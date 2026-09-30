@@ -127,6 +127,10 @@ h3 {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.segmented.four {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .segmented button {
   min-height: 2.45rem;
   border: 0;
@@ -232,5 +236,9 @@ h3 {
 
   .segmented.three {
     grid-template-columns: 1fr;
+  }
+
+  .segmented.four {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

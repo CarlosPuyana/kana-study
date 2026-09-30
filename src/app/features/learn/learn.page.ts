@@ -4,6 +4,7 @@ import { StudyRating } from '../../core/models/progress.model';
 import { LearningSessionService } from '../../core/services/learning-session.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { MedalBadge } from '../../shared/components/medal-badge/medal-badge';
+import { DailyLearningService } from '../../core/services/daily-learning.service';
 
 @Component({
   selector: 'app-learn-page',
@@ -15,6 +16,7 @@ import { MedalBadge } from '../../shared/components/medal-badge/medal-badge';
 export class LearnPage {
   readonly learning = inject(LearningSessionService);
   readonly i18n = inject(TranslationService);
+  readonly daily = inject(DailyLearningService);
   private readonly router = inject(Router);
   readonly showExitConfirmation = signal(false);
 

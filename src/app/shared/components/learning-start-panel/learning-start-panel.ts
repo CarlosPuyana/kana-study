@@ -4,6 +4,7 @@ import { LearningMode } from '../../../core/models/learning-session.model';
 import { LearningSessionService } from '../../../core/services/learning-session.service';
 import { ProgressService } from '../../../core/services/progress.service';
 import { TranslationService } from '../../../core/services/translation.service';
+import { DailyLearningService } from '../../../core/services/daily-learning.service';
 
 @Component({
   selector: 'app-learning-start-panel',
@@ -17,6 +18,7 @@ export class LearningStartPanel {
   readonly closed = output<void>();
   readonly progress = inject(ProgressService);
   readonly i18n = inject(TranslationService);
+  readonly daily = inject(DailyLearningService);
   private readonly learning = inject(LearningSessionService);
   private readonly router = inject(Router);
 

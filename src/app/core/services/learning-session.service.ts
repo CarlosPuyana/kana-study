@@ -9,6 +9,7 @@ import { answerFor, buildQuestionOptions } from './learning-options';
 import { MedalService } from './medal.service';
 import { ProgressService } from './progress.service';
 import { SessionHistoryService } from './session-history.service';
+import { DailyLearningService } from './daily-learning.service';
 
 interface SessionState {
   readonly session: LearningSession;
@@ -27,6 +28,7 @@ export class LearningSessionService {
   private readonly progress = inject(ProgressService);
   private readonly history = inject(SessionHistoryService);
   private readonly medals = inject(MedalService);
+  private readonly dailyLearning = inject(DailyLearningService);
   private readonly state = signal<SessionState | null>(null);
   private readonly newMedalState = signal<readonly MedalState[]>([]);
 
@@ -89,6 +91,7 @@ export class LearningSessionService {
   });
 
   start(mode: LearningMode): boolean {
+    if (this.dailyLearning.isCompletedToday('kana')) return false;
     const units = this.progress.buildRound();
     if (!units.length) return false;
     const session: LearningSession = {
@@ -200,6 +203,7 @@ export class LearningSessionService {
     const nextIndex = state.queueIndex + 1;
     if (nextIndex >= state.queue.length) {
       const completedAt = new Date();
+      this.dailyLearning.refresh(completedAt);
       const completedSession = {
         ...state.session,
         completedAt: completedAt.toISOString(),

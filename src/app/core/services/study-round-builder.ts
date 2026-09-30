@@ -1,4 +1,5 @@
 import { StudyProgress, StudyUnit } from '../models/progress.model';
+import { RandomSource, shuffledWithoutAdjacentContent } from './random-order';
 
 export type StudyProgressMap = Readonly<Record<string, StudyProgress>>;
 
@@ -7,7 +8,7 @@ export interface StudyRoundOptions {
   readonly progress: StudyProgressMap;
   readonly now: Date;
   readonly limit: number;
-  readonly newUnitOrder: (unit: StudyUnit) => number;
+  readonly random?: RandomSource;
 }
 
 export function buildStudyRound(options: StudyRoundOptions): readonly StudyUnit[] {
@@ -22,9 +23,13 @@ export function buildStudyRound(options: StudyRoundOptions): readonly StudyUnit[
     ));
   const fresh = options.units
     .filter(unit => options.progress[unit.key] === undefined)
-    .sort((a, b) => options.newUnitOrder(a) - options.newUnitOrder(b));
+  const randomizedFresh = shuffledWithoutAdjacentContent(
+    fresh,
+    unit => unit.kanaId,
+    options.random,
+  );
 
-  return selectUniqueKana([...due, ...fresh], options.limit);
+  return selectUniqueKana([...due, ...randomizedFresh], options.limit);
 }
 
 function selectUniqueKana(units: readonly StudyUnit[], limit: number): readonly StudyUnit[] {

@@ -31,9 +31,10 @@
           <strong>{{ i18n.t('settings.theme') }}</strong>
           <span>{{ i18n.t('settings.themeDescription') }}</span>
         </div>
-        <div class="segmented three">
+        <div class="segmented four">
           <button type="button" [class.active]="settings.theme() === 'dark'" (click)="settings.setTheme('dark')">{{ i18n.t('settings.themeDark') }}</button>
           <button type="button" [class.active]="settings.theme() === 'light'" (click)="settings.setTheme('light')">{{ i18n.t('settings.themeLight') }}</button>
+          <button type="button" [class.active]="settings.theme() === 'nora'" (click)="settings.setTheme('nora')">{{ i18n.t('settings.themeNora') }}</button>
           <button type="button" [class.active]="settings.theme() === 'system'" (click)="settings.setTheme('system')">{{ i18n.t('settings.themeSystem') }}</button>
         </div>
       </div>

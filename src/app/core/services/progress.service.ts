@@ -12,7 +12,6 @@ export const ROUND_SIZE = 10;
 const PROGRESS_KEY = 'kana-study.study-progress.v2';
 const REVIEW_EVENTS_KEY = 'kana-study.review-events.v1';
 const LEGACY_PROGRESS_KEY = 'kana-study.progress.v1';
-const VARIANT_ORDER = { basic: 0, dakuten: 1, handakuten: 2, combination: 3 } as const;
 type ProgressMap = Record<string, StudyProgress>;
 
 @Injectable({ providedIn: 'root' })
@@ -94,7 +93,6 @@ export class ProgressService {
       progress: this.progress(),
       now,
       limit: ROUND_SIZE,
-      newUnitOrder: unit => this.pedagogicalOrder(unit),
     });
   }
 
@@ -154,13 +152,6 @@ export class ProgressService {
     this.storage.remove(PROGRESS_KEY);
     this.storage.remove(REVIEW_EVENTS_KEY);
     this.storage.remove(LEGACY_PROGRESS_KEY);
-  }
-
-  private pedagogicalOrder(unit: StudyUnit): number {
-    const index = ALL_KANA.findIndex(kana => kana.id === unit.kanaId);
-    const kana = ALL_KANA[index];
-    return VARIANT_ORDER[kana.variant] * 10000 + index * QUESTION_TYPES.length
-      + QUESTION_TYPES.indexOf(unit.questionType);
   }
 
 }

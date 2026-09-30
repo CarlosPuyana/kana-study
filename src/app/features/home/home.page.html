@@ -40,10 +40,16 @@
       </div>
     </div>
 
-    <div class="study-actions"><button class="learn-button" type="button" (click)="showLearningPanel.set(true)">
-      {{ i18n.t('home.learn') }}
+    <div class="study-actions"><button class="learn-button" type="button" [disabled]="daily.isCompletedToday('kana')" (click)="showLearningPanel.set(true)">
+      {{ i18n.t(daily.isCompletedToday('kana') ? 'daily.completedButton' : 'home.learn') }}
       <span aria-hidden="true">→</span>
     </button><button class="rush-button" type="button" (click)="openRush()">⚡ {{ i18n.t('rush.title') }}</button></div>
+    @if (daily.isCompletedToday('kana')) {
+      <div class="daily-learning-status" role="status">
+        <p>{{ i18n.t('daily.completedMessage') }}</p>
+        <strong>⚡ {{ i18n.t('daily.rushAvailable') }}</strong>
+      </div>
+    }
   </section>
 
   <section class="content-section" aria-labelledby="medals-title">
@@ -92,7 +98,7 @@
   </section>
 </main>
 
-@if (showLearningPanel()) {
+@if (showLearningPanel() && !daily.isCompletedToday('kana')) {
   <app-learning-start-panel (closed)="showLearningPanel.set(false)" />
 }
 @defer (when showRushPanel()) { @if (showRushPanel()) { <app-kana-rush-launcher (closed)="showRushPanel.set(false)" /> } }

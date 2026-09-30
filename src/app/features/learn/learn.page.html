@@ -1,8 +1,9 @@
 <main class="learn-shell">
   @if (!learning.session()) {
     <section class="missing-session">
-      <h1>{{ i18n.t('learn.noActiveSession') }}</h1>
-      <p>{{ i18n.t('learn.startFromHome') }}</p>
+      <h1>{{ i18n.t(daily.isCompletedToday('kana') ? 'daily.completedTitle' : 'learn.noActiveSession') }}</h1>
+      <p>{{ i18n.t(daily.isCompletedToday('kana') ? 'daily.completedMessage' : 'learn.startFromHome') }}</p>
+      @if (daily.isCompletedToday('kana')) { <strong>⚡ {{ i18n.t('daily.rushAvailable') }}</strong> }
       <button type="button" (click)="confirmExit()">{{ i18n.t('common.returnHome') }}</button>
     </section>
   } @else {
@@ -35,7 +36,7 @@
           <div><strong>{{ learning.session()!.items.filter(item => item.initialRating === 'hard').length }}</strong><span>{{ i18n.t('learn.hard') }}</span></div>
           <div><strong>{{ learning.session()!.items.filter(item => item.initialRating === 'again').length }}</strong><span>{{ i18n.t('learn.again') }}</span></div>
         </div>
-        <button class="primary-button" type="button" (click)="anotherRound()">{{ i18n.t('learn.anotherRound') }}</button>
+        <button class="primary-button" type="button" disabled>{{ i18n.t('daily.completedButton') }}</button>
         <button class="secondary-button" type="button" (click)="confirmExit()">{{ i18n.t('common.returnHome') }}</button>
       </section>
     } @else if (learning.currentKana(); as kana) {

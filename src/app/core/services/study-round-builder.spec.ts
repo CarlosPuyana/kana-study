@@ -22,10 +22,14 @@ function stored(unit: StudyUnit, due: string): StudyProgress {
   };
 }
 
-function build(all: readonly StudyUnit[], progress: Record<string, StudyProgress>) {
+function build(
+  all: readonly StudyUnit[],
+  progress: Record<string, StudyProgress>,
+  random: () => number = () => 0.999,
+) {
   return buildStudyRound({
     units: all, progress, now: NOW, limit: 10,
-    newUnitOrder: unit => all.indexOf(unit),
+    random,
   });
 }
 
@@ -95,5 +99,14 @@ describe('buildStudyRound', () => {
       { key: 'kana-0:romaji-to-kana', kanaId: 'kana-0', questionType: 'romaji-to-kana' },
     ];
     expect(build(sameKana, {})).toEqual(sameKana);
+  });
+
+  it('randomizes new candidates before taking the round limit', () => {
+    const all = units(20);
+    const result = build(all, {}, () => 0);
+    expect(result).toHaveLength(10);
+    expect(result.map(unit => unit.key)).not.toEqual(all.slice(0, 10).map(unit => unit.key));
+    expect(new Set(result.map(unit => unit.key)).size).toBe(10);
+    expect(result.every(unit => all.includes(unit))).toBe(true);
   });
 });

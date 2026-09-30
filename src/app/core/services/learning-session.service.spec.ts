@@ -5,6 +5,7 @@ import { LearningSessionService, MAX_APPEARANCES_PER_UNIT } from './learning-ses
 import { ProgressService } from './progress.service';
 import { MedalService } from './medal.service';
 import { SessionHistoryService } from './session-history.service';
+import { DailyLearningService } from './daily-learning.service';
 
 function makeUnits(count: number): StudyUnit[] {
   return ALL_KANA.slice(0, count).map(kana => ({
@@ -22,6 +23,7 @@ describe('LearningSessionService', () => {
   };
   let history: { record: ReturnType<typeof vi.fn> };
   let medals: { evaluateUnlocks: ReturnType<typeof vi.fn> };
+  let daily: { isCompletedToday: ReturnType<typeof vi.fn>; refresh: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     round = makeUnits(10);
@@ -32,12 +34,14 @@ describe('LearningSessionService', () => {
     };
     history = { record: vi.fn() };
     medals = { evaluateUnlocks: vi.fn(() => []) };
+    daily = { isCompletedToday: vi.fn(() => false), refresh: vi.fn() };
     TestBed.configureTestingModule({
       providers: [
         LearningSessionService,
         { provide: ProgressService, useValue: progress },
         { provide: SessionHistoryService, useValue: history },
         { provide: MedalService, useValue: medals },
+        { provide: DailyLearningService, useValue: daily },
       ],
     });
     service = TestBed.inject(LearningSessionService);
@@ -189,5 +193,12 @@ describe('LearningSessionService', () => {
     service.clear();
     expect(history.record).not.toHaveBeenCalled();
     expect(medals.evaluateUnlocks).not.toHaveBeenCalled();
+  });
+
+  it('does not start a second Kana round after today is completed', () => {
+    daily.isCompletedToday.mockReturnValue(true);
+    expect(service.start('quick-practice')).toBe(false);
+    expect(progress.buildRound).not.toHaveBeenCalled();
+    expect(service.session()).toBeNull();
   });
 });

@@ -10,6 +10,7 @@ import { ProgressCircle } from '../../shared/components/progress-circle/progress
 import { SelectionCard } from '../../shared/components/selection-card/selection-card';
 import { LearningStartPanel } from '../../shared/components/learning-start-panel/learning-start-panel';
 import { KanaRushLauncher } from '../rush/kana-rush-launcher';
+import { DailyLearningService } from '../../core/services/daily-learning.service';
 
 @Component({
   selector: 'app-home-page',
@@ -31,6 +32,7 @@ export class HomePage {
   readonly progress = inject(ProgressService);
   readonly medals = inject(MedalService);
   readonly i18n = inject(TranslationService);
+  readonly daily = inject(DailyLearningService);
   readonly showLearningPanel = signal(false);
   readonly showRushPanel = signal(false);
   private readonly route = inject(ActivatedRoute);

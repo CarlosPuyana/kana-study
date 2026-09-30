@@ -26,7 +26,12 @@
       </div>
     </div>
 
-    @if (progress.roundSummary().roundSize) {
+    @if (daily.isCompletedToday('kana')) {
+      <div class="daily-learning-status" role="status">
+        <p>{{ i18n.t('daily.completedMessage') }}</p>
+        <strong>⚡ {{ i18n.t('daily.rushAvailable') }}</strong>
+      </div>
+    } @else if (progress.roundSummary().roundSize) {
       <button class="mode" type="button" (click)="start('quick-practice')">
         <span class="mode-icon" aria-hidden="true">✓</span>
         <span><strong>{{ i18n.t('learn.multipleChoice') }}</strong><small>{{ i18n.t('learn.quickPractice') }}</small></span>
