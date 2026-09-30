@@ -1,0 +1,69 @@
+<main class="page-shell">
+  <header class="page-header">
+    <a class="icon-button" routerLink="/anki" [attr.aria-label]="i18n.t('common.back')">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
+    </a>
+    <h1>{{ i18n.t('anki.cards.title') }}</h1>
+    <span></span>
+  </header>
+
+  @if (deck) {
+    <section class="deck-summary">
+      <h2>{{ i18n.t(deck.nameKey) }}</h2>
+      <p>{{ i18n.t('anki.wordCount', { count: deck.cardCount }) }}</p>
+    </section>
+
+    <label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></svg>
+      <span class="visually-hidden">{{ i18n.t('anki.cards.searchLabel') }}</span>
+      <input
+        type="search"
+        [value]="query()"
+        (input)="updateQuery($event)"
+        [placeholder]="i18n.t('anki.cards.searchPlaceholder')"
+      />
+    </label>
+
+    @if (query().trim()) {
+      <p class="results" role="status">{{ i18n.t('anki.cards.results', { count: cards().length }) }}</p>
+    }
+    <section class="card-grid" [attr.aria-label]="i18n.t('anki.cards.listLabel')">
+      @for (entry of visibleCards(); track entry.id) {
+        <button class="entry-card" type="button" (click)="selected.set(entry)">
+          <span class="meta"><span>#{{ entry.order }}</span><span>{{ i18n.t('anki.cards.frequency', { rank: entry.frequencyRank }) }}</span></span>
+          <app-furigana-text class="word" [segments]="entry.wordSegments" size="small" />
+          <span class="meaning">{{ meaning(entry) }}</span>
+        </button>
+      } @empty {
+        <p class="empty">{{ i18n.t('anki.cards.empty') }}</p>
+      }
+    </section>
+    @if (hasMore()) {
+      <button class="load-more" type="button" (click)="showMore()">{{ i18n.t('anki.cards.loadMore') }}</button>
+    }
+  } @else {
+    <p class="empty">{{ i18n.t('anki.deckNotFound') }}</p>
+  }
+</main>
+
+@if (selected(); as entry) {
+  <div class="detail-backdrop" (click)="closeOverlay()">
+    <section class="detail" role="dialog" aria-modal="true" aria-labelledby="deck-entry-title" (click)="$event.stopPropagation()">
+      <button class="close" type="button" (click)="closeOverlay()" [attr.aria-label]="i18n.t('anki.cards.close')">×</button>
+      <div class="detail-meta"><span>#{{ entry.order }}</span><span>{{ i18n.t('anki.cards.frequency', { rank: entry.frequencyRank }) }}</span></div>
+      <app-furigana-text id="deck-entry-title" class="detail-word" [segments]="entry.wordSegments" size="large" />
+      <dl class="definition">
+        <div><dt>{{ i18n.t('anki.cards.reading') }}</dt><dd lang="ja">{{ entry.reading }}</dd></div>
+        <div><dt>{{ i18n.t('anki.cards.meaning') }}</dt><dd>{{ meaning(entry) }}</dd></div>
+      </dl>
+      <section class="detail-section">
+        <h2>{{ i18n.t('anki.cards.example') }}</h2>
+        <app-deck-sentence-text [segments]="entry.sentenceSegments" />
+        <p>{{ sentenceMeaning(entry) }}</p>
+      </section>
+      @if (note(entry); as noteText) {
+        <section class="detail-section notes"><h2>{{ i18n.t('anki.cards.notes') }}</h2><p>{{ noteText }}</p></section>
+      }
+    </section>
+  </div>
+}

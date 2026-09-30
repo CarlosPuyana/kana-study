@@ -1,0 +1,94 @@
+<main class="page-shell">
+  <header class="page-header">
+    <button class="back-button" type="button" (click)="back()" [attr.aria-label]="i18n.t('common.back')">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
+    </button>
+    <h1>{{ i18n.t('selection.title') }}</h1>
+    <span aria-hidden="true"></span>
+  </header>
+
+  <section class="selection-section" aria-labelledby="content-heading">
+    <div class="section-heading">
+      <h2 id="content-heading">{{ i18n.t('selection.content') }}</h2>
+      <button type="button" class="text-action" [attr.aria-pressed]="allCategoriesSelected()" (click)="toggleAllCategories()">
+        {{ i18n.t(allCategoriesSelected() ? 'selection.deselectAll' : 'selection.selectAll') }}
+      </button>
+    </div>
+
+    @for (type of types; track type) {
+      <section class="script-block" [attr.aria-labelledby]="type + '-selection-heading'">
+        <div class="script-heading">
+          <h3 [id]="type + '-selection-heading'">{{ i18n.t('content.' + type) }}</h3>
+          <button type="button" class="all-action" [attr.aria-pressed]="isTypeFullySelected(type)" (click)="toggleType(type)">
+            {{ i18n.t('selection.all') }}
+          </button>
+        </div>
+        <div class="category-grid">
+          @for (variant of variants; track variant) {
+            <button type="button" class="category-card" [class.selected]="isCategorySelected(type, variant)"
+              [attr.aria-pressed]="isCategorySelected(type, variant)" (click)="toggleCategory(type, variant)">
+              <span class="check" aria-hidden="true">
+                @if (isCategorySelected(type, variant)) {
+                  <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 7" /></svg>
+                }
+              </span>
+              <span class="category-copy"><strong>{{ i18n.t('variants.' + variant) }}</strong><small>{{ i18n.t('content.' + type) }}</small></span>
+              <span class="count">{{ categoryCount(type, variant) }}</span>
+            </button>
+          }
+        </div>
+      </section>
+    }
+  </section>
+
+  <section class="selection-section" aria-labelledby="questions-heading">
+    <h2 id="questions-heading">{{ i18n.t('selection.questionTypes') }}</h2>
+    <div class="question-grid">
+      @for (option of questionOptions; track option.type) {
+        <button type="button" class="question-card"
+          [class.selected]="draft().questionTypes.includes(option.type)"
+          [attr.aria-pressed]="option.available ? draft().questionTypes.includes(option.type) : null"
+          [disabled]="!option.available" (click)="toggleQuestion(option.type)">
+          <span class="question-status" aria-hidden="true">
+            @if (option.available && draft().questionTypes.includes(option.type)) {
+              <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 7" /></svg>
+            } @else if (!option.available) {
+              <svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            }
+          </span>
+          <strong>{{ i18n.t('questionTypes.' + option.type) }}</strong>
+          <span class="question-example">
+            @if (option.audioSource) {
+              <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M11 5 6.5 9H3v6h3.5l4.5 4V5Z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/>
+              </svg>
+            } @else {
+              <span lang="ja">{{ option.from }}</span>
+            }
+            <span aria-hidden="true">→</span><span>{{ option.to }}</span>
+          </span>
+          <small>{{ i18n.t(option.descriptionKey) }}</small>
+        </button>
+      }
+    </div>
+    @if (selectedQuestionCount() === 0) {
+      <p class="validation-message" role="status">{{ i18n.t('selection.questionRequired') }}</p>
+    }
+  </section>
+
+  <section class="selection-section summary" aria-labelledby="summary-heading">
+    <h2 id="summary-heading">{{ i18n.t('selection.summary') }}</h2>
+    <div class="summary-card">
+      <div><strong>{{ selectedCategoryCount() }} / 8</strong><span>{{ i18n.t('selection.categories') }}</span></div>
+      <div><strong>{{ selectedQuestionCount() }} / {{ totalQuestionTypes }}</strong><span>{{ i18n.t('selection.questionTypes') }}</span></div>
+      <p>{{ i18n.t('learn.available', { count: availableExercises() }) }}</p>
+    </div>
+    @if (selectedCategoryCount() === 0) {
+      <p class="validation-message" role="status">{{ i18n.t('selection.categoryRequired') }}</p>
+    }
+  </section>
+
+  <button class="save-button" type="button" [disabled]="!valid()" (click)="save()">
+    {{ i18n.t('selection.save') }}
+  </button>
+</main>

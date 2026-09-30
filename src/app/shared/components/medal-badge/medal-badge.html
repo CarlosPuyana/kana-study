@@ -1,0 +1,22 @@
+<div class="badge" [class.locked]="locked()" [class.small]="size() === 'small'" aria-hidden="true">
+  <svg viewBox="0 0 72 82">
+    <path class="ribbon" d="M18 4h15l3 28-16 9L9 15Z" />
+    <path class="ribbon" d="M54 4H39l-3 28 16 9 11-26Z" />
+    <circle cx="36" cy="48" r="25" />
+    @switch (icon()) {
+      @case ('sessions') { <path class="symbol" d="M25 48h22M36 37v22M28 40l16 16M44 40 28 56" /> }
+      @case ('practice') { <path class="symbol filled" d="m36 33 4.5 9.2 10.2 1.5-7.4 7.2 1.8 10.1-9.1-4.8-9.1 4.8 1.8-10.1-7.4-7.2 10.2-1.5Z" /> }
+      @case ('hiragana') { <text x="36" y="57">あ</text> }
+      @case ('katakana') { <text x="36" y="57">ア</text> }
+      @case ('mastery') { <path class="symbol" d="m24 49 8 8 17-19" /> }
+      @case ('directions') { <path class="symbol" d="M23 42h25l-6-6M49 54H24l6 6" /> }
+      @case ('perfect') { <path class="symbol filled" d="m36 33 4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1Z" /> }
+      @case ('calendar') { <path class="symbol" d="M24 39h24v21H24zM29 34v10M43 34v10M24 46h24" /> }
+      @case ('recovery') { <path class="symbol" d="M48 43a14 14 0 1 0 1 12M48 43v10H38" /> }
+      @case ('rush') { <path class="symbol filled" d="m39 30-14 21h9l-2 16 15-23h-9Z" /> }
+    }
+    @if (locked()) {
+      <g class="lock"><rect x="28" y="45" width="16" height="13" rx="3"/><path d="M31 45v-4a5 5 0 0 1 10 0v4"/></g>
+    }
+  </svg>
+</div>

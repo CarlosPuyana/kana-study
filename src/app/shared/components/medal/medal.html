@@ -1,0 +1,11 @@
+<div class="medal" [class.locked]="locked()">
+  <div class="badge" aria-hidden="true">
+    <svg viewBox="0 0 64 64">
+      <path class="ribbon" d="M18 4h12l2 21-13 8L10 12Z" />
+      <path class="ribbon" d="M46 4H34l-2 21 13 8 9-21Z" />
+      <circle cx="32" cy="38" r="19" />
+      <path class="star" d="m32 25 4 8 9 1-6.5 6.3 1.5 9-8-4.2-8 4.2 1.5-9L19 34l9-1Z" />
+    </svg>
+  </div>
+  <span>{{ name() }}</span>
+</div>

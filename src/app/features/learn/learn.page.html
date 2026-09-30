@@ -1,0 +1,132 @@
+<main class="learn-shell">
+  @if (!learning.session()) {
+    <section class="missing-session">
+      <h1>{{ i18n.t('learn.noActiveSession') }}</h1>
+      <p>{{ i18n.t('learn.startFromHome') }}</p>
+      <button type="button" (click)="confirmExit()">{{ i18n.t('common.returnHome') }}</button>
+    </section>
+  } @else {
+    <header class="session-header">
+      <button class="icon-button sound" type="button" disabled [attr.aria-label]="i18n.t('learn.interfaceSounds')">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h3l4 3V7L8 10H5Z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>
+      </button>
+      <div class="progress-track" role="progressbar" [attr.aria-valuenow]="learning.resolvedCount()" [attr.aria-valuemin]="0" [attr.aria-valuemax]="learning.session()!.sessionSize">
+        <span [style.width.%]="learning.progressPercent()"></span>
+      </div>
+      <button class="icon-button" type="button" (click)="requestExit()" [attr.aria-label]="i18n.t('learn.exit')">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </header>
+
+    @if (learning.completed()) {
+      <section class="results">
+        <span class="result-mark" aria-hidden="true">✓</span>
+        <h1>{{ i18n.t('learn.roundComplete') }}</h1>
+        <p>{{ i18n.t('learn.completedSummary', {
+          count: learning.session()!.sessionSize,
+          attempts: learning.session()!.attempts
+        }) }}</p>
+        <div class="first-try-result">
+          <strong>{{ learning.firstTrySuccessPercentage() }}%</strong>
+          <span>{{ i18n.t('learn.firstTryRemembered') }}</span>
+        </div>
+        <div class="result-stats">
+          <div><strong>{{ learning.session()!.items.filter(item => item.initialRating === 'good').length }}</strong><span>{{ i18n.t('learn.good') }}</span></div>
+          <div><strong>{{ learning.session()!.items.filter(item => item.initialRating === 'hard').length }}</strong><span>{{ i18n.t('learn.hard') }}</span></div>
+          <div><strong>{{ learning.session()!.items.filter(item => item.initialRating === 'again').length }}</strong><span>{{ i18n.t('learn.again') }}</span></div>
+        </div>
+        <button class="primary-button" type="button" (click)="anotherRound()">{{ i18n.t('learn.anotherRound') }}</button>
+        <button class="secondary-button" type="button" (click)="confirmExit()">{{ i18n.t('common.returnHome') }}</button>
+      </section>
+    } @else if (learning.currentKana(); as kana) {
+      <section class="exercise" [attr.aria-labelledby]="'question-label'">
+        <p id="question-label" class="prompt">
+          @if (learning.currentUnit()!.questionType === 'romaji-to-kana') {
+            {{ i18n.t(kana.type === 'hiragana' ? 'learn.romajiToHiraganaPrompt' : 'learn.romajiToKatakanaPrompt') }}
+          } @else {
+            {{ i18n.t('learn.kanaToRomajiPrompt') }}
+          }
+        </p>
+        <div [class.kana]="learning.currentUnit()!.questionType === 'kana-to-romaji'"
+          [class.romaji]="learning.currentUnit()!.questionType === 'romaji-to-kana'"
+          [attr.lang]="learning.currentUnit()!.questionType === 'kana-to-romaji' ? 'ja' : null">
+          {{ learning.questionValue() }}
+        </div>
+
+        @if (learning.session()!.mode === 'quick-practice') {
+          <div class="options">
+            @for (option of learning.options(); track option) {
+              <button type="button" [disabled]="learning.feedback()"
+                [attr.lang]="learning.currentUnit()!.questionType === 'romaji-to-kana' ? 'ja' : null"
+                [class.kana-option]="learning.currentUnit()!.questionType === 'romaji-to-kana'"
+                [class.correct]="learning.feedback() && option === learning.feedback()!.answer"
+                [class.incorrect]="learning.feedback() && option === learning.feedback()!.selected && !learning.feedback()!.correct"
+                (click)="learning.answerQuick(option)">{{ option }}</button>
+            }
+          </div>
+          @if (learning.feedback(); as feedback) {
+            <div class="feedback" [class.success]="feedback.correct" role="status">
+              <strong>{{ i18n.t(feedback.correct ? 'learn.correct' : 'learn.notQuite') }}</strong>
+              <span>{{ i18n.t('learn.answerIs', { answer: feedback.answer }) }}</span>
+            </div>
+            <button class="primary-button" type="button" (click)="learning.continueQuick()">{{ i18n.t('learn.continue') }}</button>
+          }
+        } @else {
+          @if (!learning.revealed()) {
+            <button class="primary-button reveal" type="button" (click)="learning.reveal()">{{ i18n.t('learn.showAnswer') }}</button>
+          } @else {
+            <div class="revealed-answer" role="status">
+              <span>{{ i18n.t('learn.answer') }}</span>
+              <strong [class.kana-answer]="learning.currentUnit()!.questionType === 'romaji-to-kana'"
+                [attr.lang]="learning.currentUnit()!.questionType === 'romaji-to-kana' ? 'ja' : null">
+                {{ learning.answer() }}
+              </strong>
+            </div>
+            @if (learning.currentExample(); as example) {
+              <div class="example-block">
+                <span class="example-label">{{ i18n.t('learn.example') }}</span>
+                <strong lang="ja">{{ example.japanese }}</strong>
+                <span class="example-romaji">{{ example.romaji }}</span>
+                <span class="example-translation">{{ example.translations[i18n.language()] }}</span>
+              </div>
+            }
+            <p class="rating-prompt">{{ i18n.t('learn.howDidItGo') }}</p>
+            <div class="ratings">
+              <button type="button" class="again" (click)="rate('again')">{{ i18n.t('learn.again') }}</button>
+              <button type="button" class="hard" (click)="rate('hard')">{{ i18n.t('learn.hard') }}</button>
+              <button type="button" class="good" (click)="rate('good')">{{ i18n.t('learn.good') }}</button>
+            </div>
+          }
+        }
+      </section>
+    }
+  }
+</main>
+
+@if (showExitConfirmation()) {
+  <div class="exit-backdrop" (click)="showExitConfirmation.set(false)">
+    <section class="exit-dialog" role="dialog" aria-modal="true" aria-labelledby="exit-dialog-title" (click)="$event.stopPropagation()">
+      <h2 id="exit-dialog-title">{{ i18n.t('learn.exitTitle') }}</h2>
+      <p>{{ i18n.t('learn.exitWarning') }}</p>
+      <div class="exit-actions">
+        <button class="secondary-button" type="button" (click)="showExitConfirmation.set(false)">{{ i18n.t('learn.continueStudying') }}</button>
+        <button class="exit-button" type="button" (click)="confirmExit()">{{ i18n.t('learn.confirmExit') }}</button>
+      </div>
+    </section>
+  </div>
+}
+
+@if (learning.newlyUnlockedMedals()[0]; as medal) {
+  <div class="medal-unlock-backdrop">
+    <section class="medal-unlock-dialog" role="dialog" aria-modal="true" aria-labelledby="medal-unlock-title">
+      <app-medal-badge [icon]="medal.definition.icon" />
+      <span class="unlock-eyebrow">{{ i18n.t('medals.newUnlocked') }}</span>
+      <h2 id="medal-unlock-title">{{ i18n.t(medal.definition.titleKey) }}</h2>
+      <p>{{ i18n.t(medal.definition.descriptionKey) }}</p>
+      @if (learning.newlyUnlockedMedals().length > 1) {
+        <small>{{ i18n.t('medals.remaining', { count: learning.newlyUnlockedMedals().length - 1 }) }}</small>
+      }
+      <button class="primary-button" type="button" (click)="learning.dismissNextMedal()">{{ i18n.t('medals.continue') }}</button>
+    </section>
+  </div>
+}

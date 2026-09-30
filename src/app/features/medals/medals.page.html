@@ -1,0 +1,60 @@
+<main class="page-shell">
+  <header class="page-header">
+    <button class="back-button" type="button" (click)="back()" [attr.aria-label]="i18n.t('common.back')">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
+    </button>
+    <h1>{{ i18n.t('medals.title') }}</h1>
+    <span aria-hidden="true"></span>
+  </header>
+
+  <section class="overview" aria-labelledby="medals-overview">
+    <div>
+      <strong id="medals-overview">{{ medals.unlockedCount() }} / {{ medals.definitions.length }}</strong>
+      <span>{{ i18n.t('medals.unlockedPlural') }}</span>
+    </div>
+    <strong class="percentage">{{ medals.unlockedPercentage() }}%</strong>
+    <div class="overview-track" role="progressbar" [attr.aria-valuenow]="medals.unlockedCount()"
+      aria-valuemin="0" [attr.aria-valuemax]="medals.definitions.length">
+      <span [style.width.%]="medals.unlockedPercentage()"></span>
+    </div>
+  </section>
+
+  <section class="medal-grid" [attr.aria-label]="i18n.t('medals.collection')">
+    @for (medal of medals.medals(); track medal.definition.id) {
+      @let display = medals.presentation(medal);
+      <button type="button" class="medal-card" [class.unlocked]="medal.unlocked"
+        (click)="selected.set(medal)" [attr.aria-label]="i18n.t(display.titleKey)">
+        <app-medal-badge [icon]="medal.definition.icon" [locked]="!medal.unlocked" />
+        <strong>{{ i18n.t(display.titleKey) }}</strong>
+      </button>
+    }
+  </section>
+</main>
+
+@if (selected(); as medal) {
+  @let display = medals.presentation(medal);
+  <div class="detail-backdrop" (click)="selected.set(null)">
+    <section class="detail" role="dialog" aria-modal="true" aria-labelledby="medal-detail-title" (click)="$event.stopPropagation()">
+      <button class="close-button" type="button" (click)="selected.set(null)" [attr.aria-label]="i18n.t('medals.close')">×</button>
+      <app-medal-badge [icon]="medal.definition.icon" [locked]="!medal.unlocked" />
+      <h2 id="medal-detail-title">{{ i18n.t(display.titleKey) }}</h2>
+      <p>{{ i18n.t(display.descriptionKey) }}</p>
+      @if (medal.unlocked) {
+        <div class="unlock-date"><span>{{ i18n.t('medals.unlocked') }}</span><strong>{{ formattedDate(medal.unlock!.unlockedAt) }}</strong></div>
+      } @else if (display.progress; as progress) {
+        @if (progress.type === 'counter') {
+          <div class="detail-progress">
+            <span>{{ i18n.t('medals.progress') }}</span>
+            <strong>{{ progress.current }} / {{ progress.target }}</strong>
+            <div class="detail-track" role="progressbar" [attr.aria-valuenow]="progress.current"
+              aria-valuemin="0" [attr.aria-valuemax]="progress.target">
+              <span [style.width.%]="percent(progress)"></span>
+            </div>
+          </div>
+        } @else {
+          <strong class="locked-label">{{ i18n.t('medals.locked') }}</strong>
+        }
+      }
+    </section>
+  </div>
+}

@@ -1,0 +1,11 @@
+.badge { width: 5.25rem; aspect-ratio: 72 / 82; color: var(--accent); }
+.badge.small { width: 4rem; }
+svg { width: 100%; overflow: visible; }
+circle { fill: var(--primary-soft); stroke: var(--accent); stroke-width: 3; }
+.ribbon { fill: var(--surface-raised); stroke: var(--border); stroke-width: 2; }
+.symbol { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.symbol.filled { fill: currentColor; stroke-width: 1.5; }
+text { fill: currentColor; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-size: 25px; font-weight: 700; text-anchor: middle; }
+.lock rect { fill: var(--surface-raised); stroke: var(--text-secondary); stroke-width: 2; }
+.lock path { fill: none; stroke: var(--text-secondary); stroke-width: 2; }
+.locked { filter: saturate(0.15); opacity: 0.58; color: var(--text-secondary); }

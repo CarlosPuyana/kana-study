@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="meta">
+    <span>{{ label() }}</span>
+    <strong>{{ value() }}</strong>
+  </div>
+  <div class="track" role="progressbar" [attr.aria-valuenow]="value()" aria-valuemin="0" [attr.aria-valuemax]="total()">
+    <span class="fill" [class]="kind()" [style.width.%]="width()"></span>
+  </div>
+</div>

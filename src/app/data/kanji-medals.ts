@@ -1,0 +1,20 @@
+import { MedalDefinition } from '../core/models/medal.model';
+export const KANJI_MEDAL_DEFINITIONS:readonly MedalDefinition[]=[
+{module:'kanji',id:'kanji-first-round',titleKey:'kanji.medals.firstRound.title',descriptionKey:'kanji.medals.firstRound.description',category:'learning',secret:false,order:1,icon:'sessions'},
+{module:'kanji',id:'kanji-ten-rounds',titleKey:'kanji.medals.tenRounds.title',descriptionKey:'kanji.medals.tenRounds.description',category:'learning',secret:false,order:2,icon:'sessions'},
+{module:'kanji',id:'kanji-first-mastered',titleKey:'kanji.medals.firstMastered.title',descriptionKey:'kanji.medals.firstMastered.description',category:'mastery',secret:false,order:3,icon:'practice'},
+{module:'kanji',id:'kanji-ten-mastered',titleKey:'kanji.medals.tenMastered.title',descriptionKey:'kanji.medals.tenMastered.description',category:'mastery',secret:false,order:4,icon:'practice'},
+{module:'kanji',id:'kanji-quarter-n5',titleKey:'kanji.medals.quarter.title',descriptionKey:'kanji.medals.quarter.description',category:'mastery',secret:false,order:5,icon:'mastery'},
+{module:'kanji',id:'kanji-half-n5',titleKey:'kanji.medals.half.title',descriptionKey:'kanji.medals.half.description',category:'mastery',secret:false,order:6,icon:'mastery'},
+{module:'kanji',id:'kanji-three-quarters-n5',titleKey:'kanji.medals.threeQuarters.title',descriptionKey:'kanji.medals.threeQuarters.description',category:'mastery',secret:false,order:7,icon:'mastery'},
+{module:'kanji',id:'kanji-n5-started',titleKey:'kanji.medals.n5Started.title',descriptionKey:'kanji.medals.n5Started.description',category:'learning',secret:false,order:8,icon:'calendar'},
+{module:'kanji',id:'kanji-n5-recognized',titleKey:'kanji.medals.n5Recognized.title',descriptionKey:'kanji.medals.n5Recognized.description',category:'mastery',secret:false,order:9,icon:'hiragana'},
+{module:'kanji',id:'kanji-n5-reversed',titleKey:'kanji.medals.n5Reversed.title',descriptionKey:'kanji.medals.n5Reversed.description',category:'mastery',secret:false,order:10,icon:'katakana'},
+{module:'kanji',id:'kanji-both-directions',titleKey:'kanji.medals.bothDirections.title',descriptionKey:'kanji.medals.bothDirections.description',category:'mastery',secret:false,order:11,icon:'directions'},
+{module:'kanji',id:'kanji-ten-bidirectional',titleKey:'kanji.medals.tenBidirectional.title',descriptionKey:'kanji.medals.tenBidirectional.description',category:'mastery',secret:false,order:12,icon:'directions'},
+{module:'kanji',id:'kanji-fifty-bidirectional',titleKey:'kanji.medals.fiftyBidirectional.title',descriptionKey:'kanji.medals.fiftyBidirectional.description',category:'mastery',secret:false,order:13,icon:'directions'},
+{module:'kanji',id:'kanji-n5-mastered',titleKey:'kanji.medals.n5Mastered.title',descriptionKey:'kanji.medals.n5Mastered.description',category:'mastery',secret:false,order:14,icon:'perfect'},
+{module:'kanji',id:'kanji-perfect-round',titleKey:'kanji.medals.perfectRound.title',descriptionKey:'kanji.medals.perfectRound.description',category:'accuracy',secret:false,order:15,icon:'perfect'},
+{module:'kanji',id:'kanji-perfectionist',titleKey:'kanji.medals.perfectionist.title',descriptionKey:'kanji.medals.perfectionist.description',category:'accuracy',secret:false,order:16,icon:'perfect'},
+{module:'kanji',id:'kanji-secret-comeback',titleKey:'kanji.medals.comeback.title',descriptionKey:'kanji.medals.comeback.description',category:'accuracy',secret:true,order:17,icon:'recovery'},
+{module:'kanji',id:'kanji-secret-reverse-perfect',titleKey:'kanji.medals.reversePerfect.title',descriptionKey:'kanji.medals.reversePerfect.description',category:'accuracy',secret:true,order:18,icon:'recovery'}];

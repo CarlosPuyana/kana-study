@@ -1,0 +1,62 @@
+.learn-shell { width: min(100% - 2rem, 42rem); min-height: 100vh; margin: 0 auto; padding: 1rem 0 3rem; }
+.session-header { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem; align-items: center; gap: 1rem; }
+.icon-button { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 1px solid var(--border); border-radius: 0.8rem; background: var(--surface); color: var(--text-primary); cursor: pointer; }
+.icon-button:disabled { cursor: default; opacity: 0.55; }
+.icon-button svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.progress-track { overflow: hidden; height: 0.55rem; border-radius: 999px; background: var(--surface-raised); }
+.progress-track span { display: block; height: 100%; border-radius: inherit; background: var(--primary); transition: width 200ms ease; }
+.exercise { display: grid; justify-items: center; padding-top: clamp(2.5rem, 10vh, 6rem); }
+.prompt { margin: 0; color: var(--text-secondary); font-weight: 650; }
+.kana { margin: 1.2rem 0 2rem; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-size: clamp(5rem, 22vw, 8rem); line-height: 1.1; }
+.romaji { margin: 1.5rem 0 2.25rem; font-size: clamp(3.5rem, 16vw, 6rem); font-weight: 750; line-height: 1.1; letter-spacing: -0.04em; }
+.options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; width: min(100%, 28rem); }
+.options button { min-height: 3.5rem; border: 1px solid var(--border); border-radius: 0.9rem; background: var(--surface); color: var(--text-primary); font-size: 1.05rem; font-weight: 700; cursor: pointer; }
+.options button.kana-option { min-height: 4.5rem; font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-size: 2rem; }
+.options button.correct { border-color: var(--success); background: color-mix(in srgb, var(--success) 14%, var(--surface)); }
+.options button.incorrect { border-color: var(--warning); }
+.feedback { display: grid; gap: 0.2rem; width: min(100%, 28rem); margin-top: 1rem; padding: 0.85rem 1rem; border-radius: 0.85rem; background: var(--surface-raised); color: var(--warning); }
+.feedback.success { color: var(--success); }
+.feedback span { color: var(--text-secondary); font-size: 0.85rem; }
+.primary-button, .secondary-button { width: min(100%, 28rem); min-height: 3.1rem; margin-top: 1rem; border-radius: 0.85rem; font-weight: 800; cursor: pointer; }
+.primary-button { border: 0; background: var(--primary); color: #fff; }
+.secondary-button { border: 1px solid var(--border); background: var(--surface); color: var(--text-primary); }
+.reveal { margin-top: 1rem; }
+.revealed-answer { display: grid; justify-items: center; gap: 0.3rem; min-width: 12rem; padding: 1rem; border-radius: 0.9rem; background: var(--surface); }
+.revealed-answer span, .rating-prompt { color: var(--text-secondary); font-size: 0.8rem; }
+.revealed-answer strong { font-size: 1.5rem; }
+.revealed-answer strong.kana-answer { font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-size: 2.5rem; }
+.example-block { display: grid; justify-items: center; gap: 0.15rem; width: min(100%, 28rem); margin-top: 1rem; overflow-wrap: anywhere; text-align: center; }
+.example-label { margin-bottom: 0.2rem; color: var(--text-muted); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.1em; text-transform: uppercase; }
+.example-block strong { font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; font-size: 1.5rem; line-height: 1.35; }
+.example-romaji { color: var(--text-secondary); font-size: 0.9rem; }
+.example-translation { color: var(--text-secondary); font-size: 0.85rem; }
+.rating-prompt { margin: 1.5rem 0 0.6rem; }
+.ratings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; width: min(100%, 28rem); }
+.ratings button { min-height: 3rem; border: 1px solid var(--border); border-radius: 0.8rem; background: var(--surface); color: var(--text-primary); font-weight: 700; cursor: pointer; }
+.ratings .again { color: var(--warning); }.ratings .good { color: var(--success); }
+.results, .missing-session { display: grid; justify-items: center; margin: clamp(4rem, 15vh, 9rem) auto 0; text-align: center; }
+.results h1, .missing-session h1 { margin: 1rem 0 0.4rem; }
+.results p, .missing-session p { margin: 0; color: var(--text-secondary); line-height: 1.5; }
+.result-mark { display: grid; place-items: center; width: 4rem; height: 4rem; border-radius: 50%; background: var(--primary-soft); color: var(--accent); font-size: 2rem; }
+.result-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; width: min(100%, 28rem); margin-top: 1.5rem; }
+.result-stats div { display: grid; gap: 0.2rem; padding: 0.8rem; border: 1px solid var(--border); border-radius: 0.8rem; background: var(--surface); }
+.result-stats span { color: var(--text-secondary); font-size: 0.75rem; }
+.first-try-result { display: grid; gap: 0.1rem; margin-top: 1.25rem; }
+.first-try-result strong { color: var(--accent); font-size: 1.8rem; }
+.first-try-result span { color: var(--text-secondary); font-size: 0.82rem; }
+.exit-backdrop { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 1rem; background: rgba(3, 8, 16, 0.72); backdrop-filter: blur(4px); }
+.exit-dialog { width: min(100%, 28rem); padding: 1.25rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); box-shadow: var(--shadow); }
+.exit-dialog h2 { margin: 0; font-size: 1.15rem; }
+.exit-dialog p { margin: 0.55rem 0 0; color: var(--text-secondary); line-height: 1.5; }
+.exit-actions { display: grid; grid-template-columns: 1fr auto; gap: 0.65rem; margin-top: 1.25rem; }
+.exit-actions .secondary-button { width: 100%; margin: 0; }
+.exit-button { min-height: 3.1rem; padding: 0 1rem; border: 0; border-radius: 0.85rem; background: var(--primary); color: #fff; font-weight: 800; cursor: pointer; }
+.missing-session button { min-height: 2.8rem; margin-top: 1rem; padding: 0 1rem; border: 0; border-radius: 0.8rem; background: var(--primary); color: #fff; cursor: pointer; }
+.medal-unlock-backdrop { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 1rem; background: rgba(3, 8, 16, 0.78); backdrop-filter: blur(5px); }
+.medal-unlock-dialog { display: grid; justify-items: center; width: min(100%, 28rem); padding: 1.5rem; border: 1px solid var(--primary); border-radius: 1.1rem; background: var(--surface); box-shadow: var(--shadow); text-align: center; }
+.unlock-eyebrow { margin-top: 0.6rem; color: var(--accent); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.medal-unlock-dialog h2 { margin: 0.4rem 0 0; }
+.medal-unlock-dialog p { margin: 0.5rem 0 0; color: var(--text-secondary); line-height: 1.5; }
+.medal-unlock-dialog small { margin-top: 0.7rem; color: var(--text-muted); }
+@media (hover: hover) { .options button:not(:disabled):hover, .ratings button:hover, .secondary-button:hover { background: var(--surface-hover); } }
+@media (max-width: 460px) { .learn-shell { width: calc(100% - 1.25rem); } .exercise { padding-top: 2.5rem; } .exit-actions { grid-template-columns: 1fr; } .exit-button { order: 2; } }

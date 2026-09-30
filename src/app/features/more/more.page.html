@@ -1,0 +1,26 @@
+<main class="page-shell">
+  <header class="page-header">
+    <a class="back-button" [routerLink]="returnRoute()" [attr.aria-label]="i18n.t('common.back')">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
+    </a>
+    <h1>{{ i18n.t('more.title') }}</h1>
+    <span aria-hidden="true"></span>
+  </header>
+
+  <section class="intro" aria-labelledby="more-intro-title">
+    <span>{{ i18n.t('more.eyebrow') }}</span>
+    <h2 id="more-intro-title">{{ i18n.t('more.intro') }}</h2>
+  </section>
+
+  <section class="module-grid" [attr.aria-label]="i18n.t('more.modules')">
+    @for (module of modules(); track module.id) {
+      <app-module-card
+        [definition]="module"
+        [title]="i18n.t(module.titleKey)"
+        [description]="i18n.t(module.descriptionKey)"
+        [availableLabel]="i18n.t('more.available')"
+        [comingSoonLabel]="i18n.t('common.comingSoon')"
+      />
+    }
+  </section>
+</main>

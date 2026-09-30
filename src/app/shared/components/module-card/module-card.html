@@ -1,0 +1,54 @@
+@if (definition().available) {
+  <a class="module-card available" [routerLink]="definition().route">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else {
+  <button class="module-card locked" type="button" disabled>
+    <ng-container *ngTemplateOutlet="content" />
+  </button>
+}
+
+<ng-template #content>
+  <span class="module-icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48">
+      @switch (definition().icon) {
+        @case ('kana') {
+          <text class="kana-glyph" x="24" y="32" text-anchor="middle">あ</text>
+        }
+        @case ('kanji') {
+          <path d="M12 10h24v28H12zM18 17h12M17 24h14M24 14v20M17 31h14" />
+        }
+        @case ('vocabulary') {
+          <path d="M9 12h13a5 5 0 0 1 5 5v21H14a5 5 0 0 1-5-5V12Zm30 0H27v26h7a5 5 0 0 0 5-5V12ZM14 19h8M14 25h8" />
+        }
+        @case ('flags') {
+          <path d="M13 39V9M14 11h22l-5 7 5 7H14" />
+        }
+        @case ('anki') {
+          <rect x="10" y="15" width="25" height="24" rx="3"/><path d="m16 15 3-6 22 11-6 12M16 23h13M16 30h9" />
+        }
+        @case ('grammar') {
+          <path d="M10 12h28v25H10zM16 19h16M16 25h10M16 31h13" />
+        }
+        @case ('manga') {
+          <path d="M8 10h14a5 5 0 0 1 5 5v25H13a5 5 0 0 1-5-5V10Zm32 0H27v30h8a5 5 0 0 0 5-5V10Z"/><path d="M13 17h9v8h-9zM32 17h4M32 23h4" />
+        }
+        @default {
+          <path d="M24 8v32M8 24h32M12.7 12.7l22.6 22.6M35.3 12.7 12.7 35.3" />
+        }
+      }
+    </svg>
+  </span>
+  <span class="module-copy">
+    <strong>{{ title() }}</strong>
+    <span>{{ description() }}</span>
+  </span>
+  <span class="module-state">
+    <span>{{ definition().available ? availableLabel() : comingSoonLabel() }}</span>
+    @if (definition().available) {
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+    } @else {
+      <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>
+    }
+  </span>
+</ng-template>

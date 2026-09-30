@@ -1,0 +1,44 @@
+.row {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.meta strong {
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.track {
+  height: 0.62rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--surface-raised);
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 300ms ease;
+}
+
+.fill.new {
+  background: var(--new);
+}
+
+.fill.pending {
+  background: var(--pending);
+}
+
+.fill.memorized {
+  background: var(--memorized);
+}

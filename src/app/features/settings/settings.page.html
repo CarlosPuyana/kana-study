@@ -1,0 +1,119 @@
+<main class="page-shell">
+  <header class="page-header">
+    <a class="back-button" routerLink="/" [attr.aria-label]="i18n.t('common.back')">←</a>
+    <div>
+      <span class="eyebrow">{{ i18n.t('settings.eyebrow') }}</span>
+      <h1>{{ i18n.t('settings.title') }}</h1>
+    </div>
+  </header>
+
+  <section class="settings-section">
+    <div class="section-copy">
+      <h2>{{ i18n.t('settings.general') }}</h2>
+      <p>{{ i18n.t('settings.generalDescription') }}</p>
+    </div>
+
+    <div class="settings-card">
+      <div class="setting-row stacked">
+        <div>
+          <strong>{{ i18n.t('settings.language') }}</strong>
+          <span>{{ i18n.t('settings.languageDescription') }}</span>
+        </div>
+        <div class="segmented three">
+          <button type="button" [class.active]="settings.language() === 'es'" (click)="settings.setLanguage('es')">Español</button>
+          <button type="button" [class.active]="settings.language() === 'en'" (click)="settings.setLanguage('en')">English</button>
+          <button type="button" [class.active]="settings.language() === 'ca'" (click)="settings.setLanguage('ca')">Català</button>
+        </div>
+      </div>
+
+      <div class="setting-row stacked">
+        <div>
+          <strong>{{ i18n.t('settings.theme') }}</strong>
+          <span>{{ i18n.t('settings.themeDescription') }}</span>
+        </div>
+        <div class="segmented three">
+          <button type="button" [class.active]="settings.theme() === 'dark'" (click)="settings.setTheme('dark')">{{ i18n.t('settings.themeDark') }}</button>
+          <button type="button" [class.active]="settings.theme() === 'light'" (click)="settings.setTheme('light')">{{ i18n.t('settings.themeLight') }}</button>
+          <button type="button" [class.active]="settings.theme() === 'system'" (click)="settings.setTheme('system')">{{ i18n.t('settings.themeSystem') }}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="settings-section">
+    <div class="section-copy">
+      <h2>{{ i18n.t('settings.study') }}</h2>
+      <p>{{ i18n.t('settings.studyDescription') }}</p>
+    </div>
+
+    <div class="settings-card">
+      <h3>{{ i18n.t('settings.content') }}</h3>
+
+      <label class="toggle-row">
+        <span><strong>{{ i18n.t('content.hiragana') }}</strong><small>あ か さ た な</small></span>
+        <input type="checkbox" [checked]="settings.learning().content.hiragana" (change)="setContent('hiragana', $any($event.target).checked)" />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+
+      <label class="toggle-row">
+        <span><strong>{{ i18n.t('content.katakana') }}</strong><small>ア カ サ タ ナ</small></span>
+        <input type="checkbox" [checked]="settings.learning().content.katakana" (change)="setContent('katakana', $any($event.target).checked)" />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+
+      <label class="toggle-row disabled">
+        <span><strong>{{ i18n.t('content.kanji') }}</strong><small>{{ i18n.t('common.comingSoon') }}</small></span>
+        <input type="checkbox" disabled />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+
+      <label class="toggle-row disabled">
+        <span><strong>{{ i18n.t('content.vocabulary') }}</strong><small>{{ i18n.t('common.comingSoon') }}</small></span>
+        <input type="checkbox" disabled />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+    </div>
+
+    <div class="settings-card">
+      <h3>{{ i18n.t('settings.kanaTypes') }}</h3>
+
+      <label class="toggle-row">
+        <span><strong>{{ i18n.t('variants.basic') }}</strong><small>{{ i18n.t('variants.basicDescription') }}</small></span>
+        <input type="checkbox" [checked]="settings.learning().variants.basic" (change)="setVariant('basic', $any($event.target).checked)" />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+
+      <label class="toggle-row">
+        <span><strong>{{ i18n.t('variants.dakuten') }}</strong><small>{{ i18n.t('variants.dakutenDescription') }}</small></span>
+        <input type="checkbox" [checked]="settings.learning().variants.dakuten" (change)="setVariant('dakuten', $any($event.target).checked)" />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+
+      <label class="toggle-row">
+        <span><strong>{{ i18n.t('variants.handakuten') }}</strong><small>{{ i18n.t('variants.handakutenDescription') }}</small></span>
+        <input type="checkbox" [checked]="settings.learning().variants.handakuten" (change)="setVariant('handakuten', $any($event.target).checked)" />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+
+      <label class="toggle-row">
+        <span><strong>{{ i18n.t('variants.combination') }}</strong><small>{{ i18n.t('variants.combinationDescription') }}</small></span>
+        <input type="checkbox" [checked]="settings.learning().variants.combination" (change)="setVariant('combination', $any($event.target).checked)" />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+    </div>
+
+    <p class="active-count">
+      {{ i18n.t('settings.activeCards', { count: progress.stats().total }) }}
+    </p>
+  </section>
+
+  <section class="settings-section danger-zone">
+    <div class="section-copy">
+      <h2>{{ i18n.t('settings.data') }}</h2>
+      <p>{{ i18n.t('settings.dataDescription') }}</p>
+    </div>
+    <button class="danger-button" type="button" (click)="confirmResetProgress()">
+      {{ i18n.t('settings.resetProgress') }}
+    </button>
+  </section>
+</main>

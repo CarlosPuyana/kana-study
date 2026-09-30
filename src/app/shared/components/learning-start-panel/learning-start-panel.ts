@@ -1,0 +1,26 @@
+import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { LearningMode } from '../../../core/models/learning-session.model';
+import { LearningSessionService } from '../../../core/services/learning-session.service';
+import { ProgressService } from '../../../core/services/progress.service';
+import { TranslationService } from '../../../core/services/translation.service';
+
+@Component({
+  selector: 'app-learning-start-panel',
+  imports: [RouterLink],
+  templateUrl: './learning-start-panel.html',
+  styleUrl: './learning-start-panel.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '(document:keydown.escape)': 'closed.emit()' },
+})
+export class LearningStartPanel {
+  readonly closed = output<void>();
+  readonly progress = inject(ProgressService);
+  readonly i18n = inject(TranslationService);
+  private readonly learning = inject(LearningSessionService);
+  private readonly router = inject(Router);
+
+  start(mode: LearningMode): void {
+    if (this.learning.start(mode)) void this.router.navigateByUrl('/learn');
+  }
+}

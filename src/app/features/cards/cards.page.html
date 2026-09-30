@@ -1,0 +1,50 @@
+<main class="page-shell">
+  <header class="browse-header" [class.searching]="searching()">
+    @if (searching()) {
+      <button type="button" class="icon-button" (click)="closeSearch()" [attr.aria-label]="i18n.t('cards.closeSearch')">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+      </button>
+      <input #searchInput type="search" [value]="query()" (input)="query.set(searchInput.value)"
+        [placeholder]="i18n.t('cards.search')" [attr.aria-label]="i18n.t('cards.search')" autocomplete="off" />
+    } @else {
+      <button type="button" class="icon-button" (click)="back()" [attr.aria-label]="i18n.t('common.back')">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
+      </button>
+      <h1>{{ i18n.t('cards.title') }}</h1>
+      <button #searchButton type="button" class="icon-button" (click)="searching.set(true)" [attr.aria-label]="i18n.t('cards.search')">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4 4" /></svg>
+      </button>
+    }
+  </header>
+
+  <div class="view-selector" role="group" [attr.aria-label]="i18n.t('cards.view')">
+    <button type="button" [attr.aria-pressed]="mode() === 'all'" (click)="mode.set('all')">{{ i18n.t('cards.all') }}</button>
+    <button type="button" [attr.aria-pressed]="mode() === 'category'" (click)="mode.set('category')">{{ i18n.t('cards.category') }}</button>
+  </div>
+
+  @if (cards().length === 0) {
+    <p class="empty-state" role="status">{{ i18n.t('cards.empty') }}</p>
+  } @else if (mode() === 'all') {
+    <ul class="kana-grid">
+      @for (kana of cards(); track kana.id) {
+        <li><app-kana-card [kana]="kana" /></li>
+      }
+    </ul>
+  } @else {
+    @for (group of groups(); track group.type) {
+      <section class="script-group" [attr.aria-labelledby]="group.type + '-heading'">
+        <h2 [id]="group.type + '-heading'">{{ i18n.t('content.' + group.type) }}</h2>
+        @for (category of group.categories; track category.variant) {
+          <section class="category" [attr.aria-labelledby]="group.type + '-' + category.variant">
+            <h3 [id]="group.type + '-' + category.variant">{{ i18n.t('variants.' + category.variant) }}</h3>
+            <ul class="kana-grid">
+              @for (kana of category.cards; track kana.id) {
+                <li><app-kana-card [kana]="kana" /></li>
+              }
+            </ul>
+          </section>
+        }
+      </section>
+    }
+  }
+</main>

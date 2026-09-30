@@ -1,0 +1,44 @@
+<div class="backdrop" (click)="closed.emit()">
+  <section class="panel" role="dialog" aria-modal="true" [attr.aria-labelledby]="'learning-panel-title'" (click)="$event.stopPropagation()">
+    <div class="panel-heading">
+      <h2 id="learning-panel-title">{{ i18n.t('learn.selectionTitle') }}</h2>
+      <a routerLink="/selection">{{ i18n.t('learn.edit') }}</a>
+    </div>
+    <button class="close" type="button" (click)="closed.emit()" [attr.aria-label]="i18n.t('learn.close')">×</button>
+
+    <p class="selection-meta">{{ i18n.t('learn.selectionSummary', {
+      selected: progress.roundSummary().enabledCategories,
+      total: progress.roundSummary().totalCategories,
+      questionSelected: progress.roundSummary().enabledQuestionTypes,
+      questionTotal: progress.roundSummary().totalQuestionTypes
+    }) }}</p>
+    <strong class="available">{{ i18n.t('learn.available', { count: progress.roundSummary().available }) }}</strong>
+    <p class="counts">{{ i18n.t('learn.pendingAndNew', {
+      due: progress.roundSummary().due, new: progress.roundSummary().newCount
+    }) }}</p>
+
+    <div class="round-summary">
+      <span>{{ i18n.t('learn.nextRound') }}</span>
+      <strong>{{ i18n.t('learn.exerciseCount', { count: progress.roundSummary().roundSize }) }}</strong>
+      <div class="chips">
+        @if (progress.roundSummary().roundDue) { <span>{{ i18n.t('learn.reviewChip', { count: progress.roundSummary().roundDue }) }}</span> }
+        @if (progress.roundSummary().roundNew) { <span>{{ i18n.t('learn.newChip', { count: progress.roundSummary().roundNew }) }}</span> }
+      </div>
+    </div>
+
+    @if (progress.roundSummary().roundSize) {
+      <button class="mode" type="button" (click)="start('quick-practice')">
+        <span class="mode-icon" aria-hidden="true">✓</span>
+        <span><strong>{{ i18n.t('learn.multipleChoice') }}</strong><small>{{ i18n.t('learn.quickPractice') }}</small></span>
+        <span aria-hidden="true">›</span>
+      </button>
+      <button class="mode" type="button" (click)="start('self-assessment')">
+        <span class="mode-icon" aria-hidden="true">◎</span>
+        <span><strong>{{ i18n.t('learn.selfAssessment') }}</strong><small>{{ i18n.t('learn.durableLearning') }}</small></span>
+        <span aria-hidden="true">›</span>
+      </button>
+    } @else {
+      <p class="empty">{{ i18n.t('learn.noExercises') }}</p>
+    }
+  </section>
+</div>

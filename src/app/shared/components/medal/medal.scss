@@ -1,0 +1,39 @@
+.medal {
+  display: grid;
+  justify-items: center;
+  gap: 0.65rem;
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 0.82rem;
+}
+
+.badge {
+  width: clamp(4rem, 9vw, 5rem);
+  aspect-ratio: 1;
+}
+
+svg {
+  width: 100%;
+  overflow: visible;
+}
+
+svg circle {
+  fill: var(--primary-soft);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.ribbon {
+  fill: var(--surface-raised);
+  stroke: var(--border);
+  stroke-width: 2;
+}
+
+.star {
+  fill: var(--accent);
+}
+
+.locked {
+  filter: saturate(0.25);
+  opacity: 0.68;
+}

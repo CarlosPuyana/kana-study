@@ -1,0 +1,11 @@
+<main class="page-shell">
+  <header class="page-header"><a class="icon-button" routerLink="/anki" [attr.aria-label]="i18n.t('common.back')"><svg viewBox="0 0 24 24"><path d="m12 5-7 7 7 7M5 12h14" /></svg></a><h1>{{ i18n.t('anki.statistics.title') }}</h1><span></span></header>
+  @if (deck) {
+    <h2>{{ i18n.t(deck.nameKey) }}</h2>
+    @if(error()){<p class="empty" role="alert">{{i18n.t('anki.storageError')}}</p>}
+    @if(stats();as value){
+      <section class="today-panel" aria-labelledby="overview-title"><h3 id="overview-title">{{i18n.t('anki.statistics.overview')}}</h3><dl><div><dt>{{i18n.t('anki.statistics.total')}}</dt><dd>{{value.total}}</dd></div><div><dt>{{i18n.t('anki.statistics.unseen')}}</dt><dd>{{value.unseen}}</dd></div><div><dt>{{i18n.t('anki.stats.learning')}}</dt><dd>{{value.learning}}</dd></div><div><dt>{{i18n.t('anki.statistics.inReview')}}</dt><dd>{{value.review}}</dd></div><div><dt>{{i18n.t('anki.statistics.dueNow')}}</dt><dd>{{value.dueNow}}</dd></div></dl></section>
+      <section class="secondary-grid"><article><h3>{{i18n.t('anki.statistics.totalReviews')}}</h3><strong>{{value.totalReviews}}</strong></article><article><h3>{{i18n.t('anki.statistics.failures')}}</h3><strong>{{value.again}}</strong></article><article><h3>{{i18n.t('anki.statistics.recalls')}}</h3><strong>{{value.good}}</strong></article><article><h3>{{i18n.t('anki.statistics.observedRetention')}}</h3><strong>{{percentage(value.observedRetention)}}</strong></article><article><h3>{{i18n.t('anki.statistics.trueRetention')}}</h3><strong>{{percentage(value.trueRetention)}}</strong><p>{{i18n.t('anki.statistics.trueRetentionHelp')}}</p></article></section>
+    } @else if(!error()){<p class="empty" aria-busy="true">{{i18n.t('common.loading')}}</p>}
+  } @else { <p class="empty">{{ i18n.t('anki.deckNotFound') }}</p> }
+</main>

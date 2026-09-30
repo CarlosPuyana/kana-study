@@ -1,0 +1,26 @@
+<div class="backdrop" (click)="closed.emit()">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="rush-dialog-title" (click)="$event.stopPropagation()">
+    <button class="close" type="button" autofocus (click)="closed.emit()" [attr.aria-label]="i18n.t('medals.close')">×</button>
+    <span class="rush-mark" aria-hidden="true">⚡</span>
+    <h2 id="rush-dialog-title">{{ i18n.t('rush.title') }}</h2>
+    <p>{{ i18n.t('rush.description') }}</p>
+    <p class="notice">{{ i18n.t('rush.noProgressNotice') }}</p>
+
+    <div class="section-title"><strong>{{ i18n.t('rush.content') }}</strong><span><button type="button" (click)="selectAll()">{{ i18n.t('rush.selectAll') }}</button> · <button type="button" (click)="clear()">{{ i18n.t('rush.clear') }}</button></span></div>
+    <div class="options">
+      @for (option of contentOptions(); track option.id) {
+        <label><input type="checkbox" [checked]="value().selectedContentIds.includes(option.id)" (change)="toggleContent(option.id)"><span>{{ i18n.t(option.labelKey) }}</span></label>
+      }
+    </div>
+    <strong class="section-label">{{ i18n.t('rush.questionTypes') }}</strong>
+    <div class="options">
+      @for (option of questionOptions(); track option.id) {
+        <label><input type="checkbox" [checked]="value().questionTypes.includes(option.id)" (change)="toggleType(option.id)"><span>{{ i18n.t(option.labelKey) }}</span></label>
+      }
+    </div>
+    <p class="count">{{ i18n.t('rush.availableCards', { count: count() }) }}</p>
+    @if (!valid()) { <p class="validation" role="alert">{{ i18n.t('rush.invalidSelection') }}</p> }
+    <button class="start" type="button" [disabled]="!valid()" (click)="start()">{{ i18n.t('rush.start') }}</button>
+    <a routerLink="/rush/medals" (click)="closed.emit()">{{ i18n.t('rush.viewMedals') }}</a>
+  </section>
+</div>

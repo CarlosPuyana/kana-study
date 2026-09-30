@@ -1,0 +1,25 @@
+<main class="page-shell">
+  <header class="page-header">
+    <a class="icon-button" routerLink="/more" [queryParams]="{ from: 'flags' }" [attr.aria-label]="i18n.t('more.title')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14"/></svg></a>
+    <h1>{{ i18n.t('flags.title') }}</h1>
+    <a class="icon-button" routerLink="/flags/selection" [attr.aria-label]="i18n.t('flags.editSelection')"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg></a>
+  </header>
+  <section class="progress-section" aria-labelledby="flags-progress-title">
+    <div class="section-heading"><div><span class="eyebrow">{{ i18n.t('home.overview') }}</span><h2 id="flags-progress-title">{{ i18n.t('home.progress') }}</h2></div><span class="total-label">{{ i18n.t('flags.activeExercises', { count: progress.stats().total }) }}</span></div>
+    <div class="progress-card">
+      <div class="circle-column"><app-progress-circle [percentage]="progress.stats().percentage"/><span>{{ i18n.t('home.memorizedPercentage') }}</span></div>
+      <div class="bars-column"><app-progress-bar [label]="i18n.t('home.new')" [value]="progress.stats().newCount" [total]="progress.stats().total" kind="new"/><app-progress-bar [label]="i18n.t('home.pending')" [value]="progress.stats().pendingCount" [total]="progress.stats().total" kind="pending"/><app-progress-bar [label]="i18n.t('home.memorized')" [value]="progress.stats().memorizedCount" [total]="progress.stats().total" kind="memorized"/></div>
+    </div>
+    <button class="play-button" type="button" (click)="showStartPanel.set(true)">{{ i18n.t('flags.play') }} <span aria-hidden="true">→</span></button>
+  </section>
+  <section class="content-section" aria-labelledby="flag-medals-title">
+    <div class="section-heading compact"><h2 id="flag-medals-title">{{ i18n.t('home.medals') }}</h2><a routerLink="/flags/medals">{{ i18n.t('home.showAll') }}</a></div>
+    <div class="medals-card">@for (medal of medals.homeMedals(); track medal.definition.id) {@let display = medals.presentation(medal);<a class="home-medal" routerLink="/flags/medals"><app-medal-badge [icon]="medal.definition.icon" [locked]="!medal.unlocked" size="small"/><strong>{{ i18n.t(display.titleKey) }}</strong></a>}</div>
+  </section>
+  <section class="content-section" aria-labelledby="flags-explore-title">
+    <div class="section-heading compact"><h2 id="flags-explore-title">{{ i18n.t('flags.explore') }}</h2></div>
+    <div class="explore-grid"><app-selection-card icon="target" route="/flags/selection" [title]="i18n.t('flags.selection.title')" [description]="i18n.t('flags.selection.description')"/><app-selection-card icon="cards" route="/flags/countries" [title]="i18n.t('flags.countries.title')" [description]="i18n.t('flags.countries.description')"/></div>
+  </section>
+</main>
+@if (showStartPanel()) { <app-flag-start-panel (closed)="showStartPanel.set(false)"/> }
+

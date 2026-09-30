@@ -1,0 +1,11 @@
+<div class="backdrop" (click)="closed.emit()">
+  <section class="panel" role="dialog" aria-modal="true" aria-labelledby="flag-start-title" (click)="$event.stopPropagation()">
+    <div class="grabber" aria-hidden="true"></div>
+    <div class="heading"><h2 id="flag-start-title">{{ i18n.t('flags.selection.current') }}</h2><a routerLink="/flags/selection">{{ i18n.t('learn.edit') }}</a><button type="button" (click)="closed.emit()" [attr.aria-label]="i18n.t('learn.close')">×</button></div>
+    <p>{{ i18n.t('flags.selection.summary', { regions: progress.roundSummary().enabledRegions, regionTotal: progress.roundSummary().totalRegions, types: progress.roundSummary().enabledQuestionTypes, typeTotal: progress.roundSummary().totalQuestionTypes }) }}</p>
+    <strong class="available">{{ i18n.t('learn.available', { count: progress.roundSummary().available }) }}</strong>
+    <p>{{ i18n.t('learn.pendingAndNew', { due: progress.roundSummary().due, new: progress.roundSummary().newCount }) }}</p>
+    <div class="round"><span>{{ i18n.t('learn.nextRound') }}</span><strong>{{ i18n.t('learn.exerciseCount', { count: progress.roundSummary().roundSize }) }}</strong><div><span>{{ i18n.t('learn.reviewChip', { count: progress.roundSummary().roundDue }) }}</span><span>{{ i18n.t('learn.newChip', { count: progress.roundSummary().roundNew }) }}</span></div></div>
+    <button class="start" type="button" [disabled]="progress.roundSummary().roundSize === 0" (click)="start()">{{ i18n.t('flags.start') }}</button>
+  </section>
+</div>

@@ -1,0 +1,19 @@
+<header class="app-header">
+  <a class="brand" routerLink="/" aria-label="Kana Study">
+    <span class="brand-mark" aria-hidden="true">あ</span>
+    <span>{{ i18n.t('app.title') }}</span>
+  </a>
+
+  <a
+    class="settings-button"
+    routerLink="/settings"
+    [attr.aria-label]="i18n.t('header.settings')"
+    [attr.title]="i18n.t('header.settings')"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12 8.7A3.3 3.3 0 1 0 12 15.3 3.3 3.3 0 0 0 12 8.7Zm9 3.3-2.05-1.18a7.7 7.7 0 0 0-.46-1.11l.62-2.29-2.53-2.53-2.29.62a7.7 7.7 0 0 0-1.11-.46L12 3H8.42l-1.18 2.05a7.7 7.7 0 0 0-1.11.46l-2.29-.62-2.53 2.53.62 2.29c-.18.36-.34.73-.46 1.11L0 12v3.58l2.05 1.18c.12.38.28.75.46 1.11l-.62 2.29 2.53 2.53 2.29-.62c.36.18.73.34 1.11.46L9 24h3.58l1.18-2.05c.38-.12.75-.28 1.11-.46l2.29.62 2.53-2.53-.62-2.29c.18-.36.34-.73.46-1.11L21 15v-3Z"
+      />
+    </svg>
+  </a>
+</header>

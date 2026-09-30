@@ -1,0 +1,13 @@
+@for (segment of segments(); track $index) {
+  @if (segment.lineBreak) {
+    <br />
+  } @else if (segment.highlighted) {
+    <strong>
+      @if (showFurigana() && segment.reading) { <ruby>{{ segment.text }}<rt>{{ segment.reading }}</rt></ruby> }
+      @else { <span>{{ segment.text }}</span> }
+    </strong>
+  } @else {
+    @if (showFurigana() && segment.reading) { <ruby>{{ segment.text }}<rt>{{ segment.reading }}</rt></ruby> }
+    @else { <span>{{ segment.text }}</span> }
+  }
+}

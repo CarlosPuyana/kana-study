@@ -1,0 +1,22 @@
+.backdrop { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 1rem; background: rgba(3, 8, 16, 0.7); backdrop-filter: blur(5px); }
+.panel { position: relative; width: min(100%, 31rem); max-height: calc(100vh - 2rem); overflow-y: auto; padding: 1.4rem; border: 1px solid var(--border); border-radius: 1.25rem; background: var(--surface); box-shadow: var(--shadow); }
+.panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-right: 2.5rem; }
+h2, p { margin: 0; }
+h2 { font-size: 1.1rem; }
+a { color: var(--accent); font-size: 0.85rem; font-weight: 700; text-decoration: none; }
+.close { position: absolute; top: 0.9rem; right: 0.9rem; width: 2.5rem; height: 2.5rem; border: 0; border-radius: 0.7rem; background: transparent; color: var(--text-secondary); font-size: 1.6rem; cursor: pointer; }
+.selection-meta, .counts { margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.82rem; line-height: 1.5; }
+.available { display: block; margin-top: 0.9rem; }
+.round-summary { display: grid; gap: 0.35rem; margin: 1.25rem 0; padding: 1rem; border-radius: 0.9rem; background: var(--background-soft); }
+.round-summary > span { color: var(--text-secondary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.round-summary strong { font-size: 1.25rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.35rem; }
+.chips span { padding: 0.3rem 0.6rem; border-radius: 999px; background: var(--primary-soft); color: var(--accent); font-size: 0.75rem; font-weight: 700; }
+.mode { display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: center; gap: 0.8rem; width: 100%; min-height: 4.5rem; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 0.9rem; background: var(--surface-raised); color: var(--text-primary); text-align: left; cursor: pointer; }
+.mode + .mode { margin-top: 0.65rem; }
+.mode > span:nth-child(2) { display: grid; gap: 0.2rem; }
+.mode small { color: var(--text-secondary); }
+.mode-icon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 0.7rem; background: var(--primary-soft); color: var(--accent); font-weight: 800; }
+.empty { padding: 1rem; color: var(--text-secondary); text-align: center; }
+@media (hover: hover) { .mode:hover, .close:hover { background: var(--surface-hover); } }
+@media (max-width: 520px) { .backdrop { align-items: end; padding: 0; } .panel { width: 100%; max-height: 92vh; border-radius: 1.25rem 1.25rem 0 0; padding-bottom: max(1.4rem, env(safe-area-inset-bottom)); } }

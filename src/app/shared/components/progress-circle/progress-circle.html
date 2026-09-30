@@ -1,0 +1,14 @@
+<div class="progress-circle" role="img" [attr.aria-label]="percentage() + '%'">
+  <svg viewBox="0 0 128 128" aria-hidden="true">
+    <circle class="track" cx="64" cy="64" [attr.r]="radius" />
+    <circle
+      class="value"
+      cx="64"
+      cy="64"
+      [attr.r]="radius"
+      [attr.stroke-dasharray]="circumference"
+      [attr.stroke-dashoffset]="dashOffset()"
+    />
+  </svg>
+  <strong>{{ percentage() }}%</strong>
+</div>

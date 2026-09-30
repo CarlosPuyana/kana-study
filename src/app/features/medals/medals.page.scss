@@ -1,0 +1,29 @@
+.page-shell { width: min(100% - 2rem, 68rem); margin: 0 auto; padding-bottom: 4rem; }
+.page-header { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem; align-items: center; gap: 0.75rem; min-height: 6rem; }
+.page-header h1 { margin: 0; text-align: center; font-size: clamp(1.35rem, 4vw, 1.8rem); }
+.back-button, .close-button { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 1px solid var(--border); border-radius: 0.8rem; background: var(--surface); color: var(--text-primary); cursor: pointer; }
+.back-button svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.overview { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem 1rem; padding: 1.2rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); }
+.overview > div:first-child { display: grid; gap: 0.15rem; }
+.overview span { color: var(--text-secondary); font-size: 0.8rem; }
+.overview strong { font-size: 1.35rem; }
+.percentage { align-self: center; color: var(--accent); }
+.overview-track, .detail-track { grid-column: 1 / -1; overflow: hidden; height: 0.5rem; border-radius: 999px; background: var(--background-soft); }
+.overview-track span, .detail-track span { display: block; height: 100%; border-radius: inherit; background: var(--primary); }
+.medal-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.8rem; margin-top: 1.2rem; }
+.medal-card { display: grid; justify-items: center; align-content: start; gap: 0.55rem; min-width: 0; min-height: 9rem; padding: 0.85rem 0.45rem; border: 1px solid var(--border); border-radius: 0.95rem; background: var(--surface); color: var(--text-secondary); cursor: pointer; }
+.medal-card.unlocked { border-color: var(--primary); background: var(--primary-soft); color: var(--text-primary); }
+.medal-card strong { max-width: 100%; font-size: 0.78rem; overflow-wrap: anywhere; }
+.detail-backdrop { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: 1rem; background: rgba(3, 8, 16, 0.72); backdrop-filter: blur(4px); }
+.detail { position: relative; display: grid; justify-items: center; width: min(100%, 28rem); padding: 1.5rem; border: 1px solid var(--border); border-radius: 1.1rem; background: var(--surface); box-shadow: var(--shadow); text-align: center; }
+.close-button { position: absolute; top: 0.75rem; right: 0.75rem; border: 0; background: transparent; font-size: 1.45rem; }
+.detail h2 { margin: 0.75rem 0 0; font-size: 1.3rem; }
+.detail p { margin: 0.45rem 0 0; color: var(--text-secondary); line-height: 1.5; }
+.unlock-date, .detail-progress { display: grid; justify-items: center; gap: 0.3rem; width: 100%; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.unlock-date span, .detail-progress > span { color: var(--text-secondary); font-size: 0.78rem; }
+.detail-track { width: 100%; margin-top: 0.35rem; }
+.locked-label { margin-top: 1.2rem; color: var(--text-secondary); }
+@media (hover: hover) { .medal-card:hover, .back-button:hover { background: var(--surface-hover); } }
+@media (max-width: 850px) { .medal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .medal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .detail-backdrop { align-items: end; padding: 0; } .detail { width: 100%; border-radius: 1.2rem 1.2rem 0 0; padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); } }
+@media (max-width: 460px) { .page-shell { width: calc(100% - 1.25rem); } .page-header { min-height: 5rem; } }

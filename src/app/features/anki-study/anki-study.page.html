@@ -1,0 +1,45 @@
+<main class="study-shell">
+  <header class="study-header">
+    <a routerLink="/anki" class="back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg><span>{{ i18n.t('anki.title') }}</span></a>
+    <time>{{ elapsedLabel() }}</time>
+    @if (snapshot(); as counts) { <span class="header-counts">{{ counts.newAvailable }} · {{ counts.learningDue }} · {{ counts.reviewDue }}</span> }
+    <button type="button" class="undo" [disabled]="!lastEvent() || saving()" (click)="undo()">{{ i18n.t('anki.studyPage.undo') }}</button>
+  </header>
+
+  @if (error()) { <p class="storage-error" role="alert">{{ i18n.t('anki.storageError') }}</p> }
+  @if (!deck) {
+    <section class="end-state"><h1>{{ i18n.t('anki.deckNotFound') }}</h1><a routerLink="/anki">{{ i18n.t('anki.title') }}</a></section>
+  } @else if (loading()) {
+    <p class="loading" aria-busy="true">{{ i18n.t('common.loading') }}</p>
+  } @else if (entry(); as card) {
+    <article class="study-card" [class.is-revealed]="revealed()">
+      @if (!revealed()) {
+        <section class="front">
+          <span class="kind">{{ i18n.t('anki.studyPage.prompt') }}</span>
+          <h1 lang="ja">{{ card.word }}</h1>
+          <app-deck-sentence-text class="front-sentence" [segments]="card.sentenceSegments" [showFurigana]="false" />
+        </section>
+      } @else {
+        <section class="back-content">
+          <app-furigana-text class="answer-word" [segments]="card.wordSegments" size="large" />
+          <dl class="answer-facts"><div><dt>{{ i18n.t('anki.cards.reading') }}</dt><dd lang="ja">{{ card.reading }}</dd></div><div><dt>{{ i18n.t('anki.cards.meaning') }}</dt><dd>{{ meaning(card) }}</dd></div></dl>
+          <section class="example"><app-deck-sentence-text [segments]="card.sentenceSegments" /><button type="button" class="translation-toggle" [attr.aria-expanded]="translationOpen()" (click)="translationOpen.set(!translationOpen())">{{ translationOpen() ? '▼' : '▶' }} {{ i18n.t('anki.studyPage.translation') }}</button>@if(translationOpen()){<p>{{ sentenceMeaning(card) }}</p>}</section>
+          <span class="frequency">{{ i18n.t('anki.cards.frequency', { rank: card.frequencyRank }) }}</span>
+          @if(note(card);as noteText){<section class="notes"><h2>{{i18n.t('anki.cards.notes')}}</h2><p>{{noteText}}</p></section>}
+        </section>
+      }
+    </article>
+    <footer class="answer-bar">
+      @if (!revealed()) {
+        <button type="button" class="reveal" (click)="reveal()">{{ i18n.t('anki.studyPage.reveal') }} <kbd>{{ i18n.t('anki.studyPage.space') }}</kbd></button>
+      } @else {
+        <div class="ratings">
+          <button type="button" class="again" [disabled]="saving()" (click)="rate('again')" [title]="i18n.t('anki.studyPage.againHelp')"><span>{{ i18n.t('anki.studyPage.again') }}</span><strong>{{ intervalLabel('again') }}</strong><kbd>1</kbd></button>
+          <button type="button" class="good" [disabled]="saving()" (click)="rate('good')" [title]="i18n.t('anki.studyPage.goodHelp')"><span>{{ i18n.t('anki.studyPage.good') }}</span><strong>{{ intervalLabel('good') }}</strong><kbd>2</kbd></button>
+        </div>
+      }
+    </footer>
+  } @else if (snapshot(); as currentSnapshot) {
+    <section class="end-state"><div class="end-mark">✓</div><h1>{{ i18n.t(endTitleKey(currentSnapshot)) }}</h1>@if(nextDueLabel(currentSnapshot);as next){<p>{{next}}</p>}<a routerLink="/anki">{{i18n.t('anki.studyPage.backToDecks')}}</a></section>
+  }
+</main>
