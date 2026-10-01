@@ -8,10 +8,11 @@ import { ProgressBar } from '../../shared/components/progress-bar/progress-bar';
 import { ProgressCircle } from '../../shared/components/progress-circle/progress-circle';
 import { SelectionCard } from '../../shared/components/selection-card/selection-card';
 import { FlagStartPanel } from './components/flag-start-panel/flag-start-panel';
+import { AccountControl } from '../../shared/components/account-control/account-control';
 
 @Component({
   selector: 'app-flags-page',
-  imports: [RouterLink, FlagStartPanel, MedalBadge, ProgressBar, ProgressCircle, SelectionCard],
+  imports: [RouterLink, AccountControl, FlagStartPanel, MedalBadge, ProgressBar, ProgressCircle, SelectionCard],
   templateUrl: './flags.page.html',
   styleUrl: './flags.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

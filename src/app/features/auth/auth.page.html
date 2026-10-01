@@ -1,0 +1,34 @@
+<main class="auth-overlay" role="dialog" aria-modal="true" [attr.aria-labelledby]="'auth-title'">
+  <a class="close" routerLink="/" [attr.aria-label]="i18n.t('common.close')">×</a>
+  <section class="auth-card">
+    <div class="auth-mark" aria-hidden="true">あ</div>
+    @if (!auth.configured) {
+      <h1 id="auth-title">{{ i18n.t('auth.cloudUnavailableTitle') }}</h1><p>{{ i18n.t('auth.notConfigured') }}</p>
+    } @else if (auth.needsGuestImportDecision()) {
+      <h1 id="auth-title">{{ i18n.t('auth.importTitle') }}</h1><p>{{ i18n.t('auth.importDescription') }}</p>
+      <button class="primary" type="button" [disabled]="loading()" (click)="chooseImport('merge')"><strong>{{ i18n.t('auth.merge') }}</strong><span>{{ i18n.t('auth.mergeDescription') }}</span></button>
+      <button class="secondary choice" type="button" [disabled]="loading()" (click)="chooseImport('account')"><strong>{{ i18n.t('auth.accountOnly') }}</strong><span>{{ i18n.t('auth.accountOnlyDescription') }}</span></button>
+    } @else if (mode() === 'confirm') {
+      <h1 id="auth-title">{{ i18n.t('auth.emailConfirmed') }}</h1><p>{{ i18n.t('auth.emailConfirmedDescription') }}</p>
+      <button class="primary" type="button" (click)="finishConfirmation()">{{ i18n.t(auth.authenticated() ? 'account.profile' : 'auth.signIn') }}</button>
+    } @else {
+      <h1 id="auth-title">{{ i18n.t(mode() === 'signup' ? 'auth.createAccount' : mode() === 'recovery' ? 'auth.newPassword' : mode() === 'forgot' ? 'auth.forgotTitle' : 'auth.signIn') }}</h1>
+      @if (mode() === 'login' || mode() === 'signup') {<div class="tabs" role="tablist"><button type="button" [class.active]="mode()==='login'" (click)="switchMode('login')">{{ i18n.t('auth.signIn') }}</button><button type="button" [class.active]="mode()==='signup'" (click)="switchMode('signup')">{{ i18n.t('auth.createAccount') }}</button></div>}
+      <form (ngSubmit)="mode()==='forgot' ? forgot() : submit()">
+        @if (mode() === 'signup') {
+          <label>{{ i18n.t('auth.displayName') }}<input #firstField name="displayName" [(ngModel)]="displayName" required autocomplete="name" /></label>
+          <label>{{ i18n.t('auth.username') }}<input name="username" [(ngModel)]="username" required minlength="3" maxlength="24" pattern="[A-Za-z0-9_-]+" autocomplete="username" /><small>{{ i18n.t('auth.usernameHint') }}</small></label>
+        }
+        @if (mode() !== 'recovery') {<label>{{ i18n.t('auth.email') }}<input #firstField name="email" [(ngModel)]="email" required type="email" autocomplete="email" /></label>}
+        @if (mode() === 'login' || mode() === 'signup') {<label>{{ i18n.t('auth.password') }}<input name="password" [(ngModel)]="password" required minlength="8" type="password" [autocomplete]="mode()==='signup' ? 'new-password' : 'current-password'" /></label>}
+        @if (mode() === 'signup') {<label>{{ i18n.t('auth.confirmPassword') }}<input name="confirmation" [(ngModel)]="confirmation" required type="password" autocomplete="new-password" /></label>}
+        @if (mode() === 'recovery') {<label>{{ i18n.t('auth.newPassword') }}<input #firstField name="newPassword" [(ngModel)]="newPassword" required minlength="8" type="password" autocomplete="new-password" /></label>}
+        @if (error()) {<p class="form-error" role="alert">{{ error() }}</p>} @if (message()) {<p class="form-message" role="status">{{ message() }}</p>}
+        <button class="primary" type="submit" [disabled]="loading()">{{ i18n.t(loading() ? 'auth.loading' : mode()==='signup' ? 'auth.createAccount' : mode()==='forgot' ? 'auth.sendRecovery' : mode()==='recovery' ? 'auth.savePassword' : 'auth.signIn') }}</button>
+      </form>
+      @if (mode() === 'login') {<button class="link" type="button" (click)="switchMode('forgot')">{{ i18n.t('auth.forgotPassword') }}</button>}
+      @if (mode() === 'forgot') {<button class="link" type="button" (click)="switchMode('login')">{{ i18n.t('auth.backToLogin') }}</button>}
+    }
+    <p class="local-note">{{ i18n.t('auth.localFirst') }}</p>
+  </section>
+</main>

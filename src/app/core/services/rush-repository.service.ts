@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { RushAggregateStats, RushCoverage, RushSession } from '../models/rush.model';
+import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
+import { WorkspaceService } from './workspace.service';
 
 const DB_NAME = 'kana-study-rush';
 const DB_VERSION = 1;
@@ -17,7 +19,9 @@ export abstract class RushRepository {
 
 @Injectable({ providedIn: 'root' })
 export class LocalRushRepository extends RushRepository {
-  private database: Promise<IDBDatabase> | null = null;
+  private readonly workspace = inject(WorkspaceService);
+  private readonly outbox = inject(SyncOutboxService);
+  private readonly databases = new Map<string, Promise<IDBDatabase>>();
 
   async markOpenSessionsInterrupted(): Promise<void> {
     const db = await this.open();
@@ -32,6 +36,7 @@ export class LocalRushRepository extends RushRepository {
   async createSession(session: RushSession): Promise<void> {
     const db = await this.open();
     await asPromise(db.transaction(SESSIONS, 'readwrite').objectStore(SESSIONS).add(session));
+    this.enqueue('rush-session', session.id, session);
   }
 
   async saveProgress(session: RushSession, contentId?: string): Promise<void> {
@@ -45,6 +50,10 @@ export class LocalRushRepository extends RushRepository {
       if (!existing) store.add(coverage);
     }
     await transactionDone(transaction);
+    this.enqueue('rush-session', session.id, session);
+    if (contentId) this.enqueue('rush-coverage', `${session.module}:${contentId}`, {
+      module: session.module, contentId, firstSeenAt: Date.now(),
+    });
   }
 
   finishSession(session: RushSession): Promise<void> { return this.saveProgress(session); }
@@ -52,6 +61,7 @@ export class LocalRushRepository extends RushRepository {
   async discardSession(id: string): Promise<void> {
     const db = await this.open();
     await asPromise(db.transaction(SESSIONS, 'readwrite').objectStore(SESSIONS).delete(id));
+    this.enqueue('rush-session', id, null, 'delete');
   }
 
   async getStats(): Promise<RushAggregateStats> {
@@ -64,10 +74,25 @@ export class LocalRushRepository extends RushRepository {
     return { sessions, coverage };
   }
 
+  async mergeFromCloud(input: RushAggregateStats): Promise<void> {
+    const db = await this.open();
+    const transaction = db.transaction([SESSIONS, COVERAGE], 'readwrite');
+    const sessionStore = transaction.objectStore(SESSIONS);
+    for (const session of input.sessions) sessionStore.put(session);
+    const coverageStore = transaction.objectStore(COVERAGE);
+    for (const remote of input.coverage) {
+      const local = await asPromise<RushCoverage | undefined>(coverageStore.get([remote.module, remote.contentId]));
+      coverageStore.put(!local || remote.firstSeenAt < local.firstSeenAt ? remote : local);
+    }
+    await transactionDone(transaction);
+  }
+
   private open(): Promise<IDBDatabase> {
-    if (this.database) return this.database;
-    this.database = new Promise((resolve, reject) => {
-      const open = indexedDB.open(DB_NAME, DB_VERSION);
+    const name = this.workspace.databaseName(DB_NAME);
+    const current = this.databases.get(name);
+    if (current) return current;
+    const database = new Promise<IDBDatabase>((resolve, reject) => {
+      const open = indexedDB.open(name, DB_VERSION);
       open.onerror = () => reject(open.error ?? new Error('Unable to open RUSH storage'));
       open.onsuccess = () => resolve(open.result);
       open.onupgradeneeded = () => {
@@ -80,7 +105,13 @@ export class LocalRushRepository extends RushRepository {
         coverage.createIndex('module', 'module');
       };
     });
-    return this.database;
+    this.databases.set(name, database);
+    return database;
+  }
+
+  private enqueue(type: 'rush-session' | 'rush-coverage', key: string, payload: unknown, operation: 'upsert' | 'delete' = 'upsert'): void {
+    const item = makeOutboxItem(this.workspace.active(), type, key, payload, operation);
+    if (item) void this.outbox.enqueue(item).catch(() => undefined);
   }
 }
 

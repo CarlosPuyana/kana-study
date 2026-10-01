@@ -15,8 +15,9 @@ import { ProgressCircle } from '../../shared/components/progress-circle/progress
 import { RushConfigDialog, RushConfigOption } from '../../shared/components/rush-config-dialog/rush-config-dialog';
 import { SelectionCard } from '../../shared/components/selection-card/selection-card';
 import { KanjiStartPanel } from './components/kanji-start-panel/kanji-start-panel';
+import { AccountControl } from '../../shared/components/account-control/account-control';
 
-@Component({selector:'app-kanji-page',imports:[RouterLink,KanjiStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./kanji.page.html',styleUrl:'./kanji.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-kanji-page',imports:[RouterLink,AccountControl,KanjiStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./kanji.page.html',styleUrl:'./kanji.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class KanjiPage {
   readonly daily=inject(DailyLearningService);readonly progress=inject(KanjiProgressService);readonly medals=inject(KanjiMedalService);readonly i18n=inject(TranslationService);
   readonly showStartPanel=signal(false);readonly showRushPanel=signal(false);readonly rushConfig=signal<RushConfiguration|null>(null);

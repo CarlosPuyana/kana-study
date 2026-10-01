@@ -30,6 +30,8 @@ export const routes: Routes = [
     path: 'more',
     component: MorePage,
   },
+  { path: 'auth', loadComponent: () => import('./features/auth/auth.page').then(module => module.AuthPage) },
+  { path: 'profile', loadComponent: () => import('./features/profile/profile.page').then(module => module.ProfilePage) },
   {
     path: 'flags',
     loadChildren: () => import('./features/flags/flags.routes').then(module => module.FLAGS_ROUTES),

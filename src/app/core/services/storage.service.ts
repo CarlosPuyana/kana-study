@@ -1,10 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
+import { WorkspaceService } from './workspace.service';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
+  private readonly workspace = inject(WorkspaceService);
+  private readonly outbox = inject(SyncOutboxService);
+
   get<T>(key: string, fallback: T): T {
     try {
-      const value = localStorage.getItem(key);
+      const value = localStorage.getItem(this.workspace.storageKey(key));
       return value === null ? fallback : (JSON.parse(value) as T);
     } catch {
       return fallback;
@@ -13,7 +18,8 @@ export class StorageService {
 
   set<T>(key: string, value: T): void {
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem(this.workspace.storageKey(key), JSON.stringify(value));
+      this.enqueue(key, value, 'upsert');
     } catch {
       // The app remains usable if storage is blocked/private/full.
     }
@@ -21,9 +27,21 @@ export class StorageService {
 
   remove(key: string): void {
     try {
-      localStorage.removeItem(key);
+      localStorage.removeItem(this.workspace.storageKey(key));
+      this.enqueue(key, null, 'delete');
     } catch {
       // No-op when browser storage is unavailable.
     }
+  }
+
+  setFromCloud<T>(key: string, value: T): void {
+    try { localStorage.setItem(this.workspace.storageKey(key), JSON.stringify(value)); } catch { /* local mode remains usable */ }
+  }
+
+  rawKey(key: string): string { return this.workspace.storageKey(key); }
+
+  private enqueue(key: string, value: unknown, operation: 'upsert' | 'delete'): void {
+    const item = makeOutboxItem(this.workspace.active(), 'local-storage', key, value, operation);
+    if (item) void this.outbox.enqueue(item).catch(() => undefined);
   }
 }

@@ -19,6 +19,12 @@ export class SessionHistoryService {
     this.storage.set(COMPLETED_SESSIONS_KEY, this.state());
   }
 
+  mergeFromCloud(summaries: readonly CompletedSessionSummary[]): void {
+    const merged = new Map(this.state().map(item => [item.sessionId, item]));
+    for (const summary of summaries) if (!merged.has(summary.sessionId)) merged.set(summary.sessionId, summary);
+    this.state.set([...merged.values()]);
+  }
+
   reset(): void {
     this.state.set([]);
     this.storage.remove(COMPLETED_SESSIONS_KEY);

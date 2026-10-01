@@ -93,4 +93,17 @@ describe('DailyLearningService', () => {
     service.refresh(new Date('2026-07-01T12:00:00.000Z'));
     expect(service.isCompletedToday('kana')).toBe(false);
   });
+
+  it('locks a module after a completed session is pulled from another device', () => {
+    service.refresh(new Date('2026-07-01T12:00:00.000Z'));
+    expect(service.isCompletedToday('kana')).toBe(false);
+    sessions.set([summary('kana', '2026-07-01T11:55:00.000Z')]);
+    expect(service.isCompletedToday('kana')).toBe(true);
+  });
+
+  it('remains available offline when the locally known history has no completion', () => {
+    sessions.set([]);
+    service.refresh(new Date('2026-07-01T12:00:00.000Z'));
+    expect(service.isCompletedToday('kana')).toBe(false);
+  });
 });

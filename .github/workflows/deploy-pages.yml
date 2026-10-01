@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Configure public Supabase client
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+        run: node -e "require('node:fs').writeFileSync('public/supabase-config.js', 'window.__KANA_STUDY_CONFIG__ = ' + JSON.stringify({supabaseUrl: process.env.SUPABASE_URL || '', supabasePublishableKey: process.env.SUPABASE_PUBLISHABLE_KEY || ''}) + ';\n')"
+
       - name: Run tests
         run: npm test
 

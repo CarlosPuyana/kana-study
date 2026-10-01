@@ -4,10 +4,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { APP_MODULES } from '../../data/app-modules';
 import { TranslationService } from '../../core/services/translation.service';
 import { ModuleCard } from '../../shared/components/module-card/module-card';
+import { AccountControl } from '../../shared/components/account-control/account-control';
 
 @Component({
   selector: 'app-more-page',
-  imports: [ModuleCard, RouterLink],
+  imports: [AccountControl, ModuleCard, RouterLink],
   templateUrl: './more.page.html',
   styleUrl: './more.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

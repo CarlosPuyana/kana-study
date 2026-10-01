@@ -6,9 +6,10 @@ import { TranslationService } from '../../core/services/translation.service';
 import { JAPANESE_1500_INDEX } from '../../data/japanese-1500.index.generated';
 import { STUDY_DECKS } from '../../data/study-decks';
 import { DeckCard } from './components/deck-card/deck-card';
+import { AccountControl } from '../../shared/components/account-control/account-control';
 
 @Component({
-  selector: 'app-anki-page', imports: [RouterLink, DeckCard], templateUrl: './anki.page.html',
+  selector: 'app-anki-page', imports: [RouterLink, AccountControl, DeckCard], templateUrl: './anki.page.html',
   styleUrl: './anki.page.scss', changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnkiPage implements OnInit {

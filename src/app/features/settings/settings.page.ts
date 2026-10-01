@@ -4,10 +4,11 @@ import { ContentSettings, VariantSettings } from '../../core/models/settings.mod
 import { ProgressService } from '../../core/services/progress.service';
 import { SettingsService } from '../../core/services/settings.service';
 import { TranslationService } from '../../core/services/translation.service';
+import { AccountControl } from '../../shared/components/account-control/account-control';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [RouterLink],
+  imports: [RouterLink, AccountControl],
   templateUrl: './settings.page.html',
   styleUrl: './settings.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
