@@ -5,7 +5,7 @@ import { DeckMixedCursor, DeckQueueChoice, DeckQueueSnapshot, DeckRating, DeckRe
 import { DeckSchedulePreview } from '../../core/services/deck-scheduler.service';
 import { deckContentLanguage } from '../../core/services/deck-content-language';
 import { DeckStudyService } from '../../core/services/deck-study.service';
-import { formatStudyInterval } from '../../core/services/deck-study-time';
+import { formatStudyInterval, getLocalStudyDayKey } from '../../core/services/deck-study-time';
 import { TranslationService } from '../../core/services/translation.service';
 import { JAPANESE_1500_ENTRIES } from '../../data/japanese-1500.generated';
 import { JAPANESE_1500_INDEX } from '../../data/japanese-1500.index.generated';
@@ -19,7 +19,7 @@ import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/de
   templateUrl: './anki-study.page.html',
   styleUrl: './anki-study.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '(document:keydown)': 'handleKey($event)' },
+  host: { '(document:keydown)': 'handleKey($event)', '(window:focus)': 'refreshAvailability()', '(document:visibilitychange)': 'refreshAvailability()' },
 })
 export class AnkiStudyPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
@@ -29,6 +29,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   private sessionStartedAt = Date.now();
   private cardShownAt = Date.now();
   private timerId: ReturnType<typeof setInterval> | null = null;
+  private day = getLocalStudyDayKey(new Date());
 
   readonly i18n = inject(TranslationService);
   readonly deck = findStudyDeck(this.route.snapshot.paramMap.get('deckId'));
@@ -46,12 +47,21 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   readonly elapsedLabel = computed(() => `${Math.floor(this.elapsedSeconds() / 60)}:${String(this.elapsedSeconds() % 60).padStart(2, '0')}`);
 
   ngOnInit(): void {
-    this.timerId = setInterval(() => this.elapsedSeconds.set(Math.floor((Date.now() - this.sessionStartedAt) / 1000)), 1000);
+    this.timerId = setInterval(() => {
+      this.elapsedSeconds.set(Math.floor((Date.now() - this.sessionStartedAt) / 1000));
+      if (getLocalStudyDayKey(new Date()) !== this.day) this.refreshAvailability();
+    }, 1000);
     void this.loadNext();
   }
 
   ngOnDestroy(): void {
     if (this.timerId) clearInterval(this.timerId);
+  }
+
+  refreshAvailability(): void {
+    if (this.saving()) return;
+    this.day = getLocalStudyDayKey(new Date());
+    void this.loadNext();
   }
 
   reveal(): void {
@@ -76,7 +86,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
 
   async undo(): Promise<void> {
     const event = this.lastEvent();
-    if (!event || !this.deck || this.saving()) return;
+    if (!event || !this.deck || this.saving() || this.snapshot()?.completedToday) return;
     this.saving.set(true); this.error.set(false);
     try {
       await this.study.undo(event);
@@ -106,6 +116,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   note(entry: JapaneseWordDeckEntry): string | null { return entry.notes[deckContentLanguage(this.i18n.language())] ?? null; }
 
   endTitleKey(snapshot: DeckQueueSnapshot): string {
+    if (snapshot.completedToday) return 'anki.daily.completed';
     if (snapshot.nextLearningDue) return 'anki.studyPage.finishedForNow';
     if (snapshot.remainingUnseen && snapshot.newAvailable === 0) return 'anki.studyPage.dailyLimit';
     if (snapshot.progress.length >= (this.deck?.cardCount ?? Infinity)) return 'anki.studyPage.allCaughtUp';
@@ -131,8 +142,13 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     if (!this.deck) { this.loading.set(false); return; }
     this.error.set(false);
     try {
-      const snapshot = await this.study.snapshot(this.deck, JAPANESE_1500_INDEX);
-      const decision = this.study.chooseNext(snapshot, this.deck, this.cursor);
+      let snapshot = await this.study.snapshot(this.deck, JAPANESE_1500_INDEX);
+      const decision = snapshot.completedToday ? { choice: null, cursor: this.cursor } : this.study.chooseNext(snapshot, this.deck, this.cursor);
+      const event = this.lastEvent();
+      if (!decision.choice && !snapshot.completedToday && event && getLocalStudyDayKey(new Date(event.reviewedAt)) === getLocalStudyDayKey(new Date())) {
+        await this.study.completeSession(this.deck, JAPANESE_1500_INDEX);
+        snapshot = await this.study.snapshot(this.deck, JAPANESE_1500_INDEX);
+      }
       this.cursor = decision.cursor;
       this.snapshot.set(snapshot);
       this.setCurrent(decision.choice);

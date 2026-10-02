@@ -829,5 +829,11 @@
   "manga.remote.network": "Could not connect to the server. Check your network and that the catalog allows CORS access.",
   "manga.remote.cancelled": "Import cancelled.",
   "manga.remote.auth": "This catalog requires authentication and is not supported yet.",
-  "manga.error.ambiguous": "Multiple images have the same filename. OCR cannot be matched safely."
+  "manga.error.ambiguous": "Multiple images have the same filename. OCR cannot be matched safely.",
+  "anki.daily.completed": "Today’s session completed",
+  "anki.daily.tomorrow": "Available tomorrow",
+  "anki.daily.newToday": "New today: {{used}} / {{limit}}",
+  "anki.daily.nextReview": "Next review: {{date}}",
+  "anki.daily.completedNotice": "Today’s session is complete. Come back tomorrow.",
+  "anki.daily.unavailable": "No cards available right now."
 }

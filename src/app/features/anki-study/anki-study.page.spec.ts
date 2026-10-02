@@ -83,16 +83,50 @@ describe('AnkiStudyPage', () => {
     resolve(study.event);
     await first;
   });
+
+  it('blocks the direct study route when today is completed', async () => {
+    Object.assign(study.snapshotValue,{completedToday:true,newEntries:[],newAvailable:0});
+    fixture.componentInstance.refreshAvailability();await fixture.whenStable();fixture.detectChanges();
+    expect(fixture.componentInstance.choice()).toBeNull();
+    expect(fixture.nativeElement.textContent).toContain('anki.daily.completed');
+    expect(fixture.nativeElement.textContent).toContain('anki.daily.tomorrow');
+    expect(fixture.nativeElement.querySelector('.study-card')).toBeNull();
+  });
+
+  it('completes the day only after the final rating exhausts the queue', async () => {
+    study.exhaustAfterRating=true;
+    fixture.componentInstance.reveal();await fixture.componentInstance.rate('good');fixture.detectChanges();
+    expect(study.completed).toBe(1);
+    expect(fixture.componentInstance.snapshot()?.completedToday).toBe(true);
+    expect(fixture.componentInstance.choice()).toBeNull();
+  });
+
+  it('does not complete a day when an active session is abandoned', () => {
+    fixture.componentInstance.ngOnDestroy();
+    expect(study.completed).toBe(0);
+  });
+
+  it('refreshes availability when focus or visibility returns', async () => {
+    Object.assign(study.snapshotValue,{completedToday:true});
+    window.dispatchEvent(new Event('focus'));await fixture.whenStable();
+    expect(fixture.componentInstance.choice()).toBeNull();
+    Object.assign(study.snapshotValue,{completedToday:false});
+    document.dispatchEvent(new Event('visibilitychange'));await fixture.whenStable();
+    expect(fixture.componentInstance.choice()).not.toBeNull();
+  });
 });
 
 class StudyStub {
+  completed=0;
+  exhaustAfterRating=false;
   ratings: string[] = [];
   ratingPromise: Promise<DeckReviewEvent> | null = null;
   readonly event = { id: 'event-1', deckId: 'japanese-1500', entryId: JAPANESE_1500_ENTRIES[0].id, reviewedAt: Date.now(), rating: 'good' } as DeckReviewEvent;
   readonly snapshotValue: DeckQueueSnapshot = { progress: [], newEntries: [{ id: JAPANESE_1500_ENTRIES[0].id, order: 1 }], learningEntries: [], reviewEntries: [], newAvailable: 10, learningDue: 0, reviewDue: 0, introducedToday: 0, effectiveNewLimit: 10, nextLearningDue: null, nextDue: null, remainingUnseen: 1500 };
   async snapshot() { return this.snapshotValue; }
-  chooseNext() { return { choice: { entryId: JAPANESE_1500_ENTRIES[0].id, kind: 'new' as const, progress: null }, cursor: { debt: 0 } }; }
+  chooseNext() { return { choice: this.exhaustAfterRating && this.ratings.length ? null : { entryId: JAPANESE_1500_ENTRIES[0].id, kind: 'new' as const, progress: null }, cursor: { debt: 0 } }; }
   preview() { const base = { due: Date.now(), stability: 0, difficulty: 0, elapsedDays: 0, scheduledDays: 0, learningSteps: 0, reps: 0, lapses: 0, state: State.New, lastReview: null }; const log = { rating: Rating.Again, state: State.New, due: Date.now(), stability: 0, difficulty: 0, elapsedDays: 0, lastElapsedDays: 0, scheduledDays: 0, learningSteps: 0, review: Date.now() }; return { generatedAt: Date.now(), desiredRetention: 0.9, cardBefore: base, retrievabilityBefore: null, again: { card: { ...base, due: Date.now() + 60_000 }, log }, good: { card: { ...base, due: Date.now() + 10 * 60_000 }, log: { ...log, rating: Rating.Good } } }; }
   async rate(_deck: unknown, _choice: unknown, _preview: unknown, rating: string) { this.ratings.push(rating); return this.ratingPromise ?? this.event; }
   async undo() {}
+  async completeSession() { this.completed++;Object.assign(this.snapshotValue,{completedToday:true,newEntries:[],newAvailable:0}); }
 }

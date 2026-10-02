@@ -60,6 +60,7 @@ export interface DeckReviewEvent {
 }
 
 export interface DeckDailyState {
+  readonly completedAt?: number | null;
   readonly deckId: string;
   readonly localDate: string;
   readonly introducedEntryIds: readonly string[];
@@ -72,6 +73,8 @@ export interface DeckEntryIndexItem {
 }
 
 export interface DeckStudyCounts {
+  readonly completedToday?: boolean;
+  readonly nextDue?: number | null;
   readonly newAvailable: number;
   readonly learningDue: number;
   readonly reviewDue: number;

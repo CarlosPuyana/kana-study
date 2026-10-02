@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DeckStudyCounts } from '../../core/models/deck-study.model';
 import { DeckStudyService, DECK_NEW_LIMIT_STEP } from '../../core/services/deck-study.service';
@@ -7,12 +7,14 @@ import { JAPANESE_1500_INDEX } from '../../data/japanese-1500.index.generated';
 import { STUDY_DECKS } from '../../data/study-decks';
 import { DeckCard } from './components/deck-card/deck-card';
 import { AccountControl } from '../../shared/components/account-control/account-control';
+import { getLocalStudyDayKey } from '../../core/services/deck-study-time';
 
 @Component({
   selector: 'app-anki-page', imports: [RouterLink, AccountControl, DeckCard], templateUrl: './anki.page.html',
   styleUrl: './anki.page.scss', changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '(window:focus)': 'refresh()', '(document:visibilitychange)': 'refresh()' },
 })
-export class AnkiPage implements OnInit {
+export class AnkiPage implements OnInit, OnDestroy {
   private readonly study = inject(DeckStudyService);
   readonly i18n = inject(TranslationService);
   readonly decks = STUDY_DECKS;
@@ -20,7 +22,16 @@ export class AnkiPage implements OnInit {
   readonly loading = signal(true);
   readonly error = signal(false);
 
-  ngOnInit(): void { void this.refresh(); }
+  private day = getLocalStudyDayKey(new Date());
+  private timer?: ReturnType<typeof setInterval>;
+  ngOnInit(): void {
+    void this.refresh();
+    this.timer = setInterval(() => {
+      const day = getLocalStudyDayKey(new Date());
+      if (day !== this.day) { this.day = day; void this.refresh(); }
+    }, 1000);
+  }
+  ngOnDestroy(): void { if (this.timer) clearInterval(this.timer); }
 
   async adjustNewToday(deckId: string, direction: number): Promise<void> {
     const deck = this.decks.find(item => item.id === deckId);
@@ -31,7 +42,7 @@ export class AnkiPage implements OnInit {
     } catch { this.error.set(true); }
   }
 
-  private async refresh(): Promise<void> {
+  async refresh(): Promise<void> {
     this.loading.set(true); this.error.set(false);
     try {
       const values = await Promise.all(this.decks.map(async deck => [

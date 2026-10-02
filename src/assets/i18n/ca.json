@@ -829,5 +829,11 @@
   "manga.remote.network": "No s’ha pogut connectar al servidor. Comprova la xarxa i que el catàleg permeti accés CORS.",
   "manga.remote.cancelled": "Importació cancel·lada.",
   "manga.remote.auth": "Aquest catàleg requereix autenticació i encara no és compatible.",
-  "manga.error.ambiguous": "Diverses imatges tenen el mateix nom. No es pot associar l’OCR de manera segura."
+  "manga.error.ambiguous": "Diverses imatges tenen el mateix nom. No es pot associar l’OCR de manera segura.",
+  "anki.daily.completed": "Sessió d’avui completada",
+  "anki.daily.tomorrow": "Disponible demà",
+  "anki.daily.newToday": "Noves avui: {{used}} / {{limit}}",
+  "anki.daily.nextReview": "Pròxima revisió: {{date}}",
+  "anki.daily.completedNotice": "Sessió d’avui completada. Torna demà.",
+  "anki.daily.unavailable": "No hi ha targetes disponibles ara."
 }

@@ -25,16 +25,17 @@ export class DeckStudyService {
       this.database.getDailyState(deck.id, localDate),
     ]);
     const daily = storedDaily ?? emptyDailyState(deck.id, localDate);
+    const completedToday = daily.completedAt != null;
     const settings = this.settings.settingsFor(deck);
     const byEntry = new Map(progress.map(item => [item.entryId, item]));
     const unseen = index.filter(item => !byEntry.has(item.id)).sort((a, b) => a.order - b.order);
     const effectiveNewLimit = daily.newLimitOverride ?? settings.newCardsPerDay;
-    const newAvailable = Math.min(unseen.length, Math.max(0, effectiveNewLimit - daily.introducedEntryIds.length));
+    const newAvailable = completedToday ? 0 : Math.min(unseen.length, Math.max(0, effectiveNewLimit - daily.introducedEntryIds.length));
     const learning = progress
-      .filter(item => isLearning(item) && item.due <= now.getTime())
+      .filter(item => !completedToday && isLearning(item) && item.due <= now.getTime())
       .sort((a, b) => a.due - b.due);
     const reviews = progress
-      .filter(item => item.card.state === State.Review && item.due <= now.getTime())
+      .filter(item => !completedToday && item.card.state === State.Review && item.due <= now.getTime())
       .sort((a, b) => {
         const risk = this.scheduler.retrievability(a, now, settings.desiredRetention)
           - this.scheduler.retrievability(b, now, settings.desiredRetention);
@@ -43,6 +44,7 @@ export class DeckStudyService {
     const future = progress.filter(item => item.due > now.getTime());
     const futureLearning = future.filter(isLearning);
     return {
+      completedToday,
       progress,
       newEntries: unseen.slice(0, newAvailable),
       learningEntries: learning,
@@ -59,25 +61,26 @@ export class DeckStudyService {
   }
 
   chooseNext(snapshot: DeckQueueSnapshot, deck: StudyDeck, cursor: DeckMixedCursor): DeckQueueDecision {
+    if (snapshot.completedToday) return { choice: null, cursor };
     const learning = snapshot.learningEntries[0];
-    if (learning) return { choice: choiceFromProgress(learning, 'learning'), cursor };
     const nextNew = snapshot.newEntries[0];
-    const review = snapshot.reviewEntries[0];
+    const review = learning ?? snapshot.reviewEntries[0];
+    const reviewChoice = review ? choiceFromProgress(review, learning ? 'learning' : 'review') : null;
     if (!nextNew && !review) return { choice: null, cursor };
     const order = this.settings.settingsFor(deck).newCardOrder;
     if (order === 'before-reviews') {
-      return { choice: nextNew ? choiceFromNew(nextNew) : choiceFromProgress(review!, 'review'), cursor };
+      return { choice: nextNew ? choiceFromNew(nextNew) : reviewChoice, cursor };
     }
     if (order === 'after-reviews') {
-      return { choice: review ? choiceFromProgress(review, 'review') : choiceFromNew(nextNew!), cursor };
+      return { choice: reviewChoice ?? choiceFromNew(nextNew!), cursor };
     }
-    if (!nextNew) return { choice: choiceFromProgress(review!, 'review'), cursor };
+    if (!nextNew) return { choice: reviewChoice, cursor };
     if (!review) return { choice: choiceFromNew(nextNew), cursor };
     const debt = cursor.debt + snapshot.newEntries.length
-      / (snapshot.newEntries.length + snapshot.reviewEntries.length);
+      / (snapshot.newEntries.length + snapshot.reviewEntries.length + snapshot.learningEntries.length);
     return debt >= 1
       ? { choice: choiceFromNew(nextNew), cursor: { debt: debt - 1 } }
-      : { choice: choiceFromProgress(review, 'review'), cursor: { debt } };
+      : { choice: reviewChoice, cursor: { debt } };
   }
 
   preview(deck: StudyDeck, choice: DeckQueueChoice, now = new Date()): DeckSchedulePreview {
@@ -95,6 +98,7 @@ export class DeckStudyService {
     const branch = this.scheduler.branch(preview, rating);
     const localDate = getLocalStudyDayKey(reviewedAt);
     const daily = await this.database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
+    if (daily.completedAt != null) throw new Error('Daily deck session is completed.');
     const firstIntroduction = choice.progress === null;
     const introducedEntryIds = firstIntroduction && !daily.introducedEntryIds.includes(choice.entryId)
       ? [...daily.introducedEntryIds, choice.entryId]
@@ -139,6 +143,14 @@ export class DeckStudyService {
     const next = { ...daily, newLimitOverride: Math.max(0, current + delta) };
     await this.database.writeDailyState(next);
     return next;
+  }
+
+  async completeSession(deck: StudyDeck, index: readonly DeckEntryIndexItem[], now = new Date()): Promise<void> {
+    const snapshot = await this.snapshot(deck, index, now);
+    if (snapshot.completedToday || snapshot.newAvailable || snapshot.learningDue || snapshot.reviewDue) return;
+    const localDate = getLocalStudyDayKey(now);
+    const daily = await this.database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
+    await this.database.writeDailyState({ ...daily, completedAt: now.getTime() });
   }
 
   async statistics(deck: StudyDeck, total: number, now = new Date()): Promise<DeckStudyStatistics> {

@@ -103,7 +103,7 @@ export class DeckDatabaseService {
     const dailyStore = transaction.objectStore(DAILY_STORE);
     for (const remote of input.daily) {
       const local = await requestResult<DeckDailyState | undefined>(dailyStore.get([remote.deckId, remote.localDate]));
-      dailyStore.put({ ...remote, introducedEntryIds: [...new Set([...(local?.introducedEntryIds ?? []), ...remote.introducedEntryIds])] });
+      dailyStore.put({ ...remote, completedAt: local?.completedAt ?? remote.completedAt, introducedEntryIds: [...new Set([...(local?.introducedEntryIds ?? []), ...remote.introducedEntryIds])] });
     }
     await transactionDone(transaction);
   }

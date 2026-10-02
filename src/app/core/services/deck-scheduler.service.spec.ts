@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Rating, State } from 'ts-fsrs';
+import { fsrs, generatorParameters, Rating, State } from 'ts-fsrs';
 import { DeckCardProgress } from '../models/deck-study.model';
 import { DECK_SCHEDULER_ENABLE_FUZZ, DeckSchedulerService } from './deck-scheduler.service';
 import { deserializeDeckCard, deserializeDeckReviewLog, serializeDeckCard, serializeDeckReviewLog } from './deck-study-serialization';
@@ -18,11 +18,14 @@ describe('DeckSchedulerService', () => {
 
   afterEach(() => TestBed.resetTestingModule());
 
-  it('creates a New card preview with the configured learning steps', () => {
+  it('schedules new cards directly into long-term Review without short-term steps', () => {
     const preview = scheduler.preview(null, 0.9, now);
     expect(preview.cardBefore.state).toBe(State.New);
-    expect(preview.again.card.due - now.getTime()).toBe(60_000);
-    expect(preview.good.card.due - now.getTime()).toBe(10 * 60_000);
+    expect(preview.again.card.due - now.getTime()).toBeGreaterThanOrEqual(86_400_000);
+    expect(preview.good.card.due - now.getTime()).toBe(86_400_000);
+    expect(preview.good.card.scheduledDays).toBe(1);
+    expect(preview.good.log.scheduledDays).toBe(preview.cardBefore.scheduledDays);
+    expect(preview.good.card.state).toBe(State.Review);
   });
 
   it('maps the two public ratings only to FSRS Again and Good', () => {
@@ -47,14 +50,14 @@ describe('DeckSchedulerService', () => {
     expect(next.retrievabilityBefore!).toBeGreaterThan(0);
   });
 
-  it('uses the configured 10 minute relearning step after a Review lapse', () => {
+  it('schedules lapses in long-term Review without a 10 minute relearning step', () => {
     const learning = scheduler.preview(null, 0.9, now).good.card;
     const review = scheduler.preview(asProgress(learning), 0.9, new Date(learning.due)).good.card;
     expect(review.state).toBe(State.Review);
     const lapseAt = new Date(review.due);
     const lapse = scheduler.preview(asProgress(review), 0.9, lapseAt).again.card;
-    expect(lapse.state).toBe(State.Relearning);
-    expect(lapse.due - lapseAt.getTime()).toBe(10 * 60_000);
+    expect(lapse.state).toBe(State.Review);
+    expect(lapse.due - lapseAt.getTime()).toBeGreaterThanOrEqual(86_400_000);
   });
 
   it('round-trips FSRS cards and review logs with Date conversion centralized', () => {
@@ -81,6 +84,43 @@ describe('DeckSchedulerService', () => {
     const lowRetention = scheduler.preview(review, 0.8, reviewAt).good.card.due;
     const highRetention = scheduler.preview(review, 0.97, reviewAt).good.card.due;
     expect(highRetention).toBeLessThanOrEqual(lowRetention);
+  });
+
+  it('keeps subsequent Review and Relearning scheduling identical to official FSRS', () => {
+    const first = scheduler.preview(null, 0.9, now).good.card;
+    for (const state of [State.Review, State.Relearning]) {
+      const progress = asProgress({ ...first, state });
+      const reviewAt = new Date(first.due);
+      const expected = fsrs(generatorParameters({ request_retention: 0.9, enable_short_term: false, enable_fuzz: false, maximum_interval: 36_500 })).repeat(deserializeDeckCard(progress.card), reviewAt);
+      const preview = scheduler.preview(progress, 0.9, reviewAt);
+      expect(preview.good.card).toEqual(serializeDeckCard(expected[Rating.Good].card));
+      expect(preview.again.card).toEqual(serializeDeckCard(expected[Rating.Again].card));
+    }
+  });
+
+  it('graduates legacy Learning cards with Good in one day without resetting memory', () => {
+    const first = scheduler.preview(null, 0.9, now).good.card;
+    const progress = asProgress({ ...first, state: State.Learning });
+    const at = new Date(first.due);
+    const before = structuredClone(progress);
+    const expected = fsrs(generatorParameters({ request_retention: 0.9, enable_short_term: false, enable_fuzz: false })).repeat(deserializeDeckCard(progress.card), at)[Rating.Good].card;
+    const next = scheduler.preview(progress, 0.9, at).good;
+    expect(next.card.state).toBe(State.Review);
+    expect(next.card.due).toBe(at.getTime() + 86_400_000);
+    expect(next.card.stability).toBe(expected.stability);
+    expect(next.card.difficulty).toBe(expected.difficulty);
+    expect(next.card.reps).toBe(first.reps + 1);
+    expect(progress).toEqual(before);
+  });
+
+  it('keeps initial Good at exactly one day with fuzz enabled and any deck retention', () => {
+    TestBed.resetTestingModule();
+    scheduler = TestBed.inject(DeckSchedulerService);
+    for (const retention of [0.8, 0.85, 0.9, 0.95, 0.97]) {
+      const next = scheduler.preview(null, retention, now).good;
+      expect(next.card.due - now.getTime()).toBe(86_400_000);
+      expect(next.log.scheduledDays).toBe(0);
+    }
   });
 });
 

@@ -1,11 +1,18 @@
 import { formatStudyInterval, getLocalStudyDayKey } from './deck-study-time';
 
 describe('deck study time helpers', () => {
-  it('uses the browser local calendar day rather than UTC slicing', () => {
-    const date = new Date(2026, 8, 30, 23, 59, 0);
+  it('uses the Madrid calendar day rather than the browser timezone', () => {
+    const date = new Date('2026-09-30T21:59:00Z');
     expect(getLocalStudyDayKey(date)).toBe('2026-09-30');
-    const tomorrow = new Date(2026, 9, 1, 0, 1, 0);
+    const tomorrow = new Date('2026-09-30T22:00:00Z');
     expect(getLocalStudyDayKey(tomorrow)).toBe('2026-10-01');
+  });
+
+  it('uses winter and summer Madrid offsets across DST changes', () => {
+    expect(getLocalStudyDayKey(new Date('2026-01-01T23:00:00Z'))).toBe('2026-01-02');
+    expect(getLocalStudyDayKey(new Date('2026-07-01T22:00:00Z'))).toBe('2026-07-02');
+    expect(getLocalStudyDayKey(new Date('2026-10-25T22:59:00Z'))).toBe('2026-10-25');
+    expect(getLocalStudyDayKey(new Date('2026-10-25T23:00:00Z'))).toBe('2026-10-26');
   });
 
   it('formats scheduler intervals without absolute timestamps', () => {

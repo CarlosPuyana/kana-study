@@ -33,6 +33,11 @@ export class DeckSchedulerService {
     const scheduler = this.scheduler(desiredRetention);
     const card = progress ? deserializeDeckCard(progress.card) : createEmptyCard(now);
     const result = scheduler.repeat(card, now);
+    const good = result[Rating.Good];
+    // Only the initial graduation uses a one-day interval; FSRS retains its memory parameters.
+    if ((card.state === State.New || card.state === State.Learning) && good.card.state === State.Review) {
+      good.card = { ...good.card, due: new Date(now.getTime() + 86_400_000), scheduled_days: 1 };
+    }
     return {
       generatedAt: now.getTime(),
       desiredRetention,
@@ -65,7 +70,7 @@ export class DeckSchedulerService {
   private scheduler(desiredRetention: number) {
     return fsrs(generatorParameters({
       request_retention: desiredRetention,
-      enable_short_term: true,
+      enable_short_term: false,
       learning_steps: DECK_LEARNING_STEPS,
       relearning_steps: DECK_RELEARNING_STEPS,
       maximum_interval: DECK_MAXIMUM_INTERVAL,
