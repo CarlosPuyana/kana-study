@@ -506,14 +506,9 @@ Mejoras requeridas:
 - mostrar resumen de fallos;
 - permitir `Repasar errores`.
 
-### Más adelante
+### Decisión permanente de producto
 
-- persistencia;
-- mastery;
-- FSRS o sistema de revisión espaciada si se decide;
-- adaptación intersesión.
-
-No introducir FSRS en la corrección inmediata salvo decisión explícita.
+Gramática NO utiliza FSRS ni programación espaciada. No hay due, intervalos ni mastery. La revisión utiliza práctica contextual, prácticas acumulativas, registro de errores y repaso voluntario dirigido por dificultades. No se añadirá scheduling espaciado salvo decisión explícita futura. La persistencia definida en el apartado «Progreso persistente V1» reemplaza la antigua previsión de progreso futuro.
 
 ---
 
@@ -652,4 +647,22 @@ La auditoría comprueba traducciones referenciadas, IDs y sesiones duplicados, c
 
 Kana assist incorpora formas originales y distractores gramaticales plausibles; ambos sufijos くらい/ぐらい están disponibles. Mantiene cursor, IME y botones móviles. El foco tras comprobar por teclado pasa a Continuar; la interacción de ratón no fuerza ese traslado. El menú móvil incluye foco inicial, ciclo de Tab, contenido de fondo inert, Escape y devolución al activador. El foreground seleccionado usa un token semántico con contraste comprobado en los cinco temas.
 
-Tests editoriales: `node --test scripts/grammar-n5-generation.test.mjs scripts/grammar-n5-stabilization.test.mjs scripts/grammar-editorial.test.mjs`; interacciones/regresiones en `grammar-editorial.spec.ts`. Permanecen pendientes la ampliación de ejercicios, un simulacro representativo completo y aprendizaje persistente; no forman parte de esta corrección.
+Tests editoriales: `node --test scripts/grammar-n5-generation.test.mjs scripts/grammar-n5-stabilization.test.mjs scripts/grammar-editorial.test.mjs`; interacciones/regresiones en `grammar-editorial.spec.ts`. En aquella corrección quedaban pendientes la ampliación de ejercicios, un simulacro representativo completo y el aprendizaje persistente. La ampliación ya figura en los 542 ejercicios actuales; la persistencia se incorpora en la V1 descrita a continuación. El simulacro representativo completo sigue fuera de esta tarea.
+
+
+## Progreso persistente V1 — decisión de producto (2026-10-03)
+
+- Gramática NO utiliza FSRS ni SpacedRepetitionService. Compleción no significa dominio: todos los ejercicios actuales del microconcepto deben haberse contestado al menos una vez, incluso con errores. No existe nota mínima, mastery ni bloqueo del contenido.
+- El registro versionado guarda respuestas por exerciseId y progreso por microconcepto. El estado de las 72 sesiones se deriva de sus lessonIds; el Tema y el Roadmap cuentan sesiones completadas. Los 131 microconceptos y 542 ejercicios N5 permanecen intactos.
+- Completed es estable al revisitar. Una actualización del currículo se contrasta con los IDs de los ejercicios actuales, de modo que nuevos ejercicios no se consideran contestados.
+- Resume conserva ruta, concepto y el primer ejercicio realmente pendiente, calculado por los IDs actuales y answers. Una respuesta comprobada avanza el pendiente incluso antes de pulsar Continuar. Los huecos de merge y ejercicios nuevos se resuelven por el primer ID sin respuesta; lastExerciseIndex y el índice antiguo no prevalecen. Una visita manual a un concepto parcial usa su primer pendiente aunque el resume global sea otro; un concepto completado abre en cero para repaso voluntario. Continuar prioriza el contenido incompleto guardado, después el primer concepto pendiente en orden curricular, después dificultades y finalmente la práctica del Tema 10. Abrir contenido no inicia su progreso.
+- Las dificultades persistentes son marcas por concepto sin calendario. Fallar las activa; los aciertos normales no las borran. /grammar/review ofrece una ronda voluntaria de hasta 12 ejercicios existentes, evita el último fallado si hay alternativas y mezcla los ejercicios mediante el shuffle existente. Solo una ronda terminada con todos los ejercicios seleccionados del concepto correctos limpia su marca.
+- Las prácticas de Tema son independientes de la compleción. Se guarda la última ronda completa original; Repasar errores conserva su comportamiento y no sustituye esa puntuación. Sus errores alimentan las mismas dificultades.
+- StorageService persiste kana-study.grammar-progress.v1 en el workspace activo, incluido guest. La sincronización usa la infraestructura existente y user_preferences, sin tablas nuevas. El merge puro une conceptos y respuestas por timestamp, conserva completed, y resuelve prácticas, dificultades (incluidas las marcas limpiadas) y resume por updatedAt. La normalización del servicio contrasta siempre los IDs actuales.
+- La interfaz muestra señales textuales y símbolos, progreso de compleción y última práctica; no estima retención ni gamifica el aprendizaje.
+
+Validación V1: generate:grammar y audit:grammar correctos; 53 tests Node y 557 tests Angular/Vitest (53 nuevos) correctos; TypeScript app/spec y build correctos. Verificados los flujos de inicio, recarga/resume, compleción con errores, sesiones con varios pasos, sesión grande del Tema 06, práctica completa y Repasar errores, y limpieza de dificultades. Conflictos multidispositivo simulados mediante tests del merge y de SyncService, sin efectuar operaciones reales sobre cuentas cloud. Revisados escritorio (1280 px), móvil (390 px), Light, Dark, Nora, Nora oscuro y Anime. El build mantiene avisos de presupuestos de tamaño; no hay errores de compilación.
+
+Corrección dirigida de progreso: WorkspaceService notifica mediante dataRevision las escrituras efectivas de importación Guest→cuenta; GrammarProgressService observa esta señal sin dependencia circular con StorageService. /grammar/review reconstruye la selección por cambios de dificultades únicamente en intro: sync no reinicia preguntas ni sustituye resultados, y el botón explícito de repaso vuelve a seleccionar contenido actualizado.
+
+Concurrencia cloud: user_preferences y el merge por registros se mantienen. Dos escrituras exactamente simultáneas no constituyen una transacción atómica ni un locking distribuido. Cada dispositivo conserva su copia local; los siguientes pull/merge reconcilian la unión y la devuelven al cloud, de modo que el modelo converge mediante sincronizaciones posteriores. Un test de SyncService simula el overwrite de un snapshot cloud y la reconciliación posterior de ambos dispositivos. No se añaden tablas ni RPC.

@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { LocalWorkspaceId } from '../models/account.model';
+import { GRAMMAR_PROGRESS_KEY } from '../models/grammar-progress.model';
+import { mergeGrammarProgress } from './grammar-progress-state';
 
 const ACTIVE_KEY = 'kana-study.workspace.active.v1';
 const LEGACY_MARKER = 'kana-study.workspace.legacy-guest.v1';
@@ -8,6 +10,7 @@ const USER_PREFIX = 'kana-study.workspace.';
 
 export const WORKSPACE_LOCAL_KEYS = [
   'kana-study.settings.v1',
+  'kana-study.grammar-progress.v1',
   'kana-study.study-progress.v2',
   'kana-study.review-events.v1',
   'kana-study.completed-sessions.v1',
@@ -32,6 +35,8 @@ export const WORKSPACE_LOCAL_KEYS = [
 export class WorkspaceService {
   private readonly state = signal<LocalWorkspaceId>(readActiveWorkspace());
   readonly active = this.state.asReadonly();
+  private readonly revision = signal(0);
+  readonly dataRevision = this.revision.asReadonly();
 
   constructor() {
     // Existing unscoped data is the canonical Guest workspace. Keeping it in place
@@ -60,7 +65,15 @@ export class WorkspaceService {
 
   hasGuestProgress(): boolean {
     const meaningful = WORKSPACE_LOCAL_KEYS.filter(key => !key.includes('settings') && !key.includes('selection'));
-    try { return meaningful.some(key => hasMeaningfulValue(localStorage.getItem(key))); } catch { return false; }
+    try { return meaningful.some(key => {
+      if (key === GRAMMAR_PROGRESS_KEY) {
+        try {
+          const value = JSON.parse(localStorage.getItem(key) ?? 'null');
+          return !!value && ['concepts', 'practices', 'review'].some(field => Object.keys(value[field] ?? {}).length > 0);
+        } catch { return false; }
+      }
+      return hasMeaningfulValue(localStorage.getItem(key));
+    }); } catch { return false; }
   }
 
   importDecision(userId: string): 'merge' | 'account' | null {
@@ -75,13 +88,18 @@ export class WorkspaceService {
   }
 
   copyGuestLocalStorageToUser(userId: string): void {
+    let changed = false;
     for (const key of WORKSPACE_LOCAL_KEYS) {
       try {
         const source = localStorage.getItem(key);
         const target = this.storageKey(key, `user:${userId}`);
-        if (source !== null && localStorage.getItem(target) === null) localStorage.setItem(target, source);
+        if (source !== null && key === GRAMMAR_PROGRESS_KEY) {
+          const merged = JSON.stringify(mergeGrammarProgress(JSON.parse(source), JSON.parse(localStorage.getItem(target) ?? 'null')));
+          if (merged !== localStorage.getItem(target)) { localStorage.setItem(target, merged); changed = true; }
+        } else if (source !== null && localStorage.getItem(target) === null) { localStorage.setItem(target, source); changed = true; }
       } catch { /* preserve Guest data if storage is unavailable/full */ }
     }
+    if (changed) this.revision.update(value => value + 1);
   }
 }
 

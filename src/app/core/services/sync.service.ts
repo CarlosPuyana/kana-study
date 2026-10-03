@@ -8,7 +8,8 @@ import { SessionHistoryService } from './session-history.service';
 import { StorageService } from './storage.service';
 import { SupabaseClientService } from './supabase-client.service';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
-import { mergeMedalUnlocks, mergeProgressSnapshots, unionById } from './sync-merge';
+import { mergeGrammarProgress, mergeMedalUnlocks, mergeProgressSnapshots, unionById } from './sync-merge';
+import { GRAMMAR_PROGRESS_KEY } from '../models/grammar-progress.model';
 import { WORKSPACE_LOCAL_KEYS, WorkspaceService } from './workspace.service';
 import { DeckDatabaseService } from './deck-database.service';
 import { LocalRushRepository } from './rush-repository.service';
@@ -172,8 +173,17 @@ export class SyncService {
         user_id: userId, deck_id: deckId, payload: settings,
       }))); return;
     }
-    const { data: remotePreference } = await this.client!.from('user_preferences').select('payload,updated_at')
+    const { data: remotePreference, error: preferenceError } = await this.client!.from('user_preferences').select('payload,updated_at')
       .eq('user_id', userId).eq('preference_key', key).maybeSingle();
+    if (key === GRAMMAR_PROGRESS_KEY) {
+      if (preferenceError) throw preferenceError;
+      if (this.workspace.userId() !== userId) throw new Error('Workspace changed during grammar sync');
+      const merged = mergeGrammarProgress(mergeGrammarProgress(value, this.storage.get(key, null)), remotePreference?.payload);
+      await this.upsert('user_preferences', [{user_id: userId, preference_key: key, payload: merged}]);
+      if (this.workspace.userId() !== userId) throw new Error('Workspace changed during grammar sync');
+      this.storage.setFromCloud(key, mergeGrammarProgress(merged, this.storage.get(key, null)));
+      return;
+    }
     if (remotePreference && String(remotePreference.updated_at) > item.createdAt) {
       this.storage.setFromCloud(key, remotePreference.payload); return;
     }
@@ -209,7 +219,19 @@ export class SyncService {
     const localMedals = this.storage.get<MedalUnlock[]>('kana-study.medal-unlocks.v1', []);
     const remoteMedals = medals.map(row => ({ medalId: String(row['medal_id']), unlockedAt: String(row['unlocked_at']) }));
     if (remoteMedals.length) this.storage.setFromCloud('kana-study.medal-unlocks.v1', mergeMedalUnlocks(localMedals, remoteMedals));
-    for (const row of preferences) this.storage.setFromCloud(String(row['preference_key']), row['payload']);
+    for (const row of preferences) {
+      const key = String(row['preference_key']);
+      if (key === GRAMMAR_PROGRESS_KEY) {
+        if (this.workspace.userId() !== userId) throw new Error('Workspace changed during grammar sync');
+        const merged = mergeGrammarProgress(this.storage.get(key, null), row['payload']);
+        // Reconcile the union back to the existing preference row, including on pull-only syncs.
+        if (JSON.stringify(merged) !== JSON.stringify(mergeGrammarProgress(null, row['payload']))) {
+          await this.upsert('user_preferences', [{user_id: userId, preference_key: key, payload: merged}]);
+        }
+        if (this.workspace.userId() !== userId) throw new Error('Workspace changed during grammar sync');
+        this.storage.setFromCloud(key, mergeGrammarProgress(merged, this.storage.get(key, null)));
+      } else this.storage.setFromCloud(key, row['payload']);
+    }
     if (deckSettings.length) {
       const local = this.storage.get<Record<string, unknown>>(DECK_SETTINGS_KEY, {});
       for (const row of deckSettings) local[String(row['deck_id'])] = row['payload'];

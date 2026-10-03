@@ -7,7 +7,7 @@ describe('lazy feature routes', () => {
     const feature=routes.find(route=>route.path==='grammar');
     expect(feature?.component).toBeUndefined();
     const children=await (feature!.loadChildren as ()=>Promise<Routes>)();
-    expect(children.map(route=>route.path)).toEqual(['','n5/:topicId/practice','n5/:topicId/:lessonId','n5/:topicId','**']);
+    expect(children.map(route=>route.path)).toEqual(['','review','n5/:topicId/practice','n5/:topicId/:lessonId','n5/:topicId','**']);
     expect(children.filter(route=>route.path!=='**').every(route=>route.loadComponent&&!route.component)).toBe(true);
     expect(APP_MODULES.find(module=>module.id==='grammar')).toEqual(expect.objectContaining({route:'/grammar',available:true}));
   });

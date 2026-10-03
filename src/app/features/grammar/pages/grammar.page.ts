@@ -1,4 +1,5 @@
-import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, signal, viewChild, ViewEncapsulation } from '@angular/core';
+import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, signal, untracked, viewChild, ViewEncapsulation } from '@angular/core';
+import { GrammarProgressService } from '../../../core/services/grammar-progress.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
@@ -11,6 +12,7 @@ import { grammarLessonExercises } from '../models/grammar.model';
 
 @Component({selector:'app-grammar-page',imports:[RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
 export class GrammarPage {
+  readonly progress=inject(GrammarProgressService);
   readonly i18n=inject(TranslationService);private readonly route=inject(ActivatedRoute);private readonly router=inject(Router);
   private readonly params=toSignal(this.route.paramMap,{initialValue:this.route.snapshot.paramMap});
   readonly topics=GRAMMAR_TOPICS;readonly roadmap=GRAMMAR_ROADMAP;
@@ -23,6 +25,7 @@ export class GrammarPage {
   readonly studySession=computed(()=>this.sessions().find(session=>session.lessonIds.includes(this.lesson()?.id??''))??null);
   readonly sessionLessons=computed(()=>this.studySession()?.lessonIds.map(id=>GRAMMAR_LESSONS.find(l=>l.topicId===this.topic()?.id&&l.id===id)!)??[]);
   readonly sessionPosition=computed(()=>(this.studySession()?.lessonIds.indexOf(this.lesson()?.id??'')??-1)+1);
+  readonly sessionCompletedConcepts=computed(()=>this.sessionLessons().filter(lesson=>this.progress.conceptStatus(`${lesson.topicId}.${lesson.id}`)==='completed').length);
   readonly sessionCards=computed(()=>this.sessions().map(session=>({session,first:this.topic()!.lessons.find(l=>l.path?.endsWith('/'+session.lessonIds[0]))!,lessons:session.lessonIds.map(id=>GRAMMAR_LESSONS.find(l=>l.topicId===session.topicId&&l.id===id)!)})));
   readonly practice=computed(()=>this.route.snapshot.routeConfig?.path?.endsWith('/practice')?GRAMMAR_PRACTICES.find(practice=>practice.topicId===this.topic()?.id)??null:null);
   readonly invalid=computed(()=>!!this.params().get('topicId')&&(!this.topic()||!!this.params().get('lessonId')&&!this.lesson()||this.route.snapshot.routeConfig?.path?.endsWith('/practice')&&!this.practice()));
@@ -33,7 +36,11 @@ export class GrammarPage {
   private readonly exerciseComponent=viewChild(GrammarExerciseComponent);
   private readonly focusNextExercise=signal(false);
   readonly rows=[this.topics.slice(0,3),this.topics.slice(3,6),this.topics.slice(6,9),this.topics.slice(9)];
-  constructor(){effect(()=>{this.params();this.exerciseIndex.set(0);window.scrollTo({top:0});});
+  constructor(){effect(()=>{this.params();const lesson=this.lesson();untracked(()=>{
+    const id=lesson?`${lesson.topicId}.${lesson.id}`:null;
+    this.exerciseIndex.set(id?this.progress.resumeIndex(id):0);
+    if(id)this.progress.saveResume(id,this.exerciseIndex());
+  });window.scrollTo({top:0});});
     afterRenderEffect(()=>{
       if(this.mobileOpen())this.menuItems()[0]?.focus();
       else if(this.restoreFocus()){this.menuTrigger()?.nativeElement.focus();this.restoreFocus.set(false);}
@@ -58,8 +65,9 @@ export class GrammarPage {
   menuFocus(event:FocusEvent):void{if(this.mobileOpen()&&event.target instanceof Node&&!this.sidebar()?.nativeElement.contains(event.target))this.menuItems()[0]?.focus();}
   navigate(path:string):void{void this.router.navigateByUrl(path);window.scrollTo({top:0});}
   continueExercise():void{
-    if(this.exerciseIndex()+1<this.exercises().length){this.exerciseIndex.update(i=>i+1);this.focusNextExercise.set(true);}
+    if(this.exerciseIndex()+1<this.exercises().length){this.exerciseIndex.update(i=>i+1);this.progress.saveResume(`${this.lesson()!.topicId}.${this.lesson()!.id}`,this.exerciseIndex());this.focusNextExercise.set(true);}
     else if(this.lesson())this.navigate(this.lesson()!.nextPath);
   }
+  answer(correct:boolean):void{const lesson=this.lesson(),exercise=this.currentExercise();if(lesson&&exercise)this.progress.recordAnswer(`${lesson.topicId}.${lesson.id}`,lesson.topicId,exercise.id,this.exerciseIndex(),correct);}
   showProgress():void{document.getElementById('grammar-progress')?.scrollIntoView({behavior:'smooth',block:'start'});}
 }

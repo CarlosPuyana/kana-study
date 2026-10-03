@@ -5951,5 +5951,18 @@
   "grammar.expansion.10.6-exp-1.context": "ゆきさんはあさ、うちでべんきょうします。べんきょうしてから、としょかんにいきます。そこでほんをかります。 · ゆきさん = Yuki · あさ = mañana (parte del día) · うち = casa · べんきょうする = estudiar · いく = ir · そこで = allí",
   "grammar.expansion.10.7-exp-1.context": "きのう、ゆきさんはとしょかんでほんをかりました。きょうはそのほんをよんでいます。あしたはともだちにかえすつもりです。 · ゆきさん = Yuki · きのう = ayer · きょう = hoy · ともだち = amigo/a · かえす = devolver",
   "grammar.expansion.10.8-exp-1.context": "カフェ：じゅうじからごじまで。ここでほんをよんでもいいです。そとのたべものをもってきてはいけません。",
-  "grammar.expansion.10.10-exp-1.context": "A: ここでほんをよんでもいいですか。 B: はい。でも、はなさないでください。 · ここ = aquí · はなす = hablar"
+  "grammar.expansion.10.10-exp-1.context": "A: ここでほんをよんでもいいですか。 B: はい。でも、はなさないでください。 · ここ = aquí · はなす = hablar",
+  "grammar.progressState.not-started": "No iniciada",
+  "grammar.progressState.in-progress": "En progreso",
+  "grammar.progressState.completed": "Completada",
+  "grammar.progressState.sessions": "{{completed}} / {{total}} sesiones completadas",
+  "grammar.progressState.completion": "Progreso de compleción",
+  "grammar.progressState.lastPractice": "Última práctica: {{score}} / {{total}}",
+  "grammar.progressState.difficulties": "{{count}} conceptos por repasar",
+  "grammar.progressState.resume": "Retoma tu estudio",
+  "grammar.progressState.review": "Repasar dificultades",
+  "grammar.progressState.noDifficulties": "No tienes conceptos pendientes de repaso.",
+  "grammar.progressState.reviewDescription": "Repaso voluntario de tus dificultades. Ejercicios: {{total}}.",
+  "grammar.progressState.reviewRemaining": "Conceptos pendientes de repaso: {{count}}.",
+  "grammar.progressState.difficulty": "1 concepto por repasar"
 }

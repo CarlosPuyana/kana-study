@@ -1,4 +1,5 @@
 import { MedalUnlock } from '../models/medal.model';
+export { mergeGrammarProgress } from './grammar-progress-state';
 
 export function unionById<T>(local: readonly T[], remote: readonly T[], id: (item: T) => string): T[] {
   const merged = new Map<string, T>();

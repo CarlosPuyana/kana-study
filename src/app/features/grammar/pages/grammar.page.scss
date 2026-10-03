@@ -71,3 +71,13 @@
 .grammar-shell .kanji-reference{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--surface)}
 .grammar-shell .kanji-reference h3{font-size:.9rem;color:var(--text-secondary);margin:0 0 18px}.grammar-shell .kanji-reference p{color:var(--text-secondary);margin:10px 0 0}
 .grammar-shell .lesson-exercise-count { margin: 0 0 .5rem; color: var(--text-secondary); font-size: .875rem; }
+.grammar-shell {
+  .grammar-completion { margin-block: 1rem; color: var(--text-primary); }
+  .grammar-completion p { margin-block: .5rem; }
+  .grammar-completion progress { display: block; width: 100%; height: .6rem; accent-color: var(--accent); }
+  .grammar-completion progress::-webkit-progress-bar { background: var(--surface-hover); border-radius: 1rem; }
+  .grammar-completion progress::-webkit-progress-value { background: var(--accent); border-radius: 1rem; }
+  .grammar-completion progress::-moz-progress-bar { background: var(--accent); border-radius: 1rem; }
+  .grammar-session-status, .grammar-difficulty { font-size: .8rem; margin-block: .35rem; color: var(--text-secondary); }
+  .grammar-topic-count { display: block; padding: .5rem 1rem; color: var(--text-secondary); font-size: .75rem; }
+}

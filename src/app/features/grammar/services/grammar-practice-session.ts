@@ -10,6 +10,7 @@ export class GrammarPracticeSession {
   private readonly random=inject(GRAMMAR_RANDOM);
   private original:readonly GrammarExercise[]=[];
   private readonly questions = signal<readonly GrammarExercise[]>([]);
+  readonly roundExercises = this.questions.asReadonly();
   readonly stage = signal<'intro' | 'question' | 'results'>('intro');
   readonly index = signal(0);
   readonly answers = signal<readonly boolean[]>([]);

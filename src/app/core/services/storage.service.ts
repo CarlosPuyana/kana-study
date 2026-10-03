@@ -1,9 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
 import { WorkspaceService } from './workspace.service';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
+  readonly cloudRevision = signal(0);
   private readonly workspace = inject(WorkspaceService);
   private readonly outbox = inject(SyncOutboxService);
 
@@ -36,6 +37,7 @@ export class StorageService {
 
   setFromCloud<T>(key: string, value: T): void {
     try { localStorage.setItem(this.workspace.storageKey(key), JSON.stringify(value)); } catch { /* local mode remains usable */ }
+    this.cloudRevision.update(value => value + 1);
   }
 
   rawKey(key: string): string { return this.workspace.storageKey(key); }

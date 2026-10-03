@@ -5954,7 +5954,20 @@ export const es:Record<string,string> = {...shared,...{
   "grammar.eraseKana": "Borrar",
   "grammar.step": "Paso {{number}}",
   "grammar.kanjiReference": "Kanji de referencia",
-  "grammar.exerciseStep": "Ejercicio {{current}} de {{total}}"
+  "grammar.exerciseStep": "Ejercicio {{current}} de {{total}}",
+  "grammar.progressState.not-started": "No iniciada",
+  "grammar.progressState.in-progress": "En progreso",
+  "grammar.progressState.completed": "Completada",
+  "grammar.progressState.sessions": "{{completed}} / {{total}} sesiones completadas",
+  "grammar.progressState.completion": "Progreso de compleción",
+  "grammar.progressState.lastPractice": "Última práctica: {{score}} / {{total}}",
+  "grammar.progressState.difficulties": "{{count}} conceptos por repasar",
+  "grammar.progressState.resume": "Retoma tu estudio",
+  "grammar.progressState.review": "Repasar dificultades",
+  "grammar.progressState.noDifficulties": "No tienes conceptos pendientes de repaso.",
+  "grammar.progressState.reviewDescription": "Repaso voluntario de tus dificultades. Ejercicios: {{total}}.",
+  "grammar.progressState.reviewRemaining": "Conceptos pendientes de repaso: {{count}}.",
+  "grammar.progressState.difficulty": "1 concepto por repasar"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -6776,7 +6789,20 @@ export const en:Record<string,string> = {...shared,...{
   "grammar.eraseKana": "Erase",
   "grammar.step": "Step {{number}}",
   "grammar.kanjiReference": "Reference kanji",
-  "grammar.exerciseStep": "Exercise {{current}} of {{total}}"
+  "grammar.exerciseStep": "Exercise {{current}} of {{total}}",
+  "grammar.progressState.not-started": "Not started",
+  "grammar.progressState.in-progress": "In progress",
+  "grammar.progressState.completed": "Completed",
+  "grammar.progressState.sessions": "{{completed}} / {{total}} sessions completed",
+  "grammar.progressState.completion": "Completion progress",
+  "grammar.progressState.lastPractice": "Last practice: {{score}} / {{total}}",
+  "grammar.progressState.difficulties": "{{count}} concepts to review",
+  "grammar.progressState.resume": "Resume your study",
+  "grammar.progressState.review": "Review difficulties",
+  "grammar.progressState.noDifficulties": "You have no concepts awaiting review.",
+  "grammar.progressState.reviewDescription": "Optional practice of your difficulties. Exercises: {{total}}.",
+  "grammar.progressState.reviewRemaining": "Concepts awaiting review: {{count}}.",
+  "grammar.progressState.difficulty": "1 concept to review"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -7598,5 +7624,18 @@ export const ca:Record<string,string> = {...shared,...{
   "grammar.eraseKana": "Esborrar",
   "grammar.step": "Pas {{number}}",
   "grammar.kanjiReference": "Kanji de referència",
-  "grammar.exerciseStep": "Exercici {{current}} de {{total}}"
+  "grammar.exerciseStep": "Exercici {{current}} de {{total}}",
+  "grammar.progressState.not-started": "No iniciada",
+  "grammar.progressState.in-progress": "En progrés",
+  "grammar.progressState.completed": "Completada",
+  "grammar.progressState.sessions": "{{completed}} / {{total}} sessions completades",
+  "grammar.progressState.completion": "Progrés de compleció",
+  "grammar.progressState.lastPractice": "Última pràctica: {{score}} / {{total}}",
+  "grammar.progressState.difficulties": "{{count}} conceptes per repassar",
+  "grammar.progressState.resume": "Reprèn el teu estudi",
+  "grammar.progressState.review": "Repassar dificultats",
+  "grammar.progressState.noDifficulties": "No tens conceptes pendents de repàs.",
+  "grammar.progressState.reviewDescription": "Repàs voluntari de les teves dificultats. Exercicis: {{total}}.",
+  "grammar.progressState.reviewRemaining": "Conceptes pendents de repàs: {{count}}.",
+  "grammar.progressState.difficulty": "1 concepte per repassar"
 }};
