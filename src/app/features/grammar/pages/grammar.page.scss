@@ -1,0 +1,57 @@
+// Only theme integration, Angular host layout and accessible mobile navigation supplement v7 geometry.
+.grammar-shell {
+  --bg:var(--background);--panel:var(--surface);--panel-2:var(--surface-raised);--line:var(--border);--text:var(--text-primary);--muted:var(--text-secondary);
+  --blue:var(--primary);--cyan:var(--accent);--violet:var(--accent);--pink:var(--primary);--green:var(--success);--gold:var(--warning);--orange:var(--warning);--sidebar-w:290px;
+  background:var(--background);color:var(--text-primary);min-height:100dvh;
+  app-grammar-exercise,app-grammar-sidebar,app-grammar-practice{display:block;min-width:0}
+  a{text-decoration:none}
+  .grammar-toolbar{display:flex;align-items:center;gap:14px;padding:10px 20px;background:var(--surface);border-bottom:1px solid var(--border)}
+  .icon-btn{min-width:44px;min-height:44px}
+  .topic-subnav-item{display:block}
+  .topic-subnav-item.active{background:var(--primary-soft);color:var(--accent);border-radius:8px}
+  .nav-item:hover,.subnav-item:hover,.exercise-option:hover,.practice-option:hover{background:var(--surface-hover)}
+  .subnav-item.selected{background:var(--primary-soft);color:var(--accent);box-shadow:inset 3px 0 var(--primary)}
+  .hero-bg,.topic-hero{background:linear-gradient(120deg,var(--primary-soft),var(--surface))}
+  .hero-bg::after{background:radial-gradient(circle at 70% 75%,var(--primary-soft),transparent 50%)}
+  .primary-action,.primary-link,.practice-start,.check-answer,.practice-check{background:var(--primary-soft);color:var(--text-primary);border:1px solid var(--primary);text-decoration:none}
+  .stage-card{--tone:var(--primary);background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 18%,var(--surface)),var(--surface));color:var(--text-primary)}
+  .stage-card.pink,.stage-card.blue{--tone:var(--primary)}.stage-card.gold,.stage-card.orange{--tone:var(--warning)}.stage-card.green{--tone:var(--success)}.stage-card.violet,.stage-card.cyan{--tone:var(--accent)}
+  .stage-card.blue,.stage-card.pink,.stage-card.gold,.stage-card.green,.stage-card.violet,.stage-card.orange,.stage-card.cyan{background:linear-gradient(180deg,color-mix(in srgb,var(--tone) 18%,var(--surface)),var(--surface))}
+  .stage-number{background:var(--tone);color:var(--background);border-color:var(--surface)}
+  .stage-illustration{color:var(--text-primary)}.stage-illustration.bubble,.stage-illustration.exam{background:var(--surface-raised);border-color:var(--text-primary)}
+  .stage-open{display:grid;place-items:center;background:var(--primary-soft)}
+  .micro-theory-card,.lesson-note,.panel,.practice-question-card,.practice-intro,.practice-results{background:linear-gradient(180deg,var(--surface-raised),var(--surface))}
+  .exercise-option.selected,.practice-option.selected{border-color:var(--primary);background:var(--primary-soft)}
+  .exercise-option.correct,.practice-option.correct{border-color:var(--success);background:color-mix(in srgb,var(--success) 12%,var(--surface))}
+  .exercise-option.wrong,.practice-option.wrong{border-color:var(--error);background:color-mix(in srgb,var(--error) 12%,var(--surface))}
+  .exercise-feedback.success,.practice-feedback-box.success{border-color:var(--success);background:color-mix(in srgb,var(--success) 10%,var(--surface))}
+  .exercise-feedback.error,.practice-feedback-box.error{border-color:var(--error);background:color-mix(in srgb,var(--error) 10%,var(--surface))}
+  .practice-option:disabled,.exercise-option:disabled{opacity:1;cursor:default}
+  .exercise-options button,.practice-options-grid button{overflow-wrap:anywhere}
+  .continue-answer{font:inherit;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:44px}
+  .lesson-progress-track div,.practice-progress-track div{background:linear-gradient(90deg,var(--primary),var(--success))}
+  .donut{--progress:30;background:conic-gradient(var(--success) calc(var(--progress)*1%),var(--surface-raised) 0)}
+  .donut::after{background:var(--surface)}
+  .results-score{background:conic-gradient(var(--success) var(--score),var(--surface-raised) 0);box-shadow:inset 0 0 0 12px var(--surface)}
+  .practice-prompt,.exercise-prompt{overflow-wrap:anywhere}
+  .script-pill,.micro-theory-kana{background:var(--surface-raised);color:var(--text-primary)}
+  .menu-scrim{display:none}
+  &.compact-sidebar .app-shell{grid-template-columns:1fr}
+  &.compact-sidebar .sidebar{display:none}
+  @media(min-width:901px) and (max-width:1500px){.content-grid{grid-template-columns:1fr}.right-panel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.hero{flex-direction:column}.hero-actions{align-self:flex-start}.progress-wrap{grid-template-columns:1fr}.progress-stats div{grid-template-columns:auto auto}}
+  @media(max-width:900px){
+    .menu-scrim{display:block;position:fixed;inset:0;z-index:29;border:0;background:color-mix(in srgb,var(--background) 75%,transparent)}
+    .sidebar{width:min(320px,calc(100vw - 44px));height:100dvh;overscroll-behavior:contain}
+    .sidebar.mobile-open{display:block;transform:translateX(0)}
+    .sidebar:not(.mobile-open){visibility:hidden}
+    .topic-hero h2{overflow-wrap:anywhere}.lesson-heading-card h2{overflow-wrap:anywhere}
+  }
+  @media(max-width:520px){
+    .topic-title-wrap{gap:12px}.topic-icon-large{flex-shrink:0}.topic-content,.topic-hero{padding-inline:16px}
+    .topic-intro-card,.topic-end-card{padding:18px;gap:15px}.topic-end-card{grid-template-columns:44px minmax(0,1fr)}.end-icon{width:40px;height:40px}
+    .lesson-heading-card{grid-template-columns:1fr}.hero-actions{width:100%;flex-wrap:wrap}.primary-link,.secondary-link{white-space:normal}
+    .roadmap-row{gap:32px}.stage-body{grid-template-columns:66px minmax(0,1fr)}.stage-illustration{font-size:32px}
+    .start-learning-actions{flex-direction:column;width:100%}.practice-intro-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  }
+  @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto;transition:none!important}.stage-card:hover{transform:none}}
+}

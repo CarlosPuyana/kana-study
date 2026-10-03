@@ -1,0 +1,35 @@
+<div class="grammar-shell" [class.compact-sidebar]="collapsed()">
+  @if(practice();as practice){
+    <app-grammar-practice [practice]="practice"/>
+  } @else {
+    <div class="app-shell">
+      @if(mobileOpen()){<button class="menu-scrim" (click)="closeMenu()" [attr.aria-label]="i18n.t('grammar.collapse')"></button>}
+      <aside class="sidebar" [class.mobile-open]="mobileOpen()"><app-grammar-sidebar [topics]="topics" [topicId]="topic()?.id??null" (collapsed)="collapseMenu()" (navigated)="closeMenu()"/></aside>
+      <main class="main" [class.topic-page]="topic()&&!lesson()" [class.lesson-page]="lesson()">
+        <div class="grammar-toolbar"><button class="icon-btn" [attr.aria-expanded]="mobileOpen()" [attr.aria-label]="i18n.t('grammar.menu')" (click)="toggleMenu()">☰</button><a routerLink="/more" [queryParams]="{from:'grammar'}">← {{i18n.t('more.title')}}</a></div>
+        @if(invalid()){
+          <section class="topic-content"><h2>{{i18n.t('common.comingSoon')}}</h2><a routerLink="/grammar">{{i18n.t('grammar.roadmap')}}</a></section>
+        } @else if(lesson();as lesson){
+          <header class="lesson-topbar"><div class="lesson-top-title"><a [routerLink]="lesson.previousPath" class="lesson-back" [attr.aria-label]="i18n.t('common.back')">←</a><div><span>{{i18n.t('grammar.topic',{number:lesson.topicId})}} · {{+lesson.topicId}}.{{lesson.position}}</span><strong>{{i18n.t(lesson.titleKey)}}</strong></div></div><div class="lesson-progress-wrap"><span>{{lesson.position}} / {{lesson.total}}</span><div class="lesson-progress-track"><div [style.width.%]="lesson.position/lesson.total*100"></div></div></div></header>
+          <section class="lesson-shell"><section class="lesson-main-column">
+            <div class="lesson-heading-card"><div class="lesson-big-icon">{{lesson.icon}}</div><div><span class="eyebrow">{{i18n.t('grammar.learn')}}</span><h2>{{i18n.t(lesson.titleKey)}}</h2><p>{{i18n.t(lesson.descriptionKey)}}</p></div></div>
+            <section class="lesson-theory-block"><div class="section-title"><span>01</span><div><small>{{i18n.t('grammar.theory')}}</small><h3>{{i18n.t('grammar.theoryHeading')}}</h3></div></div><div class="micro-theory-grid">@for(block of lesson.theory;track block.titleKey){<div class="micro-theory-card"><div class="micro-theory-kana">{{block.symbol}}</div><div><h4>{{i18n.t(block.titleKey)}}</h4><p [innerHTML]="i18n.t(block.bodyKey)"></p></div></div>}</div><div class="key-rule"><span>💡</span><div><strong>{{i18n.t('grammar.idea')}}</strong><p [innerHTML]="i18n.t(lesson.ideaKey)"></p></div></div></section>
+            <app-grammar-exercise [exercise]="lesson.exercise" (continued)="navigate(lesson.nextPath)"/>
+          </section><aside class="lesson-note-column">@for(note of lesson.notes;track note.titleKey){<div class="lesson-note" [class.compact-note]="$last"><span class="note-icon">{{note.icon}}</span><h3>{{i18n.t(note.titleKey)}}</h3><p [innerHTML]="i18n.t(note.bodyKey)"></p></div>}</aside></section>
+        } @else if(topic();as topic){
+          <header class="topic-hero"><div class="topic-kicker">{{i18n.t(topic.kickerKey)}}</div><div class="topic-title-wrap"><div class="topic-icon-large">{{topic.icon}}</div><div><h2>{{i18n.t(topic.titleKey)}}</h2><p>{{i18n.t(topic.descriptionKey)}}</p></div></div><div class="topic-meta-row">@for(key of topic.metaKeys;track key){<span class="meta-chip">{{i18n.t(key)}}</span>}</div></header>
+          <section class="topic-content"><section class="topic-intro-card"><div><span class="eyebrow">{{i18n.t(topic.goal.eyebrowKey)}}</span><h3>{{i18n.t(topic.goal.titleKey)}}</h3><p [innerHTML]="i18n.t(topic.goal.bodyKey)"></p></div><div class="goal-visual" [innerHTML]="i18n.t(topic.visualKey)"></div></section>
+            <div class="lesson-grid">@for(lesson of topic.lessons;track lesson.id){
+              <article [class]="'lesson-card '+lesson.color"><div class="lesson-index">{{lesson.id}}</div>@if(lesson.path){<a class="lesson-card-link" [routerLink]="lesson.path" [attr.aria-label]="lesson.id+' · '+i18n.t(lesson.titleKey)"></a>}<div class="lesson-icon">{{lesson.icon}}</div><div class="lesson-copy"><h3>{{i18n.t(lesson.titleKey)}}</h3><p [innerHTML]="i18n.t(lesson.bodyKey)"></p><div [class]="lesson.id==='0.8'?'particle-table':'lesson-example'" [innerHTML]="i18n.t(lesson.examplesKey)"></div></div></article>
+            }</div>
+            @if(topic.journey;as journey){<section class="start-learning-card"><div><span class="eyebrow">{{i18n.t(journey.eyebrowKey)}}</span><h3>{{i18n.t(journey.titleKey)}}</h3><p [innerHTML]="i18n.t(journey.bodyKey)"></p></div><div class="start-learning-actions">@for(link of journey.links;track link.path){<a [class]="$first?'primary-link':'secondary-link'" [routerLink]="link.path">{{i18n.t(link.labelKey)}}</a>}</div></section>}
+            <section class="topic-end-card"><div class="end-icon">✓</div><div><span class="eyebrow">{{i18n.t(topic.end.eyebrowKey)}}</span><h3>{{i18n.t(topic.end.titleKey)}}</h3><p [innerHTML]="i18n.t(topic.end.bodyKey)"></p></div></section>
+          </section>
+        } @else {
+          <header class="hero"><div class="hero-bg"></div><div class="hero-content"><div class="hero-title-row"><div class="hero-icon">🗺️</div><div><h2>Roadmap <span>N5</span></h2><p>{{i18n.t(roadmap.subtitleKey)}}</p></div></div><div class="pill-row">@for(key of roadmap.pillKeys;track key){<span [class]="'pill '+['cyan','violet','green','pink'][$index]">{{i18n.t(key)}}</span>}</div></div><div class="hero-actions"><a class="primary-action" routerLink="/grammar/n5/01"><span class="play">▶</span><span><strong>{{i18n.t('grammar.continue')}}</strong><small>{{i18n.t('grammar.topic',{number:'01'})}}</small></span></a><button class="secondary-action" (click)="showProgress()">{{i18n.t('grammar.progress')}} <span>›</span></button><button class="secondary-action" disabled>{{i18n.t('grammar.lab')}} <span>›</span></button></div></header>
+          <section class="content-grid"><section class="roadmap-section">@for(row of rows;track $index){<div class="roadmap-row" [class.last]="$last">@for(topic of row;track topic.id){<a [class]="'stage-card '+topic.stage.color+(row.length===2?' wide':'')" [routerLink]="['/grammar/n5',topic.id]"><div class="stage-number">{{+topic.id}}</div><div class="stage-body"><div class="stage-illustration" [class.bubble]="topic.id==='01'" [class.exam]="topic.id==='10'">{{topic.stage.icon}}</div><div><h3>{{i18n.t(topic.titleKey)}}</h3><ul>@for(key of topic.stage.bulletKeys;track key){<li>{{i18n.t(key)}}</li>}</ul></div></div><span class="stage-open" aria-hidden="true">›</span></a>@if(!$last){<div class="connector horizontal" aria-hidden="true">→</div>}}</div>@if(!$last){<div [class]="'snake-line line-'+($index+1)" aria-hidden="true"></div>}}</section><aside class="right-panel" id="grammar-progress">@for(key of roadmap.panelKeys;track key){<section [class]="'panel '+['progress-panel','howto-panel','motivation'][$index]" [innerHTML]="i18n.t(key)"></section>}</aside></section>
+        }
+      </main>
+    </div>
+  }
+</div>

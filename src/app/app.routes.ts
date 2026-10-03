@@ -51,6 +51,7 @@ export const routes: Routes = [
   { path: 'rush/medals', loadComponent: () => import('./features/rush/rush-medals.page').then(module => module.RushMedalsPage) },
   { path: 'rush', loadComponent: () => import('./features/rush/kana-rush.page').then(module => module.KanaRushPage) },
   { path: 'manga', loadChildren: () => import('./features/manga/manga.routes').then(module => module.MANGA_ROUTES) },
+  { path: 'grammar', loadChildren: () => import('./features/grammar/grammar.routes').then(module => module.GRAMMAR_ROUTES) },
   { path: 'upload', loadComponent: () => import('./features/manga/mokuro-remote-import.page').then(module => module.MokuroRemoteImportPage) },
   { path: '**', redirectTo: '' },
 ];
