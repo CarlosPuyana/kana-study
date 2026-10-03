@@ -1,0 +1,51 @@
+<section [class]="practice()?'practice-question-card':'exercise-block'">
+  @if(practice()){
+    <div class="practice-question-meta"><span class="practice-type">{{i18n.t(exercise().labelKey)}}</span><span class="practice-topic">{{i18n.t(exercise().topicKey)}}</span></div><h2>{{i18n.t(exercise().questionKey)}}</h2>
+  } @else {
+    <div class="section-title"><span>02</span><div><small>{{i18n.t('grammar.exercise')}}</small><h3>{{i18n.t(exercise().questionKey)}}</h3></div></div>
+  }
+  @if(exercise().contextKey;as key){<article class="exercise-context" [innerHTML]="i18n.t(key)"></article>}
+  @if(exercise().direction;as direction){<app-grammar-direction [direction]="direction"/>}
+  <div [class]="practice()?'practice-prompt':'exercise-prompt'">{{i18n.t(exercise().promptKey)}}</div>
+  @if(choice();as choice){
+    <div [class]="(practice()?'practice-options-grid':'exercise-options')+(choice.kind==='multiple-choice'?'':' segment-options')" role="group" [attr.aria-label]="i18n.t(exercise().questionKey)">
+      @for(option of choice.optionKeys;track $index){
+        <button type="button" [class]="practice()?'practice-option':'exercise-option'" [class.selected]="selected()===$index" [class.correct]="checked()&&$index===choice.answer" [class.wrong]="checked()&&selected()===$index&&!correct()" [disabled]="checked()" [attr.aria-pressed]="selected()===$index" (click)="select($index)">{{i18n.t(option)}}</button>
+      }
+    </div>
+  } @else if(gap();as gap){
+    <label class="gap-label"><span>{{i18n.t('grammar.answerLabel')}}</span><input #gapInput class="grammar-answer-input" lang="ja" type="text" [value]="textAnswer()" [disabled]="checked()" autocomplete="off" autocapitalize="off" spellcheck="false" (input)="textAnswer.set($any($event.target).value)" (keydown.enter)="onEnter($event)"/></label>
+    @if(gap.kanaBank?.length){<app-grammar-kana-assist [kana]="gap.kanaBank!" [disabled]="checked()" [canErase]="!!textAnswer()" (inserted)="editGap($event)" (erased)="editGap('',true)"/>}
+  } @else if(ordered();as ordered){
+    <p class="exercise-help">{{i18n.t('grammar.buildHelp')}}</p>
+    <div class="constructed-sentence" role="group" [attr.aria-label]="i18n.t('grammar.yourSentence')">
+      @for(token of sequence();track $index){<button type="button" class="grammar-token" [disabled]="checked()" [attr.aria-label]="i18n.t('grammar.removeToken',{token:i18n.t(ordered.tokenKeys[token])})" (click)="removeToken($index)">{{i18n.t(ordered.tokenKeys[token])}} <span aria-hidden="true">×</span></button>}
+    </div>
+    <div class="token-bank" role="group" [attr.aria-label]="i18n.t('grammar.availableBlocks')">
+      @for(token of ordered.tokenKeys;track $index){<button type="button" class="grammar-token" [disabled]="checked()||sequence().includes($index)" (click)="addToken($index)">{{i18n.t(token)}}</button>}
+    </div>
+  } @else if(matching();as matching){
+    <p class="exercise-help">{{i18n.t('grammar.matchHelp')}}</p><div class="matching-grid">
+      <div>@for(pair of matching.pairs;track $index){<button type="button" class="grammar-match" [class.selected]="matchingLeft()===$index" [class.correct]="checked()&&matches()[$index]===$index" [class.wrong]="checked()&&matches()[$index]!==$index" [disabled]="checked()" [attr.aria-pressed]="matchingLeft()===$index" (click)="chooseLeft($index)">{{i18n.t(pair.leftKey)}} @if(matches()[$index]!==undefined){<small>→ {{i18n.t(matching.pairs[matches()[$index]].rightKey)}}</small>}</button>}</div>
+      <div>@for(index of rightOrder();track index){<button type="button" class="grammar-match" [disabled]="checked()||matchingLeft()===null" (click)="matchRight(index)">{{i18n.t(matching.pairs[index].rightKey)}}</button>}</div>
+    </div>
+  }
+  @if(checked()){
+    <div [class]="practice()?'practice-feedback-box':'exercise-feedback show'" [class.success]="correct()" [class.error]="!correct()" role="status">
+      <div [class]="practice()?'practice-feedback-icon':'feedback-icon'">{{correct()?'✓':'!'}}</div><div><strong>{{i18n.t(correct()?'grammar.correct':practice()?'grammar.review':'grammar.almost')}}</strong><p>{{i18n.t(correct()?exercise().successKey:exercise().errorKey)}}</p>
+        @if(!correct()){
+          <p><strong>{{i18n.t('grammar.solution')}}</strong>
+          @if(gap();as gap){ {{i18n.t(gap.solutionKey)}} }
+          @if(ordered();as ordered){ @for(index of ordered.solution;track $index){ {{i18n.t(ordered.tokenKeys[index])}} } }
+          @if(matching();as matching){ @for(pair of matching.pairs;track $index){<span class="solution-pair">{{i18n.t(pair.leftKey)}} → {{i18n.t(pair.rightKey)}}</span>} }
+          @if(choice();as choice){ {{i18n.t(choice.optionKeys[choice.answer])}} }
+          </p>
+        }
+      </div>
+    </div>
+  }
+  <div [class]="practice()?'practice-question-actions':'exercise-actions'">
+    @if(!checked()){<button type="button" [class]="practice()?'practice-check':'check-answer'" [disabled]="!ready()" (click)="check($event)">{{i18n.t('grammar.check')}}</button>}
+    <button #continueButton type="button" [class]="practice()?'practice-next':'continue-answer'" [disabled]="!checked()" [hidden]="practice()&&!checked()" (click)="continued.emit()">{{i18n.t(last()?'grammar.results':'grammar.next')}}</button>
+  </div>
+</section>

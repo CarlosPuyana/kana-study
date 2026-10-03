@@ -1,7 +1,5 @@
 import { computed, inject, Injectable } from '@angular/core';
-import ca from '../../../assets/i18n/ca.json';
-import en from '../../../assets/i18n/en.json';
-import es from '../../../assets/i18n/es.json';
+import {ca,en,es} from '../../../assets/i18n/dictionaries.generated';
 import { AppLanguage } from '../models/settings.model';
 import { SettingsService } from './settings.service';
 

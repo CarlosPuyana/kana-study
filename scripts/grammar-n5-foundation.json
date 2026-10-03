@@ -1,0 +1,4497 @@
+{
+  "topics": [
+    {
+      "id": "00",
+      "level": "N5",
+      "titleKey": "grammar.content.1",
+      "descriptionKey": "grammar.content.2",
+      "kickerKey": "grammar.content.3",
+      "icon": "あ",
+      "metaKeys": [
+        "grammar.content.4",
+        "grammar.content.5",
+        "grammar.content.6"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.8",
+        "bodyKey": "grammar.content.9"
+      },
+      "visualKey": "grammar.content.10",
+      "end": {
+        "eyebrowKey": "grammar.content.11",
+        "titleKey": "grammar.content.12",
+        "bodyKey": "grammar.content.13"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.content.41",
+        "titleKey": "grammar.content.42",
+        "bodyKey": "grammar.content.43",
+        "links": [
+          {
+            "labelKey": "grammar.content.44",
+            "path": "/grammar/n5/00/1"
+          },
+          {
+            "labelKey": "grammar.content.45",
+            "path": "/grammar/n5/00/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "blue",
+        "icon": "あ✎",
+        "bulletKeys": [
+          "grammar.content.14",
+          "grammar.content.15",
+          "grammar.content.16"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "0.1",
+          "titleKey": "grammar.content.17",
+          "bodyKey": "grammar.content.18",
+          "icon": "文",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.content.19",
+          "path": "/grammar/n5/00/1"
+        },
+        {
+          "id": "0.2",
+          "titleKey": "grammar.content.20",
+          "bodyKey": "grammar.content.21",
+          "icon": "あ",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.content.22",
+          "path": "/grammar/n5/00/2"
+        },
+        {
+          "id": "0.3",
+          "titleKey": "grammar.content.23",
+          "bodyKey": "grammar.content.24",
+          "icon": "゛",
+          "color": "lesson-green",
+          "examplesKey": "grammar.content.25",
+          "path": "/grammar/n5/00/3"
+        },
+        {
+          "id": "0.4",
+          "titleKey": "grammar.content.26",
+          "bodyKey": "grammar.content.27",
+          "icon": "ゃ",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.content.28",
+          "path": "/grammar/n5/00/4"
+        },
+        {
+          "id": "0.5",
+          "titleKey": "grammar.content.29",
+          "bodyKey": "grammar.content.30",
+          "icon": "っ",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.content.31",
+          "path": "/grammar/n5/00/5"
+        },
+        {
+          "id": "0.6",
+          "titleKey": "grammar.content.32",
+          "bodyKey": "grammar.content.33",
+          "icon": "ー",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.content.34",
+          "path": "/grammar/n5/00/6"
+        },
+        {
+          "id": "0.7",
+          "titleKey": "grammar.content.35",
+          "bodyKey": "grammar.content.36",
+          "icon": "ア",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.content.37",
+          "path": "/grammar/n5/00/7"
+        },
+        {
+          "id": "0.8",
+          "titleKey": "grammar.content.38",
+          "bodyKey": "grammar.content.39",
+          "icon": "は",
+          "color": "lesson-red",
+          "examplesKey": "grammar.content.40",
+          "path": "/grammar/n5/00/8"
+        }
+      ]
+    },
+    {
+      "id": "01",
+      "level": "N5",
+      "titleKey": "grammar.content.263",
+      "descriptionKey": "grammar.content.264",
+      "kickerKey": "grammar.content.265",
+      "icon": "です",
+      "metaKeys": [
+        "grammar.content.266",
+        "grammar.content.5",
+        "grammar.content.267"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.268",
+        "bodyKey": "grammar.n5.01.overview.goal"
+      },
+      "visualKey": "grammar.content.270",
+      "end": {
+        "eyebrowKey": "grammar.content.271",
+        "titleKey": "grammar.content.272",
+        "bodyKey": "grammar.content.273"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.content.41",
+        "titleKey": "grammar.content.316",
+        "bodyKey": "grammar.content.317",
+        "links": [
+          {
+            "labelKey": "grammar.content.318",
+            "path": "/grammar/n5/01/1"
+          },
+          {
+            "labelKey": "grammar.content.45",
+            "path": "/grammar/n5/01/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "pink",
+        "icon": "です",
+        "bulletKeys": [
+          "grammar.content.274",
+          "grammar.content.275",
+          "grammar.content.276",
+          "grammar.content.277"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "1.1",
+          "titleKey": "grammar.content.278",
+          "bodyKey": "grammar.content.279",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.content.280",
+          "path": "/grammar/n5/01/1"
+        },
+        {
+          "id": "1.2",
+          "titleKey": "grammar.content.281",
+          "bodyKey": "grammar.content.282",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.content.283",
+          "path": "/grammar/n5/01/2"
+        },
+        {
+          "id": "1.3",
+          "titleKey": "grammar.content.214",
+          "bodyKey": "grammar.content.284",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.content.285",
+          "path": "/grammar/n5/01/3"
+        },
+        {
+          "id": "1.4",
+          "titleKey": "grammar.content.286",
+          "bodyKey": "grammar.content.287",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.content.288",
+          "path": "/grammar/n5/01/4"
+        },
+        {
+          "id": "1.5",
+          "titleKey": "grammar.content.289",
+          "bodyKey": "grammar.content.290",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.content.291",
+          "path": "/grammar/n5/01/5"
+        },
+        {
+          "id": "1.6",
+          "titleKey": "grammar.content.292",
+          "bodyKey": "grammar.content.293",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.content.294",
+          "path": "/grammar/n5/01/6"
+        },
+        {
+          "id": "1.7",
+          "titleKey": "grammar.content.295",
+          "bodyKey": "grammar.content.296",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.content.297",
+          "path": "/grammar/n5/01/7"
+        },
+        {
+          "id": "1.8",
+          "titleKey": "grammar.content.298",
+          "bodyKey": "grammar.content.299",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.content.300",
+          "path": "/grammar/n5/01/8"
+        },
+        {
+          "id": "1.9",
+          "titleKey": "grammar.content.301",
+          "bodyKey": "grammar.content.302",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.content.303",
+          "path": "/grammar/n5/01/9"
+        },
+        {
+          "id": "1.10",
+          "titleKey": "grammar.content.304",
+          "bodyKey": "grammar.content.305",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.content.306",
+          "path": "/grammar/n5/01/10"
+        },
+        {
+          "id": "1.11",
+          "titleKey": "grammar.content.307",
+          "bodyKey": "grammar.content.308",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.content.309",
+          "path": "/grammar/n5/01/11"
+        },
+        {
+          "id": "1.12",
+          "titleKey": "grammar.content.310",
+          "bodyKey": "grammar.content.311",
+          "icon": "12",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.content.312",
+          "path": "/grammar/n5/01/12"
+        },
+        {
+          "id": "1.13",
+          "titleKey": "grammar.content.313",
+          "bodyKey": "grammar.content.314",
+          "icon": "13",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.content.315",
+          "path": "/grammar/n5/01/13"
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "level": "N5",
+      "titleKey": "grammar.content.558",
+      "descriptionKey": "grammar.content.559",
+      "kickerKey": "grammar.content.560",
+      "icon": "い",
+      "metaKeys": [
+        "grammar.n5.02.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.562",
+        "bodyKey": "grammar.n5.02.overview.goal"
+      },
+      "visualKey": "grammar.n5.02.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.564",
+        "titleKey": "grammar.content.565",
+        "bodyKey": "grammar.content.273"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.02.journey.eyebrow",
+        "titleKey": "grammar.n5.02.journey.title",
+        "bodyKey": "grammar.n5.02.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/02/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/02/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "gold",
+        "icon": "🙂",
+        "bulletKeys": [
+          "grammar.content.566",
+          "grammar.content.567",
+          "grammar.content.543",
+          "grammar.content.568"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "2.1",
+          "titleKey": "grammar.n5.02.1.title",
+          "bodyKey": "grammar.n5.02.1.goal",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.02.1.preview",
+          "path": "/grammar/n5/02/1"
+        },
+        {
+          "id": "2.2",
+          "titleKey": "grammar.n5.02.2.title",
+          "bodyKey": "grammar.n5.02.2.goal",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.02.2.preview",
+          "path": "/grammar/n5/02/2"
+        },
+        {
+          "id": "2.3",
+          "titleKey": "grammar.n5.02.3.title",
+          "bodyKey": "grammar.n5.02.3.goal",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.02.3.preview",
+          "path": "/grammar/n5/02/3"
+        },
+        {
+          "id": "2.4",
+          "titleKey": "grammar.n5.02.4.title",
+          "bodyKey": "grammar.n5.02.4.goal",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.02.4.preview",
+          "path": "/grammar/n5/02/4"
+        },
+        {
+          "id": "2.5",
+          "titleKey": "grammar.n5.02.5.title",
+          "bodyKey": "grammar.n5.02.5.goal",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.02.5.preview",
+          "path": "/grammar/n5/02/5"
+        },
+        {
+          "id": "2.6",
+          "titleKey": "grammar.n5.02.6.title",
+          "bodyKey": "grammar.n5.02.6.goal",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.02.6.preview",
+          "path": "/grammar/n5/02/6"
+        },
+        {
+          "id": "2.7",
+          "titleKey": "grammar.n5.02.7.title",
+          "bodyKey": "grammar.n5.02.7.goal",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.02.7.preview",
+          "path": "/grammar/n5/02/7"
+        },
+        {
+          "id": "2.8",
+          "titleKey": "grammar.n5.02.8.title",
+          "bodyKey": "grammar.n5.02.8.goal",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.02.8.preview",
+          "path": "/grammar/n5/02/8"
+        },
+        {
+          "id": "2.9",
+          "titleKey": "grammar.n5.02.9.title",
+          "bodyKey": "grammar.n5.02.9.goal",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.02.9.preview",
+          "path": "/grammar/n5/02/9"
+        },
+        {
+          "id": "2.10",
+          "titleKey": "grammar.n5.02.10.title",
+          "bodyKey": "grammar.n5.02.10.goal",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.02.10.preview",
+          "path": "/grammar/n5/02/10"
+        },
+        {
+          "id": "2.11",
+          "titleKey": "grammar.n5.02.11.title",
+          "bodyKey": "grammar.n5.02.11.goal",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.02.11.preview",
+          "path": "/grammar/n5/02/11"
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "level": "N5",
+      "titleKey": "grammar.content.600",
+      "descriptionKey": "grammar.content.601",
+      "kickerKey": "grammar.content.602",
+      "icon": "行",
+      "metaKeys": [
+        "grammar.n5.03.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.604",
+        "bodyKey": "grammar.n5.03.overview.goal"
+      },
+      "visualKey": "grammar.n5.03.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.606",
+        "titleKey": "grammar.content.607",
+        "bodyKey": "grammar.content.273"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.03.journey.eyebrow",
+        "titleKey": "grammar.n5.03.journey.title",
+        "bodyKey": "grammar.n5.03.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/03/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/03/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "green",
+        "icon": "🏃",
+        "bulletKeys": [
+          "grammar.content.608",
+          "grammar.content.609",
+          "grammar.content.610",
+          "grammar.content.611"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "3.1",
+          "titleKey": "grammar.n5.03.1.title",
+          "bodyKey": "grammar.n5.03.1.goal",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.03.1.preview",
+          "path": "/grammar/n5/03/1"
+        },
+        {
+          "id": "3.2",
+          "titleKey": "grammar.n5.03.2.title",
+          "bodyKey": "grammar.n5.03.2.goal",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.03.2.preview",
+          "path": "/grammar/n5/03/2"
+        },
+        {
+          "id": "3.3",
+          "titleKey": "grammar.n5.03.3.title",
+          "bodyKey": "grammar.n5.03.3.goal",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.03.3.preview",
+          "path": "/grammar/n5/03/3"
+        },
+        {
+          "id": "3.4",
+          "titleKey": "grammar.n5.03.4.title",
+          "bodyKey": "grammar.n5.03.4.goal",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.03.4.preview",
+          "path": "/grammar/n5/03/4"
+        },
+        {
+          "id": "3.5",
+          "titleKey": "grammar.n5.03.5.title",
+          "bodyKey": "grammar.n5.03.5.goal",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.03.5.preview",
+          "path": "/grammar/n5/03/5"
+        },
+        {
+          "id": "3.6",
+          "titleKey": "grammar.n5.03.6.title",
+          "bodyKey": "grammar.n5.03.6.goal",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.03.6.preview",
+          "path": "/grammar/n5/03/6"
+        },
+        {
+          "id": "3.7",
+          "titleKey": "grammar.n5.03.7.title",
+          "bodyKey": "grammar.n5.03.7.goal",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.03.7.preview",
+          "path": "/grammar/n5/03/7"
+        },
+        {
+          "id": "3.8",
+          "titleKey": "grammar.n5.03.8.title",
+          "bodyKey": "grammar.n5.03.8.goal",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.03.8.preview",
+          "path": "/grammar/n5/03/8"
+        },
+        {
+          "id": "3.9",
+          "titleKey": "grammar.n5.03.9.title",
+          "bodyKey": "grammar.n5.03.9.goal",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.03.9.preview",
+          "path": "/grammar/n5/03/9"
+        },
+        {
+          "id": "3.10",
+          "titleKey": "grammar.n5.03.10.title",
+          "bodyKey": "grammar.n5.03.10.goal",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.03.10.preview",
+          "path": "/grammar/n5/03/10"
+        },
+        {
+          "id": "3.11",
+          "titleKey": "grammar.n5.03.11.title",
+          "bodyKey": "grammar.n5.03.11.goal",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.03.11.preview",
+          "path": "/grammar/n5/03/11"
+        },
+        {
+          "id": "3.12",
+          "titleKey": "grammar.n5.03.12.title",
+          "bodyKey": "grammar.n5.03.12.goal",
+          "icon": "12",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.03.12.preview",
+          "path": "/grammar/n5/03/12"
+        },
+        {
+          "id": "3.13",
+          "titleKey": "grammar.n5.03.13.title",
+          "bodyKey": "grammar.n5.03.13.goal",
+          "icon": "13",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.03.13.preview",
+          "path": "/grammar/n5/03/13"
+        },
+        {
+          "id": "3.14",
+          "titleKey": "grammar.n5.03.14.title",
+          "bodyKey": "grammar.n5.03.14.goal",
+          "icon": "14",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.03.14.preview",
+          "path": "/grammar/n5/03/14"
+        },
+        {
+          "id": "3.15",
+          "titleKey": "grammar.n5.03.15.title",
+          "bodyKey": "grammar.n5.03.15.goal",
+          "icon": "15",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.03.15.preview",
+          "path": "/grammar/n5/03/15"
+        },
+        {
+          "id": "3.16",
+          "titleKey": "grammar.n5.03.16.title",
+          "bodyKey": "grammar.n5.03.16.goal",
+          "icon": "16",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.03.16.preview",
+          "path": "/grammar/n5/03/16"
+        },
+        {
+          "id": "3.17",
+          "titleKey": "grammar.n5.03.17.title",
+          "bodyKey": "grammar.n5.03.17.goal",
+          "icon": "17",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.03.17.preview",
+          "path": "/grammar/n5/03/17"
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "level": "N5",
+      "titleKey": "grammar.content.662",
+      "descriptionKey": "grammar.content.663",
+      "kickerKey": "grammar.content.664",
+      "icon": "在",
+      "metaKeys": [
+        "grammar.n5.04.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.666",
+        "bodyKey": "grammar.n5.04.overview.goal"
+      },
+      "visualKey": "grammar.n5.04.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.668",
+        "titleKey": "grammar.content.669",
+        "bodyKey": "grammar.content.273"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.04.journey.eyebrow",
+        "titleKey": "grammar.n5.04.journey.title",
+        "bodyKey": "grammar.n5.04.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/04/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/04/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "violet",
+        "icon": "📍",
+        "bulletKeys": [
+          "grammar.content.670",
+          "grammar.content.671",
+          "grammar.content.672",
+          "grammar.content.673"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "4.1",
+          "titleKey": "grammar.n5.04.1.title",
+          "bodyKey": "grammar.n5.04.1.goal",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.04.1.preview",
+          "path": "/grammar/n5/04/1"
+        },
+        {
+          "id": "4.2",
+          "titleKey": "grammar.n5.04.2.title",
+          "bodyKey": "grammar.n5.04.2.goal",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.04.2.preview",
+          "path": "/grammar/n5/04/2"
+        },
+        {
+          "id": "4.3",
+          "titleKey": "grammar.n5.04.3.title",
+          "bodyKey": "grammar.n5.04.3.goal",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.04.3.preview",
+          "path": "/grammar/n5/04/3"
+        },
+        {
+          "id": "4.4",
+          "titleKey": "grammar.n5.04.4.title",
+          "bodyKey": "grammar.n5.04.4.goal",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.04.4.preview",
+          "path": "/grammar/n5/04/4"
+        },
+        {
+          "id": "4.5",
+          "titleKey": "grammar.n5.04.5.title",
+          "bodyKey": "grammar.n5.04.5.goal",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.04.5.preview",
+          "path": "/grammar/n5/04/5"
+        },
+        {
+          "id": "4.6",
+          "titleKey": "grammar.n5.04.6.title",
+          "bodyKey": "grammar.n5.04.6.goal",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.04.6.preview",
+          "path": "/grammar/n5/04/6"
+        },
+        {
+          "id": "4.7",
+          "titleKey": "grammar.n5.04.7.title",
+          "bodyKey": "grammar.n5.04.7.goal",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.04.7.preview",
+          "path": "/grammar/n5/04/7"
+        },
+        {
+          "id": "4.8",
+          "titleKey": "grammar.n5.04.8.title",
+          "bodyKey": "grammar.n5.04.8.goal",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.04.8.preview",
+          "path": "/grammar/n5/04/8"
+        },
+        {
+          "id": "4.9",
+          "titleKey": "grammar.n5.04.9.title",
+          "bodyKey": "grammar.n5.04.9.goal",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.04.9.preview",
+          "path": "/grammar/n5/04/9"
+        },
+        {
+          "id": "4.10",
+          "titleKey": "grammar.n5.04.10.title",
+          "bodyKey": "grammar.n5.04.10.goal",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.04.10.preview",
+          "path": "/grammar/n5/04/10"
+        },
+        {
+          "id": "4.11",
+          "titleKey": "grammar.n5.04.11.title",
+          "bodyKey": "grammar.n5.04.11.goal",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.04.11.preview",
+          "path": "/grammar/n5/04/11"
+        },
+        {
+          "id": "4.12",
+          "titleKey": "grammar.n5.04.12.title",
+          "bodyKey": "grammar.n5.04.12.goal",
+          "icon": "12",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.04.12.preview",
+          "path": "/grammar/n5/04/12"
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "level": "N5",
+      "titleKey": "grammar.content.709",
+      "descriptionKey": "grammar.content.710",
+      "kickerKey": "grammar.content.711",
+      "icon": "た",
+      "metaKeys": [
+        "grammar.n5.05.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.713",
+        "bodyKey": "grammar.n5.05.overview.goal"
+      },
+      "visualKey": "grammar.n5.05.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.716",
+        "titleKey": "grammar.content.717",
+        "bodyKey": "grammar.content.718"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.05.journey.eyebrow",
+        "titleKey": "grammar.n5.05.journey.title",
+        "bodyKey": "grammar.n5.05.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/05/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/05/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "blue",
+        "icon": "🗓️",
+        "bulletKeys": [
+          "grammar.content.719",
+          "grammar.content.720",
+          "grammar.content.721",
+          "grammar.content.722"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "5.1",
+          "titleKey": "grammar.n5.05.1.title",
+          "bodyKey": "grammar.n5.05.1.goal",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.05.1.preview",
+          "path": "/grammar/n5/05/1"
+        },
+        {
+          "id": "5.2",
+          "titleKey": "grammar.n5.05.2.title",
+          "bodyKey": "grammar.n5.05.2.goal",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.05.2.preview",
+          "path": "/grammar/n5/05/2"
+        },
+        {
+          "id": "5.3",
+          "titleKey": "grammar.n5.05.3.title",
+          "bodyKey": "grammar.n5.05.3.goal",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.05.3.preview",
+          "path": "/grammar/n5/05/3"
+        },
+        {
+          "id": "5.4",
+          "titleKey": "grammar.n5.05.4.title",
+          "bodyKey": "grammar.n5.05.4.goal",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.05.4.preview",
+          "path": "/grammar/n5/05/4"
+        },
+        {
+          "id": "5.5",
+          "titleKey": "grammar.n5.05.5.title",
+          "bodyKey": "grammar.n5.05.5.goal",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.05.5.preview",
+          "path": "/grammar/n5/05/5"
+        },
+        {
+          "id": "5.6",
+          "titleKey": "grammar.n5.05.6.title",
+          "bodyKey": "grammar.n5.05.6.goal",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.05.6.preview",
+          "path": "/grammar/n5/05/6"
+        },
+        {
+          "id": "5.7",
+          "titleKey": "grammar.n5.05.7.title",
+          "bodyKey": "grammar.n5.05.7.goal",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.05.7.preview",
+          "path": "/grammar/n5/05/7"
+        },
+        {
+          "id": "5.8",
+          "titleKey": "grammar.n5.05.8.title",
+          "bodyKey": "grammar.n5.05.8.goal",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.05.8.preview",
+          "path": "/grammar/n5/05/8"
+        },
+        {
+          "id": "5.9",
+          "titleKey": "grammar.n5.05.9.title",
+          "bodyKey": "grammar.n5.05.9.goal",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.05.9.preview",
+          "path": "/grammar/n5/05/9"
+        },
+        {
+          "id": "5.10",
+          "titleKey": "grammar.n5.05.10.title",
+          "bodyKey": "grammar.n5.05.10.goal",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.05.10.preview",
+          "path": "/grammar/n5/05/10"
+        },
+        {
+          "id": "5.11",
+          "titleKey": "grammar.n5.05.11.title",
+          "bodyKey": "grammar.n5.05.11.goal",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.05.11.preview",
+          "path": "/grammar/n5/05/11"
+        },
+        {
+          "id": "5.12",
+          "titleKey": "grammar.n5.05.12.title",
+          "bodyKey": "grammar.n5.05.12.goal",
+          "icon": "12",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.05.12.preview",
+          "path": "/grammar/n5/05/12"
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "level": "N5",
+      "titleKey": "grammar.content.759",
+      "descriptionKey": "grammar.content.760",
+      "kickerKey": "grammar.content.761",
+      "icon": "て",
+      "metaKeys": [
+        "grammar.n5.06.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.763",
+        "bodyKey": "grammar.n5.06.overview.goal"
+      },
+      "visualKey": "grammar.n5.06.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.765",
+        "titleKey": "grammar.content.766",
+        "bodyKey": "grammar.content.718"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.06.journey.eyebrow",
+        "titleKey": "grammar.n5.06.journey.title",
+        "bodyKey": "grammar.n5.06.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/06/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/06/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "orange",
+        "icon": "🔗",
+        "bulletKeys": [
+          "grammar.content.767",
+          "grammar.content.768",
+          "grammar.content.769",
+          "grammar.content.770"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "6.1",
+          "titleKey": "grammar.n5.06.1.title",
+          "bodyKey": "grammar.n5.06.1.goal",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.06.1.preview",
+          "path": "/grammar/n5/06/1"
+        },
+        {
+          "id": "6.2",
+          "titleKey": "grammar.n5.06.2.title",
+          "bodyKey": "grammar.n5.06.2.goal",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.06.2.preview",
+          "path": "/grammar/n5/06/2"
+        },
+        {
+          "id": "6.3",
+          "titleKey": "grammar.n5.06.3.title",
+          "bodyKey": "grammar.n5.06.3.goal",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.06.3.preview",
+          "path": "/grammar/n5/06/3"
+        },
+        {
+          "id": "6.4",
+          "titleKey": "grammar.n5.06.4.title",
+          "bodyKey": "grammar.n5.06.4.goal",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.06.4.preview",
+          "path": "/grammar/n5/06/4"
+        },
+        {
+          "id": "6.5",
+          "titleKey": "grammar.n5.06.5.title",
+          "bodyKey": "grammar.n5.06.5.goal",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.06.5.preview",
+          "path": "/grammar/n5/06/5"
+        },
+        {
+          "id": "6.6",
+          "titleKey": "grammar.n5.06.6.title",
+          "bodyKey": "grammar.n5.06.6.goal",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.06.6.preview",
+          "path": "/grammar/n5/06/6"
+        },
+        {
+          "id": "6.7",
+          "titleKey": "grammar.n5.06.7.title",
+          "bodyKey": "grammar.n5.06.7.goal",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.06.7.preview",
+          "path": "/grammar/n5/06/7"
+        },
+        {
+          "id": "6.8",
+          "titleKey": "grammar.n5.06.8.title",
+          "bodyKey": "grammar.n5.06.8.goal",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.06.8.preview",
+          "path": "/grammar/n5/06/8"
+        },
+        {
+          "id": "6.9",
+          "titleKey": "grammar.n5.06.9.title",
+          "bodyKey": "grammar.n5.06.9.goal",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.06.9.preview",
+          "path": "/grammar/n5/06/9"
+        },
+        {
+          "id": "6.10",
+          "titleKey": "grammar.n5.06.10.title",
+          "bodyKey": "grammar.n5.06.10.goal",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.06.10.preview",
+          "path": "/grammar/n5/06/10"
+        },
+        {
+          "id": "6.11",
+          "titleKey": "grammar.n5.06.11.title",
+          "bodyKey": "grammar.n5.06.11.goal",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.06.11.preview",
+          "path": "/grammar/n5/06/11"
+        },
+        {
+          "id": "6.12",
+          "titleKey": "grammar.n5.06.12.title",
+          "bodyKey": "grammar.n5.06.12.goal",
+          "icon": "12",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.06.12.preview",
+          "path": "/grammar/n5/06/12"
+        },
+        {
+          "id": "6.13",
+          "titleKey": "grammar.n5.06.13.title",
+          "bodyKey": "grammar.n5.06.13.goal",
+          "icon": "13",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.06.13.preview",
+          "path": "/grammar/n5/06/13"
+        },
+        {
+          "id": "6.14",
+          "titleKey": "grammar.n5.06.14.title",
+          "bodyKey": "grammar.n5.06.14.goal",
+          "icon": "14",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.06.14.preview",
+          "path": "/grammar/n5/06/14"
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "level": "N5",
+      "titleKey": "grammar.content.813",
+      "descriptionKey": "grammar.content.814",
+      "kickerKey": "grammar.content.815",
+      "icon": "話",
+      "metaKeys": [
+        "grammar.n5.07.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.816",
+        "bodyKey": "grammar.n5.07.overview.goal"
+      },
+      "visualKey": "grammar.n5.07.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.818",
+        "titleKey": "grammar.content.819",
+        "bodyKey": "grammar.content.718"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.07.journey.eyebrow",
+        "titleKey": "grammar.n5.07.journey.title",
+        "bodyKey": "grammar.n5.07.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/07/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/07/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "cyan",
+        "icon": "💬",
+        "bulletKeys": [
+          "grammar.content.820",
+          "grammar.content.821",
+          "grammar.content.822",
+          "grammar.content.823"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "7.1",
+          "titleKey": "grammar.n5.07.1.title",
+          "bodyKey": "grammar.n5.07.1.goal",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.07.1.preview",
+          "path": "/grammar/n5/07/1"
+        },
+        {
+          "id": "7.2",
+          "titleKey": "grammar.n5.07.2.title",
+          "bodyKey": "grammar.n5.07.2.goal",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.07.2.preview",
+          "path": "/grammar/n5/07/2"
+        },
+        {
+          "id": "7.3",
+          "titleKey": "grammar.n5.07.3.title",
+          "bodyKey": "grammar.n5.07.3.goal",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.07.3.preview",
+          "path": "/grammar/n5/07/3"
+        },
+        {
+          "id": "7.4",
+          "titleKey": "grammar.n5.07.4.title",
+          "bodyKey": "grammar.n5.07.4.goal",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.07.4.preview",
+          "path": "/grammar/n5/07/4"
+        },
+        {
+          "id": "7.5",
+          "titleKey": "grammar.n5.07.5.title",
+          "bodyKey": "grammar.n5.07.5.goal",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.07.5.preview",
+          "path": "/grammar/n5/07/5"
+        },
+        {
+          "id": "7.6",
+          "titleKey": "grammar.n5.07.6.title",
+          "bodyKey": "grammar.n5.07.6.goal",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.07.6.preview",
+          "path": "/grammar/n5/07/6"
+        },
+        {
+          "id": "7.7",
+          "titleKey": "grammar.n5.07.7.title",
+          "bodyKey": "grammar.n5.07.7.goal",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.07.7.preview",
+          "path": "/grammar/n5/07/7"
+        },
+        {
+          "id": "7.8",
+          "titleKey": "grammar.n5.07.8.title",
+          "bodyKey": "grammar.n5.07.8.goal",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.07.8.preview",
+          "path": "/grammar/n5/07/8"
+        },
+        {
+          "id": "7.9",
+          "titleKey": "grammar.n5.07.9.title",
+          "bodyKey": "grammar.n5.07.9.goal",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.07.9.preview",
+          "path": "/grammar/n5/07/9"
+        },
+        {
+          "id": "7.10",
+          "titleKey": "grammar.n5.07.10.title",
+          "bodyKey": "grammar.n5.07.10.goal",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.07.10.preview",
+          "path": "/grammar/n5/07/10"
+        },
+        {
+          "id": "7.11",
+          "titleKey": "grammar.n5.07.11.title",
+          "bodyKey": "grammar.n5.07.11.goal",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.07.11.preview",
+          "path": "/grammar/n5/07/11"
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "level": "N5",
+      "titleKey": "grammar.content.857",
+      "descriptionKey": "grammar.content.858",
+      "kickerKey": "grammar.content.859",
+      "icon": "文",
+      "metaKeys": [
+        "grammar.n5.08.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.860",
+        "bodyKey": "grammar.n5.08.overview.goal"
+      },
+      "visualKey": "grammar.n5.08.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.862",
+        "titleKey": "grammar.content.863",
+        "bodyKey": "grammar.content.718"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.08.journey.eyebrow",
+        "titleKey": "grammar.n5.08.journey.title",
+        "bodyKey": "grammar.n5.08.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/08/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/08/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "violet",
+        "icon": "💡",
+        "bulletKeys": [
+          "grammar.content.864",
+          "grammar.content.865",
+          "grammar.content.866",
+          "grammar.content.867"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "8.1",
+          "titleKey": "grammar.n5.08.1.title",
+          "bodyKey": "grammar.n5.08.1.goal",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.08.1.preview",
+          "path": "/grammar/n5/08/1"
+        },
+        {
+          "id": "8.2",
+          "titleKey": "grammar.n5.08.2.title",
+          "bodyKey": "grammar.n5.08.2.goal",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.08.2.preview",
+          "path": "/grammar/n5/08/2"
+        },
+        {
+          "id": "8.3",
+          "titleKey": "grammar.n5.08.3.title",
+          "bodyKey": "grammar.n5.08.3.goal",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.08.3.preview",
+          "path": "/grammar/n5/08/3"
+        },
+        {
+          "id": "8.4",
+          "titleKey": "grammar.n5.08.4.title",
+          "bodyKey": "grammar.n5.08.4.goal",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.08.4.preview",
+          "path": "/grammar/n5/08/4"
+        },
+        {
+          "id": "8.5",
+          "titleKey": "grammar.n5.08.5.title",
+          "bodyKey": "grammar.n5.08.5.goal",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.08.5.preview",
+          "path": "/grammar/n5/08/5"
+        },
+        {
+          "id": "8.6",
+          "titleKey": "grammar.n5.08.6.title",
+          "bodyKey": "grammar.n5.08.6.goal",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.08.6.preview",
+          "path": "/grammar/n5/08/6"
+        },
+        {
+          "id": "8.7",
+          "titleKey": "grammar.n5.08.7.title",
+          "bodyKey": "grammar.n5.08.7.goal",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.08.7.preview",
+          "path": "/grammar/n5/08/7"
+        },
+        {
+          "id": "8.8",
+          "titleKey": "grammar.n5.08.8.title",
+          "bodyKey": "grammar.n5.08.8.goal",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.08.8.preview",
+          "path": "/grammar/n5/08/8"
+        },
+        {
+          "id": "8.9",
+          "titleKey": "grammar.n5.08.9.title",
+          "bodyKey": "grammar.n5.08.9.goal",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.08.9.preview",
+          "path": "/grammar/n5/08/9"
+        },
+        {
+          "id": "8.10",
+          "titleKey": "grammar.n5.08.10.title",
+          "bodyKey": "grammar.n5.08.10.goal",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.08.10.preview",
+          "path": "/grammar/n5/08/10"
+        },
+        {
+          "id": "8.11",
+          "titleKey": "grammar.n5.08.11.title",
+          "bodyKey": "grammar.n5.08.11.goal",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.08.11.preview",
+          "path": "/grammar/n5/08/11"
+        }
+      ]
+    },
+    {
+      "id": "09",
+      "level": "N5",
+      "titleKey": "grammar.content.901",
+      "descriptionKey": "grammar.content.902",
+      "kickerKey": "grammar.content.903",
+      "icon": "比",
+      "metaKeys": [
+        "grammar.n5.09.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.904",
+        "bodyKey": "grammar.n5.09.overview.goal"
+      },
+      "visualKey": "grammar.n5.09.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.906",
+        "titleKey": "grammar.content.907",
+        "bodyKey": "grammar.content.718"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.09.journey.eyebrow",
+        "titleKey": "grammar.n5.09.journey.title",
+        "bodyKey": "grammar.n5.09.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/09/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/09/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "pink",
+        "icon": "📈",
+        "bulletKeys": [
+          "grammar.content.908",
+          "grammar.content.909",
+          "grammar.content.910",
+          "grammar.content.911"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "9.1",
+          "titleKey": "grammar.n5.09.1.title",
+          "bodyKey": "grammar.n5.09.1.goal",
+          "icon": "1",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.09.1.preview",
+          "path": "/grammar/n5/09/1"
+        },
+        {
+          "id": "9.2",
+          "titleKey": "grammar.n5.09.2.title",
+          "bodyKey": "grammar.n5.09.2.goal",
+          "icon": "2",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.09.2.preview",
+          "path": "/grammar/n5/09/2"
+        },
+        {
+          "id": "9.3",
+          "titleKey": "grammar.n5.09.3.title",
+          "bodyKey": "grammar.n5.09.3.goal",
+          "icon": "3",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.09.3.preview",
+          "path": "/grammar/n5/09/3"
+        },
+        {
+          "id": "9.4",
+          "titleKey": "grammar.n5.09.4.title",
+          "bodyKey": "grammar.n5.09.4.goal",
+          "icon": "4",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.09.4.preview",
+          "path": "/grammar/n5/09/4"
+        },
+        {
+          "id": "9.5",
+          "titleKey": "grammar.n5.09.5.title",
+          "bodyKey": "grammar.n5.09.5.goal",
+          "icon": "5",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.09.5.preview",
+          "path": "/grammar/n5/09/5"
+        },
+        {
+          "id": "9.6",
+          "titleKey": "grammar.n5.09.6.title",
+          "bodyKey": "grammar.n5.09.6.goal",
+          "icon": "6",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.09.6.preview",
+          "path": "/grammar/n5/09/6"
+        },
+        {
+          "id": "9.7",
+          "titleKey": "grammar.n5.09.7.title",
+          "bodyKey": "grammar.n5.09.7.goal",
+          "icon": "7",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.09.7.preview",
+          "path": "/grammar/n5/09/7"
+        },
+        {
+          "id": "9.8",
+          "titleKey": "grammar.n5.09.8.title",
+          "bodyKey": "grammar.n5.09.8.goal",
+          "icon": "8",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.09.8.preview",
+          "path": "/grammar/n5/09/8"
+        },
+        {
+          "id": "9.9",
+          "titleKey": "grammar.n5.09.9.title",
+          "bodyKey": "grammar.n5.09.9.goal",
+          "icon": "9",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.09.9.preview",
+          "path": "/grammar/n5/09/9"
+        },
+        {
+          "id": "9.10",
+          "titleKey": "grammar.n5.09.10.title",
+          "bodyKey": "grammar.n5.09.10.goal",
+          "icon": "10",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.09.10.preview",
+          "path": "/grammar/n5/09/10"
+        },
+        {
+          "id": "9.11",
+          "titleKey": "grammar.n5.09.11.title",
+          "bodyKey": "grammar.n5.09.11.goal",
+          "icon": "11",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.09.11.preview",
+          "path": "/grammar/n5/09/11"
+        },
+        {
+          "id": "9.12",
+          "titleKey": "grammar.n5.09.12.title",
+          "bodyKey": "grammar.n5.09.12.goal",
+          "icon": "12",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.09.12.preview",
+          "path": "/grammar/n5/09/12"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "level": "N5",
+      "titleKey": "grammar.content.946",
+      "descriptionKey": "grammar.content.947",
+      "kickerKey": "grammar.content.948",
+      "icon": "N5",
+      "metaKeys": [
+        "grammar.n5.10.count",
+        "grammar.n5.practice.available"
+      ],
+      "goal": {
+        "eyebrowKey": "grammar.content.7",
+        "titleKey": "grammar.content.951",
+        "bodyKey": "grammar.n5.10.overview.goal"
+      },
+      "visualKey": "grammar.n5.10.overview.visual",
+      "end": {
+        "eyebrowKey": "grammar.content.953",
+        "titleKey": "grammar.content.954",
+        "bodyKey": "grammar.content.718"
+      },
+      "journey": {
+        "eyebrowKey": "grammar.n5.10.journey.eyebrow",
+        "titleKey": "grammar.n5.10.journey.title",
+        "bodyKey": "grammar.n5.10.journey.body",
+        "links": [
+          {
+            "labelKey": "grammar.n5.start.lesson",
+            "path": "/grammar/n5/10/1"
+          },
+          {
+            "labelKey": "grammar.n5.start.practice",
+            "path": "/grammar/n5/10/practice"
+          }
+        ]
+      },
+      "stage": {
+        "color": "gold",
+        "icon": "N5",
+        "bulletKeys": [
+          "grammar.content.955",
+          "grammar.content.956",
+          "grammar.content.957",
+          "grammar.content.958"
+        ]
+      },
+      "lessons": [
+        {
+          "id": "10.1",
+          "titleKey": "grammar.n5.10.1.title",
+          "bodyKey": "grammar.n5.10.1.goal",
+          "icon": "★",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.10.1.preview",
+          "path": "/grammar/n5/10/1"
+        },
+        {
+          "id": "10.2",
+          "titleKey": "grammar.n5.10.2.title",
+          "bodyKey": "grammar.n5.10.2.goal",
+          "icon": "★",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.10.2.preview",
+          "path": "/grammar/n5/10/2"
+        },
+        {
+          "id": "10.3",
+          "titleKey": "grammar.n5.10.3.title",
+          "bodyKey": "grammar.n5.10.3.goal",
+          "icon": "★",
+          "color": "lesson-green",
+          "examplesKey": "grammar.n5.10.3.preview",
+          "path": "/grammar/n5/10/3"
+        },
+        {
+          "id": "10.4",
+          "titleKey": "grammar.n5.10.4.title",
+          "bodyKey": "grammar.n5.10.4.goal",
+          "icon": "★",
+          "color": "lesson-violet",
+          "examplesKey": "grammar.n5.10.4.preview",
+          "path": "/grammar/n5/10/4"
+        },
+        {
+          "id": "10.5",
+          "titleKey": "grammar.n5.10.5.title",
+          "bodyKey": "grammar.n5.10.5.goal",
+          "icon": "★",
+          "color": "lesson-orange",
+          "examplesKey": "grammar.n5.10.5.preview",
+          "path": "/grammar/n5/10/5"
+        },
+        {
+          "id": "10.6",
+          "titleKey": "grammar.n5.10.6.title",
+          "bodyKey": "grammar.n5.10.6.goal",
+          "icon": "★",
+          "color": "lesson-gold",
+          "examplesKey": "grammar.n5.10.6.preview",
+          "path": "/grammar/n5/10/6"
+        },
+        {
+          "id": "10.7",
+          "titleKey": "grammar.n5.10.7.title",
+          "bodyKey": "grammar.n5.10.7.goal",
+          "icon": "★",
+          "color": "lesson-pink",
+          "examplesKey": "grammar.n5.10.7.preview",
+          "path": "/grammar/n5/10/7"
+        },
+        {
+          "id": "10.8",
+          "titleKey": "grammar.n5.10.8.title",
+          "bodyKey": "grammar.n5.10.8.goal",
+          "icon": "★",
+          "color": "lesson-red",
+          "examplesKey": "grammar.n5.10.8.preview",
+          "path": "/grammar/n5/10/8"
+        },
+        {
+          "id": "10.9",
+          "titleKey": "grammar.n5.10.9.title",
+          "bodyKey": "grammar.n5.10.9.goal",
+          "icon": "★",
+          "color": "lesson-blue",
+          "examplesKey": "grammar.n5.10.9.preview",
+          "path": "/grammar/n5/10/9"
+        },
+        {
+          "id": "10.10",
+          "titleKey": "grammar.n5.10.10.title",
+          "bodyKey": "grammar.n5.10.10.goal",
+          "icon": "★",
+          "color": "lesson-cyan",
+          "examplesKey": "grammar.n5.10.10.preview",
+          "path": "/grammar/n5/10/10"
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "1",
+      "topicId": "00",
+      "position": 1,
+      "total": 8,
+      "titleKey": "grammar.content.17",
+      "descriptionKey": "grammar.content.54",
+      "icon": "文",
+      "theory": [
+        {
+          "symbol": "ひらがな",
+          "titleKey": "grammar.content.50",
+          "bodyKey": "grammar.content.55"
+        },
+        {
+          "symbol": "カタカナ",
+          "titleKey": "grammar.content.35",
+          "bodyKey": "grammar.content.56"
+        },
+        {
+          "symbol": "漢字",
+          "titleKey": "grammar.content.51",
+          "bodyKey": "grammar.content.57"
+        }
+      ],
+      "ideaKey": "grammar.content.58",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.60",
+          "bodyKey": "grammar.content.61",
+          "icon": "🌱"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.62",
+          "bodyKey": "grammar.content.63",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/00",
+      "nextPath": "/grammar/n5/00/2",
+      "exercise": {
+        "id": "00.1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.47",
+        "questionKey": "grammar.content.48",
+        "promptKey": "grammar.content.49",
+        "optionKeys": [
+          "grammar.content.50",
+          "grammar.content.35",
+          "grammar.content.51"
+        ],
+        "answer": 1,
+        "successKey": "grammar.content.52",
+        "errorKey": "grammar.content.53"
+      }
+    },
+    {
+      "id": "2",
+      "topicId": "00",
+      "position": 2,
+      "total": 8,
+      "titleKey": "grammar.content.20",
+      "descriptionKey": "grammar.content.73",
+      "icon": "あ",
+      "theory": [
+        {
+          "symbol": "あ い う え お",
+          "titleKey": "grammar.content.74",
+          "bodyKey": "grammar.content.75"
+        },
+        {
+          "symbol": "か き く け こ",
+          "titleKey": "grammar.content.76",
+          "bodyKey": "grammar.content.77"
+        },
+        {
+          "symbol": "あ → sonido",
+          "titleKey": "grammar.content.78",
+          "bodyKey": "grammar.content.79"
+        }
+      ],
+      "ideaKey": "grammar.content.80",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.60",
+          "bodyKey": "grammar.content.61",
+          "icon": "🌱"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.62",
+          "bodyKey": "grammar.content.63",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/00/1",
+      "nextPath": "/grammar/n5/00/3",
+      "exercise": {
+        "id": "00.2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.64",
+        "questionKey": "grammar.content.65",
+        "promptKey": "grammar.content.66",
+        "optionKeys": [
+          "grammar.content.67",
+          "grammar.content.68",
+          "grammar.content.69",
+          "grammar.content.70"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.71",
+        "errorKey": "grammar.content.72"
+      }
+    },
+    {
+      "id": "3",
+      "topicId": "00",
+      "position": 3,
+      "total": 8,
+      "titleKey": "grammar.content.23",
+      "descriptionKey": "grammar.content.90",
+      "icon": "゛",
+      "theory": [
+        {
+          "symbol": "か → が",
+          "titleKey": "grammar.content.91",
+          "bodyKey": "grammar.content.92"
+        },
+        {
+          "symbol": "さ → ざ　た → だ　は → ば",
+          "titleKey": "grammar.content.93",
+          "bodyKey": "grammar.content.94"
+        },
+        {
+          "symbol": "は → ぱ",
+          "titleKey": "grammar.content.95",
+          "bodyKey": "grammar.content.96"
+        }
+      ],
+      "ideaKey": "grammar.content.97",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.60",
+          "bodyKey": "grammar.content.61",
+          "icon": "🌱"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.62",
+          "bodyKey": "grammar.content.63",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/00/2",
+      "nextPath": "/grammar/n5/00/4",
+      "exercise": {
+        "id": "00.3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.81",
+        "questionKey": "grammar.content.82",
+        "promptKey": "grammar.content.83",
+        "optionKeys": [
+          "grammar.content.84",
+          "grammar.content.85",
+          "grammar.content.86",
+          "grammar.content.87"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.88",
+        "errorKey": "grammar.content.89"
+      }
+    },
+    {
+      "id": "4",
+      "topicId": "00",
+      "position": 4,
+      "total": 8,
+      "titleKey": "grammar.content.26",
+      "descriptionKey": "grammar.content.107",
+      "icon": "ゃ",
+      "theory": [
+        {
+          "symbol": "き + ゃ → きゃ",
+          "titleKey": "grammar.content.108",
+          "bodyKey": "grammar.content.109"
+        },
+        {
+          "symbol": "しゅ → shu",
+          "titleKey": "grammar.content.110",
+          "bodyKey": "grammar.content.111"
+        },
+        {
+          "symbol": "きや ≠ きゃ",
+          "titleKey": "grammar.content.112",
+          "bodyKey": "grammar.content.113"
+        }
+      ],
+      "ideaKey": "grammar.content.114",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.60",
+          "bodyKey": "grammar.content.61",
+          "icon": "🌱"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.62",
+          "bodyKey": "grammar.content.63",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/00/3",
+      "nextPath": "/grammar/n5/00/5",
+      "exercise": {
+        "id": "00.4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.98",
+        "questionKey": "grammar.content.99",
+        "promptKey": "grammar.content.100",
+        "optionKeys": [
+          "grammar.content.101",
+          "grammar.content.102",
+          "grammar.content.103",
+          "grammar.content.104"
+        ],
+        "answer": 1,
+        "successKey": "grammar.content.105",
+        "errorKey": "grammar.content.106"
+      }
+    },
+    {
+      "id": "5",
+      "topicId": "00",
+      "position": 5,
+      "total": 8,
+      "titleKey": "grammar.content.29",
+      "descriptionKey": "grammar.content.122",
+      "icon": "っ",
+      "theory": [
+        {
+          "symbol": "きって",
+          "titleKey": "grammar.content.123",
+          "bodyKey": "grammar.content.124"
+        },
+        {
+          "symbol": "kitte",
+          "titleKey": "grammar.content.125",
+          "bodyKey": "grammar.content.126"
+        },
+        {
+          "symbol": "きて ≠ きって",
+          "titleKey": "grammar.content.127",
+          "bodyKey": "grammar.content.128"
+        }
+      ],
+      "ideaKey": "grammar.content.129",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.60",
+          "bodyKey": "grammar.content.61",
+          "icon": "🌱"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.62",
+          "bodyKey": "grammar.content.63",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/00/4",
+      "nextPath": "/grammar/n5/00/6",
+      "exercise": {
+        "id": "00.5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.115",
+        "questionKey": "grammar.content.116",
+        "promptKey": "grammar.content.117",
+        "optionKeys": [
+          "grammar.content.118",
+          "grammar.content.119"
+        ],
+        "answer": 1,
+        "successKey": "grammar.content.120",
+        "errorKey": "grammar.content.121"
+      }
+    },
+    {
+      "id": "6",
+      "topicId": "00",
+      "position": 6,
+      "total": 8,
+      "titleKey": "grammar.content.32",
+      "descriptionKey": "grammar.content.137",
+      "icon": "ー",
+      "theory": [
+        {
+          "symbol": "おばさん ≠ おばあさん",
+          "titleKey": "grammar.content.138",
+          "bodyKey": "grammar.content.139"
+        },
+        {
+          "symbol": "おばあさん",
+          "titleKey": "grammar.content.140",
+          "bodyKey": "grammar.content.141"
+        },
+        {
+          "symbol": "コーヒー",
+          "titleKey": "grammar.content.142",
+          "bodyKey": "grammar.content.143"
+        }
+      ],
+      "ideaKey": "grammar.content.144",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.60",
+          "bodyKey": "grammar.content.61",
+          "icon": "🌱"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.62",
+          "bodyKey": "grammar.content.63",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/00/5",
+      "nextPath": "/grammar/n5/00/7",
+      "exercise": {
+        "id": "00.6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.130",
+        "questionKey": "grammar.content.131",
+        "promptKey": "grammar.content.132",
+        "optionKeys": [
+          "grammar.content.133",
+          "grammar.content.134"
+        ],
+        "answer": 1,
+        "successKey": "grammar.content.135",
+        "errorKey": "grammar.content.136"
+      }
+    },
+    {
+      "id": "7",
+      "topicId": "00",
+      "position": 7,
+      "total": 8,
+      "titleKey": "grammar.content.35",
+      "descriptionKey": "grammar.content.153",
+      "icon": "ア",
+      "theory": [
+        {
+          "symbol": "あ ↔ ア",
+          "titleKey": "grammar.content.154",
+          "bodyKey": "grammar.content.155"
+        },
+        {
+          "symbol": "テレビ　コーヒー　スペイン",
+          "titleKey": "grammar.content.156",
+          "bodyKey": "grammar.content.157"
+        },
+        {
+          "symbol": "ア → sonido",
+          "titleKey": "grammar.content.158",
+          "bodyKey": "grammar.content.159"
+        }
+      ],
+      "ideaKey": "grammar.content.160",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.60",
+          "bodyKey": "grammar.content.61",
+          "icon": "🌱"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.62",
+          "bodyKey": "grammar.content.63",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/00/6",
+      "nextPath": "/grammar/n5/00/8",
+      "exercise": {
+        "id": "00.7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.145",
+        "questionKey": "grammar.content.146",
+        "promptKey": "grammar.content.147",
+        "optionKeys": [
+          "grammar.content.148",
+          "grammar.content.149",
+          "grammar.content.87",
+          "grammar.content.150"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.151",
+        "errorKey": "grammar.content.152"
+      }
+    },
+    {
+      "id": "8",
+      "topicId": "00",
+      "position": 8,
+      "total": 8,
+      "titleKey": "grammar.content.38",
+      "descriptionKey": "grammar.content.170",
+      "icon": "は",
+      "theory": [
+        {
+          "symbol": "は → wa",
+          "titleKey": "grammar.content.171",
+          "bodyKey": "grammar.content.172"
+        },
+        {
+          "symbol": "へ → e",
+          "titleKey": "grammar.content.173",
+          "bodyKey": "grammar.content.174"
+        },
+        {
+          "symbol": "を → o",
+          "titleKey": "grammar.content.175",
+          "bodyKey": "grammar.content.176"
+        }
+      ],
+      "ideaKey": "grammar.content.177",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.60",
+          "bodyKey": "grammar.content.61",
+          "icon": "🌱"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.62",
+          "bodyKey": "grammar.content.63",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/00/7",
+      "nextPath": "/grammar/n5/00/practice",
+      "exercise": {
+        "id": "00.8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.161",
+        "questionKey": "grammar.content.162",
+        "promptKey": "grammar.content.163",
+        "optionKeys": [
+          "grammar.content.164",
+          "grammar.content.165",
+          "grammar.content.166",
+          "grammar.content.167"
+        ],
+        "answer": 1,
+        "successKey": "grammar.content.168",
+        "errorKey": "grammar.content.169"
+      }
+    },
+    {
+      "id": "1",
+      "topicId": "01",
+      "position": 1,
+      "total": 13,
+      "titleKey": "grammar.content.278",
+      "descriptionKey": "grammar.content.327",
+      "icon": "文",
+      "theory": [
+        {
+          "symbol": "わたし は",
+          "titleKey": "grammar.content.328",
+          "bodyKey": "grammar.content.329"
+        },
+        {
+          "symbol": "学生",
+          "titleKey": "grammar.content.330",
+          "bodyKey": "grammar.content.331"
+        },
+        {
+          "symbol": "です",
+          "titleKey": "grammar.content.332",
+          "bodyKey": "grammar.content.333"
+        }
+      ],
+      "ideaKey": "grammar.content.334",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01",
+      "nextPath": "/grammar/n5/01/2",
+      "exercise": {
+        "id": "01.1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.319",
+        "questionKey": "grammar.content.320",
+        "promptKey": "grammar.content.321",
+        "optionKeys": [
+          "grammar.content.322",
+          "grammar.content.323",
+          "grammar.content.324"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.325",
+        "errorKey": "grammar.content.326"
+      }
+    },
+    {
+      "id": "2",
+      "topicId": "01",
+      "position": 2,
+      "total": 13,
+      "titleKey": "grammar.content.281",
+      "descriptionKey": "grammar.content.345",
+      "icon": "です",
+      "theory": [
+        {
+          "symbol": "学生です",
+          "titleKey": "grammar.content.346",
+          "bodyKey": "grammar.content.347"
+        },
+        {
+          "symbol": "これはほんです。",
+          "titleKey": "grammar.content.348",
+          "bodyKey": "grammar.content.349"
+        },
+        {
+          "symbol": "A は B です",
+          "titleKey": "grammar.content.350",
+          "bodyKey": "grammar.content.351"
+        }
+      ],
+      "ideaKey": "grammar.content.352",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/1",
+      "nextPath": "/grammar/n5/01/3",
+      "exercise": {
+        "id": "01.2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.339",
+        "questionKey": "grammar.content.340",
+        "promptKey": "grammar.content.341",
+        "optionKeys": [
+          "grammar.content.281",
+          "grammar.content.171",
+          "grammar.content.342",
+          "grammar.content.87"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.343",
+        "errorKey": "grammar.content.344"
+      }
+    },
+    {
+      "id": "3",
+      "topicId": "01",
+      "position": 3,
+      "total": 13,
+      "titleKey": "grammar.content.214",
+      "descriptionKey": "grammar.content.361",
+      "icon": "だ",
+      "theory": [
+        {
+          "symbol": "学生だ",
+          "titleKey": "grammar.content.362",
+          "bodyKey": "grammar.content.363"
+        },
+        {
+          "symbol": "学生です ↔ 学生だ",
+          "titleKey": "grammar.content.364",
+          "bodyKey": "grammar.content.365"
+        },
+        {
+          "symbol": "だ",
+          "titleKey": "grammar.content.366",
+          "bodyKey": "grammar.content.367"
+        }
+      ],
+      "ideaKey": "grammar.content.368",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/2",
+      "nextPath": "/grammar/n5/01/4",
+      "exercise": {
+        "id": "01.3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.353",
+        "questionKey": "grammar.content.354",
+        "promptKey": "grammar.content.355",
+        "optionKeys": [
+          "grammar.content.356",
+          "grammar.content.357",
+          "grammar.content.358"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.359",
+        "errorKey": "grammar.content.360"
+      }
+    },
+    {
+      "id": "4",
+      "topicId": "01",
+      "position": 4,
+      "total": 13,
+      "titleKey": "grammar.content.286",
+      "descriptionKey": "grammar.content.375",
+      "icon": "は",
+      "theory": [
+        {
+          "symbol": "わたし は",
+          "titleKey": "grammar.content.376",
+          "bodyKey": "grammar.content.377"
+        },
+        {
+          "symbol": "わたしは学生です。",
+          "titleKey": "grammar.content.378",
+          "bodyKey": "grammar.content.379"
+        },
+        {
+          "symbol": "は → wa",
+          "titleKey": "grammar.content.380",
+          "bodyKey": "grammar.content.381"
+        }
+      ],
+      "ideaKey": "grammar.content.382",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/3",
+      "nextPath": "/grammar/n5/01/5",
+      "exercise": {
+        "id": "01.4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.369",
+        "questionKey": "grammar.content.370",
+        "promptKey": "grammar.content.371",
+        "optionKeys": [
+          "grammar.content.171",
+          "grammar.content.175",
+          "grammar.content.372",
+          "grammar.content.373"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.343",
+        "errorKey": "grammar.content.374"
+      }
+    },
+    {
+      "id": "5",
+      "topicId": "01",
+      "position": 5,
+      "total": 13,
+      "titleKey": "grammar.content.289",
+      "descriptionKey": "grammar.content.391",
+      "icon": "か",
+      "theory": [
+        {
+          "symbol": "学生ですか。",
+          "titleKey": "grammar.content.392",
+          "bodyKey": "grammar.content.393"
+        },
+        {
+          "symbol": "これはほんですか。",
+          "titleKey": "grammar.content.394",
+          "bodyKey": "grammar.content.395"
+        },
+        {
+          "symbol": "か",
+          "titleKey": "grammar.content.396",
+          "bodyKey": "grammar.content.397"
+        }
+      ],
+      "ideaKey": "grammar.content.398",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/4",
+      "nextPath": "/grammar/n5/01/6",
+      "exercise": {
+        "id": "01.5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.383",
+        "questionKey": "grammar.content.384",
+        "promptKey": "grammar.content.385",
+        "optionKeys": [
+          "grammar.content.386",
+          "grammar.content.387",
+          "grammar.content.388"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.389",
+        "errorKey": "grammar.content.390"
+      }
+    },
+    {
+      "id": "6",
+      "topicId": "01",
+      "position": 6,
+      "total": 13,
+      "titleKey": "grammar.content.292",
+      "descriptionKey": "grammar.content.404",
+      "icon": "も",
+      "theory": [
+        {
+          "symbol": "わたしも",
+          "titleKey": "grammar.content.405",
+          "bodyKey": "grammar.content.406"
+        },
+        {
+          "symbol": "わたしも学生です。",
+          "titleKey": "grammar.content.407",
+          "bodyKey": "grammar.content.408"
+        },
+        {
+          "symbol": "A: 学生です。 B: わたしも。",
+          "titleKey": "grammar.content.409",
+          "bodyKey": "grammar.content.410"
+        }
+      ],
+      "ideaKey": "grammar.content.411",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/5",
+      "nextPath": "/grammar/n5/01/7",
+      "exercise": {
+        "id": "01.6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.399",
+        "questionKey": "grammar.content.400",
+        "promptKey": "grammar.content.371",
+        "optionKeys": [
+          "grammar.content.401",
+          "grammar.content.342",
+          "grammar.content.87",
+          "grammar.content.175"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.402",
+        "errorKey": "grammar.content.403"
+      }
+    },
+    {
+      "id": "7",
+      "topicId": "01",
+      "position": 7,
+      "total": 13,
+      "titleKey": "grammar.content.295",
+      "descriptionKey": "grammar.content.420",
+      "icon": "の",
+      "theory": [
+        {
+          "symbol": "わたし の ほん",
+          "titleKey": "grammar.content.421",
+          "bodyKey": "grammar.content.422"
+        },
+        {
+          "symbol": "カルロスのほん",
+          "titleKey": "grammar.content.423",
+          "bodyKey": "grammar.content.424"
+        },
+        {
+          "symbol": "日本のアニメ",
+          "titleKey": "grammar.content.425",
+          "bodyKey": "grammar.content.426"
+        }
+      ],
+      "ideaKey": "grammar.content.427",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/6",
+      "nextPath": "/grammar/n5/01/8",
+      "exercise": {
+        "id": "01.7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.412",
+        "questionKey": "grammar.content.413",
+        "promptKey": "grammar.content.414",
+        "optionKeys": [
+          "grammar.content.415",
+          "grammar.content.416",
+          "grammar.content.417"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.418",
+        "errorKey": "grammar.content.419"
+      }
+    },
+    {
+      "id": "8",
+      "topicId": "01",
+      "position": 8,
+      "total": 13,
+      "titleKey": "grammar.content.298",
+      "descriptionKey": "grammar.content.436",
+      "icon": "こ",
+      "theory": [
+        {
+          "symbol": "これ",
+          "titleKey": "grammar.content.431",
+          "bodyKey": "grammar.content.437"
+        },
+        {
+          "symbol": "それ",
+          "titleKey": "grammar.content.432",
+          "bodyKey": "grammar.content.438"
+        },
+        {
+          "symbol": "あれ",
+          "titleKey": "grammar.content.433",
+          "bodyKey": "grammar.content.439"
+        }
+      ],
+      "ideaKey": "grammar.content.440",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/7",
+      "nextPath": "/grammar/n5/01/9",
+      "exercise": {
+        "id": "01.8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.428",
+        "questionKey": "grammar.content.429",
+        "promptKey": "grammar.content.430",
+        "optionKeys": [
+          "grammar.content.431",
+          "grammar.content.432",
+          "grammar.content.433"
+        ],
+        "answer": 1,
+        "successKey": "grammar.content.434",
+        "errorKey": "grammar.content.435"
+      }
+    },
+    {
+      "id": "9",
+      "topicId": "01",
+      "position": 9,
+      "total": 13,
+      "titleKey": "grammar.content.301",
+      "descriptionKey": "grammar.content.448",
+      "icon": "この",
+      "theory": [
+        {
+          "symbol": "このほん",
+          "titleKey": "grammar.content.449",
+          "bodyKey": "grammar.content.450"
+        },
+        {
+          "symbol": "そのかばん",
+          "titleKey": "grammar.content.451",
+          "bodyKey": "grammar.content.452"
+        },
+        {
+          "symbol": "あのひと",
+          "titleKey": "grammar.content.453",
+          "bodyKey": "grammar.content.454"
+        }
+      ],
+      "ideaKey": "grammar.content.455",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/8",
+      "nextPath": "/grammar/n5/01/10",
+      "exercise": {
+        "id": "01.9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.441",
+        "questionKey": "grammar.content.442",
+        "promptKey": "grammar.content.443",
+        "optionKeys": [
+          "grammar.content.444",
+          "grammar.content.431",
+          "grammar.content.433",
+          "grammar.content.445"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.446",
+        "errorKey": "grammar.content.447"
+      }
+    },
+    {
+      "id": "10",
+      "topicId": "01",
+      "position": 10,
+      "total": 13,
+      "titleKey": "grammar.content.304",
+      "descriptionKey": "grammar.content.463",
+      "icon": "ここ",
+      "theory": [
+        {
+          "symbol": "ここ",
+          "titleKey": "grammar.content.460",
+          "bodyKey": "grammar.content.464"
+        },
+        {
+          "symbol": "そこ　あそこ",
+          "titleKey": "grammar.content.465",
+          "bodyKey": "grammar.content.466"
+        },
+        {
+          "symbol": "どこですか。",
+          "titleKey": "grammar.content.459",
+          "bodyKey": "grammar.content.467"
+        }
+      ],
+      "ideaKey": "grammar.content.468",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/9",
+      "nextPath": "/grammar/n5/01/11",
+      "exercise": {
+        "id": "01.10",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.456",
+        "questionKey": "grammar.content.457",
+        "promptKey": "grammar.content.458",
+        "optionKeys": [
+          "grammar.content.459",
+          "grammar.content.460",
+          "grammar.content.432",
+          "grammar.content.444"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.461",
+        "errorKey": "grammar.content.462"
+      }
+    },
+    {
+      "id": "11",
+      "topicId": "01",
+      "position": 11,
+      "total": 13,
+      "titleKey": "grammar.content.307",
+      "descriptionKey": "grammar.content.475",
+      "icon": "否",
+      "theory": [
+        {
+          "symbol": "学生じゃないです。",
+          "titleKey": "grammar.content.476",
+          "bodyKey": "grammar.content.477"
+        },
+        {
+          "symbol": "先生ではありません。",
+          "titleKey": "grammar.content.478",
+          "bodyKey": "grammar.content.479"
+        },
+        {
+          "symbol": "学生じゃない。",
+          "titleKey": "grammar.content.362",
+          "bodyKey": "grammar.content.480"
+        }
+      ],
+      "ideaKey": "grammar.content.481",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/10",
+      "nextPath": "/grammar/n5/01/12",
+      "exercise": {
+        "id": "01.11",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.469",
+        "questionKey": "grammar.content.470",
+        "promptKey": "grammar.content.341",
+        "optionKeys": [
+          "grammar.content.471",
+          "grammar.content.281",
+          "grammar.content.472",
+          "grammar.content.87"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.473",
+        "errorKey": "grammar.content.474"
+      }
+    },
+    {
+      "id": "12",
+      "topicId": "01",
+      "position": 12,
+      "total": 13,
+      "titleKey": "grammar.content.310",
+      "descriptionKey": "grammar.content.489",
+      "icon": "過",
+      "theory": [
+        {
+          "symbol": "学生でした。",
+          "titleKey": "grammar.content.490",
+          "bodyKey": "grammar.content.491"
+        },
+        {
+          "symbol": "学生だった。",
+          "titleKey": "grammar.content.492",
+          "bodyKey": "grammar.content.493"
+        },
+        {
+          "symbol": "きのうは休みでした。",
+          "titleKey": "grammar.content.494",
+          "bodyKey": "grammar.content.495"
+        }
+      ],
+      "ideaKey": "grammar.content.496",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/11",
+      "nextPath": "/grammar/n5/01/13",
+      "exercise": {
+        "id": "01.12",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.482",
+        "questionKey": "grammar.content.483",
+        "promptKey": "grammar.content.484",
+        "optionKeys": [
+          "grammar.content.485",
+          "grammar.content.486",
+          "grammar.content.386"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.487",
+        "errorKey": "grammar.content.488"
+      }
+    },
+    {
+      "id": "13",
+      "topicId": "01",
+      "position": 13,
+      "total": 13,
+      "titleKey": "grammar.content.313",
+      "descriptionKey": "grammar.content.503",
+      "icon": "否過",
+      "theory": [
+        {
+          "symbol": "学生じゃなかったです。",
+          "titleKey": "grammar.content.504",
+          "bodyKey": "grammar.content.505"
+        },
+        {
+          "symbol": "先生ではありませんでした。",
+          "titleKey": "grammar.content.478",
+          "bodyKey": "grammar.content.506"
+        },
+        {
+          "symbol": "学生じゃなかった。",
+          "titleKey": "grammar.content.362",
+          "bodyKey": "grammar.content.507"
+        }
+      ],
+      "ideaKey": "grammar.content.508",
+      "notes": [
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.335",
+          "bodyKey": "grammar.content.336",
+          "icon": "🧩"
+        },
+        {
+          "eyebrowKey": "grammar.content.59",
+          "titleKey": "grammar.content.337",
+          "bodyKey": "grammar.content.338",
+          "icon": "🎯"
+        }
+      ],
+      "previousPath": "/grammar/n5/01/12",
+      "nextPath": "/grammar/n5/01/practice",
+      "exercise": {
+        "id": "01.13",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.content.46",
+        "topicKey": "grammar.content.497",
+        "questionKey": "grammar.content.498",
+        "promptKey": "grammar.content.499",
+        "optionKeys": [
+          "grammar.content.500",
+          "grammar.content.472",
+          "grammar.content.281",
+          "grammar.content.471"
+        ],
+        "answer": 0,
+        "successKey": "grammar.content.501",
+        "errorKey": "grammar.content.502"
+      }
+    }
+  ],
+  "practices": [
+    {
+      "topicId": "00",
+      "icon": "🧠",
+      "intro": {
+        "eyebrowKey": "grammar.content.178",
+        "titleKey": "grammar.content.179",
+        "bodyKey": "grammar.content.180"
+      },
+      "stats": [
+        {
+          "value": "10",
+          "labelKey": "grammar.content.181"
+        },
+        {
+          "value": "8",
+          "labelKey": "grammar.content.182"
+        },
+        {
+          "value": "∞",
+          "labelKey": "grammar.content.183"
+        }
+      ],
+      "philosophyKeys": [
+        "grammar.content.184",
+        "grammar.content.185",
+        "grammar.content.186"
+      ],
+      "tip": {
+        "eyebrowKey": "grammar.content.59",
+        "titleKey": "grammar.content.187",
+        "bodyKey": "grammar.content.188"
+      },
+      "resultEyebrowKey": "grammar.content.189",
+      "areas": [
+        {
+          "symbol": "あ",
+          "titleKey": "grammar.content.190",
+          "bodyKey": "grammar.content.191"
+        },
+        {
+          "symbol": "゛",
+          "titleKey": "grammar.content.192",
+          "bodyKey": "grammar.content.193"
+        },
+        {
+          "symbol": "ー",
+          "titleKey": "grammar.content.194",
+          "bodyKey": "grammar.content.195"
+        },
+        {
+          "symbol": "は",
+          "titleKey": "grammar.content.196",
+          "bodyKey": "grammar.content.197"
+        }
+      ],
+      "nextPath": "/grammar/n5/01",
+      "nextLabelKey": "grammar.content.198",
+      "exercises": [
+        {
+          "id": "practice-00-0",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.199",
+          "topicKey": "grammar.content.200",
+          "questionKey": "grammar.content.201",
+          "promptKey": "grammar.content.49",
+          "optionKeys": [
+            "grammar.content.50",
+            "grammar.content.35",
+            "grammar.content.51"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.202",
+          "errorKey": "grammar.content.202"
+        },
+        {
+          "id": "practice-00-1",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.190",
+          "topicKey": "grammar.content.203",
+          "questionKey": "grammar.content.65",
+          "promptKey": "grammar.content.204",
+          "optionKeys": [
+            "grammar.content.205",
+            "grammar.content.206",
+            "grammar.content.207",
+            "grammar.content.208"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.209",
+          "errorKey": "grammar.content.209"
+        },
+        {
+          "id": "practice-00-2",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.210",
+          "topicKey": "grammar.content.211",
+          "questionKey": "grammar.content.212",
+          "promptKey": "grammar.content.213",
+          "optionKeys": [
+            "grammar.content.86",
+            "grammar.content.214",
+            "grammar.content.215",
+            "grammar.content.85"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.216",
+          "errorKey": "grammar.content.216"
+        },
+        {
+          "id": "practice-00-3",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.217",
+          "topicKey": "grammar.content.218",
+          "questionKey": "grammar.content.99",
+          "promptKey": "grammar.content.219",
+          "optionKeys": [
+            "grammar.content.220",
+            "grammar.content.221",
+            "grammar.content.222",
+            "grammar.content.223"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.224",
+          "errorKey": "grammar.content.224"
+        },
+        {
+          "id": "practice-00-4",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.225",
+          "topicKey": "grammar.content.226",
+          "questionKey": "grammar.content.227",
+          "promptKey": "grammar.content.228",
+          "optionKeys": [
+            "grammar.content.118",
+            "grammar.content.119"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.229",
+          "errorKey": "grammar.content.229"
+        },
+        {
+          "id": "practice-00-5",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.230",
+          "topicKey": "grammar.content.231",
+          "questionKey": "grammar.content.232",
+          "promptKey": "grammar.content.233",
+          "optionKeys": [
+            "grammar.content.234",
+            "grammar.content.235"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.236",
+          "errorKey": "grammar.content.236"
+        },
+        {
+          "id": "practice-00-6",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.237",
+          "topicKey": "grammar.content.238",
+          "questionKey": "grammar.content.239",
+          "promptKey": "grammar.content.240",
+          "optionKeys": [
+            "grammar.content.241",
+            "grammar.content.87",
+            "grammar.content.242",
+            "grammar.content.66"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.243",
+          "errorKey": "grammar.content.243"
+        },
+        {
+          "id": "practice-00-7",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.244",
+          "topicKey": "grammar.content.245",
+          "questionKey": "grammar.content.162",
+          "promptKey": "grammar.content.163",
+          "optionKeys": [
+            "grammar.content.164",
+            "grammar.content.165",
+            "grammar.content.166",
+            "grammar.content.167"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.246",
+          "errorKey": "grammar.content.246"
+        },
+        {
+          "id": "practice-00-8",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.247",
+          "topicKey": "grammar.content.248",
+          "questionKey": "grammar.content.249",
+          "promptKey": "grammar.content.250",
+          "optionKeys": [
+            "grammar.content.251",
+            "grammar.content.252",
+            "grammar.content.35",
+            "grammar.content.253"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.254",
+          "errorKey": "grammar.content.254"
+        },
+        {
+          "id": "practice-00-9",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.255",
+          "topicKey": "grammar.content.248",
+          "questionKey": "grammar.content.256",
+          "promptKey": "grammar.content.257",
+          "optionKeys": [
+            "grammar.content.258",
+            "grammar.content.259",
+            "grammar.content.260",
+            "grammar.content.261"
+          ],
+          "answer": 2,
+          "successKey": "grammar.content.262",
+          "errorKey": "grammar.content.262"
+        }
+      ]
+    },
+    {
+      "topicId": "01",
+      "icon": "🧩",
+      "intro": {
+        "eyebrowKey": "grammar.content.509",
+        "titleKey": "grammar.content.510",
+        "bodyKey": "grammar.content.511"
+      },
+      "stats": [
+        {
+          "value": "12",
+          "labelKey": "grammar.content.181"
+        },
+        {
+          "value": "13",
+          "labelKey": "grammar.content.182"
+        },
+        {
+          "value": "1",
+          "labelKey": "grammar.content.512"
+        }
+      ],
+      "philosophyKeys": [],
+      "tip": {
+        "eyebrowKey": "grammar.content.59",
+        "titleKey": "grammar.content.513",
+        "bodyKey": "grammar.content.514"
+      },
+      "resultEyebrowKey": "grammar.content.515",
+      "areas": [],
+      "nextPath": "/grammar/n5/02",
+      "nextLabelKey": "grammar.content.516",
+      "exercises": [
+        {
+          "id": "practice-01-0",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.517",
+          "topicKey": "grammar.content.369",
+          "questionKey": "grammar.content.518",
+          "promptKey": "grammar.content.371",
+          "optionKeys": [
+            "grammar.content.171",
+            "grammar.content.175",
+            "grammar.content.342",
+            "grammar.content.87"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.519",
+          "errorKey": "grammar.content.519"
+        },
+        {
+          "id": "practice-01-1",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.520",
+          "topicKey": "grammar.content.319",
+          "questionKey": "grammar.content.521",
+          "promptKey": "grammar.content.522",
+          "optionKeys": [
+            "grammar.content.322",
+            "grammar.content.523"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.524",
+          "errorKey": "grammar.content.524"
+        },
+        {
+          "id": "practice-01-2",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.525",
+          "topicKey": "grammar.content.428",
+          "questionKey": "grammar.content.526",
+          "promptKey": "grammar.content.527",
+          "optionKeys": [
+            "grammar.content.431",
+            "grammar.content.432",
+            "grammar.content.433"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.435",
+          "errorKey": "grammar.content.435"
+        },
+        {
+          "id": "practice-01-3",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.525",
+          "topicKey": "grammar.content.441",
+          "questionKey": "grammar.content.528",
+          "promptKey": "grammar.content.443",
+          "optionKeys": [
+            "grammar.content.431",
+            "grammar.content.444",
+            "grammar.content.529"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.530",
+          "errorKey": "grammar.content.530"
+        },
+        {
+          "id": "practice-01-4",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.531",
+          "topicKey": "grammar.content.383",
+          "questionKey": "grammar.content.532",
+          "promptKey": "grammar.content.533",
+          "optionKeys": [
+            "grammar.content.87",
+            "grammar.content.342",
+            "grammar.content.401"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.534",
+          "errorKey": "grammar.content.534"
+        },
+        {
+          "id": "practice-01-5",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.425",
+          "topicKey": "grammar.content.412",
+          "questionKey": "grammar.content.535",
+          "promptKey": "grammar.content.536",
+          "optionKeys": [
+            "grammar.content.342",
+            "grammar.content.171",
+            "grammar.content.401"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.537",
+          "errorKey": "grammar.content.537"
+        },
+        {
+          "id": "practice-01-6",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.405",
+          "topicKey": "grammar.content.399",
+          "questionKey": "grammar.content.538",
+          "promptKey": "grammar.content.371",
+          "optionKeys": [
+            "grammar.content.171",
+            "grammar.content.401",
+            "grammar.content.87"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.539",
+          "errorKey": "grammar.content.539"
+        },
+        {
+          "id": "practice-01-7",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.540",
+          "topicKey": "grammar.content.469",
+          "questionKey": "grammar.content.541",
+          "promptKey": "grammar.content.499",
+          "optionKeys": [
+            "grammar.content.281",
+            "grammar.content.471",
+            "grammar.content.472"
+          ],
+          "answer": 1,
+          "successKey": "grammar.content.542",
+          "errorKey": "grammar.content.542"
+        },
+        {
+          "id": "practice-01-8",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.543",
+          "topicKey": "grammar.content.482",
+          "questionKey": "grammar.content.544",
+          "promptKey": "grammar.content.355",
+          "optionKeys": [
+            "grammar.content.485",
+            "grammar.content.486",
+            "grammar.content.386"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.545",
+          "errorKey": "grammar.content.545"
+        },
+        {
+          "id": "practice-01-9",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.313",
+          "topicKey": "grammar.content.497",
+          "questionKey": "grammar.content.546",
+          "promptKey": "grammar.content.499",
+          "optionKeys": [
+            "grammar.content.472",
+            "grammar.content.471",
+            "grammar.content.500"
+          ],
+          "answer": 2,
+          "successKey": "grammar.content.547",
+          "errorKey": "grammar.content.547"
+        },
+        {
+          "id": "practice-01-10",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.548",
+          "topicKey": "grammar.content.456",
+          "questionKey": "grammar.content.549",
+          "promptKey": "grammar.content.458",
+          "optionKeys": [
+            "grammar.content.459",
+            "grammar.content.460",
+            "grammar.content.444"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.550",
+          "errorKey": "grammar.content.550"
+        },
+        {
+          "id": "practice-01-11",
+          "kind": "multiple-choice",
+          "labelKey": "grammar.content.255",
+          "topicKey": "grammar.content.551",
+          "questionKey": "grammar.content.552",
+          "promptKey": "grammar.content.553",
+          "optionKeys": [
+            "grammar.content.554",
+            "grammar.content.555",
+            "grammar.content.556"
+          ],
+          "answer": 0,
+          "successKey": "grammar.content.557",
+          "errorKey": "grammar.content.557"
+        }
+      ]
+    }
+  ],
+  "roadmap": {
+    "subtitleKey": "grammar.content.989",
+    "pillKeys": [
+      "grammar.content.990",
+      "grammar.content.991",
+      "grammar.content.992",
+      "grammar.content.993"
+    ],
+    "panelKeys": [
+      "grammar.content.994",
+      "grammar.content.995",
+      "grammar.content.996"
+    ]
+  },
+  "copy": {
+    "grammar.content.1": "Fundamentos de escritura",
+    "grammar.content.2": "Antes de aprender gramática, necesitas poder leer el japonés que aparecerá durante el curso.",
+    "grammar.content.3": "JLPT N5 · TEMA 00",
+    "grammar.content.4": "📘 8 subtemas",
+    "grammar.content.5": "🧠 Nivel: inicial",
+    "grammar.content.6": "🎯 Objetivo: leer sin romaji",
+    "grammar.content.7": "OBJETIVO DEL TEMA",
+    "grammar.content.8": "Aprender a leer antes de empezar a “traducir”",
+    "grammar.content.9": "Este tema prepara la base de todo el curso. El objetivo no es memorizar palabras todavía, sino reconocer los sonidos del japonés y entender cómo se representan por escrito.",
+    "grammar.content.10": "<div class=\"script-pill\">ひらがな</div> <div class=\"arrow-mini\">→</div> <div class=\"script-pill\">カタカナ</div> <div class=\"arrow-mini\">→</div> <div class=\"script-pill muted-script\">漢字</div>",
+    "grammar.content.11": "AL TERMINAR EL TEMA 00",
+    "grammar.content.12": "Deberías poder leer kana sin depender constantemente del romaji",
+    "grammar.content.13": "No necesitas leer rápido todavía. Lo importante es que puedas reconocer los signos, pronunciar sílabas y continuar hacia el Tema 01 sin que la escritura sea una barrera.",
+    "grammar.content.41": "RECORRIDO DEL TEMA",
+    "grammar.content.42": "8 microlecciones + práctica acumulativa",
+    "grammar.content.43": "Entra en cada subtema para ver su teoría y realizar un ejercicio principal. Al terminar los ocho, habrá una práctica global del Tema 00.",
+    "grammar.content.44": "Empezar por 0.1 →",
+    "grammar.content.45": "Ver práctica final",
+    "grammar.content.14": "Hiragana y katakana",
+    "grammar.content.15": "Sonidos especiales",
+    "grammar.content.16": "Leer sin romaji",
+    "grammar.content.17": "Los sistemas de escritura",
+    "grammar.content.18": "Introducción a los tres sistemas que verás en japonés: <strong>hiragana</strong>, <strong>katakana</strong> y <strong>kanji</strong>. Aquí no se estudian kanji todavía; solo se aprende para qué sirve cada sistema.",
+    "grammar.content.19": "<span>ひらがな</span> <span>カタカナ</span> <span>日本</span>",
+    "grammar.content.20": "Hiragana básico",
+    "grammar.content.21": "Aprenderás las sílabas básicas del hiragana y a asociarlas directamente con su sonido, evitando depender del romaji.",
+    "grammar.content.22": "<span>あ a</span><span>か ka</span><span>さ sa</span><span>た ta</span><span>な na</span>",
+    "grammar.content.23": "Dakuten y handakuten",
+    "grammar.content.24": "Verás cómo pequeños signos transforman algunos sonidos: <strong>か → が</strong>, <strong>さ → ざ</strong>, <strong>は → ば / ぱ</strong>.",
+    "grammar.content.25": "<span>か → が</span><span>は → ば</span><span>は → ぱ</span>",
+    "grammar.content.26": "Sonidos combinados",
+    "grammar.content.27": "Introducción a las combinaciones con <strong>ゃ・ゅ・ょ</strong> pequeñas. Aprenderás a leer sonidos como <strong>きゃ</strong>, <strong>しゅ</strong> o <strong>ちょ</strong>.",
+    "grammar.content.28": "<span>きゃ kya</span><span>しゅ shu</span><span>ちょ cho</span>",
+    "grammar.content.29": "La っ pequeña",
+    "grammar.content.30": "La <strong>っ</strong> pequeña marca una pausa breve y duplica la consonante siguiente. Es esencial para distinguir palabras correctamente.",
+    "grammar.content.31": "<span>きて</span><span class=\"example-vs\">≠</span><span>きって</span>",
+    "grammar.content.32": "Vocales largas",
+    "grammar.content.33": "Aprenderás cómo se prolongan los sonidos vocálicos en hiragana y katakana. La duración de una vocal puede cambiar cómo se reconoce una palabra.",
+    "grammar.content.34": "<span>おばさん</span><span class=\"example-vs\">≠</span><span>おばあさん</span>",
+    "grammar.content.35": "Katakana",
+    "grammar.content.36": "Aprenderás el segundo silabario japonés, usado sobre todo para palabras de origen extranjero, nombres extranjeros, onomatopeyas y determinados énfasis.",
+    "grammar.content.37": "<span>コーヒー</span><span>テレビ</span><span>スペイン</span>",
+    "grammar.content.38": "は・へ・を como partículas",
+    "grammar.content.39": "Antes de empezar el Tema 01, conocerás tres excepciones importantes de pronunciación cuando estos kana funcionan como partículas.",
+    "grammar.content.40": "<div><strong>は</strong><span>se pronuncia “wa”</span></div> <div><strong>へ</strong><span>se pronuncia “e”</span></div> <div><strong>を</strong><span>se pronuncia “o”</span></div>",
+    "grammar.content.263": "La frase nominal",
+    "grammar.content.264": "Construye tus primeras frases en japonés y aprende a presentar, identificar y preguntar.",
+    "grammar.content.265": "JLPT N5 · TEMA 01",
+    "grammar.content.266": "📘 13 subtemas",
+    "grammar.content.267": "🎯 Progresión N5",
+    "grammar.content.268": "Construir frases simples con nombres y entender cómo funcionan tema, identificación y pregunta.",
+    "grammar.n5.01.overview.goal": "Construye tus primeras frases, comprueba cada idea en las microlecciones y combina lo aprendido en la práctica acumulativa.",
+    "grammar.content.270": "<div class=\"script-pill\">TEMA 01</div> <div class=\"arrow-mini\">→</div> <div class=\"script-pill\">理解</div>",
+    "grammar.content.271": "AL TERMINAR EL TEMA 01",
+    "grammar.content.272": "Deberías poder presentarte, identificar objetos y formular preguntas nominales básicas sin depender del romaji.",
+    "grammar.content.273": "El siguiente tema partirá de estos conocimientos, por lo que la progresión evita introducir estructuras que todavía no se han explicado.",
+    "grammar.content.316": "13 microlecciones + práctica acumulativa",
+    "grammar.content.317": "Este tema ya introduce gramática real. Cada subtema mantiene teoría breve, ejemplo e interacción antes de mezclarlo todo en la práctica final.",
+    "grammar.content.318": "Empezar por 1.1 →",
+    "grammar.content.274": "です / だ",
+    "grammar.content.275": "は・か・も・の",
+    "grammar.content.276": "Esto / eso / aquello",
+    "grammar.content.277": "Preguntas básicas",
+    "grammar.content.278": "Orden general de una oración japonesa",
+    "grammar.content.279": "El japonés suele colocar la información principal al final. Aquí se introduce la idea de tema + información, sin intentar traducir palabra por palabra.",
+    "grammar.content.280": "<span>わたし は カルロス です</span><span>A は B です</span>",
+    "grammar.content.281": "です",
+    "grammar.content.282": "Aprende la cópula formal です para decir que algo 'es' o identificarlo dentro de frases básicas.",
+    "grammar.content.283": "<span>わたしはカルロスです。</span><span>これはほんです。</span>",
+    "grammar.content.214": "だ",
+    "grammar.content.284": "Introduce la versión simple de la cópula. No se busca usarla todavía en todas partes, sino reconocer la relación entre です y だ.",
+    "grammar.content.285": "<span>学生です</span><span>学生だ</span>",
+    "grammar.content.286": "は — el tema",
+    "grammar.content.287": "La partícula は marca aquello de lo que estamos hablando. Se presenta como marcador de tema, no como traducción literal de 'es'.",
+    "grammar.content.288": "<span>わたしは学生です。</span><span>これはほんです。</span>",
+    "grammar.content.289": "か — preguntas",
+    "grammar.content.290": "Aprende a convertir una frase formal en pregunta añadiendo か al final.",
+    "grammar.content.291": "<span>学生です。</span><span>学生ですか。</span>",
+    "grammar.content.292": "も — también",
+    "grammar.content.293": "Usa も para indicar que algo comparte la misma información que un elemento ya mencionado.",
+    "grammar.content.294": "<span>わたしも学生です。</span><span>これもほんです。</span>",
+    "grammar.content.295": "の — posesión y relación",
+    "grammar.content.296": "La partícula の conecta dos nombres. Puede expresar posesión, pertenencia, origen o relación.",
+    "grammar.content.297": "<span>わたしのほん</span><span>日本のアニメ</span>",
+    "grammar.content.298": "これ・それ・あれ",
+    "grammar.content.299": "Aprende a señalar cosas según estén cerca del hablante, del oyente o alejadas de ambos.",
+    "grammar.content.300": "<span>これはなんですか。</span><span>それはほんです。</span>",
+    "grammar.content.301": "この・その・あの",
+    "grammar.content.302": "Estas formas acompañan directamente a un sustantivo. No pueden aparecer solas.",
+    "grammar.content.303": "<span>このほん</span><span>そのかばん</span><span>あのひと</span>",
+    "grammar.content.304": "ここ・そこ・あそこ・どこ",
+    "grammar.content.305": "Introduce los demostrativos de lugar y la pregunta básica '¿dónde?'.",
+    "grammar.content.306": "<span>ここです。</span><span>どこですか。</span>",
+    "grammar.content.307": "Cópula negativa",
+    "grammar.content.308": "Aprende a negar frases nominales con じゃないです / ではありません, reconociendo también la forma simple じゃない.",
+    "grammar.content.309": "<span>学生じゃないです。</span><span>先生ではありません。</span>",
+    "grammar.content.310": "Cópula en pasado",
+    "grammar.content.311": "Aprende a hablar de estados nominales pasados con でした y だった.",
+    "grammar.content.312": "<span>学生でした。</span><span>休みだった。</span>",
+    "grammar.content.313": "Pasado negativo",
+    "grammar.content.314": "Cierra el sistema básico de la cópula con じゃなかったです / ではありませんでした.",
+    "grammar.content.315": "<span>学生じゃなかったです。</span><span>先生ではありませんでした。</span>",
+    "grammar.content.558": "Adjetivos y descripción",
+    "grammar.content.559": "Describe personas, objetos, lugares y estados usando los dos grandes tipos de adjetivos japoneses.",
+    "grammar.content.560": "JLPT N5 · TEMA 02",
+    "grammar.n5.02.count": "11 microlecciones",
+    "grammar.n5.practice.available": "Teoría · ejercicios · práctica acumulativa",
+    "grammar.content.562": "Describir correctamente en presente y pasado, afirmativo y negativo, y expresar gustos y habilidad.",
+    "grammar.n5.02.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.02.overview.visual": "<div class=\"script-pill\">TEMA 02</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.564": "AL TERMINAR EL TEMA 02",
+    "grammar.content.565": "Deberías poder describir personas, lugares y cosas con adjetivos い y な, y expresar gustos o habilidad básica.",
+    "grammar.n5.02.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.02.journey.title": "Aprende paso a paso",
+    "grammar.n5.02.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.n5.start.lesson": "Empezar microlecciones →",
+    "grammar.n5.start.practice": "Práctica acumulativa →",
+    "grammar.content.566": "Adjetivos い y な",
+    "grammar.content.567": "Afirmativo y negativo",
+    "grammar.content.543": "Pasado",
+    "grammar.content.568": "Gustos y habilidades",
+    "grammar.n5.02.1.title": "Adjetivos い",
+    "grammar.n5.02.1.goal": "Describir algo y colocar una descripción delante de un nombre.",
+    "grammar.n5.02.1.preview": "おもしろいです。 — Es interesante.",
+    "grammar.n5.02.2.title": "Adjetivos な",
+    "grammar.n5.02.2.goal": "Distinguir la descripción final de la que acompaña a un nombre.",
+    "grammar.n5.02.2.preview": "しずかです。 — Es tranquilo.",
+    "grammar.n5.02.3.title": "Modificar sustantivos",
+    "grammar.n5.02.3.goal": "Elegir el enlace correcto según el tipo de adjetivo.",
+    "grammar.n5.02.3.preview": "おおきいいえ — una casa grande.",
+    "grammar.n5.02.4.title": "Negativo de los adjetivos",
+    "grammar.n5.02.4.goal": "Negar una descripción de cada grupo.",
+    "grammar.n5.02.4.preview": "たかくないです。 — No es caro.",
+    "grammar.n5.02.5.title": "Pasado de los adjetivos",
+    "grammar.n5.02.5.goal": "Describir cómo era algo.",
+    "grammar.n5.02.5.preview": "あつかったです。 — Hizo calor.",
+    "grammar.n5.02.6.title": "Pasado negativo de los adjetivos",
+    "grammar.n5.02.6.goal": "Decir que una descripción no era cierta antes.",
+    "grammar.n5.02.6.preview": "たかくなかったです。 — No era caro.",
+    "grammar.n5.02.7.title": "La irregularidad de いい",
+    "grammar.n5.02.7.goal": "Reconocer las formas que usan la raíz よい.",
+    "grammar.n5.02.7.preview": "いいです。 — Está bien.",
+    "grammar.n5.02.8.title": "とても・あまり・ぜんぜん",
+    "grammar.n5.02.8.goal": "Graduar una descripción sin confundir intensidad y negación.",
+    "grammar.n5.02.8.preview": "とてもおいしいです。 — Está muy rico.",
+    "grammar.n5.02.9.title": "すき・きらい",
+    "grammar.n5.02.9.goal": "Expresar gustos con el patrón が + descripción.",
+    "grammar.n5.02.9.preview": "アニメがすきです。 — Me gusta el anime.",
+    "grammar.n5.02.10.title": "じょうず・へた",
+    "grammar.n5.02.10.goal": "Describir habilidad en una actividad.",
+    "grammar.n5.02.10.preview": "たなかさんはうたがじょうずです。 — Tanaka canta bien.",
+    "grammar.n5.02.11.title": "が con gustos y capacidades",
+    "grammar.n5.02.11.goal": "Separar la persona de la actividad descrita.",
+    "grammar.n5.02.11.preview": "わたしはおちゃがすきです。 — A mí me gusta el té.",
+    "grammar.content.600": "Verbos y partículas fundamentales",
+    "grammar.content.601": "Empieza a hablar de acciones, rutinas y movimiento con verbos y partículas esenciales.",
+    "grammar.content.602": "JLPT N5 · TEMA 03",
+    "grammar.n5.03.count": "17 microlecciones",
+    "grammar.content.604": "Entender cómo se conjugan los verbos básicos y usar las partículas principales dentro de acciones cotidianas.",
+    "grammar.n5.03.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.03.overview.visual": "<div class=\"script-pill\">TEMA 03</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.606": "AL TERMINAR EL TEMA 03",
+    "grammar.content.607": "Deberías poder contar una rutina sencilla, hablar de acciones en presente/pasado y usar las partículas principales con bastante seguridad.",
+    "grammar.n5.03.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.03.journey.title": "Aprende paso a paso",
+    "grammar.n5.03.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.content.608": "ます / ません / ました",
+    "grammar.content.609": "を・に・で・へ・と",
+    "grammar.content.610": "Ir a hacer algo",
+    "grammar.content.611": "Rutinas diarias",
+    "grammar.n5.03.1.title": "Qué es un verbo japonés",
+    "grammar.n5.03.1.goal": "Reconocer qué hace el verbo al final de una frase.",
+    "grammar.n5.03.1.preview": "わたしはたべます。 — Yo como.",
+    "grammar.n5.03.2.title": "Verbos ichidan",
+    "grammar.n5.03.2.goal": "Reconocer un grupo cuya raíz se obtiene quitando る.",
+    "grammar.n5.03.2.preview": "たべる → たべ — comer, raíz たべ.",
+    "grammar.n5.03.3.title": "Verbos godan",
+    "grammar.n5.03.3.goal": "Reconocer las terminaciones que cambian de fila de kana.",
+    "grammar.n5.03.3.preview": "かく → かき — escribir, raíz para ます.",
+    "grammar.n5.03.4.title": "する・くる",
+    "grammar.n5.03.4.goal": "Aprender las dos familias irregulares básicas.",
+    "grammar.n5.03.4.preview": "する → します — hacer.",
+    "grammar.n5.03.5.title": "Forma diccionario",
+    "grammar.n5.03.5.goal": "Entender el valor no pasado de la forma de entrada.",
+    "grammar.n5.03.5.preview": "まいにちよむ。 — Leo todos los días.",
+    "grammar.n5.03.6.title": "Forma ます",
+    "grammar.n5.03.6.goal": "Construir una afirmación cortés no pasada.",
+    "grammar.n5.03.6.preview": "たべる → たべます — comer.",
+    "grammar.n5.03.7.title": "Forma ません",
+    "grammar.n5.03.7.goal": "Negar una acción con trato cortés.",
+    "grammar.n5.03.7.preview": "たべます → たべません — no como.",
+    "grammar.n5.03.8.title": "Forma ました",
+    "grammar.n5.03.8.goal": "Hablar de una acción pasada con trato cortés.",
+    "grammar.n5.03.8.preview": "たべます → たべました — comí.",
+    "grammar.n5.03.9.title": "Forma ませんでした",
+    "grammar.n5.03.9.goal": "Expresar que una acción no ocurrió.",
+    "grammar.n5.03.9.preview": "たべませんでした。 — No comí.",
+    "grammar.n5.03.10.title": "を — objeto directo",
+    "grammar.n5.03.10.goal": "Marcar lo que recibe directamente una acción.",
+    "grammar.n5.03.10.preview": "パンをたべます。 — Como pan.",
+    "grammar.n5.03.11.title": "に — destino",
+    "grammar.n5.03.11.goal": "Indicar el lugar al que se llega.",
+    "grammar.n5.03.11.preview": "がっこうにいきます。 — Voy a la escuela.",
+    "grammar.n5.03.12.title": "に — tiempo",
+    "grammar.n5.03.12.goal": "Marcar una hora concreta sin añadir に a todo marcador temporal.",
+    "grammar.n5.03.12.preview": "くじにおきます。 — Me levanto a las nueve.",
+    "grammar.n5.03.13.title": "で — lugar de una acción",
+    "grammar.n5.03.13.goal": "Indicar dónde se realiza una actividad.",
+    "grammar.n5.03.13.preview": "うちでべんきょうします。 — Estudio en casa.",
+    "grammar.n5.03.14.title": "へ — dirección",
+    "grammar.n5.03.14.goal": "Reconocer una dirección de movimiento y su pronunciación.",
+    "grammar.n5.03.14.preview": "にほんへいきます。 — Voy a Japón.",
+    "grammar.n5.03.15.title": "と — compañía",
+    "grammar.n5.03.15.goal": "Decir con quién realizas una acción.",
+    "grammar.n5.03.15.preview": "ともだちといきます。 — Voy con un amigo.",
+    "grammar.n5.03.16.title": "から・まで",
+    "grammar.n5.03.16.goal": "Señalar un origen y un límite en espacio o tiempo.",
+    "grammar.n5.03.16.preview": "くじからごじまでです。 — Es de las nueve a las cinco.",
+    "grammar.n5.03.17.title": "Raíz de ます + にいく",
+    "grammar.n5.03.17.goal": "Expresar para qué te desplazas.",
+    "grammar.n5.03.17.preview": "えいがをみにいきます。 — Voy a ver una película.",
+    "grammar.content.662": "Existencia, lugar y tiempo",
+    "grammar.content.663": "Localiza personas y objetos, habla de fechas y horas y empieza a manejar cantidades básicas.",
+    "grammar.content.664": "JLPT N5 · TEMA 04",
+    "grammar.n5.04.count": "12 microlecciones",
+    "grammar.content.666": "Saber decir dónde está algo, cuándo ocurre algo y comprender expresiones básicas de cantidad y tiempo.",
+    "grammar.n5.04.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.04.overview.visual": "<div class=\"script-pill\">TEMA 04</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.668": "AL TERMINAR EL TEMA 04",
+    "grammar.content.669": "Deberías poder describir una habitación, localizar personas u objetos, leer horarios sencillos y entender cantidades básicas.",
+    "grammar.n5.04.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.04.journey.title": "Aprende paso a paso",
+    "grammar.n5.04.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.content.670": "ある / いる",
+    "grammar.content.671": "Ubicación",
+    "grammar.content.672": "Fechas y horas",
+    "grammar.content.673": "Contadores básicos",
+    "grammar.n5.04.1.title": "あります",
+    "grammar.n5.04.1.goal": "Expresar la existencia de cosas no animadas.",
+    "grammar.n5.04.1.preview": "ほんがあります。 — Hay un libro.",
+    "grammar.n5.04.2.title": "います",
+    "grammar.n5.04.2.goal": "Expresar la presencia de personas y animales.",
+    "grammar.n5.04.2.preview": "ねこがいます。 — Hay un gato.",
+    "grammar.n5.04.3.title": "が con existencia",
+    "grammar.n5.04.3.goal": "Presentar quién o qué hay.",
+    "grammar.n5.04.3.preview": "こうえんにねこがいます。 — Hay un gato en el parque.",
+    "grammar.n5.04.4.title": "に con existencia; contraste con で",
+    "grammar.n5.04.4.goal": "Distinguir estar en un lugar de actuar en ese lugar.",
+    "grammar.n5.04.4.preview": "がっこうでべんきょうします。 — Estudio en la escuela.",
+    "grammar.n5.04.5.title": "Posiciones",
+    "grammar.n5.04.5.goal": "Situar algo respecto de un objeto conocido.",
+    "grammar.n5.04.5.preview": "つくえのうえにほんがあります。 — Hay un libro sobre la mesa.",
+    "grammar.n5.04.6.title": "Interrogativos",
+    "grammar.n5.04.6.goal": "Elegir la pregunta adecuada para persona, cosa o descripción.",
+    "grammar.n5.04.6.preview": "これはなんですか。 — ¿Qué es esto?",
+    "grammar.n5.04.7.title": "なにか・なにも",
+    "grammar.n5.04.7.goal": "Distinguir «algo» de «nada» con negación.",
+    "grammar.n5.04.7.preview": "なにかありますか。 — ¿Hay algo?",
+    "grammar.n5.04.8.title": "だれか・だれも",
+    "grammar.n5.04.8.goal": "Distinguir «alguien» de «nadie» con negación.",
+    "grammar.n5.04.8.preview": "だれかいますか。 — ¿Hay alguien?",
+    "grammar.n5.04.9.title": "Contadores básicos",
+    "grammar.n5.04.9.goal": "Contar objetos y personas con su unidad adecuada.",
+    "grammar.n5.04.9.preview": "りんごがみっつあります。 — Hay tres manzanas.",
+    "grammar.n5.04.10.title": "Horas",
+    "grammar.n5.04.10.goal": "Leer horas y preguntar cuándo dentro del día.",
+    "grammar.n5.04.10.preview": "いま、さんじです。 — Ahora son las tres.",
+    "grammar.n5.04.11.title": "Días y fechas",
+    "grammar.n5.04.11.goal": "Distinguir día de la semana, fecha y referencias relativas.",
+    "grammar.n5.04.11.preview": "きょうはげつようびです。 — Hoy es lunes.",
+    "grammar.n5.04.12.title": "Duración + くらい・ぐらい",
+    "grammar.n5.04.12.goal": "Expresar un tiempo aproximado de duración.",
+    "grammar.n5.04.12.preview": "にじかんぐらいべんきょうします。 — Estudio unas dos horas.",
+    "grammar.content.709": "Forma simple y subordinación básica",
+    "grammar.content.710": "Da el salto del japonés formal básico a las formas simples que necesitarás para estructuras más naturales.",
+    "grammar.content.711": "JLPT N5 · TEMA 05",
+    "grammar.n5.05.count": "12 microlecciones",
+    "grammar.content.713": "Dominar las formas simples esenciales y entender cómo permiten crear explicaciones, citas y modificadores más complejos.",
+    "grammar.n5.05.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.05.overview.visual": "<div class=\"script-pill\">TEMA 05</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.716": "AL TERMINAR EL TEMA 05",
+    "grammar.content.717": "Deberías reconocer y producir las formas simples principales y entender cómo se usan dentro de estructuras más largas.",
+    "grammar.content.718": "La progresión mantiene las dependencias: cada bloque utiliza estructuras ya introducidas anteriormente.",
+    "grammar.n5.05.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.05.journey.title": "Aprende paso a paso",
+    "grammar.n5.05.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.content.719": "ない / た / なかった",
+    "grammar.content.720": "Registro formal vs informal",
+    "grammar.content.721": "んです",
+    "grammar.content.722": "Frases subordinadas simples",
+    "grammar.n5.05.1.title": "Forma ない",
+    "grammar.n5.05.1.goal": "Negar un verbo en forma simple.",
+    "grammar.n5.05.1.preview": "たべる → たべない — no comer.",
+    "grammar.n5.05.2.title": "Forma た",
+    "grammar.n5.05.2.goal": "Construir el pasado simple afirmativo.",
+    "grammar.n5.05.2.preview": "たべる → たべた — comí.",
+    "grammar.n5.05.3.title": "Forma なかった",
+    "grammar.n5.05.3.goal": "Negar un verbo en pasado simple.",
+    "grammar.n5.05.3.preview": "たべない → たべなかった — no comí.",
+    "grammar.n5.05.4.title": "Forma simple con nombres",
+    "grammar.n5.05.4.goal": "Usar las cuatro formas de la cópula sin trato cortés.",
+    "grammar.n5.05.4.preview": "がくせいだ。 — Soy estudiante.",
+    "grammar.n5.05.5.title": "Forma simple de adjetivos な",
+    "grammar.n5.05.5.goal": "Describir en forma simple con el patrón de cópula.",
+    "grammar.n5.05.5.preview": "しずかだ。 — Es tranquilo.",
+    "grammar.n5.05.6.title": "Forma simple de adjetivos い",
+    "grammar.n5.05.6.goal": "Reconocer las cuatro formas sin añadir だ.",
+    "grammar.n5.05.6.preview": "あつい。 — Hace calor.",
+    "grammar.n5.05.7.title": "Formal y simple",
+    "grammar.n5.05.7.goal": "Relacionar formas equivalentes de trato distinto.",
+    "grammar.n5.05.7.preview": "たべます ↔ たべる — comer, no pasado afirmativo.",
+    "grammar.n5.05.8.title": "んです・のです",
+    "grammar.n5.05.8.goal": "Aportar una explicación relacionada con el contexto.",
+    "grammar.n5.05.8.preview": "あした、いくんです。 — Es que voy mañana.",
+    "grammar.n5.05.9.title": "Preguntas con の？",
+    "grammar.n5.05.9.goal": "Reconocer una pregunta explicativa en conversación informal.",
+    "grammar.n5.05.9.preview": "あした、いくの？ — ¿Vas mañana?",
+    "grammar.n5.05.10.title": "Cita con と",
+    "grammar.n5.05.10.goal": "Marcar las palabras que alguien dice.",
+    "grammar.n5.05.10.preview": "「はい」といいます。 — Dice «sí».",
+    "grammar.n5.05.11.title": "Frase relativa + sustantivo",
+    "grammar.n5.05.11.goal": "Describir un nombre con una frase que va delante.",
+    "grammar.n5.05.11.preview": "きのうかったほん — el libro que compré ayer.",
+    "grammar.n5.05.12.title": "Nominalización の",
+    "grammar.n5.05.12.goal": "Convertir una acción en aquello de lo que hablas.",
+    "grammar.n5.05.12.preview": "ほんをよむのがすきです。 — Me gusta leer libros.",
+    "grammar.content.759": "La forma て",
+    "grammar.content.760": "Aprende una de las piezas más importantes del japonés para conectar acciones, pedir, permitir y describir estados.",
+    "grammar.content.761": "JLPT N5 · TEMA 06",
+    "grammar.n5.06.count": "14 microlecciones",
+    "grammar.content.763": "Formar correctamente la forma て y usarla en los patrones fundamentales del japonés básico.",
+    "grammar.n5.06.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.06.overview.visual": "<div class=\"script-pill\">TEMA 06</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.765": "AL TERMINAR EL TEMA 06",
+    "grammar.content.766": "Deberías formar て con seguridad y entender sus usos principales en secuencias, estados, peticiones, permiso y prohibición.",
+    "grammar.n5.06.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.06.journey.title": "Aprende paso a paso",
+    "grammar.n5.06.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.content.767": "Cómo se forma",
+    "grammar.content.768": "Secuencias",
+    "grammar.content.769": "～ています",
+    "grammar.content.770": "～てください / ～てもいい",
+    "grammar.n5.06.1.title": "Ichidan → て",
+    "grammar.n5.06.1.goal": "Obtener la forma que conecta el verbo con otros patrones.",
+    "grammar.n5.06.1.preview": "たべる → たべて — comer.",
+    "grammar.n5.06.2.title": "Godan う・つ・る → って",
+    "grammar.n5.06.2.goal": "Agrupar tres terminaciones con el mismo cambio.",
+    "grammar.n5.06.2.preview": "かう → かって — comprar.",
+    "grammar.n5.06.3.title": "Godan む・ぶ・ぬ → んで",
+    "grammar.n5.06.3.goal": "Reconocer el grupo que termina en んで.",
+    "grammar.n5.06.3.preview": "のむ → のんで — beber.",
+    "grammar.n5.06.4.title": "Godan く → いて",
+    "grammar.n5.06.4.goal": "Cambiar los godan en く a いて.",
+    "grammar.n5.06.4.preview": "かく → かいて — escribir.",
+    "grammar.n5.06.5.title": "Godan ぐ → いで",
+    "grammar.n5.06.5.goal": "Mantener la diferencia entre く y ぐ.",
+    "grammar.n5.06.5.preview": "およぐ → およいで — nadar.",
+    "grammar.n5.06.6.title": "Godan す → して",
+    "grammar.n5.06.6.goal": "Formar la て de los verbos que acaban en す.",
+    "grammar.n5.06.6.preview": "はなす → はなして — hablar.",
+    "grammar.n5.06.7.title": "いく → いって",
+    "grammar.n5.06.7.goal": "Aprender la excepción más habitual del grupo く.",
+    "grammar.n5.06.7.preview": "いく → いって — ir.",
+    "grammar.n5.06.8.title": "Secuencia de acciones",
+    "grammar.n5.06.8.goal": "Conectar acciones realizadas en orden.",
+    "grammar.n5.06.8.preview": "おきて、たべます。 — Me levanto y como.",
+    "grammar.n5.06.9.title": "ている — acción en progreso",
+    "grammar.n5.06.9.goal": "Decir qué está ocurriendo ahora.",
+    "grammar.n5.06.9.preview": "いま、ほんをよんでいます。 — Ahora estoy leyendo.",
+    "grammar.n5.06.10.title": "ている — estado resultante",
+    "grammar.n5.06.10.goal": "Reconocer un estado que continúa después de un cambio.",
+    "grammar.n5.06.10.preview": "にほんにすんでいます。 — Vivo en Japón.",
+    "grammar.n5.06.11.title": "てから",
+    "grammar.n5.06.11.goal": "Indicar que primero se termina una acción y después viene otra.",
+    "grammar.n5.06.11.preview": "たべてから、べんきょうします。 — Después de comer, estudio.",
+    "grammar.n5.06.12.title": "てください",
+    "grammar.n5.06.12.goal": "Pedir que alguien realice una acción.",
+    "grammar.n5.06.12.preview": "すわってください。 — Siéntate, por favor.",
+    "grammar.n5.06.13.title": "てもいい",
+    "grammar.n5.06.13.goal": "Preguntar o dar permiso para una acción.",
+    "grammar.n5.06.13.preview": "ここにすわってもいいですか。 — ¿Puedo sentarme aquí?",
+    "grammar.n5.06.14.title": "てはいけない",
+    "grammar.n5.06.14.goal": "Reconocer una prohibición.",
+    "grammar.n5.06.14.preview": "ここでたべてはいけません。 — No se permite comer aquí.",
+    "grammar.content.813": "Interacción cotidiana",
+    "grammar.content.814": "Aprende a invitar, proponer, pedir, expresar deseos, obligaciones y consejos.",
+    "grammar.content.815": "JLPT N5 · TEMA 07",
+    "grammar.n5.07.count": "11 microlecciones",
+    "grammar.content.816": "Usar estructuras básicas de interacción social para desenvolverte en conversaciones sencillas.",
+    "grammar.n5.07.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.07.overview.visual": "<div class=\"script-pill\">TEMA 07</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.818": "AL TERMINAR EL TEMA 07",
+    "grammar.content.819": "Deberías poder invitar, proponer, pedir que algo no se haga, expresar deseos y comprender obligaciones y consejos básicos.",
+    "grammar.n5.07.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.07.journey.title": "Aprende paso a paso",
+    "grammar.n5.07.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.content.820": "Invitaciones",
+    "grammar.content.821": "Deseos: ～たい",
+    "grammar.content.822": "Obligación",
+    "grammar.content.823": "Consejos",
+    "grammar.n5.07.1.title": "ませんか — invitación",
+    "grammar.n5.07.1.goal": "Invitar a otra persona a hacer algo contigo.",
+    "grammar.n5.07.1.preview": "いっしょにたべませんか。 — ¿Comemos juntos?",
+    "grammar.n5.07.2.title": "ましょう — propuesta",
+    "grammar.n5.07.2.goal": "Proponer hacer algo juntos.",
+    "grammar.n5.07.2.preview": "いきましょう。 — Vamos.",
+    "grammar.n5.07.3.title": "ましょうか — oferta",
+    "grammar.n5.07.3.goal": "Ofrecer tu ayuda o proponer una acción como pregunta.",
+    "grammar.n5.07.3.preview": "かばんをもちましょうか。 — ¿Te llevo la bolsa?",
+    "grammar.n5.07.4.title": "ないでください",
+    "grammar.n5.07.4.goal": "Pedir que no se realice una acción.",
+    "grammar.n5.07.4.preview": "ここでたべないでください。 — No comas aquí, por favor.",
+    "grammar.n5.07.5.title": "なくてはいけない",
+    "grammar.n5.07.5.goal": "Expresar que hay que realizar una acción.",
+    "grammar.n5.07.5.preview": "べんきょうしなくてはいけません。 — Tengo que estudiar.",
+    "grammar.n5.07.6.title": "なくてはならない",
+    "grammar.n5.07.6.goal": "Reconocer otra expresión de obligación.",
+    "grammar.n5.07.6.preview": "いかなくてはなりません。 — Tengo que ir.",
+    "grammar.n5.07.7.title": "ないと・なきゃ・なくちゃ",
+    "grammar.n5.07.7.goal": "Reconocer obligaciones abreviadas en conversación.",
+    "grammar.n5.07.7.preview": "もう、いかなきゃ。 — Ya me tengo que ir.",
+    "grammar.n5.07.8.title": "たほうがいい",
+    "grammar.n5.07.8.goal": "Dar un consejo para realizar una acción.",
+    "grammar.n5.07.8.preview": "やすんだほうがいいです。 — Te conviene descansar.",
+    "grammar.n5.07.9.title": "ないほうがいい",
+    "grammar.n5.07.9.goal": "Aconsejar evitar una acción.",
+    "grammar.n5.07.9.preview": "ここでたべないほうがいいです。 — Mejor no comer aquí.",
+    "grammar.n5.07.10.title": "たい — deseo de una acción",
+    "grammar.n5.07.10.goal": "Expresar lo que tú quieres hacer.",
+    "grammar.n5.07.10.preview": "にほんにいきたいです。 — Quiero ir a Japón.",
+    "grammar.n5.07.11.title": "がほしい — deseo de un objeto",
+    "grammar.n5.07.11.goal": "Distinguir querer una cosa de querer hacer algo.",
+    "grammar.n5.07.11.preview": "あたらしいかばんがほしいです。 — Quiero una bolsa nueva.",
+    "grammar.content.857": "Conectar ideas",
+    "grammar.content.858": "Pasa de frases aisladas a mensajes más naturales conectando razones, contraste, listas y tiempo.",
+    "grammar.content.859": "JLPT N5 · TEMA 08",
+    "grammar.n5.08.count": "11 microlecciones",
+    "grammar.content.860": "Construir pequeños textos y conversaciones enlazando ideas sin depender de frases completamente separadas.",
+    "grammar.n5.08.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.08.overview.visual": "<div class=\"script-pill\">TEMA 08</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.862": "AL TERMINAR EL TEMA 08",
+    "grammar.content.863": "Deberías poder conectar varias ideas usando razones, contraste, listas y referencias temporales básicas.",
+    "grammar.n5.08.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.08.journey.title": "Aprende paso a paso",
+    "grammar.n5.08.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.content.864": "から / ので",
+    "grammar.content.865": "けど / が",
+    "grammar.content.866": "や / だけ",
+    "grammar.content.867": "もう / まだ",
+    "grammar.n5.08.1.title": "から — razón",
+    "grammar.n5.08.1.goal": "Enlazar una razón con lo que ocurre por ella.",
+    "grammar.n5.08.1.preview": "あついですから、みずをのみます。 — Como hace calor, bebo agua.",
+    "grammar.n5.08.2.title": "ので — razón",
+    "grammar.n5.08.2.goal": "Dar una razón con una conexión más suave.",
+    "grammar.n5.08.2.preview": "あめがふるので、うちにいます。 — Como llueve, estoy en casa.",
+    "grammar.n5.08.3.title": "けど — contraste",
+    "grammar.n5.08.3.goal": "Conectar dos ideas que contrastan en conversación.",
+    "grammar.n5.08.3.preview": "たかいですけど、おいしいです。 — Es caro, pero está rico.",
+    "grammar.n5.08.4.title": "が — pero",
+    "grammar.n5.08.4.goal": "Reconocer が después de una frase como conector.",
+    "grammar.n5.08.4.preview": "おいしいですが、たかいです。 — Está rico, pero es caro.",
+    "grammar.n5.08.5.title": "や — lista abierta",
+    "grammar.n5.08.5.goal": "Enumerar ejemplos sin afirmar que son todos.",
+    "grammar.n5.08.5.preview": "パンやくだものをかいます。 — Compro pan, fruta y cosas así.",
+    "grammar.n5.08.6.title": "だけ — solo",
+    "grammar.n5.08.6.goal": "Limitar lo que incluyes en una afirmación.",
+    "grammar.n5.08.6.preview": "みずだけをのみます。 — Bebo solo agua.",
+    "grammar.n5.08.7.title": "たり・たりする",
+    "grammar.n5.08.7.goal": "Presentar actividades representativas sin fijar un orden.",
+    "grammar.n5.08.7.preview": "ほんをよんだり、えいがをみたりします。 — Leo, veo películas y cosas así.",
+    "grammar.n5.08.8.title": "もう — ya",
+    "grammar.n5.08.8.goal": "Indicar que una acción ya se ha completado.",
+    "grammar.n5.08.8.preview": "もうたべました。 — Ya he comido.",
+    "grammar.n5.08.9.title": "まだ — todavía",
+    "grammar.n5.08.9.goal": "Indicar que una situación sigue siendo cierta.",
+    "grammar.n5.08.9.preview": "まだあついです。 — Todavía hace calor.",
+    "grammar.n5.08.10.title": "まだ～ていません",
+    "grammar.n5.08.10.goal": "Decir que una acción esperada todavía no se ha realizado.",
+    "grammar.n5.08.10.preview": "まだたべていません。 — Todavía no he comido.",
+    "grammar.n5.08.11.title": "Antes de: まえに",
+    "grammar.n5.08.11.goal": "Situar una acción antes de otra.",
+    "grammar.n5.08.11.preview": "ねるまえにほんをよみます。 — Leo antes de acostarme.",
+    "grammar.content.901": "Experiencia, comparación y cambio",
+    "grammar.content.902": "Habla de experiencias, planes, comparaciones y cambios de estado con estructuras habituales del N5.",
+    "grammar.content.903": "JLPT N5 · TEMA 09",
+    "grammar.n5.09.count": "12 microlecciones",
+    "grammar.content.904": "Expresar experiencias personales, intención, comparación, cambio y relaciones básicas de dar y recibir.",
+    "grammar.n5.09.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.09.overview.visual": "<div class=\"script-pill\">TEMA 09</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.906": "AL TERMINAR EL TEMA 09",
+    "grammar.content.907": "Deberías poder hablar de experiencias, planes, comparaciones y cambios, además de entender dar y recibir.",
+    "grammar.n5.09.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.09.journey.title": "Aprende paso a paso",
+    "grammar.n5.09.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.content.908": "～たことがある",
+    "grammar.content.909": "～つもり",
+    "grammar.content.910": "Comparativos",
+    "grammar.content.911": "～になる / ～にする",
+    "grammar.n5.09.1.title": "たことがある",
+    "grammar.n5.09.1.goal": "Hablar de una experiencia que has tenido alguna vez.",
+    "grammar.n5.09.1.preview": "にほんにいったことがあります。 — He estado en Japón alguna vez.",
+    "grammar.n5.09.2.title": "たことがない",
+    "grammar.n5.09.2.goal": "Decir que nunca has tenido una experiencia.",
+    "grammar.n5.09.2.preview": "にほんにいったことがありません。 — Nunca he estado en Japón.",
+    "grammar.n5.09.3.title": "つもり — intención",
+    "grammar.n5.09.3.goal": "Expresar lo que tienes intención de hacer.",
+    "grammar.n5.09.3.preview": "あしたべんきょうするつもりです。 — Tengo intención de estudiar mañana.",
+    "grammar.n5.09.4.title": "より・のほうが — comparación",
+    "grammar.n5.09.4.goal": "Indicar cuál de dos cosas tiene más una cualidad.",
+    "grammar.n5.09.4.preview": "コーヒーよりおちゃのほうがすきです。 — Me gusta más el té que el café.",
+    "grammar.n5.09.5.title": "のなかで・いちばん",
+    "grammar.n5.09.5.goal": "Elegir el elemento más destacado dentro de un grupo.",
+    "grammar.n5.09.5.preview": "くだもののなかでりんごがいちばんすきです。 — De las frutas, la manzana es la que más me gusta.",
+    "grammar.n5.09.6.title": "になる・くなる — cambio",
+    "grammar.n5.09.6.goal": "Describir un nuevo estado sin presentarlo como elección.",
+    "grammar.n5.09.6.preview": "せんせいになりました。 — Me hice profesor.",
+    "grammar.n5.09.7.title": "にする — elección",
+    "grammar.n5.09.7.goal": "Expresar qué opción eliges.",
+    "grammar.n5.09.7.preview": "コーヒーにします。 — Elijo café.",
+    "grammar.n5.09.8.title": "すぎる — demasiado",
+    "grammar.n5.09.8.goal": "Indicar que una acción o cualidad supera lo adecuado.",
+    "grammar.n5.09.8.preview": "たべすぎました。 — Comí demasiado.",
+    "grammar.n5.09.9.title": "でしょう・だろう",
+    "grammar.n5.09.9.goal": "Reconocer una suposición sin convertirla en certeza.",
+    "grammar.n5.09.9.preview": "あしたはあめでしょう。 — Probablemente lloverá mañana.",
+    "grammar.n5.09.10.title": "あげる — dar hacia otra persona",
+    "grammar.n5.09.10.goal": "Seguir la dirección del objeto desde quien da.",
+    "grammar.n5.09.10.preview": "わたし → ともだち：ほんをあげます。 — Le doy un libro a un amigo.",
+    "grammar.n5.09.11.title": "くれる — dar hacia mí",
+    "grammar.n5.09.11.goal": "Reconocer un regalo desde otra persona hacia ti.",
+    "grammar.n5.09.11.preview": "ともだち → わたし：ほんをくれます。 — Un amigo me da un libro.",
+    "grammar.n5.09.12.title": "もらう — recibir",
+    "grammar.n5.09.12.goal": "Describir el mismo intercambio desde quien recibe.",
+    "grammar.n5.09.12.preview": "わたし ← ともだち：ほんをもらいます。 — Recibo un libro de un amigo.",
+    "grammar.content.946": "Integración N5",
+    "grammar.content.947": "Ya no estudias reglas aisladas: ahora toca reconocerlas juntas dentro de ejercicios y textos tipo JLPT.",
+    "grammar.content.948": "JLPT N5 · TEMA 10",
+    "grammar.n5.10.count": "10 microlecciones",
+    "grammar.content.951": "Integrar todo el contenido anterior y entrenar reconocimiento gramatical y comprensión sin pistas.",
+    "grammar.n5.10.overview.goal": "Aprende los conceptos en orden, comprueba cada idea con un ejercicio y combínalos en el repaso del tema.",
+    "grammar.n5.10.overview.visual": "<div class=\"script-pill\">TEMA 10</div><div class=\"arrow-mini\">→</div><div class=\"script-pill\">Comprender</div>",
+    "grammar.content.953": "AL TERMINAR EL TEMA 10",
+    "grammar.content.954": "Este bloque sirve de puente hacia simulacros completos del JLPT N5 y ayuda a detectar qué áreas necesitan repaso.",
+    "grammar.n5.10.journey.eyebrow": "DE LA IDEA A LA PRÁCTICA",
+    "grammar.n5.10.journey.title": "Aprende paso a paso",
+    "grammar.n5.10.journey.body": "Empieza por la primera microlección o mezcla los conceptos en la práctica acumulativa.",
+    "grammar.content.955": "Repaso global",
+    "grammar.content.956": "Gramática en contexto",
+    "grammar.content.957": "Lecturas cortas y medias",
+    "grammar.content.958": "Simulacro de examen",
+    "grammar.n5.10.1.title": "Partículas mezcladas",
+    "grammar.n5.10.1.goal": "Elegir partículas por función dentro de una frase completa.",
+    "grammar.n5.10.1.preview": "わたしはうちでほんをよみます。 — Leo un libro en casa.",
+    "grammar.n5.10.2.title": "Conjugaciones mezcladas",
+    "grammar.n5.10.2.goal": "Mantener tiempo y negación al cambiar de trato.",
+    "grammar.n5.10.2.preview": "たべませんでした ↔ たべなかった — no comí.",
+    "grammar.n5.10.3.title": "Selección de forma",
+    "grammar.n5.10.3.goal": "Resolver un hueco usando la estructura que lo rodea.",
+    "grammar.n5.10.3.preview": "ねるまえに、みずをのみます。 — Bebo agua antes de dormir.",
+    "grammar.n5.10.4.title": "Orden de oración",
+    "grammar.n5.10.4.goal": "Ordenar bloques sin separar una unidad gramatical.",
+    "grammar.n5.10.4.preview": "わたしは / このほんを / よみたいです。 — Quiero leer este libro.",
+    "grammar.n5.10.5.title": "Gramática dentro de texto",
+    "grammar.n5.10.5.goal": "Usar el contexto para unir dos frases con coherencia.",
+    "grammar.n5.10.5.preview": "このみせはたかいですけど、おいしいです。 — Esta tienda es cara, pero su comida está rica.",
+    "grammar.n5.10.6.title": "Lectura corta",
+    "grammar.n5.10.6.goal": "Extraer una acción concreta de un texto breve.",
+    "grammar.n5.10.6.preview": "きょうはにちようびです。わたしはうちでほんをよみます。 — Hoy es domingo. Leo en casa.",
+    "grammar.n5.10.7.title": "Lectura media",
+    "grammar.n5.10.7.goal": "Relacionar varios momentos sin mezclar los planes.",
+    "grammar.n5.10.7.preview": "きのうはやすみでした。うちでほんをよんで、はやくねました。 — Ayer fue día libre. Leí en casa y me acosté temprano.",
+    "grammar.n5.10.8.title": "Información práctica",
+    "grammar.n5.10.8.goal": "Leer horarios y avisos para decidir qué puedes hacer.",
+    "grammar.n5.10.8.preview": "としょかん：くじからごじまで。 — Biblioteca: de nueve a cinco.",
+    "grammar.n5.10.9.title": "Repaso de errores",
+    "grammar.n5.10.9.goal": "Clasificar un fallo para revisar la idea adecuada.",
+    "grammar.n5.10.9.preview": "うちにべんきょうします → うちでべんきょうします。 — El lugar de una acción lleva で.",
+    "grammar.n5.10.10.title": "Simulacro N5",
+    "grammar.n5.10.10.goal": "Combinar forma, contexto y comprensión en un repaso pequeño.",
+    "grammar.n5.10.10.preview": "もうたべました。 — Ya he comido.",
+    "grammar.content.54": "Entender para qué sirven hiragana, katakana y kanji antes de empezar a estudiarlos.",
+    "grammar.content.50": "Hiragana",
+    "grammar.content.55": "Se usa para palabras japonesas, terminaciones y muchos elementos gramaticales.",
+    "grammar.content.56": "Se usa sobre todo para palabras extranjeras, nombres extranjeros, onomatopeyas y ciertos énfasis.",
+    "grammar.content.51": "Kanji",
+    "grammar.content.57": "Son caracteres con significado. En este tema solo aprenderás a reconocer que existen; todavía no los estudiarás.",
+    "grammar.content.58": "No necesitas aprender kanji todavía. El objetivo es reconocer qué sistema estás viendo.",
+    "grammar.content.59": "",
+    "grammar.content.60": "Aprende poco a poco",
+    "grammar.content.61": "Este subtema tiene una explicación breve y un único ejercicio principal. La práctica acumulativa vendrá después.",
+    "grammar.content.62": "Objetivo del Tema 00",
+    "grammar.content.63": "Leer kana sin depender constantemente del romaji antes de empezar con la gramática del Tema 01.",
+    "grammar.content.46": "EJERCICIO",
+    "grammar.content.47": "0.1",
+    "grammar.content.48": "¿Qué sistema de escritura se está usando principalmente?",
+    "grammar.content.49": "テレビ",
+    "grammar.content.52": "Correcto. テレビ está escrito en katakana, habitual para palabras de origen extranjero.",
+    "grammar.content.53": "Fíjate en la forma angular de los caracteres. テレビ está escrito en katakana.",
+    "grammar.content.73": "Empezar a asociar cada símbolo de hiragana directamente con su sonido.",
+    "grammar.content.74": "Las vocales",
+    "grammar.content.75": "Son la base del silabario.",
+    "grammar.content.76": "Filas consonánticas",
+    "grammar.content.77": "La mayoría de símbolos combinan una consonante con una vocal.",
+    "grammar.content.78": "Objetivo",
+    "grammar.content.79": "Queremos pasar de ver un símbolo a reconocer su sonido sin depender del romaji.",
+    "grammar.content.80": "El romaji será una ayuda temporal. Poco a poco debe desaparecer.",
+    "grammar.content.64": "0.2",
+    "grammar.content.65": "¿Cómo se lee este hiragana?",
+    "grammar.content.66": "き",
+    "grammar.content.67": "ki",
+    "grammar.content.68": "sa",
+    "grammar.content.69": "ke",
+    "grammar.content.70": "ta",
+    "grammar.content.71": "Correcto. き se lee “ki”.",
+    "grammar.content.72": "La respuesta correcta es “ki”. き pertenece a la fila か・き・く・け・こ.",
+    "grammar.content.90": "Reconocer cómo pequeños signos cambian el sonido de algunos kana.",
+    "grammar.content.91": "Dakuten ゛",
+    "grammar.content.92": "Convierte ciertos sonidos sordos en sonoros.",
+    "grammar.content.93": "Más ejemplos",
+    "grammar.content.94": "El mismo patrón afecta a varias filas.",
+    "grammar.content.95": "Handakuten ゜",
+    "grammar.content.96": "Se usa en la fila は para crear sonidos con p.",
+    "grammar.content.97": "Los signos ゛ y ゜ cambian el sonido aunque el kana base siga siendo reconocible.",
+    "grammar.content.81": "0.3",
+    "grammar.content.82": "Añade dakuten a か. ¿Qué obtienes?",
+    "grammar.content.83": "か ＋ ゛",
+    "grammar.content.84": "が",
+    "grammar.content.85": "ぱ",
+    "grammar.content.86": "ざ",
+    "grammar.content.87": "か",
+    "grammar.content.88": "Correcto. か (ka) + dakuten = が (ga).",
+    "grammar.content.89": "El dakuten transforma か (ka) en が (ga).",
+    "grammar.content.107": "Aprender a leer combinaciones con ゃ・ゅ・ょ pequeñas.",
+    "grammar.content.108": "Kana pequeño",
+    "grammar.content.109": "ゃ・ゅ・ょ pequeñas se combinan con el kana anterior.",
+    "grammar.content.110": "Un único sonido",
+    "grammar.content.111": "La combinación se pronuncia como una unidad.",
+    "grammar.content.112": "El tamaño importa",
+    "grammar.content.113": "きや y きゃ no representan lo mismo.",
+    "grammar.content.114": "Cuando ゃ・ゅ・ょ son pequeñas, forman un sonido combinado con el kana anterior.",
+    "grammar.content.98": "0.4",
+    "grammar.content.99": "¿Cuál es la lectura correcta?",
+    "grammar.content.100": "きゃ",
+    "grammar.content.101": "kiya",
+    "grammar.content.102": "kya",
+    "grammar.content.103": "kaya",
+    "grammar.content.104": "kyo",
+    "grammar.content.105": "Correcto. きゃ se lee “kya”.",
+    "grammar.content.106": "La ゃ es pequeña, así que se combina con き: きゃ = kya.",
+    "grammar.content.122": "Entender que la っ pequeña introduce una pausa breve y afecta a la consonante siguiente.",
+    "grammar.content.123": "Pausa breve",
+    "grammar.content.124": "La っ pequeña marca una interrupción muy corta antes del siguiente sonido.",
+    "grammar.content.125": "Consonante doble",
+    "grammar.content.126": "En romaji suele representarse duplicando la consonante siguiente.",
+    "grammar.content.127": "Puede cambiar la palabra",
+    "grammar.content.128": "La presencia de っ no es decorativa.",
+    "grammar.content.129": "La っ pequeña debe oírse y leerse: cambia el ritmo y puede cambiar la palabra.",
+    "grammar.content.115": "0.5",
+    "grammar.content.116": "¿Estas dos formas se pronuncian igual?",
+    "grammar.content.117": "きて　　きって",
+    "grammar.content.118": "Sí",
+    "grammar.content.119": "No",
+    "grammar.content.120": "Correcto. No se pronuncian igual: きって contiene una pausa breve antes de て.",
+    "grammar.content.121": "No. La っ pequeña introduce una pausa y duplica la consonante siguiente.",
+    "grammar.content.137": "Reconocer que la duración de una vocal forma parte de la pronunciación.",
+    "grammar.content.138": "La duración importa",
+    "grammar.content.139": "Una vocal corta y una vocal larga pueden distinguir palabras.",
+    "grammar.content.140": "En hiragana",
+    "grammar.content.141": "La vocal puede prolongarse añadiendo otra vocal.",
+    "grammar.content.142": "En katakana",
+    "grammar.content.143": "Es frecuente usar la raya larga ー.",
+    "grammar.content.144": "No ignores las vocales largas. Son parte de la palabra y deben pronunciarse.",
+    "grammar.content.130": "0.6",
+    "grammar.content.131": "¿Cuál de estas formas contiene una vocal larga?",
+    "grammar.content.132": "Selecciona una opción",
+    "grammar.content.133": "おばさん",
+    "grammar.content.134": "おばあさん",
+    "grammar.content.135": "Correcto. おばあさん contiene una vocal larga en ああ.",
+    "grammar.content.136": "La forma con vocal larga es おばあさん: el segundo あ prolonga el sonido.",
+    "grammar.content.153": "Reconocer el segundo silabario y relacionarlo con los sonidos que ya conoces.",
+    "grammar.content.154": "Mismos sonidos",
+    "grammar.content.155": "Hiragana y katakana representan esencialmente los mismos sonidos básicos.",
+    "grammar.content.156": "Uso frecuente",
+    "grammar.content.157": "Katakana aparece mucho en palabras de origen extranjero.",
+    "grammar.content.158": "Lectura directa",
+    "grammar.content.159": "También queremos reconocer katakana sin depender del romaji.",
+    "grammar.content.160": "Katakana no es otro idioma: es otro sistema para representar sonidos japoneses.",
+    "grammar.content.145": "0.7",
+    "grammar.content.146": "¿Cuál es el hiragana equivalente a ア?",
+    "grammar.content.147": "ア",
+    "grammar.content.148": "あ",
+    "grammar.content.149": "お",
+    "grammar.content.150": "い",
+    "grammar.content.151": "Correcto. ア y あ representan el sonido “a”.",
+    "grammar.content.152": "El equivalente en hiragana de ア es あ.",
+    "grammar.content.170": "Conocer tres excepciones de pronunciación antes de empezar la gramática del Tema 01.",
+    "grammar.content.171": "は",
+    "grammar.content.172": "Normalmente se lee ha, pero como partícula se pronuncia wa.",
+    "grammar.content.173": "へ",
+    "grammar.content.174": "Normalmente se lee he, pero como partícula se pronuncia e.",
+    "grammar.content.175": "を",
+    "grammar.content.176": "Cuando funciona como partícula se pronuncia normalmente o.",
+    "grammar.content.177": "Todavía no necesitas dominar qué hacen estas partículas. Solo reconocer su pronunciación especial en contexto.",
+    "grammar.content.161": "0.8",
+    "grammar.content.162": "¿Cómo se pronuncia は en esta frase?",
+    "grammar.content.163": "わたし は 学生です。",
+    "grammar.content.164": "ha",
+    "grammar.content.165": "wa",
+    "grammar.content.166": "ba",
+    "grammar.content.167": "pa",
+    "grammar.content.168": "Correcto. Aquí は funciona como partícula, por eso se pronuncia “wa”.",
+    "grammar.content.169": "En esta frase は funciona como partícula. Se pronuncia “wa”.",
+    "grammar.content.327": "Entender que el japonés organiza la información de forma distinta al español y que el verbo o la cópula suelen cerrar la oración.",
+    "grammar.content.328": "Tema primero",
+    "grammar.content.329": "La frase suele presentar primero aquello de lo que se habla.",
+    "grammar.content.330": "Información después",
+    "grammar.content.331": "La información sobre el tema aparece a continuación.",
+    "grammar.content.332": "Cierre de frase",
+    "grammar.content.333": "En frases nominales básicas, です suele cerrar la oración.",
+    "grammar.content.334": "No traduzcas palabra por palabra. Piensa en bloques: tema → información → cierre.",
+    "grammar.content.335": "Gramática real",
+    "grammar.content.336": "Ahora empezamos a trabajar estructuras que reutilizaremos durante todo el N5.",
+    "grammar.content.337": "Objetivo del Tema 01",
+    "grammar.content.338": "Construir y entender frases nominales básicas sin depender de traducciones palabra por palabra.",
+    "grammar.content.319": "1.1",
+    "grammar.content.320": "¿Cuál tiene el orden básico correcto?",
+    "grammar.content.321": "“Yo soy estudiante.”",
+    "grammar.content.322": "わたしは学生です。",
+    "grammar.content.323": "学生わたしはです。",
+    "grammar.content.324": "です学生わたしは。",
+    "grammar.content.325": "Correcto. Tema → información → です.",
+    "grammar.content.326": "La estructura básica aquí es わたしは + 学生 + です.",
+    "grammar.content.345": "Aprender a identificar o describir algo de forma educada usando です.",
+    "grammar.content.346": "Cópula formal",
+    "grammar.content.347": "です se usa para cerrar muchas frases nominales de forma educada.",
+    "grammar.content.348": "Identificación",
+    "grammar.content.349": "Permite decir qué es algo o quién es alguien.",
+    "grammar.content.350": "No es un verbo idéntico a “ser”",
+    "grammar.content.351": "Su función se parece a “ser”, pero no conviene traducirla mecánicamente.",
+    "grammar.content.352": "En este nivel, úsalo como cierre formal de frases con nombres y adjetivos な.",
+    "grammar.content.339": "1.2",
+    "grammar.content.340": "Completa la frase:",
+    "grammar.content.341": "わたしは学生 ___。",
+    "grammar.content.342": "の",
+    "grammar.content.343": "Correcto. わたしは学生です。",
+    "grammar.content.344": "La frase necesita el cierre formal です.",
+    "grammar.content.361": "Reconocer だ como la forma simple de la cópula en frases nominales.",
+    "grammar.content.362": "Forma simple",
+    "grammar.content.363": "だ es una forma simple que contrasta con el registro formal de です.",
+    "grammar.content.364": "Registro",
+    "grammar.content.365": "No expresa un significado distinto; cambia principalmente el registro.",
+    "grammar.content.366": "Reconocer antes de producir",
+    "grammar.content.367": "Al principio es más importante reconocerlo que usarlo en todas tus frases.",
+    "grammar.content.368": "Piensa です = formal y だ = simple.",
+    "grammar.content.353": "1.3",
+    "grammar.content.354": "¿Cuál es la versión simple?",
+    "grammar.content.355": "学生です。",
+    "grammar.content.356": "学生だ。",
+    "grammar.content.357": "学生か。",
+    "grammar.content.358": "学生の。",
+    "grammar.content.359": "Correcto. 学生だ es la forma simple.",
+    "grammar.content.360": "La cópula simple correspondiente aquí es だ.",
+    "grammar.content.375": "Entender que は marca aquello de lo que estamos hablando.",
+    "grammar.content.376": "Tema",
+    "grammar.content.377": "は señala el tema de la oración.",
+    "grammar.content.378": "No equivale a “ser”",
+    "grammar.content.379": "La traducción depende de la frase completa, no de は por separado.",
+    "grammar.content.380": "Pronunciación especial",
+    "grammar.content.381": "Como partícula, は se pronuncia “wa”.",
+    "grammar.content.382": "Pregunta mentalmente: “¿de qué estamos hablando?”. Ese elemento suele ser el tema marcado con は.",
+    "grammar.content.369": "1.4",
+    "grammar.content.370": "Completa con la partícula de tema:",
+    "grammar.content.371": "わたし ___ 学生です。",
+    "grammar.content.372": "に",
+    "grammar.content.373": "で",
+    "grammar.content.374": "La partícula de tema que necesitamos aquí es は.",
+    "grammar.content.391": "Convertir una frase formal en pregunta añadiendo か al final.",
+    "grammar.content.392": "Pregunta formal",
+    "grammar.content.393": "か al final puede convertir una frase formal en pregunta.",
+    "grammar.content.394": "La estructura se mantiene",
+    "grammar.content.395": "No necesitas invertir el orden como en español.",
+    "grammar.content.396": "Entonación",
+    "grammar.content.397": "La entonación puede ayudar, pero la partícula ya marca claramente la pregunta.",
+    "grammar.content.398": "En preguntas formales básicas, conserva la oración y añade か al final.",
+    "grammar.content.383": "1.5",
+    "grammar.content.384": "¿Cuál es la pregunta correcta?",
+    "grammar.content.385": "“¿Eres estudiante?”",
+    "grammar.content.386": "学生ですか。",
+    "grammar.content.387": "か学生です。",
+    "grammar.content.388": "学生かです。",
+    "grammar.content.389": "Correcto. 学生ですか。",
+    "grammar.content.390": "La partícula か va al final de la frase formal.",
+    "grammar.content.404": "Usar も para indicar que un elemento comparte la misma información que otro ya mencionado.",
+    "grammar.content.405": "También",
+    "grammar.content.406": "も añade el sentido de “también”.",
+    "grammar.content.407": "Sustituye a は",
+    "grammar.content.408": "En frases simples, も ocupa el lugar donde normalmente pondrías は.",
+    "grammar.content.409": "Reutiliza contexto",
+    "grammar.content.410": "Funciona bien cuando la información ya se conoce.",
+    "grammar.content.411": "Cuando quieras decir “X también…”, piensa primero en も.",
+    "grammar.content.399": "1.6",
+    "grammar.content.400": "Completa: “Yo también soy estudiante.”",
+    "grammar.content.401": "も",
+    "grammar.content.402": "Correcto. わたしも学生です。",
+    "grammar.content.403": "Para expresar “también” usamos も.",
+    "grammar.content.420": "Conectar dos nombres para expresar posesión, pertenencia, origen o relación.",
+    "grammar.content.421": "A の B",
+    "grammar.content.422": "El primer nombre describe o relaciona al segundo.",
+    "grammar.content.423": "Posesión",
+    "grammar.content.424": "Puede equivaler a “de” o a una relación posesiva.",
+    "grammar.content.425": "Relación",
+    "grammar.content.426": "No siempre significa propiedad literal.",
+    "grammar.content.427": "Lee A の B como “B relacionado con A”. La traducción concreta depende del contexto.",
+    "grammar.content.412": "1.7",
+    "grammar.content.413": "¿Cuál significa “mi libro”?",
+    "grammar.content.414": "Selecciona la opción correcta",
+    "grammar.content.415": "わたしのほん",
+    "grammar.content.416": "ほんのわたし",
+    "grammar.content.417": "わたしはほん",
+    "grammar.content.418": "Correcto. わたしのほん = mi libro.",
+    "grammar.content.419": "La estructura es poseedor/relación + の + cosa.",
+    "grammar.content.436": "Señalar objetos según su distancia respecto al hablante y al oyente.",
+    "grammar.content.431": "これ",
+    "grammar.content.437": "Esto: cerca del hablante.",
+    "grammar.content.432": "それ",
+    "grammar.content.438": "Eso: cerca del oyente.",
+    "grammar.content.433": "あれ",
+    "grammar.content.439": "Aquello: lejos de ambos.",
+    "grammar.content.440": "これ・それ・あれ pueden aparecer solos; no necesitan un sustantivo detrás.",
+    "grammar.content.428": "1.8",
+    "grammar.content.429": "El objeto está cerca de la persona que escucha. ¿Qué usas?",
+    "grammar.content.430": "¿Esto / eso / aquello?",
+    "grammar.content.434": "Correcto. それ señala algo cerca del oyente.",
+    "grammar.content.435": "Cerca del oyente usamos それ.",
+    "grammar.content.448": "Señalar un sustantivo concreto con demostrativos que siempre necesitan acompañarlo.",
+    "grammar.content.449": "この + nombre",
+    "grammar.content.450": "Este/esta + sustantivo.",
+    "grammar.content.451": "その + nombre",
+    "grammar.content.452": "Ese/esa + sustantivo.",
+    "grammar.content.453": "あの + nombre",
+    "grammar.content.454": "Aquel/aquella + sustantivo.",
+    "grammar.content.455": "A diferencia de これ・それ・あれ, この・その・あの necesitan un sustantivo después.",
+    "grammar.content.441": "1.9",
+    "grammar.content.442": "¿Cuál significa “este libro”?",
+    "grammar.content.443": "___ ほん",
+    "grammar.content.444": "この",
+    "grammar.content.445": "その",
+    "grammar.content.446": "Correcto. このほん = este libro.",
+    "grammar.content.447": "Como ほん aparece después, necesitamos この.",
+    "grammar.content.463": "Hablar de lugares básicos y preguntar dónde está algo.",
+    "grammar.content.460": "ここ",
+    "grammar.content.464": "Aquí, cerca del hablante.",
+    "grammar.content.465": "そこ / あそこ",
+    "grammar.content.466": "Ahí / allí según la distancia.",
+    "grammar.content.459": "どこ",
+    "grammar.content.467": "Pregunta “¿dónde?”.",
+    "grammar.content.468": "El patrón espacial sigue la misma lógica de distancia que これ・それ・あれ.",
+    "grammar.content.456": "1.10",
+    "grammar.content.457": "¿Cómo preguntas “¿Dónde está?” de forma básica?",
+    "grammar.content.458": "___ ですか。",
+    "grammar.content.461": "Correcto. どこですか。",
+    "grammar.content.462": "Para preguntar “dónde” usamos どこ.",
+    "grammar.content.475": "Negar frases nominales básicas en registro formal y reconocer la forma simple.",
+    "grammar.content.476": "Formal frecuente",
+    "grammar.content.477": "じゃないです es común en conversación educada.",
+    "grammar.content.478": "Formal",
+    "grammar.content.479": "ではありません también es correcta y más formal.",
+    "grammar.content.480": "じゃない es una forma simple muy frecuente.",
+    "grammar.content.481": "No memorices tres traducciones distintas: todas expresan negación con diferente registro.",
+    "grammar.content.469": "1.11",
+    "grammar.content.470": "¿Cuál significa “No soy estudiante”?",
+    "grammar.content.471": "じゃないです",
+    "grammar.content.472": "でした",
+    "grammar.content.473": "Correcto. わたしは学生じゃないです。",
+    "grammar.content.474": "Para negar en este patrón usamos じゃないです.",
+    "grammar.content.489": "Hablar de estados nominales pasados con でした y reconocer だった.",
+    "grammar.content.490": "Pasado formal",
+    "grammar.content.491": "でした es el pasado formal de です.",
+    "grammar.content.492": "Pasado simple",
+    "grammar.content.493": "だった es la forma simple correspondiente.",
+    "grammar.content.494": "Cambio temporal",
+    "grammar.content.495": "La frase describe un estado pasado.",
+    "grammar.content.496": "Para nombres: です → でした y だ → だった.",
+    "grammar.content.482": "1.12",
+    "grammar.content.483": "Convierte al pasado formal:",
+    "grammar.content.484": "学生です。 → ?",
+    "grammar.content.485": "学生でした。",
+    "grammar.content.486": "学生じゃないです。",
+    "grammar.content.487": "Correcto. 学生でした。",
+    "grammar.content.488": "El pasado formal de です es でした.",
+    "grammar.content.503": "Combinar negación y pasado en frases nominales.",
+    "grammar.content.504": "Conversacional formal",
+    "grammar.content.505": "じゃなかったです expresa pasado negativo de forma educada.",
+    "grammar.content.506": "ではありませんでした es una variante más formal.",
+    "grammar.content.507": "じゃなかった es el pasado negativo simple.",
+    "grammar.content.508": "Piensa en dos operaciones: negar + mover esa negación al pasado.",
+    "grammar.content.497": "1.13",
+    "grammar.content.498": "¿Cuál significa “No era estudiante”?",
+    "grammar.content.499": "学生 ___。",
+    "grammar.content.500": "じゃなかったです",
+    "grammar.content.501": "Correcto. 学生じゃなかったです。",
+    "grammar.content.502": "Necesitamos pasado + negación: じゃなかったです.",
+    "grammar.content.178": "REPASO DEL TEMA 00",
+    "grammar.content.179": "Ahora mezclamos todo",
+    "grammar.content.180": "Ya no sabrás de antemano qué subtema se está evaluando. La idea es comprobar si reconoces los patrones sin depender del orden de las lecciones.",
+    "grammar.content.181": "preguntas",
+    "grammar.content.182": "subtemas",
+    "grammar.content.183": "intentos",
+    "grammar.content.184": "⚡ Feedback inmediato",
+    "grammar.content.185": "🔀 Contenido mezclado",
+    "grammar.content.186": "🎯 Resultado final por áreas",
+    "grammar.content.187": "No memorices la posición",
+    "grammar.content.188": "En la versión final mezclaremos el orden y añadiremos más ejemplos para que aprendas el concepto, no una respuesta concreta.",
+    "grammar.content.189": "TEMA 00 · RESULTADO",
+    "grammar.content.190": "Reconocimiento",
+    "grammar.content.191": "Hiragana, katakana y sistemas de escritura.",
+    "grammar.content.192": "Cambios de sonido",
+    "grammar.content.193": "Dakuten, sonidos combinados y っ pequeña.",
+    "grammar.content.194": "Duración y lectura",
+    "grammar.content.195": "Vocales largas y lectura contextual.",
+    "grammar.content.196": "Partículas",
+    "grammar.content.197": "Pronunciación especial de は・へ・を.",
+    "grammar.content.198": "Ir al Tema 01 →",
+    "grammar.content.199": "Clasificación",
+    "grammar.content.200": "0.1 · Sistemas de escritura",
+    "grammar.content.201": "¿Qué sistema de escritura se usa principalmente?",
+    "grammar.content.202": "テレビ está escrito en katakana, habitual en muchas palabras de origen extranjero.",
+    "grammar.content.203": "0.2 · Hiragana",
+    "grammar.content.204": "ぬ",
+    "grammar.content.205": "ne",
+    "grammar.content.206": "nu",
+    "grammar.content.207": "me",
+    "grammar.content.208": "no",
+    "grammar.content.209": "ぬ se lee “nu”.",
+    "grammar.content.210": "Transformación",
+    "grammar.content.211": "0.3 · Dakuten",
+    "grammar.content.212": "¿Qué kana obtenemos?",
+    "grammar.content.213": "さ ＋ ゛",
+    "grammar.content.215": "ば",
+    "grammar.content.216": "さ (sa) + dakuten = ざ (za).",
+    "grammar.content.217": "Lectura",
+    "grammar.content.218": "0.4 · Sonidos combinados",
+    "grammar.content.219": "しゅ",
+    "grammar.content.220": "shiyu",
+    "grammar.content.221": "shu",
+    "grammar.content.222": "sho",
+    "grammar.content.223": "su",
+    "grammar.content.224": "La ゅ pequeña se combina con し: しゅ = “shu”.",
+    "grammar.content.225": "Comparación",
+    "grammar.content.226": "0.5 · っ pequeña",
+    "grammar.content.227": "¿Se pronuncian exactamente igual?",
+    "grammar.content.228": "さか　　さっか",
+    "grammar.content.229": "No. さっか contiene una pausa breve producida por la っ pequeña.",
+    "grammar.content.230": "Detección",
+    "grammar.content.231": "0.6 · Vocales largas",
+    "grammar.content.232": "¿Cuál contiene una vocal larga marcada con ー?",
+    "grammar.content.233": "コーヒー　　コヒ",
+    "grammar.content.234": "コーヒー",
+    "grammar.content.235": "コヒ",
+    "grammar.content.236": "コーヒー contiene la marca ー, que prolonga la vocal.",
+    "grammar.content.237": "Equivalencia",
+    "grammar.content.238": "0.7 · Katakana",
+    "grammar.content.239": "¿Cuál es su equivalente en hiragana?",
+    "grammar.content.240": "カ",
+    "grammar.content.241": "け",
+    "grammar.content.242": "こ",
+    "grammar.content.243": "カ y か representan el sonido “ka”.",
+    "grammar.content.244": "Contexto",
+    "grammar.content.245": "0.8 · Partículas",
+    "grammar.content.246": "Aquí は funciona como partícula, por eso se pronuncia “wa”.",
+    "grammar.content.247": "Mezcla",
+    "grammar.content.248": "Repaso combinado",
+    "grammar.content.249": "¿Qué aparece en esta palabra?",
+    "grammar.content.250": "きょう",
+    "grammar.content.251": "Una っ pequeña",
+    "grammar.content.252": "Un sonido combinado con ょ",
+    "grammar.content.253": "Handakuten",
+    "grammar.content.254": "きょ contiene una ょ pequeña combinada con き.",
+    "grammar.content.255": "Reto final",
+    "grammar.content.256": "¿Qué afirmación es correcta?",
+    "grammar.content.257": "スーパー へ いきます。",
+    "grammar.content.258": "スーパー está en hiragana",
+    "grammar.content.259": "へ se pronuncia “he” como partícula",
+    "grammar.content.260": "スーパー contiene una vocal larga y へ se pronuncia “e” como partícula",
+    "grammar.content.261": "No aparece katakana",
+    "grammar.content.262": "スーパー está en katakana y contiene ー. Además, へ como partícula se pronuncia “e”.",
+    "grammar.content.509": "REPASO DEL TEMA 01",
+    "grammar.content.510": "Frases nominales en contexto",
+    "grammar.content.511": "Mezclamos です, だ, partículas, demostrativos y formas negativas/pasadas sin decirte qué regla toca.",
+    "grammar.content.512": "reto final",
+    "grammar.content.513": "Sin pistas de subtema",
+    "grammar.content.514": "La práctica mezcla conceptos porque en el examen y en textos reales nadie te dice qué regla debes aplicar.",
+    "grammar.content.515": "TEMA 01 · RESULTADO",
+    "grammar.content.516": "Ir al Tema 02 →",
+    "grammar.content.517": "Opción múltiple",
+    "grammar.content.518": "¿Qué partícula marca el tema?",
+    "grammar.content.519": "Aquí は marca aquello de lo que hablamos.",
+    "grammar.content.520": "Orden",
+    "grammar.content.521": "¿Cuál es el orden correcto?",
+    "grammar.content.522": "学生です / わたしは",
+    "grammar.content.523": "学生ですわたしは。",
+    "grammar.content.524": "Tema + información + です.",
+    "grammar.content.525": "Demostrativos",
+    "grammar.content.526": "¿Qué demostrativo usas?",
+    "grammar.content.527": "Objeto cerca del oyente",
+    "grammar.content.528": "¿Cómo dices “este libro”?",
+    "grammar.content.529": "そこ",
+    "grammar.content.530": "この necesita un sustantivo después.",
+    "grammar.content.531": "Pregunta",
+    "grammar.content.532": "Completa la pregunta formal.",
+    "grammar.content.533": "学生です ___。",
+    "grammar.content.534": "か al final marca la pregunta formal.",
+    "grammar.content.535": "Completa “mi libro”.",
+    "grammar.content.536": "わたし ___ ほん",
+    "grammar.content.537": "A の B expresa relación o posesión.",
+    "grammar.content.538": "Completa “Yo también soy estudiante”.",
+    "grammar.content.539": "も expresa “también”.",
+    "grammar.content.540": "Negación",
+    "grammar.content.541": "¿Qué opción niega la frase?",
+    "grammar.content.542": "じゃないです expresa negación.",
+    "grammar.content.544": "Pásalo a pasado formal.",
+    "grammar.content.545": "です → でした.",
+    "grammar.content.546": "¿Qué expresa “No era estudiante”?",
+    "grammar.content.547": "Pasado negativo: じゃなかったです.",
+    "grammar.content.548": "Lugar",
+    "grammar.content.549": "¿Cómo preguntas “¿Dónde?”",
+    "grammar.content.550": "どこ = dónde.",
+    "grammar.content.551": "Tema 01",
+    "grammar.content.552": "¿Qué significa mejor?",
+    "grammar.content.553": "これは わたし の ほん です。",
+    "grammar.content.554": "Esto es mi libro.",
+    "grammar.content.555": "Ese es tu libro.",
+    "grammar.content.556": "Aquí está el libro.",
+    "grammar.content.557": "これ = esto, わたしのほん = mi libro.",
+    "grammar.content.989": "Tu ruta desde cero hasta aprobar el JLPT N5",
+    "grammar.content.990": "🧩 Gramática",
+    "grammar.content.991": "📖 Lectura",
+    "grammar.content.992": "◉ Vocabulario",
+    "grammar.content.993": "🎯 Práctica progresiva",
+    "grammar.content.994": "<h3>📖 Progreso general</h3> <div class=\"progress-wrap\"> <div class=\"donut\" style=\"--progress: 30\"> <span>30%</span> </div> <div class=\"progress-stats\"> <div><strong>3 / 10</strong><span>Temas completados</span></div> <div>📖 <strong>12</strong><span>Lecturas</span></div> <div>あ <strong>48</strong><span>Kanji de apoyo</span></div> <div>🏆 <strong>1</strong><span>Simulacros</span></div> </div> </div>",
+    "grammar.content.995": "<h3>📘 Cómo usar este roadmap</h3> <div class=\"howto-item\"><span class=\"step blue-step\">1</span><div><strong>Sigue el orden de los temas</strong><p>Cada tema se basa en el anterior.</p></div></div> <div class=\"howto-item\"><span class=\"step pink-step\">2</span><div><strong>Estudia y practica</strong><p>Cada tema incluye gramática, lectura y ejercicios.</p></div></div> <div class=\"howto-item\"><span class=\"step green-step\">3</span><div><strong>Completa y avanza</strong><p>Marca temas completados y sigue tu progreso.</p></div></div> <div class=\"howto-item\"><span class=\"step violet-step\">4</span><div><strong>Llega al examen</strong><p>Repasa todo y realiza un simulacro del N5.</p></div></div>",
+    "grammar.content.996": "<div class=\"cat\">🐈</div> <div> <div class=\"jp\">がんばろう！</div> <div class=\"es\">¡Tú puedes!</div> </div>"
+  }
+}

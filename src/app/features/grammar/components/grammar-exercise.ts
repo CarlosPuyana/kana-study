@@ -1,39 +1,56 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, output, signal } from '@angular/core';
+import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { TranslationService } from '../../../core/services/translation.service';
 import { GrammarExercise } from '../models/grammar.model';
+import { grammarAnswerReady, isGrammarAnswerCorrect, isChoiceExercise } from '../services/grammar-exercise-answer';
+import { GrammarDirectionComponent } from './grammar-direction';
+import { GrammarKanaAssistComponent } from './grammar-kana-assist';
 
-@Component({selector:'app-grammar-exercise',changeDetection:ChangeDetectionStrategy.OnPush,template:`
-  <section [class]="practice()?'practice-question-card':'exercise-block'">
-    @if(practice()){
-      <div class="practice-question-meta"><span class="practice-type">{{i18n.t(exercise().labelKey)}}</span><span class="practice-topic">{{i18n.t(exercise().topicKey)}}</span></div>
-      <h2>{{i18n.t(exercise().questionKey)}}</h2>
-    } @else {
-      <div class="section-title"><span>02</span><div><small>{{i18n.t('grammar.exercise')}}</small><h3>{{i18n.t(exercise().questionKey)}}</h3></div></div>
-    }
-    <div [class]="practice()?'practice-prompt':'exercise-prompt'">{{i18n.t(exercise().promptKey)}}</div>
-    <div [class]="practice()?'practice-options-grid':'exercise-options'" role="group" [attr.aria-label]="i18n.t(exercise().questionKey)">
-      @for(option of exercise().optionKeys;track $index){
-        <button type="button" [class]="practice()?'practice-option':'exercise-option'" [class.selected]="selected()===$index" [class.correct]="checked()&&$index===exercise().answer" [class.wrong]="checked()&&selected()===$index&&!correct()" [disabled]="checked()" [attr.aria-pressed]="selected()===$index" (click)="select($index)">{{i18n.t(option)}}</button>
-      }
-    </div>
-    @if(checked()){
-      <div [class]="practice()?'practice-feedback-box':'exercise-feedback show'" [class.success]="correct()" [class.error]="!correct()" role="status">
-        <div [class]="practice()?'practice-feedback-icon':'feedback-icon'">{{correct()?'✓':'!'}}</div><div><strong>{{i18n.t(correct()?'grammar.correct':practice()?'grammar.review':'grammar.almost')}}</strong><p>{{i18n.t(correct()?exercise().successKey:exercise().errorKey)}}</p></div>
-      </div>
-    }
-    <div [class]="practice()?'practice-question-actions':'exercise-actions'">
-      @if(!checked()){<button type="button" [class]="practice()?'practice-check':'check-answer'" [disabled]="selected()===null" (click)="check()">{{i18n.t('grammar.check')}}</button>}
-      <button type="button" [class]="practice()?'practice-next':'continue-answer'" [disabled]="!checked()" [hidden]="practice()&&!checked()" (click)="continued.emit()">{{i18n.t(last()?'grammar.results':'grammar.next')}}</button>
-    </div>
-  </section>
-`})
+@Component({selector:'app-grammar-exercise',imports:[GrammarDirectionComponent,GrammarKanaAssistComponent],changeDetection:ChangeDetectionStrategy.OnPush,templateUrl:'./grammar-exercise.html',styleUrl:'./grammar-exercise.scss'})
 export class GrammarExerciseComponent {
   readonly i18n=inject(TranslationService);
-  readonly exercise=input.required<GrammarExercise>();readonly practice=input(false);readonly last=input(false);
-  readonly answered=output<boolean>();readonly continued=output<void>();
-  readonly selected=signal<number|null>(null);readonly checked=signal(false);
-  constructor(){effect(()=>{this.exercise();this.selected.set(null);this.checked.set(false);});}
-  correct():boolean{return this.selected()===this.exercise().answer;}
+  readonly exercise=input.required<GrammarExercise>(); readonly practice=input(false); readonly last=input(false);
+  readonly answered=output<boolean>(); readonly continued=output<void>();
+  readonly selected=signal<number|null>(null); readonly checked=signal(false);
+  readonly textAnswer=signal(''); readonly sequence=signal<readonly number[]>([]);
+  readonly matches=signal<Readonly<Record<number,number>>>({}); readonly matchingLeft=signal<number|null>(null);
+  readonly choice=computed(()=>{const e=this.exercise();return isChoiceExercise(e)?e:null;});
+  readonly ordered=computed(()=>{const e=this.exercise();return e.kind==='sentence-builder'||e.kind==='sentence-order'?e:null;});
+  readonly matching=computed(()=>{const e=this.exercise();return e.kind==='matching'?e:null;});
+  readonly gap=computed(()=>{const e=this.exercise();return e.kind==='fill-gap'?e:null;});
+  private readonly gapInput=viewChild<ElementRef<HTMLInputElement>>('gapInput');
+  private readonly continueButton=viewChild<ElementRef<HTMLButtonElement>>('continueButton');
+  private readonly keyboardCheck=signal(false);
+  private readonly host=inject<ElementRef<HTMLElement>>(ElementRef);
+  focusAnswer():void{this.host.nativeElement.querySelector<HTMLElement>('input,button:not(:disabled)')?.focus();}
+  readonly rightOrder=computed(()=>{const e=this.matching();return e?.rightOrder??e?.pairs.map((_,i)=>i).reverse()??[];});
+  readonly ready=computed(()=>grammarAnswerReady(this.exercise(),this.answer()));
+  constructor(){effect(()=>{this.exercise();this.selected.set(null);this.checked.set(false);this.textAnswer.set('');this.sequence.set([]);this.matches.set({});this.matchingLeft.set(null);});
+    afterRenderEffect(()=>{if(this.checked()&&this.keyboardCheck()){this.continueButton()?.nativeElement.focus();this.keyboardCheck.set(false);}});
+  }
+  private answer(){return {selected:this.selected(),text:this.textAnswer(),sequence:this.sequence(),matches:this.matches()};}
+  correct():boolean{return isGrammarAnswerCorrect(this.exercise(),this.answer());}
   select(index:number):void{if(!this.checked())this.selected.set(index);}
-  check():void{if(this.selected()===null||this.checked())return;this.checked.set(true);this.answered.emit(this.correct());}
+  addToken(index:number):void{if(!this.checked()&&!this.sequence().includes(index))this.sequence.update(tokens=>[...tokens,index]);}
+  removeToken(position:number):void{if(!this.checked())this.sequence.update(tokens=>tokens.filter((_,i)=>i!==position));}
+  chooseLeft(index:number):void{if(!this.checked())this.matchingLeft.set(index);}
+  matchRight(index:number):void {
+    const left=this.matchingLeft();if(left===null||this.checked())return;
+    this.matches.update(matches=>({...Object.fromEntries(Object.entries(matches).filter(([key,value])=>Number(key)!==left&&value!==index)),[left]:index}));
+    this.matchingLeft.set(null);
+  }
+  onEnter(event:Event):void{if(event instanceof KeyboardEvent&&!event.isComposing)this.check(event);}
+  editGap(kana:string,erase=false):void {
+    if(this.checked()||!this.gap()||(!erase&&!this.gap()!.kanaBank?.includes(kana)))return;
+    const input=this.gapInput()?.nativeElement,current=this.textAnswer();
+    const start=input?.selectionStart??current.length,end=input?.selectionEnd??start;
+    let prefix=current.slice(0,start);
+    if(erase&&start===end){const chars=Array.from(prefix);chars.pop();prefix=chars.join('');}
+    const value=prefix+kana+current.slice(end),cursor=prefix.length+kana.length;
+    this.textAnswer.set(value);
+    if(input){input.value=value;input.setSelectionRange(cursor,cursor);}
+  }
+  check(event?:Event):void{if(!this.ready()||this.checked())return;
+    this.keyboardCheck.set(event instanceof KeyboardEvent||event instanceof MouseEvent&&event.detail===0);
+    this.checked.set(true);this.answered.emit(this.correct());
+  }
 }

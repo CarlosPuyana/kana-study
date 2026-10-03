@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { auditGrammarCourse } from './grammar-language-audit.mjs';
+import { completeGrammarCourse } from './complete-grammar-n5.mjs';
+import { compiledTranslations } from './compile-i18n.mjs';
+const source=JSON.parse(fs.readFileSync('scripts/grammar-n5-foundation.json','utf8'));
+const sessions=completeGrammarCourse(source.topics,source.lessons,source.practices,source.copy);
+assert.equal(fs.readFileSync('src/assets/i18n/dictionaries.generated.ts','utf8'),compiledTranslations(),'Stale compact translations: run npm run generate:grammar or node scripts/compile-i18n.mjs');
+const raw=fs.readFileSync('src/app/features/grammar/data/grammar-n5.generated.ts','utf8');
+const read=name=>JSON.parse(raw.match(new RegExp(`export const ${name}:[^=]+= ([\\s\\S]*?);\\r?\\n`))[1]);
+for(const [name,value]of Object.entries({GRAMMAR_TOPICS:source.topics,GRAMMAR_LESSONS:source.lessons,GRAMMAR_PRACTICES:source.practices,GRAMMAR_SESSIONS:sessions,GRAMMAR_ROADMAP:source.roadmap}))assert.deepEqual(read(name),value,'Stale Grammar data: run node scripts/complete-grammar-n5.mjs');
+const result=auditGrammarCourse(read('GRAMMAR_LESSONS'),read('GRAMMAR_PRACTICES'),read('GRAMMAR_SESSIONS'),JSON.parse(fs.readFileSync('src/assets/i18n/es.json','utf8')),read('GRAMMAR_TOPICS'),read('GRAMMAR_ROADMAP'));
+console.log(`Grammar audit OK: ${result.concepts} concepts, ${result.sessions} sessions, ${JSON.stringify(result.modes)}, ${result.kanji.length} introduced kanji.`);

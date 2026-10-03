@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ALL_KANA } from '../../data/kana';
 import { KanaType, KanaVariant } from '../../core/models/kana.model';
 import { QUESTION_TYPES, QuestionType } from '../../core/models/progress.model';
@@ -35,6 +35,7 @@ export class SelectionPage {
   readonly i18n = inject(TranslationService);
   private readonly location = inject(Location);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   readonly types = KANA_TYPES;
   readonly variants = KANA_VARIANTS;
@@ -52,6 +53,15 @@ export class SelectionPage {
     { type: 'audio-to-romaji', available: false, from: '', audioSource: true, to: 'ho', descriptionKey: 'common.comingSoon' },
     { type: 'audio-to-kana', available: false, from: '', audioSource: true, to: 'ほ', descriptionKey: 'common.comingSoon' },
   ];
+
+  constructor() {
+    const kana = this.route.snapshot.queryParamMap.get('kana');
+    if (this.route.snapshot.queryParamMap.get('from') !== 'grammar' || (kana !== 'hiragana' && kana !== 'katakana')) return;
+    this.updateDraft(selection => {
+      for (const type of this.types) for (const variant of this.variants) selection.categories[type][variant] = type === kana;
+      selection.questionTypes = ['kana-to-romaji', 'romaji-to-kana'];
+    });
+  }
 
   categoryCount(type: KanaType, variant: KanaVariant): number {
     return ALL_KANA.filter(kana => kana.type === type && kana.variant === variant).length;
@@ -105,7 +115,7 @@ export class SelectionPage {
   back(): void {
     const state = this.location.getState() as { navigationId?: number } | null;
     if ((state?.navigationId ?? 0) > 1) this.location.back();
-    else void this.router.navigateByUrl('/');
+    else void this.router.navigateByUrl(this.route.snapshot.queryParamMap.get('from') === 'grammar' ? '/grammar/n5/00' : '/');
   }
 
   private updateDraft(updater: (selection: LearningSelection) => void): void {

@@ -8,9 +8,9 @@
   .grammar-toolbar{display:flex;align-items:center;gap:14px;padding:10px 20px;background:var(--surface);border-bottom:1px solid var(--border)}
   .icon-btn{min-width:44px;min-height:44px}
   .topic-subnav-item{display:block}
-  .topic-subnav-item.active{background:var(--primary-soft);color:var(--accent);border-radius:8px}
+  .topic-subnav-item.active{background:var(--primary-soft);color:var(--selected-foreground);border-radius:8px}
   .nav-item:hover,.subnav-item:hover,.exercise-option:hover,.practice-option:hover{background:var(--surface-hover)}
-  .subnav-item.selected{background:var(--primary-soft);color:var(--accent);box-shadow:inset 3px 0 var(--primary)}
+  .subnav-item.selected{background:var(--primary-soft);color:var(--selected-foreground);box-shadow:inset 3px 0 var(--primary)}
   .hero-bg,.topic-hero{background:linear-gradient(120deg,var(--primary-soft),var(--surface))}
   .hero-bg::after{background:radial-gradient(circle at 70% 75%,var(--primary-soft),transparent 50%)}
   .primary-action,.primary-link,.practice-start,.check-answer,.practice-check{background:var(--primary-soft);color:var(--text-primary);border:1px solid var(--primary);text-decoration:none}
@@ -21,7 +21,7 @@
   .stage-illustration{color:var(--text-primary)}.stage-illustration.bubble,.stage-illustration.exam{background:var(--surface-raised);border-color:var(--text-primary)}
   .stage-open{display:grid;place-items:center;background:var(--primary-soft)}
   .micro-theory-card,.lesson-note,.panel,.practice-question-card,.practice-intro,.practice-results{background:linear-gradient(180deg,var(--surface-raised),var(--surface))}
-  .exercise-option.selected,.practice-option.selected{border-color:var(--primary);background:var(--primary-soft)}
+  .exercise-option.selected,.practice-option.selected{border-color:var(--primary);background:var(--primary-soft);color:var(--selected-foreground)}
   .exercise-option.correct,.practice-option.correct{border-color:var(--success);background:color-mix(in srgb,var(--success) 12%,var(--surface))}
   .exercise-option.wrong,.practice-option.wrong{border-color:var(--error);background:color-mix(in srgb,var(--error) 12%,var(--surface))}
   .exercise-feedback.success,.practice-feedback-box.success{border-color:var(--success);background:color-mix(in srgb,var(--success) 10%,var(--surface))}
@@ -36,6 +36,19 @@
   .practice-prompt,.exercise-prompt{overflow-wrap:anywhere}
   .script-pill,.micro-theory-kana{background:var(--surface-raised);color:var(--text-primary)}
   .menu-scrim{display:none}
+  .session-concepts{display:flex;gap:8px;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid var(--border);background:var(--surface)}
+  .session-concepts a{padding:8px 10px;min-height:44px;display:flex;align-items:center;border:1px solid var(--border);border-radius:10px;font-size:.85rem;color:var(--text-secondary)}
+  .session-concepts a.current{color:var(--text-primary);background:var(--primary-soft);border-color:var(--primary)}
+  .session-concept-list{padding-left:18px;font-size:.88rem;line-height:1.65;color:var(--text-secondary)}
+  .kana-practice-links{display:flex;flex-wrap:wrap;gap:12px;padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--surface)}
+  .kana-practice-links p{width:100%;margin:0;color:var(--text-secondary)}
+  .vocabulary-note summary{cursor:pointer;min-height:44px;font-weight:700}.vocabulary-note p{overflow-wrap:anywhere}
+  .grammar-direction{margin:0;padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--surface);text-align:center}
+  .direction-line{display:flex;justify-content:center;align-items:center;gap:14px}.direction-line span{padding:10px;border:1px solid var(--border);border-radius:12px}.direction-line .focus{border-color:var(--primary);background:var(--primary-soft)}
+  .direction-line>strong{font-size:2rem;color:var(--primary)}.grammar-direction figcaption{margin-top:10px;line-height:1.6;color:var(--text-secondary)}
+  .grammar-contrast{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}.grammar-contrast>span{flex:1 1 140px;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--primary-soft)}.grammar-contrast small{display:block;font-size:.8rem;color:var(--text-secondary);margin-top:8px}
+  .practice-errors{margin:20px 0;padding:18px;text-align:left;border:1px solid var(--border);border-radius:16px;background:var(--surface)}.practice-errors h2{font-size:1.1rem}.practice-errors li{margin:8px 0}.error-review-mode{color:var(--text-secondary)}
+  .exercise-context table{width:100%;border-collapse:collapse}.exercise-context td,.exercise-context th{padding:8px;border:1px solid var(--border);text-align:left}
   &.compact-sidebar .app-shell{grid-template-columns:1fr}
   &.compact-sidebar .sidebar{display:none}
   @media(min-width:901px) and (max-width:1500px){.content-grid{grid-template-columns:1fr}.right-panel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.hero{flex-direction:column}.hero-actions{align-self:flex-start}.progress-wrap{grid-template-columns:1fr}.progress-stats div{grid-template-columns:auto auto}}
@@ -55,3 +68,6 @@
   }
   @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto;transition:none!important}.stage-card:hover{transform:none}}
 }
+.grammar-shell .kanji-reference{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--surface)}
+.grammar-shell .kanji-reference h3{font-size:.9rem;color:var(--text-secondary);margin:0 0 18px}.grammar-shell .kanji-reference p{color:var(--text-secondary);margin:10px 0 0}
+.grammar-shell .lesson-exercise-count { margin: 0 0 .5rem; color: var(--text-secondary); font-size: .875rem; }

@@ -367,9 +367,9 @@ Bloque 8 11
 Bloque 9 12
 Bloque 10 10
 ────────────────
-≈ 121 microlecciones
+131 microconceptos/contenidos actuales
 
-Pero no quiero realmente 121 pantallas de teoría.
+Pero no quiero que los 131 microconceptos equivalgan a 131 sesiones independientes de teoría.
 Muchas se deberían agrupar. Por ejemplo:
 Lección:
 Pasado de verbos
@@ -380,7 +380,7 @@ Dentro:
 ✓ irregular
 ✓ práctica
 
-Así que mi objetivo real sería unas 60–75 lecciones de estudio, más lecturas y evaluaciones.
+Así que mi objetivo UX real sería unas 60–75 sesiones de estudio agrupadas, más lecturas y evaluaciones.
 Eso me parece el tamaño adecuado para algo que pretende llevar literalmente de:
 "No sé japonés"
 

@@ -1,3 +1,4 @@
+import {grammarLessonExercises} from './models/grammar.model';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
@@ -6,7 +7,9 @@ import es from '../../../assets/i18n/es.json';
 import en from '../../../assets/i18n/en.json';
 import ca from '../../../assets/i18n/ca.json';
 import { APP_MODULES } from '../../data/app-modules';
-import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES, GRAMMAR_TOPICS, GRAMMAR_ROADMAP } from './data/grammar-n5.generated';
+import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES, GRAMMAR_TOPICS, GRAMMAR_ROADMAP, GRAMMAR_SESSIONS } from './data/grammar-n5.generated';
+import { isChoiceExercise, isGrammarAnswerCorrect, GrammarAnswer } from './services/grammar-exercise-answer';
+import { GrammarExercise } from './models/grammar.model';
 import { GRAMMAR_ROUTES } from './grammar.routes';
 import { GrammarExerciseComponent } from './components/grammar-exercise';
 import { GrammarPracticeComponent } from './components/grammar-practice';
@@ -32,8 +35,9 @@ describe('Grammar N5 content and practice',()=>{
   it('preserves example copy and defines a valid answer for every used exercise',()=>{
     expect(translate(GRAMMAR_LESSONS[0].exercise.promptKey)).toBe('テレビ');
     expect(translate(GRAMMAR_LESSONS[4].exercise.promptKey)).toBe('きて　　きって');
-    for(const e of [...GRAMMAR_LESSONS.map(l=>l.exercise),...GRAMMAR_PRACTICES.flatMap(p=>p.exercises)]){
-      expect(e.kind).toBe('multiple-choice');expect(e.answer).toBeGreaterThanOrEqual(0);expect(e.answer).toBeLessThan(e.optionKeys.length);
+    for(const e of [...GRAMMAR_LESSONS.flatMap(grammarLessonExercises),...GRAMMAR_PRACTICES.flatMap(p=>p.exercises)]){
+      const answer:GrammarAnswer={selected:isChoiceExercise(e)?e.answer:null,text:e.kind==='fill-gap'?e.acceptedAnswers[0]:'',sequence:e.kind==='sentence-order'||e.kind==='sentence-builder'?e.solution:[],matches:e.kind==='matching'?Object.fromEntries(e.pairs.map((_,i)=>[i,i])):{}};
+      expect(isGrammarAnswerCorrect(e,answer),e.id).toBe(true);
     }
   });
   it('provides objectives, three theory blocks, independent examples and feedback for the new lessons',()=>{
@@ -48,7 +52,7 @@ describe('Grammar N5 content and practice',()=>{
         const japanese=translate(example.bodyKey).split(' — ')[0];
         expect(translate(lesson.exercise.promptKey)).not.toContain(japanese);
       }
-      expect(new Set(lesson.exercise.optionKeys.map(key=>translate(key))).size).toBe(lesson.exercise.optionKeys.length);
+      if(isChoiceExercise(lesson.exercise))expect(new Set(lesson.exercise.optionKeys.map(key=>translate(key))).size).toBe(lesson.exercise.optionKeys.length);
     }
   });
   it('offers mixed practice without source-lesson labels and returns the final topic to the roadmap',()=>{
@@ -81,18 +85,18 @@ describe('Grammar N5 content and practice',()=>{
         if(name.endsWith('Key'))keys.push(item as string);else if(name.endsWith('Keys'))keys.push(...item as string[]);else visit(item);
       }}
     }
-    visit([GRAMMAR_TOPICS,GRAMMAR_LESSONS,GRAMMAR_PRACTICES,GRAMMAR_ROADMAP]);
+    visit([GRAMMAR_TOPICS,GRAMMAR_LESSONS,GRAMMAR_PRACTICES,GRAMMAR_ROADMAP,GRAMMAR_SESSIONS]);
     for(const dictionary of [es,en,ca])for(const key of keys)expect(key in dictionary).toBe(true);
   });
   it('preserves next/previous lesson navigation and ends each topic at cumulative practice',()=>{
     for(const topic of GRAMMAR_TOPICS.map(t=>t.id)){
-      const lessons=GRAMMAR_LESSONS.filter(l=>l.topicId===topic);
+      const lessons=GRAMMAR_SESSIONS.filter(s=>s.topicId===topic).flatMap(s=>s.lessonIds.map(id=>GRAMMAR_LESSONS.find(l=>l.topicId===topic&&l.id===id)!));
       expect(lessons.at(-1)?.nextPath).toBe(`/grammar/n5/${topic}/practice`);
       for(let i=0;i<lessons.length-1;i++)expect(lessons[i].nextPath).toBe(`/grammar/n5/${topic}/${lessons[i+1].id}`);
     }
   });
   it('does not advance or count unanswered questions, scores once and can repeat the practice',()=>{
-    const session=new GrammarPracticeSession();session.reset(GRAMMAR_PRACTICES[0].exercises);session.start();session.next();expect(session.index()).toBe(0);
+    const session=TestBed.runInInjectionContext(()=>new GrammarPracticeSession());session.reset(GRAMMAR_PRACTICES[0].exercises);session.start();session.next();expect(session.index()).toBe(0);
     for(let i=0;i<session.total();i++){session.answer(i!==0);session.answer(true);session.next();}
     expect(session.score()).toBe(9);expect(session.stage()).toBe('results');
     session.start();expect(session.score()).toBe(0);expect(session.index()).toBe(0);expect(session.checked()).toBe(false);
@@ -100,6 +104,7 @@ describe('Grammar N5 content and practice',()=>{
   it.each([true,false])('checks a lesson answer once, gives feedback and reveals the correct option (correct=%s)',correct=>{
     TestBed.configureTestingModule({providers:[{provide:TranslationService,useValue:{t:translate}}]});
     const fixture=TestBed.createComponent(GrammarExerciseComponent);const exercise=GRAMMAR_LESSONS[0].exercise;
+    if(!isChoiceExercise(exercise))throw new Error('Expected a choice exercise');
     fixture.componentRef.setInput('exercise',exercise);fixture.detectChanges();
     const answered=vi.fn();fixture.componentInstance.answered.subscribe(answered);
     expect(fixture.nativeElement.querySelector('.check-answer').disabled).toBe(true);
@@ -125,8 +130,8 @@ describe('Grammar navigation',()=>{
   });
   it('renders every topic overview and every micro-lesson from data',async()=>{
     const harness=await RouterTestingHarness.create();
-    for(const topic of GRAMMAR_TOPICS){await harness.navigateByUrl(`/grammar/n5/${topic.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelectorAll('.lesson-card')).toHaveLength(topic.lessons.length);}
-    for(const lesson of GRAMMAR_LESSONS){await harness.navigateByUrl(`/grammar/n5/${lesson.topicId}/${lesson.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe(translate(lesson.titleKey));expect(harness.routeNativeElement?.querySelectorAll('.exercise-option')).toHaveLength(lesson.exercise.optionKeys.length);}
+    for(const topic of GRAMMAR_TOPICS){await harness.navigateByUrl(`/grammar/n5/${topic.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelectorAll('.lesson-card')).toHaveLength(GRAMMAR_SESSIONS.filter(s=>s.topicId===topic.id).length);}
+    for(const lesson of GRAMMAR_LESSONS){await harness.navigateByUrl(`/grammar/n5/${lesson.topicId}/${lesson.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe(translate(lesson.titleKey));if(isChoiceExercise(grammarLessonExercises(lesson)[0]))expect(harness.routeNativeElement?.querySelectorAll('.exercise-option')).toHaveLength((grammarLessonExercises(lesson)[0] as import('./models/grammar.model').GrammarChoiceExercise).optionKeys.length);else expect(harness.routeNativeElement?.querySelector('.check-answer')).not.toBeNull();}
   });
   it('opens all cumulative practices and handles unsupported lessons without inventing content',async()=>{
     const harness=await RouterTestingHarness.create();
@@ -138,6 +143,9 @@ describe('Grammar navigation',()=>{
     (harness.routeNativeElement?.querySelectorAll('.exercise-option')[1] as HTMLButtonElement).click();harness.detectChanges();
     (harness.routeNativeElement?.querySelector('.check-answer') as HTMLButtonElement).click();harness.detectChanges();
     (harness.routeNativeElement?.querySelector('.continue-answer') as HTMLButtonElement).click();await harness.fixture.whenStable();harness.detectChanges();
+    expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe('Los sistemas de escritura');
+    const page=harness.routeDebugElement!.componentInstance as GrammarPage;
+    page.continueExercise();await harness.fixture.whenStable();harness.detectChanges();
     expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe('Hiragana básico');
     expect((harness.routeNativeElement?.querySelector('.check-answer')as HTMLButtonElement).disabled).toBe(true);
     expect(harness.routeNativeElement?.querySelector('.exercise-feedback')).toBeNull();

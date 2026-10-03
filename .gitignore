@@ -17,6 +17,8 @@
 !.env.example
 *.pem
 *.key
+/public/supabase-config.js
+/grammar-*.patch
 
 # OS
 .DS_Store

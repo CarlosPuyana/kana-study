@@ -6,6 +6,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "prebuild": "node scripts/audit-grammar-n5.mjs",
+    "generate:grammar": "node scripts/complete-grammar-n5.mjs",
+    "audit:grammar": "node scripts/audit-grammar-n5.mjs",
     "generate:japanese-1500": "node scripts/generate-japanese-1500.mjs",
     "test": "ng test --watch=false",
     "watch": "ng build --watch --configuration development"

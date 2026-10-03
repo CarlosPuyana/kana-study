@@ -9,6 +9,7 @@
   --primary-hover: #2563eb;
   --primary-soft: rgba(59, 130, 246, 0.14);
   --accent: #60a5fa;
+  --selected-foreground: var(--text-primary);
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
@@ -113,33 +114,39 @@
 }
 
 :root[data-theme='anime'] {
-  color-scheme: dark;
-  --background: #090d1f;
-  --background-soft: #0d1228;
-  --surface: #121831;
-  --surface-raised: #192042;
-  --surface-hover: #242c54;
-  --primary: #7868ff;
-  --primary-hover: #9387ff;
-  --primary-soft: rgba(120, 104, 255, 0.16);
-  --accent: #42d9f5;
-  --accent-secondary: #ff78ae;
-  --secondary-soft: rgba(255, 120, 174, 0.07);
-  --text-primary: #f2f5ff;
-  --text-secondary: #a9b2d1;
-  --text-muted: #929dc4;
-  --border: #303967;
-  --success: #67e1bc;
-  --warning: #ffce7b;
-  --error: #ff8fba;
+  color-scheme: light;
+  --background: #f7fbff;
+  --background-soft: #eaf4ff;
+  --surface: #ffffff;
+  --surface-raised: #fff8e8;
+  --surface-hover: #e5efff;
+  --primary: #465be0;
+  --primary-hover: #3548c6;
+  --primary-soft: rgba(83, 109, 254, 0.12);
+  --accent: #c63865;
+  --accent-secondary: #25bfd0;
+  --secondary-soft: rgba(255, 95, 135, 0.10);
+  --text-primary: #20253f;
+  --text-secondary: #56617e;
+  --text-muted: #626f91;
+  --border: #ccd9f4;
+  --success: #087c69;
+  --warning: #96600e;
+  --error: #c92d50;
   --again: var(--error);
   --hard: var(--warning);
   --good: var(--success);
   --new: var(--accent);
   --pending: var(--warning);
   --memorized: var(--success);
-  --shadow: 0 18px 50px rgba(3, 5, 20, 0.45);
-  --focus-ring: 0 0 0 3px rgba(66, 217, 245, 0.5);
+  --shadow: 0 18px 50px rgba(64, 84, 214, 0.10);
+  --focus-ring: 0 0 0 3px rgba(64, 84, 214, 0.35);
+  --theme-decoration: linear-gradient(125deg, rgba(37, 191, 208, .07), transparent 45%, rgba(255, 95, 135, .06));
+}
+
+:root[data-theme='anime'] .page-shell,
+:root[data-theme='anime'] .grammar-shell {
+  background-image: var(--theme-decoration);
 }
 
 * {
