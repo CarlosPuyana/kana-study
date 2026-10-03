@@ -9,6 +9,7 @@ import { APP_MODULES } from '../../data/app-modules';
 import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES, GRAMMAR_TOPICS, GRAMMAR_ROADMAP } from './data/grammar-n5.generated';
 import { GRAMMAR_ROUTES } from './grammar.routes';
 import { GrammarExerciseComponent } from './components/grammar-exercise';
+import { GrammarPracticeComponent } from './components/grammar-practice';
 import { GrammarPage } from './pages/grammar.page';
 import { GrammarPracticeSession } from './services/grammar-practice-session';
 
@@ -23,8 +24,10 @@ describe('Grammar N5 content and practice',()=>{
     expect(GRAMMAR_TOPICS.map(t=>t.id)).toEqual(['00','01','02','03','04','05','06','07','08','09','10']);
     expect(GRAMMAR_LESSONS.filter(l=>l.topicId==='00')).toHaveLength(8);
     expect(GRAMMAR_LESSONS.filter(l=>l.topicId==='01')).toHaveLength(13);
-    expect(GRAMMAR_PRACTICES.map(p=>p.exercises.length)).toEqual([10,12]);
-    expect(GRAMMAR_TOPICS.slice(2).flatMap(t=>t.lessons).every(l=>l.path===null)).toBe(true);
+    expect(GRAMMAR_TOPICS.map(t=>GRAMMAR_LESSONS.filter(l=>l.topicId===t.id).length)).toEqual([8,13,11,17,12,12,14,11,11,12,10]);
+    expect(GRAMMAR_LESSONS).toHaveLength(131);
+    expect(GRAMMAR_PRACTICES.map(p=>p.exercises.length)).toEqual([10,12,10,10,10,10,10,10,10,10,10]);
+    expect(GRAMMAR_TOPICS.flatMap(t=>t.lessons).every(l=>l.path!==null)).toBe(true);
   });
   it('preserves example copy and defines a valid answer for every used exercise',()=>{
     expect(translate(GRAMMAR_LESSONS[0].exercise.promptKey)).toBe('テレビ');
@@ -32,6 +35,43 @@ describe('Grammar N5 content and practice',()=>{
     for(const e of [...GRAMMAR_LESSONS.map(l=>l.exercise),...GRAMMAR_PRACTICES.flatMap(p=>p.exercises)]){
       expect(e.kind).toBe('multiple-choice');expect(e.answer).toBeGreaterThanOrEqual(0);expect(e.answer).toBeLessThan(e.optionKeys.length);
     }
+  });
+  it('provides objectives, three theory blocks, independent examples and feedback for the new lessons',()=>{
+    for(const lesson of GRAMMAR_LESSONS.filter(l=>Number(l.topicId)>=2)){
+      expect(translate(lesson.descriptionKey).length).toBeGreaterThan(10);
+      expect(lesson.theory.length).toBeGreaterThanOrEqual(2);
+      expect(lesson.theory.length).toBeLessThanOrEqual(4);
+      expect(translate(lesson.ideaKey).trim()).not.toBe('');
+      expect(translate(lesson.exercise.successKey).length).toBeGreaterThan(10);
+      expect(translate(lesson.exercise.errorKey).length).toBeGreaterThan(10);
+      for(const example of lesson.theory.slice(1)){
+        const japanese=translate(example.bodyKey).split(' — ')[0];
+        expect(translate(lesson.exercise.promptKey)).not.toContain(japanese);
+      }
+      expect(new Set(lesson.exercise.optionKeys.map(key=>translate(key))).size).toBe(lesson.exercise.optionKeys.length);
+    }
+  });
+  it('offers mixed practice without source-lesson labels and returns the final topic to the roadmap',()=>{
+    for(const practice of GRAMMAR_PRACTICES.filter(p=>Number(p.topicId)>=2)){
+      expect(practice.exercises.length).toBeGreaterThanOrEqual(8);
+      expect(practice.exercises.length).toBeLessThanOrEqual(12);
+      for(const exercise of practice.exercises)expect(translate(exercise.topicKey)).toBe(`Tema ${practice.topicId}`);
+      const theoryExamples=GRAMMAR_LESSONS.filter(l=>l.topicId===practice.topicId).flatMap(l=>l.theory.slice(1).map(b=>translate(b.bodyKey).split(' — ')[0]));
+      for(const exercise of practice.exercises)for(const example of theoryExamples)expect(translate(exercise.promptKey)).not.toContain(example);
+    }
+    expect(GRAMMAR_PRACTICES.at(-1)?.nextPath).toBe('/grammar');
+  });
+  it('shows the current topic in practice results and starts another attempt with zero answers',()=>{
+    TestBed.configureTestingModule({providers:[provideRouter([]),{provide:TranslationService,useValue:{t:translate}}]});
+    const fixture=TestBed.createComponent(GrammarPracticeComponent);
+    fixture.componentRef.setInput('practice',GRAMMAR_PRACTICES.find(p=>p.topicId==='09'));fixture.detectChanges();
+    const session=fixture.componentInstance.session;session.start();
+    for(let i=0;i<session.total();i++){session.answer(true);session.next();}
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.practice-results').textContent).toContain('Tema 09');
+    expect(fixture.nativeElement.querySelector('.practice-results').textContent).not.toContain('Tema 00');
+    (fixture.nativeElement.querySelector('.results-actions button') as HTMLButtonElement).click();fixture.detectChanges();
+    expect(session.stage()).toBe('question');expect(session.score()).toBe(0);expect(session.index()).toBe(0);
   });
   it('resolves every content translation in ES, EN and CA',()=>{
     const keys:string[]=[];
@@ -45,7 +85,7 @@ describe('Grammar N5 content and practice',()=>{
     for(const dictionary of [es,en,ca])for(const key of keys)expect(key in dictionary).toBe(true);
   });
   it('preserves next/previous lesson navigation and ends each topic at cumulative practice',()=>{
-    for(const topic of ['00','01']){
+    for(const topic of GRAMMAR_TOPICS.map(t=>t.id)){
       const lessons=GRAMMAR_LESSONS.filter(l=>l.topicId===topic);
       expect(lessons.at(-1)?.nextPath).toBe(`/grammar/n5/${topic}/practice`);
       for(let i=0;i<lessons.length-1;i++)expect(lessons[i].nextPath).toBe(`/grammar/n5/${topic}/${lessons[i+1].id}`);
@@ -88,10 +128,10 @@ describe('Grammar navigation',()=>{
     for(const topic of GRAMMAR_TOPICS){await harness.navigateByUrl(`/grammar/n5/${topic.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelectorAll('.lesson-card')).toHaveLength(topic.lessons.length);}
     for(const lesson of GRAMMAR_LESSONS){await harness.navigateByUrl(`/grammar/n5/${lesson.topicId}/${lesson.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe(translate(lesson.titleKey));expect(harness.routeNativeElement?.querySelectorAll('.exercise-option')).toHaveLength(lesson.exercise.optionKeys.length);}
   });
-  it('opens both cumulative practices and handles unsupported lessons without inventing content',async()=>{
+  it('opens all cumulative practices and handles unsupported lessons without inventing content',async()=>{
     const harness=await RouterTestingHarness.create();
     for(const p of GRAMMAR_PRACTICES){await harness.navigateByUrl(`/grammar/n5/${p.topicId}/practice`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.practice-intro h1')?.textContent).toBe(translate(p.intro.titleKey));}
-    await harness.navigateByUrl('/grammar/n5/02/1',GrammarPage);expect(harness.routeNativeElement?.querySelector('.exercise-block')).toBeNull();
+    await harness.navigateByUrl('/grammar/n5/02/99',GrammarPage);expect(harness.routeNativeElement?.querySelector('.exercise-block')).toBeNull();
   });
   it('resets lesson feedback when navigating to the next lesson',async()=>{
     const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/00/1',GrammarPage);

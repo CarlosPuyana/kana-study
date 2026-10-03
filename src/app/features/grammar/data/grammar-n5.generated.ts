@@ -138,7 +138,7 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.268",
-      "bodyKey": "grammar.content.269"
+      "bodyKey": "grammar.n5.01.overview.goal"
     },
     "visualKey": "grammar.content.270",
     "end": {
@@ -299,22 +299,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.560",
     "icon": "い",
     "metaKeys": [
-      "grammar.content.561",
-      "grammar.content.5",
-      "grammar.content.267"
+      "grammar.n5.02.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.562",
-      "bodyKey": "grammar.content.269"
+      "bodyKey": "grammar.n5.02.overview.goal"
     },
-    "visualKey": "grammar.content.563",
+    "visualKey": "grammar.n5.02.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.564",
       "titleKey": "grammar.content.565",
       "bodyKey": "grammar.content.273"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.02.journey.eyebrow",
+      "titleKey": "grammar.n5.02.journey.title",
+      "bodyKey": "grammar.n5.02.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/02/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/02/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "gold",
       "icon": "🙂",
@@ -328,102 +341,102 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "2.1",
-        "titleKey": "grammar.content.569",
-        "bodyKey": "grammar.content.570",
+        "titleKey": "grammar.n5.02.1.title",
+        "bodyKey": "grammar.n5.02.1.goal",
         "icon": "1",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.571",
-        "path": null
+        "examplesKey": "grammar.n5.02.1.preview",
+        "path": "/grammar/n5/02/1"
       },
       {
         "id": "2.2",
-        "titleKey": "grammar.content.572",
-        "bodyKey": "grammar.content.573",
+        "titleKey": "grammar.n5.02.2.title",
+        "bodyKey": "grammar.n5.02.2.goal",
         "icon": "2",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.574",
-        "path": null
+        "examplesKey": "grammar.n5.02.2.preview",
+        "path": "/grammar/n5/02/2"
       },
       {
         "id": "2.3",
-        "titleKey": "grammar.content.575",
-        "bodyKey": "grammar.content.576",
+        "titleKey": "grammar.n5.02.3.title",
+        "bodyKey": "grammar.n5.02.3.goal",
         "icon": "3",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.577",
-        "path": null
+        "examplesKey": "grammar.n5.02.3.preview",
+        "path": "/grammar/n5/02/3"
       },
       {
         "id": "2.4",
-        "titleKey": "grammar.content.578",
-        "bodyKey": "grammar.content.579",
+        "titleKey": "grammar.n5.02.4.title",
+        "bodyKey": "grammar.n5.02.4.goal",
         "icon": "4",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.580",
-        "path": null
+        "examplesKey": "grammar.n5.02.4.preview",
+        "path": "/grammar/n5/02/4"
       },
       {
         "id": "2.5",
-        "titleKey": "grammar.content.543",
-        "bodyKey": "grammar.content.581",
+        "titleKey": "grammar.n5.02.5.title",
+        "bodyKey": "grammar.n5.02.5.goal",
         "icon": "5",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.582",
-        "path": null
+        "examplesKey": "grammar.n5.02.5.preview",
+        "path": "/grammar/n5/02/5"
       },
       {
         "id": "2.6",
-        "titleKey": "grammar.content.313",
-        "bodyKey": "grammar.content.583",
+        "titleKey": "grammar.n5.02.6.title",
+        "bodyKey": "grammar.n5.02.6.goal",
         "icon": "6",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.584",
-        "path": null
+        "examplesKey": "grammar.n5.02.6.preview",
+        "path": "/grammar/n5/02/6"
       },
       {
         "id": "2.7",
-        "titleKey": "grammar.content.585",
-        "bodyKey": "grammar.content.586",
+        "titleKey": "grammar.n5.02.7.title",
+        "bodyKey": "grammar.n5.02.7.goal",
         "icon": "7",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.587",
-        "path": null
+        "examplesKey": "grammar.n5.02.7.preview",
+        "path": "/grammar/n5/02/7"
       },
       {
         "id": "2.8",
-        "titleKey": "grammar.content.588",
-        "bodyKey": "grammar.content.589",
+        "titleKey": "grammar.n5.02.8.title",
+        "bodyKey": "grammar.n5.02.8.goal",
         "icon": "8",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.590",
-        "path": null
+        "examplesKey": "grammar.n5.02.8.preview",
+        "path": "/grammar/n5/02/8"
       },
       {
         "id": "2.9",
-        "titleKey": "grammar.content.591",
-        "bodyKey": "grammar.content.592",
+        "titleKey": "grammar.n5.02.9.title",
+        "bodyKey": "grammar.n5.02.9.goal",
         "icon": "9",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.593",
-        "path": null
+        "examplesKey": "grammar.n5.02.9.preview",
+        "path": "/grammar/n5/02/9"
       },
       {
         "id": "2.10",
-        "titleKey": "grammar.content.594",
-        "bodyKey": "grammar.content.595",
+        "titleKey": "grammar.n5.02.10.title",
+        "bodyKey": "grammar.n5.02.10.goal",
         "icon": "10",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.596",
-        "path": null
+        "examplesKey": "grammar.n5.02.10.preview",
+        "path": "/grammar/n5/02/10"
       },
       {
         "id": "2.11",
-        "titleKey": "grammar.content.597",
-        "bodyKey": "grammar.content.598",
+        "titleKey": "grammar.n5.02.11.title",
+        "bodyKey": "grammar.n5.02.11.goal",
         "icon": "11",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.599",
-        "path": null
+        "examplesKey": "grammar.n5.02.11.preview",
+        "path": "/grammar/n5/02/11"
       }
     ]
   },
@@ -435,22 +448,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.602",
     "icon": "行",
     "metaKeys": [
-      "grammar.content.603",
-      "grammar.content.5",
-      "grammar.content.267"
+      "grammar.n5.03.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.604",
-      "bodyKey": "grammar.content.269"
+      "bodyKey": "grammar.n5.03.overview.goal"
     },
-    "visualKey": "grammar.content.605",
+    "visualKey": "grammar.n5.03.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.606",
       "titleKey": "grammar.content.607",
       "bodyKey": "grammar.content.273"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.03.journey.eyebrow",
+      "titleKey": "grammar.n5.03.journey.title",
+      "bodyKey": "grammar.n5.03.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/03/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/03/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "green",
       "icon": "🏃",
@@ -464,156 +490,156 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "3.1",
-        "titleKey": "grammar.content.612",
-        "bodyKey": "grammar.content.613",
+        "titleKey": "grammar.n5.03.1.title",
+        "bodyKey": "grammar.n5.03.1.goal",
         "icon": "1",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.614",
-        "path": null
+        "examplesKey": "grammar.n5.03.1.preview",
+        "path": "/grammar/n5/03/1"
       },
       {
         "id": "3.2",
-        "titleKey": "grammar.content.615",
-        "bodyKey": "grammar.content.616",
+        "titleKey": "grammar.n5.03.2.title",
+        "bodyKey": "grammar.n5.03.2.goal",
         "icon": "2",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.617",
-        "path": null
+        "examplesKey": "grammar.n5.03.2.preview",
+        "path": "/grammar/n5/03/2"
       },
       {
         "id": "3.3",
-        "titleKey": "grammar.content.618",
-        "bodyKey": "grammar.content.619",
+        "titleKey": "grammar.n5.03.3.title",
+        "bodyKey": "grammar.n5.03.3.goal",
         "icon": "3",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.620",
-        "path": null
+        "examplesKey": "grammar.n5.03.3.preview",
+        "path": "/grammar/n5/03/3"
       },
       {
         "id": "3.4",
-        "titleKey": "grammar.content.621",
-        "bodyKey": "grammar.content.622",
+        "titleKey": "grammar.n5.03.4.title",
+        "bodyKey": "grammar.n5.03.4.goal",
         "icon": "4",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.623",
-        "path": null
+        "examplesKey": "grammar.n5.03.4.preview",
+        "path": "/grammar/n5/03/4"
       },
       {
         "id": "3.5",
-        "titleKey": "grammar.content.624",
-        "bodyKey": "grammar.content.625",
+        "titleKey": "grammar.n5.03.5.title",
+        "bodyKey": "grammar.n5.03.5.goal",
         "icon": "5",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.626",
-        "path": null
+        "examplesKey": "grammar.n5.03.5.preview",
+        "path": "/grammar/n5/03/5"
       },
       {
         "id": "3.6",
-        "titleKey": "grammar.content.627",
-        "bodyKey": "grammar.content.628",
+        "titleKey": "grammar.n5.03.6.title",
+        "bodyKey": "grammar.n5.03.6.goal",
         "icon": "6",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.629",
-        "path": null
+        "examplesKey": "grammar.n5.03.6.preview",
+        "path": "/grammar/n5/03/6"
       },
       {
         "id": "3.7",
-        "titleKey": "grammar.content.630",
-        "bodyKey": "grammar.content.631",
+        "titleKey": "grammar.n5.03.7.title",
+        "bodyKey": "grammar.n5.03.7.goal",
         "icon": "7",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.632",
-        "path": null
+        "examplesKey": "grammar.n5.03.7.preview",
+        "path": "/grammar/n5/03/7"
       },
       {
         "id": "3.8",
-        "titleKey": "grammar.content.633",
-        "bodyKey": "grammar.content.634",
+        "titleKey": "grammar.n5.03.8.title",
+        "bodyKey": "grammar.n5.03.8.goal",
         "icon": "8",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.635",
-        "path": null
+        "examplesKey": "grammar.n5.03.8.preview",
+        "path": "/grammar/n5/03/8"
       },
       {
         "id": "3.9",
-        "titleKey": "grammar.content.636",
-        "bodyKey": "grammar.content.637",
+        "titleKey": "grammar.n5.03.9.title",
+        "bodyKey": "grammar.n5.03.9.goal",
         "icon": "9",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.638",
-        "path": null
+        "examplesKey": "grammar.n5.03.9.preview",
+        "path": "/grammar/n5/03/9"
       },
       {
         "id": "3.10",
-        "titleKey": "grammar.content.639",
-        "bodyKey": "grammar.content.640",
+        "titleKey": "grammar.n5.03.10.title",
+        "bodyKey": "grammar.n5.03.10.goal",
         "icon": "10",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.641",
-        "path": null
+        "examplesKey": "grammar.n5.03.10.preview",
+        "path": "/grammar/n5/03/10"
       },
       {
         "id": "3.11",
-        "titleKey": "grammar.content.642",
-        "bodyKey": "grammar.content.643",
+        "titleKey": "grammar.n5.03.11.title",
+        "bodyKey": "grammar.n5.03.11.goal",
         "icon": "11",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.644",
-        "path": null
+        "examplesKey": "grammar.n5.03.11.preview",
+        "path": "/grammar/n5/03/11"
       },
       {
         "id": "3.12",
-        "titleKey": "grammar.content.645",
-        "bodyKey": "grammar.content.646",
+        "titleKey": "grammar.n5.03.12.title",
+        "bodyKey": "grammar.n5.03.12.goal",
         "icon": "12",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.647",
-        "path": null
+        "examplesKey": "grammar.n5.03.12.preview",
+        "path": "/grammar/n5/03/12"
       },
       {
         "id": "3.13",
-        "titleKey": "grammar.content.648",
-        "bodyKey": "grammar.content.649",
+        "titleKey": "grammar.n5.03.13.title",
+        "bodyKey": "grammar.n5.03.13.goal",
         "icon": "13",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.650",
-        "path": null
+        "examplesKey": "grammar.n5.03.13.preview",
+        "path": "/grammar/n5/03/13"
       },
       {
         "id": "3.14",
-        "titleKey": "grammar.content.651",
-        "bodyKey": "grammar.content.652",
+        "titleKey": "grammar.n5.03.14.title",
+        "bodyKey": "grammar.n5.03.14.goal",
         "icon": "14",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.653",
-        "path": null
+        "examplesKey": "grammar.n5.03.14.preview",
+        "path": "/grammar/n5/03/14"
       },
       {
         "id": "3.15",
-        "titleKey": "grammar.content.654",
-        "bodyKey": "grammar.content.655",
+        "titleKey": "grammar.n5.03.15.title",
+        "bodyKey": "grammar.n5.03.15.goal",
         "icon": "15",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.656",
-        "path": null
+        "examplesKey": "grammar.n5.03.15.preview",
+        "path": "/grammar/n5/03/15"
       },
       {
         "id": "3.16",
-        "titleKey": "grammar.content.657",
-        "bodyKey": "grammar.content.658",
+        "titleKey": "grammar.n5.03.16.title",
+        "bodyKey": "grammar.n5.03.16.goal",
         "icon": "16",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.659",
-        "path": null
+        "examplesKey": "grammar.n5.03.16.preview",
+        "path": "/grammar/n5/03/16"
       },
       {
         "id": "3.17",
-        "titleKey": "grammar.content.610",
-        "bodyKey": "grammar.content.660",
+        "titleKey": "grammar.n5.03.17.title",
+        "bodyKey": "grammar.n5.03.17.goal",
         "icon": "17",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.661",
-        "path": null
+        "examplesKey": "grammar.n5.03.17.preview",
+        "path": "/grammar/n5/03/17"
       }
     ]
   },
@@ -625,22 +651,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.664",
     "icon": "在",
     "metaKeys": [
-      "grammar.content.665",
-      "grammar.content.5",
-      "grammar.content.267"
+      "grammar.n5.04.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.666",
-      "bodyKey": "grammar.content.269"
+      "bodyKey": "grammar.n5.04.overview.goal"
     },
-    "visualKey": "grammar.content.667",
+    "visualKey": "grammar.n5.04.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.668",
       "titleKey": "grammar.content.669",
       "bodyKey": "grammar.content.273"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.04.journey.eyebrow",
+      "titleKey": "grammar.n5.04.journey.title",
+      "bodyKey": "grammar.n5.04.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/04/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/04/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "violet",
       "icon": "📍",
@@ -654,111 +693,111 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "4.1",
-        "titleKey": "grammar.content.674",
-        "bodyKey": "grammar.content.675",
+        "titleKey": "grammar.n5.04.1.title",
+        "bodyKey": "grammar.n5.04.1.goal",
         "icon": "1",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.676",
-        "path": null
+        "examplesKey": "grammar.n5.04.1.preview",
+        "path": "/grammar/n5/04/1"
       },
       {
         "id": "4.2",
-        "titleKey": "grammar.content.677",
-        "bodyKey": "grammar.content.678",
+        "titleKey": "grammar.n5.04.2.title",
+        "bodyKey": "grammar.n5.04.2.goal",
         "icon": "2",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.679",
-        "path": null
+        "examplesKey": "grammar.n5.04.2.preview",
+        "path": "/grammar/n5/04/2"
       },
       {
         "id": "4.3",
-        "titleKey": "grammar.content.680",
-        "bodyKey": "grammar.content.681",
+        "titleKey": "grammar.n5.04.3.title",
+        "bodyKey": "grammar.n5.04.3.goal",
         "icon": "3",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.682",
-        "path": null
+        "examplesKey": "grammar.n5.04.3.preview",
+        "path": "/grammar/n5/04/3"
       },
       {
         "id": "4.4",
-        "titleKey": "grammar.content.683",
-        "bodyKey": "grammar.content.684",
+        "titleKey": "grammar.n5.04.4.title",
+        "bodyKey": "grammar.n5.04.4.goal",
         "icon": "4",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.685",
-        "path": null
+        "examplesKey": "grammar.n5.04.4.preview",
+        "path": "/grammar/n5/04/4"
       },
       {
         "id": "4.5",
-        "titleKey": "grammar.content.686",
-        "bodyKey": "grammar.content.687",
+        "titleKey": "grammar.n5.04.5.title",
+        "bodyKey": "grammar.n5.04.5.goal",
         "icon": "5",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.688",
-        "path": null
+        "examplesKey": "grammar.n5.04.5.preview",
+        "path": "/grammar/n5/04/5"
       },
       {
         "id": "4.6",
-        "titleKey": "grammar.content.689",
-        "bodyKey": "grammar.content.690",
+        "titleKey": "grammar.n5.04.6.title",
+        "bodyKey": "grammar.n5.04.6.goal",
         "icon": "6",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.691",
-        "path": null
+        "examplesKey": "grammar.n5.04.6.preview",
+        "path": "/grammar/n5/04/6"
       },
       {
         "id": "4.7",
-        "titleKey": "grammar.content.692",
-        "bodyKey": "grammar.content.693",
+        "titleKey": "grammar.n5.04.7.title",
+        "bodyKey": "grammar.n5.04.7.goal",
         "icon": "7",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.694",
-        "path": null
+        "examplesKey": "grammar.n5.04.7.preview",
+        "path": "/grammar/n5/04/7"
       },
       {
         "id": "4.8",
-        "titleKey": "grammar.content.695",
-        "bodyKey": "grammar.content.696",
+        "titleKey": "grammar.n5.04.8.title",
+        "bodyKey": "grammar.n5.04.8.goal",
         "icon": "8",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.697",
-        "path": null
+        "examplesKey": "grammar.n5.04.8.preview",
+        "path": "/grammar/n5/04/8"
       },
       {
         "id": "4.9",
-        "titleKey": "grammar.content.673",
-        "bodyKey": "grammar.content.698",
+        "titleKey": "grammar.n5.04.9.title",
+        "bodyKey": "grammar.n5.04.9.goal",
         "icon": "9",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.699",
-        "path": null
+        "examplesKey": "grammar.n5.04.9.preview",
+        "path": "/grammar/n5/04/9"
       },
       {
         "id": "4.10",
-        "titleKey": "grammar.content.700",
-        "bodyKey": "grammar.content.701",
+        "titleKey": "grammar.n5.04.10.title",
+        "bodyKey": "grammar.n5.04.10.goal",
         "icon": "10",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.702",
-        "path": null
+        "examplesKey": "grammar.n5.04.10.preview",
+        "path": "/grammar/n5/04/10"
       },
       {
         "id": "4.11",
-        "titleKey": "grammar.content.703",
-        "bodyKey": "grammar.content.704",
+        "titleKey": "grammar.n5.04.11.title",
+        "bodyKey": "grammar.n5.04.11.goal",
         "icon": "11",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.705",
-        "path": null
+        "examplesKey": "grammar.n5.04.11.preview",
+        "path": "/grammar/n5/04/11"
       },
       {
         "id": "4.12",
-        "titleKey": "grammar.content.706",
-        "bodyKey": "grammar.content.707",
+        "titleKey": "grammar.n5.04.12.title",
+        "bodyKey": "grammar.n5.04.12.goal",
         "icon": "12",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.708",
-        "path": null
+        "examplesKey": "grammar.n5.04.12.preview",
+        "path": "/grammar/n5/04/12"
       }
     ]
   },
@@ -770,22 +809,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.711",
     "icon": "た",
     "metaKeys": [
-      "grammar.content.665",
-      "grammar.content.712",
-      "grammar.content.267"
+      "grammar.n5.05.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.713",
-      "bodyKey": "grammar.content.714"
+      "bodyKey": "grammar.n5.05.overview.goal"
     },
-    "visualKey": "grammar.content.715",
+    "visualKey": "grammar.n5.05.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.716",
       "titleKey": "grammar.content.717",
       "bodyKey": "grammar.content.718"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.05.journey.eyebrow",
+      "titleKey": "grammar.n5.05.journey.title",
+      "bodyKey": "grammar.n5.05.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/05/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/05/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "blue",
       "icon": "🗓️",
@@ -799,111 +851,111 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "5.1",
-        "titleKey": "grammar.content.723",
-        "bodyKey": "grammar.content.724",
+        "titleKey": "grammar.n5.05.1.title",
+        "bodyKey": "grammar.n5.05.1.goal",
         "icon": "1",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.725",
-        "path": null
+        "examplesKey": "grammar.n5.05.1.preview",
+        "path": "/grammar/n5/05/1"
       },
       {
         "id": "5.2",
-        "titleKey": "grammar.content.726",
-        "bodyKey": "grammar.content.727",
+        "titleKey": "grammar.n5.05.2.title",
+        "bodyKey": "grammar.n5.05.2.goal",
         "icon": "2",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.728",
-        "path": null
+        "examplesKey": "grammar.n5.05.2.preview",
+        "path": "/grammar/n5/05/2"
       },
       {
         "id": "5.3",
-        "titleKey": "grammar.content.729",
-        "bodyKey": "grammar.content.730",
+        "titleKey": "grammar.n5.05.3.title",
+        "bodyKey": "grammar.n5.05.3.goal",
         "icon": "3",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.731",
-        "path": null
+        "examplesKey": "grammar.n5.05.3.preview",
+        "path": "/grammar/n5/05/3"
       },
       {
         "id": "5.4",
-        "titleKey": "grammar.content.732",
-        "bodyKey": "grammar.content.733",
+        "titleKey": "grammar.n5.05.4.title",
+        "bodyKey": "grammar.n5.05.4.goal",
         "icon": "4",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.734",
-        "path": null
+        "examplesKey": "grammar.n5.05.4.preview",
+        "path": "/grammar/n5/05/4"
       },
       {
         "id": "5.5",
-        "titleKey": "grammar.content.735",
-        "bodyKey": "grammar.content.736",
+        "titleKey": "grammar.n5.05.5.title",
+        "bodyKey": "grammar.n5.05.5.goal",
         "icon": "5",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.737",
-        "path": null
+        "examplesKey": "grammar.n5.05.5.preview",
+        "path": "/grammar/n5/05/5"
       },
       {
         "id": "5.6",
-        "titleKey": "grammar.content.738",
-        "bodyKey": "grammar.content.739",
+        "titleKey": "grammar.n5.05.6.title",
+        "bodyKey": "grammar.n5.05.6.goal",
         "icon": "6",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.740",
-        "path": null
+        "examplesKey": "grammar.n5.05.6.preview",
+        "path": "/grammar/n5/05/6"
       },
       {
         "id": "5.7",
-        "titleKey": "grammar.content.741",
-        "bodyKey": "grammar.content.742",
+        "titleKey": "grammar.n5.05.7.title",
+        "bodyKey": "grammar.n5.05.7.goal",
         "icon": "7",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.743",
-        "path": null
+        "examplesKey": "grammar.n5.05.7.preview",
+        "path": "/grammar/n5/05/7"
       },
       {
         "id": "5.8",
-        "titleKey": "grammar.content.744",
-        "bodyKey": "grammar.content.745",
+        "titleKey": "grammar.n5.05.8.title",
+        "bodyKey": "grammar.n5.05.8.goal",
         "icon": "8",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.746",
-        "path": null
+        "examplesKey": "grammar.n5.05.8.preview",
+        "path": "/grammar/n5/05/8"
       },
       {
         "id": "5.9",
-        "titleKey": "grammar.content.747",
-        "bodyKey": "grammar.content.748",
+        "titleKey": "grammar.n5.05.9.title",
+        "bodyKey": "grammar.n5.05.9.goal",
         "icon": "9",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.749",
-        "path": null
+        "examplesKey": "grammar.n5.05.9.preview",
+        "path": "/grammar/n5/05/9"
       },
       {
         "id": "5.10",
-        "titleKey": "grammar.content.750",
-        "bodyKey": "grammar.content.751",
+        "titleKey": "grammar.n5.05.10.title",
+        "bodyKey": "grammar.n5.05.10.goal",
         "icon": "10",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.752",
-        "path": null
+        "examplesKey": "grammar.n5.05.10.preview",
+        "path": "/grammar/n5/05/10"
       },
       {
         "id": "5.11",
-        "titleKey": "grammar.content.753",
-        "bodyKey": "grammar.content.754",
+        "titleKey": "grammar.n5.05.11.title",
+        "bodyKey": "grammar.n5.05.11.goal",
         "icon": "11",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.755",
-        "path": null
+        "examplesKey": "grammar.n5.05.11.preview",
+        "path": "/grammar/n5/05/11"
       },
       {
         "id": "5.12",
-        "titleKey": "grammar.content.756",
-        "bodyKey": "grammar.content.757",
+        "titleKey": "grammar.n5.05.12.title",
+        "bodyKey": "grammar.n5.05.12.goal",
         "icon": "12",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.758",
-        "path": null
+        "examplesKey": "grammar.n5.05.12.preview",
+        "path": "/grammar/n5/05/12"
       }
     ]
   },
@@ -915,22 +967,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.761",
     "icon": "て",
     "metaKeys": [
-      "grammar.content.762",
-      "grammar.content.712",
-      "grammar.content.267"
+      "grammar.n5.06.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.763",
-      "bodyKey": "grammar.content.714"
+      "bodyKey": "grammar.n5.06.overview.goal"
     },
-    "visualKey": "grammar.content.764",
+    "visualKey": "grammar.n5.06.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.765",
       "titleKey": "grammar.content.766",
       "bodyKey": "grammar.content.718"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.06.journey.eyebrow",
+      "titleKey": "grammar.n5.06.journey.title",
+      "bodyKey": "grammar.n5.06.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/06/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/06/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "orange",
       "icon": "🔗",
@@ -944,129 +1009,129 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "6.1",
-        "titleKey": "grammar.content.771",
-        "bodyKey": "grammar.content.772",
+        "titleKey": "grammar.n5.06.1.title",
+        "bodyKey": "grammar.n5.06.1.goal",
         "icon": "1",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.773",
-        "path": null
+        "examplesKey": "grammar.n5.06.1.preview",
+        "path": "/grammar/n5/06/1"
       },
       {
         "id": "6.2",
-        "titleKey": "grammar.content.774",
-        "bodyKey": "grammar.content.775",
+        "titleKey": "grammar.n5.06.2.title",
+        "bodyKey": "grammar.n5.06.2.goal",
         "icon": "2",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.776",
-        "path": null
+        "examplesKey": "grammar.n5.06.2.preview",
+        "path": "/grammar/n5/06/2"
       },
       {
         "id": "6.3",
-        "titleKey": "grammar.content.777",
-        "bodyKey": "grammar.content.778",
+        "titleKey": "grammar.n5.06.3.title",
+        "bodyKey": "grammar.n5.06.3.goal",
         "icon": "3",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.779",
-        "path": null
+        "examplesKey": "grammar.n5.06.3.preview",
+        "path": "/grammar/n5/06/3"
       },
       {
         "id": "6.4",
-        "titleKey": "grammar.content.780",
-        "bodyKey": "grammar.content.781",
+        "titleKey": "grammar.n5.06.4.title",
+        "bodyKey": "grammar.n5.06.4.goal",
         "icon": "4",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.782",
-        "path": null
+        "examplesKey": "grammar.n5.06.4.preview",
+        "path": "/grammar/n5/06/4"
       },
       {
         "id": "6.5",
-        "titleKey": "grammar.content.783",
-        "bodyKey": "grammar.content.784",
+        "titleKey": "grammar.n5.06.5.title",
+        "bodyKey": "grammar.n5.06.5.goal",
         "icon": "5",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.785",
-        "path": null
+        "examplesKey": "grammar.n5.06.5.preview",
+        "path": "/grammar/n5/06/5"
       },
       {
         "id": "6.6",
-        "titleKey": "grammar.content.786",
-        "bodyKey": "grammar.content.787",
+        "titleKey": "grammar.n5.06.6.title",
+        "bodyKey": "grammar.n5.06.6.goal",
         "icon": "6",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.788",
-        "path": null
+        "examplesKey": "grammar.n5.06.6.preview",
+        "path": "/grammar/n5/06/6"
       },
       {
         "id": "6.7",
-        "titleKey": "grammar.content.789",
-        "bodyKey": "grammar.content.790",
+        "titleKey": "grammar.n5.06.7.title",
+        "bodyKey": "grammar.n5.06.7.goal",
         "icon": "7",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.791",
-        "path": null
+        "examplesKey": "grammar.n5.06.7.preview",
+        "path": "/grammar/n5/06/7"
       },
       {
         "id": "6.8",
-        "titleKey": "grammar.content.792",
-        "bodyKey": "grammar.content.793",
+        "titleKey": "grammar.n5.06.8.title",
+        "bodyKey": "grammar.n5.06.8.goal",
         "icon": "8",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.794",
-        "path": null
+        "examplesKey": "grammar.n5.06.8.preview",
+        "path": "/grammar/n5/06/8"
       },
       {
         "id": "6.9",
-        "titleKey": "grammar.content.795",
-        "bodyKey": "grammar.content.796",
+        "titleKey": "grammar.n5.06.9.title",
+        "bodyKey": "grammar.n5.06.9.goal",
         "icon": "9",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.797",
-        "path": null
+        "examplesKey": "grammar.n5.06.9.preview",
+        "path": "/grammar/n5/06/9"
       },
       {
         "id": "6.10",
-        "titleKey": "grammar.content.798",
-        "bodyKey": "grammar.content.799",
+        "titleKey": "grammar.n5.06.10.title",
+        "bodyKey": "grammar.n5.06.10.goal",
         "icon": "10",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.800",
-        "path": null
+        "examplesKey": "grammar.n5.06.10.preview",
+        "path": "/grammar/n5/06/10"
       },
       {
         "id": "6.11",
-        "titleKey": "grammar.content.801",
-        "bodyKey": "grammar.content.802",
+        "titleKey": "grammar.n5.06.11.title",
+        "bodyKey": "grammar.n5.06.11.goal",
         "icon": "11",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.803",
-        "path": null
+        "examplesKey": "grammar.n5.06.11.preview",
+        "path": "/grammar/n5/06/11"
       },
       {
         "id": "6.12",
-        "titleKey": "grammar.content.804",
-        "bodyKey": "grammar.content.805",
+        "titleKey": "grammar.n5.06.12.title",
+        "bodyKey": "grammar.n5.06.12.goal",
         "icon": "12",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.806",
-        "path": null
+        "examplesKey": "grammar.n5.06.12.preview",
+        "path": "/grammar/n5/06/12"
       },
       {
         "id": "6.13",
-        "titleKey": "grammar.content.807",
-        "bodyKey": "grammar.content.808",
+        "titleKey": "grammar.n5.06.13.title",
+        "bodyKey": "grammar.n5.06.13.goal",
         "icon": "13",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.809",
-        "path": null
+        "examplesKey": "grammar.n5.06.13.preview",
+        "path": "/grammar/n5/06/13"
       },
       {
         "id": "6.14",
-        "titleKey": "grammar.content.810",
-        "bodyKey": "grammar.content.811",
+        "titleKey": "grammar.n5.06.14.title",
+        "bodyKey": "grammar.n5.06.14.goal",
         "icon": "14",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.812",
-        "path": null
+        "examplesKey": "grammar.n5.06.14.preview",
+        "path": "/grammar/n5/06/14"
       }
     ]
   },
@@ -1078,22 +1143,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.815",
     "icon": "話",
     "metaKeys": [
-      "grammar.content.561",
-      "grammar.content.712",
-      "grammar.content.267"
+      "grammar.n5.07.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.816",
-      "bodyKey": "grammar.content.714"
+      "bodyKey": "grammar.n5.07.overview.goal"
     },
-    "visualKey": "grammar.content.817",
+    "visualKey": "grammar.n5.07.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.818",
       "titleKey": "grammar.content.819",
       "bodyKey": "grammar.content.718"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.07.journey.eyebrow",
+      "titleKey": "grammar.n5.07.journey.title",
+      "bodyKey": "grammar.n5.07.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/07/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/07/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "cyan",
       "icon": "💬",
@@ -1107,102 +1185,102 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "7.1",
-        "titleKey": "grammar.content.824",
-        "bodyKey": "grammar.content.825",
+        "titleKey": "grammar.n5.07.1.title",
+        "bodyKey": "grammar.n5.07.1.goal",
         "icon": "1",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.826",
-        "path": null
+        "examplesKey": "grammar.n5.07.1.preview",
+        "path": "/grammar/n5/07/1"
       },
       {
         "id": "7.2",
-        "titleKey": "grammar.content.827",
-        "bodyKey": "grammar.content.828",
+        "titleKey": "grammar.n5.07.2.title",
+        "bodyKey": "grammar.n5.07.2.goal",
         "icon": "2",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.829",
-        "path": null
+        "examplesKey": "grammar.n5.07.2.preview",
+        "path": "/grammar/n5/07/2"
       },
       {
         "id": "7.3",
-        "titleKey": "grammar.content.830",
-        "bodyKey": "grammar.content.831",
+        "titleKey": "grammar.n5.07.3.title",
+        "bodyKey": "grammar.n5.07.3.goal",
         "icon": "3",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.832",
-        "path": null
+        "examplesKey": "grammar.n5.07.3.preview",
+        "path": "/grammar/n5/07/3"
       },
       {
         "id": "7.4",
-        "titleKey": "grammar.content.833",
-        "bodyKey": "grammar.content.834",
+        "titleKey": "grammar.n5.07.4.title",
+        "bodyKey": "grammar.n5.07.4.goal",
         "icon": "4",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.835",
-        "path": null
+        "examplesKey": "grammar.n5.07.4.preview",
+        "path": "/grammar/n5/07/4"
       },
       {
         "id": "7.5",
-        "titleKey": "grammar.content.836",
-        "bodyKey": "grammar.content.837",
+        "titleKey": "grammar.n5.07.5.title",
+        "bodyKey": "grammar.n5.07.5.goal",
         "icon": "5",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.838",
-        "path": null
+        "examplesKey": "grammar.n5.07.5.preview",
+        "path": "/grammar/n5/07/5"
       },
       {
         "id": "7.6",
-        "titleKey": "grammar.content.839",
-        "bodyKey": "grammar.content.840",
+        "titleKey": "grammar.n5.07.6.title",
+        "bodyKey": "grammar.n5.07.6.goal",
         "icon": "6",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.841",
-        "path": null
+        "examplesKey": "grammar.n5.07.6.preview",
+        "path": "/grammar/n5/07/6"
       },
       {
         "id": "7.7",
-        "titleKey": "grammar.content.842",
-        "bodyKey": "grammar.content.843",
+        "titleKey": "grammar.n5.07.7.title",
+        "bodyKey": "grammar.n5.07.7.goal",
         "icon": "7",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.844",
-        "path": null
+        "examplesKey": "grammar.n5.07.7.preview",
+        "path": "/grammar/n5/07/7"
       },
       {
         "id": "7.8",
-        "titleKey": "grammar.content.845",
-        "bodyKey": "grammar.content.846",
+        "titleKey": "grammar.n5.07.8.title",
+        "bodyKey": "grammar.n5.07.8.goal",
         "icon": "8",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.847",
-        "path": null
+        "examplesKey": "grammar.n5.07.8.preview",
+        "path": "/grammar/n5/07/8"
       },
       {
         "id": "7.9",
-        "titleKey": "grammar.content.848",
-        "bodyKey": "grammar.content.849",
+        "titleKey": "grammar.n5.07.9.title",
+        "bodyKey": "grammar.n5.07.9.goal",
         "icon": "9",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.850",
-        "path": null
+        "examplesKey": "grammar.n5.07.9.preview",
+        "path": "/grammar/n5/07/9"
       },
       {
         "id": "7.10",
-        "titleKey": "grammar.content.851",
-        "bodyKey": "grammar.content.852",
+        "titleKey": "grammar.n5.07.10.title",
+        "bodyKey": "grammar.n5.07.10.goal",
         "icon": "10",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.853",
-        "path": null
+        "examplesKey": "grammar.n5.07.10.preview",
+        "path": "/grammar/n5/07/10"
       },
       {
         "id": "7.11",
-        "titleKey": "grammar.content.854",
-        "bodyKey": "grammar.content.855",
+        "titleKey": "grammar.n5.07.11.title",
+        "bodyKey": "grammar.n5.07.11.goal",
         "icon": "11",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.856",
-        "path": null
+        "examplesKey": "grammar.n5.07.11.preview",
+        "path": "/grammar/n5/07/11"
       }
     ]
   },
@@ -1214,22 +1292,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.859",
     "icon": "文",
     "metaKeys": [
-      "grammar.content.561",
-      "grammar.content.712",
-      "grammar.content.267"
+      "grammar.n5.08.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.860",
-      "bodyKey": "grammar.content.714"
+      "bodyKey": "grammar.n5.08.overview.goal"
     },
-    "visualKey": "grammar.content.861",
+    "visualKey": "grammar.n5.08.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.862",
       "titleKey": "grammar.content.863",
       "bodyKey": "grammar.content.718"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.08.journey.eyebrow",
+      "titleKey": "grammar.n5.08.journey.title",
+      "bodyKey": "grammar.n5.08.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/08/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/08/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "violet",
       "icon": "💡",
@@ -1243,102 +1334,102 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "8.1",
-        "titleKey": "grammar.content.868",
-        "bodyKey": "grammar.content.869",
+        "titleKey": "grammar.n5.08.1.title",
+        "bodyKey": "grammar.n5.08.1.goal",
         "icon": "1",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.870",
-        "path": null
+        "examplesKey": "grammar.n5.08.1.preview",
+        "path": "/grammar/n5/08/1"
       },
       {
         "id": "8.2",
-        "titleKey": "grammar.content.871",
-        "bodyKey": "grammar.content.872",
+        "titleKey": "grammar.n5.08.2.title",
+        "bodyKey": "grammar.n5.08.2.goal",
         "icon": "2",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.873",
-        "path": null
+        "examplesKey": "grammar.n5.08.2.preview",
+        "path": "/grammar/n5/08/2"
       },
       {
         "id": "8.3",
-        "titleKey": "grammar.content.874",
-        "bodyKey": "grammar.content.875",
+        "titleKey": "grammar.n5.08.3.title",
+        "bodyKey": "grammar.n5.08.3.goal",
         "icon": "3",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.876",
-        "path": null
+        "examplesKey": "grammar.n5.08.3.preview",
+        "path": "/grammar/n5/08/3"
       },
       {
         "id": "8.4",
-        "titleKey": "grammar.content.877",
-        "bodyKey": "grammar.content.878",
+        "titleKey": "grammar.n5.08.4.title",
+        "bodyKey": "grammar.n5.08.4.goal",
         "icon": "4",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.879",
-        "path": null
+        "examplesKey": "grammar.n5.08.4.preview",
+        "path": "/grammar/n5/08/4"
       },
       {
         "id": "8.5",
-        "titleKey": "grammar.content.880",
-        "bodyKey": "grammar.content.881",
+        "titleKey": "grammar.n5.08.5.title",
+        "bodyKey": "grammar.n5.08.5.goal",
         "icon": "5",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.882",
-        "path": null
+        "examplesKey": "grammar.n5.08.5.preview",
+        "path": "/grammar/n5/08/5"
       },
       {
         "id": "8.6",
-        "titleKey": "grammar.content.883",
-        "bodyKey": "grammar.content.884",
+        "titleKey": "grammar.n5.08.6.title",
+        "bodyKey": "grammar.n5.08.6.goal",
         "icon": "6",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.885",
-        "path": null
+        "examplesKey": "grammar.n5.08.6.preview",
+        "path": "/grammar/n5/08/6"
       },
       {
         "id": "8.7",
-        "titleKey": "grammar.content.886",
-        "bodyKey": "grammar.content.887",
+        "titleKey": "grammar.n5.08.7.title",
+        "bodyKey": "grammar.n5.08.7.goal",
         "icon": "7",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.888",
-        "path": null
+        "examplesKey": "grammar.n5.08.7.preview",
+        "path": "/grammar/n5/08/7"
       },
       {
         "id": "8.8",
-        "titleKey": "grammar.content.889",
-        "bodyKey": "grammar.content.890",
+        "titleKey": "grammar.n5.08.8.title",
+        "bodyKey": "grammar.n5.08.8.goal",
         "icon": "8",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.891",
-        "path": null
+        "examplesKey": "grammar.n5.08.8.preview",
+        "path": "/grammar/n5/08/8"
       },
       {
         "id": "8.9",
-        "titleKey": "grammar.content.892",
-        "bodyKey": "grammar.content.893",
+        "titleKey": "grammar.n5.08.9.title",
+        "bodyKey": "grammar.n5.08.9.goal",
         "icon": "9",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.894",
-        "path": null
+        "examplesKey": "grammar.n5.08.9.preview",
+        "path": "/grammar/n5/08/9"
       },
       {
         "id": "8.10",
-        "titleKey": "grammar.content.895",
-        "bodyKey": "grammar.content.896",
+        "titleKey": "grammar.n5.08.10.title",
+        "bodyKey": "grammar.n5.08.10.goal",
         "icon": "10",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.897",
-        "path": null
+        "examplesKey": "grammar.n5.08.10.preview",
+        "path": "/grammar/n5/08/10"
       },
       {
         "id": "8.11",
-        "titleKey": "grammar.content.898",
-        "bodyKey": "grammar.content.899",
+        "titleKey": "grammar.n5.08.11.title",
+        "bodyKey": "grammar.n5.08.11.goal",
         "icon": "11",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.900",
-        "path": null
+        "examplesKey": "grammar.n5.08.11.preview",
+        "path": "/grammar/n5/08/11"
       }
     ]
   },
@@ -1350,22 +1441,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.903",
     "icon": "比",
     "metaKeys": [
-      "grammar.content.665",
-      "grammar.content.712",
-      "grammar.content.267"
+      "grammar.n5.09.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.904",
-      "bodyKey": "grammar.content.714"
+      "bodyKey": "grammar.n5.09.overview.goal"
     },
-    "visualKey": "grammar.content.905",
+    "visualKey": "grammar.n5.09.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.906",
       "titleKey": "grammar.content.907",
       "bodyKey": "grammar.content.718"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.09.journey.eyebrow",
+      "titleKey": "grammar.n5.09.journey.title",
+      "bodyKey": "grammar.n5.09.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/09/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/09/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "pink",
       "icon": "📈",
@@ -1379,111 +1483,111 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "9.1",
-        "titleKey": "grammar.content.908",
-        "bodyKey": "grammar.content.912",
+        "titleKey": "grammar.n5.09.1.title",
+        "bodyKey": "grammar.n5.09.1.goal",
         "icon": "1",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.913",
-        "path": null
+        "examplesKey": "grammar.n5.09.1.preview",
+        "path": "/grammar/n5/09/1"
       },
       {
         "id": "9.2",
-        "titleKey": "grammar.content.914",
-        "bodyKey": "grammar.content.915",
+        "titleKey": "grammar.n5.09.2.title",
+        "bodyKey": "grammar.n5.09.2.goal",
         "icon": "2",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.916",
-        "path": null
+        "examplesKey": "grammar.n5.09.2.preview",
+        "path": "/grammar/n5/09/2"
       },
       {
         "id": "9.3",
-        "titleKey": "grammar.content.909",
-        "bodyKey": "grammar.content.917",
+        "titleKey": "grammar.n5.09.3.title",
+        "bodyKey": "grammar.n5.09.3.goal",
         "icon": "3",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.918",
-        "path": null
+        "examplesKey": "grammar.n5.09.3.preview",
+        "path": "/grammar/n5/09/3"
       },
       {
         "id": "9.4",
-        "titleKey": "grammar.content.919",
-        "bodyKey": "grammar.content.920",
+        "titleKey": "grammar.n5.09.4.title",
+        "bodyKey": "grammar.n5.09.4.goal",
         "icon": "4",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.921",
-        "path": null
+        "examplesKey": "grammar.n5.09.4.preview",
+        "path": "/grammar/n5/09/4"
       },
       {
         "id": "9.5",
-        "titleKey": "grammar.content.922",
-        "bodyKey": "grammar.content.923",
+        "titleKey": "grammar.n5.09.5.title",
+        "bodyKey": "grammar.n5.09.5.goal",
         "icon": "5",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.924",
-        "path": null
+        "examplesKey": "grammar.n5.09.5.preview",
+        "path": "/grammar/n5/09/5"
       },
       {
         "id": "9.6",
-        "titleKey": "grammar.content.925",
-        "bodyKey": "grammar.content.926",
+        "titleKey": "grammar.n5.09.6.title",
+        "bodyKey": "grammar.n5.09.6.goal",
         "icon": "6",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.927",
-        "path": null
+        "examplesKey": "grammar.n5.09.6.preview",
+        "path": "/grammar/n5/09/6"
       },
       {
         "id": "9.7",
-        "titleKey": "grammar.content.928",
-        "bodyKey": "grammar.content.929",
+        "titleKey": "grammar.n5.09.7.title",
+        "bodyKey": "grammar.n5.09.7.goal",
         "icon": "7",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.930",
-        "path": null
+        "examplesKey": "grammar.n5.09.7.preview",
+        "path": "/grammar/n5/09/7"
       },
       {
         "id": "9.8",
-        "titleKey": "grammar.content.931",
-        "bodyKey": "grammar.content.932",
+        "titleKey": "grammar.n5.09.8.title",
+        "bodyKey": "grammar.n5.09.8.goal",
         "icon": "8",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.933",
-        "path": null
+        "examplesKey": "grammar.n5.09.8.preview",
+        "path": "/grammar/n5/09/8"
       },
       {
         "id": "9.9",
-        "titleKey": "grammar.content.934",
-        "bodyKey": "grammar.content.935",
+        "titleKey": "grammar.n5.09.9.title",
+        "bodyKey": "grammar.n5.09.9.goal",
         "icon": "9",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.936",
-        "path": null
+        "examplesKey": "grammar.n5.09.9.preview",
+        "path": "/grammar/n5/09/9"
       },
       {
         "id": "9.10",
-        "titleKey": "grammar.content.937",
-        "bodyKey": "grammar.content.938",
+        "titleKey": "grammar.n5.09.10.title",
+        "bodyKey": "grammar.n5.09.10.goal",
         "icon": "10",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.939",
-        "path": null
+        "examplesKey": "grammar.n5.09.10.preview",
+        "path": "/grammar/n5/09/10"
       },
       {
         "id": "9.11",
-        "titleKey": "grammar.content.940",
-        "bodyKey": "grammar.content.941",
+        "titleKey": "grammar.n5.09.11.title",
+        "bodyKey": "grammar.n5.09.11.goal",
         "icon": "11",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.942",
-        "path": null
+        "examplesKey": "grammar.n5.09.11.preview",
+        "path": "/grammar/n5/09/11"
       },
       {
         "id": "9.12",
-        "titleKey": "grammar.content.943",
-        "bodyKey": "grammar.content.944",
+        "titleKey": "grammar.n5.09.12.title",
+        "bodyKey": "grammar.n5.09.12.goal",
         "icon": "12",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.945",
-        "path": null
+        "examplesKey": "grammar.n5.09.12.preview",
+        "path": "/grammar/n5/09/12"
       }
     ]
   },
@@ -1495,22 +1599,35 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "kickerKey": "grammar.content.948",
     "icon": "N5",
     "metaKeys": [
-      "grammar.content.949",
-      "grammar.content.950",
-      "grammar.content.267"
+      "grammar.n5.10.count",
+      "grammar.n5.practice.available"
     ],
     "goal": {
       "eyebrowKey": "grammar.content.7",
       "titleKey": "grammar.content.951",
-      "bodyKey": "grammar.content.714"
+      "bodyKey": "grammar.n5.10.overview.goal"
     },
-    "visualKey": "grammar.content.952",
+    "visualKey": "grammar.n5.10.overview.visual",
     "end": {
       "eyebrowKey": "grammar.content.953",
       "titleKey": "grammar.content.954",
       "bodyKey": "grammar.content.718"
     },
-    "journey": null,
+    "journey": {
+      "eyebrowKey": "grammar.n5.10.journey.eyebrow",
+      "titleKey": "grammar.n5.10.journey.title",
+      "bodyKey": "grammar.n5.10.journey.body",
+      "links": [
+        {
+          "labelKey": "grammar.n5.start.lesson",
+          "path": "/grammar/n5/10/1"
+        },
+        {
+          "labelKey": "grammar.n5.start.practice",
+          "path": "/grammar/n5/10/practice"
+        }
+      ]
+    },
     "stage": {
       "color": "gold",
       "icon": "N5",
@@ -1524,93 +1641,93 @@ export const GRAMMAR_TOPICS: readonly GrammarTopic[] = [
     "lessons": [
       {
         "id": "10.1",
-        "titleKey": "grammar.content.959",
-        "bodyKey": "grammar.content.960",
+        "titleKey": "grammar.n5.10.1.title",
+        "bodyKey": "grammar.n5.10.1.goal",
         "icon": "★",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.961",
-        "path": null
+        "examplesKey": "grammar.n5.10.1.preview",
+        "path": "/grammar/n5/10/1"
       },
       {
         "id": "10.2",
-        "titleKey": "grammar.content.962",
-        "bodyKey": "grammar.content.963",
+        "titleKey": "grammar.n5.10.2.title",
+        "bodyKey": "grammar.n5.10.2.goal",
         "icon": "★",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.964",
-        "path": null
+        "examplesKey": "grammar.n5.10.2.preview",
+        "path": "/grammar/n5/10/2"
       },
       {
         "id": "10.3",
-        "titleKey": "grammar.content.965",
-        "bodyKey": "grammar.content.966",
+        "titleKey": "grammar.n5.10.3.title",
+        "bodyKey": "grammar.n5.10.3.goal",
         "icon": "★",
         "color": "lesson-green",
-        "examplesKey": "grammar.content.967",
-        "path": null
+        "examplesKey": "grammar.n5.10.3.preview",
+        "path": "/grammar/n5/10/3"
       },
       {
         "id": "10.4",
-        "titleKey": "grammar.content.968",
-        "bodyKey": "grammar.content.969",
+        "titleKey": "grammar.n5.10.4.title",
+        "bodyKey": "grammar.n5.10.4.goal",
         "icon": "★",
         "color": "lesson-violet",
-        "examplesKey": "grammar.content.970",
-        "path": null
+        "examplesKey": "grammar.n5.10.4.preview",
+        "path": "/grammar/n5/10/4"
       },
       {
         "id": "10.5",
-        "titleKey": "grammar.content.971",
-        "bodyKey": "grammar.content.972",
+        "titleKey": "grammar.n5.10.5.title",
+        "bodyKey": "grammar.n5.10.5.goal",
         "icon": "★",
         "color": "lesson-orange",
-        "examplesKey": "grammar.content.973",
-        "path": null
+        "examplesKey": "grammar.n5.10.5.preview",
+        "path": "/grammar/n5/10/5"
       },
       {
         "id": "10.6",
-        "titleKey": "grammar.content.974",
-        "bodyKey": "grammar.content.975",
+        "titleKey": "grammar.n5.10.6.title",
+        "bodyKey": "grammar.n5.10.6.goal",
         "icon": "★",
         "color": "lesson-gold",
-        "examplesKey": "grammar.content.976",
-        "path": null
+        "examplesKey": "grammar.n5.10.6.preview",
+        "path": "/grammar/n5/10/6"
       },
       {
         "id": "10.7",
-        "titleKey": "grammar.content.977",
-        "bodyKey": "grammar.content.978",
+        "titleKey": "grammar.n5.10.7.title",
+        "bodyKey": "grammar.n5.10.7.goal",
         "icon": "★",
         "color": "lesson-pink",
-        "examplesKey": "grammar.content.979",
-        "path": null
+        "examplesKey": "grammar.n5.10.7.preview",
+        "path": "/grammar/n5/10/7"
       },
       {
         "id": "10.8",
-        "titleKey": "grammar.content.980",
-        "bodyKey": "grammar.content.981",
+        "titleKey": "grammar.n5.10.8.title",
+        "bodyKey": "grammar.n5.10.8.goal",
         "icon": "★",
         "color": "lesson-red",
-        "examplesKey": "grammar.content.982",
-        "path": null
+        "examplesKey": "grammar.n5.10.8.preview",
+        "path": "/grammar/n5/10/8"
       },
       {
         "id": "10.9",
-        "titleKey": "grammar.content.983",
-        "bodyKey": "grammar.content.984",
+        "titleKey": "grammar.n5.10.9.title",
+        "bodyKey": "grammar.n5.10.9.goal",
         "icon": "★",
         "color": "lesson-blue",
-        "examplesKey": "grammar.content.985",
-        "path": null
+        "examplesKey": "grammar.n5.10.9.preview",
+        "path": "/grammar/n5/10/9"
       },
       {
         "id": "10.10",
-        "titleKey": "grammar.content.986",
-        "bodyKey": "grammar.content.987",
+        "titleKey": "grammar.n5.10.10.title",
+        "bodyKey": "grammar.n5.10.10.goal",
         "icon": "★",
         "color": "lesson-cyan",
-        "examplesKey": "grammar.content.988",
-        "path": null
+        "examplesKey": "grammar.n5.10.10.preview",
+        "path": "/grammar/n5/10/10"
       }
     ]
   }
@@ -2864,6 +2981,5066 @@ export const GRAMMAR_LESSONS: readonly GrammarLesson[] = [
       "successKey": "grammar.content.501",
       "errorKey": "grammar.content.502"
     }
+  },
+  {
+    "id": "1",
+    "topicId": "02",
+    "position": 1,
+    "total": 11,
+    "titleKey": "grammar.n5.02.1.title",
+    "descriptionKey": "grammar.n5.02.1.goal",
+    "icon": "1",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02",
+    "nextPath": "/grammar/n5/02/2",
+    "exercise": {
+      "id": "02.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.1.exercise.question",
+      "promptKey": "grammar.n5.02.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.1.exercise.option.0",
+        "grammar.n5.02.1.exercise.option.1",
+        "grammar.n5.02.1.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.02.1.exercise.success",
+      "errorKey": "grammar.n5.02.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "02",
+    "position": 2,
+    "total": 11,
+    "titleKey": "grammar.n5.02.2.title",
+    "descriptionKey": "grammar.n5.02.2.goal",
+    "icon": "2",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/1",
+    "nextPath": "/grammar/n5/02/3",
+    "exercise": {
+      "id": "02.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.2.exercise.question",
+      "promptKey": "grammar.n5.02.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.2.exercise.option.0",
+        "grammar.n5.02.2.exercise.option.1",
+        "grammar.n5.02.2.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.02.2.exercise.success",
+      "errorKey": "grammar.n5.02.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "02",
+    "position": 3,
+    "total": 11,
+    "titleKey": "grammar.n5.02.3.title",
+    "descriptionKey": "grammar.n5.02.3.goal",
+    "icon": "3",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/2",
+    "nextPath": "/grammar/n5/02/4",
+    "exercise": {
+      "id": "02.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.3.exercise.question",
+      "promptKey": "grammar.n5.02.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.3.exercise.option.0",
+        "grammar.n5.02.3.exercise.option.1",
+        "grammar.n5.02.3.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.02.3.exercise.success",
+      "errorKey": "grammar.n5.02.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "02",
+    "position": 4,
+    "total": 11,
+    "titleKey": "grammar.n5.02.4.title",
+    "descriptionKey": "grammar.n5.02.4.goal",
+    "icon": "4",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/3",
+    "nextPath": "/grammar/n5/02/5",
+    "exercise": {
+      "id": "02.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.4.exercise.question",
+      "promptKey": "grammar.n5.02.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.4.exercise.option.0",
+        "grammar.n5.02.4.exercise.option.1",
+        "grammar.n5.02.4.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.02.4.exercise.success",
+      "errorKey": "grammar.n5.02.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "02",
+    "position": 5,
+    "total": 11,
+    "titleKey": "grammar.n5.02.5.title",
+    "descriptionKey": "grammar.n5.02.5.goal",
+    "icon": "5",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/4",
+    "nextPath": "/grammar/n5/02/6",
+    "exercise": {
+      "id": "02.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.5.exercise.question",
+      "promptKey": "grammar.n5.02.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.5.exercise.option.0",
+        "grammar.n5.02.5.exercise.option.1",
+        "grammar.n5.02.5.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.02.5.exercise.success",
+      "errorKey": "grammar.n5.02.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "02",
+    "position": 6,
+    "total": 11,
+    "titleKey": "grammar.n5.02.6.title",
+    "descriptionKey": "grammar.n5.02.6.goal",
+    "icon": "6",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/5",
+    "nextPath": "/grammar/n5/02/7",
+    "exercise": {
+      "id": "02.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.6.exercise.question",
+      "promptKey": "grammar.n5.02.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.6.exercise.option.0",
+        "grammar.n5.02.6.exercise.option.1",
+        "grammar.n5.02.6.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.02.6.exercise.success",
+      "errorKey": "grammar.n5.02.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "02",
+    "position": 7,
+    "total": 11,
+    "titleKey": "grammar.n5.02.7.title",
+    "descriptionKey": "grammar.n5.02.7.goal",
+    "icon": "7",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/6",
+    "nextPath": "/grammar/n5/02/8",
+    "exercise": {
+      "id": "02.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.7.exercise.question",
+      "promptKey": "grammar.n5.02.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.7.exercise.option.0",
+        "grammar.n5.02.7.exercise.option.1",
+        "grammar.n5.02.7.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.02.7.exercise.success",
+      "errorKey": "grammar.n5.02.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "02",
+    "position": 8,
+    "total": 11,
+    "titleKey": "grammar.n5.02.8.title",
+    "descriptionKey": "grammar.n5.02.8.goal",
+    "icon": "8",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/7",
+    "nextPath": "/grammar/n5/02/9",
+    "exercise": {
+      "id": "02.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.8.exercise.question",
+      "promptKey": "grammar.n5.02.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.8.exercise.option.0",
+        "grammar.n5.02.8.exercise.option.1",
+        "grammar.n5.02.8.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.02.8.exercise.success",
+      "errorKey": "grammar.n5.02.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "02",
+    "position": 9,
+    "total": 11,
+    "titleKey": "grammar.n5.02.9.title",
+    "descriptionKey": "grammar.n5.02.9.goal",
+    "icon": "9",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/8",
+    "nextPath": "/grammar/n5/02/10",
+    "exercise": {
+      "id": "02.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.9.exercise.question",
+      "promptKey": "grammar.n5.02.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.9.exercise.option.0",
+        "grammar.n5.02.9.exercise.option.1",
+        "grammar.n5.02.9.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.02.9.exercise.success",
+      "errorKey": "grammar.n5.02.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "02",
+    "position": 10,
+    "total": 11,
+    "titleKey": "grammar.n5.02.10.title",
+    "descriptionKey": "grammar.n5.02.10.goal",
+    "icon": "10",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/9",
+    "nextPath": "/grammar/n5/02/11",
+    "exercise": {
+      "id": "02.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.10.exercise.question",
+      "promptKey": "grammar.n5.02.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.10.exercise.option.0",
+        "grammar.n5.02.10.exercise.option.1",
+        "grammar.n5.02.10.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.02.10.exercise.success",
+      "errorKey": "grammar.n5.02.10.exercise.error"
+    }
+  },
+  {
+    "id": "11",
+    "topicId": "02",
+    "position": 11,
+    "total": 11,
+    "titleKey": "grammar.n5.02.11.title",
+    "descriptionKey": "grammar.n5.02.11.goal",
+    "icon": "11",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.02.11.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.02.11.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.02.11.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.02.11.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/02/10",
+    "nextPath": "/grammar/n5/02/practice",
+    "exercise": {
+      "id": "02.11",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.02",
+      "questionKey": "grammar.n5.02.11.exercise.question",
+      "promptKey": "grammar.n5.02.11.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.02.11.exercise.option.0",
+        "grammar.n5.02.11.exercise.option.1",
+        "grammar.n5.02.11.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.02.11.exercise.success",
+      "errorKey": "grammar.n5.02.11.exercise.error"
+    }
+  },
+  {
+    "id": "1",
+    "topicId": "03",
+    "position": 1,
+    "total": 17,
+    "titleKey": "grammar.n5.03.1.title",
+    "descriptionKey": "grammar.n5.03.1.goal",
+    "icon": "1",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03",
+    "nextPath": "/grammar/n5/03/2",
+    "exercise": {
+      "id": "03.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.1.exercise.question",
+      "promptKey": "grammar.n5.03.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.1.exercise.option.0",
+        "grammar.n5.03.1.exercise.option.1",
+        "grammar.n5.03.1.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.03.1.exercise.success",
+      "errorKey": "grammar.n5.03.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "03",
+    "position": 2,
+    "total": 17,
+    "titleKey": "grammar.n5.03.2.title",
+    "descriptionKey": "grammar.n5.03.2.goal",
+    "icon": "2",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/1",
+    "nextPath": "/grammar/n5/03/3",
+    "exercise": {
+      "id": "03.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.2.exercise.question",
+      "promptKey": "grammar.n5.03.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.2.exercise.option.0",
+        "grammar.n5.03.2.exercise.option.1",
+        "grammar.n5.03.2.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.03.2.exercise.success",
+      "errorKey": "grammar.n5.03.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "03",
+    "position": 3,
+    "total": 17,
+    "titleKey": "grammar.n5.03.3.title",
+    "descriptionKey": "grammar.n5.03.3.goal",
+    "icon": "3",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/2",
+    "nextPath": "/grammar/n5/03/4",
+    "exercise": {
+      "id": "03.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.3.exercise.question",
+      "promptKey": "grammar.n5.03.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.3.exercise.option.0",
+        "grammar.n5.03.3.exercise.option.1",
+        "grammar.n5.03.3.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.03.3.exercise.success",
+      "errorKey": "grammar.n5.03.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "03",
+    "position": 4,
+    "total": 17,
+    "titleKey": "grammar.n5.03.4.title",
+    "descriptionKey": "grammar.n5.03.4.goal",
+    "icon": "4",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/3",
+    "nextPath": "/grammar/n5/03/5",
+    "exercise": {
+      "id": "03.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.4.exercise.question",
+      "promptKey": "grammar.n5.03.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.4.exercise.option.0",
+        "grammar.n5.03.4.exercise.option.1",
+        "grammar.n5.03.4.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.03.4.exercise.success",
+      "errorKey": "grammar.n5.03.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "03",
+    "position": 5,
+    "total": 17,
+    "titleKey": "grammar.n5.03.5.title",
+    "descriptionKey": "grammar.n5.03.5.goal",
+    "icon": "5",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/4",
+    "nextPath": "/grammar/n5/03/6",
+    "exercise": {
+      "id": "03.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.5.exercise.question",
+      "promptKey": "grammar.n5.03.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.5.exercise.option.0",
+        "grammar.n5.03.5.exercise.option.1",
+        "grammar.n5.03.5.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.03.5.exercise.success",
+      "errorKey": "grammar.n5.03.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "03",
+    "position": 6,
+    "total": 17,
+    "titleKey": "grammar.n5.03.6.title",
+    "descriptionKey": "grammar.n5.03.6.goal",
+    "icon": "6",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/5",
+    "nextPath": "/grammar/n5/03/7",
+    "exercise": {
+      "id": "03.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.6.exercise.question",
+      "promptKey": "grammar.n5.03.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.6.exercise.option.0",
+        "grammar.n5.03.6.exercise.option.1",
+        "grammar.n5.03.6.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.03.6.exercise.success",
+      "errorKey": "grammar.n5.03.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "03",
+    "position": 7,
+    "total": 17,
+    "titleKey": "grammar.n5.03.7.title",
+    "descriptionKey": "grammar.n5.03.7.goal",
+    "icon": "7",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/6",
+    "nextPath": "/grammar/n5/03/8",
+    "exercise": {
+      "id": "03.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.7.exercise.question",
+      "promptKey": "grammar.n5.03.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.7.exercise.option.0",
+        "grammar.n5.03.7.exercise.option.1",
+        "grammar.n5.03.7.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.03.7.exercise.success",
+      "errorKey": "grammar.n5.03.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "03",
+    "position": 8,
+    "total": 17,
+    "titleKey": "grammar.n5.03.8.title",
+    "descriptionKey": "grammar.n5.03.8.goal",
+    "icon": "8",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/7",
+    "nextPath": "/grammar/n5/03/9",
+    "exercise": {
+      "id": "03.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.8.exercise.question",
+      "promptKey": "grammar.n5.03.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.8.exercise.option.0",
+        "grammar.n5.03.8.exercise.option.1",
+        "grammar.n5.03.8.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.03.8.exercise.success",
+      "errorKey": "grammar.n5.03.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "03",
+    "position": 9,
+    "total": 17,
+    "titleKey": "grammar.n5.03.9.title",
+    "descriptionKey": "grammar.n5.03.9.goal",
+    "icon": "9",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/8",
+    "nextPath": "/grammar/n5/03/10",
+    "exercise": {
+      "id": "03.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.9.exercise.question",
+      "promptKey": "grammar.n5.03.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.9.exercise.option.0",
+        "grammar.n5.03.9.exercise.option.1",
+        "grammar.n5.03.9.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.03.9.exercise.success",
+      "errorKey": "grammar.n5.03.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "03",
+    "position": 10,
+    "total": 17,
+    "titleKey": "grammar.n5.03.10.title",
+    "descriptionKey": "grammar.n5.03.10.goal",
+    "icon": "10",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/9",
+    "nextPath": "/grammar/n5/03/11",
+    "exercise": {
+      "id": "03.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.10.exercise.question",
+      "promptKey": "grammar.n5.03.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.10.exercise.option.0",
+        "grammar.n5.03.10.exercise.option.1",
+        "grammar.n5.03.10.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.03.10.exercise.success",
+      "errorKey": "grammar.n5.03.10.exercise.error"
+    }
+  },
+  {
+    "id": "11",
+    "topicId": "03",
+    "position": 11,
+    "total": 17,
+    "titleKey": "grammar.n5.03.11.title",
+    "descriptionKey": "grammar.n5.03.11.goal",
+    "icon": "11",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.11.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.11.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.11.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.11.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/10",
+    "nextPath": "/grammar/n5/03/12",
+    "exercise": {
+      "id": "03.11",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.11.exercise.question",
+      "promptKey": "grammar.n5.03.11.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.11.exercise.option.0",
+        "grammar.n5.03.11.exercise.option.1",
+        "grammar.n5.03.11.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.03.11.exercise.success",
+      "errorKey": "grammar.n5.03.11.exercise.error"
+    }
+  },
+  {
+    "id": "12",
+    "topicId": "03",
+    "position": 12,
+    "total": 17,
+    "titleKey": "grammar.n5.03.12.title",
+    "descriptionKey": "grammar.n5.03.12.goal",
+    "icon": "12",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.12.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.12.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.12.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.12.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/11",
+    "nextPath": "/grammar/n5/03/13",
+    "exercise": {
+      "id": "03.12",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.12.exercise.question",
+      "promptKey": "grammar.n5.03.12.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.12.exercise.option.0",
+        "grammar.n5.03.12.exercise.option.1",
+        "grammar.n5.03.12.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.03.12.exercise.success",
+      "errorKey": "grammar.n5.03.12.exercise.error"
+    }
+  },
+  {
+    "id": "13",
+    "topicId": "03",
+    "position": 13,
+    "total": 17,
+    "titleKey": "grammar.n5.03.13.title",
+    "descriptionKey": "grammar.n5.03.13.goal",
+    "icon": "13",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.13.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.13.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.13.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.13.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/12",
+    "nextPath": "/grammar/n5/03/14",
+    "exercise": {
+      "id": "03.13",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.13.exercise.question",
+      "promptKey": "grammar.n5.03.13.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.13.exercise.option.0",
+        "grammar.n5.03.13.exercise.option.1",
+        "grammar.n5.03.13.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.03.13.exercise.success",
+      "errorKey": "grammar.n5.03.13.exercise.error"
+    }
+  },
+  {
+    "id": "14",
+    "topicId": "03",
+    "position": 14,
+    "total": 17,
+    "titleKey": "grammar.n5.03.14.title",
+    "descriptionKey": "grammar.n5.03.14.goal",
+    "icon": "14",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.14.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.14.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.14.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.14.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/13",
+    "nextPath": "/grammar/n5/03/15",
+    "exercise": {
+      "id": "03.14",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.14.exercise.question",
+      "promptKey": "grammar.n5.03.14.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.14.exercise.option.0",
+        "grammar.n5.03.14.exercise.option.1",
+        "grammar.n5.03.14.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.03.14.exercise.success",
+      "errorKey": "grammar.n5.03.14.exercise.error"
+    }
+  },
+  {
+    "id": "15",
+    "topicId": "03",
+    "position": 15,
+    "total": 17,
+    "titleKey": "grammar.n5.03.15.title",
+    "descriptionKey": "grammar.n5.03.15.goal",
+    "icon": "15",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.15.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.15.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.15.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.15.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/14",
+    "nextPath": "/grammar/n5/03/16",
+    "exercise": {
+      "id": "03.15",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.15.exercise.question",
+      "promptKey": "grammar.n5.03.15.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.15.exercise.option.0",
+        "grammar.n5.03.15.exercise.option.1",
+        "grammar.n5.03.15.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.03.15.exercise.success",
+      "errorKey": "grammar.n5.03.15.exercise.error"
+    }
+  },
+  {
+    "id": "16",
+    "topicId": "03",
+    "position": 16,
+    "total": 17,
+    "titleKey": "grammar.n5.03.16.title",
+    "descriptionKey": "grammar.n5.03.16.goal",
+    "icon": "16",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.16.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.16.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.16.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.16.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/15",
+    "nextPath": "/grammar/n5/03/17",
+    "exercise": {
+      "id": "03.16",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.16.exercise.question",
+      "promptKey": "grammar.n5.03.16.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.16.exercise.option.0",
+        "grammar.n5.03.16.exercise.option.1",
+        "grammar.n5.03.16.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.03.16.exercise.success",
+      "errorKey": "grammar.n5.03.16.exercise.error"
+    }
+  },
+  {
+    "id": "17",
+    "topicId": "03",
+    "position": 17,
+    "total": 17,
+    "titleKey": "grammar.n5.03.17.title",
+    "descriptionKey": "grammar.n5.03.17.goal",
+    "icon": "17",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.03.17.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.03.17.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.03.17.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.03.17.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/03/16",
+    "nextPath": "/grammar/n5/03/practice",
+    "exercise": {
+      "id": "03.17",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.03",
+      "questionKey": "grammar.n5.03.17.exercise.question",
+      "promptKey": "grammar.n5.03.17.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.03.17.exercise.option.0",
+        "grammar.n5.03.17.exercise.option.1",
+        "grammar.n5.03.17.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.03.17.exercise.success",
+      "errorKey": "grammar.n5.03.17.exercise.error"
+    }
+  },
+  {
+    "id": "1",
+    "topicId": "04",
+    "position": 1,
+    "total": 12,
+    "titleKey": "grammar.n5.04.1.title",
+    "descriptionKey": "grammar.n5.04.1.goal",
+    "icon": "1",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04",
+    "nextPath": "/grammar/n5/04/2",
+    "exercise": {
+      "id": "04.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.1.exercise.question",
+      "promptKey": "grammar.n5.04.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.1.exercise.option.0",
+        "grammar.n5.04.1.exercise.option.1",
+        "grammar.n5.04.1.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.04.1.exercise.success",
+      "errorKey": "grammar.n5.04.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "04",
+    "position": 2,
+    "total": 12,
+    "titleKey": "grammar.n5.04.2.title",
+    "descriptionKey": "grammar.n5.04.2.goal",
+    "icon": "2",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/1",
+    "nextPath": "/grammar/n5/04/3",
+    "exercise": {
+      "id": "04.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.2.exercise.question",
+      "promptKey": "grammar.n5.04.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.2.exercise.option.0",
+        "grammar.n5.04.2.exercise.option.1",
+        "grammar.n5.04.2.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.04.2.exercise.success",
+      "errorKey": "grammar.n5.04.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "04",
+    "position": 3,
+    "total": 12,
+    "titleKey": "grammar.n5.04.3.title",
+    "descriptionKey": "grammar.n5.04.3.goal",
+    "icon": "3",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/2",
+    "nextPath": "/grammar/n5/04/4",
+    "exercise": {
+      "id": "04.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.3.exercise.question",
+      "promptKey": "grammar.n5.04.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.3.exercise.option.0",
+        "grammar.n5.04.3.exercise.option.1",
+        "grammar.n5.04.3.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.04.3.exercise.success",
+      "errorKey": "grammar.n5.04.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "04",
+    "position": 4,
+    "total": 12,
+    "titleKey": "grammar.n5.04.4.title",
+    "descriptionKey": "grammar.n5.04.4.goal",
+    "icon": "4",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/3",
+    "nextPath": "/grammar/n5/04/5",
+    "exercise": {
+      "id": "04.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.4.exercise.question",
+      "promptKey": "grammar.n5.04.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.4.exercise.option.0",
+        "grammar.n5.04.4.exercise.option.1",
+        "grammar.n5.04.4.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.04.4.exercise.success",
+      "errorKey": "grammar.n5.04.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "04",
+    "position": 5,
+    "total": 12,
+    "titleKey": "grammar.n5.04.5.title",
+    "descriptionKey": "grammar.n5.04.5.goal",
+    "icon": "5",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/4",
+    "nextPath": "/grammar/n5/04/6",
+    "exercise": {
+      "id": "04.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.5.exercise.question",
+      "promptKey": "grammar.n5.04.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.5.exercise.option.0",
+        "grammar.n5.04.5.exercise.option.1",
+        "grammar.n5.04.5.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.04.5.exercise.success",
+      "errorKey": "grammar.n5.04.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "04",
+    "position": 6,
+    "total": 12,
+    "titleKey": "grammar.n5.04.6.title",
+    "descriptionKey": "grammar.n5.04.6.goal",
+    "icon": "6",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/5",
+    "nextPath": "/grammar/n5/04/7",
+    "exercise": {
+      "id": "04.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.6.exercise.question",
+      "promptKey": "grammar.n5.04.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.6.exercise.option.0",
+        "grammar.n5.04.6.exercise.option.1",
+        "grammar.n5.04.6.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.04.6.exercise.success",
+      "errorKey": "grammar.n5.04.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "04",
+    "position": 7,
+    "total": 12,
+    "titleKey": "grammar.n5.04.7.title",
+    "descriptionKey": "grammar.n5.04.7.goal",
+    "icon": "7",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/6",
+    "nextPath": "/grammar/n5/04/8",
+    "exercise": {
+      "id": "04.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.7.exercise.question",
+      "promptKey": "grammar.n5.04.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.7.exercise.option.0",
+        "grammar.n5.04.7.exercise.option.1",
+        "grammar.n5.04.7.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.04.7.exercise.success",
+      "errorKey": "grammar.n5.04.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "04",
+    "position": 8,
+    "total": 12,
+    "titleKey": "grammar.n5.04.8.title",
+    "descriptionKey": "grammar.n5.04.8.goal",
+    "icon": "8",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/7",
+    "nextPath": "/grammar/n5/04/9",
+    "exercise": {
+      "id": "04.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.8.exercise.question",
+      "promptKey": "grammar.n5.04.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.8.exercise.option.0",
+        "grammar.n5.04.8.exercise.option.1",
+        "grammar.n5.04.8.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.04.8.exercise.success",
+      "errorKey": "grammar.n5.04.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "04",
+    "position": 9,
+    "total": 12,
+    "titleKey": "grammar.n5.04.9.title",
+    "descriptionKey": "grammar.n5.04.9.goal",
+    "icon": "9",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/8",
+    "nextPath": "/grammar/n5/04/10",
+    "exercise": {
+      "id": "04.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.9.exercise.question",
+      "promptKey": "grammar.n5.04.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.9.exercise.option.0",
+        "grammar.n5.04.9.exercise.option.1",
+        "grammar.n5.04.9.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.04.9.exercise.success",
+      "errorKey": "grammar.n5.04.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "04",
+    "position": 10,
+    "total": 12,
+    "titleKey": "grammar.n5.04.10.title",
+    "descriptionKey": "grammar.n5.04.10.goal",
+    "icon": "10",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/9",
+    "nextPath": "/grammar/n5/04/11",
+    "exercise": {
+      "id": "04.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.10.exercise.question",
+      "promptKey": "grammar.n5.04.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.10.exercise.option.0",
+        "grammar.n5.04.10.exercise.option.1",
+        "grammar.n5.04.10.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.04.10.exercise.success",
+      "errorKey": "grammar.n5.04.10.exercise.error"
+    }
+  },
+  {
+    "id": "11",
+    "topicId": "04",
+    "position": 11,
+    "total": 12,
+    "titleKey": "grammar.n5.04.11.title",
+    "descriptionKey": "grammar.n5.04.11.goal",
+    "icon": "11",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.11.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.11.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.11.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.11.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/10",
+    "nextPath": "/grammar/n5/04/12",
+    "exercise": {
+      "id": "04.11",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.11.exercise.question",
+      "promptKey": "grammar.n5.04.11.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.11.exercise.option.0",
+        "grammar.n5.04.11.exercise.option.1",
+        "grammar.n5.04.11.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.04.11.exercise.success",
+      "errorKey": "grammar.n5.04.11.exercise.error"
+    }
+  },
+  {
+    "id": "12",
+    "topicId": "04",
+    "position": 12,
+    "total": 12,
+    "titleKey": "grammar.n5.04.12.title",
+    "descriptionKey": "grammar.n5.04.12.goal",
+    "icon": "12",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.04.12.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.04.12.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.04.12.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.04.12.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/04/11",
+    "nextPath": "/grammar/n5/04/practice",
+    "exercise": {
+      "id": "04.12",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.04",
+      "questionKey": "grammar.n5.04.12.exercise.question",
+      "promptKey": "grammar.n5.04.12.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.04.12.exercise.option.0",
+        "grammar.n5.04.12.exercise.option.1",
+        "grammar.n5.04.12.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.04.12.exercise.success",
+      "errorKey": "grammar.n5.04.12.exercise.error"
+    }
+  },
+  {
+    "id": "1",
+    "topicId": "05",
+    "position": 1,
+    "total": 12,
+    "titleKey": "grammar.n5.05.1.title",
+    "descriptionKey": "grammar.n5.05.1.goal",
+    "icon": "1",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05",
+    "nextPath": "/grammar/n5/05/2",
+    "exercise": {
+      "id": "05.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.1.exercise.question",
+      "promptKey": "grammar.n5.05.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.1.exercise.option.0",
+        "grammar.n5.05.1.exercise.option.1",
+        "grammar.n5.05.1.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.05.1.exercise.success",
+      "errorKey": "grammar.n5.05.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "05",
+    "position": 2,
+    "total": 12,
+    "titleKey": "grammar.n5.05.2.title",
+    "descriptionKey": "grammar.n5.05.2.goal",
+    "icon": "2",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/1",
+    "nextPath": "/grammar/n5/05/3",
+    "exercise": {
+      "id": "05.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.2.exercise.question",
+      "promptKey": "grammar.n5.05.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.2.exercise.option.0",
+        "grammar.n5.05.2.exercise.option.1",
+        "grammar.n5.05.2.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.05.2.exercise.success",
+      "errorKey": "grammar.n5.05.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "05",
+    "position": 3,
+    "total": 12,
+    "titleKey": "grammar.n5.05.3.title",
+    "descriptionKey": "grammar.n5.05.3.goal",
+    "icon": "3",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/2",
+    "nextPath": "/grammar/n5/05/4",
+    "exercise": {
+      "id": "05.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.3.exercise.question",
+      "promptKey": "grammar.n5.05.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.3.exercise.option.0",
+        "grammar.n5.05.3.exercise.option.1",
+        "grammar.n5.05.3.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.05.3.exercise.success",
+      "errorKey": "grammar.n5.05.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "05",
+    "position": 4,
+    "total": 12,
+    "titleKey": "grammar.n5.05.4.title",
+    "descriptionKey": "grammar.n5.05.4.goal",
+    "icon": "4",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/3",
+    "nextPath": "/grammar/n5/05/5",
+    "exercise": {
+      "id": "05.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.4.exercise.question",
+      "promptKey": "grammar.n5.05.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.4.exercise.option.0",
+        "grammar.n5.05.4.exercise.option.1",
+        "grammar.n5.05.4.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.05.4.exercise.success",
+      "errorKey": "grammar.n5.05.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "05",
+    "position": 5,
+    "total": 12,
+    "titleKey": "grammar.n5.05.5.title",
+    "descriptionKey": "grammar.n5.05.5.goal",
+    "icon": "5",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/4",
+    "nextPath": "/grammar/n5/05/6",
+    "exercise": {
+      "id": "05.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.5.exercise.question",
+      "promptKey": "grammar.n5.05.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.5.exercise.option.0",
+        "grammar.n5.05.5.exercise.option.1",
+        "grammar.n5.05.5.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.05.5.exercise.success",
+      "errorKey": "grammar.n5.05.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "05",
+    "position": 6,
+    "total": 12,
+    "titleKey": "grammar.n5.05.6.title",
+    "descriptionKey": "grammar.n5.05.6.goal",
+    "icon": "6",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/5",
+    "nextPath": "/grammar/n5/05/7",
+    "exercise": {
+      "id": "05.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.6.exercise.question",
+      "promptKey": "grammar.n5.05.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.6.exercise.option.0",
+        "grammar.n5.05.6.exercise.option.1",
+        "grammar.n5.05.6.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.05.6.exercise.success",
+      "errorKey": "grammar.n5.05.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "05",
+    "position": 7,
+    "total": 12,
+    "titleKey": "grammar.n5.05.7.title",
+    "descriptionKey": "grammar.n5.05.7.goal",
+    "icon": "7",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/6",
+    "nextPath": "/grammar/n5/05/8",
+    "exercise": {
+      "id": "05.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.7.exercise.question",
+      "promptKey": "grammar.n5.05.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.7.exercise.option.0",
+        "grammar.n5.05.7.exercise.option.1",
+        "grammar.n5.05.7.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.05.7.exercise.success",
+      "errorKey": "grammar.n5.05.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "05",
+    "position": 8,
+    "total": 12,
+    "titleKey": "grammar.n5.05.8.title",
+    "descriptionKey": "grammar.n5.05.8.goal",
+    "icon": "8",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/7",
+    "nextPath": "/grammar/n5/05/9",
+    "exercise": {
+      "id": "05.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.8.exercise.question",
+      "promptKey": "grammar.n5.05.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.8.exercise.option.0",
+        "grammar.n5.05.8.exercise.option.1",
+        "grammar.n5.05.8.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.05.8.exercise.success",
+      "errorKey": "grammar.n5.05.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "05",
+    "position": 9,
+    "total": 12,
+    "titleKey": "grammar.n5.05.9.title",
+    "descriptionKey": "grammar.n5.05.9.goal",
+    "icon": "9",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/8",
+    "nextPath": "/grammar/n5/05/10",
+    "exercise": {
+      "id": "05.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.9.exercise.question",
+      "promptKey": "grammar.n5.05.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.9.exercise.option.0",
+        "grammar.n5.05.9.exercise.option.1",
+        "grammar.n5.05.9.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.05.9.exercise.success",
+      "errorKey": "grammar.n5.05.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "05",
+    "position": 10,
+    "total": 12,
+    "titleKey": "grammar.n5.05.10.title",
+    "descriptionKey": "grammar.n5.05.10.goal",
+    "icon": "10",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/9",
+    "nextPath": "/grammar/n5/05/11",
+    "exercise": {
+      "id": "05.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.10.exercise.question",
+      "promptKey": "grammar.n5.05.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.10.exercise.option.0",
+        "grammar.n5.05.10.exercise.option.1",
+        "grammar.n5.05.10.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.05.10.exercise.success",
+      "errorKey": "grammar.n5.05.10.exercise.error"
+    }
+  },
+  {
+    "id": "11",
+    "topicId": "05",
+    "position": 11,
+    "total": 12,
+    "titleKey": "grammar.n5.05.11.title",
+    "descriptionKey": "grammar.n5.05.11.goal",
+    "icon": "11",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.11.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.11.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.11.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.11.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/10",
+    "nextPath": "/grammar/n5/05/12",
+    "exercise": {
+      "id": "05.11",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.11.exercise.question",
+      "promptKey": "grammar.n5.05.11.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.11.exercise.option.0",
+        "grammar.n5.05.11.exercise.option.1",
+        "grammar.n5.05.11.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.05.11.exercise.success",
+      "errorKey": "grammar.n5.05.11.exercise.error"
+    }
+  },
+  {
+    "id": "12",
+    "topicId": "05",
+    "position": 12,
+    "total": 12,
+    "titleKey": "grammar.n5.05.12.title",
+    "descriptionKey": "grammar.n5.05.12.goal",
+    "icon": "12",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.05.12.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.05.12.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.05.12.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.05.12.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/05/11",
+    "nextPath": "/grammar/n5/05/practice",
+    "exercise": {
+      "id": "05.12",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.05",
+      "questionKey": "grammar.n5.05.12.exercise.question",
+      "promptKey": "grammar.n5.05.12.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.05.12.exercise.option.0",
+        "grammar.n5.05.12.exercise.option.1",
+        "grammar.n5.05.12.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.05.12.exercise.success",
+      "errorKey": "grammar.n5.05.12.exercise.error"
+    }
+  },
+  {
+    "id": "1",
+    "topicId": "06",
+    "position": 1,
+    "total": 14,
+    "titleKey": "grammar.n5.06.1.title",
+    "descriptionKey": "grammar.n5.06.1.goal",
+    "icon": "1",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06",
+    "nextPath": "/grammar/n5/06/2",
+    "exercise": {
+      "id": "06.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.1.exercise.question",
+      "promptKey": "grammar.n5.06.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.1.exercise.option.0",
+        "grammar.n5.06.1.exercise.option.1",
+        "grammar.n5.06.1.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.06.1.exercise.success",
+      "errorKey": "grammar.n5.06.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "06",
+    "position": 2,
+    "total": 14,
+    "titleKey": "grammar.n5.06.2.title",
+    "descriptionKey": "grammar.n5.06.2.goal",
+    "icon": "2",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/1",
+    "nextPath": "/grammar/n5/06/3",
+    "exercise": {
+      "id": "06.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.2.exercise.question",
+      "promptKey": "grammar.n5.06.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.2.exercise.option.0",
+        "grammar.n5.06.2.exercise.option.1",
+        "grammar.n5.06.2.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.06.2.exercise.success",
+      "errorKey": "grammar.n5.06.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "06",
+    "position": 3,
+    "total": 14,
+    "titleKey": "grammar.n5.06.3.title",
+    "descriptionKey": "grammar.n5.06.3.goal",
+    "icon": "3",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/2",
+    "nextPath": "/grammar/n5/06/4",
+    "exercise": {
+      "id": "06.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.3.exercise.question",
+      "promptKey": "grammar.n5.06.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.3.exercise.option.0",
+        "grammar.n5.06.3.exercise.option.1",
+        "grammar.n5.06.3.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.06.3.exercise.success",
+      "errorKey": "grammar.n5.06.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "06",
+    "position": 4,
+    "total": 14,
+    "titleKey": "grammar.n5.06.4.title",
+    "descriptionKey": "grammar.n5.06.4.goal",
+    "icon": "4",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/3",
+    "nextPath": "/grammar/n5/06/5",
+    "exercise": {
+      "id": "06.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.4.exercise.question",
+      "promptKey": "grammar.n5.06.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.4.exercise.option.0",
+        "grammar.n5.06.4.exercise.option.1",
+        "grammar.n5.06.4.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.06.4.exercise.success",
+      "errorKey": "grammar.n5.06.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "06",
+    "position": 5,
+    "total": 14,
+    "titleKey": "grammar.n5.06.5.title",
+    "descriptionKey": "grammar.n5.06.5.goal",
+    "icon": "5",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/4",
+    "nextPath": "/grammar/n5/06/6",
+    "exercise": {
+      "id": "06.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.5.exercise.question",
+      "promptKey": "grammar.n5.06.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.5.exercise.option.0",
+        "grammar.n5.06.5.exercise.option.1",
+        "grammar.n5.06.5.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.06.5.exercise.success",
+      "errorKey": "grammar.n5.06.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "06",
+    "position": 6,
+    "total": 14,
+    "titleKey": "grammar.n5.06.6.title",
+    "descriptionKey": "grammar.n5.06.6.goal",
+    "icon": "6",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/5",
+    "nextPath": "/grammar/n5/06/7",
+    "exercise": {
+      "id": "06.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.6.exercise.question",
+      "promptKey": "grammar.n5.06.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.6.exercise.option.0",
+        "grammar.n5.06.6.exercise.option.1",
+        "grammar.n5.06.6.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.06.6.exercise.success",
+      "errorKey": "grammar.n5.06.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "06",
+    "position": 7,
+    "total": 14,
+    "titleKey": "grammar.n5.06.7.title",
+    "descriptionKey": "grammar.n5.06.7.goal",
+    "icon": "7",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/6",
+    "nextPath": "/grammar/n5/06/8",
+    "exercise": {
+      "id": "06.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.7.exercise.question",
+      "promptKey": "grammar.n5.06.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.7.exercise.option.0",
+        "grammar.n5.06.7.exercise.option.1",
+        "grammar.n5.06.7.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.06.7.exercise.success",
+      "errorKey": "grammar.n5.06.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "06",
+    "position": 8,
+    "total": 14,
+    "titleKey": "grammar.n5.06.8.title",
+    "descriptionKey": "grammar.n5.06.8.goal",
+    "icon": "8",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/7",
+    "nextPath": "/grammar/n5/06/9",
+    "exercise": {
+      "id": "06.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.8.exercise.question",
+      "promptKey": "grammar.n5.06.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.8.exercise.option.0",
+        "grammar.n5.06.8.exercise.option.1",
+        "grammar.n5.06.8.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.06.8.exercise.success",
+      "errorKey": "grammar.n5.06.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "06",
+    "position": 9,
+    "total": 14,
+    "titleKey": "grammar.n5.06.9.title",
+    "descriptionKey": "grammar.n5.06.9.goal",
+    "icon": "9",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/8",
+    "nextPath": "/grammar/n5/06/10",
+    "exercise": {
+      "id": "06.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.9.exercise.question",
+      "promptKey": "grammar.n5.06.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.9.exercise.option.0",
+        "grammar.n5.06.9.exercise.option.1",
+        "grammar.n5.06.9.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.06.9.exercise.success",
+      "errorKey": "grammar.n5.06.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "06",
+    "position": 10,
+    "total": 14,
+    "titleKey": "grammar.n5.06.10.title",
+    "descriptionKey": "grammar.n5.06.10.goal",
+    "icon": "10",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/9",
+    "nextPath": "/grammar/n5/06/11",
+    "exercise": {
+      "id": "06.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.10.exercise.question",
+      "promptKey": "grammar.n5.06.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.10.exercise.option.0",
+        "grammar.n5.06.10.exercise.option.1",
+        "grammar.n5.06.10.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.06.10.exercise.success",
+      "errorKey": "grammar.n5.06.10.exercise.error"
+    }
+  },
+  {
+    "id": "11",
+    "topicId": "06",
+    "position": 11,
+    "total": 14,
+    "titleKey": "grammar.n5.06.11.title",
+    "descriptionKey": "grammar.n5.06.11.goal",
+    "icon": "11",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.11.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.11.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.11.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.11.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/10",
+    "nextPath": "/grammar/n5/06/12",
+    "exercise": {
+      "id": "06.11",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.11.exercise.question",
+      "promptKey": "grammar.n5.06.11.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.11.exercise.option.0",
+        "grammar.n5.06.11.exercise.option.1",
+        "grammar.n5.06.11.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.06.11.exercise.success",
+      "errorKey": "grammar.n5.06.11.exercise.error"
+    }
+  },
+  {
+    "id": "12",
+    "topicId": "06",
+    "position": 12,
+    "total": 14,
+    "titleKey": "grammar.n5.06.12.title",
+    "descriptionKey": "grammar.n5.06.12.goal",
+    "icon": "12",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.12.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.12.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.12.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.12.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/11",
+    "nextPath": "/grammar/n5/06/13",
+    "exercise": {
+      "id": "06.12",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.12.exercise.question",
+      "promptKey": "grammar.n5.06.12.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.12.exercise.option.0",
+        "grammar.n5.06.12.exercise.option.1",
+        "grammar.n5.06.12.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.06.12.exercise.success",
+      "errorKey": "grammar.n5.06.12.exercise.error"
+    }
+  },
+  {
+    "id": "13",
+    "topicId": "06",
+    "position": 13,
+    "total": 14,
+    "titleKey": "grammar.n5.06.13.title",
+    "descriptionKey": "grammar.n5.06.13.goal",
+    "icon": "13",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.13.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.13.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.13.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.13.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/12",
+    "nextPath": "/grammar/n5/06/14",
+    "exercise": {
+      "id": "06.13",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.13.exercise.question",
+      "promptKey": "grammar.n5.06.13.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.13.exercise.option.0",
+        "grammar.n5.06.13.exercise.option.1",
+        "grammar.n5.06.13.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.06.13.exercise.success",
+      "errorKey": "grammar.n5.06.13.exercise.error"
+    }
+  },
+  {
+    "id": "14",
+    "topicId": "06",
+    "position": 14,
+    "total": 14,
+    "titleKey": "grammar.n5.06.14.title",
+    "descriptionKey": "grammar.n5.06.14.goal",
+    "icon": "14",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.06.14.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.06.14.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.06.14.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.06.14.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/06/13",
+    "nextPath": "/grammar/n5/06/practice",
+    "exercise": {
+      "id": "06.14",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.06",
+      "questionKey": "grammar.n5.06.14.exercise.question",
+      "promptKey": "grammar.n5.06.14.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.06.14.exercise.option.0",
+        "grammar.n5.06.14.exercise.option.1",
+        "grammar.n5.06.14.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.06.14.exercise.success",
+      "errorKey": "grammar.n5.06.14.exercise.error"
+    }
+  },
+  {
+    "id": "1",
+    "topicId": "07",
+    "position": 1,
+    "total": 11,
+    "titleKey": "grammar.n5.07.1.title",
+    "descriptionKey": "grammar.n5.07.1.goal",
+    "icon": "1",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07",
+    "nextPath": "/grammar/n5/07/2",
+    "exercise": {
+      "id": "07.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.1.exercise.question",
+      "promptKey": "grammar.n5.07.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.1.exercise.option.0",
+        "grammar.n5.07.1.exercise.option.1",
+        "grammar.n5.07.1.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.07.1.exercise.success",
+      "errorKey": "grammar.n5.07.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "07",
+    "position": 2,
+    "total": 11,
+    "titleKey": "grammar.n5.07.2.title",
+    "descriptionKey": "grammar.n5.07.2.goal",
+    "icon": "2",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/1",
+    "nextPath": "/grammar/n5/07/3",
+    "exercise": {
+      "id": "07.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.2.exercise.question",
+      "promptKey": "grammar.n5.07.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.2.exercise.option.0",
+        "grammar.n5.07.2.exercise.option.1",
+        "grammar.n5.07.2.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.07.2.exercise.success",
+      "errorKey": "grammar.n5.07.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "07",
+    "position": 3,
+    "total": 11,
+    "titleKey": "grammar.n5.07.3.title",
+    "descriptionKey": "grammar.n5.07.3.goal",
+    "icon": "3",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/2",
+    "nextPath": "/grammar/n5/07/4",
+    "exercise": {
+      "id": "07.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.3.exercise.question",
+      "promptKey": "grammar.n5.07.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.3.exercise.option.0",
+        "grammar.n5.07.3.exercise.option.1",
+        "grammar.n5.07.3.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.07.3.exercise.success",
+      "errorKey": "grammar.n5.07.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "07",
+    "position": 4,
+    "total": 11,
+    "titleKey": "grammar.n5.07.4.title",
+    "descriptionKey": "grammar.n5.07.4.goal",
+    "icon": "4",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/3",
+    "nextPath": "/grammar/n5/07/5",
+    "exercise": {
+      "id": "07.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.4.exercise.question",
+      "promptKey": "grammar.n5.07.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.4.exercise.option.0",
+        "grammar.n5.07.4.exercise.option.1",
+        "grammar.n5.07.4.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.07.4.exercise.success",
+      "errorKey": "grammar.n5.07.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "07",
+    "position": 5,
+    "total": 11,
+    "titleKey": "grammar.n5.07.5.title",
+    "descriptionKey": "grammar.n5.07.5.goal",
+    "icon": "5",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/4",
+    "nextPath": "/grammar/n5/07/6",
+    "exercise": {
+      "id": "07.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.5.exercise.question",
+      "promptKey": "grammar.n5.07.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.5.exercise.option.0",
+        "grammar.n5.07.5.exercise.option.1",
+        "grammar.n5.07.5.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.07.5.exercise.success",
+      "errorKey": "grammar.n5.07.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "07",
+    "position": 6,
+    "total": 11,
+    "titleKey": "grammar.n5.07.6.title",
+    "descriptionKey": "grammar.n5.07.6.goal",
+    "icon": "6",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/5",
+    "nextPath": "/grammar/n5/07/7",
+    "exercise": {
+      "id": "07.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.6.exercise.question",
+      "promptKey": "grammar.n5.07.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.6.exercise.option.0",
+        "grammar.n5.07.6.exercise.option.1",
+        "grammar.n5.07.6.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.07.6.exercise.success",
+      "errorKey": "grammar.n5.07.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "07",
+    "position": 7,
+    "total": 11,
+    "titleKey": "grammar.n5.07.7.title",
+    "descriptionKey": "grammar.n5.07.7.goal",
+    "icon": "7",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/6",
+    "nextPath": "/grammar/n5/07/8",
+    "exercise": {
+      "id": "07.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.7.exercise.question",
+      "promptKey": "grammar.n5.07.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.7.exercise.option.0",
+        "grammar.n5.07.7.exercise.option.1",
+        "grammar.n5.07.7.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.07.7.exercise.success",
+      "errorKey": "grammar.n5.07.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "07",
+    "position": 8,
+    "total": 11,
+    "titleKey": "grammar.n5.07.8.title",
+    "descriptionKey": "grammar.n5.07.8.goal",
+    "icon": "8",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/7",
+    "nextPath": "/grammar/n5/07/9",
+    "exercise": {
+      "id": "07.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.8.exercise.question",
+      "promptKey": "grammar.n5.07.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.8.exercise.option.0",
+        "grammar.n5.07.8.exercise.option.1",
+        "grammar.n5.07.8.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.07.8.exercise.success",
+      "errorKey": "grammar.n5.07.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "07",
+    "position": 9,
+    "total": 11,
+    "titleKey": "grammar.n5.07.9.title",
+    "descriptionKey": "grammar.n5.07.9.goal",
+    "icon": "9",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/8",
+    "nextPath": "/grammar/n5/07/10",
+    "exercise": {
+      "id": "07.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.9.exercise.question",
+      "promptKey": "grammar.n5.07.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.9.exercise.option.0",
+        "grammar.n5.07.9.exercise.option.1",
+        "grammar.n5.07.9.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.07.9.exercise.success",
+      "errorKey": "grammar.n5.07.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "07",
+    "position": 10,
+    "total": 11,
+    "titleKey": "grammar.n5.07.10.title",
+    "descriptionKey": "grammar.n5.07.10.goal",
+    "icon": "10",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/9",
+    "nextPath": "/grammar/n5/07/11",
+    "exercise": {
+      "id": "07.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.10.exercise.question",
+      "promptKey": "grammar.n5.07.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.10.exercise.option.0",
+        "grammar.n5.07.10.exercise.option.1",
+        "grammar.n5.07.10.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.07.10.exercise.success",
+      "errorKey": "grammar.n5.07.10.exercise.error"
+    }
+  },
+  {
+    "id": "11",
+    "topicId": "07",
+    "position": 11,
+    "total": 11,
+    "titleKey": "grammar.n5.07.11.title",
+    "descriptionKey": "grammar.n5.07.11.goal",
+    "icon": "11",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.07.11.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.07.11.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.07.11.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.07.11.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/07/10",
+    "nextPath": "/grammar/n5/07/practice",
+    "exercise": {
+      "id": "07.11",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.07",
+      "questionKey": "grammar.n5.07.11.exercise.question",
+      "promptKey": "grammar.n5.07.11.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.07.11.exercise.option.0",
+        "grammar.n5.07.11.exercise.option.1",
+        "grammar.n5.07.11.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.07.11.exercise.success",
+      "errorKey": "grammar.n5.07.11.exercise.error"
+    }
+  },
+  {
+    "id": "1",
+    "topicId": "08",
+    "position": 1,
+    "total": 11,
+    "titleKey": "grammar.n5.08.1.title",
+    "descriptionKey": "grammar.n5.08.1.goal",
+    "icon": "1",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08",
+    "nextPath": "/grammar/n5/08/2",
+    "exercise": {
+      "id": "08.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.1.exercise.question",
+      "promptKey": "grammar.n5.08.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.1.exercise.option.0",
+        "grammar.n5.08.1.exercise.option.1",
+        "grammar.n5.08.1.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.08.1.exercise.success",
+      "errorKey": "grammar.n5.08.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "08",
+    "position": 2,
+    "total": 11,
+    "titleKey": "grammar.n5.08.2.title",
+    "descriptionKey": "grammar.n5.08.2.goal",
+    "icon": "2",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/1",
+    "nextPath": "/grammar/n5/08/3",
+    "exercise": {
+      "id": "08.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.2.exercise.question",
+      "promptKey": "grammar.n5.08.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.2.exercise.option.0",
+        "grammar.n5.08.2.exercise.option.1",
+        "grammar.n5.08.2.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.08.2.exercise.success",
+      "errorKey": "grammar.n5.08.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "08",
+    "position": 3,
+    "total": 11,
+    "titleKey": "grammar.n5.08.3.title",
+    "descriptionKey": "grammar.n5.08.3.goal",
+    "icon": "3",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/2",
+    "nextPath": "/grammar/n5/08/4",
+    "exercise": {
+      "id": "08.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.3.exercise.question",
+      "promptKey": "grammar.n5.08.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.3.exercise.option.0",
+        "grammar.n5.08.3.exercise.option.1",
+        "grammar.n5.08.3.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.08.3.exercise.success",
+      "errorKey": "grammar.n5.08.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "08",
+    "position": 4,
+    "total": 11,
+    "titleKey": "grammar.n5.08.4.title",
+    "descriptionKey": "grammar.n5.08.4.goal",
+    "icon": "4",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/3",
+    "nextPath": "/grammar/n5/08/5",
+    "exercise": {
+      "id": "08.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.4.exercise.question",
+      "promptKey": "grammar.n5.08.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.4.exercise.option.0",
+        "grammar.n5.08.4.exercise.option.1",
+        "grammar.n5.08.4.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.08.4.exercise.success",
+      "errorKey": "grammar.n5.08.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "08",
+    "position": 5,
+    "total": 11,
+    "titleKey": "grammar.n5.08.5.title",
+    "descriptionKey": "grammar.n5.08.5.goal",
+    "icon": "5",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/4",
+    "nextPath": "/grammar/n5/08/6",
+    "exercise": {
+      "id": "08.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.5.exercise.question",
+      "promptKey": "grammar.n5.08.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.5.exercise.option.0",
+        "grammar.n5.08.5.exercise.option.1",
+        "grammar.n5.08.5.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.08.5.exercise.success",
+      "errorKey": "grammar.n5.08.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "08",
+    "position": 6,
+    "total": 11,
+    "titleKey": "grammar.n5.08.6.title",
+    "descriptionKey": "grammar.n5.08.6.goal",
+    "icon": "6",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/5",
+    "nextPath": "/grammar/n5/08/7",
+    "exercise": {
+      "id": "08.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.6.exercise.question",
+      "promptKey": "grammar.n5.08.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.6.exercise.option.0",
+        "grammar.n5.08.6.exercise.option.1",
+        "grammar.n5.08.6.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.08.6.exercise.success",
+      "errorKey": "grammar.n5.08.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "08",
+    "position": 7,
+    "total": 11,
+    "titleKey": "grammar.n5.08.7.title",
+    "descriptionKey": "grammar.n5.08.7.goal",
+    "icon": "7",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/6",
+    "nextPath": "/grammar/n5/08/8",
+    "exercise": {
+      "id": "08.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.7.exercise.question",
+      "promptKey": "grammar.n5.08.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.7.exercise.option.0",
+        "grammar.n5.08.7.exercise.option.1",
+        "grammar.n5.08.7.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.08.7.exercise.success",
+      "errorKey": "grammar.n5.08.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "08",
+    "position": 8,
+    "total": 11,
+    "titleKey": "grammar.n5.08.8.title",
+    "descriptionKey": "grammar.n5.08.8.goal",
+    "icon": "8",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/7",
+    "nextPath": "/grammar/n5/08/9",
+    "exercise": {
+      "id": "08.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.8.exercise.question",
+      "promptKey": "grammar.n5.08.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.8.exercise.option.0",
+        "grammar.n5.08.8.exercise.option.1",
+        "grammar.n5.08.8.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.08.8.exercise.success",
+      "errorKey": "grammar.n5.08.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "08",
+    "position": 9,
+    "total": 11,
+    "titleKey": "grammar.n5.08.9.title",
+    "descriptionKey": "grammar.n5.08.9.goal",
+    "icon": "9",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/8",
+    "nextPath": "/grammar/n5/08/10",
+    "exercise": {
+      "id": "08.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.9.exercise.question",
+      "promptKey": "grammar.n5.08.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.9.exercise.option.0",
+        "grammar.n5.08.9.exercise.option.1",
+        "grammar.n5.08.9.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.08.9.exercise.success",
+      "errorKey": "grammar.n5.08.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "08",
+    "position": 10,
+    "total": 11,
+    "titleKey": "grammar.n5.08.10.title",
+    "descriptionKey": "grammar.n5.08.10.goal",
+    "icon": "10",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/9",
+    "nextPath": "/grammar/n5/08/11",
+    "exercise": {
+      "id": "08.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.10.exercise.question",
+      "promptKey": "grammar.n5.08.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.10.exercise.option.0",
+        "grammar.n5.08.10.exercise.option.1",
+        "grammar.n5.08.10.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.08.10.exercise.success",
+      "errorKey": "grammar.n5.08.10.exercise.error"
+    }
+  },
+  {
+    "id": "11",
+    "topicId": "08",
+    "position": 11,
+    "total": 11,
+    "titleKey": "grammar.n5.08.11.title",
+    "descriptionKey": "grammar.n5.08.11.goal",
+    "icon": "11",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.08.11.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.08.11.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.08.11.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.08.11.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/08/10",
+    "nextPath": "/grammar/n5/08/practice",
+    "exercise": {
+      "id": "08.11",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.08",
+      "questionKey": "grammar.n5.08.11.exercise.question",
+      "promptKey": "grammar.n5.08.11.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.08.11.exercise.option.0",
+        "grammar.n5.08.11.exercise.option.1",
+        "grammar.n5.08.11.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.08.11.exercise.success",
+      "errorKey": "grammar.n5.08.11.exercise.error"
+    }
+  },
+  {
+    "id": "1",
+    "topicId": "09",
+    "position": 1,
+    "total": 12,
+    "titleKey": "grammar.n5.09.1.title",
+    "descriptionKey": "grammar.n5.09.1.goal",
+    "icon": "1",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09",
+    "nextPath": "/grammar/n5/09/2",
+    "exercise": {
+      "id": "09.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.1.exercise.question",
+      "promptKey": "grammar.n5.09.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.1.exercise.option.0",
+        "grammar.n5.09.1.exercise.option.1",
+        "grammar.n5.09.1.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.09.1.exercise.success",
+      "errorKey": "grammar.n5.09.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "09",
+    "position": 2,
+    "total": 12,
+    "titleKey": "grammar.n5.09.2.title",
+    "descriptionKey": "grammar.n5.09.2.goal",
+    "icon": "2",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/1",
+    "nextPath": "/grammar/n5/09/3",
+    "exercise": {
+      "id": "09.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.2.exercise.question",
+      "promptKey": "grammar.n5.09.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.2.exercise.option.0",
+        "grammar.n5.09.2.exercise.option.1",
+        "grammar.n5.09.2.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.09.2.exercise.success",
+      "errorKey": "grammar.n5.09.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "09",
+    "position": 3,
+    "total": 12,
+    "titleKey": "grammar.n5.09.3.title",
+    "descriptionKey": "grammar.n5.09.3.goal",
+    "icon": "3",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/2",
+    "nextPath": "/grammar/n5/09/4",
+    "exercise": {
+      "id": "09.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.3.exercise.question",
+      "promptKey": "grammar.n5.09.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.3.exercise.option.0",
+        "grammar.n5.09.3.exercise.option.1",
+        "grammar.n5.09.3.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.09.3.exercise.success",
+      "errorKey": "grammar.n5.09.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "09",
+    "position": 4,
+    "total": 12,
+    "titleKey": "grammar.n5.09.4.title",
+    "descriptionKey": "grammar.n5.09.4.goal",
+    "icon": "4",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/3",
+    "nextPath": "/grammar/n5/09/5",
+    "exercise": {
+      "id": "09.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.4.exercise.question",
+      "promptKey": "grammar.n5.09.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.4.exercise.option.0",
+        "grammar.n5.09.4.exercise.option.1",
+        "grammar.n5.09.4.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.09.4.exercise.success",
+      "errorKey": "grammar.n5.09.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "09",
+    "position": 5,
+    "total": 12,
+    "titleKey": "grammar.n5.09.5.title",
+    "descriptionKey": "grammar.n5.09.5.goal",
+    "icon": "5",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/4",
+    "nextPath": "/grammar/n5/09/6",
+    "exercise": {
+      "id": "09.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.5.exercise.question",
+      "promptKey": "grammar.n5.09.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.5.exercise.option.0",
+        "grammar.n5.09.5.exercise.option.1",
+        "grammar.n5.09.5.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.09.5.exercise.success",
+      "errorKey": "grammar.n5.09.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "09",
+    "position": 6,
+    "total": 12,
+    "titleKey": "grammar.n5.09.6.title",
+    "descriptionKey": "grammar.n5.09.6.goal",
+    "icon": "6",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/5",
+    "nextPath": "/grammar/n5/09/7",
+    "exercise": {
+      "id": "09.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.6.exercise.question",
+      "promptKey": "grammar.n5.09.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.6.exercise.option.0",
+        "grammar.n5.09.6.exercise.option.1",
+        "grammar.n5.09.6.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.09.6.exercise.success",
+      "errorKey": "grammar.n5.09.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "09",
+    "position": 7,
+    "total": 12,
+    "titleKey": "grammar.n5.09.7.title",
+    "descriptionKey": "grammar.n5.09.7.goal",
+    "icon": "7",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/6",
+    "nextPath": "/grammar/n5/09/8",
+    "exercise": {
+      "id": "09.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.7.exercise.question",
+      "promptKey": "grammar.n5.09.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.7.exercise.option.0",
+        "grammar.n5.09.7.exercise.option.1",
+        "grammar.n5.09.7.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.09.7.exercise.success",
+      "errorKey": "grammar.n5.09.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "09",
+    "position": 8,
+    "total": 12,
+    "titleKey": "grammar.n5.09.8.title",
+    "descriptionKey": "grammar.n5.09.8.goal",
+    "icon": "8",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/7",
+    "nextPath": "/grammar/n5/09/9",
+    "exercise": {
+      "id": "09.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.8.exercise.question",
+      "promptKey": "grammar.n5.09.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.8.exercise.option.0",
+        "grammar.n5.09.8.exercise.option.1",
+        "grammar.n5.09.8.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.09.8.exercise.success",
+      "errorKey": "grammar.n5.09.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "09",
+    "position": 9,
+    "total": 12,
+    "titleKey": "grammar.n5.09.9.title",
+    "descriptionKey": "grammar.n5.09.9.goal",
+    "icon": "9",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/8",
+    "nextPath": "/grammar/n5/09/10",
+    "exercise": {
+      "id": "09.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.9.exercise.question",
+      "promptKey": "grammar.n5.09.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.9.exercise.option.0",
+        "grammar.n5.09.9.exercise.option.1",
+        "grammar.n5.09.9.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.09.9.exercise.success",
+      "errorKey": "grammar.n5.09.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "09",
+    "position": 10,
+    "total": 12,
+    "titleKey": "grammar.n5.09.10.title",
+    "descriptionKey": "grammar.n5.09.10.goal",
+    "icon": "10",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/9",
+    "nextPath": "/grammar/n5/09/11",
+    "exercise": {
+      "id": "09.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.10.exercise.question",
+      "promptKey": "grammar.n5.09.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.10.exercise.option.0",
+        "grammar.n5.09.10.exercise.option.1",
+        "grammar.n5.09.10.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.09.10.exercise.success",
+      "errorKey": "grammar.n5.09.10.exercise.error"
+    }
+  },
+  {
+    "id": "11",
+    "topicId": "09",
+    "position": 11,
+    "total": 12,
+    "titleKey": "grammar.n5.09.11.title",
+    "descriptionKey": "grammar.n5.09.11.goal",
+    "icon": "11",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.11.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.11.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.11.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.11.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/10",
+    "nextPath": "/grammar/n5/09/12",
+    "exercise": {
+      "id": "09.11",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.11.exercise.question",
+      "promptKey": "grammar.n5.09.11.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.11.exercise.option.0",
+        "grammar.n5.09.11.exercise.option.1",
+        "grammar.n5.09.11.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.09.11.exercise.success",
+      "errorKey": "grammar.n5.09.11.exercise.error"
+    }
+  },
+  {
+    "id": "12",
+    "topicId": "09",
+    "position": 12,
+    "total": 12,
+    "titleKey": "grammar.n5.09.12.title",
+    "descriptionKey": "grammar.n5.09.12.goal",
+    "icon": "12",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.09.12.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.09.12.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.09.12.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.09.12.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/09/11",
+    "nextPath": "/grammar/n5/09/practice",
+    "exercise": {
+      "id": "09.12",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.09",
+      "questionKey": "grammar.n5.09.12.exercise.question",
+      "promptKey": "grammar.n5.09.12.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.09.12.exercise.option.0",
+        "grammar.n5.09.12.exercise.option.1",
+        "grammar.n5.09.12.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.09.12.exercise.success",
+      "errorKey": "grammar.n5.09.12.exercise.error"
+    }
+  },
+  {
+    "id": "1",
+    "topicId": "10",
+    "position": 1,
+    "total": 10,
+    "titleKey": "grammar.n5.10.1.title",
+    "descriptionKey": "grammar.n5.10.1.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.1.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.1.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.1.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.1.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10",
+    "nextPath": "/grammar/n5/10/2",
+    "exercise": {
+      "id": "10.1",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.1.exercise.question",
+      "promptKey": "grammar.n5.10.1.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.1.exercise.option.0",
+        "grammar.n5.10.1.exercise.option.1",
+        "grammar.n5.10.1.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.10.1.exercise.success",
+      "errorKey": "grammar.n5.10.1.exercise.error"
+    }
+  },
+  {
+    "id": "2",
+    "topicId": "10",
+    "position": 2,
+    "total": 10,
+    "titleKey": "grammar.n5.10.2.title",
+    "descriptionKey": "grammar.n5.10.2.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.2.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.2.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.2.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.2.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/1",
+    "nextPath": "/grammar/n5/10/3",
+    "exercise": {
+      "id": "10.2",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.2.exercise.question",
+      "promptKey": "grammar.n5.10.2.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.2.exercise.option.0",
+        "grammar.n5.10.2.exercise.option.1",
+        "grammar.n5.10.2.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.10.2.exercise.success",
+      "errorKey": "grammar.n5.10.2.exercise.error"
+    }
+  },
+  {
+    "id": "3",
+    "topicId": "10",
+    "position": 3,
+    "total": 10,
+    "titleKey": "grammar.n5.10.3.title",
+    "descriptionKey": "grammar.n5.10.3.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.3.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.3.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.3.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.3.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/2",
+    "nextPath": "/grammar/n5/10/4",
+    "exercise": {
+      "id": "10.3",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.3.exercise.question",
+      "promptKey": "grammar.n5.10.3.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.3.exercise.option.0",
+        "grammar.n5.10.3.exercise.option.1",
+        "grammar.n5.10.3.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.10.3.exercise.success",
+      "errorKey": "grammar.n5.10.3.exercise.error"
+    }
+  },
+  {
+    "id": "4",
+    "topicId": "10",
+    "position": 4,
+    "total": 10,
+    "titleKey": "grammar.n5.10.4.title",
+    "descriptionKey": "grammar.n5.10.4.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.4.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.4.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.4.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.4.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/3",
+    "nextPath": "/grammar/n5/10/5",
+    "exercise": {
+      "id": "10.4",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.4.exercise.question",
+      "promptKey": "grammar.n5.10.4.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.4.exercise.option.0",
+        "grammar.n5.10.4.exercise.option.1",
+        "grammar.n5.10.4.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.10.4.exercise.success",
+      "errorKey": "grammar.n5.10.4.exercise.error"
+    }
+  },
+  {
+    "id": "5",
+    "topicId": "10",
+    "position": 5,
+    "total": 10,
+    "titleKey": "grammar.n5.10.5.title",
+    "descriptionKey": "grammar.n5.10.5.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.5.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.5.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.5.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.5.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/4",
+    "nextPath": "/grammar/n5/10/6",
+    "exercise": {
+      "id": "10.5",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.5.exercise.question",
+      "promptKey": "grammar.n5.10.5.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.5.exercise.option.0",
+        "grammar.n5.10.5.exercise.option.1",
+        "grammar.n5.10.5.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.10.5.exercise.success",
+      "errorKey": "grammar.n5.10.5.exercise.error"
+    }
+  },
+  {
+    "id": "6",
+    "topicId": "10",
+    "position": 6,
+    "total": 10,
+    "titleKey": "grammar.n5.10.6.title",
+    "descriptionKey": "grammar.n5.10.6.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.6.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.6.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.6.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.6.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/5",
+    "nextPath": "/grammar/n5/10/7",
+    "exercise": {
+      "id": "10.6",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.6.exercise.question",
+      "promptKey": "grammar.n5.10.6.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.6.exercise.option.0",
+        "grammar.n5.10.6.exercise.option.1",
+        "grammar.n5.10.6.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.10.6.exercise.success",
+      "errorKey": "grammar.n5.10.6.exercise.error"
+    }
+  },
+  {
+    "id": "7",
+    "topicId": "10",
+    "position": 7,
+    "total": 10,
+    "titleKey": "grammar.n5.10.7.title",
+    "descriptionKey": "grammar.n5.10.7.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.7.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.7.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.7.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.7.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/6",
+    "nextPath": "/grammar/n5/10/8",
+    "exercise": {
+      "id": "10.7",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.7.exercise.question",
+      "promptKey": "grammar.n5.10.7.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.7.exercise.option.0",
+        "grammar.n5.10.7.exercise.option.1",
+        "grammar.n5.10.7.exercise.option.2"
+      ],
+      "answer": 2,
+      "successKey": "grammar.n5.10.7.exercise.success",
+      "errorKey": "grammar.n5.10.7.exercise.error"
+    }
+  },
+  {
+    "id": "8",
+    "topicId": "10",
+    "position": 8,
+    "total": 10,
+    "titleKey": "grammar.n5.10.8.title",
+    "descriptionKey": "grammar.n5.10.8.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.8.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.8.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.8.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.8.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/7",
+    "nextPath": "/grammar/n5/10/9",
+    "exercise": {
+      "id": "10.8",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.8.exercise.question",
+      "promptKey": "grammar.n5.10.8.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.8.exercise.option.0",
+        "grammar.n5.10.8.exercise.option.1",
+        "grammar.n5.10.8.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.10.8.exercise.success",
+      "errorKey": "grammar.n5.10.8.exercise.error"
+    }
+  },
+  {
+    "id": "9",
+    "topicId": "10",
+    "position": 9,
+    "total": 10,
+    "titleKey": "grammar.n5.10.9.title",
+    "descriptionKey": "grammar.n5.10.9.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.9.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.9.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.9.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.9.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/8",
+    "nextPath": "/grammar/n5/10/10",
+    "exercise": {
+      "id": "10.9",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.9.exercise.question",
+      "promptKey": "grammar.n5.10.9.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.9.exercise.option.0",
+        "grammar.n5.10.9.exercise.option.1",
+        "grammar.n5.10.9.exercise.option.2"
+      ],
+      "answer": 0,
+      "successKey": "grammar.n5.10.9.exercise.success",
+      "errorKey": "grammar.n5.10.9.exercise.error"
+    }
+  },
+  {
+    "id": "10",
+    "topicId": "10",
+    "position": 10,
+    "total": 10,
+    "titleKey": "grammar.n5.10.10.title",
+    "descriptionKey": "grammar.n5.10.10.goal",
+    "icon": "★",
+    "theory": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.n5.rule",
+        "bodyKey": "grammar.n5.10.10.rule"
+      },
+      {
+        "symbol": "1",
+        "titleKey": "grammar.n5.example.0",
+        "bodyKey": "grammar.n5.10.10.example.0"
+      },
+      {
+        "symbol": "2",
+        "titleKey": "grammar.n5.example.1",
+        "bodyKey": "grammar.n5.10.10.example.1"
+      }
+    ],
+    "ideaKey": "grammar.n5.10.10.idea",
+    "notes": [],
+    "previousPath": "/grammar/n5/10/9",
+    "nextPath": "/grammar/n5/10/practice",
+    "exercise": {
+      "id": "10.10",
+      "kind": "multiple-choice",
+      "labelKey": "grammar.n5.exercise",
+      "topicKey": "grammar.n5.topic.10",
+      "questionKey": "grammar.n5.10.10.exercise.question",
+      "promptKey": "grammar.n5.10.10.exercise.prompt",
+      "optionKeys": [
+        "grammar.n5.10.10.exercise.option.0",
+        "grammar.n5.10.10.exercise.option.1",
+        "grammar.n5.10.10.exercise.option.2"
+      ],
+      "answer": 1,
+      "successKey": "grammar.n5.10.10.exercise.success",
+      "errorKey": "grammar.n5.10.10.exercise.error"
+    }
   }
 ];
 export const GRAMMAR_PRACTICES: readonly GrammarPractice[] = [
@@ -3316,6 +8493,1851 @@ export const GRAMMAR_PRACTICES: readonly GrammarPractice[] = [
         "answer": 0,
         "successKey": "grammar.content.557",
         "errorKey": "grammar.content.557"
+      }
+    ]
+  },
+  {
+    "topicId": "02",
+    "icon": "い",
+    "intro": {
+      "eyebrowKey": "grammar.n5.02.practice.eyebrow",
+      "titleKey": "grammar.n5.02.practice.title",
+      "bodyKey": "grammar.n5.02.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.558",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar/n5/03",
+    "nextLabelKey": "grammar.n5.02.next",
+    "exercises": [
+      {
+        "id": "practice-02-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.0.question",
+        "promptKey": "grammar.n5.02.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.0.option.0",
+          "grammar.n5.02.practice.0.option.1",
+          "grammar.n5.02.practice.0.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.02.practice.0.success",
+        "errorKey": "grammar.n5.02.practice.0.error"
+      },
+      {
+        "id": "practice-02-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.1.question",
+        "promptKey": "grammar.n5.02.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.1.option.0",
+          "grammar.n5.02.practice.1.option.1",
+          "grammar.n5.02.practice.1.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.02.practice.1.success",
+        "errorKey": "grammar.n5.02.practice.1.error"
+      },
+      {
+        "id": "practice-02-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.2.question",
+        "promptKey": "grammar.n5.02.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.2.option.0",
+          "grammar.n5.02.practice.2.option.1",
+          "grammar.n5.02.practice.2.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.02.practice.2.success",
+        "errorKey": "grammar.n5.02.practice.2.error"
+      },
+      {
+        "id": "practice-02-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.3.question",
+        "promptKey": "grammar.n5.02.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.3.option.0",
+          "grammar.n5.02.practice.3.option.1",
+          "grammar.n5.02.practice.3.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.02.practice.3.success",
+        "errorKey": "grammar.n5.02.practice.3.error"
+      },
+      {
+        "id": "practice-02-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.4.question",
+        "promptKey": "grammar.n5.02.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.4.option.0",
+          "grammar.n5.02.practice.4.option.1",
+          "grammar.n5.02.practice.4.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.02.practice.4.success",
+        "errorKey": "grammar.n5.02.practice.4.error"
+      },
+      {
+        "id": "practice-02-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.5.question",
+        "promptKey": "grammar.n5.02.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.5.option.0",
+          "grammar.n5.02.practice.5.option.1",
+          "grammar.n5.02.practice.5.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.02.practice.5.success",
+        "errorKey": "grammar.n5.02.practice.5.error"
+      },
+      {
+        "id": "practice-02-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.6.question",
+        "promptKey": "grammar.n5.02.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.6.option.0",
+          "grammar.n5.02.practice.6.option.1",
+          "grammar.n5.02.practice.6.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.02.practice.6.success",
+        "errorKey": "grammar.n5.02.practice.6.error"
+      },
+      {
+        "id": "practice-02-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.7.question",
+        "promptKey": "grammar.n5.02.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.7.option.0",
+          "grammar.n5.02.practice.7.option.1",
+          "grammar.n5.02.practice.7.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.02.practice.7.success",
+        "errorKey": "grammar.n5.02.practice.7.error"
+      },
+      {
+        "id": "practice-02-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.8.question",
+        "promptKey": "grammar.n5.02.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.8.option.0",
+          "grammar.n5.02.practice.8.option.1",
+          "grammar.n5.02.practice.8.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.02.practice.8.success",
+        "errorKey": "grammar.n5.02.practice.8.error"
+      },
+      {
+        "id": "practice-02-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.02",
+        "questionKey": "grammar.n5.02.practice.9.question",
+        "promptKey": "grammar.n5.02.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.02.practice.9.option.0",
+          "grammar.n5.02.practice.9.option.1",
+          "grammar.n5.02.practice.9.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.02.practice.9.success",
+        "errorKey": "grammar.n5.02.practice.9.error"
+      }
+    ]
+  },
+  {
+    "topicId": "03",
+    "icon": "行",
+    "intro": {
+      "eyebrowKey": "grammar.n5.03.practice.eyebrow",
+      "titleKey": "grammar.n5.03.practice.title",
+      "bodyKey": "grammar.n5.03.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.600",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar/n5/04",
+    "nextLabelKey": "grammar.n5.03.next",
+    "exercises": [
+      {
+        "id": "practice-03-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.0.question",
+        "promptKey": "grammar.n5.03.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.0.option.0",
+          "grammar.n5.03.practice.0.option.1",
+          "grammar.n5.03.practice.0.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.03.practice.0.success",
+        "errorKey": "grammar.n5.03.practice.0.error"
+      },
+      {
+        "id": "practice-03-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.1.question",
+        "promptKey": "grammar.n5.03.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.1.option.0",
+          "grammar.n5.03.practice.1.option.1",
+          "grammar.n5.03.practice.1.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.03.practice.1.success",
+        "errorKey": "grammar.n5.03.practice.1.error"
+      },
+      {
+        "id": "practice-03-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.2.question",
+        "promptKey": "grammar.n5.03.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.2.option.0",
+          "grammar.n5.03.practice.2.option.1",
+          "grammar.n5.03.practice.2.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.03.practice.2.success",
+        "errorKey": "grammar.n5.03.practice.2.error"
+      },
+      {
+        "id": "practice-03-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.3.question",
+        "promptKey": "grammar.n5.03.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.3.option.0",
+          "grammar.n5.03.practice.3.option.1",
+          "grammar.n5.03.practice.3.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.03.practice.3.success",
+        "errorKey": "grammar.n5.03.practice.3.error"
+      },
+      {
+        "id": "practice-03-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.4.question",
+        "promptKey": "grammar.n5.03.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.4.option.0",
+          "grammar.n5.03.practice.4.option.1",
+          "grammar.n5.03.practice.4.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.03.practice.4.success",
+        "errorKey": "grammar.n5.03.practice.4.error"
+      },
+      {
+        "id": "practice-03-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.5.question",
+        "promptKey": "grammar.n5.03.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.5.option.0",
+          "grammar.n5.03.practice.5.option.1",
+          "grammar.n5.03.practice.5.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.03.practice.5.success",
+        "errorKey": "grammar.n5.03.practice.5.error"
+      },
+      {
+        "id": "practice-03-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.6.question",
+        "promptKey": "grammar.n5.03.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.6.option.0",
+          "grammar.n5.03.practice.6.option.1",
+          "grammar.n5.03.practice.6.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.03.practice.6.success",
+        "errorKey": "grammar.n5.03.practice.6.error"
+      },
+      {
+        "id": "practice-03-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.7.question",
+        "promptKey": "grammar.n5.03.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.7.option.0",
+          "grammar.n5.03.practice.7.option.1",
+          "grammar.n5.03.practice.7.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.03.practice.7.success",
+        "errorKey": "grammar.n5.03.practice.7.error"
+      },
+      {
+        "id": "practice-03-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.8.question",
+        "promptKey": "grammar.n5.03.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.8.option.0",
+          "grammar.n5.03.practice.8.option.1",
+          "grammar.n5.03.practice.8.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.03.practice.8.success",
+        "errorKey": "grammar.n5.03.practice.8.error"
+      },
+      {
+        "id": "practice-03-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.03",
+        "questionKey": "grammar.n5.03.practice.9.question",
+        "promptKey": "grammar.n5.03.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.03.practice.9.option.0",
+          "grammar.n5.03.practice.9.option.1",
+          "grammar.n5.03.practice.9.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.03.practice.9.success",
+        "errorKey": "grammar.n5.03.practice.9.error"
+      }
+    ]
+  },
+  {
+    "topicId": "04",
+    "icon": "在",
+    "intro": {
+      "eyebrowKey": "grammar.n5.04.practice.eyebrow",
+      "titleKey": "grammar.n5.04.practice.title",
+      "bodyKey": "grammar.n5.04.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.662",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar/n5/05",
+    "nextLabelKey": "grammar.n5.04.next",
+    "exercises": [
+      {
+        "id": "practice-04-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.0.question",
+        "promptKey": "grammar.n5.04.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.0.option.0",
+          "grammar.n5.04.practice.0.option.1",
+          "grammar.n5.04.practice.0.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.04.practice.0.success",
+        "errorKey": "grammar.n5.04.practice.0.error"
+      },
+      {
+        "id": "practice-04-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.1.question",
+        "promptKey": "grammar.n5.04.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.1.option.0",
+          "grammar.n5.04.practice.1.option.1",
+          "grammar.n5.04.practice.1.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.04.practice.1.success",
+        "errorKey": "grammar.n5.04.practice.1.error"
+      },
+      {
+        "id": "practice-04-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.2.question",
+        "promptKey": "grammar.n5.04.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.2.option.0",
+          "grammar.n5.04.practice.2.option.1",
+          "grammar.n5.04.practice.2.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.04.practice.2.success",
+        "errorKey": "grammar.n5.04.practice.2.error"
+      },
+      {
+        "id": "practice-04-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.3.question",
+        "promptKey": "grammar.n5.04.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.3.option.0",
+          "grammar.n5.04.practice.3.option.1",
+          "grammar.n5.04.practice.3.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.04.practice.3.success",
+        "errorKey": "grammar.n5.04.practice.3.error"
+      },
+      {
+        "id": "practice-04-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.4.question",
+        "promptKey": "grammar.n5.04.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.4.option.0",
+          "grammar.n5.04.practice.4.option.1",
+          "grammar.n5.04.practice.4.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.04.practice.4.success",
+        "errorKey": "grammar.n5.04.practice.4.error"
+      },
+      {
+        "id": "practice-04-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.5.question",
+        "promptKey": "grammar.n5.04.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.5.option.0",
+          "grammar.n5.04.practice.5.option.1",
+          "grammar.n5.04.practice.5.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.04.practice.5.success",
+        "errorKey": "grammar.n5.04.practice.5.error"
+      },
+      {
+        "id": "practice-04-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.6.question",
+        "promptKey": "grammar.n5.04.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.6.option.0",
+          "grammar.n5.04.practice.6.option.1",
+          "grammar.n5.04.practice.6.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.04.practice.6.success",
+        "errorKey": "grammar.n5.04.practice.6.error"
+      },
+      {
+        "id": "practice-04-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.7.question",
+        "promptKey": "grammar.n5.04.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.7.option.0",
+          "grammar.n5.04.practice.7.option.1",
+          "grammar.n5.04.practice.7.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.04.practice.7.success",
+        "errorKey": "grammar.n5.04.practice.7.error"
+      },
+      {
+        "id": "practice-04-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.8.question",
+        "promptKey": "grammar.n5.04.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.8.option.0",
+          "grammar.n5.04.practice.8.option.1",
+          "grammar.n5.04.practice.8.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.04.practice.8.success",
+        "errorKey": "grammar.n5.04.practice.8.error"
+      },
+      {
+        "id": "practice-04-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.04",
+        "questionKey": "grammar.n5.04.practice.9.question",
+        "promptKey": "grammar.n5.04.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.04.practice.9.option.0",
+          "grammar.n5.04.practice.9.option.1",
+          "grammar.n5.04.practice.9.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.04.practice.9.success",
+        "errorKey": "grammar.n5.04.practice.9.error"
+      }
+    ]
+  },
+  {
+    "topicId": "05",
+    "icon": "た",
+    "intro": {
+      "eyebrowKey": "grammar.n5.05.practice.eyebrow",
+      "titleKey": "grammar.n5.05.practice.title",
+      "bodyKey": "grammar.n5.05.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.709",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar/n5/06",
+    "nextLabelKey": "grammar.n5.05.next",
+    "exercises": [
+      {
+        "id": "practice-05-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.0.question",
+        "promptKey": "grammar.n5.05.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.0.option.0",
+          "grammar.n5.05.practice.0.option.1",
+          "grammar.n5.05.practice.0.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.05.practice.0.success",
+        "errorKey": "grammar.n5.05.practice.0.error"
+      },
+      {
+        "id": "practice-05-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.1.question",
+        "promptKey": "grammar.n5.05.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.1.option.0",
+          "grammar.n5.05.practice.1.option.1",
+          "grammar.n5.05.practice.1.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.05.practice.1.success",
+        "errorKey": "grammar.n5.05.practice.1.error"
+      },
+      {
+        "id": "practice-05-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.2.question",
+        "promptKey": "grammar.n5.05.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.2.option.0",
+          "grammar.n5.05.practice.2.option.1",
+          "grammar.n5.05.practice.2.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.05.practice.2.success",
+        "errorKey": "grammar.n5.05.practice.2.error"
+      },
+      {
+        "id": "practice-05-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.3.question",
+        "promptKey": "grammar.n5.05.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.3.option.0",
+          "grammar.n5.05.practice.3.option.1",
+          "grammar.n5.05.practice.3.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.05.practice.3.success",
+        "errorKey": "grammar.n5.05.practice.3.error"
+      },
+      {
+        "id": "practice-05-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.4.question",
+        "promptKey": "grammar.n5.05.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.4.option.0",
+          "grammar.n5.05.practice.4.option.1",
+          "grammar.n5.05.practice.4.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.05.practice.4.success",
+        "errorKey": "grammar.n5.05.practice.4.error"
+      },
+      {
+        "id": "practice-05-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.5.question",
+        "promptKey": "grammar.n5.05.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.5.option.0",
+          "grammar.n5.05.practice.5.option.1",
+          "grammar.n5.05.practice.5.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.05.practice.5.success",
+        "errorKey": "grammar.n5.05.practice.5.error"
+      },
+      {
+        "id": "practice-05-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.6.question",
+        "promptKey": "grammar.n5.05.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.6.option.0",
+          "grammar.n5.05.practice.6.option.1",
+          "grammar.n5.05.practice.6.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.05.practice.6.success",
+        "errorKey": "grammar.n5.05.practice.6.error"
+      },
+      {
+        "id": "practice-05-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.7.question",
+        "promptKey": "grammar.n5.05.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.7.option.0",
+          "grammar.n5.05.practice.7.option.1",
+          "grammar.n5.05.practice.7.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.05.practice.7.success",
+        "errorKey": "grammar.n5.05.practice.7.error"
+      },
+      {
+        "id": "practice-05-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.8.question",
+        "promptKey": "grammar.n5.05.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.8.option.0",
+          "grammar.n5.05.practice.8.option.1",
+          "grammar.n5.05.practice.8.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.05.practice.8.success",
+        "errorKey": "grammar.n5.05.practice.8.error"
+      },
+      {
+        "id": "practice-05-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.05",
+        "questionKey": "grammar.n5.05.practice.9.question",
+        "promptKey": "grammar.n5.05.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.05.practice.9.option.0",
+          "grammar.n5.05.practice.9.option.1",
+          "grammar.n5.05.practice.9.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.05.practice.9.success",
+        "errorKey": "grammar.n5.05.practice.9.error"
+      }
+    ]
+  },
+  {
+    "topicId": "06",
+    "icon": "て",
+    "intro": {
+      "eyebrowKey": "grammar.n5.06.practice.eyebrow",
+      "titleKey": "grammar.n5.06.practice.title",
+      "bodyKey": "grammar.n5.06.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.759",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar/n5/07",
+    "nextLabelKey": "grammar.n5.06.next",
+    "exercises": [
+      {
+        "id": "practice-06-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.0.question",
+        "promptKey": "grammar.n5.06.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.0.option.0",
+          "grammar.n5.06.practice.0.option.1",
+          "grammar.n5.06.practice.0.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.06.practice.0.success",
+        "errorKey": "grammar.n5.06.practice.0.error"
+      },
+      {
+        "id": "practice-06-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.1.question",
+        "promptKey": "grammar.n5.06.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.1.option.0",
+          "grammar.n5.06.practice.1.option.1",
+          "grammar.n5.06.practice.1.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.06.practice.1.success",
+        "errorKey": "grammar.n5.06.practice.1.error"
+      },
+      {
+        "id": "practice-06-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.2.question",
+        "promptKey": "grammar.n5.06.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.2.option.0",
+          "grammar.n5.06.practice.2.option.1",
+          "grammar.n5.06.practice.2.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.06.practice.2.success",
+        "errorKey": "grammar.n5.06.practice.2.error"
+      },
+      {
+        "id": "practice-06-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.3.question",
+        "promptKey": "grammar.n5.06.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.3.option.0",
+          "grammar.n5.06.practice.3.option.1",
+          "grammar.n5.06.practice.3.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.06.practice.3.success",
+        "errorKey": "grammar.n5.06.practice.3.error"
+      },
+      {
+        "id": "practice-06-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.4.question",
+        "promptKey": "grammar.n5.06.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.4.option.0",
+          "grammar.n5.06.practice.4.option.1",
+          "grammar.n5.06.practice.4.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.06.practice.4.success",
+        "errorKey": "grammar.n5.06.practice.4.error"
+      },
+      {
+        "id": "practice-06-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.5.question",
+        "promptKey": "grammar.n5.06.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.5.option.0",
+          "grammar.n5.06.practice.5.option.1",
+          "grammar.n5.06.practice.5.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.06.practice.5.success",
+        "errorKey": "grammar.n5.06.practice.5.error"
+      },
+      {
+        "id": "practice-06-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.6.question",
+        "promptKey": "grammar.n5.06.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.6.option.0",
+          "grammar.n5.06.practice.6.option.1",
+          "grammar.n5.06.practice.6.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.06.practice.6.success",
+        "errorKey": "grammar.n5.06.practice.6.error"
+      },
+      {
+        "id": "practice-06-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.7.question",
+        "promptKey": "grammar.n5.06.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.7.option.0",
+          "grammar.n5.06.practice.7.option.1",
+          "grammar.n5.06.practice.7.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.06.practice.7.success",
+        "errorKey": "grammar.n5.06.practice.7.error"
+      },
+      {
+        "id": "practice-06-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.8.question",
+        "promptKey": "grammar.n5.06.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.8.option.0",
+          "grammar.n5.06.practice.8.option.1",
+          "grammar.n5.06.practice.8.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.06.practice.8.success",
+        "errorKey": "grammar.n5.06.practice.8.error"
+      },
+      {
+        "id": "practice-06-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.06",
+        "questionKey": "grammar.n5.06.practice.9.question",
+        "promptKey": "grammar.n5.06.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.06.practice.9.option.0",
+          "grammar.n5.06.practice.9.option.1",
+          "grammar.n5.06.practice.9.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.06.practice.9.success",
+        "errorKey": "grammar.n5.06.practice.9.error"
+      }
+    ]
+  },
+  {
+    "topicId": "07",
+    "icon": "話",
+    "intro": {
+      "eyebrowKey": "grammar.n5.07.practice.eyebrow",
+      "titleKey": "grammar.n5.07.practice.title",
+      "bodyKey": "grammar.n5.07.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.813",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar/n5/08",
+    "nextLabelKey": "grammar.n5.07.next",
+    "exercises": [
+      {
+        "id": "practice-07-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.0.question",
+        "promptKey": "grammar.n5.07.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.0.option.0",
+          "grammar.n5.07.practice.0.option.1",
+          "grammar.n5.07.practice.0.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.07.practice.0.success",
+        "errorKey": "grammar.n5.07.practice.0.error"
+      },
+      {
+        "id": "practice-07-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.1.question",
+        "promptKey": "grammar.n5.07.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.1.option.0",
+          "grammar.n5.07.practice.1.option.1",
+          "grammar.n5.07.practice.1.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.07.practice.1.success",
+        "errorKey": "grammar.n5.07.practice.1.error"
+      },
+      {
+        "id": "practice-07-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.2.question",
+        "promptKey": "grammar.n5.07.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.2.option.0",
+          "grammar.n5.07.practice.2.option.1",
+          "grammar.n5.07.practice.2.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.07.practice.2.success",
+        "errorKey": "grammar.n5.07.practice.2.error"
+      },
+      {
+        "id": "practice-07-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.3.question",
+        "promptKey": "grammar.n5.07.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.3.option.0",
+          "grammar.n5.07.practice.3.option.1",
+          "grammar.n5.07.practice.3.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.07.practice.3.success",
+        "errorKey": "grammar.n5.07.practice.3.error"
+      },
+      {
+        "id": "practice-07-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.4.question",
+        "promptKey": "grammar.n5.07.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.4.option.0",
+          "grammar.n5.07.practice.4.option.1",
+          "grammar.n5.07.practice.4.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.07.practice.4.success",
+        "errorKey": "grammar.n5.07.practice.4.error"
+      },
+      {
+        "id": "practice-07-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.5.question",
+        "promptKey": "grammar.n5.07.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.5.option.0",
+          "grammar.n5.07.practice.5.option.1",
+          "grammar.n5.07.practice.5.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.07.practice.5.success",
+        "errorKey": "grammar.n5.07.practice.5.error"
+      },
+      {
+        "id": "practice-07-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.6.question",
+        "promptKey": "grammar.n5.07.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.6.option.0",
+          "grammar.n5.07.practice.6.option.1",
+          "grammar.n5.07.practice.6.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.07.practice.6.success",
+        "errorKey": "grammar.n5.07.practice.6.error"
+      },
+      {
+        "id": "practice-07-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.7.question",
+        "promptKey": "grammar.n5.07.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.7.option.0",
+          "grammar.n5.07.practice.7.option.1",
+          "grammar.n5.07.practice.7.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.07.practice.7.success",
+        "errorKey": "grammar.n5.07.practice.7.error"
+      },
+      {
+        "id": "practice-07-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.8.question",
+        "promptKey": "grammar.n5.07.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.8.option.0",
+          "grammar.n5.07.practice.8.option.1",
+          "grammar.n5.07.practice.8.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.07.practice.8.success",
+        "errorKey": "grammar.n5.07.practice.8.error"
+      },
+      {
+        "id": "practice-07-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.07",
+        "questionKey": "grammar.n5.07.practice.9.question",
+        "promptKey": "grammar.n5.07.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.07.practice.9.option.0",
+          "grammar.n5.07.practice.9.option.1",
+          "grammar.n5.07.practice.9.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.07.practice.9.success",
+        "errorKey": "grammar.n5.07.practice.9.error"
+      }
+    ]
+  },
+  {
+    "topicId": "08",
+    "icon": "文",
+    "intro": {
+      "eyebrowKey": "grammar.n5.08.practice.eyebrow",
+      "titleKey": "grammar.n5.08.practice.title",
+      "bodyKey": "grammar.n5.08.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.857",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar/n5/09",
+    "nextLabelKey": "grammar.n5.08.next",
+    "exercises": [
+      {
+        "id": "practice-08-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.0.question",
+        "promptKey": "grammar.n5.08.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.0.option.0",
+          "grammar.n5.08.practice.0.option.1",
+          "grammar.n5.08.practice.0.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.08.practice.0.success",
+        "errorKey": "grammar.n5.08.practice.0.error"
+      },
+      {
+        "id": "practice-08-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.1.question",
+        "promptKey": "grammar.n5.08.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.1.option.0",
+          "grammar.n5.08.practice.1.option.1",
+          "grammar.n5.08.practice.1.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.08.practice.1.success",
+        "errorKey": "grammar.n5.08.practice.1.error"
+      },
+      {
+        "id": "practice-08-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.2.question",
+        "promptKey": "grammar.n5.08.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.2.option.0",
+          "grammar.n5.08.practice.2.option.1",
+          "grammar.n5.08.practice.2.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.08.practice.2.success",
+        "errorKey": "grammar.n5.08.practice.2.error"
+      },
+      {
+        "id": "practice-08-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.3.question",
+        "promptKey": "grammar.n5.08.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.3.option.0",
+          "grammar.n5.08.practice.3.option.1",
+          "grammar.n5.08.practice.3.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.08.practice.3.success",
+        "errorKey": "grammar.n5.08.practice.3.error"
+      },
+      {
+        "id": "practice-08-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.4.question",
+        "promptKey": "grammar.n5.08.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.4.option.0",
+          "grammar.n5.08.practice.4.option.1",
+          "grammar.n5.08.practice.4.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.08.practice.4.success",
+        "errorKey": "grammar.n5.08.practice.4.error"
+      },
+      {
+        "id": "practice-08-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.5.question",
+        "promptKey": "grammar.n5.08.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.5.option.0",
+          "grammar.n5.08.practice.5.option.1",
+          "grammar.n5.08.practice.5.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.08.practice.5.success",
+        "errorKey": "grammar.n5.08.practice.5.error"
+      },
+      {
+        "id": "practice-08-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.6.question",
+        "promptKey": "grammar.n5.08.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.6.option.0",
+          "grammar.n5.08.practice.6.option.1",
+          "grammar.n5.08.practice.6.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.08.practice.6.success",
+        "errorKey": "grammar.n5.08.practice.6.error"
+      },
+      {
+        "id": "practice-08-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.7.question",
+        "promptKey": "grammar.n5.08.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.7.option.0",
+          "grammar.n5.08.practice.7.option.1",
+          "grammar.n5.08.practice.7.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.08.practice.7.success",
+        "errorKey": "grammar.n5.08.practice.7.error"
+      },
+      {
+        "id": "practice-08-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.8.question",
+        "promptKey": "grammar.n5.08.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.8.option.0",
+          "grammar.n5.08.practice.8.option.1",
+          "grammar.n5.08.practice.8.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.08.practice.8.success",
+        "errorKey": "grammar.n5.08.practice.8.error"
+      },
+      {
+        "id": "practice-08-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.08",
+        "questionKey": "grammar.n5.08.practice.9.question",
+        "promptKey": "grammar.n5.08.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.08.practice.9.option.0",
+          "grammar.n5.08.practice.9.option.1",
+          "grammar.n5.08.practice.9.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.08.practice.9.success",
+        "errorKey": "grammar.n5.08.practice.9.error"
+      }
+    ]
+  },
+  {
+    "topicId": "09",
+    "icon": "比",
+    "intro": {
+      "eyebrowKey": "grammar.n5.09.practice.eyebrow",
+      "titleKey": "grammar.n5.09.practice.title",
+      "bodyKey": "grammar.n5.09.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.901",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar/n5/10",
+    "nextLabelKey": "grammar.n5.09.next",
+    "exercises": [
+      {
+        "id": "practice-09-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.0.question",
+        "promptKey": "grammar.n5.09.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.0.option.0",
+          "grammar.n5.09.practice.0.option.1",
+          "grammar.n5.09.practice.0.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.09.practice.0.success",
+        "errorKey": "grammar.n5.09.practice.0.error"
+      },
+      {
+        "id": "practice-09-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.1.question",
+        "promptKey": "grammar.n5.09.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.1.option.0",
+          "grammar.n5.09.practice.1.option.1",
+          "grammar.n5.09.practice.1.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.09.practice.1.success",
+        "errorKey": "grammar.n5.09.practice.1.error"
+      },
+      {
+        "id": "practice-09-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.2.question",
+        "promptKey": "grammar.n5.09.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.2.option.0",
+          "grammar.n5.09.practice.2.option.1",
+          "grammar.n5.09.practice.2.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.09.practice.2.success",
+        "errorKey": "grammar.n5.09.practice.2.error"
+      },
+      {
+        "id": "practice-09-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.3.question",
+        "promptKey": "grammar.n5.09.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.3.option.0",
+          "grammar.n5.09.practice.3.option.1",
+          "grammar.n5.09.practice.3.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.09.practice.3.success",
+        "errorKey": "grammar.n5.09.practice.3.error"
+      },
+      {
+        "id": "practice-09-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.4.question",
+        "promptKey": "grammar.n5.09.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.4.option.0",
+          "grammar.n5.09.practice.4.option.1",
+          "grammar.n5.09.practice.4.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.09.practice.4.success",
+        "errorKey": "grammar.n5.09.practice.4.error"
+      },
+      {
+        "id": "practice-09-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.5.question",
+        "promptKey": "grammar.n5.09.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.5.option.0",
+          "grammar.n5.09.practice.5.option.1",
+          "grammar.n5.09.practice.5.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.09.practice.5.success",
+        "errorKey": "grammar.n5.09.practice.5.error"
+      },
+      {
+        "id": "practice-09-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.6.question",
+        "promptKey": "grammar.n5.09.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.6.option.0",
+          "grammar.n5.09.practice.6.option.1",
+          "grammar.n5.09.practice.6.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.09.practice.6.success",
+        "errorKey": "grammar.n5.09.practice.6.error"
+      },
+      {
+        "id": "practice-09-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.7.question",
+        "promptKey": "grammar.n5.09.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.7.option.0",
+          "grammar.n5.09.practice.7.option.1",
+          "grammar.n5.09.practice.7.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.09.practice.7.success",
+        "errorKey": "grammar.n5.09.practice.7.error"
+      },
+      {
+        "id": "practice-09-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.8.question",
+        "promptKey": "grammar.n5.09.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.8.option.0",
+          "grammar.n5.09.practice.8.option.1",
+          "grammar.n5.09.practice.8.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.09.practice.8.success",
+        "errorKey": "grammar.n5.09.practice.8.error"
+      },
+      {
+        "id": "practice-09-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.09",
+        "questionKey": "grammar.n5.09.practice.9.question",
+        "promptKey": "grammar.n5.09.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.09.practice.9.option.0",
+          "grammar.n5.09.practice.9.option.1",
+          "grammar.n5.09.practice.9.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.09.practice.9.success",
+        "errorKey": "grammar.n5.09.practice.9.error"
+      }
+    ]
+  },
+  {
+    "topicId": "10",
+    "icon": "N5",
+    "intro": {
+      "eyebrowKey": "grammar.n5.10.practice.eyebrow",
+      "titleKey": "grammar.n5.10.practice.title",
+      "bodyKey": "grammar.n5.10.practice.body"
+    },
+    "stats": [
+      {
+        "value": "10",
+        "labelKey": "grammar.n5.questions"
+      },
+      {
+        "value": "N5",
+        "labelKey": "grammar.n5.level"
+      },
+      {
+        "value": "✓",
+        "labelKey": "grammar.n5.feedback"
+      }
+    ],
+    "philosophyKeys": [
+      "grammar.n5.practice.mix",
+      "grammar.n5.practice.context",
+      "grammar.n5.practice.memory"
+    ],
+    "tip": {
+      "eyebrowKey": "grammar.n5.practice.tip.eyebrow",
+      "titleKey": "grammar.n5.practice.tip.title",
+      "bodyKey": "grammar.n5.practice.tip.body"
+    },
+    "resultEyebrowKey": "grammar.n5.practice.result",
+    "areas": [
+      {
+        "symbol": "文",
+        "titleKey": "grammar.content.946",
+        "bodyKey": "grammar.n5.practice.review"
+      }
+    ],
+    "nextPath": "/grammar",
+    "nextLabelKey": "grammar.n5.10.next",
+    "exercises": [
+      {
+        "id": "practice-10-0",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.0.question",
+        "promptKey": "grammar.n5.10.practice.0.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.0.option.0",
+          "grammar.n5.10.practice.0.option.1",
+          "grammar.n5.10.practice.0.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.10.practice.0.success",
+        "errorKey": "grammar.n5.10.practice.0.error"
+      },
+      {
+        "id": "practice-10-1",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.1.question",
+        "promptKey": "grammar.n5.10.practice.1.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.1.option.0",
+          "grammar.n5.10.practice.1.option.1",
+          "grammar.n5.10.practice.1.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.10.practice.1.success",
+        "errorKey": "grammar.n5.10.practice.1.error"
+      },
+      {
+        "id": "practice-10-2",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.2.question",
+        "promptKey": "grammar.n5.10.practice.2.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.2.option.0",
+          "grammar.n5.10.practice.2.option.1",
+          "grammar.n5.10.practice.2.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.10.practice.2.success",
+        "errorKey": "grammar.n5.10.practice.2.error"
+      },
+      {
+        "id": "practice-10-3",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.3.question",
+        "promptKey": "grammar.n5.10.practice.3.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.3.option.0",
+          "grammar.n5.10.practice.3.option.1",
+          "grammar.n5.10.practice.3.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.10.practice.3.success",
+        "errorKey": "grammar.n5.10.practice.3.error"
+      },
+      {
+        "id": "practice-10-4",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.4.question",
+        "promptKey": "grammar.n5.10.practice.4.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.4.option.0",
+          "grammar.n5.10.practice.4.option.1",
+          "grammar.n5.10.practice.4.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.10.practice.4.success",
+        "errorKey": "grammar.n5.10.practice.4.error"
+      },
+      {
+        "id": "practice-10-5",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.5.question",
+        "promptKey": "grammar.n5.10.practice.5.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.5.option.0",
+          "grammar.n5.10.practice.5.option.1",
+          "grammar.n5.10.practice.5.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.10.practice.5.success",
+        "errorKey": "grammar.n5.10.practice.5.error"
+      },
+      {
+        "id": "practice-10-6",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.6.question",
+        "promptKey": "grammar.n5.10.practice.6.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.6.option.0",
+          "grammar.n5.10.practice.6.option.1",
+          "grammar.n5.10.practice.6.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.10.practice.6.success",
+        "errorKey": "grammar.n5.10.practice.6.error"
+      },
+      {
+        "id": "practice-10-7",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.7.question",
+        "promptKey": "grammar.n5.10.practice.7.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.7.option.0",
+          "grammar.n5.10.practice.7.option.1",
+          "grammar.n5.10.practice.7.option.2"
+        ],
+        "answer": 1,
+        "successKey": "grammar.n5.10.practice.7.success",
+        "errorKey": "grammar.n5.10.practice.7.error"
+      },
+      {
+        "id": "practice-10-8",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.8.question",
+        "promptKey": "grammar.n5.10.practice.8.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.8.option.0",
+          "grammar.n5.10.practice.8.option.1",
+          "grammar.n5.10.practice.8.option.2"
+        ],
+        "answer": 2,
+        "successKey": "grammar.n5.10.practice.8.success",
+        "errorKey": "grammar.n5.10.practice.8.error"
+      },
+      {
+        "id": "practice-10-9",
+        "kind": "multiple-choice",
+        "labelKey": "grammar.n5.exercise",
+        "topicKey": "grammar.n5.topic.10",
+        "questionKey": "grammar.n5.10.practice.9.question",
+        "promptKey": "grammar.n5.10.practice.9.prompt",
+        "optionKeys": [
+          "grammar.n5.10.practice.9.option.0",
+          "grammar.n5.10.practice.9.option.1",
+          "grammar.n5.10.practice.9.option.2"
+        ],
+        "answer": 0,
+        "successKey": "grammar.n5.10.practice.9.success",
+        "errorKey": "grammar.n5.10.practice.9.error"
       }
     ]
   }

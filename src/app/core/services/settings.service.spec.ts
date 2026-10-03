@@ -36,8 +36,14 @@ describe('SettingsService themes', () => {
     expect(document.documentElement.dataset['theme']).toBe('nora');
     expect(JSON.parse(localStorage.getItem('kana-study.settings.v1')!).theme).toBe('nora');
   });
+  it.each(['nora-dark','anime'] as const)('selects and persists the new %s theme',theme=>{
+    const settings=TestBed.inject(SettingsService);settings.setTheme(theme);TestBed.tick();
+    expect(settings.theme()).toBe(theme);
+    expect(document.documentElement.dataset['theme']).toBe(theme);
+    expect(JSON.parse(localStorage.getItem('kana-study.settings.v1')!).theme).toBe(theme);
+  });
 
-  it.each(['dark', 'light'] as const)('keeps an existing %s preference', theme => {
+  it.each(['dark', 'light', 'nora', 'nora-dark', 'anime'] as const)('keeps an existing %s preference', theme => {
     localStorage.setItem('kana-study.settings.v1', JSON.stringify({ theme }));
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({ providers: [SettingsService, StorageService] });

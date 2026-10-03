@@ -82,6 +82,66 @@
   --focus-ring: 0 0 0 3px rgba(200, 63, 107, 0.28);
 }
 
+:root[data-theme='nora-dark'] {
+  color-scheme: dark;
+  --background: #180b14;
+  --background-soft: #1e0d19;
+  --surface: #24101e;
+  --surface-raised: #301528;
+  --surface-hover: #421d36;
+  --primary: #d63d78;
+  --primary-hover: #f05a91;
+  --primary-soft: rgba(214, 61, 120, 0.16);
+  --accent: #ce85d6;
+  --accent-secondary: #9f3c8f;
+  --secondary-soft: rgba(110, 45, 112, 0.13);
+  --text-primary: #f8e9f1;
+  --text-secondary: #c69bad;
+  --text-muted: #b7869d;
+  --border: #613044;
+  --success: #73d6a9;
+  --warning: #efc276;
+  --error: #ff889e;
+  --again: var(--error);
+  --hard: var(--warning);
+  --good: var(--success);
+  --new: var(--accent);
+  --pending: var(--warning);
+  --memorized: var(--success);
+  --shadow: 0 18px 50px rgba(10, 0, 7, 0.4);
+  --focus-ring: 0 0 0 3px rgba(240, 90, 145, 0.6);
+}
+
+:root[data-theme='anime'] {
+  color-scheme: dark;
+  --background: #090d1f;
+  --background-soft: #0d1228;
+  --surface: #121831;
+  --surface-raised: #192042;
+  --surface-hover: #242c54;
+  --primary: #7868ff;
+  --primary-hover: #9387ff;
+  --primary-soft: rgba(120, 104, 255, 0.16);
+  --accent: #42d9f5;
+  --accent-secondary: #ff78ae;
+  --secondary-soft: rgba(255, 120, 174, 0.07);
+  --text-primary: #f2f5ff;
+  --text-secondary: #a9b2d1;
+  --text-muted: #929dc4;
+  --border: #303967;
+  --success: #67e1bc;
+  --warning: #ffce7b;
+  --error: #ff8fba;
+  --again: var(--error);
+  --hard: var(--warning);
+  --good: var(--success);
+  --new: var(--accent);
+  --pending: var(--warning);
+  --memorized: var(--success);
+  --shadow: 0 18px 50px rgba(3, 5, 20, 0.45);
+  --focus-ring: 0 0 0 3px rgba(66, 217, 245, 0.5);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -97,6 +157,7 @@ body {
   min-height: 100vh;
   background:
     radial-gradient(circle at 15% -10%, var(--primary-soft), transparent 34rem),
+    radial-gradient(circle at 95% 100%, var(--secondary-soft, transparent), transparent 30rem),
     var(--background);
   color: var(--text-primary);
   font-family:

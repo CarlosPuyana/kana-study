@@ -2,7 +2,7 @@ import { KanaType, KanaVariant } from './kana.model';
 import { QuestionType } from './progress.model';
 
 export type AppLanguage = 'es' | 'en' | 'ca';
-export type ThemePreference = 'dark' | 'light' | 'nora' | 'system';
+export type ThemePreference = 'dark' | 'light' | 'nora' | 'nora-dark' | 'anime' | 'system';
 
 export interface ContentSettings {
   hiragana: boolean;

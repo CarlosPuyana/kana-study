@@ -115,6 +115,7 @@ export class SettingsService {
       language: record['language'] === 'en' || record['language'] === 'ca'
         ? record['language'] : 'es',
       theme: record['theme'] === 'light' || record['theme'] === 'nora' || record['theme'] === 'system'
+        || record['theme'] === 'nora-dark' || record['theme'] === 'anime'
         ? record['theme'] : 'dark',
       learning: this.normalizeSelection(record['learning']),
     };

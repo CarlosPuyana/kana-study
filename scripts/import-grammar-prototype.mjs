@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { JSDOM } from 'jsdom';
 import postcss from 'postcss';
+import { completeGrammarCourse } from './complete-grammar-n5.mjs';
 
 const [source, styles] = process.argv.slice(2);
 if (!source || !styles) throw new Error('Expected HTML and CSS prototype directories.');
@@ -59,6 +60,7 @@ const roadmap={subtitleKey:key(text(roadmapDoc.querySelector('.hero-title-row p'
 const ui={title:'Gramática',subtitle:'Japonés paso a paso',home:'Inicio',roadmap:'ROADMAP',collapse:'Contraer menú',menu:'Menú',resources:'Recursos',settings:'Ajustes',topic:'TEMA {{number}}',continue:'Continuar',progress:'▥ Ver progreso',lab:'🧪 Laboratorio',learn:'QUÉ VAS A APRENDER',theory:'TEORÍA',theoryHeading:'Entiende la idea antes de practicar',idea:'Idea clave',exercise:'EJERCICIO',check:'Comprobar',next:'Continuar →',correct:'¡Correcto!',almost:'Casi',review:'Revisa esta idea',start:'Empezar práctica →',results:'Ver resultado →',completed:'Práctica completada',retry:'Repetir práctica',scorePerfect:'Perfecto. Has reconocido todos los conceptos del Tema 00 en esta ronda.',scoreGood:'Muy buen resultado. La base está asentada; conviene revisar los fallos antes de avanzar.',scoreBase:'Hay una base útil, pero aún conviene reforzar varios conceptos del Tema 00.',scoreLow:'Antes de avanzar, merece la pena volver a las microlecciones que más te hayan costado.'};
 for(const [name,value]of Object.entries(ui))copy[`grammar.${name}`]=value;
 copy['grammar.practice']='Práctica acumulativa';
+completeGrammarCourse(topics, lessons, practices, copy);
 fs.writeFileSync(`${output}/data/grammar-n5.generated.ts`,`// Extracted from prototype v8. Texts live in i18n; no runtime prototype dependency.\nimport { GrammarTopic, GrammarLesson, GrammarPractice, GrammarRoadmap } from '../models/grammar.model';\nexport const GRAMMAR_TOPICS: readonly GrammarTopic[] = ${JSON.stringify(topics,null,2)};\nexport const GRAMMAR_LESSONS: readonly GrammarLesson[] = ${JSON.stringify(lessons,null,2)};\nexport const GRAMMAR_PRACTICES: readonly GrammarPractice[] = ${JSON.stringify(practices,null,2)};\nexport const GRAMMAR_ROADMAP: GrammarRoadmap = ${JSON.stringify(roadmap,null,2)};\n`);
 for(const lang of ['es','en','ca']){const p=`src/assets/i18n/${lang}.json`;const old=JSON.parse(fs.readFileSync(p,'utf8'));fs.writeFileSync(p,JSON.stringify({...old,...copy},null,2)+'\n');}
 
