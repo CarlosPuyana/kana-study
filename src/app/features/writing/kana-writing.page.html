@@ -1,5 +1,5 @@
 <main class="writing-shell">
-  <header><a routerLink="/" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('writing.title')}}</h1></header>
+  <header><a [routerLink]="weakMode()?'/weaknesses':'/'" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('writing.title')}}</h1></header>
   @if(!session()){
     <section class="configuration">
       <fieldset><legend>{{i18n.t('writing.content')}}</legend><div class="choices">@for(t of types;track t){<button type="button" [attr.aria-pressed]="type()===t" (click)="type.set(t)">{{i18n.t(t==='both'?'writing.both':'content.'+t)}}</button>}</div></fieldset>

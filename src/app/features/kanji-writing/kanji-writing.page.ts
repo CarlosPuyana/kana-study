@@ -10,12 +10,15 @@ import {TranslationService} from '../../core/services/translation.service';
 import {KANJI_N5} from '../../data/kanji-n5.generated';
 import {KANJI_N5_CATEGORIES, KANJI_THEME_BY_CHARACTER, KanjiTheme} from '../../data/kanji-n5-categories';
 import {KanaWritingCanvas} from '../../shared/components/kana-writing-canvas/kana-writing-canvas';
+import {WeaknessService} from '../../core/services/weakness.service';
 
 @Component({selector:'app-kanji-writing-page', imports:[RouterLink, KanaWritingCanvas],
   templateUrl:'./kanji-writing.page.html', styleUrls:['../writing/kana-writing.page.scss','./kanji-writing.page.scss'],
   changeDetection:ChangeDetectionStrategy.OnPush})
 export class KanjiWritingPage {
   readonly i18n = inject(TranslationService);
+  private readonly weaknesses = inject(WeaknessService);
+  readonly weakMode = signal(false);
   readonly settings = inject(KanjiSettingsService);
   private readonly provider = inject(JapaneseGlyphService);
   private readonly destroy = inject(DestroyRef);
@@ -36,7 +39,8 @@ export class KanjiWritingPage {
   private generation = 0;
   constructor() {
     inject(ActivatedRoute).queryParamMap.pipe(takeUntilDestroyed()).subscribe(params => {
-      this.individual.set(KANJI_N5.find(k => k.id === params.get('entry')) ?? null);
+      this.weakMode.set(params.get('weak') === '1');
+      this.individual.set(this.weakMode() ? null : KANJI_N5.find(k => k.id === params.get('entry')) ?? null);
       this.configure();
     });
     effect(() => {
@@ -57,15 +61,18 @@ export class KanjiWritingPage {
   meaning(entry: Kanji): string { return entry.meanings[this.i18n.language()].join(' · '); }
   toggle(theme: KanjiTheme): void { this.selected.update(s => s.includes(theme) ? s.filter(t => t !== theme) : [...s, theme]); }
   start(): void {
-    if (!this.pool().length) return;
-    const session = new KanjiWritingSession(this.pool());
+    const pool = this.weakMode() ? this.weaknesses.items('kanji',KANJI_N5.filter(k=>k.enabled),10) : this.pool();
+    if (!pool.length && !this.weakMode()) return;
+    const session = new KanjiWritingSession(pool);
     this.session.set(session); this.current.set(session.current); this.resolved.set(0); this.revealed.set(false);
   }
   answer(correct: boolean): void {
     if (!this.revealed() || !this.session()) return;
+    if (!this.session()!.current) return;
+    this.weaknesses.record('kanji',this.session()!.current!.id,correct);
     this.session()!.answer(correct); this.canvas()?.clear();
     this.current.set(this.session()!.current); this.resolved.set(this.session()!.resolved); this.revealed.set(false);
   }
-  configure(): void { this.session.set(null); this.current.set(null); this.revealed.set(false); }
+  configure(): void { if(this.weakMode()){this.start();return;}this.session.set(null); this.current.set(null); this.revealed.set(false); }
   restart(): void { this.canvas()?.clear(); }
 }

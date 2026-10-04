@@ -5137,7 +5137,8 @@ const shared:Record<string,string> = {
   "kanji.all.groupCount": "{{count}} kanji",
   "profile.module.kana": "Kana",
   "profile.module.kanji": "Kanji",
-  "profile.module.rush": "RUSH"
+  "profile.module.rush": "RUSH",
+  "weaknesses.kana": "Kana"
 };
 export const es:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -6122,7 +6123,15 @@ export const es:Record<string,string> = {...shared,...{
   "kanjiWriting.currentSelection": "Selección actual",
   "kanjiWriting.available": "{{count}} kanji disponibles",
   "kanjiWriting.again": "Volver a practicar",
-  "kanjiWriting.missing": "No hay datos de trazos disponibles para este kanji. Puedes dibujarlo y continuar."
+  "kanjiWriting.missing": "No hay datos de trazos disponibles para este kanji. Puedes dibujarlo y continuar.",
+  "weaknesses.title": "Mis débiles",
+  "weaknesses.description": "Repasa lo que más te está costando.",
+  "weaknesses.tools": "Herramientas de aprendizaje",
+  "weaknesses.empty": "No hay elementos que necesiten práctica extra.",
+  "weaknesses.none": "¡Vas bien! Todavía no hay elementos que necesiten práctica extra.",
+  "weaknesses.practiceKana": "Practicar Kana",
+  "weaknesses.practiceVocabulary": "Practicar Vocabulario",
+  "weaknesses.practiceKanji": "Practicar Kanji"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -7107,7 +7116,15 @@ export const en:Record<string,string> = {...shared,...{
   "kanjiWriting.currentSelection": "Current selection",
   "kanjiWriting.available": "{{count}} kanji available",
   "kanjiWriting.again": "Practice again",
-  "kanjiWriting.missing": "Stroke data is unavailable for this kanji. You can draw it and continue."
+  "kanjiWriting.missing": "Stroke data is unavailable for this kanji. You can draw it and continue.",
+  "weaknesses.title": "My weak spots",
+  "weaknesses.description": "Practise what you find most difficult.",
+  "weaknesses.tools": "Learning tools",
+  "weaknesses.empty": "No items need extra practice.",
+  "weaknesses.none": "You’re doing well! No items need extra practice yet.",
+  "weaknesses.practiceKana": "Practise Kana",
+  "weaknesses.practiceVocabulary": "Practise Vocabulary",
+  "weaknesses.practiceKanji": "Practise Kanji"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -8092,5 +8109,13 @@ export const ca:Record<string,string> = {...shared,...{
   "kanjiWriting.currentSelection": "Selecció actual",
   "kanjiWriting.available": "{{count}} kanji disponibles",
   "kanjiWriting.again": "Tornar a practicar",
-  "kanjiWriting.missing": "No hi ha dades de traços per a aquest kanji. Pots dibuixar-lo i continuar."
+  "kanjiWriting.missing": "No hi ha dades de traços per a aquest kanji. Pots dibuixar-lo i continuar.",
+  "weaknesses.title": "Els meus punts febles",
+  "weaknesses.description": "Repassa el que més et costa.",
+  "weaknesses.tools": "Eines d’aprenentatge",
+  "weaknesses.empty": "No hi ha elements que necessitin pràctica extra.",
+  "weaknesses.none": "Vas bé! Encara no hi ha elements que necessitin pràctica extra.",
+  "weaknesses.practiceKana": "Practicar Kana",
+  "weaknesses.practiceVocabulary": "Practicar Vocabulari",
+  "weaknesses.practiceKanji": "Practicar Kanji"
 }};

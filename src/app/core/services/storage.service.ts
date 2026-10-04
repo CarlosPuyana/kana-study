@@ -17,10 +17,10 @@ export class StorageService {
     }
   }
 
-  set<T>(key: string, value: T): void {
+  set<T>(key: string, value: T, options: {localOnly?: boolean} = {}): void {
     try {
       localStorage.setItem(this.workspace.storageKey(key), JSON.stringify(value));
-      this.enqueue(key, value, 'upsert');
+      if (!options.localOnly) this.enqueue(key, value, 'upsert');
     } catch {
       // The app remains usable if storage is blocked/private/full.
     }

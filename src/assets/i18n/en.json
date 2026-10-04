@@ -6119,5 +6119,14 @@
   "kanjiWriting.currentSelection": "Current selection",
   "kanjiWriting.available": "{{count}} kanji available",
   "kanjiWriting.again": "Practice again",
-  "kanjiWriting.missing": "Stroke data is unavailable for this kanji. You can draw it and continue."
+  "kanjiWriting.missing": "Stroke data is unavailable for this kanji. You can draw it and continue.",
+  "weaknesses.title": "My weak spots",
+  "weaknesses.description": "Practise what you find most difficult.",
+  "weaknesses.tools": "Learning tools",
+  "weaknesses.kana": "Kana",
+  "weaknesses.empty": "No items need extra practice.",
+  "weaknesses.none": "You’re doing well! No items need extra practice yet.",
+  "weaknesses.practiceKana": "Practise Kana",
+  "weaknesses.practiceVocabulary": "Practise Vocabulary",
+  "weaknesses.practiceKanji": "Practise Kanji"
 }

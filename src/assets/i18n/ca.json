@@ -6119,5 +6119,14 @@
   "kanjiWriting.currentSelection": "Selecció actual",
   "kanjiWriting.available": "{{count}} kanji disponibles",
   "kanjiWriting.again": "Tornar a practicar",
-  "kanjiWriting.missing": "No hi ha dades de traços per a aquest kanji. Pots dibuixar-lo i continuar."
+  "kanjiWriting.missing": "No hi ha dades de traços per a aquest kanji. Pots dibuixar-lo i continuar.",
+  "weaknesses.title": "Els meus punts febles",
+  "weaknesses.description": "Repassa el que més et costa.",
+  "weaknesses.tools": "Eines d’aprenentatge",
+  "weaknesses.kana": "Kana",
+  "weaknesses.empty": "No hi ha elements que necessitin pràctica extra.",
+  "weaknesses.none": "Vas bé! Encara no hi ha elements que necessitin pràctica extra.",
+  "weaknesses.practiceKana": "Practicar Kana",
+  "weaknesses.practiceVocabulary": "Practicar Vocabulari",
+  "weaknesses.practiceKanji": "Practicar Kanji"
 }

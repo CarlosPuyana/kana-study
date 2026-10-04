@@ -6119,5 +6119,14 @@
   "kanjiWriting.currentSelection": "Selección actual",
   "kanjiWriting.available": "{{count}} kanji disponibles",
   "kanjiWriting.again": "Volver a practicar",
-  "kanjiWriting.missing": "No hay datos de trazos disponibles para este kanji. Puedes dibujarlo y continuar."
+  "kanjiWriting.missing": "No hay datos de trazos disponibles para este kanji. Puedes dibujarlo y continuar.",
+  "weaknesses.title": "Mis débiles",
+  "weaknesses.description": "Repasa lo que más te está costando.",
+  "weaknesses.tools": "Herramientas de aprendizaje",
+  "weaknesses.kana": "Kana",
+  "weaknesses.empty": "No hay elementos que necesiten práctica extra.",
+  "weaknesses.none": "¡Vas bien! Todavía no hay elementos que necesiten práctica extra.",
+  "weaknesses.practiceKana": "Practicar Kana",
+  "weaknesses.practiceVocabulary": "Practicar Vocabulario",
+  "weaknesses.practiceKanji": "Practicar Kanji"
 }
