@@ -10,6 +10,12 @@ Create a Supabase project. Never place a `service_role`, secret key, or Admin AP
 
 Open **SQL Editor**, paste and execute `supabase/migrations/202609300001_local_first_accounts.sql`. This creates the profile, progress, event, session, medal, deck, RUSH and preference tables, their indexes, timestamp/merge triggers, and owner-only RLS policies.
 
+After the initial migration, execute `supabase/migrations/202610040002_profile_leaderboard.sql` to enable Profile's leaderboard. The application calls `get_leaderboard_v1()` only when Classification is opened; Refresh synchronizes local activity before reloading it. This migration must be applied separately by the project operator; it is not run automatically by the frontend.
+
+The leaderboard shares only display name, username, synchronized study seconds and medal count with authenticated users, plus ranking position and a current-user flag. It exposes no UUIDs, emails, bios, private dates, progress or activity payloads. Its narrowly scoped `SECURITY DEFINER` function uses an empty search path and fully qualified table names; only `authenticated` can execute it. Existing owner-only RLS policies and table permissions remain unchanged.
+
+Study time sums completed-session `durationSeconds`, rounded total deck `elapsedAnswerMs / 1000`, and RUSH `active_seconds` for finished sessions with at least one completed card. Invalid or negative JSON durations contribute zero. Profiles without activity remain in the ranking with zero time; equal times share a position, ordered by username within ties. Medal count includes normal and RUSH unlocks. No activity beyond the existing synchronized records is counted.
+
 ## 3. Obtain the public browser values
 
 In **Project Settings → API**, copy:
@@ -68,6 +74,6 @@ Complete a local study action, open Profile, and select **Sync now**. Confirm th
 ## Operational notes
 
 - Auth and sync are eventual and never gate local study writes.
-- Realtime, PWA/service workers, image uploads, rankings and Admin APIs are intentionally absent.
+- Realtime, PWA/service workers, image uploads and Admin APIs are intentionally absent.
 - A daily round completed simultaneously on two offline devices creates two valid completed-session records after sync. Both are preserved.
 - Normal FSRS event histories cannot safely reconstruct one deterministic state after concurrent devices because practice attempts are not full FSRS events. V1 unions events and chooses the progress snapshot with the newest `lastSeenAt`; `updated_at` is only a server sync cursor.

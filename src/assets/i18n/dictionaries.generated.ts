@@ -5134,7 +5134,10 @@ const shared:Record<string,string> = {
   "grammar.expansion.10.8-exp-1.context": "カフェ：じゅうじからごじまで。ここでほんをよんでもいいです。そとのたべものをもってきてはいけません。",
   "grammar.expansion.10.10-exp-1.context": "A: ここでほんをよんでもいいですか。 B: はい。でも、はなさないでください。 · ここ = aquí · はなす = hablar",
   "manga.assist.literal": "Literal",
-  "kanji.all.groupCount": "{{count}} kanji"
+  "kanji.all.groupCount": "{{count}} kanji",
+  "profile.module.kana": "Kana",
+  "profile.module.kanji": "Kanji",
+  "profile.module.rush": "RUSH"
 };
 export const es:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -6061,7 +6064,21 @@ export const es:Record<string,string> = {...shared,...{
   "kanji.all.theme.natureElements": "Naturaleza y elementos",
   "kanji.all.theme.schoolLanguage": "Escuela y lenguaje",
   "kanji.all.theme.actions": "Acciones",
-  "kanji.all.theme.descriptionsEveryday": "Descripción y vida diaria"
+  "kanji.all.theme.descriptionsEveryday": "Descripción y vida diaria",
+  "profile.views": "Vistas del perfil",
+  "profile.summary": "Resumen",
+  "profile.leaderboard": "Clasificación",
+  "profile.position": "Posición",
+  "profile.rankingUser": "Usuario",
+  "profile.you": "Tú",
+  "profile.refresh": "Actualizar",
+  "profile.rankingSynced": "El ranking utiliza la actividad sincronizada.",
+  "profile.rankingError": "No se pudo cargar la clasificación. Puedes volver a intentarlo.",
+  "profile.noUsers": "Sin usuarios todavía",
+  "profile.myMedals": "Mis medallas",
+  "profile.noMedals": "Sin medallas todavía",
+  "profile.module.flags": "Banderas",
+  "profile.module.vocabulary": "Vocabulario"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -6988,7 +7005,21 @@ export const en:Record<string,string> = {...shared,...{
   "kanji.all.theme.natureElements": "Nature and elements",
   "kanji.all.theme.schoolLanguage": "School and language",
   "kanji.all.theme.actions": "Actions",
-  "kanji.all.theme.descriptionsEveryday": "Descriptions and daily life"
+  "kanji.all.theme.descriptionsEveryday": "Descriptions and daily life",
+  "profile.views": "Profile views",
+  "profile.summary": "Overview",
+  "profile.leaderboard": "Leaderboard",
+  "profile.position": "Position",
+  "profile.rankingUser": "User",
+  "profile.you": "You",
+  "profile.refresh": "Refresh",
+  "profile.rankingSynced": "The ranking uses synced activity.",
+  "profile.rankingError": "Unable to load the leaderboard. You can try again.",
+  "profile.noUsers": "No users yet",
+  "profile.myMedals": "My medals",
+  "profile.noMedals": "No medals yet",
+  "profile.module.flags": "Flags",
+  "profile.module.vocabulary": "Vocabulary"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -7915,5 +7946,19 @@ export const ca:Record<string,string> = {...shared,...{
   "kanji.all.theme.natureElements": "Natura i elements",
   "kanji.all.theme.schoolLanguage": "Escola i llenguatge",
   "kanji.all.theme.actions": "Accions",
-  "kanji.all.theme.descriptionsEveryday": "Descripció i vida diària"
+  "kanji.all.theme.descriptionsEveryday": "Descripció i vida diària",
+  "profile.views": "Vistes del perfil",
+  "profile.summary": "Resum",
+  "profile.leaderboard": "Classificació",
+  "profile.position": "Posició",
+  "profile.rankingUser": "Usuari",
+  "profile.you": "Tu",
+  "profile.refresh": "Actualitzar",
+  "profile.rankingSynced": "El rànquing utilitza l’activitat sincronitzada.",
+  "profile.rankingError": "No s’ha pogut carregar la classificació. Pots tornar-ho a provar.",
+  "profile.noUsers": "Encara no hi ha usuaris",
+  "profile.myMedals": "Les meves medalles",
+  "profile.noMedals": "Encara no tens medalles",
+  "profile.module.flags": "Banderes",
+  "profile.module.vocabulary": "Vocabulari"
 }};

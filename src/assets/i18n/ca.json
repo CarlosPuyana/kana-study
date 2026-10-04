@@ -6058,5 +6058,22 @@
   "kanji.all.theme.natureElements": "Natura i elements",
   "kanji.all.theme.schoolLanguage": "Escola i llenguatge",
   "kanji.all.theme.actions": "Accions",
-  "kanji.all.theme.descriptionsEveryday": "Descripció i vida diària"
+  "kanji.all.theme.descriptionsEveryday": "Descripció i vida diària",
+  "profile.views": "Vistes del perfil",
+  "profile.summary": "Resum",
+  "profile.leaderboard": "Classificació",
+  "profile.position": "Posició",
+  "profile.rankingUser": "Usuari",
+  "profile.you": "Tu",
+  "profile.refresh": "Actualitzar",
+  "profile.rankingSynced": "El rànquing utilitza l’activitat sincronitzada.",
+  "profile.rankingError": "No s’ha pogut carregar la classificació. Pots tornar-ho a provar.",
+  "profile.noUsers": "Encara no hi ha usuaris",
+  "profile.myMedals": "Les meves medalles",
+  "profile.noMedals": "Encara no tens medalles",
+  "profile.module.kana": "Kana",
+  "profile.module.flags": "Banderes",
+  "profile.module.kanji": "Kanji",
+  "profile.module.vocabulary": "Vocabulari",
+  "profile.module.rush": "RUSH"
 }

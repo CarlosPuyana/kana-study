@@ -10,8 +10,9 @@ export function unionById<T>(local: readonly T[], remote: readonly T[], id: (ite
 export function mergeMedalUnlocks(local: readonly MedalUnlock[], remote: readonly MedalUnlock[]): MedalUnlock[] {
   const merged = new Map<string, MedalUnlock>();
   for (const item of [...local, ...remote]) {
+    if (!item || typeof item.medalId !== 'string' || !item.medalId || !Number.isFinite(Date.parse(item.unlockedAt))) continue;
     const current = merged.get(item.medalId);
-    if (!current || item.unlockedAt < current.unlockedAt) merged.set(item.medalId, item);
+    if (!current || Date.parse(item.unlockedAt) < Date.parse(current.unlockedAt)) merged.set(item.medalId, item);
   }
   return [...merged.values()];
 }

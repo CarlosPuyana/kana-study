@@ -216,9 +216,12 @@ export class SyncService {
       const merged = unionById(localSessions, remoteSessions, item => item.sessionId);
       this.storage.setFromCloud(SESSION_KEY, merged); this.history.mergeFromCloud(merged);
     }
-    const localMedals = this.storage.get<MedalUnlock[]>('kana-study.medal-unlocks.v1', []);
-    const remoteMedals = medals.map(row => ({ medalId: String(row['medal_id']), unlockedAt: String(row['unlocked_at']) }));
-    if (remoteMedals.length) this.storage.setFromCloud('kana-study.medal-unlocks.v1', mergeMedalUnlocks(localMedals, remoteMedals));
+    for (const category of ['normal', 'rush'] as const) {
+      const key = category === 'rush' ? 'kana-study.rush.medal-unlocks.v1' : 'kana-study.medal-unlocks.v1';
+      const remoteMedals = medals.filter(row => (row['module_category'] === 'rush' ? 'rush' : 'normal') === category)
+        .map(row => ({medalId:String(row['medal_id']), unlockedAt:String(row['unlocked_at'])}));
+      if (remoteMedals.length) this.storage.setFromCloud(key, mergeMedalUnlocks(this.storage.get<MedalUnlock[]>(key, []), remoteMedals));
+    }
     for (const row of preferences) {
       const key = String(row['preference_key']);
       if (key === GRAMMAR_PROGRESS_KEY) {

@@ -9,13 +9,20 @@ import { getSpainDayKey } from './daily-learning.service';
 import { DeckDatabaseService } from './deck-database.service';
 import { LocalRushRepository } from './rush-repository.service';
 import { StorageService } from './storage.service';
+import { MedalDefinition } from '../models/medal.model';
+import { mergeMedalUnlocks } from './sync-merge';
+
+export interface ProfileMedal {
+  readonly medalId: string; readonly titleKey: string; readonly unlockedAt: string;
+  readonly module: MedalDefinition['module']; readonly icon: MedalDefinition['icon'];
+}
 
 export interface ProfileStats {
   readonly streak: number; readonly studySeconds: number; readonly completedSessions: number;
   readonly reviews: number; readonly rushCards: number;
   readonly kana: number; readonly kanji: number; readonly vocabulary: number;
   readonly deckUnseen: number; readonly deckLearning: number; readonly deckReview: number;
-  readonly medals: readonly { medalId: string; titleKey: string; unlockedAt: string }[];
+  readonly medals: readonly ProfileMedal[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -49,14 +56,17 @@ export class ProfileStatsService {
       deckUnseen: Math.max(0, STUDY_DECKS[0].cardCount - deckProgress.length),
       deckLearning: deckProgress.filter(item => item.state !== 2).length,
       deckReview: deckProgress.filter(item => item.state === 2).length,
-      medals: [...normalMedals, ...rushMedals]
-        .map(unlock => ({ ...unlock, titleKey: medalTitle(unlock.medalId) }))
-        .sort((a, b) => String(b.unlockedAt).localeCompare(String(a.unlockedAt))),
+      medals: profileMedals(normalMedals, rushMedals),
     };
   }
 }
 const ALL_MEDALS = [...MEDAL_DEFINITIONS,...FLAG_MEDAL_DEFINITIONS,...KANJI_MEDAL_DEFINITIONS,...VOCABULARY_MEDAL_DEFINITIONS,...RUSH_MEDAL_DEFINITIONS];
-function medalTitle(id:string):string{return ALL_MEDALS.find(definition=>definition.id===id)?.titleKey??id}
+export function profileMedals(normal: readonly {medalId:string; unlockedAt:string}[], rush: readonly {medalId:string; unlockedAt:string}[]): ProfileMedal[] {
+  return mergeMedalUnlocks(normal, rush).flatMap(unlock => {
+    const definition = ALL_MEDALS.find(item => item.id === unlock.medalId);
+    return definition ? [{...unlock, titleKey:definition.titleKey, module:definition.module, icon:definition.icon}] : [];
+  }).sort((a,b) => Date.parse(b.unlockedAt) - Date.parse(a.unlockedAt) || a.medalId.localeCompare(b.medalId));
+}
 
 function uniqueProgress(value: unknown, property: string): number {
   if (!value || typeof value !== 'object') return 0;

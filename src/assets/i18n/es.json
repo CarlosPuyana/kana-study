@@ -6058,5 +6058,22 @@
   "kanji.all.theme.natureElements": "Naturaleza y elementos",
   "kanji.all.theme.schoolLanguage": "Escuela y lenguaje",
   "kanji.all.theme.actions": "Acciones",
-  "kanji.all.theme.descriptionsEveryday": "Descripción y vida diaria"
+  "kanji.all.theme.descriptionsEveryday": "Descripción y vida diaria",
+  "profile.views": "Vistas del perfil",
+  "profile.summary": "Resumen",
+  "profile.leaderboard": "Clasificación",
+  "profile.position": "Posición",
+  "profile.rankingUser": "Usuario",
+  "profile.you": "Tú",
+  "profile.refresh": "Actualizar",
+  "profile.rankingSynced": "El ranking utiliza la actividad sincronizada.",
+  "profile.rankingError": "No se pudo cargar la clasificación. Puedes volver a intentarlo.",
+  "profile.noUsers": "Sin usuarios todavía",
+  "profile.myMedals": "Mis medallas",
+  "profile.noMedals": "Sin medallas todavía",
+  "profile.module.kana": "Kana",
+  "profile.module.flags": "Banderas",
+  "profile.module.kanji": "Kanji",
+  "profile.module.vocabulary": "Vocabulario",
+  "profile.module.rush": "RUSH"
 }
