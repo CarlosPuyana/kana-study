@@ -5133,7 +5133,8 @@ const shared:Record<string,string> = {
   "grammar.expansion.10.7-exp-1.context": "きのう、ゆきさんはとしょかんでほんをかりました。きょうはそのほんをよんでいます。あしたはともだちにかえすつもりです。 · ゆきさん = Yuki · きのう = ayer · きょう = hoy · ともだち = amigo/a · かえす = devolver",
   "grammar.expansion.10.8-exp-1.context": "カフェ：じゅうじからごじまで。ここでほんをよんでもいいです。そとのたべものをもってきてはいけません。",
   "grammar.expansion.10.10-exp-1.context": "A: ここでほんをよんでもいいですか。 B: はい。でも、はなさないでください。 · ここ = aquí · はなす = hablar",
-  "manga.assist.literal": "Literal"
+  "manga.assist.literal": "Literal",
+  "kanji.all.groupCount": "{{count}} kanji"
 };
 export const es:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -6045,7 +6046,22 @@ export const es:Record<string,string> = {...shared,...{
   "manga.assist.interpretations": "Posibles interpretaciones",
   "manga.assist.selectedText": "Texto seleccionado",
   "manga.assist.noSingleEntry": "No hay una entrada única de diccionario para esta selección.",
-  "manga.assist.selectionLimit": "La selección supera el límite de 1.200 caracteres de la ayuda contextual. Selecciona un fragmento más corto; no hemos recortado tu selección."
+  "manga.assist.selectionLimit": "La selección supera el límite de 1.200 caracteres de la ayuda contextual. Selecciona un fragmento más corto; no hemos recortado tu selección.",
+  "kanji.all.view.label": "Vista de kanji",
+  "kanji.all.view.all": "Todos",
+  "kanji.all.view.stroke": "Por trazos",
+  "kanji.all.view.theme": "Por tema",
+  "kanji.all.stroke.one": "1 trazo",
+  "kanji.all.stroke.other": "{{count}} trazos",
+  "kanji.all.theme.note": "Categorías pedagógicas de Kana Study; no son una clasificación oficial del JLPT.",
+  "kanji.all.theme.numbersMoney": "Números y dinero",
+  "kanji.all.theme.timeCalendar": "Tiempo y calendario",
+  "kanji.all.theme.peopleFamily": "Personas y familia",
+  "kanji.all.theme.directionsPlaces": "Dirección y lugares",
+  "kanji.all.theme.natureElements": "Naturaleza y elementos",
+  "kanji.all.theme.schoolLanguage": "Escuela y lenguaje",
+  "kanji.all.theme.actions": "Acciones",
+  "kanji.all.theme.descriptionsEveryday": "Descripción y vida diaria"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -6957,7 +6973,22 @@ export const en:Record<string,string> = {...shared,...{
   "manga.assist.interpretations": "Possible interpretations",
   "manga.assist.selectedText": "Selected text",
   "manga.assist.noSingleEntry": "There is no single dictionary entry for this selection.",
-  "manga.assist.selectionLimit": "The selection exceeds the 1,200-character contextual help limit. Select a shorter passage; your selection has not been truncated."
+  "manga.assist.selectionLimit": "The selection exceeds the 1,200-character contextual help limit. Select a shorter passage; your selection has not been truncated.",
+  "kanji.all.view.label": "Kanji view",
+  "kanji.all.view.all": "All",
+  "kanji.all.view.stroke": "By strokes",
+  "kanji.all.view.theme": "By theme",
+  "kanji.all.stroke.one": "1 stroke",
+  "kanji.all.stroke.other": "{{count}} strokes",
+  "kanji.all.theme.note": "Kana Study pedagogical categories; not an official JLPT classification.",
+  "kanji.all.theme.numbersMoney": "Numbers and money",
+  "kanji.all.theme.timeCalendar": "Time and calendar",
+  "kanji.all.theme.peopleFamily": "People and family",
+  "kanji.all.theme.directionsPlaces": "Directions and places",
+  "kanji.all.theme.natureElements": "Nature and elements",
+  "kanji.all.theme.schoolLanguage": "School and language",
+  "kanji.all.theme.actions": "Actions",
+  "kanji.all.theme.descriptionsEveryday": "Descriptions and daily life"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -7869,5 +7900,20 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.assist.interpretations": "Possibles interpretacions",
   "manga.assist.selectedText": "Text seleccionat",
   "manga.assist.noSingleEntry": "No hi ha una entrada única de diccionari per a aquesta selecció.",
-  "manga.assist.selectionLimit": "La selecció supera el límit de 1.200 caràcters de l’ajuda contextual. Selecciona un fragment més curt; no hem retallat la selecció."
+  "manga.assist.selectionLimit": "La selecció supera el límit de 1.200 caràcters de l’ajuda contextual. Selecciona un fragment més curt; no hem retallat la selecció.",
+  "kanji.all.view.label": "Vista de kanji",
+  "kanji.all.view.all": "Tots",
+  "kanji.all.view.stroke": "Per traços",
+  "kanji.all.view.theme": "Per tema",
+  "kanji.all.stroke.one": "1 traç",
+  "kanji.all.stroke.other": "{{count}} traços",
+  "kanji.all.theme.note": "Categories pedagògiques de Kana Study; no són una classificació oficial del JLPT.",
+  "kanji.all.theme.numbersMoney": "Nombres i diners",
+  "kanji.all.theme.timeCalendar": "Temps i calendari",
+  "kanji.all.theme.peopleFamily": "Persones i família",
+  "kanji.all.theme.directionsPlaces": "Direcció i llocs",
+  "kanji.all.theme.natureElements": "Natura i elements",
+  "kanji.all.theme.schoolLanguage": "Escola i llenguatge",
+  "kanji.all.theme.actions": "Accions",
+  "kanji.all.theme.descriptionsEveryday": "Descripció i vida diària"
 }};

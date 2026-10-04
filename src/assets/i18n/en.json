@@ -6042,5 +6042,21 @@
   "manga.assist.interpretations": "Possible interpretations",
   "manga.assist.selectedText": "Selected text",
   "manga.assist.noSingleEntry": "There is no single dictionary entry for this selection.",
-  "manga.assist.selectionLimit": "The selection exceeds the 1,200-character contextual help limit. Select a shorter passage; your selection has not been truncated."
+  "manga.assist.selectionLimit": "The selection exceeds the 1,200-character contextual help limit. Select a shorter passage; your selection has not been truncated.",
+  "kanji.all.view.label": "Kanji view",
+  "kanji.all.view.all": "All",
+  "kanji.all.view.stroke": "By strokes",
+  "kanji.all.view.theme": "By theme",
+  "kanji.all.stroke.one": "1 stroke",
+  "kanji.all.stroke.other": "{{count}} strokes",
+  "kanji.all.groupCount": "{{count}} kanji",
+  "kanji.all.theme.note": "Kana Study pedagogical categories; not an official JLPT classification.",
+  "kanji.all.theme.numbersMoney": "Numbers and money",
+  "kanji.all.theme.timeCalendar": "Time and calendar",
+  "kanji.all.theme.peopleFamily": "People and family",
+  "kanji.all.theme.directionsPlaces": "Directions and places",
+  "kanji.all.theme.natureElements": "Nature and elements",
+  "kanji.all.theme.schoolLanguage": "School and language",
+  "kanji.all.theme.actions": "Actions",
+  "kanji.all.theme.descriptionsEveryday": "Descriptions and daily life"
 }

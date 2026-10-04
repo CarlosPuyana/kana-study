@@ -6042,5 +6042,21 @@
   "manga.assist.interpretations": "Possibles interpretacions",
   "manga.assist.selectedText": "Text seleccionat",
   "manga.assist.noSingleEntry": "No hi ha una entrada única de diccionari per a aquesta selecció.",
-  "manga.assist.selectionLimit": "La selecció supera el límit de 1.200 caràcters de l’ajuda contextual. Selecciona un fragment més curt; no hem retallat la selecció."
+  "manga.assist.selectionLimit": "La selecció supera el límit de 1.200 caràcters de l’ajuda contextual. Selecciona un fragment més curt; no hem retallat la selecció.",
+  "kanji.all.view.label": "Vista de kanji",
+  "kanji.all.view.all": "Tots",
+  "kanji.all.view.stroke": "Per traços",
+  "kanji.all.view.theme": "Per tema",
+  "kanji.all.stroke.one": "1 traç",
+  "kanji.all.stroke.other": "{{count}} traços",
+  "kanji.all.groupCount": "{{count}} kanji",
+  "kanji.all.theme.note": "Categories pedagògiques de Kana Study; no són una classificació oficial del JLPT.",
+  "kanji.all.theme.numbersMoney": "Nombres i diners",
+  "kanji.all.theme.timeCalendar": "Temps i calendari",
+  "kanji.all.theme.peopleFamily": "Persones i família",
+  "kanji.all.theme.directionsPlaces": "Direcció i llocs",
+  "kanji.all.theme.natureElements": "Natura i elements",
+  "kanji.all.theme.schoolLanguage": "Escola i llenguatge",
+  "kanji.all.theme.actions": "Accions",
+  "kanji.all.theme.descriptionsEveryday": "Descripció i vida diària"
 }
