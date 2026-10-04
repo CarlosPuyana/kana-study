@@ -1,0 +1,24 @@
+<main class="writing-shell">
+  <header><a [routerLink]="individual()?'/vocabulary/all':'/vocabulary'" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('vocabularyWriting.title')}}</h1></header>
+  @if(individual();as entry){
+    <section class="practice"><h2 lang="ja">{{entry.primaryWrittenForm}}</h2><p>{{entry.quizMeaning[i18n.language()]}}</p>
+      <app-word-writing-practice [word]="entry.primaryWrittenForm"/>
+    </section>
+  }@else if(!session()){
+    <section class="configuration"><fieldset><legend>{{i18n.t('writing.content')}}</legend><div class="choices">@for(category of categories;track category){<button type="button" [attr.aria-pressed]="selected().includes(category)" (click)="toggle(category)">{{i18n.t('vocabulary.category.'+category)}}</button>}</div></fieldset>
+      <fieldset><legend>{{i18n.t('vocabularyWriting.difficulty')}}</legend><div class="choices"><button type="button" [attr.aria-pressed]="withReading()" (click)="withReading.set(true)">{{i18n.t('vocabularyWriting.withReading')}}</button><button type="button" [attr.aria-pressed]="!withReading()" (click)="withReading.set(false)">{{i18n.t('vocabularyWriting.memory')}}</button></div></fieldset>
+      <fieldset><legend>{{i18n.t('writing.help')}}</legend><div class="choices"><button type="button" [attr.aria-pressed]="withGuide()" (click)="withGuide.set(true)">{{i18n.t('writing.withGuide')}}</button><button type="button" [attr.aria-pressed]="!withGuide()" (click)="withGuide.set(false)">{{i18n.t('writing.withoutGuide')}}</button></div></fieldset>
+      <p>{{i18n.t('vocabularyWriting.available',{count:pool().length})}}</p><button class="primary" type="button" [disabled]="!pool().length" (click)="start()">{{i18n.t('writing.start')}}</button>
+    </section>
+  }@else{
+    <p class="progress" role="status">{{resolved()}} / {{session()!.total}}</p>
+    @if(current();as entry){<section class="practice"><h2>{{entry.quizMeaning[i18n.language()]}}</h2>@if(withReading()){<p lang="ja">{{entry.primaryReading}}</p>}
+      <app-word-writing-practice [word]="entry.primaryWrittenForm" [guide]="withGuide()||revealed()" [revealWord]="withGuide()||revealed()" (completed)="wordFinished.set($event)"/>
+      @if(wordFinished()){
+        @if(!revealed()){<button class="primary" type="button" (click)="revealed.set(true)">{{i18n.t('writing.answer')}}</button>}
+        @else{<div class="answer" aria-live="polite"><strong lang="ja">{{entry.primaryWrittenForm}}</strong><div class="choices"><button type="button" (click)="answer(false)">{{i18n.t('writing.repeat')}}</button><button class="primary" type="button" (click)="answer(true)">{{i18n.t('writing.correct')}}</button></div></div>}
+      }
+    </section>}@else{<section class="finished"><h2>{{i18n.t('writing.finished')}}</h2><button class="primary" type="button" (click)="configure()">{{i18n.t('writing.configure')}}</button></section>}
+  }
+  <p class="attribution">{{i18n.t('writing.attribution')}} <a href="https://github.com/parsimonhi/animCJK" target="_blank" rel="noopener">AnimCJK</a> · LGPL / <a href="https://kanjivg.tagaini.net/" target="_blank" rel="noopener">KanjiVG</a> · CC BY-SA 3.0</p>
+</main>

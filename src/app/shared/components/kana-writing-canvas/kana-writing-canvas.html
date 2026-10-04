@@ -4,10 +4,11 @@
   <path class="grid" d="M512 0V1024M0 512H1024"/><path class="diagonal" d="M0 0L1024 1024M1024 0L0 1024"/>
   @for(stroke of modelStrokes(); track stroke.key){
     <defs><clipPath [id]="stroke.key"><path [attr.d]="stroke.shape"/></clipPath></defs>
-    @if(helpAvailable() && guideVisible()){<path class="model" [attr.d]="stroke.shape" [attr.transform]="stroke.transform"/>}
+    @if(helpAvailable() && guideVisible()){<path class="model" [class.centerline]="stroke.centerline" [attr.d]="stroke.shape" [attr.transform]="stroke.transform"/>}
     @if(animation() && helpAvailable()){
-      <g [attr.transform]="stroke.transform"><path class="animated" [attr.d]="stroke.median" [attr.clip-path]="'url(#'+stroke.key+')'" pathLength="1" [style.animation-delay]="stroke.order * 700 + 'ms'"/>
-      <text class="stroke-number" x="60" [attr.y]="100+stroke.order*75" [style.animation-delay]="stroke.order * 700 + 'ms'">{{stroke.order+1}}</text></g>
+      <g [attr.transform]="stroke.transform"><path class="animated" [class.centerline]="stroke.centerline" [attr.d]="stroke.median" [attr.clip-path]="stroke.centerline?null:'url(#'+stroke.key+')'" pathLength="1" [style.animation-delay]="stroke.order * 700 + 'ms'"/>
+      @if(!stroke.centerline){<text class="stroke-number" x="60" [attr.y]="100+stroke.order*75" [style.animation-delay]="stroke.order * 700 + 'ms'">{{stroke.order+1}}</text>}</g>
+      @if(stroke.centerline){<text class="stroke-number centerline-label" x="60" y="100" [style.animation-delay]="stroke.order * 700 + 'ms'">{{stroke.order+1}}</text>}
     }
   }
   @for(points of drawnPaths(); track $index){<polyline class="ink" [attr.points]="points"/>}

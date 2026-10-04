@@ -44,4 +44,12 @@ describe('KanaWritingCanvas',()=>{
     c.play();expect(c.animation()).toBe(false);vi.advanceTimersByTime(1);expect(c.animation()).toBe(true);
     f.destroy();expect(vi.getTimerCount()).toBe(0);vi.useRealTimers();
   });
+  it('keeps strokes drawn while the original Kana guide is still loading',async()=>{
+    let resolve!:(value:ReturnType<typeof glyph>[])=>void;
+    TestBed.overrideProvider(KanaStrokesService,{useValue:{load:()=>new Promise(r=>resolve=r)}});
+    const f=TestBed.createComponent(KanaWritingCanvas);f.componentRef.setInput('character','あ');f.detectChanges();
+    const svg=f.nativeElement.querySelector('svg');f.componentInstance.pointerDown(pointer(svg,110,120));
+    f.componentInstance.pointerUp(pointer(svg,110,120,1,'pointerup'));resolve([glyph('あ')]);await f.whenStable();
+    expect(f.componentInstance.strokes()).toHaveLength(1);
+  });
 });

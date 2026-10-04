@@ -5,13 +5,16 @@ import { TranslationService } from '../../../core/services/translation.service';
 
 let nextCanvasId = 0;
 @Component({
-  selector: 'app-kana-writing-canvas', templateUrl: './kana-writing-canvas.html',
+  selector: 'app-kana-writing-canvas, app-japanese-writing-canvas', templateUrl: './kana-writing-canvas.html',
   styleUrl: './kana-writing-canvas.scss', changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanaWritingCanvas {
   readonly character = input.required<string>();
   readonly guide = input(true);
   readonly helpAvailable = input(true);
+  /** Optional resolved glyphs let other writing features reuse the same drawing engine. */
+  readonly suppliedGlyphs = input<readonly KanaStrokeGlyph[] | null>(null);
+  readonly initialStrokes = input<readonly WritingStroke[]>([]);
   readonly i18n = inject(TranslationService);
   private readonly data = inject(KanaStrokesService);
   private readonly destroy = inject(DestroyRef);
@@ -33,18 +36,19 @@ export class KanaWritingCanvas {
       const ids = [...new Set(glyph.strokes.map(p => p.id.replace(/[a-z]+$/u, '')))];
       return ids.map(id => ({
         key: `${this.prefix}-${glyphIndex}-${id}`, order: order++,
+        centerline: glyph.pathMode === 'centerline',
         shape: glyph.strokes.filter(p => p.id.replace(/[a-z]+$/u, '') === id).map(p => p.value).join(' '),
-        median: glyph.clipPaths.filter(p => p.id.replace(/[a-z]+$/u, '') === id).map(p => p.value).join(' '),
-        transform: this.glyphs().length === 1 ? '' : `translate(${glyphIndex * 512} 256) scale(0.5)`,
+        median: (glyph.pathMode==='centerline'?glyph.strokes:glyph.clipPaths).filter(p => p.id.replace(/[a-z]+$/u, '') === id).map(p => p.value).join(' '),
+        transform: (this.glyphs().length === 1 ? '' : `translate(${glyphIndex * 512} 256) scale(0.5)`) + (glyph.viewBox ? ` scale(${1024/glyph.viewBox})` : ''),
       }));
     });
   });
   constructor() {
     effect(() => this.guideVisible.set(this.guide()));
     effect(() => {
-      const character = this.character(), generation = ++this.generation;
-      this.clear(); this.stopAnimation(); this.glyphs.set([]); this.loading.set(true); this.error.set(false);
-      void this.data.load(character).then(glyphs => {
+      const character = this.character(), supplied = this.suppliedGlyphs(), initial = this.initialStrokes(), generation = ++this.generation;
+      this.clear(); this.strokes.set(initial); this.stopAnimation(); this.glyphs.set([]); this.loading.set(true); this.error.set(false);
+      void (supplied ? Promise.resolve(supplied) : this.data.load(character)).then(glyphs => {
         if (generation === this.generation) {this.glyphs.set(glyphs); this.loading.set(false);}
       }).catch(() => {if (generation === this.generation) {this.error.set(true); this.loading.set(false);}});
     });

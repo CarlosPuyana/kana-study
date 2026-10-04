@@ -1,0 +1,12 @@
+<p class="character-progress" role="status">{{i18n.t('vocabularyWriting.character',{current:Math.min(index()+1,characters().length),total:characters().length})}}</p>
+<ol class="character-strip" [attr.aria-label]="i18n.t('vocabularyWriting.characters')">@for(character of characters();track $index){<li [class.current]="$index===index()" [attr.aria-current]="$index===index()?'step':null">{{revealWord()?character:$index+1}}</li>}</ol>
+@if(index()<characters().length){
+  @if(glyphs();as data){
+    <app-japanese-writing-canvas [character]="characters()[index()]" [suppliedGlyphs]="data" [initialStrokes]="initial()" [guide]="guide()" [helpAvailable]="guide()||revealWord()"/>
+    @if(loadError()||!data[0]?.strokes?.length){<p class="notice" role="alert">{{i18n.t('vocabularyWriting.missing')}}</p>}
+  }@else{<p role="status">{{i18n.t('writing.loading')}}</p>}
+  <div class="navigation"><button type="button" [disabled]="index()===0" (click)="move(index()-1)">{{i18n.t('vocabularyWriting.previous')}}</button><button type="button" [disabled]="!glyphs()" (click)="move(index()+1)">{{i18n.t(index()===characters().length-1?'vocabularyWriting.finishWord':'vocabularyWriting.next')}}</button></div>
+}@else{
+  @if(revealWord()){<strong class="whole-word" lang="ja">{{word()}}</strong>}
+  <div class="navigation"><button type="button" (click)="move(index()-1)">{{i18n.t('vocabularyWriting.previous')}}</button><button type="button" (click)="restart()">{{i18n.t('vocabularyWriting.again')}}</button></div>
+}

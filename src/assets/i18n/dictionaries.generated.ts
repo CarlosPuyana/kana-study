@@ -6103,7 +6103,20 @@ export const es:Record<string,string> = {...shared,...{
   "writing.repeat": "Repetir",
   "writing.correct": "Correcto",
   "writing.finished": "Práctica completada",
-  "writing.configure": "Nueva práctica"
+  "writing.configure": "Nueva práctica",
+  "vocabularyWriting.title": "Escritura de vocabulario",
+  "vocabularyWriting.practice": "Practicar escritura",
+  "vocabularyWriting.difficulty": "Dificultad",
+  "vocabularyWriting.withReading": "Con lectura",
+  "vocabularyWriting.memory": "De memoria",
+  "vocabularyWriting.available": "{{count}} palabras disponibles",
+  "vocabularyWriting.character": "Carácter {{current}} / {{total}}",
+  "vocabularyWriting.characters": "Caracteres de la palabra",
+  "vocabularyWriting.previous": "Anterior",
+  "vocabularyWriting.next": "Siguiente carácter",
+  "vocabularyWriting.finishWord": "Terminar palabra",
+  "vocabularyWriting.again": "Volver a practicar",
+  "vocabularyWriting.missing": "No hay datos de trazos disponibles para este carácter. Puedes dibujarlo y continuar."
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -7069,7 +7082,20 @@ export const en:Record<string,string> = {...shared,...{
   "writing.repeat": "Repeat",
   "writing.correct": "Correct",
   "writing.finished": "Practice completed",
-  "writing.configure": "New practice"
+  "writing.configure": "New practice",
+  "vocabularyWriting.title": "Vocabulary writing",
+  "vocabularyWriting.practice": "Practice writing",
+  "vocabularyWriting.difficulty": "Difficulty",
+  "vocabularyWriting.withReading": "With reading",
+  "vocabularyWriting.memory": "From memory",
+  "vocabularyWriting.available": "{{count}} words available",
+  "vocabularyWriting.character": "Character {{current}} / {{total}}",
+  "vocabularyWriting.characters": "Word characters",
+  "vocabularyWriting.previous": "Previous",
+  "vocabularyWriting.next": "Next character",
+  "vocabularyWriting.finishWord": "Finish word",
+  "vocabularyWriting.again": "Practice again",
+  "vocabularyWriting.missing": "Stroke data is unavailable for this character. You can draw it and continue."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -8035,5 +8061,18 @@ export const ca:Record<string,string> = {...shared,...{
   "writing.repeat": "Repetir",
   "writing.correct": "Correcte",
   "writing.finished": "Pràctica completada",
-  "writing.configure": "Nova pràctica"
+  "writing.configure": "Nova pràctica",
+  "vocabularyWriting.title": "Escriptura de vocabulari",
+  "vocabularyWriting.practice": "Practicar escriptura",
+  "vocabularyWriting.difficulty": "Dificultat",
+  "vocabularyWriting.withReading": "Amb lectura",
+  "vocabularyWriting.memory": "De memòria",
+  "vocabularyWriting.available": "{{count}} paraules disponibles",
+  "vocabularyWriting.character": "Caràcter {{current}} / {{total}}",
+  "vocabularyWriting.characters": "Caràcters de la paraula",
+  "vocabularyWriting.previous": "Anterior",
+  "vocabularyWriting.next": "Caràcter següent",
+  "vocabularyWriting.finishWord": "Acabar paraula",
+  "vocabularyWriting.again": "Tornar a practicar",
+  "vocabularyWriting.missing": "No hi ha dades de traços per a aquest caràcter. Pots dibuixar-lo i continuar."
 }};

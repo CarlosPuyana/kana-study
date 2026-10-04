@@ -6100,5 +6100,18 @@
   "writing.repeat": "Repetir",
   "writing.correct": "Correcto",
   "writing.finished": "Práctica completada",
-  "writing.configure": "Nueva práctica"
+  "writing.configure": "Nueva práctica",
+  "vocabularyWriting.title": "Escritura de vocabulario",
+  "vocabularyWriting.practice": "Practicar escritura",
+  "vocabularyWriting.difficulty": "Dificultad",
+  "vocabularyWriting.withReading": "Con lectura",
+  "vocabularyWriting.memory": "De memoria",
+  "vocabularyWriting.available": "{{count}} palabras disponibles",
+  "vocabularyWriting.character": "Carácter {{current}} / {{total}}",
+  "vocabularyWriting.characters": "Caracteres de la palabra",
+  "vocabularyWriting.previous": "Anterior",
+  "vocabularyWriting.next": "Siguiente carácter",
+  "vocabularyWriting.finishWord": "Terminar palabra",
+  "vocabularyWriting.again": "Volver a practicar",
+  "vocabularyWriting.missing": "No hay datos de trazos disponibles para este carácter. Puedes dibujarlo y continuar."
 }

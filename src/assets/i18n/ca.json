@@ -6100,5 +6100,18 @@
   "writing.repeat": "Repetir",
   "writing.correct": "Correcte",
   "writing.finished": "Pràctica completada",
-  "writing.configure": "Nova pràctica"
+  "writing.configure": "Nova pràctica",
+  "vocabularyWriting.title": "Escriptura de vocabulari",
+  "vocabularyWriting.practice": "Practicar escriptura",
+  "vocabularyWriting.difficulty": "Dificultat",
+  "vocabularyWriting.withReading": "Amb lectura",
+  "vocabularyWriting.memory": "De memòria",
+  "vocabularyWriting.available": "{{count}} paraules disponibles",
+  "vocabularyWriting.character": "Caràcter {{current}} / {{total}}",
+  "vocabularyWriting.characters": "Caràcters de la paraula",
+  "vocabularyWriting.previous": "Anterior",
+  "vocabularyWriting.next": "Caràcter següent",
+  "vocabularyWriting.finishWord": "Acabar paraula",
+  "vocabularyWriting.again": "Tornar a practicar",
+  "vocabularyWriting.missing": "No hi ha dades de traços per a aquest caràcter. Pots dibuixar-lo i continuar."
 }

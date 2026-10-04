@@ -6100,5 +6100,18 @@
   "writing.repeat": "Repeat",
   "writing.correct": "Correct",
   "writing.finished": "Practice completed",
-  "writing.configure": "New practice"
+  "writing.configure": "New practice",
+  "vocabularyWriting.title": "Vocabulary writing",
+  "vocabularyWriting.practice": "Practice writing",
+  "vocabularyWriting.difficulty": "Difficulty",
+  "vocabularyWriting.withReading": "With reading",
+  "vocabularyWriting.memory": "From memory",
+  "vocabularyWriting.available": "{{count}} words available",
+  "vocabularyWriting.character": "Character {{current}} / {{total}}",
+  "vocabularyWriting.characters": "Word characters",
+  "vocabularyWriting.previous": "Previous",
+  "vocabularyWriting.next": "Next character",
+  "vocabularyWriting.finishWord": "Finish word",
+  "vocabularyWriting.again": "Practice again",
+  "vocabularyWriting.missing": "Stroke data is unavailable for this character. You can draw it and continue."
 }

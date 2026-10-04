@@ -6,4 +6,5 @@ export const VOCABULARY_ROUTES:Routes=[
   {path:'all',loadComponent:()=>import('../vocabulary-all/vocabulary-all.page').then(m=>m.VocabularyAllPage)},
   {path:'medals',loadComponent:()=>import('../vocabulary-medals/vocabulary-medals.page').then(m=>m.VocabularyMedalsPage)},
   {path:'rush',loadComponent:()=>import('../rush/vocabulary-rush.page').then(m=>m.VocabularyRushPage)},
+  {path:'writing',loadComponent:()=>import('../vocabulary-writing/vocabulary-writing.page').then(m=>m.VocabularyWritingPage)},
 ];

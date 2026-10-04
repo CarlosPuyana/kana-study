@@ -33,7 +33,7 @@ describe('lazy feature routes', () => {
     const feature = routes.find(route => route.path === 'vocabulary');
     expect(feature?.component).toBeUndefined();
     const children = await (feature!.loadChildren as () => Promise<Routes>)();
-    expect(children.map(route => route.path)).toEqual(['', 'selection', 'play', 'all', 'medals', 'rush']);
+    expect(children.map(route => route.path)).toEqual(['', 'selection', 'play', 'all', 'medals', 'rush', 'writing']);
     expect(children.every(route => route.loadComponent && !route.component)).toBe(true);
   });
 
