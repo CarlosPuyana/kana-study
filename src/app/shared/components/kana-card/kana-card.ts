@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { Kana } from '../../../core/models/kana.model';
 import { TranslationService } from '../../../core/services/translation.service';
 
@@ -10,5 +10,6 @@ import { TranslationService } from '../../../core/services/translation.service';
 })
 export class KanaCard {
   readonly kana = input.required<Kana>();
+  readonly pressed = output<Kana>();
   readonly i18n = inject(TranslationService);
 }

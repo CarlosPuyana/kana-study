@@ -43,7 +43,7 @@
     <div class="study-actions"><button class="learn-button" type="button" [disabled]="daily.isCompletedToday('kana')" (click)="showLearningPanel.set(true)">
       {{ i18n.t(daily.isCompletedToday('kana') ? 'daily.completedButton' : 'home.learn') }}
       <span aria-hidden="true">→</span>
-    </button><button class="rush-button" type="button" (click)="openRush()">⚡ {{ i18n.t('rush.title') }}</button></div>
+    </button><button class="rush-button" type="button" (click)="openRush()">⚡ {{ i18n.t('rush.title') }}</button><a class="rush-button writing-button" routerLink="/writing">✍ {{i18n.t('writing.title')}}</a></div>
     @if (daily.isCompletedToday('kana')) {
       <div class="daily-learning-status" role="status">
         <p>{{ i18n.t('daily.completedMessage') }}</p>

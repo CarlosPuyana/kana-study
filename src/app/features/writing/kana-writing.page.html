@@ -1,0 +1,21 @@
+<main class="writing-shell">
+  <header><a routerLink="/" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('writing.title')}}</h1></header>
+  @if(!session()){
+    <section class="configuration">
+      <fieldset><legend>{{i18n.t('writing.content')}}</legend><div class="choices">@for(t of types;track t){<button type="button" [attr.aria-pressed]="type()===t" (click)="type.set(t)">{{i18n.t(t==='both'?'writing.both':'content.'+t)}}</button>}</div></fieldset>
+      <fieldset><legend>{{i18n.t('writing.include')}}</legend><div class="choices">@for(category of categories;track category){<button type="button" [attr.aria-pressed]="variants().includes(category)" (click)="toggle(category)">{{i18n.t('variants.'+category)}}</button>}</div></fieldset>
+      <fieldset><legend>{{i18n.t('writing.help')}}</legend><div class="choices"><button type="button" [attr.aria-pressed]="withGuide()" (click)="withGuide.set(true)">{{i18n.t('writing.withGuide')}}</button><button type="button" [attr.aria-pressed]="!withGuide()" (click)="withGuide.set(false)">{{i18n.t('writing.withoutGuide')}}</button></div></fieldset>
+      <p>{{i18n.t('writing.available',{count:pool().length})}}</p><button class="primary" type="button" [disabled]="!pool().length" (click)="start()">{{i18n.t('writing.start')}}</button>
+    </section>
+  }@else{
+    <p class="progress" role="status">{{resolved()}} / {{session()!.total}}</p>
+    @if(current();as kana){
+      <section class="practice"><h2>{{kana.romaji}}</h2><p>{{i18n.t('writing.prompt')}}</p>
+        <app-kana-writing-canvas [character]="kana.character" [guide]="withGuide()||revealed()" [helpAvailable]="withGuide()||revealed()"/>
+        @if(!revealed()){<button class="primary" type="button" (click)="revealed.set(true)">{{i18n.t('writing.answer')}}</button>}
+        @else{<div class="answer" aria-live="polite"><strong lang="ja">{{kana.character}}</strong><div class="choices"><button type="button" (click)="answer(false)">{{i18n.t('writing.repeat')}}</button><button class="primary" type="button" (click)="answer(true)">{{i18n.t('writing.correct')}}</button></div></div>}
+      </section>
+    }@else{<section class="finished" role="status"><h2>{{i18n.t('writing.finished')}}</h2><button class="primary" type="button" (click)="configure()">{{i18n.t('writing.configure')}}</button></section>}
+  }
+  <p class="attribution">{{i18n.t('writing.attribution')}} <a href="https://github.com/parsimonhi/animCJK" target="_blank" rel="noopener">AnimCJK</a> · LGPL</p>
+</main>

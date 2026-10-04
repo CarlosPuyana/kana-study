@@ -1,4 +1,8 @@
-:host {
+:host { display:block; height:100%; }
+.kana-card {
+  width:100%;
+  font:inherit;
+  cursor:pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,5 +20,6 @@
 .romaji { margin-top: 0.15rem; color: var(--text-secondary); font-size: 0.85rem; }
 
 @media (hover: hover) {
-  :host(:hover) { background: var(--surface-hover); }
+  .kana-card:hover { background: var(--surface-hover); }
 }
+.kana-card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}

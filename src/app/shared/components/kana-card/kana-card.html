@@ -1,3 +1,5 @@
+<button class="kana-card" type="button" (click)="pressed.emit(kana())" [attr.aria-label]="i18n.t('writing.practiceKana', {kana:kana().character,romaji:kana().romaji})">
 <span class="script">{{ i18n.t('content.' + kana().type) }}</span>
 <span class="character" lang="ja">{{ kana().character }}</span>
 <span class="romaji">{{ kana().romaji }}</span>
+</button>

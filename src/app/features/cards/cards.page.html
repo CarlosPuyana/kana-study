@@ -27,7 +27,7 @@
   } @else if (mode() === 'all') {
     <ul class="kana-grid">
       @for (kana of cards(); track kana.id) {
-        <li><app-kana-card [kana]="kana" /></li>
+        <li><app-kana-card [kana]="kana" (pressed)="writingKana.set($event)" /></li>
       }
     </ul>
   } @else {
@@ -39,7 +39,7 @@
             <h3 [id]="group.type + '-' + category.variant">{{ i18n.t('variants.' + category.variant) }}</h3>
             <ul class="kana-grid">
               @for (kana of category.cards; track kana.id) {
-                <li><app-kana-card [kana]="kana" /></li>
+                <li><app-kana-card [kana]="kana" (pressed)="writingKana.set($event)" /></li>
               }
             </ul>
           </section>
@@ -48,3 +48,5 @@
     }
   }
 </main>
+
+@defer (when writingKana()) { @if(writingKana();as kana){<app-kana-writing-dialog [kana]="kana" (closed)="writingKana.set(null)"/>} }

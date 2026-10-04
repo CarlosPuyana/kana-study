@@ -1,0 +1,8 @@
+Kana stroke outlines and median paths from kana-svg-data (hy2k), derived from
+AnimCJK (François Mizessyn and contributors), under GNU LGPL v3 or later.
+https://github.com/hy2k/kana-svg-data
+https://github.com/parsimonhi/animCJK
+License: LGPL.txt. The upstream copyright/license notices are retained there.
+Local modification: only characters present in Kana Study are retained in
+strokes.json; charCode is converted to character and unused medians are omitted.
+Stroke shapes and median paths are unchanged. No executable upstream code is used.

@@ -1,17 +1,18 @@
 import { Location } from '@angular/common';
 import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { KanaType, KanaVariant } from '../../core/models/kana.model';
+import { Kana, KanaType, KanaVariant } from '../../core/models/kana.model';
 import { TranslationService } from '../../core/services/translation.service';
 import { ALL_KANA } from '../../data/kana';
 import { KanaCard } from '../../shared/components/kana-card/kana-card';
+import { KanaWritingDialog } from '../writing/kana-writing-dialog';
 
 const TYPES: readonly KanaType[] = ['hiragana', 'katakana'];
 const VARIANTS: readonly KanaVariant[] = ['basic', 'dakuten', 'handakuten', 'combination'];
 
 @Component({
   selector: 'app-cards-page',
-  imports: [KanaCard],
+  imports: [KanaCard, KanaWritingDialog],
   templateUrl: './cards.page.html',
   styleUrl: './cards.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +27,7 @@ export class CardsPage {
   private restoreSearchFocus = false;
 
   readonly mode = signal<'all' | 'category'>('all');
+  readonly writingKana = signal<Kana|null>(null);
   readonly searching = signal(false);
   readonly query = signal('');
   readonly cards = computed(() => {
