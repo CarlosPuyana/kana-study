@@ -6113,5 +6113,11 @@
   "vocabularyWriting.next": "Siguiente carácter",
   "vocabularyWriting.finishWord": "Terminar palabra",
   "vocabularyWriting.again": "Volver a practicar",
-  "vocabularyWriting.missing": "No hay datos de trazos disponibles para este carácter. Puedes dibujarlo y continuar."
+  "vocabularyWriting.missing": "No hay datos de trazos disponibles para este carácter. Puedes dibujarlo y continuar.",
+  "kanjiWriting.title": "Escritura de kanji",
+  "kanjiWriting.practice": "Practicar escritura",
+  "kanjiWriting.currentSelection": "Selección actual",
+  "kanjiWriting.available": "{{count}} kanji disponibles",
+  "kanjiWriting.again": "Volver a practicar",
+  "kanjiWriting.missing": "No hay datos de trazos disponibles para este kanji. Puedes dibujarlo y continuar."
 }

@@ -6113,5 +6113,11 @@
   "vocabularyWriting.next": "Caràcter següent",
   "vocabularyWriting.finishWord": "Acabar paraula",
   "vocabularyWriting.again": "Tornar a practicar",
-  "vocabularyWriting.missing": "No hi ha dades de traços per a aquest caràcter. Pots dibuixar-lo i continuar."
+  "vocabularyWriting.missing": "No hi ha dades de traços per a aquest caràcter. Pots dibuixar-lo i continuar.",
+  "kanjiWriting.title": "Escriptura de kanji",
+  "kanjiWriting.practice": "Practicar escriptura",
+  "kanjiWriting.currentSelection": "Selecció actual",
+  "kanjiWriting.available": "{{count}} kanji disponibles",
+  "kanjiWriting.again": "Tornar a practicar",
+  "kanjiWriting.missing": "No hi ha dades de traços per a aquest kanji. Pots dibuixar-lo i continuar."
 }

@@ -7,4 +7,5 @@ export const KANJI_ROUTES: Routes = [
   { path: 'all', loadComponent: () => import('../kanji-all/kanji-all.page').then(module => module.KanjiAllPage) },
   { path: 'medals', loadComponent: () => import('../kanji-medals/kanji-medals.page').then(module => module.KanjiMedalsPage) },
   { path: 'rush', loadComponent: () => import('../rush/kanji-rush.page').then(module => module.KanjiRushPage) },
+  { path: 'writing', loadComponent: () => import('../kanji-writing/kanji-writing.page').then(module => module.KanjiWritingPage) },
 ];

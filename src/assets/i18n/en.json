@@ -6113,5 +6113,11 @@
   "vocabularyWriting.next": "Next character",
   "vocabularyWriting.finishWord": "Finish word",
   "vocabularyWriting.again": "Practice again",
-  "vocabularyWriting.missing": "Stroke data is unavailable for this character. You can draw it and continue."
+  "vocabularyWriting.missing": "Stroke data is unavailable for this character. You can draw it and continue.",
+  "kanjiWriting.title": "Kanji writing",
+  "kanjiWriting.practice": "Practice writing",
+  "kanjiWriting.currentSelection": "Current selection",
+  "kanjiWriting.available": "{{count}} kanji available",
+  "kanjiWriting.again": "Practice again",
+  "kanjiWriting.missing": "Stroke data is unavailable for this kanji. You can draw it and continue."
 }

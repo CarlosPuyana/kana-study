@@ -6116,7 +6116,13 @@ export const es:Record<string,string> = {...shared,...{
   "vocabularyWriting.next": "Siguiente carácter",
   "vocabularyWriting.finishWord": "Terminar palabra",
   "vocabularyWriting.again": "Volver a practicar",
-  "vocabularyWriting.missing": "No hay datos de trazos disponibles para este carácter. Puedes dibujarlo y continuar."
+  "vocabularyWriting.missing": "No hay datos de trazos disponibles para este carácter. Puedes dibujarlo y continuar.",
+  "kanjiWriting.title": "Escritura de kanji",
+  "kanjiWriting.practice": "Practicar escritura",
+  "kanjiWriting.currentSelection": "Selección actual",
+  "kanjiWriting.available": "{{count}} kanji disponibles",
+  "kanjiWriting.again": "Volver a practicar",
+  "kanjiWriting.missing": "No hay datos de trazos disponibles para este kanji. Puedes dibujarlo y continuar."
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -7095,7 +7101,13 @@ export const en:Record<string,string> = {...shared,...{
   "vocabularyWriting.next": "Next character",
   "vocabularyWriting.finishWord": "Finish word",
   "vocabularyWriting.again": "Practice again",
-  "vocabularyWriting.missing": "Stroke data is unavailable for this character. You can draw it and continue."
+  "vocabularyWriting.missing": "Stroke data is unavailable for this character. You can draw it and continue.",
+  "kanjiWriting.title": "Kanji writing",
+  "kanjiWriting.practice": "Practice writing",
+  "kanjiWriting.currentSelection": "Current selection",
+  "kanjiWriting.available": "{{count}} kanji available",
+  "kanjiWriting.again": "Practice again",
+  "kanjiWriting.missing": "Stroke data is unavailable for this kanji. You can draw it and continue."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -8074,5 +8086,11 @@ export const ca:Record<string,string> = {...shared,...{
   "vocabularyWriting.next": "Caràcter següent",
   "vocabularyWriting.finishWord": "Acabar paraula",
   "vocabularyWriting.again": "Tornar a practicar",
-  "vocabularyWriting.missing": "No hi ha dades de traços per a aquest caràcter. Pots dibuixar-lo i continuar."
+  "vocabularyWriting.missing": "No hi ha dades de traços per a aquest caràcter. Pots dibuixar-lo i continuar.",
+  "kanjiWriting.title": "Escriptura de kanji",
+  "kanjiWriting.practice": "Practicar escriptura",
+  "kanjiWriting.currentSelection": "Selecció actual",
+  "kanjiWriting.available": "{{count}} kanji disponibles",
+  "kanjiWriting.again": "Tornar a practicar",
+  "kanjiWriting.missing": "No hi ha dades de traços per a aquest kanji. Pots dibuixar-lo i continuar."
 }};

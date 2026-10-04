@@ -18,10 +18,10 @@ describe('Vocabulary writing data and sessions',()=>{
     expect(data.map(g=>g.character)).toEqual(['食','べ','ー','?']);expect(data[0].pathMode).toBe('centerline');expect(data[3].strokes).toEqual([]);
     expect(fetchMock.mock.calls.every(([url])=>url.origin===new URL(document.baseURI).origin)).toBe(true);
   });
-  it('only vendors the Kanji used by the primary written forms and checks known stroke counts',()=>{
+  it('only vendors the Kanji used by Vocabulary and Kanji N5 and checks known stroke counts',()=>{
     const fs=(globalThis as unknown as {process:{getBuiltinModule:(id:string)=>{readFileSync:(p:string,e:string)=>string}}}).process.getBuiltinModule('fs');
     const data=JSON.parse(fs.readFileSync('public/vocabulary-writing/kanji.json','utf8')) as WritingGlyph[];
-    const expected=new Set(VOCABULARY_N5.flatMap(e=>splitWritingWord(e.primaryWrittenForm)).filter(c=>/\p{Script=Han}/u.test(c)));
+    const expected=new Set([...VOCABULARY_N5.flatMap(e=>splitWritingWord(e.primaryWrittenForm)).filter(c=>/\p{Script=Han}/u.test(c)),...KANJI_N5.map(k=>k.character)]);
     expect(new Set(data.map(g=>g.character))).toEqual(expected);expect(data.every(g=>g.strokes.length>0&&g.viewBox===109)).toBe(true);
     for(const kanji of KANJI_N5){const glyph=data.find(g=>g.character===kanji.character);if(glyph)expect(glyph.strokes.length,kanji.character).toBe(kanji.strokeCount);}
     const extras=JSON.parse(fs.readFileSync('public/vocabulary-writing/kana-extra.json','utf8')) as WritingGlyph[];

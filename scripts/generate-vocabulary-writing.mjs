@@ -3,7 +3,9 @@ import {readFile, writeFile, mkdir} from 'node:fs/promises';
 const revision='70a0b7ae0c18ceb5cb358274b029cce0234a43bc';
 const source=await readFile('src/app/data/vocabulary-n5.generated.ts','utf8');
 const entries=JSON.parse(source.slice(source.indexOf('=[')+1).trim().replace(/;$/,''));
-const characters=[...new Set(entries.flatMap(e=>[...e.primaryWrittenForm.normalize('NFC')]))].sort();
+const kanjiSource=await readFile('src/app/data/kanji-n5.generated.ts','utf8');
+const kanjiEntries=JSON.parse(kanjiSource.slice(kanjiSource.indexOf('= [')+1).trim().replace(/;$/,''));
+const characters=[...new Set([...entries.flatMap(e=>[...e.primaryWrittenForm.normalize('NFC')]),...kanjiEntries.map(e=>e.character)])].sort();
 const kanji=characters.filter(c=>/\p{Script=Han}/u.test(c));
 const directory='public/vocabulary-writing';await mkdir(directory,{recursive:true});
 async function download(url){const r=await fetch(url);if(!r.ok)throw new Error(`${r.status}: ${url}`);return r.text();}

@@ -1,0 +1,35 @@
+<main class="writing-shell">
+  <header><a [routerLink]="individual()?'/kanji/all':'/kanji'" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('kanjiWriting.title')}}</h1></header>
+  @if(!individual()&&!session()){
+    <section class="configuration">
+      <fieldset><legend>{{i18n.t('writing.content')}}</legend>
+        <p>{{i18n.t('kanjiWriting.currentSelection')}} · N5</p>
+        <a routerLink="/kanji/selection">{{i18n.t('kanji.editSelection')}}</a>
+        <div class="choices">@for(category of categories;track category.theme){<button type="button" [attr.aria-pressed]="selected().includes(category.theme)" (click)="toggle(category.theme)">{{i18n.t('kanji.all.theme.'+category.theme)}}</button>}</div>
+      </fieldset>
+      <fieldset><legend>{{i18n.t('writing.help')}}</legend><div class="choices">
+        <button type="button" [attr.aria-pressed]="withGuide()" (click)="withGuide.set(true)">{{i18n.t('writing.withGuide')}}</button>
+        <button type="button" [attr.aria-pressed]="!withGuide()" (click)="withGuide.set(false)">{{i18n.t('writing.withoutGuide')}}</button>
+      </div></fieldset>
+      <p>{{i18n.t('kanjiWriting.available',{count:pool().length})}}</p>
+      <button class="primary" type="button" [disabled]="!pool().length" (click)="start()">{{i18n.t('writing.start')}}</button>
+    </section>
+  }@else{
+    @if(session()){<p class="progress" role="status">{{resolved()}} / {{session()!.total}}</p>}
+    @if(active();as entry){
+      <section class="practice">
+        <h2>{{meaning(entry)}}</h2>
+        @if(individual()){<strong class="character" lang="ja">{{entry.character}}</strong>}
+        <p>{{i18n.t('kanji.strokes',{count:entry.strokeCount})}}</p>
+        @if(glyphs();as data){
+          <app-japanese-writing-canvas [character]="entry.character" [suppliedGlyphs]="data" [guide]="!!individual()||withGuide()||revealed()" [helpAvailable]="!!individual()||withGuide()||revealed()"/>
+          @if(loadError()||!data[0]?.strokes?.length){<p role="alert">{{i18n.t('kanjiWriting.missing')}}</p>}
+          @if(individual()){<button class="primary" type="button" (click)="restart()">{{i18n.t('kanjiWriting.again')}}</button>}
+          @else if(!revealed()){<button class="primary" type="button" (click)="revealed.set(true)">{{i18n.t('writing.answer')}}</button>}
+          @else{<div class="answer" aria-live="polite"><strong lang="ja">{{entry.character}}</strong><div class="choices"><button type="button" (click)="answer(false)">{{i18n.t('writing.repeat')}}</button><button class="primary" type="button" (click)="answer(true)">{{i18n.t('writing.correct')}}</button></div></div>}
+        }@else{<p role="status">{{i18n.t('writing.loading')}}</p>}
+      </section>
+    }@else{<section class="finished"><h2>{{i18n.t('writing.finished')}}</h2><button class="primary" type="button" (click)="configure()">{{i18n.t('writing.configure')}}</button></section>}
+  }
+  <p class="attribution">{{i18n.t('writing.attribution')}} <a href="https://kanjivg.tagaini.net/" target="_blank" rel="noopener">KanjiVG</a> · CC BY-SA 3.0</p>
+</main>

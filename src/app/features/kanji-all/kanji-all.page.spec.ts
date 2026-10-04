@@ -55,6 +55,11 @@ describe('Kanji exploration categories', () => {
     expect(component.selected()?.character).toBe('人');
     for(const mode of component.viewModes) {component.viewMode.set(mode); fixture.detectChanges(); expect(fixture.nativeElement.querySelector('[role=dialog]')).not.toBeNull(); expect(component.selected()?.character).toBe('人');}
   });
+  it('links the selected Kanji detail to individual handwriting practice', () => {
+    const fixture=page('水');fixture.detectChanges();
+    const link=fixture.nativeElement.querySelector('a.writing-action');
+    expect(decodeURIComponent(link.getAttribute('href'))).toContain('/kanji/writing?entry='+fixture.componentInstance.selected()!.id);
+  });
   it('defaults to All and uses pressed buttons and the same card detail in grouped views', () => {
     const fixture = page(); fixture.detectChanges();
     expect(fixture.componentInstance.viewMode()).toBe('all');
