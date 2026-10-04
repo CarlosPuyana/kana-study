@@ -13,6 +13,25 @@ import { DictionaryLookup } from '../../core/models/dictionary.model';
 import { SettingsService } from '../../core/services/settings.service';
 const exact:DictionaryLookup={installed:true,query:'学校',terms:[{id:'school',dictionaryId:'test',expression:'学校',reading:'がっこう',glossaries:['escuela'],definitionTags:'',rules:'n',score:0,sequence:1,termTags:''}]};
 describe('Manga assisted reading UI',()=>{
+  it('renders translation notes as text and allows responses without notes',()=>{
+    const fixture=popup();fixture.componentInstance.tab.set('context');
+    fixture.componentInstance.translation.set({natural:'Incierto',notes:['Posible OCR: <b>texto</b>']});fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Posible OCR: <b>texto</b>');expect(fixture.nativeElement.querySelector('.dictionary-sheet b')).toBeNull();
+    fixture.componentInstance.translation.set({natural:'Anterior'});fixture.detectChanges();expect(fixture.nativeElement.textContent).not.toContain('Posible OCR');
+  });
+  it('exposes only Translate with endpoint and blocks Study invocation from the popup',async()=>{
+    const request=vi.fn(async(_mode:string)=>({natural:'Traducción'}));TestBed.overrideProvider(MangaContextService,{useValue:{available:true,request}});
+    const fixture=popup();fixture.componentRef.setInput('context',{text:'学校',offset:0,x:0,y:0,blockIndex:0});fixture.componentInstance.tab.set('context');fixture.detectChanges();
+    const actions=fixture.nativeElement.querySelectorAll('.context-actions button');expect(actions).toHaveLength(1);expect(actions[0].disabled).toBe(false);expect(actions[0].textContent).toContain('Traducir');
+    await fixture.componentInstance.ask('study');expect(request).not.toHaveBeenCalled();
+    actions[0].click();await fixture.whenStable();expect(request.mock.calls[0]?.[0]).toBe('translate');
+  });
+  it('keeps dictionary results available when translation fails',async()=>{
+    TestBed.overrideProvider(MangaContextService,{useValue:{available:true,request:vi.fn(async()=>{throw new Error('AI unavailable');})}});
+    const fixture=popup();fixture.componentRef.setInput('context',{text:'学校',offset:0,x:0,y:0,blockIndex:0});fixture.componentInstance.tab.set('context');fixture.detectChanges();
+    await fixture.componentInstance.ask('translate');fixture.detectChanges();expect(fixture.nativeElement.querySelector('[role=alert]')).not.toBeNull();
+    fixture.componentInstance.tab.set('word');fixture.detectChanges();expect(fixture.nativeElement.textContent).toContain('escuela');
+  });
   it.each(['es','en','ca'] as const)('separates senses and interpretations and translates negative-nu in %s',language=>{TestBed.inject(SettingsService).setLanguage(language);const fixture=popup({...exact,baseForm:'行く',reasons:['negative-nu'],terms:[{...exact.terms[0],id:'go',expression:'行く',reading:'いく'},{...exact.terms[0],id:'go-sense',expression:'行く',reading:'いく',glossaries:['another sense']},{...exact.terms[0],id:'say',expression:'言う',reading:'いう'}]});const details=fixture.nativeElement.querySelectorAll('details');expect(details).toHaveLength(2);expect(details[0].textContent).toContain('another sense');expect(details[0].textContent).not.toContain('言う');expect(details[1].textContent).toContain('言う');expect(fixture.nativeElement.textContent).not.toMatch(/manga\.(assist|reason)\./);expect(details[1].querySelector('summary').textContent).toBe(language==='es'?'Posibles interpretaciones':language==='en'?'Possible interpretations':'Possibles interpretacions');});
   it('keeps plausible ambiguous deinflections visible in the existing alternatives section',()=>{const fixture=popup({...exact,surface:'きた',baseForm:'くる',terms:[{...exact.terms[0],id:'come',expression:'来る',reading:'くる'},{...exact.terms[0],id:'wear',expression:'着る',reading:'きる'}]});const details=fixture.nativeElement.querySelector('details') as HTMLDetailsElement;expect(details).not.toBeNull();details.open=true;expect(details.textContent).toContain('着る · きる');expect(fixture.nativeElement.querySelector('.base').textContent).toContain('くる');});
   it('does not duplicate caret blocks or manufacture cross-block context',async()=>{const request=vi.fn(async(_mode:string,_request:unknown)=>({natural:'text'}));TestBed.overrideProvider(MangaContextService,{useValue:{available:true,request}});const fixture=popup();for(const point of [{mode:'caret',text:'学校へ行く',selectedText:'学校へ行く',blockIndex:0},{mode:'selection',text:'学校へ行く',selectedText:'学校へ行く\n明日。',blockIndex:0,endBlockIndex:1}] as const){fixture.componentRef.setInput('context',{...point,offset:0,x:0,y:0});fixture.detectChanges();await fixture.componentInstance.ask('translate');expect(request.mock.calls.at(-1)![1]).toMatchObject({selectedText:point.selectedText,contextText:undefined});}});

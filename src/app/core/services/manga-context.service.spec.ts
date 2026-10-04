@@ -3,6 +3,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MangaContextService, MANGA_ASSISTANT_ENDPOINT, limitedMangaRequest, validMangaContext } from './manga-context.service';
 const request={selectedText:'食べなかった',targetLanguage:'es' as const};const location={volumeId:'volume',pageIndex:1,blockIndex:0};
 describe('Manga context contract',()=>{
+  it.each([
+    [undefined,true], [['Posible error de OCR.'],true], [['a'.repeat(501)],false],
+    [Array(6).fill('Aviso'),false], [['<script>alert(1)</script>'],false], [['<div>texto</div>'],false],
+  ])('validates optional bounded plain study notes %j', (notes,valid)=>{
+    expect(validMangaContext({natural:'Incierto',vocabulary:[],grammar:[],notes},'study')).toBe(valid);
+  });
   it('sends exact selection and containing block separately and invalidates cache when context changes',async()=>{const fetch=vi.fn(async()=>({ok:true,body:null,text:async()=>JSON.stringify({natural:'No hay remedio.'})}));vi.stubGlobal('fetch',fetch);const context=service(),selected={...request,selectedText:'しょうがない',contextText:'しょうがないだろ。明日早いんだから。'};await context.request('translate',selected,location,new AbortController().signal);const options=fetch.mock.calls[0] as unknown as [string,RequestInit];expect(JSON.parse(options[1].body as string).request).toEqual(selected);await context.request('translate',selected,location,new AbortController().signal);expect(fetch).toHaveBeenCalledTimes(1);await context.request('translate',{...selected,contextText:'しょうがないだろ。今日は休みだから。'},location,new AbortController().signal);expect(fetch).toHaveBeenCalledTimes(2);expect(limitedMangaRequest({...selected,contextText:'あ'.repeat(1201)}).contextText).toHaveLength(1200);});
   beforeEach(()=>{localStorage.clear();});afterEach(()=>vi.unstubAllGlobals());
   function service(endpoint:string|null='https://example.test/assist'){TestBed.configureTestingModule({providers:[{provide:MANGA_ASSISTANT_ENDPOINT,useValue:endpoint}]});return TestBed.inject(MangaContextService);}

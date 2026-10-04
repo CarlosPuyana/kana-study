@@ -36,14 +36,14 @@ import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTra
       } @else {
         <h2>{{i18n.t('manga.assist.inContext')}}</h2>
         <p class="ocr-context">{{highlight().before}}<mark>{{highlight().selected}}</mark>{{highlight().after}}</p>
-        <div class="context-actions"><button [disabled]="!assistant.available || !context() || busy()" (click)="ask('translate')">✨ {{i18n.t('manga.assist.translate')}}</button><button [disabled]="!assistant.available || !context() || busy()" (click)="ask('study')">{{i18n.t('manga.assist.study')}}</button></div>
+        <div class="context-actions"><button [disabled]="!assistant.available || !context() || busy()" (click)="ask('translate')">✨ {{i18n.t('manga.assist.translate')}}</button></div>
         @if(!assistant.available){<p class="hint">{{i18n.t('manga.assist.unavailable')}}</p>}
         @else{<p class="hint">{{i18n.t('manga.assist.privacy')}}</p>}
         @if(busy()){<p role="status">{{i18n.t('common.loading')}}</p><button (click)="cancel()">{{i18n.t('common.cancel')}}</button>}
         @if(contextError()){<p role="alert">{{i18n.t('manga.assist.error')}}</p>}
         @if(selectionLimitError()){<p role="alert">{{i18n.t('manga.assist.selectionLimit')}}</p>}
         @if(translation();as value){<p>{{value.natural}}</p>@if(value.literal){<p><strong>{{i18n.t('manga.assist.literal')}}:</strong> {{value.literal}}</p>}@for(note of value.notes;track $index){<p>{{note}}</p>}}
-        @if(study();as value){<p>{{value.natural}}</p><h3>{{i18n.t('manga.assist.vocabulary')}}</h3><ul>@for(word of value.vocabulary;track $index){<li><strong>{{word.expression}}</strong> {{word.reading}} @if(word.baseForm){· {{word.baseForm}}} — {{word.meaning}}</li>}</ul><h3>{{i18n.t('manga.assist.grammar')}}</h3><ul>@for(item of value.grammar;track $index){<li><strong>{{item.expression}}</strong> — {{item.explanation}}</li>}</ul>}
+        @if(study();as value){<p>{{value.natural}}</p>@for(note of value.notes;track $index){<p class="study-note">{{note}}</p>}<h3>{{i18n.t('manga.assist.vocabulary')}}</h3><ul>@for(word of value.vocabulary;track $index){<li><strong>{{word.expression}}</strong> {{word.reading}} @if(word.baseForm){· {{word.baseForm}}} — {{word.meaning}}</li>}</ul><h3>{{i18n.t('manga.assist.grammar')}}</h3><ul>@for(item of value.grammar;track $index){<li><strong>{{item.expression}}</strong> — {{item.explanation}}</li>}</ul>}
       }
     </section>`,
 })
@@ -68,6 +68,8 @@ export class DictionaryPopup implements OnDestroy {
     return index<0?{before:text,selected:'',after:''}:{before:text.slice(0,index),selected:surface,after:text.slice(index+surface.length)};
   }
   async ask(mode:MangaContextMode):Promise<void>{
+    // Study is internal/experimental and is not published in Manga Assistant V1.
+    if(mode!=='translate')return;
     const point=this.context();if(!point || !this.assistant.available || this.busy())return;
     this.selectionLimitError.set(false);
     // Respect explicit text: refuse an oversized request rather than silently truncating it.

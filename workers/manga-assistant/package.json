@@ -1,0 +1,12 @@
+{
+  "name": "kana-study-manga-assistant",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "npx wrangler@4 dev",
+    "benchmark": "node scripts/benchmark.mjs"
+  },
+  "engines": { "node": ">=22.22.3" }
+}

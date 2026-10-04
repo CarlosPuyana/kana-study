@@ -10,11 +10,18 @@ type ContextResult = MangaTranslationResult | MangaStudyExplanation;
 const CACHE_KEY='kana-study-manga-context-v1';
 function text(value:unknown):value is string { return typeof value==='string' && value.length>0 && value.length<=6000; }
 function optionalText(value:unknown):boolean {return value===undefined || text(value);}
+function studyNotes(value:unknown):boolean {
+  return value===undefined || (Array.isArray(value) && value.length<=5 && value.every(note=>
+    text(note) && note.trim().length>0 && note.length<=500
+    && !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/u.test(note)
+    && !/<\/?[a-z][a-z0-9:-]*(?:\s+[^<>]*)?\/?>|<!--|<!doctype\b/iu.test(note)
+    && !/(?:[a-z][a-z0-9+.-]*:\/\/|\bwww\.|\b(?:data|javascript|mailto):)/iu.test(note)));
+}
 export function validMangaContext(value:unknown,mode:MangaContextMode):value is ContextResult {
   if(!value || typeof value!=='object')return false;
   const result=value as Record<string,unknown>;if(!text(result['natural']))return false;
   if(mode==='translate')return optionalText(result['literal']) && (result['notes']===undefined || (Array.isArray(result['notes']) && result['notes'].length<=20 && result['notes'].every(text)));
-  return Array.isArray(result['vocabulary']) && result['vocabulary'].length<=40 && result['vocabulary'].every(row=>row && text(row.expression) && text(row.meaning) && optionalText(row.reading) && optionalText(row.baseForm)) && Array.isArray(result['grammar']) && result['grammar'].length<=20 && result['grammar'].every(row=>row && text(row.expression) && text(row.explanation));
+  return studyNotes(result['notes']) && Array.isArray(result['vocabulary']) && result['vocabulary'].length<=40 && result['vocabulary'].every(row=>row && text(row.expression) && text(row.meaning) && optionalText(row.reading) && optionalText(row.baseForm)) && Array.isArray(result['grammar']) && result['grammar'].length<=20 && result['grammar'].every(row=>row && text(row.expression) && text(row.explanation));
 }
 export function limitedMangaRequest(request:MangaTranslationRequest):MangaTranslationRequest {
   return {selectedText:request.selectedText.slice(0,1200),contextText:request.contextText?.slice(0,1200),selectedExpression:request.selectedExpression?.slice(0,100),previousText:request.previousText?.slice(0,300),nextText:request.nextText?.slice(0,300),targetLanguage:request.targetLanguage};

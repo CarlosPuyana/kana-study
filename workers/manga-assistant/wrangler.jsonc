@@ -1,0 +1,17 @@
+{
+  "name": "kana-study-manga-assistant",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-04",
+  "ai": { "binding": "AI", "remote": true },
+  "vars": {
+    "MANGA_AI_MODEL": "@cf/google/gemma-4-26b-a4b-it",
+    "ALLOWED_ORIGINS": "https://carlospuyana.github.io,http://localhost:4200,http://127.0.0.1:4200",
+    "AI_JSON_MODE": "prompt"
+  },
+  "ratelimits": [{
+    "name": "ASSIST_RATE_LIMITER",
+    "namespace_id": "15001",
+    "simple": { "limit": 10, "period": 60 }
+  }],
+  "observability": { "enabled": false }
+}

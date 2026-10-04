@@ -28,7 +28,7 @@ Para activar la ayuda debe existir un backend independiente compatible y configu
 <meta name="kana-study-manga-assistant" content="https://TU-SERVICIO/assist">
 ```
 
-Esto es configuración pública, nunca una API key. Se aceptan HTTPS o HTTP del mismo origen para desarrollo. El backend debe permitir el origen de la aplicación si es externo, validar el contrato, limitar abuso/coste y mantener cualquier secreto exclusivamente en servidor/Worker secrets. No se creó ni desplegó un Worker.
+Esto es configuración pública, nunca una API key. Se aceptan HTTPS o HTTP del mismo origen para desarrollo. El backend debe permitir el origen de la aplicación si es externo, validar el contrato, limitar abuso/coste y mantener cualquier secreto exclusivamente en servidor/Worker secrets. El backend independiente existe ahora en `workers/manga-assistant`, con contrato, validación, AI binding, rate limiting y tests simulados. **No está desplegado ni conectado al frontend.** Instrucciones y benchmark local opcional: `workers/manga-assistant/README.md`. El relay Mokuro no se modifica.
 
 ### Contrato backend, versión 1
 
@@ -179,3 +179,21 @@ Archivos modificados en esta corrección (los cambios previos permanecen sin com
 - Se reprodujo y corrigió con test el caso de Segmenter たん que cruzaba el final de la superficie verbal. La comprobación final del navegador ya no devuelve ese fragmento. No se guardan capturas de las páginas privadas.
 - 30 tests nuevos frente a 675: 705 tests pasan en 81 archivos. TypeScript app/spec y build correctos; permanecen los presupuestos inicial/Grammar existentes. Regresiones: palabras reales, ひとり, 食べなかった, 読んでる, 行った y ambigüedades いった/きた; selección nativa y contexto conservados por la suite existente.
 - Archivos de esta fase: japanese-lookup.service.ts y su spec; japanese-deinflection.service.ts; dictionary-popup.ts; manga-assistance.spec.ts; ES/EN/CA y dictionaries.generated.ts; este documento. Sin cambios en OCR/Mokuro, selección nativa, IndexedDB, importación ni backend. Sin commit ni push.
+
+## Estado final Manga Assistant V1: solo Translate publicado
+
+Translate listo con Gemma/Cloudflare Workers AI: plain JSON, thinking=false, sin retries ni fallback, una inferencia máxima. Study se conserva internamente como experimental, sin botón ni invocación desde el popup. Known limitation: su análisis léxico puede ser pedagógicamente incorrecto; se aplaza sin más inferencias ni cambios de prompt.
+
+El flujo existente permite Translate con endpoint, carga, cancelación y caché local; presenta natural/literal/notes como texto y sus errores no rompen JMdict. Reader/JMdict siguen funcionando sin IA. No hay deploy ni endpoint de producción configurado. Después de desplegar Worker, añadir en el head de src/index.html el meta `kana-study-manga-assistant` con la URL pública real terminada en `/assist`; el factory de MANGA_ASSISTANT_ENDPOINT lo lee. Sin claves ni URL inventada. Location/IDs se mantienen solo en la clave de caché local, sin enviarlos al Worker.
+
+BENCHMARK.md y MODEL_OUTPUT_DIAGNOSTIC.md se conservan como histórico. El informe siguiente describe la fase experimental previa; la decisión final publica únicamente Translate.
+
+Validación de cierre: 114/114 tests Worker, 42/42 Angular afectados, TypeScript Worker/app/spec y build correctos; avisos de tamaño existentes. Sin llamadas AI, benchmark ni deploy. Study no visible y rechazado desde el popup; errores de Translate conservan el diccionario y notes se renderizan como texto.
+
+## Manga Assistant V1: notes opcionales de estudio (experimental)
+
+MangaStudyExplanation conserva natural/vocabulary/grammar y admite notes opcionales: hasta cinco avisos de 500 caracteres para OCR, ambigüedad o análisis incierto. Respuestas sin notes siguen siendo válidas. Validación en MangaContextService y Worker; el contrato Worker reutiliza el modelo Angular y su schema incluye el campo opcional. El popup muestra cada aviso mediante interpolación de texto bajo natural, sin innerHTML ni label nuevo. Idioma ES/EN/CA según targetLanguage, con los estilos existentes del popup; no se añaden traducciones de etiquetas.
+
+El detector de salida distingue etiquetas HTML de símbolos normales <, > y flechas; no se cambia el filtro de entrada. Arrays vacíos siguen siendo válidos, y las expresiones de vocabulary/grammar deben seguir siendo substrings literales de selectedText, sin duplicados. Prompt conservador sobre fragmentos, OCR y formas conjugadas. Gemma sigue plain JSON/thinking=false, sin reparación, retry ni fallback. Endpoint no configurado y Worker no desplegado.
+
+Validación de esta fase: 22 tests Worker y 7 Angular nuevos; 114/114 Worker y 40/40 Angular afectados pasan. TypeScript Worker/app/spec y build correctos, avisos de tamaño existentes. Tres llamadas reales Gemma, sin retry: B translate, D study, E study; 3/3 contratos válidos. B avisa de ambigüedad y E advierte OCR, pero D mantiene análisis léxico dudoso (baseForm い para かった); no se recomienda deploy aún. Informe y outputs completos en workers/manga-assistant/BENCHMARK.md. Sin commit ni push.

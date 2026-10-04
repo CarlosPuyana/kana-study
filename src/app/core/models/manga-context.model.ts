@@ -6,6 +6,7 @@ export interface MangaTranslationRequest {
 export interface MangaTranslationResult { natural: string; literal?: string; notes?: string[] }
 export interface MangaStudyExplanation {
   natural: string;
+  notes?: string[];
   vocabulary: { expression: string; reading?: string; baseForm?: string; meaning: string }[];
   grammar: { expression: string; explanation: string }[];
 }
