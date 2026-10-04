@@ -24,11 +24,12 @@ import { MangaReaderPreferences, MANGA_READER_PREFERENCES_KEY, readMangaReaderPr
     } @else if (!error()) { <p role="status">{{ i18n.t('common.loading') }}</p> }
     </div>
     <nav class="reader-toolbar" [attr.aria-label]="i18n.t('manga.controls')">
-      <button class="previous" [disabled]="index() <= 0 || loading()" [attr.aria-label]="i18n.t('manga.previous')" [title]="i18n.t('manga.previous')" (click)="go(index()-1)"><span aria-hidden="true">‹</span></button>
+      <div class="toolbar-group" role="group" [attr.aria-label]="i18n.t('manga.assist.navigation')"><button class="previous" [disabled]="index() <= 0 || loading()" [attr.aria-label]="i18n.t('manga.previous')" [title]="i18n.t('manga.previous')" (click)="go(index()-1)"><span aria-hidden="true">‹</span></button>
       <span class="page-counter">{{ index()+1 }} / {{ volume()?.pageCount ?? 0 }}</span>
       <button class="next" [disabled]="!volume() || index()+1 >= volume()!.pageCount || loading()" [attr.aria-label]="i18n.t('manga.next')" [title]="i18n.t('manga.next')" (click)="go(index()+1)"><span aria-hidden="true">›</span></button>
-      <button data-panel="settings" [attr.aria-label]="i18n.t('manga.readerSettings')" [title]="i18n.t('manga.readerSettings')" [attr.aria-expanded]="panel()==='settings'" (click)="openPanel('settings')"><span aria-hidden="true">⚙</span></button>
+      </div><div class="toolbar-group" role="group" [attr.aria-label]="i18n.t('manga.assist.reading')"><button data-panel="settings" [attr.aria-label]="i18n.t('manga.readerSettings')" [title]="i18n.t('manga.readerSettings')" [attr.aria-expanded]="panel()==='settings'" (click)="openPanel('settings')"><span aria-hidden="true">⚙</span></button>
       <button class="clock-button" data-panel="clock" [attr.aria-label]="i18n.t('manga.readingTime') + ': ' + clockLabel()" [title]="i18n.t('manga.readingTime')" [attr.aria-expanded]="panel()==='clock'" (click)="openPanel('clock')"><span aria-hidden="true">{{clockState()==='off'?'▷':clockState()==='paused'?'⏸':'⏱'}}</span><span>{{clockState()==='off'?i18n.t('manga.clock'):formatTime(sessionSeconds())}}</span></button>
+      </div><div class="toolbar-group" role="group" [attr.aria-label]="i18n.t('manga.assist.help')"><a class="reader-help" routerLink="/manga/guide" [attr.aria-label]="i18n.t('manga.landing.how')" [title]="i18n.t('manga.landing.how')">?</a></div>
     </nav>
     @if(panel();as activePanel){
       <div class="reader-panel-backdrop" (click)="closePanel()"></div>
@@ -50,14 +51,14 @@ import { MangaReaderPreferences, MANGA_READER_PREFERENCES_KEY, readMangaReaderPr
         }
       </section>
     }
-    @if(popup();as point){<app-dictionary-popup [x]="point.x" [y]="point.y" [result]="lookupResult()" [loading]="lookupLoading()" [failed]="lookupFailed()" (closed)="closeDictionary()"/>}
+    @if(popup();as point){<app-dictionary-popup [x]="point.x" [y]="point.y" [context]="point" [location]="{volumeId:volume()?.id ?? '',pageIndex:index(),blockIndex:point.blockIndex ?? 0}" [result]="lookupResult()" [loading]="lookupLoading()" [failed]="lookupFailed()" (closed)="closeDictionary()"/>}
   </main>`,
 })
 export class MangaReaderPage implements OnDestroy {
   private readonly lookup=inject(JapaneseLookupService);
   readonly popup=signal<OcrLookupPoint|null>(null);readonly lookupResult=signal<DictionaryLookup>({query:'',terms:[],installed:false});readonly lookupLoading=signal(false);readonly lookupFailed=signal(false);private lookupGeneration=0;
   async lookupWord(point:OcrLookupPoint):Promise<void>{if(!this.preferences().dictionaryEnabled)return;this.interact();this.panel.set(null);this.popup.set(point);this.tick();this.lookupLoading.set(true);this.lookupFailed.set(false);const generation=++this.lookupGeneration;
-    try{const result=await this.lookup.lookup(point.text,point.offset);if(generation===this.lookupGeneration)this.lookupResult.set(result);}catch{if(generation===this.lookupGeneration)this.lookupFailed.set(true);}finally{if(generation===this.lookupGeneration)this.lookupLoading.set(false);}
+    try{const result=point.mode==='selection'?await this.lookup.lookupSelection(point.selectedText??point.text):await this.lookup.lookupAt(point.text,point.offset);if(generation===this.lookupGeneration)this.lookupResult.set(result);}catch{if(generation===this.lookupGeneration)this.lookupFailed.set(true);}finally{if(generation===this.lookupGeneration)this.lookupLoading.set(false);}
   }
   closeDictionary():void{this.tick();++this.lookupGeneration;this.popup.set(null);this.interact();}
   readonly i18n = inject(TranslationService); private readonly repository = inject(MangaRepository); private readonly workspaceService = inject(WorkspaceService);

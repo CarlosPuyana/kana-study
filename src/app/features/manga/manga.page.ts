@@ -18,7 +18,7 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
 @Component({
   selector: "app-manga-page",
   imports: [RouterLink, AccountControl, DictionaryInstallComponent],
-  styleUrl: "./manga.scss",
+  styleUrls: ["./manga.scss", "./manga-library.scss"],
   template: `<main class="manga-library">
     <header>
       <a routerLink="/more" [queryParams]="{ from: 'manga' }">{{
@@ -26,17 +26,15 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
       }}</a
       ><app-account-control />
     </header>
-    <h1>{{ i18n.t("more.manga.title") }}</h1>
+    <section class="manga-hero"><span class="eyebrow">{{i18n.t("more.manga.title")}}</span><h1>{{i18n.t("manga.landing.title")}}</h1><p>{{i18n.t("manga.landing.intro")}}</p><div class="actions"><button class="primary-action" [disabled]="busy()" (click)="fileInput.click()">{{i18n.t("manga.landing.add")}}</button><a routerLink="/manga/guide">{{i18n.t("manga.landing.how")}} →</a></div></section><section class="manga-steps">@for(step of [1,2,3];track step){<article><div class="step-art" aria-hidden="true">@switch(step){@case(1){<span class="file-art">ZIP / CBZ</span>}@case(2){<span class="bubble-art">何してるの？</span>}@case(3){<span class="word-art">食べなかった → 食べる</span>}}</div><h2>{{step}} · {{i18n.t("manga.landing.step"+step)}}</h2></article>}</section>
     <p>{{ i18n.t("manga.rights") }}</p>
     <app-dictionary-install />
-    <label class="import-button" [class.disabled]="busy()"
-      ><span>{{ i18n.t("manga.import") }}</span
-      ><input
-        type="file"
+    <input hidden [attr.aria-label]="i18n.t('manga.landing.add')"
+        #fileInput type="file"
         accept=".zip,.cbz"
         [disabled]="busy()"
         (change)="importFile($event)"
-    /></label>
+    />
     @if (busy()) {
       <p role="status">
         {{ i18n.t("manga.processing") }} {{ processed() }} / {{ total() }}
@@ -46,9 +44,9 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
       <p role="alert">{{ i18n.t("manga.error." + error()) }}</p>
     }
     @if (!busy() && !volumes().length) {
-      <p>{{ i18n.t("manga.empty") }}</p>
+      <section class="empty-library"><div class="file-art" aria-hidden="true">＋</div><h2>{{i18n.t("manga.landing.empty")}}</h2><p>{{i18n.t("manga.landing.emptyHelp")}}</p><div class="actions"><button class="primary-action" (click)="fileInput.click()">{{i18n.t("manga.landing.add")}}</button><a routerLink="/manga/guide">{{i18n.t("manga.landing.how")}}</a></div></section>
     }
-    <section class="library-grid">
+    <h2 class="library-heading">{{i18n.t("manga.library")}}</h2><section class="library-grid">
       @for (volume of volumes(); track volume.id) {
         <article>
           @if (covers()[volume.id]) {
@@ -67,16 +65,14 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
             {{ i18n.t("manga.pages") }} · {{ size(volume.storageBytes) }} MB
           </p>
           <progress
-            [value]="readPages(volume)"
+            [attr.aria-label]="i18n.t('manga.landing.progress')" [value]="readPages(volume)"
             [max]="volume.pageCount"
           ></progress>
           <div class="actions">
             <a [routerLink]="['/manga/read', volume.id]">{{
               i18n.t(progress()[volume.id] ? "manga.continue" : "manga.read")
             }}</a
-            ><button (click)="confirmDelete.set(volume)">
-              {{ i18n.t("manga.delete") }}
-            </button>
+            ><details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
           </div>
         </article>
       }

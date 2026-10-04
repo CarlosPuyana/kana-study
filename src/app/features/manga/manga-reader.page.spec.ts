@@ -9,7 +9,7 @@ import { MangaReadingClock, MangaClockOptions } from '../../core/services/manga-
 import { MANGA_READER_PREFERENCES_KEY } from '../../core/services/manga-reader-preferences';
 const point={text:'学校',offset:0,x:100,y:100};
 describe('Manga reader controls',()=>{
-  const lookup={lookup:vi.fn()};
+  const lookup={lookup:vi.fn(),lookupSelection:vi.fn(),lookupAt:(text:string,offset:number)=>lookup.lookup(text,offset)};
   beforeEach(()=>{
     localStorage.clear();lookup.lookup.mockReset().mockResolvedValue({query:'学校',installed:true,terms:[]});
     vi.spyOn(document,'hasFocus').mockReturnValue(true);
@@ -24,6 +24,7 @@ describe('Manga reader controls',()=>{
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();});
   async function reader(){const fixture=TestBed.createComponent(MangaReaderPage);fixture.detectChanges();await vi.waitFor(()=>expect(fixture.componentInstance.loading()).toBe(false));fixture.detectChanges();return fixture;}
+  it('routes manual selection to its own lookup API without caret segmentation',async()=>{lookup.lookupSelection.mockResolvedValue({query:'ひとりで行く',requestedText:'ひとりで行く',terms:[],installed:true,mode:'selection'});const fixture=await reader();await fixture.componentInstance.lookupWord({mode:'selection',text:'今日はひとりで行く',selectedText:'ひとりで行く',offset:3,x:100,y:100});expect(lookup.lookupSelection).toHaveBeenCalledWith('ひとりで行く');expect(lookup.lookup).not.toHaveBeenCalled();expect(fixture.componentInstance.lookupResult().requestedText).toBe('ひとりで行く');});
   it('navigates previous/next with disabled first and last page boundaries',async()=>{
     const fixture=await reader(),component=fixture.componentInstance;
     expect(fixture.nativeElement.querySelector('.previous').disabled).toBe(true);expect(fixture.nativeElement.querySelector('.next').disabled).toBe(false);

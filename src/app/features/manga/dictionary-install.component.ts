@@ -5,18 +5,18 @@ import { YomitanDictionaryImporter } from '../../core/services/yomitan-dictionar
 import { DictionaryMetadata } from '../../core/models/dictionary.model';
 export const JMDICT_DOWNLOAD_URL = 'dictionaries/JMdict_spanish.zip';
 @Component({selector:'app-dictionary-install',template:`<section class="dictionary-card">
-  <h2>{{i18n.t('dictionary.title')}}</h2>
-  @if(ready();as metadata){<p>{{i18n.t('dictionary.installed')}}</p><p>{{metadata.count.toLocaleString(i18n.language())}} {{i18n.t('dictionary.entries')}}</p>}
+  <h2>@if(ready()){<span aria-hidden="true">✓ </span>}{{i18n.t('dictionary.title')}}</h2>
+  @if(ready();as metadata){<p>{{i18n.t('manga.dictionary.offline')}}</p><p>{{metadata.count.toLocaleString(i18n.language())}} {{i18n.t('dictionary.entries')}}</p>}
   @else{<p>{{i18n.t('dictionary.installHelp')}}</p>}
   <div class="install-actions">
-    <button [disabled]="busy()" (click)="download()">{{i18n.t(ready()?'dictionary.update':'dictionary.downloadInstall')}}</button>
-    <label [class.disabled]="busy()"><span>{{i18n.t('dictionary.manualImport')}}</span><input type="file" accept=".zip" [disabled]="busy()" (change)="install($event)"/></label>
+    <button [disabled]="busy()" (click)="download()">{{i18n.t(ready()?'dictionary.update':'manga.dictionary.install')}}</button>
+    <details><summary>{{i18n.t('manga.dictionary.advanced')}}</summary><label [class.disabled]="busy()"><span>{{i18n.t('dictionary.manualImport')}}</span><input type="file" accept=".zip" [disabled]="busy()" (change)="install($event)"/></label></details>
   </div>
   @if(phase()==='download'){<p role="status">{{i18n.t('dictionary.downloading')}} @if(percent()!==null){<span>{{percent()}} %</span>}</p>}
   @else if(busy()){<p role="status">{{i18n.t('dictionary.importing')}} {{count().toLocaleString(i18n.language())}} {{i18n.t('dictionary.entries')}}</p>}
   @if(error()){<p role="alert">{{i18n.t(error()==='download'?'dictionary.downloadError':'dictionary.importError')}}</p>}
   <small>{{i18n.t('dictionary.attribution')}}</small>
-</section>`,styles:[`.dictionary-card{margin-block:1.5rem;padding:1rem;border:1px solid var(--border);border-radius:1rem;background:var(--surface);color:var(--text-primary);}h2{font-size:1.1rem;}p,small{color:var(--text-secondary);}small{display:block;margin-top:1rem;}.install-actions{display:flex;flex-wrap:wrap;gap:.75rem;}button,label{position:relative;display:inline-block;padding:.65rem 1rem;border:1px solid var(--border);border-radius:.7rem;background:var(--surface-raised);color:var(--text-primary);font:inherit;cursor:pointer;}button{background:var(--primary);color:var(--background);}input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;}label:focus-within{outline:2px solid var(--focus-ring);outline-offset:3px;}button:disabled,.disabled{opacity:.5;cursor:default;}`]})
+</section>`,styles:[`.dictionary-card{margin-block:1.5rem;padding:1rem;border:1px solid var(--border);border-radius:1rem;background:var(--surface);color:var(--text-primary);}h2{font-size:1.1rem;}p,small{color:var(--text-secondary);}small{display:block;margin-top:1rem;}summary{min-height:44px;align-content:center;cursor:pointer;}summary:focus-visible,button:focus-visible{outline:2px solid var(--focus-ring);outline-offset:3px;}.install-actions{display:flex;align-items:start;flex-wrap:wrap;gap:.75rem;}button,label{position:relative;display:inline-block;padding:.65rem 1rem;border:1px solid var(--border);border-radius:.7rem;background:var(--surface-raised);color:var(--text-primary);font:inherit;cursor:pointer;}button{background:var(--primary);color:var(--background);}input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;}label:focus-within{outline:2px solid var(--focus-ring);outline-offset:3px;}button:disabled,.disabled{opacity:.5;cursor:default;}`]})
 export class DictionaryInstallComponent implements OnInit, OnDestroy {
   readonly i18n=inject(TranslationService);private readonly repository=inject(DictionaryRepository);private readonly importer=inject(YomitanDictionaryImporter);
   readonly ready=signal<DictionaryMetadata|undefined>(undefined);readonly busy=signal(false);readonly count=signal(0);readonly error=signal<'download'|'import'|null>(null);

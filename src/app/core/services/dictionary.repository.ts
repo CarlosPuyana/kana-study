@@ -51,6 +51,6 @@ export class DictionaryRepository {
     });
   }
   async find(dictionaryId:string, query:string, field:'expression'|'reading'):Promise<DictionaryTerm[]> {
-    const db=await this.open();return request(db.transaction('terms').objectStore('terms').index(field).getAll(IDBKeyRange.only([dictionaryId,query]),5));
+    const db=await this.open();return request(db.transaction('terms').objectStore('terms').index(field).getAll(IDBKeyRange.only([dictionaryId,query]),32));
   }
 }
