@@ -3,13 +3,17 @@ import { CompletedSessionSummary } from '../models/learning-session.model';
 import { StorageService } from './storage.service';
 
 const COMPLETED_SESSIONS_KEY = 'kana-study.completed-sessions.v1';
+function readSessions(storage:StorageService):readonly CompletedSessionSummary[] {
+  const stored=storage.get<unknown>(COMPLETED_SESSIONS_KEY,[]);
+  return Array.isArray(stored)?stored.filter((item):item is CompletedSessionSummary=>!!item&&typeof item==='object')
+    .map(item=>({...item,module:item.module??'kana'})):[];
+}
 
 @Injectable({ providedIn: 'root' })
 export class SessionHistoryService {
   private readonly storage = inject(StorageService);
   private readonly state = signal<readonly CompletedSessionSummary[]>(
-    this.storage.get<readonly CompletedSessionSummary[]>(COMPLETED_SESSIONS_KEY, [])
-      .map(item => ({ ...item, module: item.module ?? 'kana' })),
+    readSessions(this.storage),
   );
   readonly sessions = this.state.asReadonly();
 

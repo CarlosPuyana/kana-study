@@ -34,6 +34,7 @@ export const routes: Routes = [
   { path: 'profile', loadComponent: () => import('./features/profile/profile.page').then(module => module.ProfilePage) },
   { path: 'writing', loadComponent: () => import('./features/writing/kana-writing.page').then(module => module.KanaWritingPage) },
   { path: 'weaknesses', loadComponent: () => import('./features/weaknesses/weaknesses.page').then(module => module.WeaknessesPage) },
+  { path: 'stats', loadComponent: () => import('./features/stats/stats.page').then(module => module.StatsPage) },
   {
     path: 'flags',
     loadChildren: () => import('./features/flags/flags.routes').then(module => module.FLAGS_ROUTES),

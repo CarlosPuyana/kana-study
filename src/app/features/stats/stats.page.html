@@ -1,0 +1,40 @@
+@let stats=analytics.stats();
+<main class="stats-shell">
+  <header><a class="back" routerLink="/more" [attr.aria-label]="i18n.t('common.back')">←</a><h1>📊 {{i18n.t('stats.title')}}</h1></header>
+  <p class="intro">{{i18n.t('stats.description')}}</p>
+  <div class="summary">
+    <article><strong>{{stats.summary.streak}}</strong><span>{{i18n.t('stats.streak')}}</span></article>
+    <article><strong>{{stats.summary.sessions}}</strong><span>{{i18n.t('stats.sessions')}}</span></article>
+    <article><strong>{{duration(stats.summary.seconds)}}</strong><span>{{i18n.t('stats.time')}}</span></article>
+    <article><strong>{{stats.summary.weakCount}}</strong><span>{{i18n.t('stats.weak')}}</span></article>
+  </div>
+  <section class="recommendation"><h2>{{i18n.t('stats.recommendation')}}</h2>@for(item of stats.recommendations;track item.key){<p>{{recommendation(item)}}</p>}</section>
+  <section aria-labelledby="modules-title"><h2 id="modules-title">{{i18n.t('stats.modules')}}</h2><p class="note">{{i18n.t('stats.performanceScope')}}</p><div class="cards">
+    @for(item of stats.modules;track item.module){<article><h3>{{moduleLabel(item.module)}}</h3>
+      @if(item.accuracy!==null){<strong class="accuracy">{{percent(item.accuracy)}}</strong><div class="bar" aria-hidden="true"><span [style.width.%]="item.accuracy"></span></div>
+        <dl><div><dt>{{i18n.t('stats.attempts')}}</dt><dd>{{item.attempts}}</dd></div><div><dt>{{i18n.t('stats.successes')}}</dt><dd>{{item.successes}}</dd></div><div><dt>{{i18n.t('stats.failures')}}</dt><dd>{{item.failures}}</dd></div></dl>
+      }@else{<p class="empty">{{i18n.t('stats.insufficient')}}</p>}
+    </article>}
+  </div></section>
+  <section aria-labelledby="skills-title"><h2 id="skills-title">{{i18n.t('stats.skills')}}</h2><div class="cards">
+    @for(item of stats.skills;track item.activity){<article><h3>{{skillIcon(item.activity)}} {{skillLabel(item.activity)}}</h3>
+      @if(item.accuracy!==null){<strong class="accuracy">{{percent(item.accuracy)}}</strong><div class="bar" aria-hidden="true"><span [style.width.%]="item.accuracy"></span></div><dl><div><dt>{{i18n.t('stats.attempts')}}</dt><dd>{{item.attempts}}</dd></div><div><dt>{{i18n.t('stats.weak')}}</dt><dd>{{item.weakCount}}</dd></div></dl>}
+      @else{<p class="empty">{{i18n.t('stats.insufficient')}}</p>}
+    </article>}
+  </div></section>
+  <div class="paired">
+    <section><h2>{{i18n.t('stats.difficult')}}</h2><p class="note">{{i18n.t('stats.difficultMinimum')}}</p>
+      <ol>@for(item of stats.difficult;track item.module+':'+item.questionType){<li><div><strong>{{directionLabel(item)}}</strong><small>{{moduleLabel(item.module)}} · {{i18n.t('stats.attemptCount',{count:item.attempts})}}</small></div><span>{{percent(item.accuracy)}}</span></li>}@empty{<li class="empty">{{i18n.t('stats.insufficient')}}</li>}</ol>
+    </section>
+    <section><h2>{{i18n.t('stats.strengths')}}</h2><p class="note">{{i18n.t('stats.strengthMinimum')}}</p>
+      <ol>@for(item of stats.strengths;track item.module+':'+item.questionType){<li><div><strong>{{directionLabel(item)}}</strong><small>{{moduleLabel(item.module)}} · {{i18n.t('stats.attemptCount',{count:item.attempts})}}</small></div><span>{{percent(item.accuracy)}}</span></li>}@empty{<li class="empty">{{i18n.t('stats.insufficient')}}</li>}</ol>
+    </section>
+  </div>
+  <section><h2>{{i18n.t('stats.weak')}}</h2><div class="paired weak-summary"><dl>@for(item of stats.modules;track item.module){<div><dt>{{moduleLabel(item.module)}}</dt><dd>{{item.weakCount}}</dd></div>}</dl><dl>@for(item of stats.skills;track item.activity){<div><dt>{{skillIcon(item.activity)}} {{skillLabel(item.activity)}}</dt><dd>{{item.weakCount}}</dd></div>}</dl></div><a class="action" routerLink="/weaknesses">{{i18n.t('stats.viewWeaknesses')}} →</a></section>
+  <section><h2>{{i18n.t('stats.recent')}}</h2><p class="note">{{i18n.t('stats.historyScope')}}</p><div class="paired">
+    @for(item of stats.recent;track item.days){<article><h3>{{i18n.t('stats.lastDays',{count:item.days})}}</h3>
+      @if(item.sessions){<dl><div><dt>{{i18n.t('stats.sessions')}}</dt><dd>{{item.sessions}}</dd></div><div><dt>{{i18n.t('stats.exercises')}}</dt><dd>{{item.exercises}}</dd></div><div><dt>{{i18n.t('stats.time')}}</dt><dd>{{duration(item.seconds)}}</dd></div><div><dt>{{i18n.t('learn.firstTryRemembered')}}</dt><dd>{{percent(item.firstTryAccuracy)}}</dd></div></dl>}
+      @else{<p class="empty">{{i18n.t('stats.noRecent')}}</p>}
+    </article>}
+  </div></section>
+</main>
