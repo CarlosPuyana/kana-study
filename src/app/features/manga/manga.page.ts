@@ -6,7 +6,9 @@ import {
   signal,
   untracked,
 } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink, convertToParamMap } from "@angular/router";
+import { FormsModule } from '@angular/forms';
+import { parseRemoteLink } from '../../core/services/mokuro-remote-import.service';
 import { TranslationService } from "../../core/services/translation.service";
 import { WorkspaceService } from "../../core/services/workspace.service";
 import { MangaRepository } from "../../core/services/manga.repository";
@@ -17,7 +19,7 @@ import { AccountControl } from "../../shared/components/account-control/account-
 import { DictionaryInstallComponent } from './dictionary-install.component';
 @Component({
   selector: "app-manga-page",
-  imports: [RouterLink, AccountControl, DictionaryInstallComponent],
+  imports: [FormsModule, RouterLink, AccountControl, DictionaryInstallComponent],
   styleUrls: ["./manga.scss", "./manga-library.scss"],
   template: `<main class="manga-library">
     <header>
@@ -27,6 +29,15 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
       ><app-account-control />
     </header>
     <section class="manga-hero"><span class="eyebrow">{{i18n.t("more.manga.title")}}</span><h1>{{i18n.t("manga.landing.title")}}</h1><p>{{i18n.t("manga.landing.intro")}}</p><div class="actions"><button class="primary-action" [disabled]="busy()" (click)="fileInput.click()">{{i18n.t("manga.landing.add")}}</button><a routerLink="/manga/guide">{{i18n.t("manga.landing.how")}} →</a></div></section><section class="manga-steps">@for(step of [1,2,3];track step){<article><div class="step-art" aria-hidden="true">@switch(step){@case(1){<span class="file-art">ZIP / CBZ</span>}@case(2){<span class="bubble-art">何してるの？</span>}@case(3){<span class="word-art">食べなかった → 食べる</span>}}</div><h2>{{step}} · {{i18n.t("manga.landing.step"+step)}}</h2></article>}</section>
+    <details class="remote-entry"><summary>{{i18n.t('manga.remote.openLink')}}</summary>
+      <p>{{i18n.t('manga.remote.linkHelp')}}</p><form (ngSubmit)="openRemote()">
+        <label>{{i18n.t('manga.remote.archiveUrl')}}<input name="cbz" type="url" required [(ngModel)]="remoteCbz" /></label>
+        <label>{{i18n.t('manga.remote.manifestUrl')}}<input name="manifest" type="url" required [(ngModel)]="remoteManifest" /></label>
+        <label>{{i18n.t('manga.remote.coverUrl')}}<input name="cover" type="url" [(ngModel)]="remoteCover" /></label>
+        @if(remoteInvalid()){<p role="alert">{{i18n.t('manga.remote.invalidLink')}}</p>}
+        <button type="submit" [disabled]="busy()">{{i18n.t('manga.remote.openLink')}}</button>
+      </form>
+    </details>
     <p>{{ i18n.t("manga.rights") }}</p>
     <app-dictionary-install />
     <input hidden [attr.aria-label]="i18n.t('manga.landing.add')"
@@ -95,6 +106,16 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
   </main>`,
 })
 export class MangaPage implements OnDestroy {
+  private readonly router=inject(Router);
+  remoteCbz='';remoteManifest='';remoteCover='';readonly remoteInvalid=signal(false);
+  openRemote():void {
+    this.remoteInvalid.set(false);
+    try {
+      const link=parseRemoteLink(convertToParamMap({cbz:this.remoteCbz.trim(),manifest:this.remoteManifest.trim(),...(this.remoteCover.trim()?{cover:this.remoteCover.trim()}:{})}));
+      void this.router.navigate(['/upload'],{queryParams:{...link}});
+    }catch{this.remoteInvalid.set(true);}
+  }
+
   readonly i18n = inject(TranslationService);
   private readonly workspace = inject(WorkspaceService);
   private readonly repository = inject(MangaRepository);

@@ -6006,7 +6006,7 @@
   "manga.guide.step3": "Tap a word",
   "manga.guide.text3": "JMdict shows readings and Spanish meanings. The lookup tries to recover the base form of conjugated verbs and adjectives. Ambiguous forms may have alternatives; a lookup does not replace context.",
   "manga.guide.step4": "Ask for more context",
-  "manga.guide.text4": "Translate provides natural meaning. Study sentence separates vocabulary, base forms and grammar. These optional actions require a configured contextual service and a connection. Opening a page never translates it.",
+  "manga.guide.text4": "Translate looks for a natural meaning in the context of the sentence. It is a voluntary action requiring the configured contextual service and a connection. Opening a page never translates it automatically.",
   "manga.guide.step5": "Keep reading",
   "manga.guide.text5": "Try reading first. Look things up only when needed. Close the help to return to the story; adjust zoom and continue from your last saved page.",
   "manga.guide.faq": "Frequently asked questions",
@@ -6019,7 +6019,7 @@
   "manga.guide.q4": "Why install the dictionary?",
   "manga.guide.a4": "JMdict is installed once in the browser to look up words without sending queries to a server. It is shared across workspaces and an unsuccessful update preserves the previous installation.",
   "manga.guide.q5": "Is contextual translation automatic?",
-  "manga.guide.a5": "No. It is requested only when you press Translate or Study sentence, if a service is configured. The local dictionary always works independently.",
+  "manga.guide.a5": "No. It is requested only when you press Translate, if a service is configured. The local dictionary works independently.",
   "manga.reason.polite": "Polite form",
   "manga.reason.polite-past": "Polite past",
   "manga.reason.polite-negative": "Polite negative",
@@ -6262,5 +6262,10 @@
   "grammar.weakness.type.matching": "Matching",
   "grammar.weakness.practice": "Practice Grammar",
   "grammar.weakness.concepts": "Your most difficult grammar concepts",
-  "grammar.weakness.recommend": "{{direction}} is currently your grammar exercise type with the most room for improvement."
+  "grammar.weakness.recommend": "{{direction}} is currently your grammar exercise type with the most room for improvement.",
+  "manga.remote.openLink": "Import from link",
+  "manga.remote.linkHelp": "Enter the URLs of the ZIP/CBZ archive and the Mokuro-compatible remote manifest. The cover is optional.",
+  "manga.remote.archiveUrl": "ZIP/CBZ archive URL",
+  "manga.remote.manifestUrl": "Manifest URL",
+  "manga.remote.coverUrl": "Cover URL (optional)"
 }

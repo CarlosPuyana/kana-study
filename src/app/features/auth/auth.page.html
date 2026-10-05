@@ -1,5 +1,5 @@
 <main class="auth-overlay" role="dialog" aria-modal="true" [attr.aria-labelledby]="'auth-title'">
-  <a class="close" routerLink="/" [attr.aria-label]="i18n.t('common.close')">×</a>
+  <a class="close" [routerLink]="closeUrl" [attr.aria-label]="i18n.t('common.close')">×</a>
   <section class="auth-card">
     <div class="auth-mark" aria-hidden="true">あ</div>
     @if (!auth.configured) {

@@ -48,24 +48,24 @@ export class AuthService {
     return { error: safeAuthError(error) };
   }
 
-  async signUp(input: { displayName: string; username: string; email: string; password: string }): Promise<{ error: string | null; confirmationRequired: boolean }> {
+  async signUp(input: { displayName: string; username: string; email: string; password: string; returnUrl?: string }): Promise<{ error: string | null; confirmationRequired: boolean }> {
     const client = await this.supabase.getClient();
     if (!client) return { error: 'not-configured', confirmationRequired: false };
     const username = normalizeUsername(input.username);
     const { data, error } = await client.auth.signUp({
       email: input.email.trim(), password: input.password,
       options: {
-        emailRedirectTo: authReturnUrl('confirm'),
+        emailRedirectTo: authReturnUrl('confirm',input.returnUrl),
         data: { display_name: input.displayName.trim(), username, avatar_seed: username },
       },
     });
     return { error: safeAuthError(error), confirmationRequired: Boolean(data.user && !data.session) };
   }
 
-  async requestPasswordReset(email: string): Promise<{ error: string | null }> {
+  async requestPasswordReset(email: string,returnUrl?:string): Promise<{ error: string | null }> {
     const client = await this.supabase.getClient();
     if (!client) return { error: 'not-configured' };
-    const { error } = await client.auth.resetPasswordForEmail(email.trim(), { redirectTo: authReturnUrl('recovery') });
+    const { error } = await client.auth.resetPasswordForEmail(email.trim(), { redirectTo: authReturnUrl('recovery',returnUrl) });
     return { error: safeAuthError(error) };
   }
 

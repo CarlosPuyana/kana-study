@@ -6006,7 +6006,7 @@
   "manga.guide.step3": "Prem una paraula",
   "manga.guide.text3": "JMdict mostra lectures i significats en espanyol. El cercador intenta recuperar la forma base de verbs i adjectius conjugats. Les formes ambigües poden tenir alternatives; la consulta no substitueix el context.",
   "manga.guide.step4": "Demana més context",
-  "manga.guide.text4": "Traduir busca un significat natural. Estudiar frase separa vocabulari, formes base i gramàtica. Són accions voluntàries que requereixen un servei contextual configurat i connexió. Mai es tradueix una pàgina en obrir-la.",
+  "manga.guide.text4": "Traduir cerca un significat natural en el context de la frase. És una acció voluntària que requereix el servei contextual configurat i connexió. Mai no es tradueix una pàgina en obrir-la.",
   "manga.guide.step5": "Continua llegint",
   "manga.guide.text5": "Intenta llegir primer. Consulta només quan ho necessitis. Tanca l’ajuda per tornar a la història; pots ajustar el zoom i continuar des de l’última pàgina desada.",
   "manga.guide.faq": "Preguntes freqüents",
@@ -6019,7 +6019,7 @@
   "manga.guide.q4": "Per què instal·lar el diccionari?",
   "manga.guide.a4": "JMdict s’instal·la una vegada al navegador per buscar paraules sense enviar consultes a un servidor. És compartit entre els espais de treball i una actualització fallida conserva la instal·lació anterior.",
   "manga.guide.q5": "La traducció contextual és automàtica?",
-  "manga.guide.a5": "No. Només es demana en prémer Traduir o Estudiar frase, si hi ha un servei configurat. El diccionari local sempre funciona de manera independent.",
+  "manga.guide.a5": "No. Només se sol·licita en prémer Traduir, si hi ha un servei configurat. El diccionari local funciona de manera independent.",
   "manga.reason.polite": "Forma cortesa",
   "manga.reason.polite-past": "Passat cortès",
   "manga.reason.polite-negative": "Negació cortesa",
@@ -6262,5 +6262,10 @@
   "grammar.weakness.type.matching": "Emparella",
   "grammar.weakness.practice": "Practica Gramàtica",
   "grammar.weakness.concepts": "La gramàtica que més et costa",
-  "grammar.weakness.recommend": "{{direction}} és ara el tipus d’exercici de gramàtica amb més marge de millora."
+  "grammar.weakness.recommend": "{{direction}} és ara el tipus d’exercici de gramàtica amb més marge de millora.",
+  "manga.remote.openLink": "Importa des d’un enllaç",
+  "manga.remote.linkHelp": "Introdueix les URL de l’arxiu ZIP/CBZ i del manifest remot compatible amb Mokuro. La portada és opcional.",
+  "manga.remote.archiveUrl": "URL de l’arxiu ZIP/CBZ",
+  "manga.remote.manifestUrl": "URL del manifest",
+  "manga.remote.coverUrl": "URL de portada (opcional)"
 }

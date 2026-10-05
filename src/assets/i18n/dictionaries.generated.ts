@@ -6079,7 +6079,7 @@ export const es:Record<string,string> = {...shared,...{
   "manga.guide.step3": "Pulsa una palabra",
   "manga.guide.text3": "JMdict muestra lecturas y significados en español. El buscador intenta recuperar la forma base de verbos y adjetivos conjugados. Las formas ambiguas pueden tener alternativas; la consulta no sustituye al contexto.",
   "manga.guide.step4": "Pide más contexto",
-  "manga.guide.text4": "Traducir busca un significado natural. Estudiar frase separa vocabulario, formas base y gramática. Son acciones voluntarias que requieren un servicio contextual configurado y conexión. Nunca se traduce una página al abrirla.",
+  "manga.guide.text4": "Traducir busca un significado natural en el contexto de la frase. Es una acción voluntaria que requiere el servicio contextual configurado y conexión. Nunca se traduce una página al abrirla.",
   "manga.guide.step5": "Sigue leyendo",
   "manga.guide.text5": "Intenta leer primero. Consulta solo cuando lo necesites. Cierra la ayuda para volver a la historia; puedes ajustar el zoom y continuar desde la última página guardada.",
   "manga.guide.faq": "Preguntas frecuentes",
@@ -6092,7 +6092,7 @@ export const es:Record<string,string> = {...shared,...{
   "manga.guide.q4": "¿Por qué instalar el diccionario?",
   "manga.guide.a4": "JMdict se instala una vez en el navegador para buscar palabras sin enviar consultas a un servidor. Es compartido entre tus espacios de trabajo y la actualización conserva la instalación anterior si falla.",
   "manga.guide.q5": "¿La traducción contextual es automática?",
-  "manga.guide.a5": "No. Solo se solicita al pulsar Traducir o Estudiar frase, si hay un servicio configurado. El diccionario local siempre funciona de forma independiente.",
+  "manga.guide.a5": "No. Solo se solicita al pulsar Traducir, si hay un servicio configurado. El diccionario local funciona de forma independiente.",
   "manga.reason.polite": "Forma cortés",
   "manga.reason.polite-past": "Pasado cortés",
   "manga.reason.polite-negative": "Negación cortés",
@@ -6265,7 +6265,12 @@ export const es:Record<string,string> = {...shared,...{
   "grammar.weakness.type.matching": "Emparejar",
   "grammar.weakness.practice": "Practicar Gramática",
   "grammar.weakness.concepts": "Gramática que más te cuesta",
-  "grammar.weakness.recommend": "{{direction}} es ahora el tipo de ejercicio de gramática con más margen de mejora."
+  "grammar.weakness.recommend": "{{direction}} es ahora el tipo de ejercicio de gramática con más margen de mejora.",
+  "manga.remote.openLink": "Importar desde enlace",
+  "manga.remote.linkHelp": "Introduce las URLs del archivo ZIP/CBZ y del manifiesto remoto compatible con Mokuro. La portada es opcional.",
+  "manga.remote.archiveUrl": "URL del archivo ZIP/CBZ",
+  "manga.remote.manifestUrl": "URL del manifiesto",
+  "manga.remote.coverUrl": "URL de portada (opcional)"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -7141,7 +7146,7 @@ export const en:Record<string,string> = {...shared,...{
   "manga.guide.step3": "Tap a word",
   "manga.guide.text3": "JMdict shows readings and Spanish meanings. The lookup tries to recover the base form of conjugated verbs and adjectives. Ambiguous forms may have alternatives; a lookup does not replace context.",
   "manga.guide.step4": "Ask for more context",
-  "manga.guide.text4": "Translate provides natural meaning. Study sentence separates vocabulary, base forms and grammar. These optional actions require a configured contextual service and a connection. Opening a page never translates it.",
+  "manga.guide.text4": "Translate looks for a natural meaning in the context of the sentence. It is a voluntary action requiring the configured contextual service and a connection. Opening a page never translates it automatically.",
   "manga.guide.step5": "Keep reading",
   "manga.guide.text5": "Try reading first. Look things up only when needed. Close the help to return to the story; adjust zoom and continue from your last saved page.",
   "manga.guide.faq": "Frequently asked questions",
@@ -7154,7 +7159,7 @@ export const en:Record<string,string> = {...shared,...{
   "manga.guide.q4": "Why install the dictionary?",
   "manga.guide.a4": "JMdict is installed once in the browser to look up words without sending queries to a server. It is shared across workspaces and an unsuccessful update preserves the previous installation.",
   "manga.guide.q5": "Is contextual translation automatic?",
-  "manga.guide.a5": "No. It is requested only when you press Translate or Study sentence, if a service is configured. The local dictionary always works independently.",
+  "manga.guide.a5": "No. It is requested only when you press Translate, if a service is configured. The local dictionary works independently.",
   "manga.reason.polite": "Polite form",
   "manga.reason.polite-past": "Polite past",
   "manga.reason.polite-negative": "Polite negative",
@@ -7327,7 +7332,12 @@ export const en:Record<string,string> = {...shared,...{
   "grammar.weakness.type.matching": "Matching",
   "grammar.weakness.practice": "Practice Grammar",
   "grammar.weakness.concepts": "Your most difficult grammar concepts",
-  "grammar.weakness.recommend": "{{direction}} is currently your grammar exercise type with the most room for improvement."
+  "grammar.weakness.recommend": "{{direction}} is currently your grammar exercise type with the most room for improvement.",
+  "manga.remote.openLink": "Import from link",
+  "manga.remote.linkHelp": "Enter the URLs of the ZIP/CBZ archive and the Mokuro-compatible remote manifest. The cover is optional.",
+  "manga.remote.archiveUrl": "ZIP/CBZ archive URL",
+  "manga.remote.manifestUrl": "Manifest URL",
+  "manga.remote.coverUrl": "Cover URL (optional)"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -8203,7 +8213,7 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.guide.step3": "Prem una paraula",
   "manga.guide.text3": "JMdict mostra lectures i significats en espanyol. El cercador intenta recuperar la forma base de verbs i adjectius conjugats. Les formes ambigües poden tenir alternatives; la consulta no substitueix el context.",
   "manga.guide.step4": "Demana més context",
-  "manga.guide.text4": "Traduir busca un significat natural. Estudiar frase separa vocabulari, formes base i gramàtica. Són accions voluntàries que requereixen un servei contextual configurat i connexió. Mai es tradueix una pàgina en obrir-la.",
+  "manga.guide.text4": "Traduir cerca un significat natural en el context de la frase. És una acció voluntària que requereix el servei contextual configurat i connexió. Mai no es tradueix una pàgina en obrir-la.",
   "manga.guide.step5": "Continua llegint",
   "manga.guide.text5": "Intenta llegir primer. Consulta només quan ho necessitis. Tanca l’ajuda per tornar a la història; pots ajustar el zoom i continuar des de l’última pàgina desada.",
   "manga.guide.faq": "Preguntes freqüents",
@@ -8216,7 +8226,7 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.guide.q4": "Per què instal·lar el diccionari?",
   "manga.guide.a4": "JMdict s’instal·la una vegada al navegador per buscar paraules sense enviar consultes a un servidor. És compartit entre els espais de treball i una actualització fallida conserva la instal·lació anterior.",
   "manga.guide.q5": "La traducció contextual és automàtica?",
-  "manga.guide.a5": "No. Només es demana en prémer Traduir o Estudiar frase, si hi ha un servei configurat. El diccionari local sempre funciona de manera independent.",
+  "manga.guide.a5": "No. Només se sol·licita en prémer Traduir, si hi ha un servei configurat. El diccionari local funciona de manera independent.",
   "manga.reason.polite": "Forma cortesa",
   "manga.reason.polite-past": "Passat cortès",
   "manga.reason.polite-negative": "Negació cortesa",
@@ -8389,5 +8399,10 @@ export const ca:Record<string,string> = {...shared,...{
   "grammar.weakness.type.matching": "Emparella",
   "grammar.weakness.practice": "Practica Gramàtica",
   "grammar.weakness.concepts": "La gramàtica que més et costa",
-  "grammar.weakness.recommend": "{{direction}} és ara el tipus d’exercici de gramàtica amb més marge de millora."
+  "grammar.weakness.recommend": "{{direction}} és ara el tipus d’exercici de gramàtica amb més marge de millora.",
+  "manga.remote.openLink": "Importa des d’un enllaç",
+  "manga.remote.linkHelp": "Introdueix les URL de l’arxiu ZIP/CBZ i del manifest remot compatible amb Mokuro. La portada és opcional.",
+  "manga.remote.archiveUrl": "URL de l’arxiu ZIP/CBZ",
+  "manga.remote.manifestUrl": "URL del manifest",
+  "manga.remote.coverUrl": "URL de portada (opcional)"
 }};

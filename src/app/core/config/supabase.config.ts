@@ -1,3 +1,4 @@
+import { safeReturnUrl } from '../services/return-navigation';
 export interface KanaStudyRuntimeConfig {
   readonly supabaseUrl?: string;
   readonly supabasePublishableKey?: string;
@@ -22,7 +23,10 @@ export function readSupabaseConfig(): SupabasePublicConfig {
   return { url, publishableKey, configured: /^https:\/\/.+\.supabase\.co$/i.test(url) && publishableKey.length > 20 };
 }
 
-export function authReturnUrl(mode?: 'recovery' | 'confirm'): string {
+export function authReturnUrl(mode?: 'recovery' | 'confirm', returnUrl?:string): string {
   const base = `${window.location.origin}${window.location.pathname}`;
-  return mode ? `${base}?auth=${mode}` : base;
+  if(!mode)return base;
+  const params=new URLSearchParams({auth:mode});
+  if(returnUrl)params.set('return',safeReturnUrl(returnUrl));
+  return `${base}?${params}`;
 }

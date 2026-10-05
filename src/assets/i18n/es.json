@@ -6006,7 +6006,7 @@
   "manga.guide.step3": "Pulsa una palabra",
   "manga.guide.text3": "JMdict muestra lecturas y significados en español. El buscador intenta recuperar la forma base de verbos y adjetivos conjugados. Las formas ambiguas pueden tener alternativas; la consulta no sustituye al contexto.",
   "manga.guide.step4": "Pide más contexto",
-  "manga.guide.text4": "Traducir busca un significado natural. Estudiar frase separa vocabulario, formas base y gramática. Son acciones voluntarias que requieren un servicio contextual configurado y conexión. Nunca se traduce una página al abrirla.",
+  "manga.guide.text4": "Traducir busca un significado natural en el contexto de la frase. Es una acción voluntaria que requiere el servicio contextual configurado y conexión. Nunca se traduce una página al abrirla.",
   "manga.guide.step5": "Sigue leyendo",
   "manga.guide.text5": "Intenta leer primero. Consulta solo cuando lo necesites. Cierra la ayuda para volver a la historia; puedes ajustar el zoom y continuar desde la última página guardada.",
   "manga.guide.faq": "Preguntas frecuentes",
@@ -6019,7 +6019,7 @@
   "manga.guide.q4": "¿Por qué instalar el diccionario?",
   "manga.guide.a4": "JMdict se instala una vez en el navegador para buscar palabras sin enviar consultas a un servidor. Es compartido entre tus espacios de trabajo y la actualización conserva la instalación anterior si falla.",
   "manga.guide.q5": "¿La traducción contextual es automática?",
-  "manga.guide.a5": "No. Solo se solicita al pulsar Traducir o Estudiar frase, si hay un servicio configurado. El diccionario local siempre funciona de forma independiente.",
+  "manga.guide.a5": "No. Solo se solicita al pulsar Traducir, si hay un servicio configurado. El diccionario local funciona de forma independiente.",
   "manga.reason.polite": "Forma cortés",
   "manga.reason.polite-past": "Pasado cortés",
   "manga.reason.polite-negative": "Negación cortés",
@@ -6262,5 +6262,10 @@
   "grammar.weakness.type.matching": "Emparejar",
   "grammar.weakness.practice": "Practicar Gramática",
   "grammar.weakness.concepts": "Gramática que más te cuesta",
-  "grammar.weakness.recommend": "{{direction}} es ahora el tipo de ejercicio de gramática con más margen de mejora."
+  "grammar.weakness.recommend": "{{direction}} es ahora el tipo de ejercicio de gramática con más margen de mejora.",
+  "manga.remote.openLink": "Importar desde enlace",
+  "manga.remote.linkHelp": "Introduce las URLs del archivo ZIP/CBZ y del manifiesto remoto compatible con Mokuro. La portada es opcional.",
+  "manga.remote.archiveUrl": "URL del archivo ZIP/CBZ",
+  "manga.remote.manifestUrl": "URL del manifiesto",
+  "manga.remote.coverUrl": "URL de portada (opcional)"
 }

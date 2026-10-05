@@ -1,3 +1,4 @@
+import { safeReturnUrl } from '../../core/services/return-navigation';
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -109,7 +110,9 @@ export class SelectionPage {
   save(): void {
     if (!this.valid()) return;
     this.settings.saveLearningSelection(this.draft());
-    void this.router.navigateByUrl('/');
+    const params=this.route.snapshot.queryParamMap;
+    const origin=safeReturnUrl(params.get('return'),'/grammar/n5/00');
+    void this.router.navigateByUrl(params.get('from')==='grammar'&&(origin==='/grammar'||origin.startsWith('/grammar/'))?origin:params.get('from')==='grammar'?'/grammar/n5/00':'/');
   }
 
   back(): void {
