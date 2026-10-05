@@ -20,6 +20,46 @@ describe('local writing weaknesses', () => {
   });
   let values: Map<string,unknown>;
   let saved: ReturnType<typeof vi.fn>;
+  it('scores Learn Good, Hard and Again independently by direction and retains all counters',()=>{
+    const s=TestBed.inject(WeaknessService);
+    s.recordLearn('vocabulary','word','meaning-to-japanese','again');
+    s.recordLearn('vocabulary','word','meaning-to-japanese','hard');
+    expect(s.records()[0]).toEqual(expect.objectContaining({score:3,attempts:2,failures:1,consecutiveCorrect:0}));
+    s.recordLearn('vocabulary','word','meaning-to-japanese','good');
+    expect(s.records()[0]).toEqual(expect.objectContaining({score:2,attempts:3,failures:1,consecutiveCorrect:1}));
+    s.recordLearn('vocabulary','word','japanese-to-reading','again');
+    s.recordLearn('vocabulary','word','japanese-to-reading','again');
+    expect(s.records()).toHaveLength(2);
+    expect(s.weak().map(r=>r.questionType)).toEqual(['japanese-to-reading']);
+    const reload=TestBed.runInInjectionContext(()=>new WeaknessService());expect(reload.records()).toEqual(s.records());
+  });
+  it('clamps Learn scores and distinguishes two weak directions of the same item',()=>{
+    const s=TestBed.inject(WeaknessService);
+    for(let n=0;n<12;n++)s.recordLearn('kana','a','kana-to-romaji','hard');
+    expect(s.records()[0].score).toBe(10);expect(s.records()[0].failures).toBe(0);
+    for(let n=0;n<15;n++)s.recordLearn('kana','a','kana-to-romaji','good');
+    expect(s.records()[0].score).toBe(0);
+    for(const type of ['kana-to-romaji','romaji-to-kana'])for(let n=0;n<2;n++)s.recordLearn('kana','a',type,'again');
+    expect(s.weak()).toHaveLength(2);
+    s.record('kana','a',false);s.record('kana','a',false);
+    expect(s.weak()).toHaveLength(3);
+  });
+  it('loads legacy records without adding optional fields and deduplicates exact identities only',()=>{
+    const legacy={module:'vocabulary',activity:'writing',itemId:'word',attempts:2,failures:2,score:4,consecutiveCorrect:0,lastAttemptAt:new Date().toISOString()};
+    values.set(WEAKNESSES_KEY,[legacy,legacy,{...legacy,activity:'listening'},
+      {...legacy,activity:'learn',questionType:'meaning-to-japanese'}, {...legacy,activity:'learn',questionType:'japanese-to-reading'}]);
+    const s=TestBed.inject(WeaknessService);expect(s.records()).toHaveLength(4);expect(s.records()[0]).toEqual(legacy);
+    s.recordLearn('vocabulary','word','meaning-to-japanese','good');
+    expect(s.records()).toHaveLength(4);expect(s.records().find(r=>r.questionType==='meaning-to-japanese')?.score).toBe(3);
+  });
+  it('resolves only existing Learn units by complete identity and retains priority',()=>{
+    const s=TestBed.inject(WeaknessService);
+    for(const type of ['a','b','obsolete'])for(let n=0;n<2;n++)s.recordLearn('kana','item',type,'again');
+    s.recordLearn('kana','item','b','hard');
+    s.record('kana','item',false);s.record('kana','item',false);
+    const units=[{id:'item',questionType:'a'},{id:'item',questionType:'b'}];
+    expect(s.learnUnits('kana',units,u=>u.id)).toEqual([units[1],units[0]]);
+  });
   beforeEach(() => {
     values=new Map();saved=vi.fn((key:string,value:unknown)=>values.set(key,value));
     TestBed.configureTestingModule({providers:[{provide:StorageService,useValue:{

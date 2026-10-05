@@ -6142,5 +6142,7 @@
   "listening.error": "No se pudo reproducir el audio. No se registrará como un fallo.",
   "listening.skipped": "{{count}} preguntas omitidas por fallos de audio. No afectan a tus débiles.",
   "listening.continue": "Continuar",
-  "listening.practiceWeak": "Practicar escucha débil"
+  "listening.practiceWeak": "Practicar escucha débil",
+  "weaknesses.learn": "Aprender",
+  "weaknesses.practiceLearn": "Practicar aprendizaje"
 }

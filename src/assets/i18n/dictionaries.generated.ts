@@ -6145,7 +6145,9 @@ export const es:Record<string,string> = {...shared,...{
   "listening.error": "No se pudo reproducir el audio. No se registrará como un fallo.",
   "listening.skipped": "{{count}} preguntas omitidas por fallos de audio. No afectan a tus débiles.",
   "listening.continue": "Continuar",
-  "listening.practiceWeak": "Practicar escucha débil"
+  "listening.practiceWeak": "Practicar escucha débil",
+  "weaknesses.learn": "Aprender",
+  "weaknesses.practiceLearn": "Practicar aprendizaje"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -7151,7 +7153,9 @@ export const en:Record<string,string> = {...shared,...{
   "listening.error": "Audio could not be played. This will not count as a mistake.",
   "listening.skipped": "{{count}} questions skipped due to audio errors. Your weak items are unaffected.",
   "listening.continue": "Continue",
-  "listening.practiceWeak": "Practise weak listening items"
+  "listening.practiceWeak": "Practise weak listening items",
+  "weaknesses.learn": "Learn",
+  "weaknesses.practiceLearn": "Practise learning"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -8157,5 +8161,7 @@ export const ca:Record<string,string> = {...shared,...{
   "listening.error": "No s’ha pogut reproduir l’àudio. No es registrarà com un error.",
   "listening.skipped": "{{count}} preguntes omeses per errors d’àudio. No afecten els teus punts febles.",
   "listening.continue": "Continuar",
-  "listening.practiceWeak": "Practicar escolta feble"
+  "listening.practiceWeak": "Practicar escolta feble",
+  "weaknesses.learn": "Aprendre",
+  "weaknesses.practiceLearn": "Practicar aprenentatge"
 }};

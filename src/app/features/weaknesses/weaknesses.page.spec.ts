@@ -1,6 +1,10 @@
 import {TestBed} from '@angular/core/testing';
 import {signal, Type} from '@angular/core';
-import {ActivatedRoute,convertToParamMap,provideRouter} from '@angular/router';
+import {ActivatedRoute,convertToParamMap,provideRouter,Router} from '@angular/router';
+import {LearningSessionService} from '../../core/services/learning-session.service';
+import {VocabularySessionService} from '../../core/services/vocabulary-session.service';
+import {KanjiSessionService} from '../../core/services/kanji-session.service';
+import {DailyLearningService} from '../../core/services/daily-learning.service';
 import {of} from 'rxjs';
 import {WeaknessesPage} from './weaknesses.page';
 import {WeaknessService,WEAKNESSES_KEY} from '../../core/services/weakness.service';
@@ -39,6 +43,38 @@ describe('Weak spots page and Writing integrations',()=>{
   }
   function weakRoute(){const params=convertToParamMap({weak:'1'});TestBed.overrideProvider(ActivatedRoute,{useValue:{snapshot:{queryParamMap:params},queryParamMap:of(params)}});}
   function reveal(c:WritingPage){if(c instanceof VocabularyWritingPage)c.wordFinished.set(true);c.revealed.set(true);}
+  it('shows one item per weak Learn direction with localized labels and no exact duplicates',async()=>{
+    const s=TestBed.inject(WeaknessService),entry=VOCABULARY_N5[0];
+    for(const type of ['meaning-to-japanese','japanese-to-reading'])for(let n=0;n<3;n++)s.recordLearn('vocabulary',entry.id,type,'again');
+    const f=TestBed.createComponent(WeaknessesPage);await f.whenStable();f.detectChanges();
+    expect(f.componentInstance.vocabularyLearn()).toHaveLength(2);
+    expect(f.nativeElement.textContent).toContain('Significado → Japonés');
+    expect(f.nativeElement.textContent).toContain('Japonés → Lectura');
+    expect(f.nativeElement.textContent).not.toContain('meaning-to-japanese');
+    expect(f.nativeElement.querySelector('.positive')).toBeNull();
+    expect(f.nativeElement.querySelectorAll('button.practice')).toHaveLength(1);
+  });
+  for(const module of ['kana','vocabulary','kanji'] as const){
+    it(`starts only ${module} Learn weaknesses via its existing engine without changing selection or daily state`,async()=>{
+      const daily={isCompletedToday:vi.fn(()=>true),refresh:vi.fn()};TestBed.overrideProvider(DailyLearningService,{useValue:daily});
+      const s=TestBed.inject(WeaknessService);
+      const id=module==='kana'?ALL_KANA[0].id:module==='vocabulary'?VOCABULARY_N5[0].id:KANJI_N5[0].id;
+      const type=module==='kana'?'kana-to-romaji':module==='vocabulary'?'meaning-to-japanese':'meaning-to-kanji';
+      s.recordLearn(module,id,type,'again');s.recordLearn(module,id,type,'again');
+      s.recordLearn(module,'obsolete',type,'again');s.recordLearn(module,'obsolete',type,'again');
+      s.record(module,id,false);s.record(module,id,false);
+      const f=TestBed.createComponent(WeaknessesPage);await f.whenStable();f.detectChanges();
+      const navigate=vi.spyOn(TestBed.inject(Router),'navigateByUrl').mockResolvedValue(true);
+      const before=new Map(values);
+      (f.nativeElement.querySelector('button.practice') as HTMLButtonElement).click();
+      const learning=module==='kana'?TestBed.inject(LearningSessionService):module==='vocabulary'?TestBed.inject(VocabularySessionService):TestBed.inject(KanjiSessionService);
+      expect(learning.isPractice()).toBe(true);expect(learning.session()?.units).toHaveLength(1);
+      expect(learning.currentUnit()?.questionType).toBe(type);
+      expect(navigate).toHaveBeenCalledWith(module==='kana'?'/learn':`/${module}/play`);
+      expect(daily.isCompletedToday).not.toHaveBeenCalled();expect(daily.refresh).not.toHaveBeenCalled();
+      expect(values).toEqual(before);
+    });
+  }
   it('exposes a lazy public route with no sign-in guard',async()=>{
     const route=routes.find(r=>r.path==='weaknesses')!;expect(route.canActivate).toBeUndefined();
     expect(await (route.loadComponent as ()=>Promise<unknown>)()).toBe(WeaknessesPage);

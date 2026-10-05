@@ -6142,5 +6142,7 @@
   "listening.error": "Audio could not be played. This will not count as a mistake.",
   "listening.skipped": "{{count}} questions skipped due to audio errors. Your weak items are unaffected.",
   "listening.continue": "Continue",
-  "listening.practiceWeak": "Practise weak listening items"
+  "listening.practiceWeak": "Practise weak listening items",
+  "weaknesses.learn": "Learn",
+  "weaknesses.practiceLearn": "Practise learning"
 }

@@ -10,8 +10,10 @@ import { MedalService } from './medal.service';
 import { ProgressService } from './progress.service';
 import { SessionHistoryService } from './session-history.service';
 import { DailyLearningService } from './daily-learning.service';
+import { WeaknessService } from './weakness.service';
 
 interface SessionState {
+  readonly practice: boolean;
   readonly session: LearningSession;
   readonly queue: readonly string[];
   readonly queueIndex: number;
@@ -29,10 +31,12 @@ export class LearningSessionService {
   private readonly history = inject(SessionHistoryService);
   private readonly medals = inject(MedalService);
   private readonly dailyLearning = inject(DailyLearningService);
+  private readonly weaknesses = inject(WeaknessService);
   private readonly state = signal<SessionState | null>(null);
   private readonly newMedalState = signal<readonly MedalState[]>([]);
 
   readonly session = computed(() => this.state()?.session ?? null);
+  readonly isPractice = computed(() => this.state()?.practice ?? false);
   readonly newlyUnlockedMedals = this.newMedalState.asReadonly();
   readonly currentUnit = computed(() => {
     const state = this.state();
@@ -93,6 +97,16 @@ export class LearningSessionService {
   start(mode: LearningMode): boolean {
     if (this.dailyLearning.isCompletedToday('kana')) return false;
     const units = this.progress.buildRound();
+    return this.initialize(units,mode,false);
+  }
+
+  startPractice(units: readonly StudyUnit[], mode: LearningMode = 'quick-practice'): boolean {
+    const valid=units.filter(u=>ALL_KANA.some(k=>k.id===u.kanaId) && ['kana-to-romaji','romaji-to-kana'].includes(u.questionType));
+    const unique=[...new Map(valid.map(u=>[`${u.kanaId}:${u.questionType}`,{...u,key:`${u.kanaId}:${u.questionType}`}])).values()];
+    return this.initialize(unique,mode,true);
+  }
+
+  private initialize(units: readonly StudyUnit[], mode: LearningMode, practice: boolean): boolean {
     if (!units.length) return false;
     const session: LearningSession = {
       id: globalThis.crypto?.randomUUID?.() ?? `session-${Date.now()}`,
@@ -105,7 +119,7 @@ export class LearningSessionService {
       attempts: 0,
     };
     this.newMedalState.set([]);
-    this.state.set({ session, queue: units.map(unit => unit.key), queueIndex: 0,
+    this.state.set({ session, practice, queue: units.map(unit => unit.key), queueIndex: 0,
       revealed: false, feedback: null });
     this.markAppearance();
     return true;
@@ -144,6 +158,7 @@ export class LearningSessionService {
   }
 
   restart(mode = this.session()?.mode ?? 'quick-practice'): boolean {
+    if (this.isPractice()) return this.startPractice(this.session()!.units,mode);
     return this.start(mode);
   }
 
@@ -160,13 +175,14 @@ export class LearningSessionService {
     const state = this.state();
     const unit = this.currentUnit();
     if (!state || !unit) return;
+    this.weaknesses.recordLearn('kana',unit.kanaId,unit.questionType,rating);
     const items = state.session.items.map(item => {
       if (item.studyKey !== unit.key) return item;
       const firstAttempt = item.initialRating === null;
-      if (firstAttempt) {
+      if (!state.practice && firstAttempt) {
         this.progress.recordReview(unit, rating, rating === 'good', state.session.id);
       }
-      else this.progress.recordPracticeAttempt(unit, rating === 'good');
+      else if (!state.practice) this.progress.recordPracticeAttempt(unit, rating === 'good');
       const reachedAppearanceLimit = !resolved
         && item.appearances >= MAX_APPEARANCES_PER_UNIT;
       return {
@@ -203,7 +219,7 @@ export class LearningSessionService {
     const nextIndex = state.queueIndex + 1;
     if (nextIndex >= state.queue.length) {
       const completedAt = new Date();
-      this.dailyLearning.refresh(completedAt);
+      if (!state.practice) this.dailyLearning.refresh(completedAt);
       const completedSession = {
         ...state.session,
         completedAt: completedAt.toISOString(),
@@ -211,6 +227,7 @@ export class LearningSessionService {
       this.state.set({ ...state, session: {
         ...completedSession,
       }, feedback: null, revealed: false });
+      if (state.practice) return;
       this.history.record({
         module: 'kana',
         sessionId: completedSession.id,

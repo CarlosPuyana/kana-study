@@ -36,7 +36,7 @@
           <div><strong>{{ learning.session()!.items.filter(item => item.initialRating === 'hard').length }}</strong><span>{{ i18n.t('learn.hard') }}</span></div>
           <div><strong>{{ learning.session()!.items.filter(item => item.initialRating === 'again').length }}</strong><span>{{ i18n.t('learn.again') }}</span></div>
         </div>
-        <button class="primary-button" type="button" disabled>{{ i18n.t('daily.completedButton') }}</button>
+        @if(learning.isPractice()){<p role="status">{{i18n.t('writing.finished')}}</p>}@else{<button class="primary-button" type="button" disabled>{{ i18n.t('daily.completedButton') }}</button>}
         <button class="secondary-button" type="button" (click)="confirmExit()">{{ i18n.t('common.returnHome') }}</button>
       </section>
     } @else if (learning.currentKana(); as kana) {

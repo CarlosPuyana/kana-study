@@ -6142,5 +6142,7 @@
   "listening.error": "No s’ha pogut reproduir l’àudio. No es registrarà com un error.",
   "listening.skipped": "{{count}} preguntes omeses per errors d’àudio. No afecten els teus punts febles.",
   "listening.continue": "Continuar",
-  "listening.practiceWeak": "Practicar escolta feble"
+  "listening.practiceWeak": "Practicar escolta feble",
+  "weaknesses.learn": "Aprendre",
+  "weaknesses.practiceLearn": "Practicar aprenentatge"
 }

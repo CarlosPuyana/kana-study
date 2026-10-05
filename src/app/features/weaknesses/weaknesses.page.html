@@ -5,16 +5,19 @@
   <div class="sections">
     <section><h2>{{i18n.t('weaknesses.kana')}}</h2><small class="skill">✍ {{i18n.t('writing.title')}}</small>
       @if(kana().length){<ul>@for(item of kana();track item.id){<li><strong lang="ja">{{item.character}}</strong><span>{{item.romaji}}</span></li>}</ul><a class="practice" routerLink="/writing" [queryParams]="{weak:1}">{{i18n.t('weaknesses.practiceKana')}}</a>}
-      @else{<p class="empty">{{i18n.t('weaknesses.empty')}}</p>}
+      @if(!kana().length&&!kanaLearn().length){<p class="empty">{{i18n.t('weaknesses.empty')}}</p>}
+      @if(kanaLearn().length){<small class="skill">📚 {{i18n.t('weaknesses.learn')}}</small><ul>@for(unit of kanaLearn().slice(0,5);track unit.key){<li><strong lang="ja">{{learnLabel('kana',unit.kanaId)}}</strong><span>📚 {{direction('kana',unit.questionType)}}</span></li>}</ul><button class="practice" type="button" (click)="practiceLearn('kana')">{{i18n.t('weaknesses.practiceLearn')}}</button>}
     </section>
     <section><h2>{{i18n.t('vocabulary.title')}}</h2>
       @if(vocabulary().length){<small class="skill">✍ {{i18n.t('writing.title')}}</small><ul>@for(item of vocabulary();track item.id){<li><strong lang="ja">{{item.primaryWrittenForm}}</strong><span><span lang="ja">{{item.primaryReading}}</span> · {{item.quizMeaning[i18n.language()]}}</span></li>}</ul><a class="practice" routerLink="/vocabulary/writing" [queryParams]="{weak:1}">{{i18n.t('weaknesses.practiceVocabulary')}}</a>}
       @if(vocabularyListening().length){<small class="skill">🎧 {{i18n.t('listening.skill')}}</small><ul>@for(item of vocabularyListening();track item.id){<li><strong lang="ja">{{item.primaryWrittenForm}}</strong><span><span lang="ja">{{item.primaryReading}}</span> · {{item.quizMeaning[i18n.language()]}}</span></li>}</ul><a class="practice" routerLink="/vocabulary/listening" [queryParams]="{weak:1}">{{i18n.t('listening.practiceWeak')}}</a>}
-      @if(!vocabulary().length&&!vocabularyListening().length){<p class="empty">{{i18n.t('weaknesses.empty')}}</p>}
+      @if(!vocabulary().length&&!vocabularyListening().length&&!vocabularyLearn().length){<p class="empty">{{i18n.t('weaknesses.empty')}}</p>}
+      @if(vocabularyLearn().length){<small class="skill">📚 {{i18n.t('weaknesses.learn')}}</small><ul>@for(unit of vocabularyLearn().slice(0,5);track unit.key){<li><strong lang="ja">{{learnLabel('vocabulary',unit.entryId)}}</strong><span>📚 {{direction('vocabulary',unit.questionType)}}</span></li>}</ul><button class="practice" type="button" (click)="practiceLearn('vocabulary')">{{i18n.t('weaknesses.practiceLearn')}}</button>}
     </section>
     <section><h2>{{i18n.t('kanji.title')}}</h2><small class="skill">✍ {{i18n.t('writing.title')}}</small>
       @if(kanji().length){<ul>@for(item of kanji();track item.id){<li><strong lang="ja">{{item.character}}</strong><span>{{item.meanings[i18n.language()].join(' · ')}}</span></li>}</ul><a class="practice" routerLink="/kanji/writing" [queryParams]="{weak:1}">{{i18n.t('weaknesses.practiceKanji')}}</a>}
-      @else{<p class="empty">{{i18n.t('weaknesses.empty')}}</p>}
+      @if(!kanji().length&&!kanjiLearn().length){<p class="empty">{{i18n.t('weaknesses.empty')}}</p>}
+      @if(kanjiLearn().length){<small class="skill">📚 {{i18n.t('weaknesses.learn')}}</small><ul>@for(unit of kanjiLearn().slice(0,5);track unit.key){<li><strong lang="ja">{{learnLabel('kanji',unit.kanjiId)}}</strong><span>📚 {{direction('kanji',unit.questionType)}}</span></li>}</ul><button class="practice" type="button" (click)="practiceLearn('kanji')">{{i18n.t('weaknesses.practiceLearn')}}</button>}
     </section>
   </div>
 </main>
