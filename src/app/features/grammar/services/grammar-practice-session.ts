@@ -1,5 +1,7 @@
 import { Injectable, InjectionToken, computed, inject, signal } from '@angular/core';
 import { SessionHistoryService } from '../../../core/services/session-history.service';
+import { WeaknessService } from '../../../core/services/weakness.service';
+import { grammarWeaknessIdentity } from './grammar-weakness';
 import { GrammarExercise } from '../models/grammar.model';
 import { shuffleGrammar, shuffleGrammarExercise } from './grammar-shuffle';
 
@@ -8,6 +10,7 @@ export const GRAMMAR_RANDOM=new InjectionToken<()=>number>('GRAMMAR_RANDOM',{pro
 // Component-scoped, transient practice state. Does not read or write saved study progress.
 @Injectable()
 export class GrammarPracticeSession {
+  private readonly weaknesses=inject(WeaknessService);
   private readonly history=inject(SessionHistoryService);
   private startedAt=0;
   private sessionId='';
@@ -43,6 +46,8 @@ export class GrammarPracticeSession {
   }
   answer(correct: boolean): void {
     if (this.stage() !== 'question' || this.checked()) return;
+    const identity=this.current()?grammarWeaknessIdentity(this.current()!):null;
+    if(identity)this.weaknesses.recordLearn('grammar',identity.itemId,identity.questionType,correct?'good':'again');
     this.answers.update(answers => [...answers, correct]);
     if(!correct&&this.current())this.failures.update(failed=>[...failed,this.current()!]);
   }

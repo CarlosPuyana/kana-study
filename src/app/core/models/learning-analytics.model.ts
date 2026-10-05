@@ -30,6 +30,7 @@ export interface LearningAnalytics {
   readonly skills:readonly (LearningPerformance & {readonly activity:WeaknessActivity})[];
   readonly difficult:readonly LearningDirection[];
   readonly strengths:readonly LearningDirection[];
+  readonly grammarConcepts:readonly (LearningPerformance & {readonly itemId:string})[];
   readonly recent:readonly (RecordedActivity & {readonly days:7|30})[];
   readonly recommendations:readonly LearningRecommendation[];
 }

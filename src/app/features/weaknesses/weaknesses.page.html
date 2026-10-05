@@ -19,5 +19,10 @@
       @if(!kanji().length&&!kanjiLearn().length){<p class="empty">{{i18n.t('weaknesses.empty')}}</p>}
       @if(kanjiLearn().length){<small class="skill">📚 {{i18n.t('weaknesses.learn')}}</small><ul>@for(unit of kanjiLearn().slice(0,5);track unit.key){<li><strong lang="ja">{{learnLabel('kanji',unit.kanjiId)}}</strong><span>📚 {{direction('kanji',unit.questionType)}}</span></li>}</ul><button class="practice" type="button" (click)="practiceLearn('kanji')">{{i18n.t('weaknesses.practiceLearn')}}</button>}
     </section>
+    <section><h2>{{i18n.t('grammar.title')}}</h2><small class="skill">📚 {{i18n.t('weaknesses.learn')}}</small>
+      @if(grammar().length){<ul>@for(item of grammar().slice(0,5);track item.itemId+':'+item.questionType){<li><strong>{{grammarTitle(item.itemId)}}</strong><span>📚 {{grammarType(item.questionType)}}</span></li>}</ul>
+        @if(grammarAvailable()){<a class="practice" routerLink="/grammar/review" [queryParams]="{weak:1}">{{i18n.t('grammar.weakness.practice')}}</a>}
+      }@else{<p class="empty">{{i18n.t('weaknesses.empty')}}</p>}
+    </section>
   </div>
 </main>

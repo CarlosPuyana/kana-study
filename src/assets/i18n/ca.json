@@ -6169,7 +6169,7 @@
   "stats.exercises": "Exercicis",
   "stats.noRecent": "No hi ha sessions registrades en aquest període.",
   "stats.performanceScope": "Precisió: intents sense error / intents registrats als punts febles. A Aprendre, «Gairebé» no compta com a error. Aquestes dades no cobreixen tot l’historial anterior d’aprenentatge.",
-  "stats.historyScope": "Sessions, temps i ratxa reflecteixen l’historial Learn registrat, incloses Banderes. No inclouen Escriptura, Escolta, pràctica addicional de punts febles, RUSH ni Malls. Períodes per dies d’Europe/Madrid, inclòs avui.",
+  "stats.historyScope": "Sessions, temps i ratxa reflecteixen l’historial Learn i Grammar registrat, incloses Banderes. No inclouen Escriptura, Escolta, RUSH ni Maços. Períodes per dies d’Europe/Madrid, inclòs avui.",
   "stats.recommendSkill": "{{skill}} és ara l’habilitat amb més marge de millora.",
   "stats.recommendProduction": "Et costa més produir japonès a partir del significat que reconèixer-lo.",
   "stats.recommendDirection": "Enfoca la propera pràctica en {{direction}}: és la direcció amb menys precisió registrada.",
@@ -6250,5 +6250,17 @@
   "grammar.interactive.sentence-order": "Ordena la frase",
   "grammar.interactive.conjugation": "Conjugació",
   "grammar.interactive.history": "El resultat es desa a l’historial de sessions.",
-  "grammar.interactive.lessonIntro": "Practica només els conceptes d’aquesta lliçó."
+  "grammar.interactive.lessonIntro": "Practica només els conceptes d’aquesta lliçó.",
+  "grammar.weakness.type.particle": "Tria una partícula",
+  "grammar.weakness.type.fill-gap": "Completa el buit",
+  "grammar.weakness.type.sentence-order": "Ordena la frase",
+  "grammar.weakness.type.conjugation": "Conjugació",
+  "grammar.weakness.type.multiple-choice": "Opció múltiple",
+  "grammar.weakness.type.sentence-builder": "Construeix una frase",
+  "grammar.weakness.type.detect-error": "Detecta un error",
+  "grammar.weakness.type.select-segment": "Selecciona part de la frase",
+  "grammar.weakness.type.matching": "Emparella",
+  "grammar.weakness.practice": "Practica Gramàtica",
+  "grammar.weakness.concepts": "La gramàtica que més et costa",
+  "grammar.weakness.recommend": "{{direction}} és ara el tipus d’exercici de gramàtica amb més marge de millora."
 }

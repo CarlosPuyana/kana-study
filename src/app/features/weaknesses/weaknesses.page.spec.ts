@@ -79,9 +79,9 @@ describe('Weak spots page and Writing integrations',()=>{
     const route=routes.find(r=>r.path==='weaknesses')!;expect(route.canActivate).toBeUndefined();
     expect(await (route.loadComponent as ()=>Promise<unknown>)()).toBe(WeaknessesPage);
   });
-  it('shows a positive empty state, three sections and no practice links',async()=>{
+  it('shows a positive empty state, four sections and no practice links',async()=>{
     const f=TestBed.createComponent(WeaknessesPage);await f.whenStable();f.detectChanges();
-    expect(f.nativeElement.querySelectorAll('.sections section')).toHaveLength(3);
+    expect(f.nativeElement.querySelectorAll('.sections section')).toHaveLength(4);
     expect(f.nativeElement.querySelector('.positive')).not.toBeNull();expect(f.nativeElement.querySelectorAll('.practice')).toHaveLength(0);
   });
   it('labels writing/listening separately and routes listening weaknesses to the same listening mode',async()=>{

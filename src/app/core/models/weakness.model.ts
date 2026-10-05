@@ -1,4 +1,4 @@
-export type WeaknessModule = 'kana' | 'vocabulary' | 'kanji';
+export type WeaknessModule = 'kana' | 'vocabulary' | 'kanji' | 'grammar';
 /** More activities can extend this union when their detection rules are defined. */
 export type WeaknessActivity = 'writing' | 'listening' | 'learn';
 

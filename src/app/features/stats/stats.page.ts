@@ -1,3 +1,4 @@
+import {grammarQuestionLabelKey,grammarWeaknessTitleKey} from '../grammar/services/grammar-weakness';
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {LearningAnalyticsService} from '../../core/services/learning-analytics.service';
@@ -13,7 +14,9 @@ export class StatsPage {
   moduleLabel(module:WeaknessModule):string{return this.i18n.t(module==='kana'?'weaknesses.kana':`${module}.title`);}
   skillLabel(activity:WeaknessActivity):string{return this.i18n.t(activity==='learn'?'weaknesses.learn':activity==='writing'?'writing.title':'listening.skill');}
   skillIcon(activity:WeaknessActivity):string{return activity==='learn'?'📚':activity==='writing'?'✍':'🎧';}
+  grammarTitle(itemId:string):string{return this.i18n.t(grammarWeaknessTitleKey(itemId)??'grammar.title');}
   directionLabel(direction:LearningDirection):string {
+    if(direction.module==='grammar')return this.i18n.t(grammarQuestionLabelKey(direction.questionType));
     return this.i18n.t(`${direction.module==='kana'?'questionTypes':direction.module+'.questionType'}.${direction.questionType}`);
   }
   percent(value:number|null):string {

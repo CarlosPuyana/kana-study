@@ -22,7 +22,7 @@ describe('LearningAnalyticsService projections',()=>{
   });
   it('aggregates each module without merging its identity into other modules',()=>{
     const stats=calculate([record({module:'kana',attempts:4,failures:2}),record({attempts:6,failures:1}),record({module:'kanji',attempts:8,failures:0})]);
-    expect(stats.modules.map(m=>[m.module,m.attempts,m.failures])).toEqual([['kana',4,2],['vocabulary',6,1],['kanji',8,0]]);
+    expect(stats.modules.map(m=>[m.module,m.attempts,m.failures])).toEqual([['kana',4,2],['vocabulary',6,1],['kanji',8,0],['grammar',0,0]]);
   });
   it('keeps Learn, Writing and Listening separate while weighting across modules',()=>{
     const stats=calculate([record({activity:'writing',attempts:1,failures:1}),record({module:'kanji',activity:'writing',attempts:9,failures:0}),record({activity:'listening',attempts:10,failures:4}),record({attempts:5,failures:1})]);
@@ -60,7 +60,7 @@ describe('LearningAnalyticsService projections',()=>{
   it('never uses weakness score as accuracy and counts each weak skill separately',()=>{
     const stats=calculate([record({score:10}),record({activity:'listening',score:0}),record({module:'kanji',activity:'writing',score:3})]);
     expect(stats.modules[1].accuracy).toBe(80);expect(stats.summary.weakCount).toBe(2);
-    expect(stats.skills.map(s=>s.weakCount)).toEqual([1,1,0]);expect(stats.modules.map(m=>m.weakCount)).toEqual([0,1,1]);
+    expect(stats.skills.map(s=>s.weakCount)).toEqual([1,1,0]);expect(stats.modules.map(m=>m.weakCount)).toEqual([0,1,1,0]);
   });
   it('returns null percentages and a useful recommendation for a new user',()=>{
     const stats=calculate();expect(stats.modules.every(m=>m.accuracy===null)).toBe(true);expect(stats.skills.every(s=>s.accuracy===null)).toBe(true);

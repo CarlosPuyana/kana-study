@@ -6169,7 +6169,7 @@
   "stats.exercises": "Ejercicios",
   "stats.noRecent": "No hay sesiones registradas en este periodo.",
   "stats.performanceScope": "Precisión: intentos sin fallo / intentos registrados en Mis débiles. En Aprender, «Casi» no cuenta como fallo. Estos datos no cubren todo el historial anterior de aprendizaje.",
-  "stats.historyScope": "Sesiones, tiempo y racha reflejan el historial Learn registrado, incluidas Banderas. No incluyen Escritura, Escucha, práctica adicional de débiles, RUSH ni Mazos. Periodos por días de Europe/Madrid, incluido hoy.",
+  "stats.historyScope": "Sesiones, tiempo y racha reflejan el historial Learn y Grammar registrado, incluidas Banderas. No incluyen Escritura, Escucha, RUSH ni Mazos. Periodos por días de Europe/Madrid, incluido hoy.",
   "stats.recommendSkill": "{{skill}} es ahora tu habilidad con más margen de mejora.",
   "stats.recommendProduction": "Te cuesta más producir japonés a partir del significado que reconocerlo.",
   "stats.recommendDirection": "Enfoca tu próxima práctica en {{direction}}: es tu dirección con menor precisión registrada.",
@@ -6250,5 +6250,17 @@
   "grammar.interactive.sentence-order": "Ordenar frase",
   "grammar.interactive.conjugation": "Conjugación",
   "grammar.interactive.history": "El resultado se guarda en el historial de sesiones.",
-  "grammar.interactive.lessonIntro": "Practica únicamente los conceptos de esta lección."
+  "grammar.interactive.lessonIntro": "Practica únicamente los conceptos de esta lección.",
+  "grammar.weakness.type.particle": "Elegir partícula",
+  "grammar.weakness.type.fill-gap": "Completar hueco",
+  "grammar.weakness.type.sentence-order": "Ordenar frase",
+  "grammar.weakness.type.conjugation": "Conjugación",
+  "grammar.weakness.type.multiple-choice": "Opción múltiple",
+  "grammar.weakness.type.sentence-builder": "Construir frase",
+  "grammar.weakness.type.detect-error": "Detectar error",
+  "grammar.weakness.type.select-segment": "Seleccionar parte de la frase",
+  "grammar.weakness.type.matching": "Emparejar",
+  "grammar.weakness.practice": "Practicar Gramática",
+  "grammar.weakness.concepts": "Gramática que más te cuesta",
+  "grammar.weakness.recommend": "{{direction}} es ahora el tipo de ejercicio de gramática con más margen de mejora."
 }

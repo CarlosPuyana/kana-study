@@ -30,6 +30,10 @@
       <ol>@for(item of stats.strengths;track item.module+':'+item.questionType){<li><div><strong>{{directionLabel(item)}}</strong><small>{{moduleLabel(item.module)}} · {{i18n.t('stats.attemptCount',{count:item.attempts})}}</small></div><span>{{percent(item.accuracy)}}</span></li>}@empty{<li class="empty">{{i18n.t('stats.insufficient')}}</li>}</ol>
     </section>
   </div>
+  <section><h2>{{i18n.t('grammar.weakness.concepts')}}</h2><ol>
+    @for(item of stats.grammarConcepts;track item.itemId){<li><div><strong>{{grammarTitle(item.itemId)}}</strong><small>{{i18n.t('stats.attemptCount',{count:item.attempts})}}</small></div><span>{{percent(item.accuracy)}}</span></li>}
+    @empty{<li class="empty">{{i18n.t('stats.insufficient')}}</li>}
+  </ol></section>
   <section><h2>{{i18n.t('stats.weak')}}</h2><div class="paired weak-summary"><dl>@for(item of stats.modules;track item.module){<div><dt>{{moduleLabel(item.module)}}</dt><dd>{{item.weakCount}}</dd></div>}</dl><dl>@for(item of stats.skills;track item.activity){<div><dt>{{skillIcon(item.activity)}} {{skillLabel(item.activity)}}</dt><dd>{{item.weakCount}}</dd></div>}</dl></div><a class="action" routerLink="/weaknesses">{{i18n.t('stats.viewWeaknesses')}} →</a></section>
   <section><h2>{{i18n.t('stats.recent')}}</h2><p class="note">{{i18n.t('stats.historyScope')}}</p><div class="paired">
     @for(item of stats.recent;track item.days){<article><h3>{{i18n.t('stats.lastDays',{count:item.days})}}</h3>

@@ -6236,7 +6236,7 @@ export const es:Record<string,string> = {...shared,...{
   "stats.exercises": "Ejercicios",
   "stats.noRecent": "No hay sesiones registradas en este periodo.",
   "stats.performanceScope": "Precisión: intentos sin fallo / intentos registrados en Mis débiles. En Aprender, «Casi» no cuenta como fallo. Estos datos no cubren todo el historial anterior de aprendizaje.",
-  "stats.historyScope": "Sesiones, tiempo y racha reflejan el historial Learn registrado, incluidas Banderas. No incluyen Escritura, Escucha, práctica adicional de débiles, RUSH ni Mazos. Periodos por días de Europe/Madrid, incluido hoy.",
+  "stats.historyScope": "Sesiones, tiempo y racha reflejan el historial Learn y Grammar registrado, incluidas Banderas. No incluyen Escritura, Escucha, RUSH ni Mazos. Periodos por días de Europe/Madrid, incluido hoy.",
   "stats.recommendSkill": "{{skill}} es ahora tu habilidad con más margen de mejora.",
   "stats.recommendProduction": "Te cuesta más producir japonés a partir del significado que reconocerlo.",
   "stats.recommendDirection": "Enfoca tu próxima práctica en {{direction}}: es tu dirección con menor precisión registrada.",
@@ -6253,7 +6253,19 @@ export const es:Record<string,string> = {...shared,...{
   "grammar.interactive.sentence-order": "Ordenar frase",
   "grammar.interactive.conjugation": "Conjugación",
   "grammar.interactive.history": "El resultado se guarda en el historial de sesiones.",
-  "grammar.interactive.lessonIntro": "Practica únicamente los conceptos de esta lección."
+  "grammar.interactive.lessonIntro": "Practica únicamente los conceptos de esta lección.",
+  "grammar.weakness.type.particle": "Elegir partícula",
+  "grammar.weakness.type.fill-gap": "Completar hueco",
+  "grammar.weakness.type.sentence-order": "Ordenar frase",
+  "grammar.weakness.type.conjugation": "Conjugación",
+  "grammar.weakness.type.multiple-choice": "Opción múltiple",
+  "grammar.weakness.type.sentence-builder": "Construir frase",
+  "grammar.weakness.type.detect-error": "Detectar error",
+  "grammar.weakness.type.select-segment": "Seleccionar parte de la frase",
+  "grammar.weakness.type.matching": "Emparejar",
+  "grammar.weakness.practice": "Practicar Gramática",
+  "grammar.weakness.concepts": "Gramática que más te cuesta",
+  "grammar.weakness.recommend": "{{direction}} es ahora el tipo de ejercicio de gramática con más margen de mejora."
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -7286,7 +7298,7 @@ export const en:Record<string,string> = {...shared,...{
   "stats.exercises": "Exercises",
   "stats.noRecent": "No recorded sessions in this period.",
   "stats.performanceScope": "Accuracy: attempts without a mistake / attempts recorded in weak-item tracking. In Learn, “Almost” is not a mistake. These results do not cover your entire earlier study history.",
-  "stats.historyScope": "Sessions, time and streak reflect recorded Learn history, including Flags. They exclude Writing, Listening, extra weak-item practice, RUSH and Decks. Calendar periods use Europe/Madrid and include today.",
+  "stats.historyScope": "Sessions, time and streak reflect recorded Learn and Grammar history, including Flags. They exclude Writing, Listening, RUSH and Decks. Periods use Europe/Madrid calendar days, including today.",
   "stats.recommendSkill": "{{skill}} is currently your skill with the most room for improvement.",
   "stats.recommendProduction": "You find producing Japanese from a meaning harder than recognising it.",
   "stats.recommendDirection": "Focus your next practice on {{direction}}: it has your lowest recorded accuracy.",
@@ -7303,7 +7315,19 @@ export const en:Record<string,string> = {...shared,...{
   "grammar.interactive.sentence-order": "Order the sentence",
   "grammar.interactive.conjugation": "Conjugation",
   "grammar.interactive.history": "The result is saved in session history.",
-  "grammar.interactive.lessonIntro": "Practice only the concepts from this lesson."
+  "grammar.interactive.lessonIntro": "Practice only the concepts from this lesson.",
+  "grammar.weakness.type.particle": "Choose a particle",
+  "grammar.weakness.type.fill-gap": "Fill the gap",
+  "grammar.weakness.type.sentence-order": "Order the sentence",
+  "grammar.weakness.type.conjugation": "Conjugation",
+  "grammar.weakness.type.multiple-choice": "Multiple choice",
+  "grammar.weakness.type.sentence-builder": "Build a sentence",
+  "grammar.weakness.type.detect-error": "Detect an error",
+  "grammar.weakness.type.select-segment": "Select part of the sentence",
+  "grammar.weakness.type.matching": "Matching",
+  "grammar.weakness.practice": "Practice Grammar",
+  "grammar.weakness.concepts": "Your most difficult grammar concepts",
+  "grammar.weakness.recommend": "{{direction}} is currently your grammar exercise type with the most room for improvement."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -8336,7 +8360,7 @@ export const ca:Record<string,string> = {...shared,...{
   "stats.exercises": "Exercicis",
   "stats.noRecent": "No hi ha sessions registrades en aquest període.",
   "stats.performanceScope": "Precisió: intents sense error / intents registrats als punts febles. A Aprendre, «Gairebé» no compta com a error. Aquestes dades no cobreixen tot l’historial anterior d’aprenentatge.",
-  "stats.historyScope": "Sessions, temps i ratxa reflecteixen l’historial Learn registrat, incloses Banderes. No inclouen Escriptura, Escolta, pràctica addicional de punts febles, RUSH ni Malls. Períodes per dies d’Europe/Madrid, inclòs avui.",
+  "stats.historyScope": "Sessions, temps i ratxa reflecteixen l’historial Learn i Grammar registrat, incloses Banderes. No inclouen Escriptura, Escolta, RUSH ni Maços. Períodes per dies d’Europe/Madrid, inclòs avui.",
   "stats.recommendSkill": "{{skill}} és ara l’habilitat amb més marge de millora.",
   "stats.recommendProduction": "Et costa més produir japonès a partir del significat que reconèixer-lo.",
   "stats.recommendDirection": "Enfoca la propera pràctica en {{direction}}: és la direcció amb menys precisió registrada.",
@@ -8353,5 +8377,17 @@ export const ca:Record<string,string> = {...shared,...{
   "grammar.interactive.sentence-order": "Ordena la frase",
   "grammar.interactive.conjugation": "Conjugació",
   "grammar.interactive.history": "El resultat es desa a l’historial de sessions.",
-  "grammar.interactive.lessonIntro": "Practica només els conceptes d’aquesta lliçó."
+  "grammar.interactive.lessonIntro": "Practica només els conceptes d’aquesta lliçó.",
+  "grammar.weakness.type.particle": "Tria una partícula",
+  "grammar.weakness.type.fill-gap": "Completa el buit",
+  "grammar.weakness.type.sentence-order": "Ordena la frase",
+  "grammar.weakness.type.conjugation": "Conjugació",
+  "grammar.weakness.type.multiple-choice": "Opció múltiple",
+  "grammar.weakness.type.sentence-builder": "Construeix una frase",
+  "grammar.weakness.type.detect-error": "Detecta un error",
+  "grammar.weakness.type.select-segment": "Selecciona part de la frase",
+  "grammar.weakness.type.matching": "Emparella",
+  "grammar.weakness.practice": "Practica Gramàtica",
+  "grammar.weakness.concepts": "La gramàtica que més et costa",
+  "grammar.weakness.recommend": "{{direction}} és ara el tipus d’exercici de gramàtica amb més marge de millora."
 }};

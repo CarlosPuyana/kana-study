@@ -1,3 +1,4 @@
+import { GRAMMAR_QUESTION_TYPES, grammarWeaknessTitleKey } from '../../features/grammar/services/grammar-weakness';
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {CompletedSessionSummary} from '../models/learning-session.model';
 import {LearningAnalytics, LearningDirection, LearningPerformance, LearningRecommendation, RecordedActivity} from '../models/learning-analytics.model';
@@ -5,9 +6,10 @@ import {WeaknessActivity, WeaknessModule, WeaknessRecord} from '../models/weakne
 import {WeaknessService} from './weakness.service';
 import {SessionHistoryService} from './session-history.service';
 
-const MODULES:readonly WeaknessModule[]=['kana','vocabulary','kanji'];
+const MODULES:readonly WeaknessModule[]=['kana','vocabulary','kanji','grammar'];
 const SKILLS:readonly WeaknessActivity[]=['learn','writing','listening'];
 const DIRECTIONS:Readonly<Record<WeaknessModule,readonly string[]>>={
+  grammar:GRAMMAR_QUESTION_TYPES,
   kana:['kana-to-romaji','romaji-to-kana'],
   vocabulary:['japanese-to-meaning','meaning-to-japanese','japanese-to-reading','reading-to-japanese'],
   kanji:['kanji-to-meaning','meaning-to-kanji'],
@@ -37,7 +39,7 @@ function performance(records:readonly WeaknessRecord[]):LearningPerformance {
 }
 function validSession(session:CompletedSessionSummary,now:Date):boolean {
   return !!session&&typeof session.sessionId==='string'&&!!session.sessionId
-    &&['kana','vocabulary','kanji','flags'].includes(session.module??'kana')
+    &&['kana','vocabulary','kanji','flags','grammar'].includes(session.module??'kana')
     &&Number.isFinite(Date.parse(session.completedAt))&&Date.parse(session.completedAt)<=now.getTime()
     &&Number.isInteger(session.exercisesCompleted)&&session.exercisesCompleted>0;
 }
@@ -77,11 +79,15 @@ export function calculateLearningAnalytics(records:readonly WeaknessRecord[],his
     const recognition=directions.find(d=>d.module==='vocabulary'&&d.questionType==='japanese-to-meaning');
     if(worst.module==='vocabulary'&&worst.questionType==='meaning-to-japanese'&&recognition&&recognition.attempts>=3&&worst.accuracy!<recognition.accuracy!)
       recommendations.push({key:'stats.recommendProduction'});
-    else recommendations.push({key:'stats.recommendDirection',direction:worst});
+    else recommendations.push({key:worst.module==='grammar'?'grammar.weakness.recommend':'stats.recommendDirection',direction:worst});
   }
   if(!recommendations.length)recommendations.push({key:strengths.length?'stats.recommendMaintain':'stats.recommendMore'});
+  const grammarRecords=valid.filter(r=>r.module==='grammar'&&r.activity==='learn'&&grammarWeaknessTitleKey(r.itemId));
+  const grammarConcepts=[...new Set(grammarRecords.map(r=>r.itemId))].map(itemId=>({itemId,...performance(grammarRecords.filter(r=>r.itemId===itemId))}))
+    .filter(c=>c.attempts>=ANALYTICS_DIRECTION_MIN_ATTEMPTS)
+    .sort((a,b)=>a.accuracy!-b.accuracy!||b.failures-a.failures||b.attempts-a.attempts||a.itemId.localeCompare(b.itemId)).slice(0,3);
   const total=activity(sessions);
-  return {summary:{streak,sessions:total.sessions,seconds:total.seconds,weakCount:valid.filter(r=>r.score>=3).length},modules,skills,difficult,strengths,
+  return {summary:{streak,sessions:total.sessions,seconds:total.seconds,weakCount:valid.filter(r=>r.score>=3).length},modules,skills,difficult,strengths,grammarConcepts,
     recent:([7,30] as const).map(count=>({days:count,...activity(sessions.filter(s=>dayKey(new Date(s.completedAt))>=previousDay(today,count-1)))})),
     recommendations:recommendations.slice(0,2)};
 }

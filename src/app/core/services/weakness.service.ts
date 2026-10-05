@@ -4,7 +4,7 @@ import {StorageService} from './storage.service';
 import {StudyRating} from '../models/progress.model';
 
 export const WEAKNESSES_KEY = 'kana-study.weaknesses.v1';
-const modules: readonly WeaknessModule[] = ['kana', 'vocabulary', 'kanji'];
+const modules: readonly WeaknessModule[] = ['kana', 'vocabulary', 'kanji', 'grammar'];
 function valid(value: unknown): value is WeaknessRecord {
   if (!value || typeof value !== 'object') return false;
   const r = value as WeaknessRecord;

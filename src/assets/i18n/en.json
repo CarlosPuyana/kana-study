@@ -6169,7 +6169,7 @@
   "stats.exercises": "Exercises",
   "stats.noRecent": "No recorded sessions in this period.",
   "stats.performanceScope": "Accuracy: attempts without a mistake / attempts recorded in weak-item tracking. In Learn, “Almost” is not a mistake. These results do not cover your entire earlier study history.",
-  "stats.historyScope": "Sessions, time and streak reflect recorded Learn history, including Flags. They exclude Writing, Listening, extra weak-item practice, RUSH and Decks. Calendar periods use Europe/Madrid and include today.",
+  "stats.historyScope": "Sessions, time and streak reflect recorded Learn and Grammar history, including Flags. They exclude Writing, Listening, RUSH and Decks. Periods use Europe/Madrid calendar days, including today.",
   "stats.recommendSkill": "{{skill}} is currently your skill with the most room for improvement.",
   "stats.recommendProduction": "You find producing Japanese from a meaning harder than recognising it.",
   "stats.recommendDirection": "Focus your next practice on {{direction}}: it has your lowest recorded accuracy.",
@@ -6250,5 +6250,17 @@
   "grammar.interactive.sentence-order": "Order the sentence",
   "grammar.interactive.conjugation": "Conjugation",
   "grammar.interactive.history": "The result is saved in session history.",
-  "grammar.interactive.lessonIntro": "Practice only the concepts from this lesson."
+  "grammar.interactive.lessonIntro": "Practice only the concepts from this lesson.",
+  "grammar.weakness.type.particle": "Choose a particle",
+  "grammar.weakness.type.fill-gap": "Fill the gap",
+  "grammar.weakness.type.sentence-order": "Order the sentence",
+  "grammar.weakness.type.conjugation": "Conjugation",
+  "grammar.weakness.type.multiple-choice": "Multiple choice",
+  "grammar.weakness.type.sentence-builder": "Build a sentence",
+  "grammar.weakness.type.detect-error": "Detect an error",
+  "grammar.weakness.type.select-segment": "Select part of the sentence",
+  "grammar.weakness.type.matching": "Matching",
+  "grammar.weakness.practice": "Practice Grammar",
+  "grammar.weakness.concepts": "Your most difficult grammar concepts",
+  "grammar.weakness.recommend": "{{direction}} is currently your grammar exercise type with the most room for improvement."
 }

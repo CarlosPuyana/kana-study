@@ -6,6 +6,7 @@ import {KanjiSessionService} from '../../core/services/kanji-session.service';
 import {QuestionType, StudyUnit} from '../../core/models/progress.model';
 import {VOCABULARY_QUESTION_TYPES, VocabularyStudyUnit} from '../../core/models/vocabulary.model';
 import {KANJI_QUESTION_TYPES, KanjiStudyUnit} from '../../core/models/kanji.model';
+import {grammarFocusedExercises,grammarWeaknessTitleKey,grammarQuestionLabelKey} from '../grammar/services/grammar-weakness';
 import {WeaknessModule} from '../../core/models/weakness.model';
 import {TranslationService} from '../../core/services/translation.service';
 import {WeaknessService} from '../../core/services/weakness.service';
@@ -35,8 +36,12 @@ export class WeaknessesPage {
   readonly vocabulary = computed(() => this.weaknesses.items('vocabulary',VOCABULARY_N5.filter(e=>e.enabled),5));
   readonly vocabularyListening = computed(() => this.weaknesses.items('vocabulary',VOCABULARY_N5.filter(e=>e.enabled&&this.audio.hasAudio(e.id)),5,'listening'));
   readonly kanji = computed(() => this.weaknesses.items('kanji',KANJI_N5.filter(k=>k.enabled),5));
+  readonly grammar=computed(()=>this.weaknesses.weak().filter(r=>r.module==='grammar'&&r.activity==='learn'&&grammarWeaknessTitleKey(r.itemId)));
+  readonly grammarAvailable=computed(()=>grammarFocusedExercises(this.grammar()).length>0);
+  grammarTitle(itemId:string):string{return this.i18n.t(grammarWeaknessTitleKey(itemId)??'grammar.title');}
+  grammarType(type:string|undefined):string{return this.i18n.t(grammarQuestionLabelKey(type??''));}
   readonly empty = computed(() => !this.kana().length && !this.vocabulary().length && !this.vocabularyListening().length && !this.kanji().length
-    && !this.kanaLearn().length && !this.vocabularyLearn().length && !this.kanjiLearn().length);
+    && !this.kanaLearn().length && !this.vocabularyLearn().length && !this.kanjiLearn().length && !this.grammar().length);
   learnLabel(module:WeaknessModule,itemId:string):string {
     return module==='kana'?ALL_KANA.find(e=>e.id===itemId)?.character??'':module==='kanji'?KANJI_N5.find(e=>e.id===itemId)?.character??'':VOCABULARY_N5.find(e=>e.id===itemId)?.primaryWrittenForm??'';
   }
