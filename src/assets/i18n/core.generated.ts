@@ -1219,7 +1219,16 @@ export const es:Record<string,string> = {...shared,...{
   "storage.saveFailed": "No se han podido guardar los cambios en este dispositivo.",
   "listening.interrupted": "Práctica interrumpida",
   "listening.interruptedHelp": "Varios audios no se han podido reproducir. Comprueba la conexión y vuelve a intentarlo.",
-  "listening.retry": "Reintentar audio"
+  "listening.retry": "Reintentar audio",
+  "manga.study.title": "En Kana Study",
+  "manga.study.vocabularyLevel": "Vocabulario {{level}}",
+  "manga.study.viewVocabulary": "Ver en Vocabulario",
+  "manga.study.listen": "Escuchar",
+  "manga.study.audioError": "No se pudo reproducir el audio. Inténtalo de nuevo.",
+  "manga.study.audioBlocked": "Pulsa Escuchar para permitir la reproducción de audio.",
+  "manga.study.viewKanji": "Ver Kanji",
+  "manga.study.viewKanjiNamed": "Ver Kanji {{kanji}}",
+  "manga.study.writeKanji": "Practicar escritura de {{kanji}}"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -2326,7 +2335,16 @@ export const en:Record<string,string> = {...shared,...{
   "storage.saveFailed": "Changes could not be saved on this device.",
   "listening.interrupted": "Practice interrupted",
   "listening.interruptedHelp": "Several audio files could not be played. Check your connection and try again.",
-  "listening.retry": "Retry audio"
+  "listening.retry": "Retry audio",
+  "manga.study.title": "In Kana Study",
+  "manga.study.vocabularyLevel": "Vocabulary {{level}}",
+  "manga.study.viewVocabulary": "View in Vocabulary",
+  "manga.study.listen": "Listen",
+  "manga.study.audioError": "Audio could not be played. Try again.",
+  "manga.study.audioBlocked": "Press Listen to allow audio playback.",
+  "manga.study.viewKanji": "View Kanji",
+  "manga.study.viewKanjiNamed": "View Kanji {{kanji}}",
+  "manga.study.writeKanji": "Practice writing {{kanji}}"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -3433,5 +3451,14 @@ export const ca:Record<string,string> = {...shared,...{
   "storage.saveFailed": "No s’han pogut desar els canvis en aquest dispositiu.",
   "listening.interrupted": "Pràctica interrompuda",
   "listening.interruptedHelp": "No s’han pogut reproduir diversos àudios. Comprova la connexió i torna-ho a provar.",
-  "listening.retry": "Tornar a provar l’àudio"
+  "listening.retry": "Tornar a provar l’àudio",
+  "manga.study.title": "A Kana Study",
+  "manga.study.vocabularyLevel": "Vocabulari {{level}}",
+  "manga.study.viewVocabulary": "Veure al Vocabulari",
+  "manga.study.listen": "Escoltar",
+  "manga.study.audioError": "No s’ha pogut reproduir l’àudio. Torna-ho a provar.",
+  "manga.study.audioBlocked": "Prem Escoltar per permetre la reproducció d’àudio.",
+  "manga.study.viewKanji": "Veure Kanji",
+  "manga.study.viewKanjiNamed": "Veure Kanji {{kanji}}",
+  "manga.study.writeKanji": "Practicar l’escriptura de {{kanji}}"
 }};

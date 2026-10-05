@@ -1,5 +1,5 @@
 <main class="writing-shell">
-  <header><a [routerLink]="weakMode()?'/weaknesses':individual()?'/kanji/all':'/kanji'" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('kanjiWriting.title')}}</h1></header>
+  <header><a [routerLink]="returnRoute()" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('kanjiWriting.title')}}</h1></header>
   @if(!individual()&&!session()){
     <section class="configuration">
       <fieldset><legend>{{i18n.t('writing.content')}}</legend>

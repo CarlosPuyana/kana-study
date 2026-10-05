@@ -1,3 +1,4 @@
+import {safeReturnUrl} from '../../core/services/return-navigation';
 import {ChangeDetectionStrategy,Component,computed,inject,signal,viewChild} from '@angular/core';
 import {ActivatedRoute,RouterLink} from '@angular/router';
 import {VocabularyEntry,VocabularyStudyCategory,VOCABULARY_CATEGORIES} from '../../core/models/vocabulary.model';
@@ -17,6 +18,7 @@ export class VocabularyWritingPage {
   readonly pool=computed(()=>VOCABULARY_N5.filter(e=>e.enabled&&this.selected().includes(e.studyCategory)));
   readonly session=signal<VocabularyWritingSession|null>(null);readonly current=signal<VocabularyEntry|null>(null);
   readonly individual=signal<VocabularyEntry|null>(null);readonly resolved=signal(0);readonly revealed=signal(false);readonly wordFinished=signal(false);
+  readonly returnRoute=computed(()=>safeReturnUrl(this.route.snapshot.queryParamMap.get('return'),this.weakMode()?'/weaknesses':this.individual()?'/vocabulary/all':'/vocabulary'));
   readonly practice=viewChild(WordWritingPractice);
   constructor(){this.weakMode.set(this.route.snapshot.queryParamMap.get('weak')==='1');if(this.weakMode()){this.start();return;}const id=this.route.snapshot.queryParamMap.get('entry');if(id)this.individual.set(VOCABULARY_N5.find(e=>e.id===id)??null);}
   toggle(category:VocabularyStudyCategory):void{this.selected.update(c=>c.includes(category)?c.filter(x=>x!==category):[...c,category]);}

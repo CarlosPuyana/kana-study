@@ -6276,5 +6276,14 @@
   "storage.saveFailed": "Changes could not be saved on this device.",
   "listening.interrupted": "Practice interrupted",
   "listening.interruptedHelp": "Several audio files could not be played. Check your connection and try again.",
-  "listening.retry": "Retry audio"
+  "listening.retry": "Retry audio",
+  "manga.study.title": "In Kana Study",
+  "manga.study.vocabularyLevel": "Vocabulary {{level}}",
+  "manga.study.viewVocabulary": "View in Vocabulary",
+  "manga.study.listen": "Listen",
+  "manga.study.audioError": "Audio could not be played. Try again.",
+  "manga.study.audioBlocked": "Press Listen to allow audio playback.",
+  "manga.study.viewKanji": "View Kanji",
+  "manga.study.viewKanjiNamed": "View Kanji {{kanji}}",
+  "manga.study.writeKanji": "Practice writing {{kanji}}"
 }

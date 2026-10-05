@@ -24,7 +24,7 @@ async function archive(banks:unknown=rows,withIndex=true):Promise<Blob>{
 }
 describe('Dictionary V1',()=>{
   let repository:DictionaryRepository,importer:YomitanDictionaryImporter;
-  beforeEach(()=>{vi.stubGlobal('indexedDB',new IDBFactory());localStorage.clear();TestBed.configureTestingModule({providers:[provideRouter([]),{provide:TranslationService,useValue:{t:(key:string)=>key}}]});repository=TestBed.inject(DictionaryRepository);importer=TestBed.inject(YomitanDictionaryImporter);});
+  beforeEach(()=>{vi.stubGlobal('indexedDB',new IDBFactory());localStorage.clear();TestBed.configureTestingModule({providers:[provideRouter([]),{provide:TranslationService,useValue:{t:(key:string)=>key,language:()=>'es'}}]});repository=TestBed.inject(DictionaryRepository);importer=TestBed.inject(YomitanDictionaryImporter);});
   it('parses the standard eight-field term bank entry',()=>{expect(parseDictionaryTerm(rows[0],'fixture',0)).toMatchObject({expression:'学校',reading:'がっこう',glossaries:['escuela','colegio'],sequence:1});});
   it('extracts safe text from modern structured glossaries, dropping media and duplicates',()=>{expect(glossaryText(['escuela',{type:'structured-content',content:[{text:'colegio'},{tag:'img',text:'omit'},{content:['escuela',' ']}]}])).toEqual(['escuela','colegio']);});
   it('imports two fixture entries and looks up an expression locally',async()=>{

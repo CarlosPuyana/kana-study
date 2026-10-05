@@ -1,8 +1,12 @@
-import { Component, ElementRef, HostListener, OnDestroy, afterNextRender, inject, input, output, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, HostListener, OnDestroy, afterNextRender, inject, input, output, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
 import { DictionaryLookup, OcrLookupPoint } from '../../../core/models/dictionary.model';
 import { MangaContextService } from '../../../core/services/manga-context.service';
+import {MangaStudyIntegrationService} from '../../../core/services/manga-study-integration.service';
+import {JapaneseAudioService} from '../../../core/services/japanese-audio.service';
+import {MangaStudyMatch} from '../../../core/models/manga-study.model';
+import {safeReturnUrl} from '../../../core/services/return-navigation';
 import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTranslationResult } from '../../../core/models/manga-context.model';
 @Component({
   selector:'app-dictionary-popup',imports:[RouterLink],styleUrl:'./dictionary-popup.scss',
@@ -32,6 +36,36 @@ import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTra
             </details>
           }
           @if(interpretations().length){<details><summary>{{i18n.t('manga.assist.interpretations')}}</summary>@for(term of interpretations();track term.id){<article><h3>{{term.expression}} · {{term.reading}}</h3><ul>@for(glossary of term.glossaries;track $index){<li>{{glossary}}</li>}</ul></article>}</details>}
+          @if(studyMatch().vocabulary || studyMatch().kanji.length){
+            <section class="study-integration" aria-labelledby="manga-study-title">
+              <h3 id="manga-study-title">{{i18n.t('manga.study.title')}}</h3>
+              @if(studyMatch().vocabulary;as entry){
+                <article class="study-vocabulary">
+                  <h4>✓ {{i18n.t('manga.study.vocabularyLevel',{level:entry.jlptApproxLevel})}}</h4>
+                  <strong lang="ja">{{entry.primaryWrittenForm}}</strong><span lang="ja"> · {{entry.primaryReading}}</span>
+                  <p>{{entry.quizMeaning[i18n.language()]}}</p>
+                  <div class="study-actions">
+                    <a routerLink="/vocabulary/all" [queryParams]="{entry:entry.id,return:studyReturn()}">{{i18n.t('manga.study.viewVocabulary')}}</a>
+                    @if(studyMatch().writingAvailable){<a routerLink="/vocabulary/writing" [queryParams]="{entry:entry.id,return:studyReturn()}">✍ {{i18n.t('vocabularyWriting.practice')}}</a>}
+                    @if(studyMatch().audioAvailable){<button type="button" [attr.aria-busy]="audioRequested() && audio.state()==='loading'" (click)="listen()">🎧 {{i18n.t('manga.study.listen')}}</button>}
+                  </div>
+                  @if(audioRequested() && audio.state()==='error'){<p role="alert">{{i18n.t('manga.study.audioError')}}</p>}
+                  @if(audioRequested() && audio.state()==='blocked'){<p role="status">{{i18n.t('manga.study.audioBlocked')}}</p>}
+                </article>
+              }
+              @if(studyMatch().kanji.length){
+                <h4>{{i18n.t('kanji.title')}}</h4>
+                @for(entry of studyMatch().kanji;track entry.id){
+                  <article class="study-kanji"><strong lang="ja">{{entry.character}}</strong>
+                    <div class="study-actions">
+                      <a routerLink="/kanji/all" [queryParams]="{selected:entry.character,return:studyReturn()}" [attr.aria-label]="i18n.t('manga.study.viewKanjiNamed',{kanji:entry.character})">{{i18n.t('manga.study.viewKanji')}}</a>
+                      <a routerLink="/kanji/writing" [queryParams]="{entry:entry.id,return:studyReturn()}">✍ {{i18n.t('manga.study.writeKanji',{kanji:entry.character})}}</a>
+                    </div>
+                  </article>
+                }
+              }
+            </section>
+          }
         }
       } @else {
         <h2>{{i18n.t('manga.assist.inContext')}}</h2>
@@ -49,6 +83,10 @@ import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTra
 })
 export class DictionaryPopup implements OnDestroy {
   readonly i18n=inject(TranslationService);readonly assistant=inject(MangaContextService);
+  private readonly integration=inject(MangaStudyIntegrationService);readonly audio=inject(JapaneseAudioService);
+  readonly studyMatch=computed<MangaStudyMatch>(()=>this.loading()||this.failed()?{kanji:[],audioAvailable:false,writingAvailable:false}:this.integration.match(this.result()));
+  readonly studyReturn=computed(()=>safeReturnUrl(this.location().volumeId?'/manga/read/'+encodeURIComponent(this.location().volumeId):'/manga','/manga'));
+  readonly audioRequested=signal(false);private playingEntry:string|null=null;
   readonly result=input.required<DictionaryLookup>();readonly loading=input(false);readonly failed=input(false);readonly x=input(0);readonly y=input(0);readonly closed=output<void>();
   readonly context=input<OcrLookupPoint|null>(null);readonly location=input<MangaContextLocation>({volumeId:'',pageIndex:0,blockIndex:0});
   readonly tab=signal<'word'|'context'>('word');readonly busy=signal(false);readonly contextError=signal(false);
@@ -56,7 +94,8 @@ export class DictionaryPopup implements OnDestroy {
   readonly translation=signal<MangaTranslationResult|null>(null);readonly study=signal<MangaStudyExplanation|null>(null);
   private controller:AbortController|null=null;private readonly previousFocus=document.activeElement;
   private readonly close=viewChild<ElementRef<HTMLButtonElement>>('close');private readonly dialog=viewChild<ElementRef<HTMLElement>>('dialog');
-  constructor(){afterNextRender(()=>this.close()?.nativeElement.focus());}
+  constructor(){afterNextRender(()=>this.close()?.nativeElement.focus());effect(()=>{const entryId=this.studyMatch().vocabulary?.id;if(this.playingEntry && entryId!==this.playingEntry){this.audio.stop();this.playingEntry=null;this.audioRequested.set(false);}});}
+  async listen():Promise<void>{const entry=this.studyMatch().vocabulary;if(!entry||!this.studyMatch().audioAvailable||this.audio.state()==='loading')return;this.playingEntry=entry.id;this.audioRequested.set(true);await this.audio.play(entry.id);}
   isSelection():boolean {const point=this.context();return point?point.mode==='selection':this.result().mode==='selection';}
   selectedText():string {return this.context()?.selectedText??this.result().requestedText??this.result().selectedText??this.result().surface??this.result().query;}
   interpretations(){return this.result().terms.slice(1).filter(term=>!!this.result().baseForm && term.expression!==this.result().terms[0]?.expression);}
@@ -86,5 +125,5 @@ export class DictionaryPopup implements OnDestroy {
     if(event.key==='Escape'){event.preventDefault();event.stopPropagation();this.closed.emit();}
     if(event.key==='Tab'){const controls=Array.from(this.dialog()?.nativeElement.querySelectorAll<HTMLElement>('button:not(:disabled),a,summary')??[]);const first=controls[0],last=controls.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}}
   }
-  ngOnDestroy():void{this.cancel();if(this.previousFocus instanceof HTMLElement && this.previousFocus.isConnected)this.previousFocus.focus();}
+  ngOnDestroy():void{this.cancel();if(this.audioRequested())this.audio.stop();if(this.previousFocus instanceof HTMLElement && this.previousFocus.isConnected)this.previousFocus.focus();}
 }

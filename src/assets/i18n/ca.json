@@ -6276,5 +6276,14 @@
   "storage.saveFailed": "No s’han pogut desar els canvis en aquest dispositiu.",
   "listening.interrupted": "Pràctica interrompuda",
   "listening.interruptedHelp": "No s’han pogut reproduir diversos àudios. Comprova la connexió i torna-ho a provar.",
-  "listening.retry": "Tornar a provar l’àudio"
+  "listening.retry": "Tornar a provar l’àudio",
+  "manga.study.title": "A Kana Study",
+  "manga.study.vocabularyLevel": "Vocabulari {{level}}",
+  "manga.study.viewVocabulary": "Veure al Vocabulari",
+  "manga.study.listen": "Escoltar",
+  "manga.study.audioError": "No s’ha pogut reproduir l’àudio. Torna-ho a provar.",
+  "manga.study.audioBlocked": "Prem Escoltar per permetre la reproducció d’àudio.",
+  "manga.study.viewKanji": "Veure Kanji",
+  "manga.study.viewKanjiNamed": "Veure Kanji {{kanji}}",
+  "manga.study.writeKanji": "Practicar l’escriptura de {{kanji}}"
 }

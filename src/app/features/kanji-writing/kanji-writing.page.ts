@@ -1,3 +1,4 @@
+import {safeReturnUrl} from '../../core/services/return-navigation';
 import {ChangeDetectionStrategy, Component, DestroyRef, computed, effect, inject, signal, viewChild} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -19,6 +20,7 @@ export class KanjiWritingPage {
   readonly i18n = inject(TranslationService);
   private readonly weaknesses = inject(WeaknessService);
   readonly weakMode = signal(false);
+  readonly returnRoute=signal('/kanji');
   readonly settings = inject(KanjiSettingsService);
   private readonly provider = inject(JapaneseGlyphService);
   private readonly destroy = inject(DestroyRef);
@@ -41,6 +43,7 @@ export class KanjiWritingPage {
     inject(ActivatedRoute).queryParamMap.pipe(takeUntilDestroyed()).subscribe(params => {
       this.weakMode.set(params.get('weak') === '1');
       this.individual.set(this.weakMode() ? null : KANJI_N5.find(k => k.id === params.get('entry')) ?? null);
+      this.returnRoute.set(safeReturnUrl(params.get('return'),this.weakMode()?'/weaknesses':this.individual()?'/kanji/all':'/kanji'));
       this.configure();
     });
     effect(() => {

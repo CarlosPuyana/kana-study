@@ -6276,5 +6276,14 @@
   "storage.saveFailed": "No se han podido guardar los cambios en este dispositivo.",
   "listening.interrupted": "Práctica interrumpida",
   "listening.interruptedHelp": "Varios audios no se han podido reproducir. Comprueba la conexión y vuelve a intentarlo.",
-  "listening.retry": "Reintentar audio"
+  "listening.retry": "Reintentar audio",
+  "manga.study.title": "En Kana Study",
+  "manga.study.vocabularyLevel": "Vocabulario {{level}}",
+  "manga.study.viewVocabulary": "Ver en Vocabulario",
+  "manga.study.listen": "Escuchar",
+  "manga.study.audioError": "No se pudo reproducir el audio. Inténtalo de nuevo.",
+  "manga.study.audioBlocked": "Pulsa Escuchar para permitir la reproducción de audio.",
+  "manga.study.viewKanji": "Ver Kanji",
+  "manga.study.viewKanjiNamed": "Ver Kanji {{kanji}}",
+  "manga.study.writeKanji": "Practicar escritura de {{kanji}}"
 }
