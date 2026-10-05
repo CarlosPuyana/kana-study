@@ -23,6 +23,7 @@ import { MangaReaderPreferences, MANGA_READER_PREFERENCES_KEY, readMangaReaderPr
       </div></div>
     } @else if (!error()) { <p role="status">{{ i18n.t('common.loading') }}</p> }
     </div>
+    @if(volume()?.pageCount && current()){
     <nav class="reader-toolbar" [attr.aria-label]="i18n.t('manga.controls')">
       <div class="toolbar-group" role="group" [attr.aria-label]="i18n.t('manga.assist.navigation')"><button class="previous" [disabled]="index() <= 0 || loading()" [attr.aria-label]="i18n.t('manga.previous')" [title]="i18n.t('manga.previous')" (click)="go(index()-1)"><span aria-hidden="true">‹</span></button>
       <span class="page-counter">{{ index()+1 }} / {{ volume()?.pageCount ?? 0 }}</span>
@@ -31,6 +32,7 @@ import { MangaReaderPreferences, MANGA_READER_PREFERENCES_KEY, readMangaReaderPr
       <button class="clock-button" data-panel="clock" [attr.aria-label]="i18n.t('manga.readingTime') + ': ' + clockLabel()" [title]="i18n.t('manga.readingTime')" [attr.aria-expanded]="panel()==='clock'" (click)="openPanel('clock')"><span aria-hidden="true">{{clockState()==='off'?'▷':clockState()==='paused'?'⏸':'⏱'}}</span><span>{{clockState()==='off'?i18n.t('manga.clock'):formatTime(sessionSeconds())}}</span></button>
       </div><div class="toolbar-group" role="group" [attr.aria-label]="i18n.t('manga.assist.help')"><a class="reader-help" routerLink="/manga/guide" [attr.aria-label]="i18n.t('manga.landing.how')" [title]="i18n.t('manga.landing.how')">?</a></div>
     </nav>
+    }
     @if(panel();as activePanel){
       <div class="reader-panel-backdrop" (click)="closePanel()"></div>
       <section class="reader-panel" role="dialog" aria-modal="true" aria-labelledby="reader-panel-title">

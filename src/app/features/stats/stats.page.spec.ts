@@ -51,10 +51,10 @@ describe('local learning statistics page',()=>{
     const f=TestBed.createComponent(StatsPage);f.detectChanges();expect(f.nativeElement.querySelectorAll('.accuracy')).toHaveLength(0);
     stats.set(calculateLearningAnalytics(learningRecords,[]));f.detectChanges();expect(f.nativeElement.querySelectorAll('.accuracy')).toHaveLength(2);
   });
-  it('adds a statistics tool link to More without changing the module cards',()=>{
+  it('shows statistics as a prominent tool while hiding unavailable module cards',()=>{
     TestBed.overrideComponent(MorePage,{remove:{imports:[AccountControl]},add:{imports:[AccountPlaceholder]}});
     const f=TestBed.createComponent(MorePage);f.detectChanges();
     expect(f.nativeElement.querySelector('.learning-tools a[href="/stats"]')?.textContent).toContain('Estadísticas');
-    expect(f.nativeElement.querySelectorAll('app-module-card')).toHaveLength(APP_MODULES.length);
+    expect(f.nativeElement.querySelectorAll('app-module-card')).toHaveLength(APP_MODULES.filter(module=>module.available).length);
   });
 });

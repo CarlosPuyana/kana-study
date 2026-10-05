@@ -9,7 +9,13 @@
   }@else{
     <p class="progress" role="status">{{answered()}} / {{total()}}</p>
     @if(skipped()){<p class="notice" role="status">{{i18n.t('listening.skipped',{count:skipped()})}}</p>}
-    @if(question();as q){<section class="practice">
+    @if(interrupted()){
+      <section class="practice interrupted-practice"><h2>{{i18n.t('listening.interrupted')}}</h2><p role="alert">{{i18n.t('listening.interruptedHelp')}}</p>
+        @if(question()){<button class="primary" type="button" (click)="retry()">{{i18n.t('listening.retry')}}</button>}
+        <button type="button" (click)="configure()">{{i18n.t('writing.configure')}}</button>
+        <a routerLink="/vocabulary">{{i18n.t('vocabulary.title')}}</a>
+      </section>
+    }@else if(question();as q){<section class="practice">
       <h2>{{i18n.t('listening.'+q.kind)}}</h2>
       <button class="replay" type="button" (click)="replay()" [attr.aria-label]="i18n.t('listening.replay')">▶</button>
       @if(audio.state()==='loading'){<p role="status">{{i18n.t('listening.loading')}}</p>}

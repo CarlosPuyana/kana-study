@@ -1,3 +1,4 @@
+import { backWithinApp } from '../../core/services/return-navigation';
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
@@ -27,6 +28,6 @@ export class FlagsSelectionPage {
   toggleRegion(region: FlagRegion): void { this.draft.update(value => ({ ...value, regions: { ...value.regions, [region]: !value.regions[region] } })); }
   toggleAllRegions(): void { const enabled = !this.allRegions(); this.draft.update(value => ({ ...value, regions: Object.fromEntries(this.regions.map(region => [region, enabled])) as Record<FlagRegion, boolean> })); }
   toggleType(type: FlagQuestionType): void { this.draft.update(value => ({ ...value, questionTypes: value.questionTypes.includes(type) ? value.questionTypes.filter(item => item !== type) : [...value.questionTypes, type] })); }
-  back(): void { this.location.back(); }
+  back(): void { backWithinApp(this.location, this.router, '/flags'); }
   save(): void { if (!this.valid()) return; this.settings.save(this.draft()); void this.router.navigateByUrl('/flags'); }
 }

@@ -24,6 +24,12 @@ describe('Manga reader controls',()=>{
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();});
   async function reader(){const fixture=TestBed.createComponent(MangaReaderPage);fixture.detectChanges();await vi.waitFor(()=>expect(fixture.componentInstance.loading()).toBe(false));fixture.detectChanges();return fixture;}
+  it('missing volumes show an error and library return without page controls or 1 / 0',async()=>{
+    vi.mocked(TestBed.inject(MangaRepository).volume).mockResolvedValueOnce(undefined);
+    const fixture=await reader();expect(fixture.nativeElement.querySelector('[role=alert]')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.reader-toolbar')).toBeNull();expect(fixture.nativeElement.textContent).not.toContain('1 / 0');
+    expect(fixture.nativeElement.querySelector('a[href="/manga"]')).not.toBeNull();
+  });
   it('routes manual selection to its own lookup API without caret segmentation',async()=>{lookup.lookupSelection.mockResolvedValue({query:'ひとりで行く',requestedText:'ひとりで行く',terms:[],installed:true,mode:'selection'});const fixture=await reader();await fixture.componentInstance.lookupWord({mode:'selection',text:'今日はひとりで行く',selectedText:'ひとりで行く',offset:3,x:100,y:100});expect(lookup.lookupSelection).toHaveBeenCalledWith('ひとりで行く');expect(lookup.lookup).not.toHaveBeenCalled();expect(fixture.componentInstance.lookupResult().requestedText).toBe('ひとりで行く');});
   it('navigates previous/next with disabled first and last page boundaries',async()=>{
     const fixture=await reader(),component=fixture.componentInstance;

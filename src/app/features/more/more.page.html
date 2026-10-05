@@ -1,8 +1,14 @@
 <main class="page-shell">
   <app-page-header titleKey="more.title" [backRoute]="returnRoute()"/>
 
+  <section class="learning-tools" aria-labelledby="learning-tools-title">
+    <h2 id="learning-tools-title">{{i18n.t('weaknesses.tools')}}</h2>
+    <a routerLink="/weaknesses"><strong>🧠 {{i18n.t('weaknesses.title')}}</strong><span>{{i18n.t('weaknesses.description')}}</span></a>
+    <a routerLink="/stats"><strong>📊 {{i18n.t('stats.title')}}</strong><span>{{i18n.t('stats.description')}}</span></a>
+  </section>
+
   <section class="intro" aria-labelledby="more-intro-title">
-    <span>{{ i18n.t('more.eyebrow') }}</span>
+    <span>{{ i18n.t('more.modules') }}</span>
     <h2 id="more-intro-title">{{ i18n.t('more.intro') }}</h2>
   </section>
 
@@ -17,10 +23,8 @@
       />
     }
   </section>
-  <section class="learning-tools" aria-labelledby="learning-tools-title">
-    <h2 id="learning-tools-title">{{i18n.t('weaknesses.tools')}}</h2>
-    <a routerLink="/weaknesses"><strong>🧠 {{i18n.t('weaknesses.title')}}</strong><span>{{i18n.t('weaknesses.description')}}</span></a>
-    <a routerLink="/stats"><strong>📊 {{i18n.t('stats.title')}}</strong><span>{{i18n.t('stats.description')}}</span></a>
-    <a routerLink="/settings"><strong>⚙ {{i18n.t('more.settings')}}</strong><span>{{i18n.t('more.settingsDescription')}}</span></a>
+  <section class="learning-tools settings-tools" aria-labelledby="more-settings-title">
+    <h2 id="more-settings-title">{{i18n.t('more.settings')}}</h2>
+    <a routerLink="/settings" [queryParams]="{return:currentModule()?'/more?from='+currentModule()!.id:'/more'}"><strong>⚙ {{i18n.t('more.settings')}}</strong><span>{{i18n.t('more.settingsDescription')}}</span></a>
   </section>
 </main>

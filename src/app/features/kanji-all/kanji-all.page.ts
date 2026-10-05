@@ -1,3 +1,4 @@
+import { ModalFocusDirective } from '../../shared/directives/modal-focus.directive';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { KANJI_N5 } from '../../data/kanji-n5.generated';
@@ -5,7 +6,7 @@ import { Kanji, KanjiQuestionType } from '../../core/models/kanji.model';
 import { KanjiProgressService } from '../../core/services/kanji-progress.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { KANJI_N5_CATEGORIES, KANJI_THEME_BY_CHARACTER } from '../../data/kanji-n5-categories';
-@Component({selector:'app-kanji-all-page',imports:[RouterLink],templateUrl:'./kanji-all.page.html',styleUrl:'./kanji-all.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown.escape)':'closeOverlay()'}})
+@Component({selector:'app-kanji-all-page',imports:[RouterLink,ModalFocusDirective],templateUrl:'./kanji-all.page.html',styleUrl:'./kanji-all.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown.escape)':'!$event.defaultPrevented && closeOverlay()'}})
 export class KanjiAllPage {
   readonly viewModes = ['all', 'stroke', 'theme'] as const;
   readonly viewMode = signal<'all' | 'stroke' | 'theme'>('all');

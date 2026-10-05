@@ -1,6 +1,6 @@
 <main class="page-shell">
   <header class="page-header">
-    <a class="back-button" routerLink="/" [attr.aria-label]="i18n.t('common.back')">←</a>
+    <a class="back-button" [routerLink]="returnUrl" [attr.aria-label]="i18n.t('common.back')">←</a>
     <div>
       <span class="eyebrow">{{ i18n.t('settings.eyebrow') }}</span>
       <h1>{{ i18n.t('settings.title') }}</h1>

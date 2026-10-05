@@ -21,12 +21,16 @@ export class VocabularyListeningPage implements OnDestroy {
   readonly session=signal<VocabularyListeningSession|null>(null);readonly question=signal<ListeningQuestion|null>(null);
   readonly chosen=signal<string|null>(null);readonly canAnswer=signal(false);readonly answered=signal(0);readonly total=signal(0);
   readonly skipped=signal(0);private token=0;
+  readonly interrupted=signal(false);
+  private consecutiveErrors=0;
+  private failedToken=-1;
   constructor(){
-    effect(()=>{if(this.audio.state()==='error'&&this.question()&&!this.chosen())this.skip();});
+    effect(()=>{if(this.audio.state()==='error'&&this.question()&&!this.chosen())this.playbackFailed(this.token);});
     if(this.weakMode)this.start();
   }
   toggle(category:VocabularyStudyCategory):void{this.selected.update(items=>items.includes(category)?items.filter(c=>c!==category):[...items,category]);}
   start():void {
+    this.interrupted.set(false);this.consecutiveErrors=0;
     const pool=this.weakMode?this.weaknesses.items('vocabulary',this.validEntries,15,'listening'):this.pool();
     this.session.set(new VocabularyListeningSession(pool,this.validEntries,this.mode(),this.i18n.language(),Math.random,this.weakMode));
     this.skipped.set(0);this.refresh();
@@ -35,9 +39,10 @@ export class VocabularyListeningPage implements OnDestroy {
     const question=this.question();if(!question)return;
     const token=this.token;const result=await this.audio.play(question.entry.id);
     if(token!==this.token)return;
-    if(result==='played')this.canAnswer.set(true);
-    if(result==='error'&&!this.chosen())this.skip();
+    if(result==='played'){this.consecutiveErrors=0;this.interrupted.set(false);this.canAnswer.set(true);}
+    if(result==='error'&&!this.chosen())this.playbackFailed(token);
   }
+  async retry():Promise<void>{this.interrupted.set(false);this.failedToken=-1;await this.replay();}
   answer(optionId:string):void {
     if(!this.canAnswer()||this.audio.state()==='error'||this.chosen())return;
     const session=this.session(),question=this.question();if(!session||!question)return;
@@ -51,10 +56,17 @@ export class VocabularyListeningPage implements OnDestroy {
       question.options.find(o=>o.id===chosen)!.correct,'listening');
     session.next();this.refresh();
   }
-  configure():void{this.token++;this.audio.stop();this.session.set(null);this.question.set(null);this.chosen.set(null);this.canAnswer.set(false);}
+  configure():void{this.token++;this.audio.stop();this.session.set(null);this.question.set(null);this.chosen.set(null);this.canAnswer.set(false);this.interrupted.set(false);this.consecutiveErrors=0;}
+  private playbackFailed(token:number):void {
+    if(token!==this.token||this.failedToken===token||this.chosen()||this.interrupted())return;
+    this.failedToken=token;this.canAnswer.set(false);this.consecutiveErrors++;
+    if(this.consecutiveErrors>=3){this.interrupted.set(true);this.audio.stop();return;}
+    this.skip();
+  }
   private skip():void {
     const session=this.session();if(!session||!this.question()||this.chosen())return;
     this.skipped.update(n=>n+1);session.skip();this.refresh();
+    if(!session.question&&session.answered===0)this.interrupted.set(true);
   }
   private refresh():void {
     this.token++;this.audio.stop();const session=this.session()!;

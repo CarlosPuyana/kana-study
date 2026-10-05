@@ -25,7 +25,7 @@ export class MorePage {
     return APP_MODULES.find(module => module.available && module.id === requestedId);
   });
   readonly modules = computed(() =>
-    APP_MODULES.filter(module => module.id !== this.currentModule()?.id),
+    APP_MODULES.filter(module => module.available && module.id !== this.currentModule()?.id),
   );
   readonly returnRoute = computed(() => this.currentModule()?.route ?? '/');
 }

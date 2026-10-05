@@ -1,3 +1,4 @@
+import { readStudyProgress, readReviewEvents } from './study-progress-validation';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { ALL_KANA } from '../../data/kana';
 import {
@@ -20,10 +21,10 @@ export class ProgressService {
   private readonly settingsService = inject(SettingsService);
   private readonly spacedRepetition = inject(SpacedRepetitionService);
   private readonly progress = signal<ProgressMap>(
-    this.storage.get<ProgressMap>(PROGRESS_KEY, {}),
+    readStudyProgress<StudyProgress>(this.storage.get<unknown>(PROGRESS_KEY, {}), 'kanaId', QUESTION_TYPES),
   );
   private readonly reviewEventState = signal<readonly ReviewEvent[]>(
-    this.storage.get<readonly ReviewEvent[]>(REVIEW_EVENTS_KEY, []),
+    readReviewEvents<ReviewEvent>(this.storage.get<unknown>(REVIEW_EVENTS_KEY, []), 'kanaId', QUESTION_TYPES),
   );
   readonly reviewEvents = this.reviewEventState.asReadonly();
   readonly allProgress = this.progress.asReadonly();

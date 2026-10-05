@@ -52,6 +52,27 @@ describe('Vocabulary Listening page',()=>{
     const f=TestBed.createComponent(VocabularyListeningPage),c=f.componentInstance;c.start();await f.whenStable();
     c.answer(c.question()!.options.find(o=>!o.correct)!.id);state.set('error');c.next();expect(TestBed.inject(WeaknessService).records()).toEqual([]);
   });
+  it('stops after three consecutive failures without exhausting the catalog or scoring',async()=>{
+    play.mockResolvedValue('error');const f=TestBed.createComponent(VocabularyListeningPage),c=f.componentInstance;c.start();await f.whenStable();f.detectChanges();
+    expect(play).toHaveBeenCalledTimes(3);expect(c.interrupted()).toBe(true);expect(c.question()).not.toBeNull();expect(c.total()).toBe(15);
+    expect(f.nativeElement.querySelector('.finished')).toBeNull();expect(TestBed.inject(WeaknessService).records()).toEqual([]);
+  });
+  it('retry keeps the interrupted question and resumes after successful playback',async()=>{
+    play.mockResolvedValue('error');const f=TestBed.createComponent(VocabularyListeningPage),c=f.componentInstance;c.start();await f.whenStable();
+    const question=c.question();play.mockResolvedValue('played');await c.retry();expect(c.question()).toBe(question);expect(c.interrupted()).toBe(false);expect(c.canAnswer()).toBe(true);
+    c.answer(question!.options.find(o=>o.correct)!.id);c.next();expect(TestBed.inject(WeaknessService).records()).toHaveLength(1);
+  });
+  it('a failed retry makes only one additional request and configuration clears interruption',async()=>{
+    play.mockResolvedValue('error');const f=TestBed.createComponent(VocabularyListeningPage),c=f.componentInstance;c.start();await f.whenStable();await c.retry();
+    expect(play).toHaveBeenCalledTimes(4);expect(c.interrupted()).toBe(true);c.configure();expect(c.session()).toBeNull();expect(c.interrupted()).toBe(false);
+    expect(TestBed.inject(WeaknessService).records()).toEqual([]);
+  });
+  it('successful playback resets the consecutive failure boundary',async()=>{
+    play.mockResolvedValueOnce('error').mockResolvedValueOnce('error').mockResolvedValue('played');
+    const f=TestBed.createComponent(VocabularyListeningPage),c=f.componentInstance;c.start();await f.whenStable();expect(c.interrupted()).toBe(false);
+    c.answer(c.question()!.options.find(o=>o.correct)!.id);play.mockResolvedValueOnce('error').mockResolvedValue('played');c.next();await f.whenStable();
+    expect(c.interrupted()).toBe(false);expect(c.skipped()).toBe(3);
+  });
   it('weak practice contains only listening records and approved audio, not writing weaknesses',async()=>{
     TestBed.overrideProvider(ActivatedRoute,{useValue:{snapshot:{queryParamMap:convertToParamMap({weak:'1'})}}});
     const service=TestBed.inject(WeaknessService),ids=Object.keys(VOCABULARY_AUDIO_MANIFEST).slice(0,2);

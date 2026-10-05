@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { backWithinApp } from '../../core/services/return-navigation';
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { COUNTRIES } from '../../data/countries.generated';
@@ -9,6 +11,7 @@ import { CountryFlag } from '../../shared/components/country-flag/country-flag';
 
 @Component({ selector: 'app-flag-countries-page', imports: [CountryFlag], templateUrl: './flag-countries.page.html', styleUrl: './flag-countries.page.scss', changeDetection: ChangeDetectionStrategy.OnPush, host: { '(document:keydown.escape)': 'closeOverlay()' } })
 export class FlagCountriesPage {
+  private readonly router = inject(Router);
   readonly i18n = inject(TranslationService);
   readonly progress = inject(FlagProgressService);
   readonly regions: readonly FlagRegion[] = ['europe','asia','africa','north-america','south-america','oceania'];
@@ -19,7 +22,7 @@ export class FlagCountriesPage {
     return COUNTRIES.filter(country => !query || [country.iso2,country.iso3,...Object.values(country.names),...country.capitals.flatMap(capital => Object.values(capital))].some(value => this.normalize(value).includes(query)))
       .sort((a,b) => a.names[language].localeCompare(b.names[language]));
   });
-  back(): void { this.location.back(); }
+  back(): void { backWithinApp(this.location, this.router, '/flags'); }
   setQuery(event: Event): void { this.query.set((event.target as HTMLInputElement).value); }
   closeOverlay(): void { if (this.selected()) this.selected.set(null); else if (this.searching()) { this.searching.set(false); this.query.set(''); } }
   countriesFor(region: FlagRegion) { return this.filtered().filter(country => country.studyRegion === region); }

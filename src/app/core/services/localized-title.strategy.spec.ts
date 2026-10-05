@@ -13,6 +13,6 @@ describe('localized document titles',()=>{
     await router.navigateByUrl('/stats');expect(title.getTitle()).toBe('Estadísticas · Kana Study');
     settings.setLanguage('en');TestBed.tick();expect(title.getTitle()).toBe('Statistics · Kana Study');
     settings.setLanguage('ca');TestBed.tick();expect(title.getTitle()).toBe('Estadístiques · Kana Study');
-    await router.navigateByUrl('/grammar/00');expect(title.getTitle()).toBe('Gramática · Kana Study');
+    await router.navigateByUrl('/grammar/00');expect(title.getTitle()).toBe('Gramàtica · Kana Study');
   });
 });

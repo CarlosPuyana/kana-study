@@ -5,6 +5,8 @@ import { WorkspaceService } from './workspace.service';
 @Injectable({ providedIn: 'root' })
 export class StorageService {
   readonly cloudRevision = signal(0);
+  readonly persistenceFailed = signal(false);
+  dismissPersistenceError(): void { this.persistenceFailed.set(false); }
   private readonly workspace = inject(WorkspaceService);
   private readonly outbox = inject(SyncOutboxService);
 
@@ -17,12 +19,12 @@ export class StorageService {
     }
   }
 
-  set<T>(key: string, value: T, options: {localOnly?: boolean} = {}): void {
+  set<T>(key: string, value: T, options: {localOnly?: boolean; silent?: boolean} = {}): void {
     try {
       localStorage.setItem(this.workspace.storageKey(key), JSON.stringify(value));
       if (!options.localOnly) this.enqueue(key, value, 'upsert');
     } catch {
-      // The app remains usable if storage is blocked/private/full.
+      if (!options.silent) this.persistenceFailed.set(true);
     }
   }
 
@@ -31,7 +33,7 @@ export class StorageService {
       localStorage.removeItem(this.workspace.storageKey(key));
       this.enqueue(key, null, 'delete');
     } catch {
-      // No-op when browser storage is unavailable.
+      this.persistenceFailed.set(true);
     }
   }
 

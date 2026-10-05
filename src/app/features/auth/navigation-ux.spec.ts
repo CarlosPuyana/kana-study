@@ -59,6 +59,26 @@ describe('confirmed navigation and UX corrections',()=>{
   it('Auth rejects an external target',()=>{query({return:'https://evil.test'});const page=TestBed.createComponent(AuthPage).componentInstance;expect(page.returnUrl).toBe('/');expect(page.closeUrl).toBe('/');});
   it('Auth without return defaults to profile',()=>{query({});expect(TestBed.createComponent(AuthPage).componentInstance.returnUrl).toBe('/profile');});
   it('forgot password retains return in the recovery request',async()=>{query({return:'/manga'});const page=TestBed.createComponent(AuthPage).componentInstance;page.email='student@example.test';await page.forgot();expect(auth.requestPasswordReset).toHaveBeenCalledWith('student@example.test','/manga');});
+  it('recovery submit validates and sends the new password, then keeps the login return',async()=>{
+    query({mode:'recovery',return:'/manga'});auth.updatePassword.mockClear();
+    const navigate=vi.spyOn(TestBed.inject(Router),'navigate').mockResolvedValue(true);
+    const replace=vi.spyOn(history,'replaceState').mockImplementation(()=>{});
+    const page=TestBed.createComponent(AuthPage).componentInstance;page.newPassword='new-password';
+    await page.submit();expect(auth.updatePassword).toHaveBeenCalledWith('new-password');
+    expect(page.mode()).toBe('login');expect(page.loading()).toBe(false);expect(page.message()).toBeTruthy();
+    expect(replace).toHaveBeenCalledWith(null,'',expect.stringContaining('mode=login&return=%2Fmanga'));
+    expect(navigate).toHaveBeenCalledWith([],{queryParams:{mode:'login'},queryParamsHandling:'merge',replaceUrl:true});
+  });
+  it('recovery rejects a short new password even when the login password is valid',async()=>{
+    query({mode:'recovery'});auth.updatePassword.mockClear();const page=TestBed.createComponent(AuthPage).componentInstance;
+    page.password='old-password';page.newPassword='short';await page.submit();
+    expect(auth.updatePassword).not.toHaveBeenCalled();expect(page.error()).toBeTruthy();expect(page.loading()).toBe(false);
+  });
+  it('recovery surfaces backend errors and stays on recovery',async()=>{
+    query({mode:'recovery'});auth.updatePassword.mockResolvedValueOnce({error:'failed'} as never);
+    const page=TestBed.createComponent(AuthPage).componentInstance;page.newPassword='new-password';await page.submit();
+    expect(page.error()).toBeTruthy();expect(page.mode()).toBe('recovery');expect(page.loading()).toBe(false);
+  });
   it('Auth mode changes keep return',()=>{query({return:'/manga'});const navigate=vi.spyOn(TestBed.inject(Router),'navigate').mockResolvedValue(true);TestBed.createComponent(AuthPage).componentInstance.switchMode('signup');expect(navigate).toHaveBeenCalledWith([],{queryParams:{mode:'signup'},queryParamsHandling:'merge',replaceUrl:true});});
   it('confirmation/recovery callback URLs retain a validated origin',()=>{const url=new URL(authReturnUrl('confirm','/manga'));expect(url.searchParams.get('auth')).toBe('confirm');expect(url.searchParams.get('return')).toBe('/manga');expect(new URL(authReturnUrl('recovery','//evil.test')).searchParams.get('return')).toBe('/');});
   for(const [params,destination] of [[{from:'grammar',kana:'hiragana'},'/grammar/n5/00'],[{from:'grammar',return:'/grammar/n5/00/2'},'/grammar/n5/00/2'],[{},'/']] as const)it('Selection save returns to '+destination,()=>{

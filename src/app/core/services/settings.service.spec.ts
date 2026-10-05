@@ -58,4 +58,14 @@ describe('SettingsService themes', () => {
       expect(NORA_THEME_TOKENS[token as keyof typeof NORA_THEME_TOKENS]).toMatch(/^#[0-9a-f]{6}$/i);
     }
   });
+
+  it('keeps initialization failures quiet but reports a failed user preference change',()=>{
+    const settings=TestBed.inject(SettingsService),storage=TestBed.inject(StorageService);
+    const write=vi.spyOn(Storage.prototype,'setItem').mockImplementation(()=>{throw new Error('blocked');});
+    try {
+      TestBed.tick();expect(storage.persistenceFailed()).toBe(false);
+      settings.setLanguage('en');TestBed.tick();expect(storage.persistenceFailed()).toBe(true);
+      expect(settings.language()).toBe('en');
+    } finally {write.mockRestore();}
+  });
 });

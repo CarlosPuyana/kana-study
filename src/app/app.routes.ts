@@ -1,5 +1,9 @@
+import {inject} from '@angular/core';
 import { Routes } from '@angular/router';
+import {TranslationService} from './core/services/translation.service';
 import { HomePage } from './features/home/home.page';
+
+const grammarCopy=()=>inject(TranslationService).loadGrammar();
 
 export const routes: Routes = [
   { path: '', data: {titleKey: 'navigation.home'}, component: HomePage, title: 'Kana Study' },
@@ -27,8 +31,8 @@ export const routes: Routes = [
   { path: 'auth', data: {titleKey: 'navigation.account'}, loadComponent: () => import('./features/auth/auth.page').then(module => module.AuthPage) },
   { path: 'profile', data: {titleKey: 'profile.title'}, loadComponent: () => import('./features/profile/profile.page').then(module => module.ProfilePage) },
   { path: 'writing', data: {titleKey: 'writing.title'}, loadComponent: () => import('./features/writing/kana-writing.page').then(module => module.KanaWritingPage) },
-  { path: 'weaknesses', data: {titleKey: 'weaknesses.title'}, loadComponent: () => import('./features/weaknesses/weaknesses.page').then(module => module.WeaknessesPage) },
-  { path: 'stats', data: {titleKey: 'stats.title'}, loadComponent: () => import('./features/stats/stats.page').then(module => module.StatsPage) },
+  { path: 'weaknesses', resolve:{translations:grammarCopy}, data: {titleKey: 'weaknesses.title'}, loadComponent: () => import('./features/weaknesses/weaknesses.page').then(module => module.WeaknessesPage) },
+  { path: 'stats', resolve:{translations:grammarCopy}, data: {titleKey: 'stats.title'}, loadComponent: () => import('./features/stats/stats.page').then(module => module.StatsPage) },
   {
     path: 'flags', data: {titleKey: 'flags.title'},
     loadChildren: () => import('./features/flags/flags.routes').then(module => module.FLAGS_ROUTES),
@@ -48,7 +52,7 @@ export const routes: Routes = [
   { path: 'rush/medals', data: {titleKey: 'medals.title'}, loadComponent: () => import('./features/rush/rush-medals.page').then(module => module.RushMedalsPage) },
   { path: 'rush', data: {titleKey: 'rush.title'}, loadComponent: () => import('./features/rush/kana-rush.page').then(module => module.KanaRushPage) },
   { path: 'manga', data: {titleKey: 'more.manga.title'}, loadChildren: () => import('./features/manga/manga.routes').then(module => module.MANGA_ROUTES) },
-  { path: 'grammar', data: {titleKey: 'grammar.title'}, loadChildren: () => import('./features/grammar/grammar.routes').then(module => module.GRAMMAR_ROUTES) },
+  { path: 'grammar', resolve:{translations:grammarCopy}, data: {titleKey: 'grammar.title'}, loadChildren: () => import('./features/grammar/grammar.routes').then(module => module.GRAMMAR_ROUTES) },
   { path: 'upload', data: {titleKey: 'manga.remote.title'}, loadComponent: () => import('./features/manga/mokuro-remote-import.page').then(module => module.MokuroRemoteImportPage) },
   { path: '**', redirectTo: '' },
 ];

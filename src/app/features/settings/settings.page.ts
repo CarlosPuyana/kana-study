@@ -1,3 +1,5 @@
+import {ActivatedRoute} from '@angular/router';
+import {safeReturnUrl} from '../../core/services/return-navigation';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ContentSettings, VariantSettings } from '../../core/models/settings.model';
@@ -14,6 +16,7 @@ import { AccountControl } from '../../shared/components/account-control/account-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsPage {
+  readonly returnUrl = safeReturnUrl(inject(ActivatedRoute).snapshot.queryParamMap.get('return'));
   readonly settings = inject(SettingsService);
   readonly progress = inject(ProgressService);
   readonly i18n = inject(TranslationService);

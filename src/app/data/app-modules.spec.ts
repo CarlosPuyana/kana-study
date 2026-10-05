@@ -74,18 +74,18 @@ describe('Module navigation', () => {
   it('D: hides Kana when the origin is kana', async () => {
     const fixture = await createMoreFixture('kana');
     expect(visibleModuleIds(fixture)).not.toContain('kana');
-    expect(visibleModuleIds(fixture)).toHaveLength(7);
+    expect(visibleModuleIds(fixture)).toHaveLength(6);
   });
 
   it('E: hides Flags when the origin is flags', async () => {
     const fixture = await createMoreFixture('flags');
     expect(visibleModuleIds(fixture)).not.toContain('flags');
-    expect(visibleModuleIds(fixture)).toHaveLength(7);
+    expect(visibleModuleIds(fixture)).toHaveLength(6);
   });
 
-  it('F: shows all eight modules without an origin', async () => {
+  it('F: shows available modules without an origin', async () => {
     const fixture = await createMoreFixture();
-    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.map(module => module.id));
+    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.filter(module=>module.available).map(module => module.id));
   });
 
   it('F2: hides Kanji and returns to it when the origin is kanji', async () => {
@@ -106,9 +106,9 @@ describe('Module navigation', () => {
     expect(fixture.componentInstance.returnRoute()).toBe('/anki');
   });
 
-  it('G: shows all eight modules for an unknown origin', async () => {
+  it('G: shows available modules for an unknown origin', async () => {
     const fixture = await createMoreFixture('unknown');
-    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.map(module => module.id));
+    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.filter(module=>module.available).map(module => module.id));
   });
 
   it('H: resolves the return route from the module definition', async () => {

@@ -11,7 +11,7 @@ describe('shared page header and global tools',()=>{
     expect(fixture.nativeElement.querySelector('h1').textContent).toBe('Kanji');expect(fixture.nativeElement.querySelector('.back-button').getAttribute('href')).toBe('/more?from=kanji');expect(fixture.nativeElement.querySelector('.back-button').getAttribute('aria-label')).toBe('Volver');
     TestBed.inject(SettingsService).setLanguage('en');fixture.detectChanges();expect(fixture.nativeElement.querySelector('.back-button').getAttribute('aria-label')).toBe('Back');
   });
-  it('exposes Settings alongside weaknesses and statistics in More for all languages',()=>{
-    const fixture=TestBed.createComponent(MorePage);for(const language of ['es','en','ca'] as const){TestBed.inject(SettingsService).setLanguage(language);fixture.detectChanges();const links=fixture.nativeElement.querySelectorAll('.learning-tools a');expect([...links].map((link:any)=>link.getAttribute('href'))).toEqual(['/weaknesses','/stats','/settings']);expect(links[2].textContent).not.toContain('more.settings');}
+  it('exposes Settings separately after the primary tools in More for all languages',()=>{
+    const fixture=TestBed.createComponent(MorePage);for(const language of ['es','en','ca'] as const){TestBed.inject(SettingsService).setLanguage(language);fixture.detectChanges();const links=fixture.nativeElement.querySelectorAll('.learning-tools a');expect([...links].map((link:any)=>decodeURIComponent(link.getAttribute('href')))).toEqual(['/weaknesses','/stats','/settings?return=/more']);expect(links[2].textContent).not.toContain('more.settings');}
   });
 });

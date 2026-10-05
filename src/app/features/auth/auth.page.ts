@@ -26,7 +26,7 @@ export class AuthPage implements AfterViewInit {
 
   async submit(): Promise<void> {
     this.error.set(null); this.message.set(null);
-    if (this.password.length < 8 || (this.mode() === 'signup' && this.password !== this.confirmation)) { this.error.set(this.i18n.t('auth.passwordInvalid')); return; }
+    if ((this.mode() === 'recovery' ? this.newPassword : this.password).length < 8 || (this.mode() === 'signup' && this.password !== this.confirmation)) { this.error.set(this.i18n.t('auth.passwordInvalid')); return; }
     if (this.mode() === 'signup' && !validUsername(this.username)) { this.error.set(this.i18n.t('auth.usernameInvalid')); return; }
     this.loading.set(true);
     try {
@@ -40,7 +40,7 @@ export class AuthPage implements AfterViewInit {
         else await this.afterSignIn();
       } else if (this.mode() === 'recovery') {
         const result = await this.auth.updatePassword(this.newPassword);
-        if (result.error) this.error.set(this.authError(result.error)); else { history.replaceState(null,'',`${window.location.pathname}#/auth?${new URLSearchParams({mode:'login',return:this.returnUrl})}`);this.message.set(this.i18n.t('auth.passwordUpdated')); this.switchMode('login'); }
+        if (result.error) this.error.set(this.authError(result.error)); else { history.replaceState(null,'',`${window.location.pathname}#/auth?${new URLSearchParams({mode:'login',return:this.returnUrl})}`);this.switchMode('login'); this.message.set(this.i18n.t('auth.passwordUpdated')); }
       }
     } finally { this.loading.set(false); }
   }

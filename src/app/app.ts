@@ -3,10 +3,11 @@ import { Router, RouterOutlet } from '@angular/router';
 import { safeReturnUrl } from './core/services/return-navigation';
 import { AuthService } from './core/services/auth.service';
 import { SyncService } from './core/services/sync.service';
+import { PersistenceNotice } from './shared/components/persistence-notice/persistence-notice';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, PersistenceNotice],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,6 +7,7 @@ async function more(page:Page){await page.goto('/#/more');await screen(page,'/mo
 async function noOverflow(page:Page){expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);}
 
 test.beforeEach(async({page},info)=>{
+  await page.route('**/supabase-config.js',r=>r.fulfill({contentType:'text/javascript',body:'window.__KANA_STUDY_CONFIG__ = {};'}));
   await page.addInitScript(theme=>{if(!localStorage.getItem('kana-study.settings.v1'))localStorage.setItem('kana-study.settings.v1',JSON.stringify({language:'es',theme}));},info.project.use.colorScheme==='light'?'light':'dark');
 });
 
@@ -27,7 +28,7 @@ test('Grammar roadmap, topic, lesson and lesson practice',async({page})=>{
   await page.locator('a[href^="#/grammar/n5/00/practice"]:visible').first().click();await screen(page,'/grammar/n5/00/practice');await expect(page.locator('app-grammar-practice')).toBeVisible();await noOverflow(page);await back(page,'/grammar/n5/00');
 });
 test('Global tools, settings and account access',async({page})=>{
-  await more(page);await follow(page,'/weaknesses');await back(page,'/more');await follow(page,'/stats');await back(page,'/more');await follow(page,'/settings');
+  await more(page);await follow(page,'/weaknesses');await back(page,'/more');await follow(page,'/stats');await back(page,'/more');await page.locator('a[href^="#/settings?return="]').click();await screen(page,'/settings');await back(page,'/more');
   await more(page);const account=page.locator('app-account-control a');if(await account.count()){await account.click();await screen(page,'/auth');await page.getByRole('link',{name:/Cerrar|Volver/}).first().click();await screen(page,'/more');}else{await page.goto('/#/auth?return=/more');await screen(page,'/auth');await expect(page.locator('#auth-title')).toBeVisible();await page.getByRole('link',{name:'Cerrar',exact:true}).click();await screen(page,'/more');}
 });
 test('Priority screens have titles and no horizontal overflow',async({page})=>{
@@ -39,7 +40,7 @@ test('Shared headers respect all existing themes and 44px touch targets',async({
   await more(page);
   for(const theme of ['dark','light','nora','nora-dark','anime']){
     await page.evaluate(theme=>localStorage.setItem('kana-study.settings.v1',JSON.stringify({language:'es',theme})),theme);await page.reload();await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
-    for(const path of ['/more','/kanji']){await page.goto('/#'+path);await screen(page,path);await noOverflow(page);const shell=await page.locator('main.page-shell').boundingBox();expect(shell?.width).toBeLessThanOrEqual(page.viewportSize()!.width-19);const header=page.locator('app-page-header');await expect(header.locator('h1')).toBeVisible();for(const button of await header.locator('a').all()){const box=await button.boundingBox();expect(box?.width).toBeGreaterThanOrEqual(44);expect(box?.height).toBeGreaterThanOrEqual(44);}}
+    for(const path of ['/more','/kanji']){await page.goto('/#'+path);await screen(page,path);await noOverflow(page);await expect(page.locator('main.page-shell')).toBeVisible();const shell=await page.locator('main.page-shell').boundingBox();expect(shell?.width).toBeLessThanOrEqual(page.viewportSize()!.width-19);const header=page.locator('app-page-header');await expect(header.locator('h1')).toBeVisible();for(const button of await header.locator('a').all()){const box=await button.boundingBox();expect(box?.width).toBeGreaterThanOrEqual(44);expect(box?.height).toBeGreaterThanOrEqual(44);}}
   }
 });
 

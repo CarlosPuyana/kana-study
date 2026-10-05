@@ -87,7 +87,13 @@ if(process.argv[1] && fileURLToPath(import.meta.url)===fs.realpathSync(process.a
   for(const [name,type,value]of [['GRAMMAR_TOPICS','readonly GrammarTopic[]',topics],['GRAMMAR_LESSONS','readonly GrammarLesson[]',lessons],['GRAMMAR_PRACTICES','readonly GrammarPractice[]',practices],['GRAMMAR_ROADMAP','GrammarRoadmap',roadmap],['GRAMMAR_SESSIONS','readonly GrammarStudySession[]',sessions]])
     result+=`export const ${name}: ${type} = ${JSON.stringify(value,null,2)};\n`;
   fs.writeFileSync(target,result);
-  for(const lang of ['es','en','ca']){const p=`src/assets/i18n/${lang}.json`;const dictionary=pruneGrammarTranslations({...JSON.parse(fs.readFileSync(p,'utf8')),...copy,...GRAMMAR_UI_TRANSLATIONS[lang]},[topics,lessons,practices,roadmap,sessions]);fs.writeFileSync(p,JSON.stringify(dictionary,null,2)+'\n');}
+  const oldSpanish=JSON.parse(fs.readFileSync('src/assets/i18n/es.json','utf8'));
+  for(const lang of ['es','en','ca']){
+    const p=`src/assets/i18n/${lang}.json`,existing=JSON.parse(fs.readFileSync(p,'utf8'));
+    const authored=lang==='es'?{}:Object.fromEntries(Object.entries(existing).filter(([key,value])=>key.startsWith('grammar.')&&value!==oldSpanish[key]));
+    const dictionary=pruneGrammarTranslations({...existing,...copy,...GRAMMAR_UI_TRANSLATIONS[lang],...authored},[topics,lessons,practices,roadmap,sessions]);
+    fs.writeFileSync(p,JSON.stringify(dictionary,null,2)+'\n');
+  }
   compileTranslations();
   console.log(`${lessons.length} microconceptos, ${sessions.length} sesiones, ${practices.reduce((n,p)=>n+p.exercises.length,0)} preguntas de práctica.`);
 }

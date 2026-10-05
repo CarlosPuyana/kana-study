@@ -108,7 +108,7 @@
   "more.flags.title": "Banderas",
   "more.flags.description": "Aprende las banderas del mundo.",
   "more.anki.title": "Mazos",
-  "more.anki.description": "Crea y estudia tus propios mazos.",
+  "more.anki.description": "Estudia y repasa las tarjetas de los mazos disponibles.",
   "more.grammar.title": "Gramática",
   "more.grammar.description": "Lecciones y ejercicios de gramática japonesa.",
   "more.manga.title": "Manga",
@@ -1018,7 +1018,7 @@
   "grammar.content.185": "🔀 Contenido mezclado",
   "grammar.content.186": "🎯 Resultado final por áreas",
   "grammar.content.187": "No memorices la posición",
-  "grammar.content.188": "En la versión final mezclaremos el orden y añadiremos más ejemplos para que aprendas el concepto, no una respuesta concreta.",
+  "grammar.content.188": "En cada ronda mezclamos las preguntas y las opciones para que aprendas el concepto, no una posición concreta.",
   "grammar.content.189": "TEMA 00 · RESULTADO",
   "grammar.content.190": "Reconocimiento",
   "grammar.content.191": "Hiragana, katakana y sistemas de escritura.",
@@ -6272,5 +6272,9 @@
   "more.settingsDescription": "Idioma, tema y preferencias de la aplicación.",
   "navigation.home": "Inicio",
   "navigation.learn": "Aprender",
-  "navigation.account": "Cuenta"
+  "navigation.account": "Cuenta",
+  "storage.saveFailed": "No se han podido guardar los cambios en este dispositivo.",
+  "listening.interrupted": "Práctica interrumpida",
+  "listening.interruptedHelp": "Varios audios no se han podido reproducir. Comprueba la conexión y vuelve a intentarlo.",
+  "listening.retry": "Reintentar audio"
 }

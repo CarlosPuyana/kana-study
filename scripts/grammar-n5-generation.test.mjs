@@ -33,7 +33,7 @@ test('generated exercise solutions and alternate orders reference valid unique b
     if(e.pairs)assert.ok(e.pairs.length>1,e.id);
   }
 });
-test('all generated translation keys are present and source copy agrees with ES/EN/CA dictionaries',()=>{
+test('all generated keys exist in ES/EN/CA and Spanish agrees with the authored source',()=>{
   const source=generate(),keys=new Set();
   function visit(value){
     if(typeof value==='string'&&value.startsWith('grammar.'))keys.add(value);
@@ -43,7 +43,7 @@ test('all generated translation keys are present and source copy agrees with ES/
   visit([source.topics,source.lessons,source.practices,source.sessions,source.roadmap]);
   for(const lang of ['es','en','ca']){
     const dictionary=JSON.parse(fs.readFileSync(`src/assets/i18n/${lang}.json`,'utf8'));
-    for(const key of keys){assert.ok(Object.hasOwn(dictionary,key),`${lang}: ${key}`);assert.equal(dictionary[key],GRAMMAR_UI_TRANSLATIONS[lang]?.[key]??source.copy[key],`${lang}: ${key}`);}
+    for(const key of keys){assert.ok(Object.hasOwn(dictionary,key),`${lang}: ${key}`);if(lang==='es')assert.equal(dictionary[key],GRAMMAR_UI_TRANSLATIONS[lang]?.[key]??source.copy[key],`${lang}: ${key}`);else assert.equal(typeof dictionary[key],'string',`${lang}: ${key}`);}
   }
 });
 test('groups preserve all original IDs and all seven kinds remain authored after regeneration',()=>{

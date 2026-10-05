@@ -26,6 +26,7 @@ const DEFAULT_SETTINGS: AppSettings = {
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
+  private userChanged = false;
   private readonly storage = inject(StorageService);
   private readonly state = signal<AppSettings>(
     this.normalize(this.storage.get<unknown>(SETTINGS_KEY, DEFAULT_SETTINGS)),
@@ -60,7 +61,7 @@ export class SettingsService {
   constructor() {
     effect(() => {
       const settings = this.state();
-      this.storage.set(SETTINGS_KEY, settings);
+      this.storage.set(SETTINGS_KEY, settings, {silent: !this.userChanged});
       this.applyTheme(settings.theme);
       document.documentElement.lang = settings.language;
     });
@@ -79,6 +80,7 @@ export class SettingsService {
   }
 
   saveLearningSelection(selection: LearningSelection): void {
+    this.userChanged = true;
     this.state.update(current => ({
       ...current,
       learning: {
@@ -102,10 +104,12 @@ export class SettingsService {
   }
 
   reset(): void {
+    this.userChanged = true;
     this.state.set(structuredClone(DEFAULT_SETTINGS));
   }
 
   private patch(partial: Partial<AppSettings>): void {
+    this.userChanged = true;
     this.state.update(current => ({ ...current, ...partial }));
   }
 
