@@ -1,6 +1,6 @@
 export type WeaknessModule = 'kana' | 'vocabulary' | 'kanji';
 /** More activities can extend this union when their detection rules are defined. */
-export type WeaknessActivity = 'writing';
+export type WeaknessActivity = 'writing' | 'listening';
 
 export interface WeaknessRecord {
   readonly module: WeaknessModule;

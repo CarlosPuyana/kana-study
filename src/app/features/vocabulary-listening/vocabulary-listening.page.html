@@ -1,0 +1,26 @@
+<main class="listening-shell">
+  <header><a [routerLink]="weakMode?'/weaknesses':'/vocabulary'" [attr.aria-label]="i18n.t('common.back')">←</a><h1>🎧 {{i18n.t('listening.title')}}</h1></header>
+  @if(!session()){
+    <section class="configuration"><fieldset><legend>{{i18n.t('writing.content')}}</legend><div class="choices">
+      @for(category of categories;track category){<button type="button" [attr.aria-pressed]="selected().includes(category)" (click)="toggle(category)">{{i18n.t('vocabulary.category.'+category)}}</button>}
+    </div></fieldset><fieldset><legend>{{i18n.t('listening.exercise')}}</legend><div class="choices">
+      @for(kind of modes;track kind){<button type="button" [attr.aria-pressed]="mode()===kind" (click)="mode.set(kind)">{{i18n.t('listening.'+kind)}}</button>}
+    </div></fieldset><p>{{i18n.t('listening.available',{count:pool().length})}}</p><button class="primary" type="button" [disabled]="!pool().length" (click)="start()">{{i18n.t('writing.start')}}</button></section>
+  }@else{
+    <p class="progress" role="status">{{answered()}} / {{total()}}</p>
+    @if(skipped()){<p class="notice" role="status">{{i18n.t('listening.skipped',{count:skipped()})}}</p>}
+    @if(question();as q){<section class="practice">
+      <h2>{{i18n.t('listening.'+q.kind)}}</h2>
+      <button class="replay" type="button" (click)="replay()" [attr.aria-label]="i18n.t('listening.replay')">▶</button>
+      @if(audio.state()==='loading'){<p role="status">{{i18n.t('listening.loading')}}</p>}
+      @if(audio.state()==='blocked'){<p role="status">{{i18n.t('listening.blocked')}}</p>}
+      @if(audio.state()==='error'){<p role="alert">{{i18n.t('listening.error')}}</p>}
+      <div class="options">@for(option of q.options;track option.id){<button type="button" [disabled]="!!chosen()||!canAnswer()"
+        [class.correct]="chosen()&&option.correct" [class.incorrect]="chosen()===option.id&&!option.correct" (click)="answer(option.id)">
+        @if(chosen()&&option.correct){✓ }@else if(chosen()===option.id){✗ }{{option.label}}
+      </button>}</div>
+      @if(chosen()){<div class="feedback" aria-live="polite"><strong lang="ja">{{q.entry.primaryWrittenForm}}</strong><p lang="ja">{{q.entry.primaryReading}}</p><p>{{q.entry.quizMeaning[i18n.language()]}}</p></div>
+        <button class="primary continue" type="button" (click)="next()">{{i18n.t('listening.continue')}}</button>}
+    </section>}@else{<section class="finished"><h2>{{i18n.t('writing.finished')}}</h2><button class="primary" type="button" (click)="weakMode?start():configure()">{{i18n.t('writing.configure')}}</button></section>}
+  }
+</main>

@@ -1,5 +1,14 @@
 # Reproducible local Vocabulary N5 audio catalog
 
+## Publish approved static assets
+
+Run `python scripts/export-vocabulary-audio.py` after generating/auditing the catalog.
+This copies only unflagged MP3s to `public/audio/vocabulary/n5/`, retains provenance,
+and writes the public and TypeScript manifests. No TTS runs in Angular or its build.
+To reintroduce a flagged word after listening approval, add its stable ID to
+`scripts/vocabulary-audio-approved.json` and rerun the exporter. Multi-reading
+exclusions cannot be approved through this file. V1 has no approvals: 606 assets.
+
 Uses the existing isolated Python environment and shared Kokoro POC tooling.
 No Angular integration, network APIs, production dependencies or data edits.
 

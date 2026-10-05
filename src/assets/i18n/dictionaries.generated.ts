@@ -5138,7 +5138,8 @@ const shared:Record<string,string> = {
   "profile.module.kana": "Kana",
   "profile.module.kanji": "Kanji",
   "profile.module.rush": "RUSH",
-  "weaknesses.kana": "Kana"
+  "weaknesses.kana": "Kana",
+  "listening.title": "Listening"
 };
 export const es:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -6131,7 +6132,20 @@ export const es:Record<string,string> = {...shared,...{
   "weaknesses.none": "¡Vas bien! Todavía no hay elementos que necesiten práctica extra.",
   "weaknesses.practiceKana": "Practicar Kana",
   "weaknesses.practiceVocabulary": "Practicar Vocabulario",
-  "weaknesses.practiceKanji": "Practicar Kanji"
+  "weaknesses.practiceKanji": "Practicar Kanji",
+  "listening.skill": "Escucha",
+  "listening.exercise": "Ejercicio",
+  "listening.meaning": "Audio → significado",
+  "listening.japanese": "Audio → japonés",
+  "listening.mixed": "Mixto",
+  "listening.available": "{{count}} palabras con audio disponibles",
+  "listening.replay": "Reproducir de nuevo",
+  "listening.loading": "Cargando audio…",
+  "listening.blocked": "Pulsa ▶ para escuchar.",
+  "listening.error": "No se pudo reproducir el audio. No se registrará como un fallo.",
+  "listening.skipped": "{{count}} preguntas omitidas por fallos de audio. No afectan a tus débiles.",
+  "listening.continue": "Continuar",
+  "listening.practiceWeak": "Practicar escucha débil"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -7124,7 +7138,20 @@ export const en:Record<string,string> = {...shared,...{
   "weaknesses.none": "You’re doing well! No items need extra practice yet.",
   "weaknesses.practiceKana": "Practise Kana",
   "weaknesses.practiceVocabulary": "Practise Vocabulary",
-  "weaknesses.practiceKanji": "Practise Kanji"
+  "weaknesses.practiceKanji": "Practise Kanji",
+  "listening.skill": "Listening",
+  "listening.exercise": "Exercise",
+  "listening.meaning": "Audio → meaning",
+  "listening.japanese": "Audio → Japanese",
+  "listening.mixed": "Mixed",
+  "listening.available": "{{count}} words with audio available",
+  "listening.replay": "Play again",
+  "listening.loading": "Loading audio…",
+  "listening.blocked": "Press ▶ to listen.",
+  "listening.error": "Audio could not be played. This will not count as a mistake.",
+  "listening.skipped": "{{count}} questions skipped due to audio errors. Your weak items are unaffected.",
+  "listening.continue": "Continue",
+  "listening.practiceWeak": "Practise weak listening items"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -8117,5 +8144,18 @@ export const ca:Record<string,string> = {...shared,...{
   "weaknesses.none": "Vas bé! Encara no hi ha elements que necessitin pràctica extra.",
   "weaknesses.practiceKana": "Practicar Kana",
   "weaknesses.practiceVocabulary": "Practicar Vocabulari",
-  "weaknesses.practiceKanji": "Practicar Kanji"
+  "weaknesses.practiceKanji": "Practicar Kanji",
+  "listening.skill": "Escolta",
+  "listening.exercise": "Exercici",
+  "listening.meaning": "Àudio → significat",
+  "listening.japanese": "Àudio → japonès",
+  "listening.mixed": "Mixt",
+  "listening.available": "{{count}} paraules amb àudio disponibles",
+  "listening.replay": "Tornar a reproduir",
+  "listening.loading": "Carregant àudio…",
+  "listening.blocked": "Prem ▶ per escoltar.",
+  "listening.error": "No s’ha pogut reproduir l’àudio. No es registrarà com un error.",
+  "listening.skipped": "{{count}} preguntes omeses per errors d’àudio. No afecten els teus punts febles.",
+  "listening.continue": "Continuar",
+  "listening.practiceWeak": "Practicar escolta feble"
 }};

@@ -6128,5 +6128,19 @@
   "weaknesses.none": "Vas bé! Encara no hi ha elements que necessitin pràctica extra.",
   "weaknesses.practiceKana": "Practicar Kana",
   "weaknesses.practiceVocabulary": "Practicar Vocabulari",
-  "weaknesses.practiceKanji": "Practicar Kanji"
+  "weaknesses.practiceKanji": "Practicar Kanji",
+  "listening.title": "Listening",
+  "listening.skill": "Escolta",
+  "listening.exercise": "Exercici",
+  "listening.meaning": "Àudio → significat",
+  "listening.japanese": "Àudio → japonès",
+  "listening.mixed": "Mixt",
+  "listening.available": "{{count}} paraules amb àudio disponibles",
+  "listening.replay": "Tornar a reproduir",
+  "listening.loading": "Carregant àudio…",
+  "listening.blocked": "Prem ▶ per escoltar.",
+  "listening.error": "No s’ha pogut reproduir l’àudio. No es registrarà com un error.",
+  "listening.skipped": "{{count}} preguntes omeses per errors d’àudio. No afecten els teus punts febles.",
+  "listening.continue": "Continuar",
+  "listening.practiceWeak": "Practicar escolta feble"
 }

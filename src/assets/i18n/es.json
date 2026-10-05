@@ -6128,5 +6128,19 @@
   "weaknesses.none": "¡Vas bien! Todavía no hay elementos que necesiten práctica extra.",
   "weaknesses.practiceKana": "Practicar Kana",
   "weaknesses.practiceVocabulary": "Practicar Vocabulario",
-  "weaknesses.practiceKanji": "Practicar Kanji"
+  "weaknesses.practiceKanji": "Practicar Kanji",
+  "listening.title": "Listening",
+  "listening.skill": "Escucha",
+  "listening.exercise": "Ejercicio",
+  "listening.meaning": "Audio → significado",
+  "listening.japanese": "Audio → japonés",
+  "listening.mixed": "Mixto",
+  "listening.available": "{{count}} palabras con audio disponibles",
+  "listening.replay": "Reproducir de nuevo",
+  "listening.loading": "Cargando audio…",
+  "listening.blocked": "Pulsa ▶ para escuchar.",
+  "listening.error": "No se pudo reproducir el audio. No se registrará como un fallo.",
+  "listening.skipped": "{{count}} preguntas omitidas por fallos de audio. No afectan a tus débiles.",
+  "listening.continue": "Continuar",
+  "listening.practiceWeak": "Practicar escucha débil"
 }

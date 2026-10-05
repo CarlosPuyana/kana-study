@@ -7,6 +7,17 @@ import {SyncOutboxService} from './sync-outbox.service';
 import {WeaknessRecord} from '../models/weakness.model';
 
 describe('local writing weaknesses', () => {
+  it('persists independent writing/listening histories with unchanged scoring and writing defaults',()=>{
+    const service=TestBed.inject(WeaknessService);
+    service.record('vocabulary','same',true);
+    service.record('vocabulary','same',false,'listening');service.record('vocabulary','same',false,'listening');
+    expect(service.records()).toHaveLength(2);
+    expect(service.records().find(r=>r.activity==='writing')?.score).toBe(0);
+    expect(service.records().find(r=>r.activity==='listening')?.score).toBe(4);
+    expect(service.items('vocabulary',[{id:'same'}],10)).toEqual([]);
+    expect(service.items('vocabulary',[{id:'same'}],10,'listening')).toEqual([{id:'same'}]);
+    const reload=TestBed.runInInjectionContext(()=>new WeaknessService());expect(reload.records()).toEqual(service.records());
+  });
   let values: Map<string,unknown>;
   let saved: ReturnType<typeof vi.fn>;
   beforeEach(() => {

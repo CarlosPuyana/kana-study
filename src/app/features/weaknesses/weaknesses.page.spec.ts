@@ -48,6 +48,15 @@ describe('Weak spots page and Writing integrations',()=>{
     expect(f.nativeElement.querySelectorAll('.sections section')).toHaveLength(3);
     expect(f.nativeElement.querySelector('.positive')).not.toBeNull();expect(f.nativeElement.querySelectorAll('.practice')).toHaveLength(0);
   });
+  it('labels writing/listening separately and routes listening weaknesses to the same listening mode',async()=>{
+    const service=seed('vocabulary',VOCABULARY_N5,1),entry=VOCABULARY_N5[0];
+    service.record('vocabulary',entry.id,false,'listening');service.record('vocabulary',entry.id,false,'listening');
+    const f=TestBed.createComponent(WeaknessesPage);await f.whenStable();f.detectChanges();
+    expect(f.componentInstance.vocabulary()[0].id).toBe(entry.id);expect(f.componentInstance.vocabularyListening()[0].id).toBe(entry.id);
+    const hrefs=[...f.nativeElement.querySelectorAll('a.practice')].map(a=>(a as HTMLAnchorElement).getAttribute('href'));
+    expect(hrefs).toContain('/vocabulary/writing?weak=1');expect(hrefs).toContain('/vocabulary/listening?weak=1');
+    expect(f.nativeElement.textContent).toContain('✍');expect(f.nativeElement.textContent).toContain('🎧');
+  });
   it('resolves dataset labels, limits previews to five and removes improved items reactively',async()=>{
     const s=seed('kana',ALL_KANA,7);seed('vocabulary',VOCABULARY_N5,1);seed('kanji',KANJI_N5,1);seed('kana',[{id:'obsolete'}],1);
     const f=TestBed.createComponent(WeaknessesPage);await f.whenStable();f.detectChanges();

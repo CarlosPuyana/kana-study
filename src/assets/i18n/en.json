@@ -6128,5 +6128,19 @@
   "weaknesses.none": "You’re doing well! No items need extra practice yet.",
   "weaknesses.practiceKana": "Practise Kana",
   "weaknesses.practiceVocabulary": "Practise Vocabulary",
-  "weaknesses.practiceKanji": "Practise Kanji"
+  "weaknesses.practiceKanji": "Practise Kanji",
+  "listening.title": "Listening",
+  "listening.skill": "Listening",
+  "listening.exercise": "Exercise",
+  "listening.meaning": "Audio → meaning",
+  "listening.japanese": "Audio → Japanese",
+  "listening.mixed": "Mixed",
+  "listening.available": "{{count}} words with audio available",
+  "listening.replay": "Play again",
+  "listening.loading": "Loading audio…",
+  "listening.blocked": "Press ▶ to listen.",
+  "listening.error": "Audio could not be played. This will not count as a mistake.",
+  "listening.skipped": "{{count}} questions skipped due to audio errors. Your weak items are unaffected.",
+  "listening.continue": "Continue",
+  "listening.practiceWeak": "Practise weak listening items"
 }
