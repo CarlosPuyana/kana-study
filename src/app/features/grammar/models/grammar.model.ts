@@ -12,7 +12,11 @@ export interface GrammarDirection {
   readonly fromKey: string; readonly toKey: string; readonly actionKey: string;
   readonly captionKey: string; readonly arrow: '→' | '←'; readonly focus: 'from' | 'to';
 }
+export type GrammarExerciseType = 'particle' | 'fill-gap' | 'sentence-order' | 'conjugation';
 interface GrammarExerciseBase {
+  readonly exerciseType?: GrammarExerciseType;
+  readonly topicId?: string;
+  readonly lessonId?: string;
   readonly id: string;
   readonly labelKey: string;
   readonly topicKey: string;

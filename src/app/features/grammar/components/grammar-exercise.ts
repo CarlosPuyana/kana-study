@@ -31,6 +31,15 @@ export class GrammarExerciseComponent {
   correct():boolean{return isGrammarAnswerCorrect(this.exercise(),this.answer());}
   select(index:number):void{if(!this.checked())this.selected.set(index);}
   addToken(index:number):void{if(!this.checked()&&!this.sequence().includes(index))this.sequence.update(tokens=>[...tokens,index]);}
+  resetSequence():void{if(!this.checked())this.sequence.set([]);}
+  userAnswer():string {
+    const e=this.exercise();
+    if(isChoiceExercise(e))return this.selected()===null?'':this.i18n.t(e.optionKeys[this.selected()!]);
+    if(e.kind==='fill-gap')return this.textAnswer();
+    if(e.kind==='sentence-builder'||e.kind==='sentence-order')return this.sequence().map(i=>this.i18n.t(e.tokenKeys[i])).join('');
+    if(e.kind!=='matching')return '';
+    return e.pairs.map((p,i)=>this.i18n.t(p.leftKey)+' → '+this.i18n.t(e.pairs[this.matches()[i]].rightKey)).join(' · ');
+  }
   removeToken(position:number):void{if(!this.checked())this.sequence.update(tokens=>tokens.filter((_,i)=>i!==position));}
   chooseLeft(index:number):void{if(!this.checked())this.matchingLeft.set(index);}
   matchRight(index:number):void {

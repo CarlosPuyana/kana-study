@@ -40,8 +40,11 @@ export interface CompletedSessionSummary {
   readonly attempts: number;
   readonly needsPracticeCount: number;
   readonly durationSeconds: number;
-  readonly module?: 'kana' | 'flags' | 'kanji' | 'vocabulary';
+  readonly module?: 'kana' | 'flags' | 'kanji' | 'vocabulary' | 'grammar';
   readonly questionTypes?: readonly (FlagQuestionType | KanjiQuestionType | VocabularyQuestionType)[];
+  readonly grammarTopicIds?: readonly string[];
+  readonly grammarLessonIds?: readonly string[];
+  readonly grammarExerciseIds?: readonly string[];
   readonly countryIds?: readonly string[];
   readonly studyRegions?: readonly FlagRegion[];
   readonly kanjiIds?: readonly string[];

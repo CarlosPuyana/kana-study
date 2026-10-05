@@ -21,6 +21,7 @@
     <div class="constructed-sentence" role="group" [attr.aria-label]="i18n.t('grammar.yourSentence')">
       @for(token of sequence();track $index){<button type="button" class="grammar-token" [disabled]="checked()" [attr.aria-label]="i18n.t('grammar.removeToken',{token:i18n.t(ordered.tokenKeys[token])})" (click)="removeToken($index)">{{i18n.t(ordered.tokenKeys[token])}} <span aria-hidden="true">×</span></button>}
     </div>
+    <button type="button" class="grammar-token" [disabled]="checked()||!sequence().length" (click)="resetSequence()">{{i18n.t('grammar.interactive.reset')}}</button>
     <div class="token-bank" role="group" [attr.aria-label]="i18n.t('grammar.availableBlocks')">
       @for(token of ordered.tokenKeys;track $index){<button type="button" class="grammar-token" [disabled]="checked()||sequence().includes($index)" (click)="addToken($index)">{{i18n.t(token)}}</button>}
     </div>
@@ -34,6 +35,7 @@
     <div [class]="practice()?'practice-feedback-box':'exercise-feedback show'" [class.success]="correct()" [class.error]="!correct()" role="status">
       <div [class]="practice()?'practice-feedback-icon':'feedback-icon'">{{correct()?'✓':'!'}}</div><div><strong>{{i18n.t(correct()?'grammar.correct':practice()?'grammar.review':'grammar.almost')}}</strong><p>{{i18n.t(correct()?exercise().successKey:exercise().errorKey)}}</p>
         @if(!correct()){
+          <p><strong>{{i18n.t('grammar.interactive.yourAnswer')}}</strong>: {{userAnswer()}}</p>
           <p><strong>{{i18n.t('grammar.solution')}}</strong>
           @if(gap();as gap){ {{i18n.t(gap.solutionKey)}} }
           @if(ordered();as ordered){ @for(index of ordered.solution;track $index){ {{i18n.t(ordered.tokenKeys[index])}} } }

@@ -80,10 +80,10 @@ describe('Grammar progress UI and complete practice integration', () => {
     harness.detectChanges(); expect(progress.state().review['06.1'].active).toBe(false); expect(progress.state().review['06.2'].active).toBe(true);
     expect(progress.state().concepts).toEqual({}); expect(progress.state().practices).toEqual({});
   });
-  it('empty global review offers the Roadmap without creating a random round', async () => {
+  it('global review offers mixed practice even without saved difficulties', async () => {
     const harness = await RouterTestingHarness.create(), page = await harness.navigateByUrl('/grammar/review', GrammarReviewPage);
-    expect(page.session.total()).toBe(0); expect(harness.routeNativeElement!.textContent).toContain('No tienes conceptos pendientes de repaso.');
-    expect(harness.routeNativeElement!.querySelector('.practice-start')).toBeNull();
+    expect(page.session.total()).toBe(10); expect(new Set(page.session.roundExercises().map(e=>e.topicId)).size).toBeGreaterThan(1);
+    expect(harness.routeNativeElement!.querySelector('.practice-start')).not.toBeNull();
   });
   it('reloads the lesson at exercise two after answering without pressing Continue', async () => {
     const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/06/1', GrammarPage);
@@ -113,11 +113,12 @@ describe('Grammar progress UI and complete practice integration', () => {
     TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY,cloud); TestBed.tick(); harness.detectChanges();
     expect(page.session.stage()).toBe('question'); expect(page.session.roundExercises()).toBe(questions);
     expect(page.session.index()).toBe(index); expect(page.session.answers()).toEqual(answers);
-    page.answer(true); page.next(); harness.detectChanges(); await harness.fixture.whenStable();
+    while(page.session.stage()==='question'){page.answer(true);page.next();} harness.detectChanges(); await harness.fixture.whenStable();
     expect(page.session.stage()).toBe('results'); const score = page.session.score();
     TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY,cloud); TestBed.tick(); harness.detectChanges();
     expect(page.session.stage()).toBe('results'); expect(page.session.roundExercises()).toBe(questions); expect(page.session.score()).toBe(score);
     page.reset(); harness.detectChanges(); await harness.fixture.whenStable();
-    expect(page.session.stage()).toBe('intro'); expect(page.session.roundExercises().every(exercise=>exercise.conceptId==='00.1')).toBe(true);
+    expect(page.session.stage()).toBe('intro'); expect(page.session.roundExercises().some(exercise=>exercise.conceptId==='00.1')).toBe(true);
+    expect(new Set(page.session.roundExercises().map(e=>e.topicId)).size).toBeGreaterThan(1);
   });
 });

@@ -8,6 +8,7 @@ import { FuriganaText } from '../../../shared/components/furigana-text/furigana-
 import { GrammarSidebar } from '../components/grammar-sidebar';
 import { GrammarExerciseComponent } from '../components/grammar-exercise';
 import { GrammarPracticeComponent } from '../components/grammar-practice';
+import { grammarTopicRound } from '../services/grammar-interactive-catalog';
 import { grammarLessonExercises } from '../models/grammar.model';
 
 @Component({selector:'app-grammar-page',imports:[RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
@@ -15,6 +16,7 @@ export class GrammarPage {
   readonly progress=inject(GrammarProgressService);
   readonly i18n=inject(TranslationService);private readonly route=inject(ActivatedRoute);private readonly router=inject(Router);
   private readonly params=toSignal(this.route.paramMap,{initialValue:this.route.snapshot.paramMap});
+  private readonly query=toSignal(this.route.queryParamMap,{initialValue:this.route.snapshot.queryParamMap});
   readonly topics=GRAMMAR_TOPICS;readonly roadmap=GRAMMAR_ROADMAP;
   readonly topic=computed(()=>this.topics.find(topic=>topic.id===this.params().get('topicId'))??null);
   readonly lesson=computed(()=>GRAMMAR_LESSONS.find(lesson=>lesson.topicId===this.topic()?.id&&lesson.id===this.params().get('lessonId'))??null);
@@ -27,7 +29,19 @@ export class GrammarPage {
   readonly sessionPosition=computed(()=>(this.studySession()?.lessonIds.indexOf(this.lesson()?.id??'')??-1)+1);
   readonly sessionCompletedConcepts=computed(()=>this.sessionLessons().filter(lesson=>this.progress.conceptStatus(`${lesson.topicId}.${lesson.id}`)==='completed').length);
   readonly sessionCards=computed(()=>this.sessions().map(session=>({session,first:this.topic()!.lessons.find(l=>l.path?.endsWith('/'+session.lessonIds[0]))!,lessons:session.lessonIds.map(id=>GRAMMAR_LESSONS.find(l=>l.topicId===session.topicId&&l.id===id)!)})));
-  readonly practice=computed(()=>this.route.snapshot.routeConfig?.path?.endsWith('/practice')?GRAMMAR_PRACTICES.find(practice=>practice.topicId===this.topic()?.id)??null:null);
+  readonly practice=computed(()=>{
+    if(!this.route.snapshot.routeConfig?.path?.endsWith('/practice'))return null;
+    const practice=GRAMMAR_PRACTICES.find(practice=>practice.topicId===this.topic()?.id);
+    if(!practice)return null;
+    const lessonId=this.query().get('lesson')??undefined;
+    if(lessonId&&!GRAMMAR_LESSONS.some(l=>l.topicId===practice.topicId&&l.id===lessonId))return null;
+    const exercises=grammarTopicRound(practice.topicId,lessonId);
+    const lesson=GRAMMAR_LESSONS.find(l=>l.topicId===practice.topicId&&l.id===lessonId);
+    return {...practice,exercises,
+      stats:practice.stats.slice(0,lesson?1:undefined).map((stat,index)=>index===0?{...stat,value:String(exercises.length)}:stat),
+      ...(lesson?{intro:{...practice.intro,titleKey:lesson.titleKey,bodyKey:'grammar.interactive.lessonIntro'},philosophyKeys:[],areas:[],
+        tip:GRAMMAR_PRACTICES.find(p=>p.topicId==='03')!.tip,nextPath:`/grammar/n5/${practice.topicId}/${lesson.id}`,nextLabelKey:'grammar.learn'}:{})};
+  });
   readonly invalid=computed(()=>!!this.params().get('topicId')&&(!this.topic()||!!this.params().get('lessonId')&&!this.lesson()||this.route.snapshot.routeConfig?.path?.endsWith('/practice')&&!this.practice()));
   readonly mobileOpen=signal(false);readonly collapsed=signal(false);
   private readonly sidebar=viewChild<ElementRef<HTMLElement>>('sidebar');

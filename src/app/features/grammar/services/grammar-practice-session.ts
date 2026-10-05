@@ -1,4 +1,5 @@
 import { Injectable, InjectionToken, computed, inject, signal } from '@angular/core';
+import { SessionHistoryService } from '../../../core/services/session-history.service';
 import { GrammarExercise } from '../models/grammar.model';
 import { shuffleGrammar, shuffleGrammarExercise } from './grammar-shuffle';
 
@@ -7,6 +8,9 @@ export const GRAMMAR_RANDOM=new InjectionToken<()=>number>('GRAMMAR_RANDOM',{pro
 // Component-scoped, transient practice state. Does not read or write saved study progress.
 @Injectable()
 export class GrammarPracticeSession {
+  private readonly history=inject(SessionHistoryService);
+  private startedAt=0;
+  private sessionId='';
   private readonly random=inject(GRAMMAR_RANDOM);
   private original:readonly GrammarExercise[]=[];
   private readonly questions = signal<readonly GrammarExercise[]>([]);
@@ -17,6 +21,8 @@ export class GrammarPracticeSession {
   readonly current = computed(() => this.questions()[this.index()] ?? null);
   readonly total = computed(() => this.questions().length);
   readonly score = computed(() => this.answers().filter(Boolean).length);
+  readonly percent=computed(()=>this.total()?Math.round(this.score()/this.total()*100):0);
+  readonly topicIds=computed(()=>[...new Set(this.questions().map(e=>e.topicId??e.conceptId?.split('.')[0]).filter((id):id is string=>!!id))]);
   readonly checked = computed(() => this.answers().length > this.index());
   readonly failures=signal<readonly GrammarExercise[]>([]);
   readonly reviewing=signal(false);
@@ -30,6 +36,8 @@ export class GrammarPracticeSession {
     const questions=this.failures();this.reviewing.set(true);this.startRound(questions);
   }
   private startRound(questions:readonly GrammarExercise[]):void {
+    this.startedAt=Date.now();this.sessionId=crypto.randomUUID();
+    questions=[...new Map(questions.map(e=>[e.id,e])).values()];
     this.questions.set(shuffleGrammar(questions,this.random).map(e=>shuffleGrammarExercise(e,this.random)));
     this.index.set(0);this.answers.set([]);this.failures.set([]);this.stage.set(questions.length?'question':'results');
   }
@@ -41,7 +49,15 @@ export class GrammarPracticeSession {
   next(): void {
     if (this.stage()!=='question'||!this.checked()) return;
     if (this.index()+1 < this.total()) this.index.update(index => index+1);
-    else this.stage.set('results');
+    else {
+      this.stage.set('results');
+      this.history.record({sessionId:this.sessionId,completedAt:new Date().toISOString(),module:'grammar',mode:'quick-practice',
+        exercisesCompleted:this.total(),firstTrySuccesses:this.score(),attempts:this.answers().length,
+        needsPracticeCount:this.total()-this.score(),durationSeconds:Math.max(0,Math.round((Date.now()-this.startedAt)/1000)),
+        grammarExerciseIds:this.questions().map(e=>e.id),
+        grammarTopicIds:[...new Set(this.questions().map(e=>e.topicId??e.conceptId?.split('.')[0]).filter((id):id is string=>!!id))],
+        grammarLessonIds:[...new Set(this.questions().map(e=>e.conceptId).filter((id):id is string=>!!id))]});
+    }
   }
   resultKey(): string {
     const ratio = this.total() ? this.score()/this.total() : 0;

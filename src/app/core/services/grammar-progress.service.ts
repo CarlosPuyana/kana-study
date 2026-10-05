@@ -85,7 +85,7 @@ export class GrammarProgressService {
   }
   recordPractice(topicId: string, score: number, total: number, errorConceptIds: readonly string[], attemptedAt: string): void {
     const practice = GRAMMAR_PRACTICES.find(practice => practice.topicId === topicId);
-    if (!practice || total !== practice.exercises.length || score < 0 || score > total || !Number.isInteger(score) || !Number.isFinite(Date.parse(attemptedAt))) return;
+    if (!practice || (!Number.isInteger(total) || total < 1 || total > practice.exercises.length) || score < 0 || score > total || !Number.isInteger(score) || !Number.isFinite(Date.parse(attemptedAt))) return;
     this.write({...this.state(), practices: {...this.state().practices, [topicId]: {topicId, score, total, attemptedAt, updatedAt: this.now(), errorConceptIds: [...new Set(errorConceptIds.filter(id => concepts.has(id) && id.startsWith(topicId + '.')))]}}});
   }
   /** Only call at the end of the selected round; a partial round cannot clear errors. */
