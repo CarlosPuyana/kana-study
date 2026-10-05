@@ -29,3 +29,7 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# Playwright local reports and traces
+/test-results/
+/playwright-report/

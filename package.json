@@ -11,7 +11,8 @@
     "audit:grammar": "node scripts/audit-grammar-n5.mjs",
     "generate:japanese-1500": "node scripts/generate-japanese-1500.mjs",
     "test": "ng test --watch=false",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@angular/common": "^22.0.0",
@@ -33,6 +34,7 @@
     "@angular/build": "^22.0.0",
     "@angular/cli": "^22.0.0",
     "@angular/compiler-cli": "^22.0.0",
+    "@playwright/test": "^1.63.0",
     "fake-indexeddb": "^6.2.5",
     "jsdom": "^30.1.1",
     "typescript": "~6.0.2",

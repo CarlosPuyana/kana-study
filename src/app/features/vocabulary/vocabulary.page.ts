@@ -1,3 +1,4 @@
+import {PageHeader} from '../../shared/components/page-header/page-header';
 import { ChangeDetectionStrategy,Component,inject,signal } from '@angular/core';
 import { ActivatedRoute,Router,RouterLink } from '@angular/router';
 import { RushConfiguration } from '../../core/models/rush.model';
@@ -16,8 +17,7 @@ import { ProgressCircle } from '../../shared/components/progress-circle/progress
 import { RushConfigDialog,RushConfigOption } from '../../shared/components/rush-config-dialog/rush-config-dialog';
 import { SelectionCard } from '../../shared/components/selection-card/selection-card';
 import { VocabularyStartPanel } from './components/vocabulary-start-panel/vocabulary-start-panel';
-import { AccountControl } from '../../shared/components/account-control/account-control';
-@Component({selector:'app-vocabulary-page',imports:[RouterLink,AccountControl,VocabularyStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./vocabulary.page.html',styleUrl:'./vocabulary.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-vocabulary-page',imports:[PageHeader,RouterLink,VocabularyStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./vocabulary.page.html',styleUrl:'./vocabulary.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class VocabularyPage{
   readonly daily=inject(DailyLearningService);readonly progress=inject(VocabularyProgressService);readonly medals=inject(VocabularyMedalService);readonly i18n=inject(TranslationService);readonly showStartPanel=signal(false);readonly showRushPanel=signal(false);readonly rushConfig=signal<RushConfiguration|null>(null);
   readonly rushContent:readonly RushConfigOption[]=VOCABULARY_CATEGORIES.map(id=>({id,labelKey:`vocabulary.category.${id}`}));

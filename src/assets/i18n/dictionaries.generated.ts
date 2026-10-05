@@ -6270,7 +6270,12 @@ export const es:Record<string,string> = {...shared,...{
   "manga.remote.linkHelp": "Introduce las URLs del archivo ZIP/CBZ y del manifiesto remoto compatible con Mokuro. La portada es opcional.",
   "manga.remote.archiveUrl": "URL del archivo ZIP/CBZ",
   "manga.remote.manifestUrl": "URL del manifiesto",
-  "manga.remote.coverUrl": "URL de portada (opcional)"
+  "manga.remote.coverUrl": "URL de portada (opcional)",
+  "more.settings": "Configuración",
+  "more.settingsDescription": "Idioma, tema y preferencias de la aplicación.",
+  "navigation.home": "Inicio",
+  "navigation.learn": "Aprender",
+  "navigation.account": "Cuenta"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -7337,7 +7342,12 @@ export const en:Record<string,string> = {...shared,...{
   "manga.remote.linkHelp": "Enter the URLs of the ZIP/CBZ archive and the Mokuro-compatible remote manifest. The cover is optional.",
   "manga.remote.archiveUrl": "ZIP/CBZ archive URL",
   "manga.remote.manifestUrl": "Manifest URL",
-  "manga.remote.coverUrl": "Cover URL (optional)"
+  "manga.remote.coverUrl": "Cover URL (optional)",
+  "more.settings": "Settings",
+  "more.settingsDescription": "Language, theme and app preferences.",
+  "navigation.home": "Home",
+  "navigation.learn": "Learn",
+  "navigation.account": "Account"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -8404,5 +8414,10 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.remote.linkHelp": "Introdueix les URL de l’arxiu ZIP/CBZ i del manifest remot compatible amb Mokuro. La portada és opcional.",
   "manga.remote.archiveUrl": "URL de l’arxiu ZIP/CBZ",
   "manga.remote.manifestUrl": "URL del manifest",
-  "manga.remote.coverUrl": "URL de portada (opcional)"
+  "manga.remote.coverUrl": "URL de portada (opcional)",
+  "more.settings": "Configuració",
+  "more.settingsDescription": "Idioma, tema i preferències de l’aplicació.",
+  "navigation.home": "Inici",
+  "navigation.learn": "Aprendre",
+  "navigation.account": "Compte"
 }};

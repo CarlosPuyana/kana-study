@@ -17,6 +17,7 @@ describe('shared Japanese audio',()=>{
     expect(service.hasAudio('unknown')).toBe(false);expect(service.resolve('unknown')).toBeNull();
   });
   it('resolves assets on localhost too',()=>{expect(setup('http://localhost:4200/').service.resolve(id)).toBe('http://localhost:4200/'+VOCABULARY_AUDIO_MANIFEST[id]);});
+  it('does not create or preload audio while resolving availability',()=>{const {service,factory}=setup();for(const entryId of Object.keys(VOCABULARY_AUDIO_MANIFEST)){service.hasAudio(entryId);service.resolve(entryId);}expect(factory).not.toHaveBeenCalled();});
   it('plays and repeats centrally, stopping the prior playback',async()=>{
     const {service,audio}=setup();expect(await service.play(id)).toBe('played');expect(service.state()).toBe('playing');
     expect(await service.repeat()).toBe('played');expect(audio.pause).toHaveBeenCalledOnce();expect(audio.play).toHaveBeenCalledTimes(2);

@@ -1,3 +1,4 @@
+import {PageHeader} from '../../shared/components/page-header/page-header';
 import {ChangeDetectionStrategy, Component, computed, inject} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {LearningSessionService} from '../../core/services/learning-session.service';
@@ -15,7 +16,7 @@ import {ALL_KANA} from '../../data/kana';
 import {VOCABULARY_N5} from '../../data/vocabulary-n5.generated';
 import {KANJI_N5} from '../../data/kanji-n5.generated';
 
-@Component({selector:'app-weaknesses-page', imports:[RouterLink], templateUrl:'./weaknesses.page.html',
+@Component({selector:'app-weaknesses-page', imports:[PageHeader,RouterLink], templateUrl:'./weaknesses.page.html',
   styleUrl:'./weaknesses.page.scss', changeDetection:ChangeDetectionStrategy.OnPush})
 export class WeaknessesPage {
   readonly i18n = inject(TranslationService);

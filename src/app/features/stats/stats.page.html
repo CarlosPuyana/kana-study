@@ -1,6 +1,6 @@
 @let stats=analytics.stats();
 <main class="stats-shell">
-  <header><a class="back" routerLink="/more" [attr.aria-label]="i18n.t('common.back')">←</a><h1>📊 {{i18n.t('stats.title')}}</h1></header>
+  <app-page-header titleKey="stats.title" backRoute="/more"/>
   <p class="intro">{{i18n.t('stats.description')}}</p>
   <div class="summary">
     <article><strong>{{stats.summary.streak}}</strong><span>{{i18n.t('stats.streak')}}</span></article>
@@ -9,7 +9,7 @@
     <article><strong>{{stats.summary.weakCount}}</strong><span>{{i18n.t('stats.weak')}}</span></article>
   </div>
   <section class="recommendation"><h2>{{i18n.t('stats.recommendation')}}</h2>@for(item of stats.recommendations;track item.key){<p>{{recommendation(item)}}</p>}</section>
-  <section aria-labelledby="modules-title"><h2 id="modules-title">{{i18n.t('stats.modules')}}</h2><p class="note">{{i18n.t('stats.performanceScope')}}</p><div class="cards">
+  <section aria-labelledby="modules-title"><h2 id="modules-title">{{i18n.t('stats.modules')}}</h2><p class="note">{{i18n.t('stats.performanceScope')}}</p><div class="cards modules">
     @for(item of stats.modules;track item.module){<article><h3>{{moduleLabel(item.module)}}</h3>
       @if(item.accuracy!==null){<strong class="accuracy">{{percent(item.accuracy)}}</strong><div class="bar" aria-hidden="true"><span [style.width.%]="item.accuracy"></span></div>
         <dl><div><dt>{{i18n.t('stats.attempts')}}</dt><dd>{{item.attempts}}</dd></div><div><dt>{{i18n.t('stats.successes')}}</dt><dd>{{item.successes}}</dd></div><div><dt>{{i18n.t('stats.failures')}}</dt><dd>{{item.failures}}</dd></div></dl>

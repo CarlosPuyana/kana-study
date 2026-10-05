@@ -5,14 +5,7 @@
   </a>
 
   <nav class="header-actions" [attr.aria-label]="i18n.t('header.actions')">
-  <a class="account-button" [routerLink]="auth.authenticated() ? '/profile' : '/auth'"
-    [attr.aria-label]="i18n.t(auth.authenticated() ? 'account.profile' : 'account.signIn')">
-    <span class="avatar" aria-hidden="true">{{ auth.authenticated() ? auth.initials() : '♙' }}</span>
-    <span class="account-label">{{ i18n.t(auth.authenticated() ? 'account.profile' : 'account.signIn') }}</span>
-    @if (auth.authenticated()) {
-      <span class="sync-dot" [attr.data-status]="sync.status()" [attr.aria-label]="i18n.t('sync.' + sync.status())"></span>
-    }
-  </a>
+  <app-account-control/>
   <a class="settings-button"
     routerLink="/settings"
     [attr.aria-label]="i18n.t('header.settings')"

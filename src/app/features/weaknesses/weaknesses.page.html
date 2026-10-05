@@ -1,5 +1,5 @@
 <main class="page-shell">
-  <header><a routerLink="/more" [attr.aria-label]="i18n.t('common.back')">←</a><h1>🧠 {{i18n.t('weaknesses.title')}}</h1></header>
+  <app-page-header titleKey="weaknesses.title" backRoute="/more"/>
   <p class="intro">{{i18n.t('weaknesses.description')}}</p>
   @if(empty()){<p class="positive" role="status">{{i18n.t('weaknesses.none')}}</p>}
   <div class="sections">

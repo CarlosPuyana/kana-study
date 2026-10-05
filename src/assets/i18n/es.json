@@ -6267,5 +6267,10 @@
   "manga.remote.linkHelp": "Introduce las URLs del archivo ZIP/CBZ y del manifiesto remoto compatible con Mokuro. La portada es opcional.",
   "manga.remote.archiveUrl": "URL del archivo ZIP/CBZ",
   "manga.remote.manifestUrl": "URL del manifiesto",
-  "manga.remote.coverUrl": "URL de portada (opcional)"
+  "manga.remote.coverUrl": "URL de portada (opcional)",
+  "more.settings": "Configuración",
+  "more.settingsDescription": "Idioma, tema y preferencias de la aplicación.",
+  "navigation.home": "Inicio",
+  "navigation.learn": "Aprender",
+  "navigation.account": "Cuenta"
 }

@@ -1,11 +1,5 @@
 <main class="page-shell">
-  <header class="page-header">
-    <a class="back-button" [routerLink]="returnRoute()" [attr.aria-label]="i18n.t('common.back')">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
-    </a>
-    <h1>{{ i18n.t('more.title') }}</h1>
-    <app-account-control />
-  </header>
+  <app-page-header titleKey="more.title" [backRoute]="returnRoute()"/>
 
   <section class="intro" aria-labelledby="more-intro-title">
     <span>{{ i18n.t('more.eyebrow') }}</span>
@@ -27,5 +21,6 @@
     <h2 id="learning-tools-title">{{i18n.t('weaknesses.tools')}}</h2>
     <a routerLink="/weaknesses"><strong>🧠 {{i18n.t('weaknesses.title')}}</strong><span>{{i18n.t('weaknesses.description')}}</span></a>
     <a routerLink="/stats"><strong>📊 {{i18n.t('stats.title')}}</strong><span>{{i18n.t('stats.description')}}</span></a>
+    <a routerLink="/settings"><strong>⚙ {{i18n.t('more.settings')}}</strong><span>{{i18n.t('more.settingsDescription')}}</span></a>
   </section>
 </main>

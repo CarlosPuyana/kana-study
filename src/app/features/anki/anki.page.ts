@@ -1,16 +1,15 @@
+import {PageHeader} from '../../shared/components/page-header/page-header';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { DeckStudyCounts } from '../../core/models/deck-study.model';
 import { DeckStudyService, DECK_NEW_LIMIT_STEP } from '../../core/services/deck-study.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { JAPANESE_1500_INDEX } from '../../data/japanese-1500.index.generated';
 import { STUDY_DECKS } from '../../data/study-decks';
 import { DeckCard } from './components/deck-card/deck-card';
-import { AccountControl } from '../../shared/components/account-control/account-control';
 import { getLocalStudyDayKey } from '../../core/services/deck-study-time';
 
 @Component({
-  selector: 'app-anki-page', imports: [RouterLink, AccountControl, DeckCard], templateUrl: './anki.page.html',
+  selector: 'app-anki-page', imports:[PageHeader,  DeckCard], templateUrl: './anki.page.html',
   styleUrl: './anki.page.scss', changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(window:focus)': 'refresh()', '(document:visibilitychange)': 'refresh()' },
 })
