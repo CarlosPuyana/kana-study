@@ -1249,7 +1249,9 @@ export const es:Record<string,string> = {...shared,...{
   "manga.saved.emptyHelp": "Mientras lees un manga, pulsa una palabra y usa «Guardar para estudiar».",
   "manga.saved.back": "Volver al manga",
   "manga.saved.external": "No está actualmente en Vocabulary",
-  "manga.saved.page": "pág. {{page}}"
+  "manga.saved.page": "pág. {{page}}",
+  "manga.builtin.preparing": "Preparando manga incluido…",
+  "manga.builtin.failed": "No se pudo preparar el manga incluido. Se reintentará al volver a Manga."
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -2386,7 +2388,9 @@ export const en:Record<string,string> = {...shared,...{
   "manga.saved.emptyHelp": "While reading a manga, tap a word and choose “Save for study”.",
   "manga.saved.back": "Back to manga",
   "manga.saved.external": "Not currently in Vocabulary",
-  "manga.saved.page": "page {{page}}"
+  "manga.saved.page": "page {{page}}",
+  "manga.builtin.preparing": "Preparing included manga…",
+  "manga.builtin.failed": "Could not prepare the included manga. It will be retried when you return to Manga."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -3523,5 +3527,7 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.saved.emptyHelp": "Mentre llegeixes un manga, toca una paraula i tria «Desa per estudiar».",
   "manga.saved.back": "Torna al manga",
   "manga.saved.external": "Actualment no és a Vocabulary",
-  "manga.saved.page": "pàg. {{page}}"
+  "manga.saved.page": "pàg. {{page}}",
+  "manga.builtin.preparing": "S’està preparant el manga inclòs…",
+  "manga.builtin.failed": "No s’ha pogut preparar el manga inclòs. Es tornarà a intentar quan tornis a Manga."
 }};

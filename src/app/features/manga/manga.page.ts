@@ -1,3 +1,4 @@
+import {MangaBuiltinService} from '../../core/services/manga-builtin.service';
 import {MangaStudySavedRepository} from '../../core/services/manga-study-saved.repository';
 import {LocalManga} from '../../core/models/local-manga.model';
 import {LocalMangaCatalogService,LOCAL_MANGA_PREFIX} from '../../core/services/local-manga-catalog.service';
@@ -5,6 +6,7 @@ import {
   Component,
   effect,
   inject,
+  isDevMode,
   OnDestroy,
   signal,
   untracked,
@@ -50,6 +52,8 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
         [disabled]="busy()"
         (change)="importFile($event)"
     />
+    @if(builtinPreparing()){<p role="status">{{i18n.t('manga.builtin.preparing')}}</p>}
+    @if(builtinFailed()){<p role="status">{{i18n.t('manga.builtin.failed')}}</p>}
     @if (busy()) {
       <p role="status">
         {{ i18n.t("manga.processing") }} {{ processed() }} / {{ total() }}
@@ -149,6 +153,18 @@ export class MangaPage implements OnDestroy {
   readonly total = signal(0);
   readonly confirmDelete = signal<MangaVolume | null>(null);
   private generation = 0;
+  private builtinGeneration=0;
+  private readonly builtin=inject(MangaBuiltinService);
+  readonly builtinPreparing=signal(false);readonly builtinFailed=signal(false);
+  private async prepareBuiltin(workspace=this.workspace.active()):Promise<void>{
+    const generation=++this.builtinGeneration;this.builtinPreparing.set(true);this.builtinFailed.set(false);
+    try{const added=await this.builtin.ensure(workspace);if(generation===this.builtinGeneration && workspace===this.workspace.active() && added)await this.load(workspace);}
+    catch(error){
+      if(isDevMode())console.error('[Manga library] Included manga unavailable',{workspace,error});
+      if(generation===this.builtinGeneration && workspace===this.workspace.active())this.builtinFailed.set(true);
+    }
+    finally{if(generation===this.builtinGeneration && workspace===this.workspace.active())this.builtinPreparing.set(false);}
+  }
   constructor() {
     void this.loadCatalog();
     effect(() => {
@@ -157,6 +173,7 @@ export class MangaPage implements OnDestroy {
       untracked(() => {
         this.confirmDelete.set(null);
         void this.load(workspace);
+        void this.prepareBuiltin(workspace);
       });
     });
   }
@@ -231,7 +248,7 @@ export class MangaPage implements OnDestroy {
     return (bytes / 1024 / 1024).toFixed(1);
   }
   ngOnDestroy(): void {
-    ++this.generation;++this.catalogGeneration;
+    ++this.generation;++this.catalogGeneration;++this.builtinGeneration;
     this.clearCovers();
   }
 }

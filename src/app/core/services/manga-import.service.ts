@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, isDevMode } from '@angular/core';
 import { MangaRepository } from './manga.repository';
 import { WorkspaceService } from './workspace.service';
 import { findMokuro, MangaError, mapMokuroImages, normalizeMangaPath, parseMokuro } from './mokuro-parser';
@@ -6,6 +6,7 @@ import { MangaVolume } from '../models/manga.model';
 import { withMangaLock } from './manga-lock';
 import { LocalWorkspaceId } from '../models/account.model';
 export interface RemoteMangaInput { archiveBlob: Blob; mokuroBlob: Blob; seriesTitle: string; volumeTitle: string; archiveUrl: string; ocrUrl: string; signal: AbortSignal; workspace?: LocalWorkspaceId }
+interface BuiltinMangaInput { id: string; workspace: LocalWorkspaceId; volumeTitle: string }
 @Injectable({ providedIn: 'root' })
 export class MangaImportService {
   private readonly repository = inject(MangaRepository);
@@ -14,16 +15,20 @@ export class MangaImportService {
   async import(file: File, progress: (current: number, total: number) => void): Promise<void> {
     await this.importArchive(file, progress);
   }
+  async importBuiltin(file: Blob, id: string, workspace: LocalWorkspaceId, volumeTitle: string): Promise<void> {
+    await this.importArchive(file,()=>{},undefined,{id,workspace,volumeTitle});
+  }
   importRemote(input: RemoteMangaInput, progress: (current: number, total: number) => void): Promise<string> {
     return this.importArchive(input.archiveBlob, progress, input);
   }
-  private async importArchive(file: Blob, progress: (current: number, total: number) => void, remote?: RemoteMangaInput): Promise<string> {
-    const workspace = remote?.workspace ?? this.workspace.active();
+  private async importArchive(file: Blob, progress: (current: number, total: number) => void, remote?: RemoteMangaInput, builtin?: BuiltinMangaInput): Promise<string> {
+    const workspace = builtin?.workspace ?? remote?.workspace ?? this.workspace.active();
     return withMangaLock(workspace, async () => {
+    if(builtin && await this.repository.provisioned(builtin.id,workspace))return builtin.id;
     remote?.signal.throwIfAborted();
     const { ZipReader, BlobReader, BlobWriter, TextWriter } = await import('@zip.js/zip.js');
     const zip = new ZipReader(new BlobReader(file), { useWebWorkers: false });
-    const id = crypto.randomUUID();
+    const id = builtin?.id ?? crypto.randomUUID();
     this.activeIds.add(id);
     try {
       const entries = (await zip.getEntries()).filter(entry => !entry.directory);
@@ -40,7 +45,7 @@ export class MangaImportService {
       if (estimate?.quota !== undefined && estimate.usage !== undefined && bytes > estimate.quota - estimate.usage) throw new MangaError('quota');
       const now = new Date().toISOString();
       const { pages: _pages, ...mokuro } = doc;
-      const volume: MangaVolume = { id, title: remote?.volumeTitle ?? (doc.volume || doc.title), seriesTitle: remote?.seriesTitle ?? doc.title, pageCount: images.length, storageBytes: bytes, mokuro, createdAt: now, updatedAt: now, complete: false, ...(remote ? {remoteSource:{archiveUrl:remote.archiveUrl,ocrUrl:remote.ocrUrl}} : {}) };
+      const volume: MangaVolume = { id, title: builtin?.volumeTitle ?? remote?.volumeTitle ?? (doc.volume || doc.title), seriesTitle: remote?.seriesTitle ?? doc.title, pageCount: images.length, storageBytes: bytes, mokuro, createdAt: now, updatedAt: now, complete: false, ...(remote ? {remoteSource:{archiveUrl:remote.archiveUrl,ocrUrl:remote.ocrUrl}} : {}) };
       remote?.signal.throwIfAborted();
       await this.repository.put('volumes', volume, workspace);
       progress(0, images.length);
@@ -57,13 +62,15 @@ export class MangaImportService {
         progress(index + 1, images.length);
       }
       remote?.signal.throwIfAborted();
-      await this.repository.put('volumes', { ...volume, complete: true }, workspace);
+      if(builtin)await this.repository.completeBuiltin(volume,workspace);
+      else await this.repository.put('volumes', { ...volume, complete: true }, workspace);
       remote?.signal.throwIfAborted();
       try { await navigator.storage?.persist?.(); } catch { /* best effort */ }
       remote?.signal.throwIfAborted();
       return id;
     } catch (error) {
-      await this.repository.delete(id, workspace).catch(() => undefined);
+      if(builtin && isDevMode())console.error('[Manga builtin] ZIP/Mokuro/IndexedDB import failed',{workspace,id,error});
+      await this.repository.delete(id, workspace, false).catch(() => undefined);
       if (remote?.signal.aborted) throw new MangaError('cancelled');
       if (error instanceof MangaError) throw error;
       throw new MangaError(error instanceof DOMException && error.name === 'QuotaExceededError' ? 'quota' : 'corrupt');

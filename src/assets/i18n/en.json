@@ -6306,5 +6306,7 @@
   "manga.saved.emptyHelp": "While reading a manga, tap a word and choose “Save for study”.",
   "manga.saved.back": "Back to manga",
   "manga.saved.external": "Not currently in Vocabulary",
-  "manga.saved.page": "page {{page}}"
+  "manga.saved.page": "page {{page}}",
+  "manga.builtin.preparing": "Preparing included manga…",
+  "manga.builtin.failed": "Could not prepare the included manga. It will be retried when you return to Manga."
 }

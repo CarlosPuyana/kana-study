@@ -6306,5 +6306,7 @@
   "manga.saved.emptyHelp": "Mentre llegeixes un manga, toca una paraula i tria «Desa per estudiar».",
   "manga.saved.back": "Torna al manga",
   "manga.saved.external": "Actualment no és a Vocabulary",
-  "manga.saved.page": "pàg. {{page}}"
+  "manga.saved.page": "pàg. {{page}}",
+  "manga.builtin.preparing": "S’està preparant el manga inclòs…",
+  "manga.builtin.failed": "No s’ha pogut preparar el manga inclòs. Es tornarà a intentar quan tornis a Manga."
 }

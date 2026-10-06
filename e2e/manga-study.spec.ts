@@ -76,7 +76,7 @@ test('saved words preserve original page, external terms and reactive collection
   const unknown=page.locator('.saved-grid article').filter({has:page.getByRole('heading',{name:'未知語',exact:true})});
   await expect(unknown).toContainText('palabra desconocida');await expect(unknown.locator('a[href*="vocabulary"]')).toHaveCount(0);await expect(unknown.getByRole('button',{name:/Escuchar/})).toHaveCount(0);
   // Removing a volume retains both snapshots and removes return links.
-  await page.evaluate(async()=>{const db=await new Promise<IDBDatabase>(resolve=>{const req=indexedDB.open('kana-study-manga',1);req.onsuccess=()=>resolve(req.result);});await new Promise<void>((resolve,reject)=>{const tx=db.transaction('volumes','readwrite');tx.objectStore('volumes').delete('study-fixture');tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});db.close();});
+  await page.evaluate(async()=>{const db=await new Promise<IDBDatabase>(resolve=>{const req=indexedDB.open('kana-study-manga');req.onsuccess=()=>resolve(req.result);});await new Promise<void>((resolve,reject)=>{const tx=db.transaction('volumes','readwrite');tx.objectStore('volumes').delete('study-fixture');tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});db.close();});
   await page.reload();await expect(page.locator('.saved-grid article')).toHaveCount(2);await expect(page.locator('.saved-grid a[href*="/manga/read/"]')).toHaveCount(0);
   while(await page.locator('.saved-grid article').count()){
     const remaining=await page.locator('.saved-grid article').count();const current=page.locator('.saved-grid article').first();await current.locator('.footer').getByRole('button',{name:'Quitar',exact:true}).click();
@@ -85,4 +85,34 @@ test('saved words preserve original page, external terms and reactive collection
   }
   await expect(page.locator('.empty')).toContainText('Aún no has guardado ninguna palabra.');
   await page.getByRole('link',{name:'Volver al manga',exact:true}).click();await expect(page.getByRole('link',{name:'📚 Palabras guardadas · 0'})).toBeVisible();
+});
+
+
+test('included manga real provisioning handles clean storage, reload, deletion and legacy repair',async({page})=>{
+  // Real server, real public config, real ZIP and real IndexedDB: no network mocks.
+  const responses:{url:string;status:number}[]=[];
+  page.on('response',r=>{if(r.url().includes('/manga/default/hajimete-no-irai.zip'))responses.push({url:r.url(),status:r.status()});});
+  const included=page.locator('.library-grid article').filter({has:page.getByRole('heading',{name:'はじめての依頼 — Vol. 1',exact:true})});
+  const settled=()=>page.waitForFunction(()=>{const c=(window as any).ng?.getComponent(document.querySelector('app-manga-page'));return c?.builtinPreparing?.()===false;});
+  await page.goto('/#/manga');await expect(included).toBeVisible({timeout:30000});await settled();
+  expect(responses).toEqual([{url:new URL('manga/default/hajimete-no-irai.zip',page.url()).href.split('#')[0],status:200}]);
+  const stored=await page.evaluate(async()=>{
+    const c=(window as any).ng.getComponent(document.querySelector('app-manga-page'));
+    const workspace=c.workspace.active();
+    const name=workspace==='guest'?'kana-study-manga':`kana-study-manga--${workspace.slice(5).replace(/[^a-z0-9-]/gi,'_')}`;
+    const db=await new Promise<IDBDatabase>((resolve,reject)=>{const req=indexedDB.open(name);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});
+    const id='builtin:hajimete-no-irai:v1';const volume=await new Promise<any>(resolve=>{const req=db.transaction('volumes').objectStore('volumes').get(id);req.onsuccess=()=>resolve(req.result);});
+    const pages=await new Promise<number>(resolve=>{const req=db.transaction('pages').objectStore('pages').index('volumeId').count(id);req.onsuccess=()=>resolve(req.result);});db.close();
+    return {workspace,name,complete:volume?.complete,pages,listed:c.volumes().some((v:any)=>v.id===id)};
+  });
+  expect(stored).toEqual({workspace:'guest',name:'kana-study-manga',complete:true,pages:20,listed:true});
+  await page.reload();await expect(included).toHaveCount(1);await settled();expect(responses).toHaveLength(1);
+  await included.getByRole('link',{name:'Leer',exact:true}).click();await expect(page.locator('.page-counter')).toHaveText('1 / 20');
+  await page.goto('/#/manga');await expect(included).toBeVisible();await settled();
+  await included.locator('.volume-menu summary').click();await included.getByRole('button',{name:'Eliminar',exact:true}).click();
+  await page.getByRole('dialog').getByRole('button',{name:'Eliminar',exact:true}).click();await expect(included).toHaveCount(0);
+  await page.reload();await expect(page.locator('h1')).toBeVisible();await settled();await expect(included).toHaveCount(0);expect(responses).toHaveLength(1);
+  // Reproduce an old success flag left without a volume, explicitly without a tombstone.
+  await page.evaluate(async()=>{const db=await new Promise<IDBDatabase>(resolve=>{const req=indexedDB.open('kana-study-manga');req.onsuccess=()=>resolve(req.result);});await new Promise<void>((resolve,reject)=>{const tx=db.transaction('provisioning','readwrite');tx.objectStore('provisioning').put({id:'builtin:hajimete-no-irai:v1',provisionedAt:'legacy'});tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});db.close();});
+  await page.reload();await expect(included).toBeVisible({timeout:30000});await settled();await expect(included).toHaveCount(1);expect(responses).toHaveLength(2);expect(responses[1].status).toBe(200);
 });
