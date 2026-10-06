@@ -11,6 +11,17 @@ describe('Writing entry points and manual practice',()=>{
     TestBed.configureTestingModule({providers:[provideRouter([]),{provide:KanaStrokesService,useValue:{load:async()=>[]}}]});
   });
   afterEach(()=>vi.unstubAllGlobals());
+  it.each(['basic','dakuten','handakuten','combination'] as const)('labels both alphabets for %s',async variant=>{
+    const f=TestBed.createComponent(KanaWritingPage),c=f.componentInstance;c.type.set('both');c.variants.set([variant]);c.start();
+    for(const script of ['hiragana','katakana'] as const){
+      c.current.set(ALL_KANA.find(k=>k.type===script && k.variant===variant)!);await f.whenStable();f.detectChanges();
+      expect(f.nativeElement.querySelector('.practice h2').textContent).toContain(c.current()!.romaji);
+      expect(f.nativeElement.querySelector('.script-label').textContent).toContain(c.i18n.t('content.'+script));
+    }
+  });
+  it.each(['hiragana','katakana'] as const)('keeps single-script practice concise: %s',async script=>{
+    const f=TestBed.createComponent(KanaWritingPage),c=f.componentInstance;c.type.set(script);c.start();await f.whenStable();f.detectChanges();expect(f.nativeElement.querySelector('.script-label')).toBeNull();
+  });
   it('offers script, existing categories and guide configuration',async()=>{
     const f=TestBed.createComponent(KanaWritingPage);await f.whenStable();f.detectChanges();
     expect(f.nativeElement.querySelectorAll('fieldset')).toHaveLength(3);

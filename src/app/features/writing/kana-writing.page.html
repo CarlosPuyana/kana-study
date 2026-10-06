@@ -10,7 +10,7 @@
   }@else{
     <p class="progress" role="status">{{resolved()}} / {{session()!.total}}</p>
     @if(current();as kana){
-      <section class="practice"><h2>{{kana.romaji}}</h2><p>{{i18n.t('writing.prompt')}}</p>
+      <section class="practice"><h2>{{kana.romaji}}@if(type()==='both' || weakMode()){<small class="script-label"> · {{i18n.t('content.'+kana.type)}}</small>}</h2><p>{{i18n.t('writing.prompt')}}</p>
         <app-kana-writing-canvas [character]="kana.character" [guide]="withGuide()||revealed()" [helpAvailable]="withGuide()||revealed()"/>
         @if(!revealed()){<button class="primary" type="button" (click)="revealed.set(true)">{{i18n.t('writing.answer')}}</button>}
         @else{<div class="answer" aria-live="polite"><strong lang="ja">{{kana.character}}</strong><div class="choices"><button type="button" (click)="answer(false)">{{i18n.t('writing.repeat')}}</button><button class="primary" type="button" (click)="answer(true)">{{i18n.t('writing.correct')}}</button></div></div>}

@@ -6308,5 +6308,6 @@
   "manga.saved.external": "No está actualmente en Vocabulary",
   "manga.saved.page": "pág. {{page}}",
   "manga.builtin.preparing": "Preparando manga incluido…",
-  "manga.builtin.failed": "No se pudo preparar el manga incluido. Se reintentará al volver a Manga."
+  "manga.builtin.failed": "No se pudo preparar el manga incluido. Se reintentará al volver a Manga.",
+  "vocabulary.shortcuts.space": "Espacio"
 }

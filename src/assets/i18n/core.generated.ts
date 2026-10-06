@@ -1251,7 +1251,8 @@ export const es:Record<string,string> = {...shared,...{
   "manga.saved.external": "No está actualmente en Vocabulary",
   "manga.saved.page": "pág. {{page}}",
   "manga.builtin.preparing": "Preparando manga incluido…",
-  "manga.builtin.failed": "No se pudo preparar el manga incluido. Se reintentará al volver a Manga."
+  "manga.builtin.failed": "No se pudo preparar el manga incluido. Se reintentará al volver a Manga.",
+  "vocabulary.shortcuts.space": "Espacio"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -2390,7 +2391,8 @@ export const en:Record<string,string> = {...shared,...{
   "manga.saved.external": "Not currently in Vocabulary",
   "manga.saved.page": "page {{page}}",
   "manga.builtin.preparing": "Preparing included manga…",
-  "manga.builtin.failed": "Could not prepare the included manga. It will be retried when you return to Manga."
+  "manga.builtin.failed": "Could not prepare the included manga. It will be retried when you return to Manga.",
+  "vocabulary.shortcuts.space": "Space"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -3529,5 +3531,6 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.saved.external": "Actualment no és a Vocabulary",
   "manga.saved.page": "pàg. {{page}}",
   "manga.builtin.preparing": "S’està preparant el manga inclòs…",
-  "manga.builtin.failed": "No s’ha pogut preparar el manga inclòs. Es tornarà a intentar quan tornis a Manga."
+  "manga.builtin.failed": "No s’ha pogut preparar el manga inclòs. Es tornarà a intentar quan tornis a Manga.",
+  "vocabulary.shortcuts.space": "Espai"
 }};
