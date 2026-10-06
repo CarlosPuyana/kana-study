@@ -1,6 +1,6 @@
 import {safeReturnUrl} from '../../core/services/return-navigation';
 import {ChangeDetectionStrategy, Component, DestroyRef, computed, effect, inject, signal, viewChild} from '@angular/core';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Kanji} from '../../core/models/kanji.model';
 import {WritingGlyph} from '../../core/models/kana-writing.model';
@@ -17,6 +17,8 @@ import {WeaknessService} from '../../core/services/weakness.service';
   templateUrl:'./kanji-writing.page.html', styleUrls:['../writing/kana-writing.page.scss','./kanji-writing.page.scss'],
   changeDetection:ChangeDetectionStrategy.OnPush})
 export class KanjiWritingPage {
+  private readonly router=inject(Router);
+  readonly returnLink=computed(()=>this.router.parseUrl(this.returnRoute()));
   readonly i18n = inject(TranslationService);
   private readonly weaknesses = inject(WeaknessService);
   readonly weakMode = signal(false);

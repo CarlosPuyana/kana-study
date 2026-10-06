@@ -1,6 +1,6 @@
 import {safeReturnUrl} from '../../core/services/return-navigation';
 import {ChangeDetectionStrategy,Component,computed,inject,signal,viewChild} from '@angular/core';
-import {ActivatedRoute,RouterLink} from '@angular/router';
+import {ActivatedRoute,Router,RouterLink} from '@angular/router';
 import {VocabularyEntry,VocabularyStudyCategory,VOCABULARY_CATEGORIES} from '../../core/models/vocabulary.model';
 import {VocabularyWritingSession} from '../../core/services/vocabulary-writing-session';
 import {TranslationService} from '../../core/services/translation.service';
@@ -10,6 +10,8 @@ import {WeaknessService} from '../../core/services/weakness.service';
 
 @Component({selector:'app-vocabulary-writing-page',imports:[RouterLink,WordWritingPractice],templateUrl:'./vocabulary-writing.page.html',styleUrls:['../writing/kana-writing.page.scss','./vocabulary-writing.page.scss'],changeDetection:ChangeDetectionStrategy.OnPush})
 export class VocabularyWritingPage {
+  private readonly router=inject(Router);
+  readonly returnLink=computed(()=>this.router.parseUrl(this.returnRoute()));
   readonly i18n=inject(TranslationService);private readonly route=inject(ActivatedRoute);
   private readonly weaknesses=inject(WeaknessService);readonly weakMode=signal(false);
   readonly categories=VOCABULARY_CATEGORIES.filter(c=>VOCABULARY_N5.some(e=>e.enabled&&e.studyCategory===c));

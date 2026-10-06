@@ -1,4 +1,5 @@
 import {inject, Injectable} from '@angular/core';
+import {MangaStudySavedItem} from '../models/manga-study-saved.model';
 import {DictionaryLookup} from '../models/dictionary.model';
 import {MangaStudyMatch} from '../models/manga-study.model';
 import {VocabularyEntry} from '../models/vocabulary.model';
@@ -41,10 +42,26 @@ export function mangaWordCanBeWritten(entry:VocabularyEntry):boolean {
 @Injectable({providedIn:'root'})
 export class MangaStudyIntegrationService {
   private readonly audio=inject(JapaneseAudioService);
-  match(lookup:DictionaryLookup):MangaStudyMatch {
+  snapshot(lookup:DictionaryLookup, source:MangaStudySavedItem['source'], context?:string):MangaStudySavedItem|undefined {
+    const principal=lookup.principal??lookup.terms[0];
+    if(!lookup.installed||!principal||!source.volumeId)return undefined;
+    const match=this.match(lookup);
+    const expression=normalized(match.vocabulary?.primaryWrittenForm||principal.expression||lookup.baseForm);
+    const reading=normalized(match.vocabulary?.primaryReading||lookup.reading||principal.reading);
+    if(!expression)return undefined;
+    return {schemaVersion:1,id:match.vocabulary?'vocabulary:'+match.vocabulary.id:'dictionary:'+JSON.stringify([expression,reading]),
+      expression,reading:reading||undefined,baseForm:normalized(lookup.baseForm)||undefined,vocabularyId:match.vocabulary?.id,
+      kanji:match.kanji.map(k=>k.id),meaning:principal.glossaries[0]?.slice(0,300),surface:(lookup.surface||lookup.query).slice(0,160),
+      context:context?.slice(0,1200),source:{...source,volumeTitle:source.volumeTitle?.slice(0,160)},createdAt:Date.now()};
+  }
+  matchSaved(item:MangaStudySavedItem):MangaStudyMatch {
+    const term={id:item.id,dictionaryId:'saved',expression:item.expression,reading:item.reading??'',glossaries:[],definitionTags:'',rules:'',score:0,sequence:0,termTags:''};
+    return this.match({query:item.expression,installed:true,terms:[term],principal:term,baseForm:item.baseForm,reading:item.reading},item.vocabularyId);
+  }
+  match(lookup:DictionaryLookup,preferredVocabularyId?:string):MangaStudyMatch {
     const principal=lookup.principal??lookup.terms[0];
     if(!lookup.installed||!principal)return {kanji:[],audioAvailable:false,writingAvailable:false};
-    const vocabulary=matchMangaVocabulary(lookup,VOCABULARY_N5);
+    const vocabulary=preferredVocabularyId?VOCABULARY_N5.find(entry=>entry.enabled && entry.id===preferredVocabularyId):matchMangaVocabulary(lookup,VOCABULARY_N5);
     const base=normalized(lookup.baseForm);
     const expression=base&&han.test(base)?base:normalized(principal.expression)||base||normalized(lookup.surface||lookup.query);
     const seen=new Set<string>();

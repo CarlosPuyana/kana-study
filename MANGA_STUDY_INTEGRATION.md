@@ -1,4 +1,4 @@
-# Manga Study Integration V1
+# Manga Study Integration V1 / V2
 
 `MangaStudyIntegrationService` consumes the existing `DictionaryLookup`. It does
 not perform lookup, deinflection, network requests, or persistence. Its result
@@ -47,6 +47,21 @@ exercises real deinflection, all four navigation actions, saved-page return,
 no audio preloading, five themes, and desktop/390px/320px layouts. Existing
 Reader clock, lookup, writing and lazy translation regressions also run.
 
-Scope limits: current catalogs only; no saved words, Grammar detection,
+V1 scope limits (saved words are added below in V2): current catalogs only; no Grammar detection,
 automatic cards, learning history or recognition. Browser smoke coverage uses
 Chromium; Safari is not available in the configured test projects.
+
+
+## V2 — Guardar para estudiar
+
+La colección se abre desde Manga → Palabras guardadas (`/manga/study`). Guardar es una decisión manual, no un intento ni una sesión. No modifica FSRS, Daily, Weakness, accuracy, medallas, rachas, historial ni Anki.
+
+`MangaStudySavedItem` (schemaVersion 1) guarda expresión canónica, lectura, base opcional, Vocabulary ID opcional, IDs de Kanji, un significado breve, surface/contexto acotados, título snapshot, volumeId, página (1-based) y fecha. No guarda páginas, blobs ni entradas JMdict completas. Los significados actuales de Vocabulary se resuelven según idioma; el snapshot del diccionario conserva el texto original de su fuente sin atribuirle falsamente el idioma de UI.
+
+Persistencia: IndexedDB `kana-study-manga-study`, store `saved-items`; `WorkspaceService.databaseName` separa guest y cuentas. `MangaStudySavedRepository` ofrece list/get/save/remove/exists/clear y señales reactivas sin polling. Guardar hace get/add en una única transacción serializada; mantiene el primer contexto/origen al guardar desde otra página. La colección ordena primero las entradas recientes. Los errores se muestran y permiten reintentar; no se simula éxito antes de confirmar la escritura.
+
+Deduplicación: `vocabulary:<entryId>` para match conocido; de lo contrario `dictionary:` + par JSON de expresión canónica y lectura normalizadas NFC/trim. No se deduplica por lectura sola (橋 y 箸 se mantienen separados). `食べなかった` conserva surface/contexto y guarda 食べる. Los términos externos siguen disponibles sin enlaces ficticios a Vocabulary/audio/Writing.
+
+La colección reutiliza `MangaStudyIntegrationService` para matching, extracción de Kanji y disponibilidad real de audio/escritura. El nivel se muestra desde el entry actual, no está fijado a N5. Los enlaces de detalle y escritura retornan a la colección. El retorno al Reader incluye `?page=N`, validado contra el volumen; usa `go()` existente. Si el volumen desaparece, se conserva la palabra y snapshot, ocultando el retorno. Borrar Manga nunca toca esta base.
+
+Quitar requiere confirmación ligera en la misma tarjeta/popup, con cancelar. Los controles tienen targets de 44 px y focus visible, usando tokens de todos los temas. No incluye buscador, export/import, sync cloud, sesiones de guardadas ni incorporación automática a catálogos. Podrán añadirse después con un diseño explícito.

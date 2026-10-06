@@ -1,9 +1,12 @@
+import {MangaSourceService} from '../../core/services/manga-source.service';
+import {MangaLanguage} from '../../core/models/local-manga.model';
+import {MangaError} from '../../core/services/mokuro-parser';
 import { Component, computed, effect, ElementRef, HostListener, inject, OnDestroy, signal, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslationService } from '../../core/services/translation.service';
 import { MangaRepository } from '../../core/services/manga.repository';
 import { WorkspaceService } from '../../core/services/workspace.service';
-import { MangaPage, MangaVolume } from '../../core/models/manga.model';
+import { MangaPage, MangaReaderVolume } from '../../core/models/manga.model';
 import { MangaReadingClock } from '../../core/services/manga-reading-clock';
 import { MangaOcrComponent } from './manga-ocr.component';
 import { DictionaryPopup } from '../../shared/components/dictionary-popup/dictionary-popup';
@@ -13,21 +16,21 @@ import { MangaReaderPreferences, MANGA_READER_PREFERENCES_KEY, readMangaReaderPr
 @Component({
   selector: 'app-manga-reader', imports: [RouterLink, MangaOcrComponent, DictionaryPopup], styleUrl: './manga.scss',
   template: `<main #readerRoot class="manga-reader" (pointerdown)="interact()" (wheel)="zoomWheel($event)">
-    <header class="reader-header"><a routerLink="/manga" [attr.aria-label]="i18n.t('manga.library')" [title]="i18n.t('manga.library')"><span aria-hidden="true">←</span> {{ i18n.t('manga.library') }}</a><span class="reader-title" [title]="readerTitle()">{{readerTitle()}}</span><button class="fullscreen-button" [disabled]="!fullscreenAvailable()" [attr.aria-pressed]="fullscreen()" [attr.aria-label]="i18n.t(fullscreen()?'manga.exitFullscreen':'manga.enterFullscreen')" [title]="i18n.t(fullscreen()?'manga.exitFullscreen':'manga.enterFullscreen')" (click)="toggleFullscreen()"><span aria-hidden="true">{{fullscreen()?'⛶':'⛶'}}</span></button></header>
+    <header class="reader-header"><a routerLink="/manga" [attr.aria-label]="i18n.t('manga.library')" [title]="i18n.t('manga.library')"><span aria-hidden="true">←</span> {{ i18n.t('manga.library') }}</a><span class="reader-title" [title]="readerTitle()">{{readerTitle()}}</span><button class="fullscreen-button" [disabled]="!fullscreenAvailable()" [attr.aria-pressed]="fullscreen()" [attr.aria-label]="i18n.t(fullscreen()?'manga.exitFullscreen':'manga.enterFullscreen')" [title]="i18n.t(fullscreen()?'manga.exitFullscreen':'manga.enterFullscreen')" (click)="toggleFullscreen()"><span aria-hidden="true">{{fullscreen()?'⛶':'⛶'}}</span></button>@if(volume()?.catalogId){<label class="reader-language"><span>{{i18n.t('manga.catalog.language')}}</span><select [value]="language()" [disabled]="loading()" (change)="setLanguage($event)">@for(lang of volume()?.availableLanguages;track lang){<option [value]="lang">{{i18n.t('manga.catalog.language.'+lang)}}</option>}</select></label>}</header>
     @if (error()) { <p role="alert">{{ i18n.t('manga.error.' + error()) }}</p> }
     <div #stage class="page-stage" tabindex="0" [attr.aria-label]="i18n.t('manga.viewport')" (pointerdown)="sidePointerDown($event)" (pointermove)="sidePointerMove($event)" (scroll)="sideScroll()" (click)="sideClick($event)">
     @if (current(); as page) {
       <div class="manga-canvas" [style.width.px]="baseWidth()*zoom()/100" [style.height.px]="baseWidth()*page.ocr.img_height/page.ocr.img_width*zoom()/100"><div class="page-image" [style.width.px]="baseWidth()" [style.height.px]="baseWidth()*page.ocr.img_height/page.ocr.img_width" [style.transform]="'scale(' + zoom()/100 + ')'" (touchstart)="touchStart($event)" (touchend)="touchEnd($event)">
         <img [src]="url()" [alt]="i18n.t('manga.page', {number:index()+1})" draggable="false" />
-        <app-manga-ocr [page]="page.ocr" [visible]="showOcr()" (wordClicked)="lookupWord($event)" />
+        @if(!volume()?.catalogId||language()==='ja'){<app-manga-ocr [page]="page.ocr" [visible]="showOcr()" (wordClicked)="lookupWord($event)" />}
       </div></div>
     } @else if (!error()) { <p role="status">{{ i18n.t('common.loading') }}</p> }
     </div>
     @if(volume()?.pageCount && current()){
     <nav class="reader-toolbar" [attr.aria-label]="i18n.t('manga.controls')">
-      <div class="toolbar-group" role="group" [attr.aria-label]="i18n.t('manga.assist.navigation')"><button class="previous" [disabled]="index() <= 0 || loading()" [attr.aria-label]="i18n.t('manga.previous')" [title]="i18n.t('manga.previous')" (click)="go(index()-1)"><span aria-hidden="true">‹</span></button>
+      <div class="toolbar-group" [class.rtl]="rightToLeft()" role="group" [attr.aria-label]="i18n.t('manga.assist.navigation')"><button class="previous" [disabled]="index() <= 0 || loading()" [attr.aria-label]="i18n.t('manga.previous')" [title]="i18n.t('manga.previous')" (click)="go(index()-1)"><span aria-hidden="true">{{rightToLeft()?'›':'‹'}}</span></button>
       <span class="page-counter">{{ index()+1 }} / {{ volume()?.pageCount ?? 0 }}</span>
-      <button class="next" [disabled]="!volume() || index()+1 >= volume()!.pageCount || loading()" [attr.aria-label]="i18n.t('manga.next')" [title]="i18n.t('manga.next')" (click)="go(index()+1)"><span aria-hidden="true">›</span></button>
+      <button class="next" [disabled]="!volume() || index()+1 >= volume()!.pageCount || loading()" [attr.aria-label]="i18n.t('manga.next')" [title]="i18n.t('manga.next')" (click)="go(index()+1)"><span aria-hidden="true">{{rightToLeft()?'‹':'›'}}</span></button>
       </div><div class="toolbar-group" role="group" [attr.aria-label]="i18n.t('manga.assist.reading')"><button data-panel="settings" [attr.aria-label]="i18n.t('manga.readerSettings')" [title]="i18n.t('manga.readerSettings')" [attr.aria-expanded]="panel()==='settings'" (click)="openPanel('settings')"><span aria-hidden="true">⚙</span></button>
       <button class="clock-button" data-panel="clock" [attr.aria-label]="i18n.t('manga.readingTime') + ': ' + clockLabel()" [title]="i18n.t('manga.readingTime')" [attr.aria-expanded]="panel()==='clock'" (click)="openPanel('clock')"><span aria-hidden="true">{{clockState()==='off'?'▷':clockState()==='paused'?'⏸':'⏱'}}</span><span>{{clockState()==='off'?i18n.t('manga.clock'):formatTime(sessionSeconds())}}</span></button>
       </div><div class="toolbar-group" role="group" [attr.aria-label]="i18n.t('manga.assist.help')"><a class="reader-help" routerLink="/manga/guide" [attr.aria-label]="i18n.t('manga.landing.how')" [title]="i18n.t('manga.landing.how')">?</a></div>
@@ -53,17 +56,17 @@ import { MangaReaderPreferences, MANGA_READER_PREFERENCES_KEY, readMangaReaderPr
         }
       </section>
     }
-    @if(popup();as point){<app-dictionary-popup [x]="point.x" [y]="point.y" [context]="point" [location]="{volumeId:volume()?.id ?? '',pageIndex:index(),blockIndex:point.blockIndex ?? 0}" [result]="lookupResult()" [loading]="lookupLoading()" [failed]="lookupFailed()" (closed)="closeDictionary()"/>}
+    @if(popup();as point){<app-dictionary-popup [x]="point.x" [y]="point.y" [context]="point" [volumeTitle]="readerTitle()" [location]="{volumeId:volume()?.id ?? '',pageIndex:index(),blockIndex:point.blockIndex ?? 0}" [result]="lookupResult()" [loading]="lookupLoading()" [failed]="lookupFailed()" (closed)="closeDictionary()"/>}
   </main>`,
 })
 export class MangaReaderPage implements OnDestroy {
   private readonly lookup=inject(JapaneseLookupService);
   readonly popup=signal<OcrLookupPoint|null>(null);readonly lookupResult=signal<DictionaryLookup>({query:'',terms:[],installed:false});readonly lookupLoading=signal(false);readonly lookupFailed=signal(false);private lookupGeneration=0;
-  async lookupWord(point:OcrLookupPoint):Promise<void>{if(!this.preferences().dictionaryEnabled)return;this.interact();this.panel.set(null);this.popup.set(point);this.tick();this.lookupLoading.set(true);this.lookupFailed.set(false);const generation=++this.lookupGeneration;
+  async lookupWord(point:OcrLookupPoint):Promise<void>{if(!this.preferences().dictionaryEnabled||(this.volume()?.catalogId&&this.language()!=='ja'))return;this.interact();this.panel.set(null);this.popup.set(point);this.tick();this.lookupLoading.set(true);this.lookupFailed.set(false);const generation=++this.lookupGeneration;
     try{const result=point.mode==='selection'?await this.lookup.lookupSelection(point.selectedText??point.text):await this.lookup.lookupAt(point.text,point.offset);if(generation===this.lookupGeneration)this.lookupResult.set(result);}catch{if(generation===this.lookupGeneration)this.lookupFailed.set(true);}finally{if(generation===this.lookupGeneration)this.lookupLoading.set(false);}
   }
   closeDictionary():void{this.tick();++this.lookupGeneration;this.popup.set(null);this.interact();}
-  readonly i18n = inject(TranslationService); private readonly repository = inject(MangaRepository); private readonly workspaceService = inject(WorkspaceService);
+  readonly i18n = inject(TranslationService); private readonly repository = inject(MangaRepository);private readonly source=inject(MangaSourceService);readonly language=signal<MangaLanguage>('ja');readonly rightToLeft=computed(()=>this.volume()?.readingDirection==='rtl'); private readonly workspaceService = inject(WorkspaceService);
   private readonly router = inject(Router); private readonly id = inject(ActivatedRoute).snapshot.paramMap.get('volumeId')!;
   private readonly workspace = this.workspaceService.active();
   private readonly preferencesKey=this.workspaceService.storageKey(MANGA_READER_PREFERENCES_KEY,this.workspace);
@@ -76,7 +79,7 @@ export class MangaReaderPage implements OnDestroy {
   private readonly viewport=signal({width:window.innerWidth,height:Math.max(1,window.innerHeight-160)});
   readonly baseWidth=computed(()=>{const page=this.current()?.ocr;if(!page)return 1;const viewport=this.viewport();if(this.preferences().fitMode==='actual')return page.img_width;if(this.preferences().fitMode==='width')return viewport.width;return Math.min(viewport.width,viewport.height*page.img_width/page.img_height);});
   private zoomFrame=0;
-  readonly volume = signal<MangaVolume | undefined>(undefined); readonly index = signal(0); readonly current = signal<MangaPage | undefined>(undefined); readonly url = signal(''); readonly showOcr = computed(()=>this.preferences().ocrVisible); readonly error = signal(''); readonly loading = signal(true);
+  readonly volume = signal<MangaReaderVolume | undefined>(undefined); readonly index = signal(0); readonly current = signal<MangaPage | undefined>(undefined); readonly url = signal(''); readonly showOcr = computed(()=>this.preferences().ocrVisible); readonly error = signal(''); readonly loading = signal(true);
   private readonly cache = new Map<number, {page:MangaPage; url:string; preview?:HTMLImageElement}>(); private readonly clock = new MangaReadingClock(Date.now(),false);
   private seconds = 0; private completed = false; private destroyed = false; private generation = 0; private touch: {x:number;y:number} | null = null;
   private visible = document.visibilityState === 'visible'; private focused = document.hasFocus();
@@ -90,14 +93,17 @@ export class MangaReaderPage implements OnDestroy {
     effect(() => { if (this.workspaceService.active() !== this.workspace) void this.router.navigateByUrl('/manga'); });
     void this.start();
   }
+  private readonly requestedPage=inject(ActivatedRoute).snapshot.queryParamMap?.get('page');
   private async start(): Promise<void> {
     try {
-      const [volume, saved] = await Promise.all([this.repository.volume(this.id, this.workspace), this.repository.progress(this.id,this.workspace)]);
+      const [volume, saved] = await Promise.all([this.source.volume(this.id, this.workspace), this.repository.progress(this.id,this.workspace)]);
       if (this.destroyed) return;
       if (!volume?.complete) throw new Error('missing');
       this.volume.set(volume); this.seconds = saved?.activeSeconds ?? 0; this.completed = saved?.completed ?? false;
-      this.loading.set(false); await this.go(Math.max(0, Math.min(saved?.pageIndex ?? 0, volume.pageCount - 1)));
-    } catch { this.error.set('interrupted'); this.loading.set(false); }
+      const requested=this.requestedPage && /^\d+$/.test(this.requestedPage)?Number(this.requestedPage):0;
+      const index=Number.isSafeInteger(requested)&&requested>=1&&requested<=volume.pageCount?requested-1:Math.max(0,Math.min(saved?.pageIndex??0,volume.pageCount-1));
+      this.loading.set(false); await this.go(index);
+    } catch(error) { this.error.set(error instanceof MangaError?error.code:'interrupted'); this.loading.set(false); }
   }
   async go(index: number): Promise<void> {
     const volume = this.volume(); if (!volume || index < 0 || index >= volume.pageCount || this.loading() || this.destroyed || this.popup()) return;
@@ -109,7 +115,7 @@ export class MangaReaderPage implements OnDestroy {
       // Current first, then at most two adjacent pages; never fetch the volume's blobs together.
       for (const key of [index, ...Array.from(keep).filter(i => i !== index)]) {
         if (!this.cache.has(key)) {
-          const page = await this.repository.page(this.id,key,this.workspace);
+          const page = await this.source.page(this.id,key,this.workspace,this.language());
           if (generation !== this.generation || this.destroyed) return;
           if (!page) throw new Error('missing');
           this.cache.set(key,{page,url:URL.createObjectURL(page.image)});
@@ -122,7 +128,14 @@ export class MangaReaderPage implements OnDestroy {
           if(!cached.preview){const preview=new Image();cached.preview=preview;preview.src=cached.url;if(typeof preview.decode==='function')void preview.decode().catch(()=>undefined);}
         }
       }
-    } catch { this.error.set('interrupted'); } finally { if (generation === this.generation) this.loading.set(false); }
+    } catch(error) { this.error.set(error instanceof MangaError?error.code:'interrupted'); } finally { if (generation === this.generation) this.loading.set(false); }
+  }
+  async setLanguage(event:Event):Promise<void>{
+    const language=(event.target as HTMLSelectElement).value as MangaLanguage;
+    if(!this.volume()?.catalogId||!this.volume()?.availableLanguages?.includes(language)||language===this.language()||this.loading())return;
+    this.closeDictionary();this.language.set(language);this.error.set('');
+    for(const cached of this.cache.values()){if(cached.preview)cached.preview.src='';URL.revokeObjectURL(cached.url);}this.cache.clear();
+    await this.go(this.index());
   }
   readerTitle():string{const volume=this.volume();return [...new Set([volume?.seriesTitle,volume?.title].filter((title):title is string=>!!title?.trim()&&title.trim().toLowerCase()!=='pages'))].join(' · ')||this.i18n.t('more.manga.title');}
   fullscreenAvailable():boolean{return document.fullscreenEnabled!==false&&typeof this.readerRoot()?.nativeElement.requestFullscreen==='function';}
@@ -155,7 +168,7 @@ export class MangaReaderPage implements OnDestroy {
   sidePointerMove(event:PointerEvent):void{if(this.sidePointer&&Math.hypot(event.clientX-this.sidePointer.x,event.clientY-this.sidePointer.y)>8)this.sidePointer.dragged=true;}
   sideScroll():void{if(this.sidePointer)this.sidePointer.dragged=true;}
   private sideBlocked(target:EventTarget|null):boolean{return !this.preferences().sideClicks||!!this.popup()||!!this.panel()||!window.getSelection()?.isCollapsed||!window.matchMedia('(hover: hover) and (pointer: fine)').matches||!(target instanceof Element)||!!target.closest('app-manga-ocr,app-dictionary-popup,.reader-toolbar,.reader-panel,button,input,a,textarea,select,[contenteditable]');}
-  sideClick(event:MouseEvent):void{const pointer=this.sidePointer;this.sidePointer=null;if(!pointer||pointer.dragged||this.sideBlocked(event.target)||Math.hypot(event.clientX-pointer.x,event.clientY-pointer.y)>8)return;const bounds=(event.currentTarget as HTMLElement).getBoundingClientRect();const position=(event.clientX-bounds.left)/bounds.width;if(position<.25)void this.go(this.index()-1);else if(position>.75)void this.go(this.index()+1);}
+  sideClick(event:MouseEvent):void{const pointer=this.sidePointer;this.sidePointer=null;if(!pointer||pointer.dragged||this.sideBlocked(event.target)||Math.hypot(event.clientX-pointer.x,event.clientY-pointer.y)>8)return;const bounds=(event.currentTarget as HTMLElement).getBoundingClientRect();const position=(event.clientX-bounds.left)/bounds.width;if(position<.25)void this.go(this.index()+(this.rightToLeft()?1:-1));else if(position>.75)void this.go(this.index()+(this.rightToLeft()?-1:1));}
   @HostListener('document:pointermove') pointerActivity(): void { this.interact(); }
   @HostListener('document:wheel') wheelActivity(): void { this.interact(); }
   private save(): Promise<void> {
@@ -178,7 +191,7 @@ export class MangaReaderPage implements OnDestroy {
     if(this.popup()){if(event.key==='Escape'){event.preventDefault();this.closeDictionary();}else if(['ArrowLeft','ArrowRight',' ','PageDown','PageUp','Home','End'].includes(event.key) && !(event.target instanceof HTMLElement && event.target.closest('app-dictionary-popup')))event.preventDefault();return;}
     this.interact(); if (event.repeat || event.ctrlKey || event.metaKey || event.altKey || !window.getSelection()?.isCollapsed || (event.target instanceof HTMLElement && event.target.closest('input,textarea,select,button,a,[contenteditable]'))) return;
     if(event.key==='+'||event.key==='='){event.preventDefault();this.changeZoom(1);return;}if(event.key==='-'){event.preventDefault();this.changeZoom(-1);return;}if(event.key==='0'){event.preventDefault();this.resetZoom();return;}if(event.key.toLowerCase()==='f'){event.preventDefault();void this.toggleFullscreen();return;}
-    const targets: Record<string,number> = {ArrowLeft:this.index()-1,ArrowRight:this.index()+1,' ':this.index()+1,PageDown:this.index()+1,PageUp:this.index()-1,Home:0,End:(this.volume()?.pageCount ?? 1)-1};
+    const targets: Record<string,number> = {ArrowLeft:this.index()+(this.rightToLeft()?1:-1),ArrowRight:this.index()+(this.rightToLeft()?-1:1),' ':this.index()+1,PageDown:this.index()+1,PageUp:this.index()-1,Home:0,End:(this.volume()?.pageCount ?? 1)-1};
     if (event.key in targets) { event.preventDefault(); void this.go(targets[event.key]); }
   }
   touchStart(event: TouchEvent): void {
@@ -190,7 +203,7 @@ export class MangaReaderPage implements OnDestroy {
     if (!start || event.touches.length || !window.getSelection()?.isCollapsed || this.popup() || (stage&&(stage.scrollWidth>stage.clientWidth+2||stage.scrollHeight>stage.clientHeight+2))) return;
     const end = event.changedTouches[0]; if (!end) return;
     const dx=end.clientX-start.x,dy=end.clientY-start.y;
-    if (Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5) void this.go(this.index()+(dx<0 ? 1 : -1));
+    if (Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5) void this.go(this.index()+((dx<0 ? 1 : -1)*(this.rightToLeft()?-1:1)));
   }
   ngOnDestroy(): void { this.closeDictionary(); this.tick(); void this.save(); this.destroyed=true; ++this.generation; clearInterval(this.timer);cancelAnimationFrame(this.zoomFrame); for (const value of this.cache.values()){if(value.preview)value.preview.src='';URL.revokeObjectURL(value.url);} this.cache.clear(); }
 }

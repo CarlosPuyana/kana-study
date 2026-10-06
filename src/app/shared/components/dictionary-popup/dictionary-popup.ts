@@ -1,3 +1,5 @@
+import {MangaStudySavedRepository} from '../../../core/services/manga-study-saved.repository';
+import {WorkspaceService} from '../../../core/services/workspace.service';
 import { Component, computed, effect, ElementRef, HostListener, OnDestroy, afterNextRender, inject, input, output, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
@@ -36,9 +38,17 @@ import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTra
             </details>
           }
           @if(interpretations().length){<details><summary>{{i18n.t('manga.assist.interpretations')}}</summary>@for(term of interpretations();track term.id){<article><h3>{{term.expression}} · {{term.reading}}</h3><ul>@for(glossary of term.glossaries;track $index){<li>{{glossary}}</li>}</ul></article>}</details>}
-          @if(studyMatch().vocabulary || studyMatch().kanji.length){
+          @if(studyMatch().vocabulary || studyMatch().kanji.length || savedCandidate()){
             <section class="study-integration" aria-labelledby="manga-study-title">
               <h3 id="manga-study-title">{{i18n.t('manga.study.title')}}</h3>
+              @if(savedCandidate()){
+                <div class="saved-actions">
+                  @if(isSaved()){<span role="status">✓ {{i18n.t('manga.saved.saved')}}</span><button [disabled]="saving()" (click)="confirmRemove.set(true)">{{i18n.t('manga.saved.remove')}}</button>}
+                  @else{<button [disabled]="saving() || saved.loading() || saved.failed()" (click)="saveWord()">＋ {{i18n.t('manga.saved.save')}}</button>}
+                  @if(confirmRemove() && isSaved()){<div role="group" [attr.aria-label]="i18n.t('manga.saved.confirm')"><p>{{i18n.t('manga.saved.confirm')}}</p><button [disabled]="saving()" (click)="removeWord()">{{i18n.t('manga.saved.remove')}}</button><button (click)="confirmRemove.set(false)">{{i18n.t('common.cancel')}}</button></div>}
+                  @if(saveError() || saved.failed()){<p role="alert">{{i18n.t('manga.saved.error')}}</p><button (click)="saved.reload()">{{i18n.t('manga.catalog.retry')}}</button>}
+                </div>
+              }
               @if(studyMatch().vocabulary;as entry){
                 <article class="study-vocabulary">
                   <h4>✓ {{i18n.t('manga.study.vocabularyLevel',{level:entry.jlptApproxLevel})}}</h4>
@@ -85,7 +95,14 @@ export class DictionaryPopup implements OnDestroy {
   readonly i18n=inject(TranslationService);readonly assistant=inject(MangaContextService);
   private readonly integration=inject(MangaStudyIntegrationService);readonly audio=inject(JapaneseAudioService);
   readonly studyMatch=computed<MangaStudyMatch>(()=>this.loading()||this.failed()?{kanji:[],audioAvailable:false,writingAvailable:false}:this.integration.match(this.result()));
-  readonly studyReturn=computed(()=>safeReturnUrl(this.location().volumeId?'/manga/read/'+encodeURIComponent(this.location().volumeId):'/manga','/manga'));
+  readonly studyReturn=computed(()=>safeReturnUrl(this.location().volumeId?'/manga/read/'+encodeURIComponent(this.location().volumeId)+'?page='+(this.location().pageIndex+1):'/manga','/manga'));
+  readonly saved=inject(MangaStudySavedRepository);private readonly workspace=inject(WorkspaceService);
+  readonly volumeTitle=input('');
+  readonly saving=signal(false);readonly saveError=signal(false);readonly confirmRemove=signal(false);
+  readonly savedCandidate=computed(()=>this.loading()||this.failed()?undefined:this.integration.snapshot(this.result(),{volumeId:this.location().volumeId,pageNumber:this.location().pageIndex+1,volumeTitle:this.volumeTitle()},this.context()?.text));
+  readonly isSaved=computed(()=>this.saved.items().some(item=>item.id===this.savedCandidate()?.id));
+  async saveWord():Promise<void>{const item=this.savedCandidate();if(!item||this.saving())return;this.saving.set(true);this.saveError.set(false);try{await this.saved.save(item);}catch{this.saveError.set(true);}finally{this.saving.set(false);}}
+  async removeWord():Promise<void>{const item=this.savedCandidate();if(!item||this.saving())return;this.saving.set(true);this.saveError.set(false);try{await this.saved.remove(item.id);this.confirmRemove.set(false);}catch{this.saveError.set(true);}finally{this.saving.set(false);}}
   readonly audioRequested=signal(false);private playingEntry:string|null=null;
   readonly result=input.required<DictionaryLookup>();readonly loading=input(false);readonly failed=input(false);readonly x=input(0);readonly y=input(0);readonly closed=output<void>();
   readonly context=input<OcrLookupPoint|null>(null);readonly location=input<MangaContextLocation>({volumeId:'',pageIndex:0,blockIndex:0});
@@ -94,7 +111,7 @@ export class DictionaryPopup implements OnDestroy {
   readonly translation=signal<MangaTranslationResult|null>(null);readonly study=signal<MangaStudyExplanation|null>(null);
   private controller:AbortController|null=null;private readonly previousFocus=document.activeElement;
   private readonly close=viewChild<ElementRef<HTMLButtonElement>>('close');private readonly dialog=viewChild<ElementRef<HTMLElement>>('dialog');
-  constructor(){afterNextRender(()=>this.close()?.nativeElement.focus());effect(()=>{const entryId=this.studyMatch().vocabulary?.id;if(this.playingEntry && entryId!==this.playingEntry){this.audio.stop();this.playingEntry=null;this.audioRequested.set(false);}});}
+  constructor(){effect(()=>{this.savedCandidate();this.workspace.active();this.confirmRemove.set(false);this.saveError.set(false);});afterNextRender(()=>this.close()?.nativeElement.focus());effect(()=>{const entryId=this.studyMatch().vocabulary?.id;if(this.playingEntry && entryId!==this.playingEntry){this.audio.stop();this.playingEntry=null;this.audioRequested.set(false);}});}
   async listen():Promise<void>{const entry=this.studyMatch().vocabulary;if(!entry||!this.studyMatch().audioAvailable||this.audio.state()==='loading')return;this.playingEntry=entry.id;this.audioRequested.set(true);await this.audio.play(entry.id);}
   isSelection():boolean {const point=this.context();return point?point.mode==='selection':this.result().mode==='selection';}
   selectedText():string {return this.context()?.selectedText??this.result().requestedText??this.result().selectedText??this.result().surface??this.result().query;}

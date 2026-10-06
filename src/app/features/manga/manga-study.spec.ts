@@ -1,3 +1,5 @@
+import 'fake-indexeddb/auto';
+import {IDBFactory} from 'fake-indexeddb';
 import {TestBed} from '@angular/core/testing';
 import {ActivatedRoute,convertToParamMap,provideRouter,Router,withHashLocation} from '@angular/router';
 import {of} from 'rxjs';
@@ -23,7 +25,7 @@ function wordLookup(expression:string,reading=expression):DictionaryLookup{retur
 describe('Manga study actions',()=>{
   const audioElement={play:vi.fn(async()=>{}),pause:vi.fn(),load:vi.fn(),removeAttribute:vi.fn(),src:'',preload:'',onended:null,onerror:null};
   beforeEach(()=>{
-    localStorage.clear();vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
+    localStorage.clear();vi.stubGlobal('indexedDB',new IDBFactory());vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
     audioElement.play.mockClear();
     TestBed.configureTestingModule({providers:[provideRouter([],withHashLocation()),{provide:MangaContextService,useValue:{available:false}},{provide:JAPANESE_AUDIO_FACTORY,useValue:()=>audioElement},{provide:JapaneseGlyphService,useValue:{load:async(character:string)=>[{character,strokes:[],clipPaths:[]}]}}]});
   });
@@ -38,7 +40,7 @@ describe('Manga study actions',()=>{
     expect(section.querySelector('a[href^="#/vocabulary/all?entry=n5-euiuyn"]')).not.toBeNull();expect(section.querySelector('a[href^="#/vocabulary/writing?entry=n5-euiuyn"]')).not.toBeNull();
     expect(section.querySelector('button')).not.toBeNull();expect(audioElement.play).not.toHaveBeenCalled();
   });
-  it('keeps dictionary content without an empty integration section',()=>{const f=popup('ありがとう','ありがとう');expect(f.nativeElement.querySelector('h2').textContent).toBe('ありがとう');expect(f.nativeElement.querySelector('.study-integration')).toBeNull();});
+  it('keeps dictionary content and permits saving words outside Vocabulary',()=>{const f=popup('ありがとう','ありがとう');expect(f.nativeElement.querySelector('h2').textContent).toBe('ありがとう');expect(f.nativeElement.querySelector('.saved-actions')).not.toBeNull();expect(f.nativeElement.querySelector('.study-vocabulary')).toBeNull();});
   it('omits listening when a matched entry has no production audio',()=>{const f=popup('九','きゅう');expect(f.nativeElement.querySelector('.study-vocabulary')).not.toBeNull();expect(f.nativeElement.querySelector('.study-actions button')).toBeNull();expect(f.nativeElement.querySelector('.study-vocabulary a[href^="#/vocabulary/writing"]')).not.toBeNull();});
   it('shows unique Kanji and contextual navigation even without vocabulary',()=>{
     const f=popup('学学校龍','がっこう');expect(f.nativeElement.querySelector('.study-vocabulary')).toBeNull();const rows=f.nativeElement.querySelectorAll('.study-kanji');expect(rows).toHaveLength(2);
@@ -71,6 +73,11 @@ describe('Manga study actions',()=>{
     // Resolve the real Kanji ID below rather than relying on generated identifier spelling.
     if(component===KanjiWritingPage){const {KANJI_N5}=await import('../../data/kanji-n5.generated');route({entry:KANJI_N5.find(k=>k.character==='食')!.id,return:'/manga/read/fixture-manga'});}
     const f=TestBed.createComponent(component as typeof VocabularyWritingPage);await f.whenStable();f.detectChanges();expect(f.componentInstance.individual()).not.toBeNull();expect(f.nativeElement.querySelector('header a').getAttribute('href')).toBe('#/manga/read/fixture-manga');
+  });
+  it.each([VocabularyWritingPage,KanjiWritingPage])('keeps the original page query in Writing return links: %s',async component=>{
+    const {KANJI_N5}=await import('../../data/kanji-n5.generated');
+    route({entry:component===VocabularyWritingPage?'n5-euiuyn':KANJI_N5.find(k=>k.character==='食')!.id,return:'/manga/read/fixture-manga?page=18'});
+    const f=TestBed.createComponent(component as typeof VocabularyWritingPage);await f.whenStable();f.detectChanges();expect(f.nativeElement.querySelector('header a').getAttribute('href')).toBe('#/manga/read/fixture-manga?page=18');
   });
   it('rejects external return URLs and unknown vocabulary IDs',()=>{route({entry:'unknown',return:'//external.invalid'});const f=TestBed.createComponent(VocabularyAllPage);expect(f.componentInstance.selected()).toBeNull();expect(f.componentInstance.returnUrl).toBe('/vocabulary');});
 });

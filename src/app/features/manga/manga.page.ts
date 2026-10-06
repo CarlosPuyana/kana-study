@@ -1,3 +1,6 @@
+import {MangaStudySavedRepository} from '../../core/services/manga-study-saved.repository';
+import {LocalManga} from '../../core/models/local-manga.model';
+import {LocalMangaCatalogService,LOCAL_MANGA_PREFIX} from '../../core/services/local-manga-catalog.service';
 import {
   Component,
   effect,
@@ -29,6 +32,7 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
       ><app-account-control />
     </header>
     <section class="manga-hero"><span class="eyebrow">{{i18n.t("more.manga.title")}}</span><h1>{{i18n.t("manga.landing.title")}}</h1><p>{{i18n.t("manga.landing.intro")}}</p><div class="actions"><button class="primary-action" [disabled]="busy()" (click)="fileInput.click()">{{i18n.t("manga.landing.add")}}</button><a routerLink="/manga/guide">{{i18n.t("manga.landing.how")}} →</a></div></section><section class="manga-steps">@for(step of [1,2,3];track step){<article><div class="step-art" aria-hidden="true">@switch(step){@case(1){<span class="file-art">ZIP / CBZ</span>}@case(2){<span class="bubble-art">何してるの？</span>}@case(3){<span class="word-art">食べなかった → 食べる</span>}}</div><h2>{{step}} · {{i18n.t("manga.landing.step"+step)}}</h2></article>}</section>
+    <div class="saved-library-link"><a routerLink="/manga/study">📚 {{i18n.t('manga.saved.title')}} · {{saved.count()}}</a></div>
     <details class="remote-entry"><summary>{{i18n.t('manga.remote.openLink')}}</summary>
       <p>{{i18n.t('manga.remote.linkHelp')}}</p><form (ngSubmit)="openRemote()">
         <label>{{i18n.t('manga.remote.archiveUrl')}}<input name="cbz" type="url" required [(ngModel)]="remoteCbz" /></label>
@@ -54,9 +58,20 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
     @if (error()) {
       <p role="alert">{{ i18n.t("manga.error." + error()) }}</p>
     }
-    @if (!busy() && !volumes().length) {
+    @if (!busy() && !volumes().length && !localMangas().length) {
       <section class="empty-library"><div class="file-art" aria-hidden="true">＋</div><h2>{{i18n.t("manga.landing.empty")}}</h2><p>{{i18n.t("manga.landing.emptyHelp")}}</p><div class="actions"><button class="primary-action" (click)="fileInput.click()">{{i18n.t("manga.landing.add")}}</button><a routerLink="/manga/guide">{{i18n.t("manga.landing.how")}}</a></div></section>
     }
+    @if(catalogError()){<p role="status">{{i18n.t('manga.catalog.unavailable')}} <button (click)="loadCatalog()">{{i18n.t('manga.catalog.retry')}}</button></p>}
+    @if(localMangas().length){<h2 class="library-heading">{{i18n.t('manga.catalog.title')}}</h2><section class="library-grid">
+      @for(manga of localMangas();track manga.id){<article class="catalog-manga">
+        @if(manga.cover){<img class="cover" [src]="catalog.asset(manga,manga.cover)" [alt]="manga.titles.ja"/>}
+        <h2 lang="ja">{{manga.titles.ja}}</h2>@if(manga.reading){<p lang="ja">{{manga.reading}}</p>}
+        @if(manga.titles.es && i18n.language()==='es'){<p>{{manga.titles.es}}</p>}
+        @if(manga.description?.[i18n.language()];as description){<p>{{description}}</p>}
+        <p>{{manga.pages.length}} {{i18n.t('manga.pages')}} · @for(lang of manga.availableLanguages;track lang){<span>{{i18n.t('manga.catalog.language.'+lang)}} </span>}</p>
+        <div class="actions"><a [routerLink]="['/manga/read',localVolumeId(manga)]">{{i18n.t('manga.read')}}</a></div>
+      </article>}
+    </section>}
     <h2 class="library-heading">{{i18n.t("manga.library")}}</h2><section class="library-grid">
       @for (volume of volumes(); track volume.id) {
         <article>
@@ -106,6 +121,7 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
   </main>`,
 })
 export class MangaPage implements OnDestroy {
+  readonly saved=inject(MangaStudySavedRepository);
   private readonly router=inject(Router);
   remoteCbz='';remoteManifest='';remoteCover='';readonly remoteInvalid=signal(false);
   openRemote():void {
@@ -116,6 +132,10 @@ export class MangaPage implements OnDestroy {
     }catch{this.remoteInvalid.set(true);}
   }
 
+  readonly catalog=inject(LocalMangaCatalogService);readonly localMangas=signal<LocalManga[]>([]);readonly catalogError=signal(false);
+  private catalogGeneration=0;
+  localVolumeId(manga:LocalManga):string{return LOCAL_MANGA_PREFIX+manga.id;}
+  async loadCatalog():Promise<void>{const generation=++this.catalogGeneration;this.catalogError.set(false);try{const mangas=await this.catalog.list();if(generation===this.catalogGeneration)this.localMangas.set(mangas);}catch{if(generation===this.catalogGeneration)this.catalogError.set(true);}}
   readonly i18n = inject(TranslationService);
   private readonly workspace = inject(WorkspaceService);
   private readonly repository = inject(MangaRepository);
@@ -130,6 +150,7 @@ export class MangaPage implements OnDestroy {
   readonly confirmDelete = signal<MangaVolume | null>(null);
   private generation = 0;
   constructor() {
+    void this.loadCatalog();
     effect(() => {
       const workspace = this.workspace.active();
 
@@ -210,7 +231,7 @@ export class MangaPage implements OnDestroy {
     return (bytes / 1024 / 1024).toFixed(1);
   }
   ngOnDestroy(): void {
-    ++this.generation;
+    ++this.generation;++this.catalogGeneration;
     this.clearCovers();
   }
 }

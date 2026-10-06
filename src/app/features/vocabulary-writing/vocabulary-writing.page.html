@@ -1,5 +1,5 @@
 <main class="writing-shell">
-  <header><a [routerLink]="returnRoute()" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('vocabularyWriting.title')}}</h1></header>
+  <header><a [routerLink]="returnLink()" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('vocabularyWriting.title')}}</h1></header>
   @if(individual();as entry){
     <section class="practice"><h2 lang="ja">{{entry.primaryWrittenForm}}</h2><p>{{entry.quizMeaning[i18n.language()]}}</p>
       <app-word-writing-practice [word]="entry.primaryWrittenForm"/>
