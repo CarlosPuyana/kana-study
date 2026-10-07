@@ -15,7 +15,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     "relatedIds": [
       "state-being-plain",
       "particle-wa-topic",
-      "verb-role-dictionary"
+      "verb-role-dictionary",
+      "sentence-ending-ne-yo"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.sentence-structure-context.idea",
@@ -206,7 +207,9 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "particle-wa-topic",
       "particle-no-noun-link",
       "adjective-na",
-      "adjective-i"
+      "adjective-i",
+      "polite-desu-system",
+      "da-vs-desu"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.state-being-plain.idea",
@@ -462,7 +465,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "state-being-past-negative",
       "particle-mo-inclusive",
       "adjective-na",
-      "adjective-negative"
+      "adjective-negative",
+      "polite-desu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.state-being-negative.idea",
@@ -700,7 +704,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     "relatedIds": [
       "state-being-past-negative",
       "adjective-na",
-      "adjective-past"
+      "adjective-past",
+      "polite-desu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.state-being-past.idea",
@@ -920,7 +925,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     ],
     "relatedIds": [
       "adjective-na",
-      "adjective-past-negative"
+      "adjective-past-negative",
+      "polite-desu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.state-being-past-negative.idea",
@@ -2680,7 +2686,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "adjective-negative",
       "adjective-past",
       "adjectival-predicates-ga",
-      "adjective-adverb-ku-ni"
+      "adjective-adverb-ku-ni",
+      "polite-desu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.adjective-na.idea",
@@ -2936,7 +2943,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "adjective-noun-modification",
       "adjective-negative",
       "adjective-past",
-      "adjective-adverb-ku-ni"
+      "adjective-adverb-ku-ni",
+      "polite-desu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.adjective-i.idea",
@@ -3507,7 +3515,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     "relatedIds": [
       "adjective-past-negative",
       "adjective-ii-irregular",
-      "degree-adverbs"
+      "degree-adverbs",
+      "polite-desu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.adjective-negative.idea",
@@ -3804,7 +3813,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     ],
     "relatedIds": [
       "adjective-past-negative",
-      "adjective-ii-irregular"
+      "adjective-ii-irregular",
+      "polite-desu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.adjective-past.idea",
@@ -4093,7 +4103,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "state-being-past-negative"
     ],
     "relatedIds": [
-      "adjective-ii-irregular"
+      "adjective-ii-irregular",
+      "polite-desu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.adjective-past-negative.idea",
@@ -5470,7 +5481,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     ],
     "relatedIds": [
       "verb-negative-plain",
-      "verb-past-plain"
+      "verb-past-plain",
+      "verb-stem"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.verb-ichidan.idea",
@@ -5717,7 +5729,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     ],
     "relatedIds": [
       "verb-negative-plain",
-      "verb-past-plain"
+      "verb-past-plain",
+      "verb-stem"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.verb-godan.idea",
@@ -6068,7 +6081,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     ],
     "relatedIds": [
       "verb-negative-plain",
-      "verb-past-plain"
+      "verb-past-plain",
+      "verb-stem"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.verb-irregular-suru-kuru.idea",
@@ -6277,7 +6291,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     "relatedIds": [
       "verb-past-negative-plain",
       "existence-aru-iru",
-      "question-words-ka-mo"
+      "question-words-ka-mo",
+      "polite-verb-masu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.verb-negative-plain.idea",
@@ -6651,7 +6666,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "verb-irregular-suru-kuru"
     ],
     "relatedIds": [
-      "verb-past-negative-plain"
+      "verb-past-negative-plain",
+      "polite-verb-masu-system"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.verb-past-plain.idea",
@@ -7015,7 +7031,9 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "verb-negative-plain",
       "verb-past-plain"
     ],
-    "relatedIds": [],
+    "relatedIds": [
+      "polite-verb-masu-system"
+    ],
     "lesson": {
       "ideaKey": "grammar.v2.verb-past-negative-plain.idea",
       "formation": [
@@ -7548,7 +7566,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "verb-role-dictionary"
     ],
     "relatedIds": [
-      "verb-transitivity-basic"
+      "verb-transitivity-basic",
+      "motion-purpose-ni-iku"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.particle-wo-object.idea",
@@ -7956,7 +7975,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "verb-role-dictionary"
     ],
     "relatedIds": [
-      "particle-he-direction"
+      "particle-he-direction",
+      "motion-purpose-ni-iku"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.particle-ni-destination.idea",
@@ -9599,7 +9619,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     ],
     "relatedIds": [
       "question-words-ka-mo",
-      "calendar-dates"
+      "calendar-dates",
+      "question-ka"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.question-words-basic.idea",
@@ -11183,6 +11204,2589 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
           "grammar.v2.duration-gurai-3.option.1"
         ],
         "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "verb-stem",
+    "level": "N5",
+    "track": "core",
+    "topicId": "05",
+    "order": 1,
+    "titleKey": "grammar.v2.verb-stem.title",
+    "summaryKey": "grammar.v2.verb-stem.summary",
+    "goalKey": "grammar.v2.verb-stem.goal",
+    "prerequisiteIds": [
+      "verb-ichidan",
+      "verb-godan",
+      "verb-irregular-suru-kuru"
+    ],
+    "relatedIds": [
+      "motion-purpose-ni-iku",
+      "polite-verb-masu-system"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.verb-stem.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "食べる → 食べ"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "飲む → 飲み"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "する → し"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "来る → き"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "食べる → 食べ",
+          "reading": "たべる → たべ",
+          "meaningKey": "grammar.v2.verb-stem.example.0"
+        },
+        {
+          "japanese": "飲む → 飲み",
+          "reading": "のむ → のみ",
+          "meaningKey": "grammar.v2.verb-stem.example.1"
+        },
+        {
+          "japanese": "する → し",
+          "reading": "する → し",
+          "meaningKey": "grammar.v2.verb-stem.example.2"
+        },
+        {
+          "japanese": "来る → き",
+          "reading": "くる → き",
+          "meaningKey": "grammar.v2.verb-stem.example.3"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.verb-stem.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.verb-stem.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.polite.stems.caption",
+          "headerKeys": [
+            "grammar.v2.polite.stems.header.0",
+            "grammar.v2.polite.stems.header.1"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.polite.stems.row.0",
+              "cells": [
+                "食べる",
+                "食べ"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.1",
+              "cells": [
+                "見る",
+                "見"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.2",
+              "cells": [
+                "起きる",
+                "起き"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.3",
+              "cells": [
+                "買う",
+                "買い"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.4",
+              "cells": [
+                "書く",
+                "書き"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.5",
+              "cells": [
+                "泳ぐ",
+                "泳ぎ"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.6",
+              "cells": [
+                "話す",
+                "話し"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.7",
+              "cells": [
+                "待つ",
+                "待ち"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.8",
+              "cells": [
+                "死ぬ",
+                "死に"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.9",
+              "cells": [
+                "遊ぶ",
+                "遊び"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.10",
+              "cells": [
+                "飲む",
+                "飲み"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.11",
+              "cells": [
+                "帰る",
+                "帰り"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.12",
+              "cells": [
+                "する",
+                "し"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.stems.row.13",
+              "cells": [
+                "来る",
+                "き"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "verb-stem-1",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "verb-stem",
+        "conceptId": "verb-stem",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.verb-stem-1.prompt",
+        "successKey": "grammar.v2.verb-stem-1.explanation",
+        "errorKey": "grammar.v2.verb-stem-1.explanation",
+        "acceptedAnswers": [
+          "食べ"
+        ],
+        "solutionKey": "grammar.v2.verb-stem-1.solution",
+        "kanaBank": [
+          "べ",
+          "食",
+          "ら",
+          "る",
+          "れ",
+          "ゃ"
+        ]
+      },
+      {
+        "id": "verb-stem-2",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "verb-stem",
+        "conceptId": "verb-stem",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.verb-stem-2.prompt",
+        "successKey": "grammar.v2.verb-stem-2.explanation",
+        "errorKey": "grammar.v2.verb-stem-2.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.verb-stem-2.left.0",
+            "rightKey": "grammar.v2.verb-stem-2.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.verb-stem-2.left.1",
+            "rightKey": "grammar.v2.verb-stem-2.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.verb-stem-2.left.2",
+            "rightKey": "grammar.v2.verb-stem-2.right.2"
+          }
+        ]
+      },
+      {
+        "id": "verb-stem-3",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "verb-stem",
+        "conceptId": "verb-stem",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.verb-stem-3.prompt",
+        "successKey": "grammar.v2.verb-stem-3.explanation",
+        "errorKey": "grammar.v2.verb-stem-3.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.verb-stem-3.left.0",
+            "rightKey": "grammar.v2.verb-stem-3.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.verb-stem-3.left.1",
+            "rightKey": "grammar.v2.verb-stem-3.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.verb-stem-3.left.2",
+            "rightKey": "grammar.v2.verb-stem-3.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.verb-stem-3.left.3",
+            "rightKey": "grammar.v2.verb-stem-3.right.3"
+          },
+          {
+            "leftKey": "grammar.v2.verb-stem-3.left.4",
+            "rightKey": "grammar.v2.verb-stem-3.right.4"
+          }
+        ]
+      },
+      {
+        "id": "verb-stem-4",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "verb-stem",
+        "conceptId": "verb-stem",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.verb-stem-4.prompt",
+        "successKey": "grammar.v2.verb-stem-4.explanation",
+        "errorKey": "grammar.v2.verb-stem-4.explanation",
+        "acceptedAnswers": [
+          "し"
+        ],
+        "solutionKey": "grammar.v2.verb-stem-4.solution",
+        "kanaBank": [
+          "ま",
+          "へ",
+          "で",
+          "だ",
+          "は",
+          "し"
+        ]
+      },
+      {
+        "id": "verb-stem-5",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "verb-stem",
+        "conceptId": "verb-stem",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.verb-stem-5.prompt",
+        "successKey": "grammar.v2.verb-stem-5.explanation",
+        "errorKey": "grammar.v2.verb-stem-5.explanation",
+        "acceptedAnswers": [
+          "き"
+        ],
+        "solutionKey": "grammar.v2.verb-stem-5.solution",
+        "kanaBank": [
+          "を",
+          "ん",
+          "る",
+          "ら",
+          "れ",
+          "き"
+        ]
+      },
+      {
+        "id": "verb-stem-6",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "verb-stem",
+        "conceptId": "verb-stem",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.verb-stem-6.prompt",
+        "successKey": "grammar.v2.verb-stem-6.explanation",
+        "errorKey": "grammar.v2.verb-stem-6.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.verb-stem-6.left.0",
+            "rightKey": "grammar.v2.verb-stem-6.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.verb-stem-6.left.1",
+            "rightKey": "grammar.v2.verb-stem-6.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.verb-stem-6.left.2",
+            "rightKey": "grammar.v2.verb-stem-6.right.2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "motion-purpose-ni-iku",
+    "level": "N5",
+    "track": "core",
+    "topicId": "05",
+    "order": 2,
+    "titleKey": "grammar.v2.motion-purpose-ni-iku.title",
+    "summaryKey": "grammar.v2.motion-purpose-ni-iku.summary",
+    "goalKey": "grammar.v2.motion-purpose-ni-iku.goal",
+    "prerequisiteIds": [
+      "verb-stem",
+      "particle-ni-destination",
+      "particle-wo-object"
+    ],
+    "relatedIds": [],
+    "lesson": {
+      "ideaKey": "grammar.v2.motion-purpose-ni-iku.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "見る → 見 + に + 行く"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "買う → 買い + に + 行く"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "遊ぶ → 遊び + に + 来る"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "映画を見に行く。",
+          "reading": "えいがをみにいく。",
+          "meaningKey": "grammar.v2.motion-purpose-ni-iku.example.0"
+        },
+        {
+          "japanese": "パンを買いに行く。",
+          "reading": "パンをかいにいく。",
+          "meaningKey": "grammar.v2.motion-purpose-ni-iku.example.1"
+        },
+        {
+          "japanese": "友達が遊びに来る。",
+          "reading": "ともだちがあそびにくる。",
+          "meaningKey": "grammar.v2.motion-purpose-ni-iku.example.2"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.motion-purpose-ni-iku.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.motion-purpose-ni-iku.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": []
+    },
+    "exercises": [
+      {
+        "id": "motion-purpose-ni-iku-1",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "motion-purpose-ni-iku",
+        "conceptId": "motion-purpose-ni-iku",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.motion-purpose-ni-iku-1.prompt",
+        "successKey": "grammar.v2.motion-purpose-ni-iku-1.explanation",
+        "errorKey": "grammar.v2.motion-purpose-ni-iku-1.explanation",
+        "acceptedAnswers": [
+          "見"
+        ],
+        "solutionKey": "grammar.v2.motion-purpose-ni-iku-1.solution",
+        "kanaBank": [
+          "し",
+          "じ",
+          "す",
+          "た",
+          "い",
+          "見"
+        ]
+      },
+      {
+        "id": "motion-purpose-ni-iku-2",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "motion-purpose-ni-iku",
+        "conceptId": "motion-purpose-ni-iku",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.motion-purpose-ni-iku-2.prompt",
+        "successKey": "grammar.v2.motion-purpose-ni-iku-2.explanation",
+        "errorKey": "grammar.v2.motion-purpose-ni-iku-2.explanation",
+        "acceptedAnswers": [
+          "買い"
+        ],
+        "solutionKey": "grammar.v2.motion-purpose-ni-iku-2.solution",
+        "kanaBank": [
+          "た",
+          "す",
+          "じ",
+          "う",
+          "い",
+          "買"
+        ]
+      },
+      {
+        "id": "motion-purpose-ni-iku-3",
+        "version": 2,
+        "kind": "sentence-builder",
+        "skill": "ordering",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "motion-purpose-ni-iku",
+        "conceptId": "motion-purpose-ni-iku",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.motion-purpose-ni-iku-3.prompt",
+        "successKey": "grammar.v2.motion-purpose-ni-iku-3.explanation",
+        "errorKey": "grammar.v2.motion-purpose-ni-iku-3.explanation",
+        "tokenKeys": [
+          "grammar.v2.motion-purpose-ni-iku-3.token.0",
+          "grammar.v2.motion-purpose-ni-iku-3.token.1",
+          "grammar.v2.motion-purpose-ni-iku-3.token.2",
+          "grammar.v2.motion-purpose-ni-iku-3.token.3"
+        ],
+        "solution": [
+          1,
+          3,
+          2,
+          0
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "motion-purpose-ni-iku-4",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "motion-purpose-ni-iku",
+        "conceptId": "motion-purpose-ni-iku",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.motion-purpose-ni-iku-4.prompt",
+        "successKey": "grammar.v2.motion-purpose-ni-iku-4.explanation",
+        "errorKey": "grammar.v2.motion-purpose-ni-iku-4.explanation",
+        "options": [
+          {
+            "id": "motion-purpose-ni-iku-4-option-0",
+            "textKey": "grammar.v2.motion-purpose-ni-iku-4.option.0",
+            "feedbackKey": "grammar.v2.motion-purpose-ni-iku-4.feedback.0"
+          },
+          {
+            "id": "motion-purpose-ni-iku-4-option-1",
+            "textKey": "grammar.v2.motion-purpose-ni-iku-4.option.1",
+            "feedbackKey": "grammar.v2.motion-purpose-ni-iku-4.feedback.1"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.motion-purpose-ni-iku-4.option.0",
+          "grammar.v2.motion-purpose-ni-iku-4.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "motion-purpose-ni-iku-5",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "motion-purpose-ni-iku",
+        "conceptId": "motion-purpose-ni-iku",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.motion-purpose-ni-iku-5.prompt",
+        "successKey": "grammar.v2.motion-purpose-ni-iku-5.explanation",
+        "errorKey": "grammar.v2.motion-purpose-ni-iku-5.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.motion-purpose-ni-iku-5.left.0",
+            "rightKey": "grammar.v2.motion-purpose-ni-iku-5.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.motion-purpose-ni-iku-5.left.1",
+            "rightKey": "grammar.v2.motion-purpose-ni-iku-5.right.1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "polite-verb-masu-system",
+    "level": "N5",
+    "track": "core",
+    "topicId": "05",
+    "order": 3,
+    "titleKey": "grammar.v2.polite-verb-masu-system.title",
+    "summaryKey": "grammar.v2.polite-verb-masu-system.summary",
+    "goalKey": "grammar.v2.polite-verb-masu-system.goal",
+    "prerequisiteIds": [
+      "verb-stem",
+      "verb-negative-plain",
+      "verb-past-plain",
+      "verb-past-negative-plain"
+    ],
+    "relatedIds": [
+      "question-ka",
+      "plain-vs-polite"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.polite-verb-masu-system.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "食べ + ます / ません / ました / ませんでした"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "飲み + ます / ません / ました / ませんでした"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "し + ます / ません / ました / ませんでした"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "き + ます / ません / ました / ませんでした"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "食べます。",
+          "reading": "たべます。",
+          "meaningKey": "grammar.v2.polite-verb-masu-system.example.0"
+        },
+        {
+          "japanese": "飲みませんでした。",
+          "reading": "のみませんでした。",
+          "meaningKey": "grammar.v2.polite-verb-masu-system.example.1"
+        },
+        {
+          "japanese": "します。",
+          "reading": "します。",
+          "meaningKey": "grammar.v2.polite-verb-masu-system.example.2"
+        },
+        {
+          "japanese": "きます。",
+          "reading": "きます。",
+          "meaningKey": "grammar.v2.polite-verb-masu-system.example.3"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.polite-verb-masu-system.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.polite-verb-masu-system.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.polite.matrix.caption",
+          "headerKeys": [
+            "grammar.v2.polite.matrix.header.0",
+            "grammar.v2.polite.matrix.header.1"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.polite.matrix.row.0",
+              "cells": [
+                "ます",
+                "ました"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.matrix.row.1",
+              "cells": [
+                "ません",
+                "ませんでした"
+              ]
+            }
+          ]
+        },
+        {
+          "captionKey": "grammar.v2.polite.families.caption",
+          "headerKeys": [
+            "grammar.v2.polite.families.header.0",
+            "grammar.v2.polite.families.header.1",
+            "grammar.v2.polite.families.header.2",
+            "grammar.v2.polite.families.header.3"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.polite.families.row.0",
+              "cells": [
+                "食べます",
+                "飲みます",
+                "します",
+                "きます"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.families.row.1",
+              "cells": [
+                "食べません",
+                "飲みません",
+                "しません",
+                "きません"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.families.row.2",
+              "cells": [
+                "食べました",
+                "飲みました",
+                "しました",
+                "きました"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.families.row.3",
+              "cells": [
+                "食べませんでした",
+                "飲みませんでした",
+                "しませんでした",
+                "きませんでした"
+              ]
+            }
+          ]
+        },
+        {
+          "captionKey": "grammar.v2.polite.plainDrink.caption",
+          "headerKeys": [
+            "grammar.v2.polite.plainDrink.header.0",
+            "grammar.v2.polite.plainDrink.header.1"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.polite.plainDrink.row.0",
+              "cells": [
+                "飲む",
+                "飲みます"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.plainDrink.row.1",
+              "cells": [
+                "飲まない",
+                "飲みません"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.plainDrink.row.2",
+              "cells": [
+                "飲んだ",
+                "飲みました"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.plainDrink.row.3",
+              "cells": [
+                "飲まなかった",
+                "飲みませんでした"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "polite-verb-masu-system-1",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "polite-verb-masu-system",
+        "conceptId": "polite-verb-masu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.polite-verb-masu-system-1.prompt",
+        "successKey": "grammar.v2.polite-verb-masu-system-1.explanation",
+        "errorKey": "grammar.v2.polite-verb-masu-system-1.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.polite-verb-masu-system-1.left.0",
+            "rightKey": "grammar.v2.polite-verb-masu-system-1.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.polite-verb-masu-system-1.left.1",
+            "rightKey": "grammar.v2.polite-verb-masu-system-1.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.polite-verb-masu-system-1.left.2",
+            "rightKey": "grammar.v2.polite-verb-masu-system-1.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.polite-verb-masu-system-1.left.3",
+            "rightKey": "grammar.v2.polite-verb-masu-system-1.right.3"
+          }
+        ]
+      },
+      {
+        "id": "polite-verb-masu-system-2",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-verb-masu-system",
+        "conceptId": "polite-verb-masu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.polite-verb-masu-system-2.prompt",
+        "successKey": "grammar.v2.polite-verb-masu-system-2.explanation",
+        "errorKey": "grammar.v2.polite-verb-masu-system-2.explanation",
+        "acceptedAnswers": [
+          "食べます"
+        ],
+        "solutionKey": "grammar.v2.polite-verb-masu-system-2.solution",
+        "kanaBank": [
+          "し",
+          "じ",
+          "す",
+          "べ",
+          "ま",
+          "食"
+        ]
+      },
+      {
+        "id": "polite-verb-masu-system-3",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-verb-masu-system",
+        "conceptId": "polite-verb-masu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.polite-verb-masu-system-3.prompt",
+        "successKey": "grammar.v2.polite-verb-masu-system-3.explanation",
+        "errorKey": "grammar.v2.polite-verb-masu-system-3.explanation",
+        "acceptedAnswers": [
+          "食べません"
+        ],
+        "solutionKey": "grammar.v2.polite-verb-masu-system-3.solution",
+        "kanaBank": [
+          "食",
+          "れ",
+          "る",
+          "ん",
+          "せ",
+          "ま",
+          "べ"
+        ]
+      },
+      {
+        "id": "polite-verb-masu-system-4",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-verb-masu-system",
+        "conceptId": "polite-verb-masu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.polite-verb-masu-system-4.prompt",
+        "successKey": "grammar.v2.polite-verb-masu-system-4.explanation",
+        "errorKey": "grammar.v2.polite-verb-masu-system-4.explanation",
+        "acceptedAnswers": [
+          "食べました"
+        ],
+        "solutionKey": "grammar.v2.polite-verb-masu-system-4.solution",
+        "kanaBank": [
+          "食",
+          "や",
+          "も",
+          "ま",
+          "べ",
+          "し",
+          "た"
+        ]
+      },
+      {
+        "id": "polite-verb-masu-system-5",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-verb-masu-system",
+        "conceptId": "polite-verb-masu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.polite-verb-masu-system-5.prompt",
+        "successKey": "grammar.v2.polite-verb-masu-system-5.explanation",
+        "errorKey": "grammar.v2.polite-verb-masu-system-5.explanation",
+        "acceptedAnswers": [
+          "食べませんでした"
+        ],
+        "solutionKey": "grammar.v2.polite-verb-masu-system-5.solution",
+        "kanaBank": [
+          "と",
+          "に",
+          "で",
+          "べ",
+          "ま",
+          "ん",
+          "食",
+          "せ",
+          "た",
+          "し"
+        ]
+      },
+      {
+        "id": "polite-verb-masu-system-6",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-verb-masu-system",
+        "conceptId": "polite-verb-masu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.polite-verb-masu-system-6.prompt",
+        "successKey": "grammar.v2.polite-verb-masu-system-6.explanation",
+        "errorKey": "grammar.v2.polite-verb-masu-system-6.explanation",
+        "options": [
+          {
+            "id": "polite-verb-masu-system-6-option-0",
+            "textKey": "grammar.v2.polite-verb-masu-system-6.option.0",
+            "feedbackKey": "grammar.v2.polite-verb-masu-system-6.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "polite-verb-masu-system-6-option-1",
+            "textKey": "grammar.v2.polite-verb-masu-system-6.option.1",
+            "feedbackKey": "grammar.v2.polite-verb-masu-system-6.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "polite-verb-masu-system-6-option-2",
+            "textKey": "grammar.v2.polite-verb-masu-system-6.option.2",
+            "feedbackKey": "grammar.v2.polite-verb-masu-system-6.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "polite-verb-masu-system-6-option-3",
+            "textKey": "grammar.v2.polite-verb-masu-system-6.option.3",
+            "feedbackKey": "grammar.v2.polite-verb-masu-system-6.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.polite-verb-masu-system-6.option.0",
+          "grammar.v2.polite-verb-masu-system-6.option.1",
+          "grammar.v2.polite-verb-masu-system-6.option.2",
+          "grammar.v2.polite-verb-masu-system-6.option.3"
+        ],
+        "answer": 3
+      },
+      {
+        "id": "polite-verb-masu-system-7",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "polite-verb-masu-system",
+        "conceptId": "polite-verb-masu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.polite-verb-masu-system-7.prompt",
+        "successKey": "grammar.v2.polite-verb-masu-system-7.explanation",
+        "errorKey": "grammar.v2.polite-verb-masu-system-7.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.polite-verb-masu-system-7.left.0",
+            "rightKey": "grammar.v2.polite-verb-masu-system-7.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.polite-verb-masu-system-7.left.1",
+            "rightKey": "grammar.v2.polite-verb-masu-system-7.right.1"
+          }
+        ]
+      },
+      {
+        "id": "polite-verb-masu-system-8",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-verb-masu-system",
+        "conceptId": "polite-verb-masu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.polite-verb-masu-system-8.prompt",
+        "successKey": "grammar.v2.polite-verb-masu-system-8.explanation",
+        "errorKey": "grammar.v2.polite-verb-masu-system-8.explanation",
+        "options": [
+          {
+            "id": "polite-verb-masu-system-8-option-0",
+            "textKey": "grammar.v2.polite-verb-masu-system-8.option.0",
+            "feedbackKey": "grammar.v2.polite-verb-masu-system-8.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "polite-verb-masu-system-8-option-1",
+            "textKey": "grammar.v2.polite-verb-masu-system-8.option.1",
+            "feedbackKey": "grammar.v2.polite-verb-masu-system-8.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "polite-verb-masu-system-8-option-2",
+            "textKey": "grammar.v2.polite-verb-masu-system-8.option.2",
+            "feedbackKey": "grammar.v2.polite-verb-masu-system-8.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "polite-verb-masu-system-8-option-3",
+            "textKey": "grammar.v2.polite-verb-masu-system-8.option.3",
+            "feedbackKey": "grammar.v2.polite-verb-masu-system-8.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.polite-verb-masu-system-8.option.0",
+          "grammar.v2.polite-verb-masu-system-8.option.1",
+          "grammar.v2.polite-verb-masu-system-8.option.2",
+          "grammar.v2.polite-verb-masu-system-8.option.3"
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": "polite-desu-system",
+    "level": "N5",
+    "track": "core",
+    "topicId": "05",
+    "order": 4,
+    "titleKey": "grammar.v2.polite-desu-system.title",
+    "summaryKey": "grammar.v2.polite-desu-system.summary",
+    "goalKey": "grammar.v2.polite-desu-system.goal",
+    "prerequisiteIds": [
+      "state-being-plain",
+      "state-being-negative",
+      "state-being-past",
+      "state-being-past-negative",
+      "adjective-na",
+      "adjective-i",
+      "adjective-negative",
+      "adjective-past",
+      "adjective-past-negative"
+    ],
+    "relatedIds": [
+      "da-vs-desu",
+      "question-ka",
+      "plain-vs-polite"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.polite-desu-system.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "学生です / 学生じゃないです / 学生でした / 学生じゃなかったです"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "静かです / 静かじゃないです / 静かでした / 静かじゃなかったです"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "高いです / 高くないです / 高かったです / 高くなかったです"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "学生じゃないです。",
+          "reading": "がくせいじゃないです。",
+          "meaningKey": "grammar.v2.polite-desu-system.example.0"
+        },
+        {
+          "japanese": "静かでした。",
+          "reading": "しずかでした。",
+          "meaningKey": "grammar.v2.polite-desu-system.example.1"
+        },
+        {
+          "japanese": "高くなかったです。",
+          "reading": "たかくなかったです。",
+          "meaningKey": "grammar.v2.polite-desu-system.example.2"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.polite-desu-system.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.polite-desu-system.detail.1"
+        }
+      ],
+      "mistakes": [
+        {
+          "wrong": "高いでした。",
+          "correction": "高かったです。",
+          "explanationKey": "grammar.v2.polite-desu-system.mistake.0"
+        },
+        {
+          "wrong": "高かっただ。",
+          "correction": "高かったです。",
+          "explanationKey": "grammar.v2.polite-desu-system.mistake.1"
+        }
+      ],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.polite.desuMatrix.caption",
+          "headerKeys": [
+            "grammar.v2.polite.desuMatrix.header.0",
+            "grammar.v2.polite.desuMatrix.header.1",
+            "grammar.v2.polite.desuMatrix.header.2"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.polite.desuMatrix.row.0",
+              "cells": [
+                "学生です",
+                "静かです",
+                "高いです"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.desuMatrix.row.1",
+              "cells": [
+                "学生じゃないです",
+                "静かじゃないです",
+                "高くないです"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.desuMatrix.row.2",
+              "cells": [
+                "学生でした",
+                "静かでした",
+                "高かったです"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.desuMatrix.row.3",
+              "cells": [
+                "学生じゃなかったです",
+                "静かじゃなかったです",
+                "高くなかったです"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "polite-desu-system-1",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "polite-desu-system",
+        "conceptId": "polite-desu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.polite-desu-system-1.prompt",
+        "successKey": "grammar.v2.polite-desu-system-1.explanation",
+        "errorKey": "grammar.v2.polite-desu-system-1.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.polite-desu-system-1.left.0",
+            "rightKey": "grammar.v2.polite-desu-system-1.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-1.left.1",
+            "rightKey": "grammar.v2.polite-desu-system-1.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-1.left.2",
+            "rightKey": "grammar.v2.polite-desu-system-1.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-1.left.3",
+            "rightKey": "grammar.v2.polite-desu-system-1.right.3"
+          }
+        ]
+      },
+      {
+        "id": "polite-desu-system-2",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-desu-system",
+        "conceptId": "polite-desu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.polite-desu-system-2.prompt",
+        "successKey": "grammar.v2.polite-desu-system-2.explanation",
+        "errorKey": "grammar.v2.polite-desu-system-2.explanation",
+        "acceptedAnswers": [
+          "学生です"
+        ],
+        "solutionKey": "grammar.v2.polite-desu-system-2.solution",
+        "kanaBank": [
+          "は",
+          "の",
+          "で",
+          "学",
+          "す",
+          "生"
+        ]
+      },
+      {
+        "id": "polite-desu-system-3",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-desu-system",
+        "conceptId": "polite-desu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.polite-desu-system-3.prompt",
+        "successKey": "grammar.v2.polite-desu-system-3.explanation",
+        "errorKey": "grammar.v2.polite-desu-system-3.explanation",
+        "acceptedAnswers": [
+          "学生じゃないです"
+        ],
+        "solutionKey": "grammar.v2.polite-desu-system-3.solution",
+        "kanaBank": [
+          "を",
+          "ん",
+          "ゃ",
+          "じ",
+          "す",
+          "い",
+          "な",
+          "学",
+          "で",
+          "生"
+        ]
+      },
+      {
+        "id": "polite-desu-system-4",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-desu-system",
+        "conceptId": "polite-desu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.polite-desu-system-4.prompt",
+        "successKey": "grammar.v2.polite-desu-system-4.explanation",
+        "errorKey": "grammar.v2.polite-desu-system-4.explanation",
+        "acceptedAnswers": [
+          "学生でした"
+        ],
+        "solutionKey": "grammar.v2.polite-desu-system-4.solution",
+        "kanaBank": [
+          "生",
+          "か",
+          "え",
+          "た",
+          "し",
+          "で",
+          "学"
+        ]
+      },
+      {
+        "id": "polite-desu-system-5",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-desu-system",
+        "conceptId": "polite-desu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.polite-desu-system-5.prompt",
+        "successKey": "grammar.v2.polite-desu-system-5.explanation",
+        "errorKey": "grammar.v2.polite-desu-system-5.explanation",
+        "acceptedAnswers": [
+          "学生じゃなかったです"
+        ],
+        "solutionKey": "grammar.v2.polite-desu-system-5.solution",
+        "kanaBank": [
+          "た",
+          "じ",
+          "す",
+          "し",
+          "の",
+          "な",
+          "学",
+          "で",
+          "っ",
+          "生",
+          "ゃ",
+          "か"
+        ]
+      },
+      {
+        "id": "polite-desu-system-6",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "polite-desu-system",
+        "conceptId": "polite-desu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.polite-desu-system-6.prompt",
+        "successKey": "grammar.v2.polite-desu-system-6.explanation",
+        "errorKey": "grammar.v2.polite-desu-system-6.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.polite-desu-system-6.left.0",
+            "rightKey": "grammar.v2.polite-desu-system-6.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-6.left.1",
+            "rightKey": "grammar.v2.polite-desu-system-6.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-6.left.2",
+            "rightKey": "grammar.v2.polite-desu-system-6.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-6.left.3",
+            "rightKey": "grammar.v2.polite-desu-system-6.right.3"
+          }
+        ]
+      },
+      {
+        "id": "polite-desu-system-7",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "polite-desu-system",
+        "conceptId": "polite-desu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.polite-desu-system-7.prompt",
+        "successKey": "grammar.v2.polite-desu-system-7.explanation",
+        "errorKey": "grammar.v2.polite-desu-system-7.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.polite-desu-system-7.left.0",
+            "rightKey": "grammar.v2.polite-desu-system-7.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-7.left.1",
+            "rightKey": "grammar.v2.polite-desu-system-7.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-7.left.2",
+            "rightKey": "grammar.v2.polite-desu-system-7.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.polite-desu-system-7.left.3",
+            "rightKey": "grammar.v2.polite-desu-system-7.right.3"
+          }
+        ]
+      },
+      {
+        "id": "polite-desu-system-8",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "polite-desu-system",
+        "conceptId": "polite-desu-system",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.polite-desu-system-8.prompt",
+        "successKey": "grammar.v2.polite-desu-system-8.explanation",
+        "errorKey": "grammar.v2.polite-desu-system-8.explanation",
+        "options": [
+          {
+            "id": "polite-desu-system-8-option-0",
+            "textKey": "grammar.v2.polite-desu-system-8.option.0",
+            "feedbackKey": "grammar.v2.polite-desu-system-8.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "polite-desu-system-8-option-1",
+            "textKey": "grammar.v2.polite-desu-system-8.option.1",
+            "feedbackKey": "grammar.v2.polite-desu-system-8.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "polite-desu-system-8-option-2",
+            "textKey": "grammar.v2.polite-desu-system-8.option.2",
+            "feedbackKey": "grammar.v2.polite-desu-system-8.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.polite-desu-system-8.option.0",
+          "grammar.v2.polite-desu-system-8.option.1",
+          "grammar.v2.polite-desu-system-8.option.2"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "da-vs-desu",
+    "level": "N5",
+    "track": "core",
+    "topicId": "05",
+    "order": 5,
+    "titleKey": "grammar.v2.da-vs-desu.title",
+    "summaryKey": "grammar.v2.da-vs-desu.summary",
+    "goalKey": "grammar.v2.da-vs-desu.goal",
+    "prerequisiteIds": [
+      "polite-desu-system",
+      "state-being-plain"
+    ],
+    "relatedIds": [],
+    "lesson": {
+      "ideaKey": "grammar.v2.da-vs-desu.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "学生だ。 ↔ 学生です。"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "学生だった。 ↔ 学生でした。"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "高い。 ↔ 高いです。"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "学生だ。",
+          "reading": "がくせいだ。",
+          "meaningKey": "grammar.v2.da-vs-desu.example.0"
+        },
+        {
+          "japanese": "学生です。",
+          "reading": "がくせいです。",
+          "meaningKey": "grammar.v2.da-vs-desu.example.1"
+        },
+        {
+          "japanese": "学生でした。",
+          "reading": "がくせいでした。",
+          "meaningKey": "grammar.v2.da-vs-desu.example.2"
+        },
+        {
+          "japanese": "高いです。",
+          "reading": "たかいです。",
+          "meaningKey": "grammar.v2.da-vs-desu.example.3"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.da-vs-desu.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.da-vs-desu.detail.1"
+        }
+      ],
+      "mistakes": [
+        {
+          "wrong": "学生だです。",
+          "correction": "学生です。",
+          "explanationKey": "grammar.v2.da-vs-desu.mistake.0"
+        },
+        {
+          "wrong": "高いだ。",
+          "correction": "高い。",
+          "explanationKey": "grammar.v2.da-vs-desu.mistake.1"
+        },
+        {
+          "wrong": "学生でしたった。",
+          "correction": "学生でした。",
+          "explanationKey": "grammar.v2.da-vs-desu.mistake.2"
+        }
+      ],
+      "contrasts": []
+    },
+    "exercises": [
+      {
+        "id": "da-vs-desu-1",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "da-vs-desu",
+        "conceptId": "da-vs-desu",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.da-vs-desu-1.prompt",
+        "successKey": "grammar.v2.da-vs-desu-1.explanation",
+        "errorKey": "grammar.v2.da-vs-desu-1.explanation",
+        "options": [
+          {
+            "id": "da-vs-desu-1-option-0",
+            "textKey": "grammar.v2.da-vs-desu-1.option.0",
+            "feedbackKey": "grammar.v2.da-vs-desu-1.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "da-vs-desu-1-option-1",
+            "textKey": "grammar.v2.da-vs-desu-1.option.1",
+            "feedbackKey": "grammar.v2.da-vs-desu-1.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "da-vs-desu-1-option-2",
+            "textKey": "grammar.v2.da-vs-desu-1.option.2",
+            "feedbackKey": "grammar.v2.da-vs-desu-1.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.da-vs-desu-1.option.0",
+          "grammar.v2.da-vs-desu-1.option.1",
+          "grammar.v2.da-vs-desu-1.option.2"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "da-vs-desu-2",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "da-vs-desu",
+        "conceptId": "da-vs-desu",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.da-vs-desu-2.prompt",
+        "successKey": "grammar.v2.da-vs-desu-2.explanation",
+        "errorKey": "grammar.v2.da-vs-desu-2.explanation",
+        "options": [
+          {
+            "id": "da-vs-desu-2-option-0",
+            "textKey": "grammar.v2.da-vs-desu-2.option.0",
+            "feedbackKey": "grammar.v2.da-vs-desu-2.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "da-vs-desu-2-option-1",
+            "textKey": "grammar.v2.da-vs-desu-2.option.1",
+            "feedbackKey": "grammar.v2.da-vs-desu-2.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "da-vs-desu-2-option-2",
+            "textKey": "grammar.v2.da-vs-desu-2.option.2",
+            "feedbackKey": "grammar.v2.da-vs-desu-2.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.da-vs-desu-2.option.0",
+          "grammar.v2.da-vs-desu-2.option.1",
+          "grammar.v2.da-vs-desu-2.option.2"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "da-vs-desu-3",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "da-vs-desu",
+        "conceptId": "da-vs-desu",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.da-vs-desu-3.prompt",
+        "successKey": "grammar.v2.da-vs-desu-3.explanation",
+        "errorKey": "grammar.v2.da-vs-desu-3.explanation",
+        "options": [
+          {
+            "id": "da-vs-desu-3-option-0",
+            "textKey": "grammar.v2.da-vs-desu-3.option.0",
+            "feedbackKey": "grammar.v2.da-vs-desu-3.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "da-vs-desu-3-option-1",
+            "textKey": "grammar.v2.da-vs-desu-3.option.1",
+            "feedbackKey": "grammar.v2.da-vs-desu-3.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "da-vs-desu-3-option-2",
+            "textKey": "grammar.v2.da-vs-desu-3.option.2",
+            "feedbackKey": "grammar.v2.da-vs-desu-3.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.da-vs-desu-3.option.0",
+          "grammar.v2.da-vs-desu-3.option.1",
+          "grammar.v2.da-vs-desu-3.option.2"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "da-vs-desu-4",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "da-vs-desu",
+        "conceptId": "da-vs-desu",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.da-vs-desu-4.prompt",
+        "successKey": "grammar.v2.da-vs-desu-4.explanation",
+        "errorKey": "grammar.v2.da-vs-desu-4.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.da-vs-desu-4.left.0",
+            "rightKey": "grammar.v2.da-vs-desu-4.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.da-vs-desu-4.left.1",
+            "rightKey": "grammar.v2.da-vs-desu-4.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.da-vs-desu-4.left.2",
+            "rightKey": "grammar.v2.da-vs-desu-4.right.2"
+          }
+        ]
+      },
+      {
+        "id": "da-vs-desu-5",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "da-vs-desu",
+        "conceptId": "da-vs-desu",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.da-vs-desu-5.prompt",
+        "successKey": "grammar.v2.da-vs-desu-5.explanation",
+        "errorKey": "grammar.v2.da-vs-desu-5.explanation",
+        "options": [
+          {
+            "id": "da-vs-desu-5-option-0",
+            "textKey": "grammar.v2.da-vs-desu-5.option.0",
+            "feedbackKey": "grammar.v2.da-vs-desu-5.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "da-vs-desu-5-option-1",
+            "textKey": "grammar.v2.da-vs-desu-5.option.1",
+            "feedbackKey": "grammar.v2.da-vs-desu-5.feedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.da-vs-desu-5.option.0",
+          "grammar.v2.da-vs-desu-5.option.1"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "question-ka",
+    "level": "N5",
+    "track": "core",
+    "topicId": "05",
+    "order": 6,
+    "titleKey": "grammar.v2.question-ka.title",
+    "summaryKey": "grammar.v2.question-ka.summary",
+    "goalKey": "grammar.v2.question-ka.goal",
+    "prerequisiteIds": [
+      "polite-verb-masu-system",
+      "polite-desu-system",
+      "question-words-basic"
+    ],
+    "relatedIds": [],
+    "lesson": {
+      "ideaKey": "grammar.v2.question-ka.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "学生です → 学生ですか。"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "行きます → 行きますか。"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "食べました → 食べましたか。"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "何を食べますか。",
+          "reading": "なにをたべますか。",
+          "meaningKey": "grammar.v2.question-ka.example.0"
+        },
+        {
+          "japanese": "どこに行きますか。",
+          "reading": "どこにいきますか。",
+          "meaningKey": "grammar.v2.question-ka.example.1"
+        },
+        {
+          "japanese": "いつ来ますか。",
+          "reading": "いつきますか。",
+          "meaningKey": "grammar.v2.question-ka.example.2"
+        },
+        {
+          "japanese": "誰と行きますか。",
+          "reading": "だれといきますか。",
+          "meaningKey": "grammar.v2.question-ka.example.3"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.question-ka.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.question-ka.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": []
+    },
+    "exercises": [
+      {
+        "id": "question-ka-1",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "question-ka",
+        "conceptId": "question-ka",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.question-ka-1.prompt",
+        "successKey": "grammar.v2.question-ka-1.explanation",
+        "errorKey": "grammar.v2.question-ka-1.explanation",
+        "acceptedAnswers": [
+          "か"
+        ],
+        "solutionKey": "grammar.v2.question-ka-1.solution",
+        "kanaBank": [
+          "い",
+          "う",
+          "え",
+          "か",
+          "が",
+          "く"
+        ]
+      },
+      {
+        "id": "question-ka-2",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "question-ka",
+        "conceptId": "question-ka",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.question-ka-2.prompt",
+        "successKey": "grammar.v2.question-ka-2.explanation",
+        "errorKey": "grammar.v2.question-ka-2.explanation",
+        "acceptedAnswers": [
+          "か"
+        ],
+        "solutionKey": "grammar.v2.question-ka-2.solution",
+        "kanaBank": [
+          "の",
+          "に",
+          "な",
+          "と",
+          "ま",
+          "か"
+        ]
+      },
+      {
+        "id": "question-ka-3",
+        "version": 2,
+        "kind": "sentence-order",
+        "skill": "ordering",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "question-ka",
+        "conceptId": "question-ka",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.question-ka-3.prompt",
+        "successKey": "grammar.v2.question-ka-3.explanation",
+        "errorKey": "grammar.v2.question-ka-3.explanation",
+        "tokenKeys": [
+          "grammar.v2.question-ka-3.token.0",
+          "grammar.v2.question-ka-3.token.1"
+        ],
+        "solution": [
+          1,
+          0
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "question-ka-4",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "question-ka",
+        "conceptId": "question-ka",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.question-ka-4.prompt",
+        "successKey": "grammar.v2.question-ka-4.explanation",
+        "errorKey": "grammar.v2.question-ka-4.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.question-ka-4.left.0",
+            "rightKey": "grammar.v2.question-ka-4.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.question-ka-4.left.1",
+            "rightKey": "grammar.v2.question-ka-4.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.question-ka-4.left.2",
+            "rightKey": "grammar.v2.question-ka-4.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.question-ka-4.left.3",
+            "rightKey": "grammar.v2.question-ka-4.right.3"
+          }
+        ]
+      },
+      {
+        "id": "question-ka-5",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "question-ka",
+        "conceptId": "question-ka",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.question-ka-5.prompt",
+        "successKey": "grammar.v2.question-ka-5.explanation",
+        "errorKey": "grammar.v2.question-ka-5.explanation",
+        "options": [
+          {
+            "id": "question-ka-5-option-0",
+            "textKey": "grammar.v2.question-ka-5.option.0",
+            "feedbackKey": "grammar.v2.question-ka-5.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "question-ka-5-option-1",
+            "textKey": "grammar.v2.question-ka-5.option.1",
+            "feedbackKey": "grammar.v2.question-ka-5.feedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.question-ka-5.option.0",
+          "grammar.v2.question-ka-5.option.1"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "plain-vs-polite",
+    "level": "N5",
+    "track": "core",
+    "topicId": "05",
+    "order": 7,
+    "titleKey": "grammar.v2.plain-vs-polite.title",
+    "summaryKey": "grammar.v2.plain-vs-polite.summary",
+    "goalKey": "grammar.v2.plain-vs-polite.goal",
+    "prerequisiteIds": [
+      "polite-verb-masu-system",
+      "polite-desu-system"
+    ],
+    "relatedIds": [
+      "sentence-ending-ne-yo"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.plain-vs-polite.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "食べなかった ↔ 食べませんでした"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "学生だった ↔ 学生でした"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "高くなかった ↔ 高くなかったです"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "食べなかった。",
+          "reading": "たべなかった。",
+          "meaningKey": "grammar.v2.plain-vs-polite.example.0"
+        },
+        {
+          "japanese": "食べませんでした。",
+          "reading": "たべませんでした。",
+          "meaningKey": "grammar.v2.plain-vs-polite.example.1"
+        },
+        {
+          "japanese": "この映画は面白くなかったです。",
+          "reading": "このえいがはおもしろくなかったです。",
+          "meaningKey": "grammar.v2.plain-vs-polite.example.2"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.plain-vs-polite.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.plain-vs-polite.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.polite.registerverb.caption",
+          "headerKeys": [
+            "grammar.v2.polite.registerverb.header.0",
+            "grammar.v2.polite.registerverb.header.1"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.polite.registerverb.row.0",
+              "cells": [
+                "食べる",
+                "食べます"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registerverb.row.1",
+              "cells": [
+                "食べない",
+                "食べません"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registerverb.row.2",
+              "cells": [
+                "食べた",
+                "食べました"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registerverb.row.3",
+              "cells": [
+                "食べなかった",
+                "食べませんでした"
+              ]
+            }
+          ]
+        },
+        {
+          "captionKey": "grammar.v2.polite.registernoun.caption",
+          "headerKeys": [
+            "grammar.v2.polite.registernoun.header.0",
+            "grammar.v2.polite.registernoun.header.1"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.polite.registernoun.row.0",
+              "cells": [
+                "学生だ",
+                "学生です"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registernoun.row.1",
+              "cells": [
+                "学生じゃない",
+                "学生じゃないです"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registernoun.row.2",
+              "cells": [
+                "学生だった",
+                "学生でした"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registernoun.row.3",
+              "cells": [
+                "学生じゃなかった",
+                "学生じゃなかったです"
+              ]
+            }
+          ]
+        },
+        {
+          "captionKey": "grammar.v2.polite.registeradjective.caption",
+          "headerKeys": [
+            "grammar.v2.polite.registeradjective.header.0",
+            "grammar.v2.polite.registeradjective.header.1"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.polite.registeradjective.row.0",
+              "cells": [
+                "高い",
+                "高いです"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registeradjective.row.1",
+              "cells": [
+                "高くない",
+                "高くないです"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registeradjective.row.2",
+              "cells": [
+                "高かった",
+                "高かったです"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.polite.registeradjective.row.3",
+              "cells": [
+                "高くなかった",
+                "高くなかったです"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "plain-vs-polite-1",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "plain-vs-polite",
+        "conceptId": "plain-vs-polite",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.plain-vs-polite-1.prompt",
+        "successKey": "grammar.v2.plain-vs-polite-1.explanation",
+        "errorKey": "grammar.v2.plain-vs-polite-1.explanation",
+        "options": [
+          {
+            "id": "plain-vs-polite-1-option-0",
+            "textKey": "grammar.v2.plain-vs-polite-1.option.0",
+            "feedbackKey": "grammar.v2.plain-vs-polite-1.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "plain-vs-polite-1-option-1",
+            "textKey": "grammar.v2.plain-vs-polite-1.option.1",
+            "feedbackKey": "grammar.v2.plain-vs-polite-1.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "plain-vs-polite-1-option-2",
+            "textKey": "grammar.v2.plain-vs-polite-1.option.2",
+            "feedbackKey": "grammar.v2.plain-vs-polite-1.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "plain-vs-polite-1-option-3",
+            "textKey": "grammar.v2.plain-vs-polite-1.option.3",
+            "feedbackKey": "grammar.v2.plain-vs-polite-1.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.plain-vs-polite-1.option.0",
+          "grammar.v2.plain-vs-polite-1.option.1",
+          "grammar.v2.plain-vs-polite-1.option.2",
+          "grammar.v2.plain-vs-polite-1.option.3"
+        ],
+        "answer": 3
+      },
+      {
+        "id": "plain-vs-polite-2",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "plain-vs-polite",
+        "conceptId": "plain-vs-polite",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.plain-vs-polite-2.prompt",
+        "successKey": "grammar.v2.plain-vs-polite-2.explanation",
+        "errorKey": "grammar.v2.plain-vs-polite-2.explanation",
+        "acceptedAnswers": [
+          "食べなかった"
+        ],
+        "solutionKey": "grammar.v2.plain-vs-polite-2.solution",
+        "kanaBank": [
+          "を",
+          "ん",
+          "べ",
+          "な",
+          "っ",
+          "た",
+          "か",
+          "食"
+        ]
+      },
+      {
+        "id": "plain-vs-polite-3",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "plain-vs-polite",
+        "conceptId": "plain-vs-polite",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.plain-vs-polite-3.prompt",
+        "successKey": "grammar.v2.plain-vs-polite-3.explanation",
+        "errorKey": "grammar.v2.plain-vs-polite-3.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.plain-vs-polite-3.left.0",
+            "rightKey": "grammar.v2.plain-vs-polite-3.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.plain-vs-polite-3.left.1",
+            "rightKey": "grammar.v2.plain-vs-polite-3.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.plain-vs-polite-3.left.2",
+            "rightKey": "grammar.v2.plain-vs-polite-3.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.plain-vs-polite-3.left.3",
+            "rightKey": "grammar.v2.plain-vs-polite-3.right.3"
+          }
+        ]
+      },
+      {
+        "id": "plain-vs-polite-4",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "plain-vs-polite",
+        "conceptId": "plain-vs-polite",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.plain-vs-polite-4.prompt",
+        "successKey": "grammar.v2.plain-vs-polite-4.explanation",
+        "errorKey": "grammar.v2.plain-vs-polite-4.explanation",
+        "acceptedAnswers": [
+          "高くなかったです"
+        ],
+        "solutionKey": "grammar.v2.plain-vs-polite-4.solution",
+        "kanaBank": [
+          "な",
+          "に",
+          "と",
+          "っ",
+          "で",
+          "か",
+          "く",
+          "す",
+          "た",
+          "高"
+        ]
+      },
+      {
+        "id": "plain-vs-polite-5",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "plain-vs-polite",
+        "conceptId": "plain-vs-polite",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.plain-vs-polite-5.prompt",
+        "successKey": "grammar.v2.plain-vs-polite-5.explanation",
+        "errorKey": "grammar.v2.plain-vs-polite-5.explanation",
+        "options": [
+          {
+            "id": "plain-vs-polite-5-option-0",
+            "textKey": "grammar.v2.plain-vs-polite-5.option.0",
+            "feedbackKey": "grammar.v2.plain-vs-polite-5.feedback.0"
+          },
+          {
+            "id": "plain-vs-polite-5-option-1",
+            "textKey": "grammar.v2.plain-vs-polite-5.option.1",
+            "feedbackKey": "grammar.v2.plain-vs-polite-5.feedback.1"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.plain-vs-polite-5.option.0",
+          "grammar.v2.plain-vs-polite-5.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "plain-vs-polite-6",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "plain-vs-polite",
+        "conceptId": "plain-vs-polite",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.plain-vs-polite-6.prompt",
+        "successKey": "grammar.v2.plain-vs-polite-6.explanation",
+        "errorKey": "grammar.v2.plain-vs-polite-6.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.plain-vs-polite-6.left.0",
+            "rightKey": "grammar.v2.plain-vs-polite-6.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.plain-vs-polite-6.left.1",
+            "rightKey": "grammar.v2.plain-vs-polite-6.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.plain-vs-polite-6.left.2",
+            "rightKey": "grammar.v2.plain-vs-polite-6.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.plain-vs-polite-6.left.3",
+            "rightKey": "grammar.v2.plain-vs-polite-6.right.3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sentence-ending-ne-yo",
+    "level": "N5",
+    "track": "core",
+    "topicId": "05",
+    "order": 8,
+    "titleKey": "grammar.v2.sentence-ending-ne-yo.title",
+    "summaryKey": "grammar.v2.sentence-ending-ne-yo.summary",
+    "goalKey": "grammar.v2.sentence-ending-ne-yo.goal",
+    "prerequisiteIds": [
+      "plain-vs-polite",
+      "sentence-structure-context"
+    ],
+    "relatedIds": [],
+    "lesson": {
+      "ideaKey": "grammar.v2.sentence-ending-ne-yo.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "そうだね。 / そうですね。"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "明日は休みですよ。"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "これ、おいしいよね。"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "いい天気ですね。",
+          "reading": "いいてんきですね。",
+          "meaningKey": "grammar.v2.sentence-ending-ne-yo.example.0"
+        },
+        {
+          "japanese": "面白かったね。",
+          "reading": "おもしろかったね。",
+          "meaningKey": "grammar.v2.sentence-ending-ne-yo.example.1"
+        },
+        {
+          "japanese": "明日は休みですよ。",
+          "reading": "あしたはやすみですよ。",
+          "meaningKey": "grammar.v2.sentence-ending-ne-yo.example.2"
+        },
+        {
+          "japanese": "時間がないよ。",
+          "reading": "じかんがないよ。",
+          "meaningKey": "grammar.v2.sentence-ending-ne-yo.example.3"
+        },
+        {
+          "japanese": "これ、おいしいよね。",
+          "reading": "これ、おいしいよね。",
+          "meaningKey": "grammar.v2.sentence-ending-ne-yo.example.4"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.sentence-ending-ne-yo.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.sentence-ending-ne-yo.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": []
+    },
+    "exercises": [
+      {
+        "id": "sentence-ending-ne-yo-1",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "sentence-ending-ne-yo",
+        "conceptId": "sentence-ending-ne-yo",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.sentence-ending-ne-yo-1.prompt",
+        "successKey": "grammar.v2.sentence-ending-ne-yo-1.explanation",
+        "errorKey": "grammar.v2.sentence-ending-ne-yo-1.explanation",
+        "options": [
+          {
+            "id": "sentence-ending-ne-yo-1-option-0",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-1.option.0",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-1.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "sentence-ending-ne-yo-1-option-1",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-1.option.1",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-1.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "sentence-ending-ne-yo-1-option-2",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-1.option.2",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-1.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.sentence-ending-ne-yo-1.option.0",
+          "grammar.v2.sentence-ending-ne-yo-1.option.1",
+          "grammar.v2.sentence-ending-ne-yo-1.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "sentence-ending-ne-yo-2",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "sentence-ending-ne-yo",
+        "conceptId": "sentence-ending-ne-yo",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.sentence-ending-ne-yo-2.prompt",
+        "successKey": "grammar.v2.sentence-ending-ne-yo-2.explanation",
+        "errorKey": "grammar.v2.sentence-ending-ne-yo-2.explanation",
+        "options": [
+          {
+            "id": "sentence-ending-ne-yo-2-option-0",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-2.option.0",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-2.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "sentence-ending-ne-yo-2-option-1",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-2.option.1",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-2.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "sentence-ending-ne-yo-2-option-2",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-2.option.2",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-2.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.sentence-ending-ne-yo-2.option.0",
+          "grammar.v2.sentence-ending-ne-yo-2.option.1",
+          "grammar.v2.sentence-ending-ne-yo-2.option.2"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "sentence-ending-ne-yo-3",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "sentence-ending-ne-yo",
+        "conceptId": "sentence-ending-ne-yo",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.sentence-ending-ne-yo-3.prompt",
+        "successKey": "grammar.v2.sentence-ending-ne-yo-3.explanation",
+        "errorKey": "grammar.v2.sentence-ending-ne-yo-3.explanation",
+        "options": [
+          {
+            "id": "sentence-ending-ne-yo-3-option-0",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-3.option.0",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-3.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "sentence-ending-ne-yo-3-option-1",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-3.option.1",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-3.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "sentence-ending-ne-yo-3-option-2",
+            "textKey": "grammar.v2.sentence-ending-ne-yo-3.option.2",
+            "feedbackKey": "grammar.v2.sentence-ending-ne-yo-3.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.sentence-ending-ne-yo-3.option.0",
+          "grammar.v2.sentence-ending-ne-yo-3.option.1",
+          "grammar.v2.sentence-ending-ne-yo-3.option.2"
+        ],
+        "answer": 2
+      },
+      {
+        "id": "sentence-ending-ne-yo-4",
+        "version": 2,
+        "kind": "sentence-order",
+        "skill": "ordering",
+        "difficulty": 2,
+        "topicId": "05",
+        "lessonId": "sentence-ending-ne-yo",
+        "conceptId": "sentence-ending-ne-yo",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.sentence-ending-ne-yo-4.prompt",
+        "successKey": "grammar.v2.sentence-ending-ne-yo-4.explanation",
+        "errorKey": "grammar.v2.sentence-ending-ne-yo-4.explanation",
+        "tokenKeys": [
+          "grammar.v2.sentence-ending-ne-yo-4.token.0",
+          "grammar.v2.sentence-ending-ne-yo-4.token.1"
+        ],
+        "solution": [
+          1,
+          0
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "sentence-ending-ne-yo-5",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "05",
+        "lessonId": "sentence-ending-ne-yo",
+        "conceptId": "sentence-ending-ne-yo",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic05",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.sentence-ending-ne-yo-5.prompt",
+        "successKey": "grammar.v2.sentence-ending-ne-yo-5.explanation",
+        "errorKey": "grammar.v2.sentence-ending-ne-yo-5.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.sentence-ending-ne-yo-5.left.0",
+            "rightKey": "grammar.v2.sentence-ending-ne-yo-5.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.sentence-ending-ne-yo-5.left.1",
+            "rightKey": "grammar.v2.sentence-ending-ne-yo-5.right.1"
+          }
+        ]
       }
     ]
   }
@@ -13282,5 +15886,535 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
       "く",
       "ぐ"
     ]
+  },
+  {
+    "id": "topic05-review-01",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "verb-stem",
+    "conceptId": "verb-stem",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-01.prompt",
+    "successKey": "grammar.v2.topic05-review-01.explanation",
+    "errorKey": "grammar.v2.topic05-review-01.explanation",
+    "acceptedAnswers": [
+      "書き"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-01.solution",
+    "kanaBank": [
+      "い",
+      "う",
+      "え",
+      "か",
+      "き",
+      "書"
+    ]
+  },
+  {
+    "id": "topic05-review-02",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "verb-stem",
+    "conceptId": "verb-stem",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-02.prompt",
+    "successKey": "grammar.v2.topic05-review-02.explanation",
+    "errorKey": "grammar.v2.topic05-review-02.explanation",
+    "acceptedAnswers": [
+      "買い"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-02.solution",
+    "kanaBank": [
+      "い",
+      "や",
+      "買",
+      "じ",
+      "す",
+      "た"
+    ]
+  },
+  {
+    "id": "topic05-review-03",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "motion-purpose-ni-iku",
+    "conceptId": "motion-purpose-ni-iku",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-03.prompt",
+    "successKey": "grammar.v2.topic05-review-03.explanation",
+    "errorKey": "grammar.v2.topic05-review-03.explanation",
+    "acceptedAnswers": [
+      "見"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-03.solution",
+    "kanaBank": [
+      "な",
+      "に",
+      "と",
+      "の",
+      "は",
+      "見"
+    ]
+  },
+  {
+    "id": "topic05-review-04",
+    "version": 2,
+    "kind": "sentence-order",
+    "skill": "ordering",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "motion-purpose-ni-iku",
+    "conceptId": "motion-purpose-ni-iku",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.order",
+    "promptKey": "grammar.v2.topic05-review-04.prompt",
+    "successKey": "grammar.v2.topic05-review-04.explanation",
+    "errorKey": "grammar.v2.topic05-review-04.explanation",
+    "tokenKeys": [
+      "grammar.v2.topic05-review-04.token.0",
+      "grammar.v2.topic05-review-04.token.1",
+      "grammar.v2.topic05-review-04.token.2",
+      "grammar.v2.topic05-review-04.token.3"
+    ],
+    "solution": [
+      1,
+      3,
+      2,
+      0
+    ],
+    "orderPolicy": "constrained"
+  },
+  {
+    "id": "topic05-review-05",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "polite-verb-masu-system",
+    "conceptId": "polite-verb-masu-system",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-05.prompt",
+    "successKey": "grammar.v2.topic05-review-05.explanation",
+    "errorKey": "grammar.v2.topic05-review-05.explanation",
+    "acceptedAnswers": [
+      "飲みませんでした"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-05.solution",
+    "kanaBank": [
+      "飲",
+      "を",
+      "ん",
+      "れ",
+      "ま",
+      "み",
+      "で",
+      "た",
+      "せ",
+      "し"
+    ]
+  },
+  {
+    "id": "topic05-review-06",
+    "version": 2,
+    "kind": "multiple-choice",
+    "skill": "usage",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "polite-verb-masu-system",
+    "conceptId": "polite-verb-masu-system",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.choose",
+    "promptKey": "grammar.v2.topic05-review-06.prompt",
+    "successKey": "grammar.v2.topic05-review-06.explanation",
+    "errorKey": "grammar.v2.topic05-review-06.explanation",
+    "options": [
+      {
+        "id": "topic05-review-06-option-0",
+        "textKey": "grammar.v2.topic05-review-06.option.0",
+        "feedbackKey": "grammar.v2.topic05-review-06.feedback.0",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic05-review-06-option-1",
+        "textKey": "grammar.v2.topic05-review-06.option.1",
+        "feedbackKey": "grammar.v2.topic05-review-06.feedback.1",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic05-review-06-option-2",
+        "textKey": "grammar.v2.topic05-review-06.option.2",
+        "feedbackKey": "grammar.v2.topic05-review-06.feedback.2",
+        "grammarStatus": "valid"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic05-review-06.option.0",
+      "grammar.v2.topic05-review-06.option.1",
+      "grammar.v2.topic05-review-06.option.2"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "topic05-review-07",
+    "version": 2,
+    "kind": "matching",
+    "skill": "recognition",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "polite-verb-masu-system",
+    "conceptId": "polite-verb-masu-system",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.match",
+    "promptKey": "grammar.v2.topic05-review-07.prompt",
+    "successKey": "grammar.v2.topic05-review-07.explanation",
+    "errorKey": "grammar.v2.topic05-review-07.explanation",
+    "pairs": [
+      {
+        "leftKey": "grammar.v2.topic05-review-07.left.0",
+        "rightKey": "grammar.v2.topic05-review-07.right.0"
+      },
+      {
+        "leftKey": "grammar.v2.topic05-review-07.left.1",
+        "rightKey": "grammar.v2.topic05-review-07.right.1"
+      },
+      {
+        "leftKey": "grammar.v2.topic05-review-07.left.2",
+        "rightKey": "grammar.v2.topic05-review-07.right.2"
+      },
+      {
+        "leftKey": "grammar.v2.topic05-review-07.left.3",
+        "rightKey": "grammar.v2.topic05-review-07.right.3"
+      }
+    ]
+  },
+  {
+    "id": "topic05-review-08",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "polite-desu-system",
+    "conceptId": "polite-desu-system",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-08.prompt",
+    "successKey": "grammar.v2.topic05-review-08.explanation",
+    "errorKey": "grammar.v2.topic05-review-08.explanation",
+    "acceptedAnswers": [
+      "静かです"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-08.solution",
+    "kanaBank": [
+      "ん",
+      "を",
+      "す",
+      "静",
+      "か",
+      "で"
+    ]
+  },
+  {
+    "id": "topic05-review-09",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "polite-desu-system",
+    "conceptId": "polite-desu-system",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-09.prompt",
+    "successKey": "grammar.v2.topic05-review-09.explanation",
+    "errorKey": "grammar.v2.topic05-review-09.explanation",
+    "acceptedAnswers": [
+      "高かったです"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-09.solution",
+    "kanaBank": [
+      "を",
+      "ん",
+      "高",
+      "か",
+      "す",
+      "た",
+      "っ",
+      "で"
+    ]
+  },
+  {
+    "id": "topic05-review-10",
+    "version": 2,
+    "kind": "matching",
+    "skill": "recognition",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "polite-desu-system",
+    "conceptId": "polite-desu-system",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.match",
+    "promptKey": "grammar.v2.topic05-review-10.prompt",
+    "successKey": "grammar.v2.topic05-review-10.explanation",
+    "errorKey": "grammar.v2.topic05-review-10.explanation",
+    "pairs": [
+      {
+        "leftKey": "grammar.v2.topic05-review-10.left.0",
+        "rightKey": "grammar.v2.topic05-review-10.right.0"
+      },
+      {
+        "leftKey": "grammar.v2.topic05-review-10.left.1",
+        "rightKey": "grammar.v2.topic05-review-10.right.1"
+      }
+    ]
+  },
+  {
+    "id": "topic05-review-11",
+    "version": 2,
+    "kind": "detect-error",
+    "skill": "contrast",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "da-vs-desu",
+    "conceptId": "da-vs-desu",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.detect",
+    "promptKey": "grammar.v2.topic05-review-11.prompt",
+    "successKey": "grammar.v2.topic05-review-11.explanation",
+    "errorKey": "grammar.v2.topic05-review-11.explanation",
+    "options": [
+      {
+        "id": "topic05-review-11-option-0",
+        "textKey": "grammar.v2.topic05-review-11.option.0",
+        "feedbackKey": "grammar.v2.topic05-review-11.feedback.0",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic05-review-11-option-1",
+        "textKey": "grammar.v2.topic05-review-11.option.1",
+        "feedbackKey": "grammar.v2.topic05-review-11.feedback.1",
+        "grammarStatus": "invalid"
+      },
+      {
+        "id": "topic05-review-11-option-2",
+        "textKey": "grammar.v2.topic05-review-11.option.2",
+        "feedbackKey": "grammar.v2.topic05-review-11.feedback.2",
+        "grammarStatus": "valid"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic05-review-11.option.0",
+      "grammar.v2.topic05-review-11.option.1",
+      "grammar.v2.topic05-review-11.option.2"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "topic05-review-12",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "question-ka",
+    "conceptId": "question-ka",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-12.prompt",
+    "successKey": "grammar.v2.topic05-review-12.explanation",
+    "errorKey": "grammar.v2.topic05-review-12.explanation",
+    "acceptedAnswers": [
+      "か"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-12.solution",
+    "kanaBank": [
+      "へ",
+      "ま",
+      "だ",
+      "で",
+      "と",
+      "か"
+    ]
+  },
+  {
+    "id": "topic05-review-13",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "plain-vs-polite",
+    "conceptId": "plain-vs-polite",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-13.prompt",
+    "successKey": "grammar.v2.topic05-review-13.explanation",
+    "errorKey": "grammar.v2.topic05-review-13.explanation",
+    "acceptedAnswers": [
+      "食べませんでした"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-13.solution",
+    "kanaBank": [
+      "ん",
+      "を",
+      "食",
+      "い",
+      "し",
+      "た",
+      "せ",
+      "で",
+      "ま",
+      "べ"
+    ]
+  },
+  {
+    "id": "topic05-review-14",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "plain-vs-polite",
+    "conceptId": "plain-vs-polite",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic05-review-14.prompt",
+    "successKey": "grammar.v2.topic05-review-14.explanation",
+    "errorKey": "grammar.v2.topic05-review-14.explanation",
+    "acceptedAnswers": [
+      "この映画は面白くなかったです。"
+    ],
+    "solutionKey": "grammar.v2.topic05-review-14.solution",
+    "kanaBank": [
+      "か",
+      "え",
+      "し",
+      "こ",
+      "た",
+      "す",
+      "映",
+      "画",
+      "。",
+      "で",
+      "面",
+      "っ",
+      "の",
+      "は",
+      "な",
+      "白",
+      "く"
+    ]
+  },
+  {
+    "id": "topic05-review-15",
+    "version": 2,
+    "kind": "multiple-choice",
+    "skill": "usage",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "sentence-ending-ne-yo",
+    "conceptId": "sentence-ending-ne-yo",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.choose",
+    "promptKey": "grammar.v2.topic05-review-15.prompt",
+    "successKey": "grammar.v2.topic05-review-15.explanation",
+    "errorKey": "grammar.v2.topic05-review-15.explanation",
+    "options": [
+      {
+        "id": "topic05-review-15-option-0",
+        "textKey": "grammar.v2.topic05-review-15.option.0",
+        "feedbackKey": "grammar.v2.topic05-review-15.feedback.0",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic05-review-15-option-1",
+        "textKey": "grammar.v2.topic05-review-15.option.1",
+        "feedbackKey": "grammar.v2.topic05-review-15.feedback.1",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic05-review-15-option-2",
+        "textKey": "grammar.v2.topic05-review-15.option.2",
+        "feedbackKey": "grammar.v2.topic05-review-15.feedback.2",
+        "grammarStatus": "valid"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic05-review-15.option.0",
+      "grammar.v2.topic05-review-15.option.1",
+      "grammar.v2.topic05-review-15.option.2"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "topic05-review-16",
+    "version": 2,
+    "kind": "multiple-choice",
+    "skill": "usage",
+    "difficulty": 3,
+    "topicId": "05",
+    "lessonId": "sentence-ending-ne-yo",
+    "conceptId": "sentence-ending-ne-yo",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic05",
+    "questionKey": "grammar.v2.choose",
+    "promptKey": "grammar.v2.topic05-review-16.prompt",
+    "successKey": "grammar.v2.topic05-review-16.explanation",
+    "errorKey": "grammar.v2.topic05-review-16.explanation",
+    "options": [
+      {
+        "id": "topic05-review-16-option-0",
+        "textKey": "grammar.v2.topic05-review-16.option.0",
+        "feedbackKey": "grammar.v2.topic05-review-16.feedback.0",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic05-review-16-option-1",
+        "textKey": "grammar.v2.topic05-review-16.option.1",
+        "feedbackKey": "grammar.v2.topic05-review-16.feedback.1",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic05-review-16-option-2",
+        "textKey": "grammar.v2.topic05-review-16.option.2",
+        "feedbackKey": "grammar.v2.topic05-review-16.feedback.2",
+        "grammarStatus": "valid"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic05-review-16.option.0",
+      "grammar.v2.topic05-review-16.option.1",
+      "grammar.v2.topic05-review-16.option.2"
+    ],
+    "answer": 1
   }
 ];

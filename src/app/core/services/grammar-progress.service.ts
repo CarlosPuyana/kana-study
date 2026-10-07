@@ -95,7 +95,7 @@ export class GrammarProgressService {
     this.write({...this.state(), review: {...this.state().review, [conceptId]: {...old, conceptId, topicId: concept.lesson.topicId, active: true, updatedAt: now, flaggedAt: now, lastFailedExerciseId: exerciseId}}});
   }
   recordPractice(topicId: string, score: number, total: number, errorConceptIds: readonly string[], attemptedAt: string): void {
-    if(topicId==='01'||topicId==='02'||topicId==='03'||topicId==='04'){this.v2.practice(score,total,errorConceptIds,attemptedAt,topicId);return;}
+    if(topicId==='01'||topicId==='02'||topicId==='03'||topicId==='04'||topicId==='05'){this.v2.practice(score,total,errorConceptIds,attemptedAt,topicId);return;}
     const practice = GRAMMAR_PRACTICES.find(practice => practice.topicId === topicId);
     if (!practice || (!Number.isInteger(total) || total < 1 || total > practice.exercises.length) || score < 0 || score > total || !Number.isInteger(score) || !Number.isFinite(Date.parse(attemptedAt))) return;
     this.write({...this.state(), practices: {...this.state().practices, [topicId]: {topicId, score, total, attemptedAt, updatedAt: this.now(), errorConceptIds: [...new Set(errorConceptIds.filter(id => concepts.has(id) && id.startsWith(topicId + '.')))]}}});
@@ -146,7 +146,7 @@ export class GrammarProgressService {
       state.concepts[id] = {...rest, answers, status: completed ? 'completed' : 'in-progress', lastExerciseIndex: row.lastExerciseIndex < concept.exercises.length ? row.lastExerciseIndex : 0,
         ...(completed ? {completedAt: completedAt ?? row.updatedAt} : {})};
     }
-    for (const [id, row] of Object.entries(input.practices)) if (Number(id)>=5 && GRAMMAR_PRACTICES.some(practice => practice.topicId === id)) state.practices[id] = {...row, errorConceptIds: row.errorConceptIds.filter(id => concepts.has(id))};
+    for (const [id, row] of Object.entries(input.practices)) if (Number(id)>=6 && GRAMMAR_PRACTICES.some(practice => practice.topicId === id)) state.practices[id] = {...row, errorConceptIds: row.errorConceptIds.filter(id => concepts.has(id))};
     for (const [id, row] of Object.entries(input.review)) if (concepts.has(id)) {
       const {lastFailedExerciseId, ...rest} = row;
       state.review[id] = {...rest, ...(lastFailedExerciseId && exerciseConcepts.get(lastFailedExerciseId) === id ? {lastFailedExerciseId} : {})};

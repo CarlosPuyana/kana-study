@@ -162,9 +162,9 @@ describe('Grammar grouped content and routes',()=>{
   });
   it('renders authored kanji reading help through the existing ruby component',async()=>{
     vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
-    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/05/3',GrammarPage);
+    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/06/3',GrammarPage);
     const reference=harness.routeNativeElement!.querySelector('.kanji-reference')!;
-    expect(reference.querySelector('ruby')!.textContent).toBe('来こ');expect(reference.querySelector('rt')!.textContent).toBe('こ');expect(reference.textContent).toContain(translate(GRAMMAR_LESSONS.find(l=>l.topicId==='05'&&l.id==='3')!.kanjiExamples![0].meaningKey));
+    expect(reference.querySelector('ruby')!.textContent).toBe('飲の');expect(reference.querySelector('rt')!.textContent).toBe('の');expect(reference.textContent).toContain(translate(GRAMMAR_LESSONS.find(l=>l.topicId==='06'&&l.id==='3')!.kanjiExamples![0].meaningKey));
   });
   it('shows readings and meanings in the V2 nominal examples',async()=>{
     vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});

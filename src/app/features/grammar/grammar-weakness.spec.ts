@@ -19,36 +19,36 @@ import es from '../../../assets/i18n/es.json';
 import en from '../../../assets/i18n/en.json';
 import ca from '../../../assets/i18n/ca.json';
 const now=new Date('2026-10-26T12:00:00Z');
-const record=(patch:Partial<WeaknessRecord>={}):WeaknessRecord=>({module:'grammar',activity:'learn',itemId:'05.1',questionType:'conjugation',attempts:4,failures:3,consecutiveCorrect:0,score:6,lastAttemptAt:now.toISOString(),...patch});
+const record=(patch:Partial<WeaknessRecord>={}):WeaknessRecord=>({module:'grammar',activity:'learn',itemId:'10.2',questionType:'conjugation',attempts:4,failures:3,consecutiveCorrect:0,score:6,lastAttemptAt:now.toISOString(),...patch});
 const calculate=(records:readonly WeaknessRecord[]=[],history:readonly CompletedSessionSummary[]=[])=>calculateLearningAnalytics(records,history,now);
-const source=GRAMMAR_INTERACTIVE.find(e=>e.id==='05.1')!;
+const source=GRAMMAR_INTERACTIVE.find(e=>e.id==='10.2')!;
 describe('Grammar weakness identities and analytics',()=>{
   it('uses topic-qualified lessons, not exercise IDs',()=>{
-    expect(grammarWeaknessIdentity(source)).toEqual({itemId:'05.1',questionType:'conjugation'});
+    expect(grammarWeaknessIdentity(source)).toEqual({itemId:'10.2',questionType:'conjugation'});
     expect(grammarWeaknessIdentity({...source,id:'different'})).toEqual(grammarWeaknessIdentity(source));
   });
   it('falls back to a stable topic when a lesson is unavailable',()=>{
     const {lessonId,conceptId,...rest}=source;
-    expect(grammarWeaknessIdentity({...rest,id:'topic-only'})).toEqual({itemId:'05',questionType:'conjugation'});
+    expect(grammarWeaknessIdentity({...rest,id:'topic-only'})).toEqual({itemId:'10',questionType:'conjugation'});
   });
   it('resolves a known legacy exercise without new metadata',()=>{
     const {lessonId,conceptId,topicId,exerciseType,...rest}=source;
-    expect(grammarWeaknessIdentity(rest)).toEqual({itemId:'05.1',questionType:'conjugation'});
+    expect(grammarWeaknessIdentity(rest)).toEqual({itemId:'10.2',questionType:'conjugation'});
   });
   it('does not fabricate identities for unknown exercises without a topic',()=>{
     const {lessonId,conceptId,topicId,...rest}=source;expect(grammarWeaknessIdentity({...rest,id:'unknown'})).toBeNull();
   });
   it('focuses on the weak type before other exercises in the same lesson',()=>{
     const exercises=grammarFocusedExercises([record()]);expect(exercises[0].exerciseType).toBe('conjugation');
-    expect(exercises.every(e=>e.conceptId==='05.1')).toBe(true);expect(exercises.length).toBeGreaterThan(1);
+    expect(exercises.every(e=>e.conceptId==='10.2')).toBe(true);expect(exercises.length).toBeGreaterThan(1);
     expect(new Set(exercises.map(e=>e.id)).size).toBe(exercises.length);expect(exercises.length).toBeLessThanOrEqual(10);
   });
   it('supports topic fallback and ignores resolved or obsolete weaknesses',()=>{
-    expect(grammarFocusedExercises([record({itemId:'05'})]).every(e=>e.topicId==='05')).toBe(true);
+    expect(grammarFocusedExercises([record({itemId:'10'})]).every(e=>e.topicId==='10')).toBe(true);
     expect(grammarFocusedExercises([record({score:2}),record({itemId:'obsolete'})])).toEqual([]);
   });
   it('computes weighted Grammar accuracy independently of weakness score',()=>{
-    const stats=calculate([record({attempts:1,failures:1}),record({itemId:'05.2',attempts:9,failures:0,score:10})]);
+    const stats=calculate([record({attempts:1,failures:1}),record({itemId:'10.3',attempts:9,failures:0,score:10})]);
     expect(stats.modules.find(m=>m.module==='grammar')).toMatchObject({attempts:10,failures:1,accuracy:90});
   });
   it('uses the existing attempt thresholds for Grammar types and strengths',()=>{
@@ -56,8 +56,8 @@ describe('Grammar weakness identities and analytics',()=>{
     expect(stats.difficult.map(d=>d.questionType)).toEqual(['particle','sentence-order']);expect(stats.strengths[0].questionType).toBe('sentence-order');
   });
   it('aggregates concepts across types, applies minimum attempts and ranks ties',()=>{
-    const stats=calculate([record({attempts:2,failures:1}),record({questionType:'fill-gap',attempts:2,failures:1}),record({itemId:'05.2',attempts:8,failures:4}),record({itemId:'state-being-plain',attempts:4,failures:3}),record({itemId:'01.6',attempts:1,failures:1})]);
-    expect(stats.grammarConcepts.map(c=>c.itemId)).toEqual(['state-being-plain','05.2','05.1']);expect(stats.grammarConcepts[2].attempts).toBe(4);
+    const stats=calculate([record({attempts:2,failures:1}),record({questionType:'fill-gap',attempts:2,failures:1}),record({itemId:'10.3',attempts:8,failures:4}),record({itemId:'state-being-plain',attempts:4,failures:3}),record({itemId:'01.6',attempts:1,failures:1})]);
+    expect(stats.grammarConcepts.map(c=>c.itemId)).toEqual(['state-being-plain','10.3','10.2']);expect(stats.grammarConcepts[2].attempts).toBe(4);
   });
   it('includes old Grammar sessions in 7/30-day activity without duplication',()=>{
     const base:CompletedSessionSummary={module:'grammar',sessionId:'g1',completedAt:'2026-10-25T10:00:00Z',mode:'quick-practice',exercisesCompleted:4,firstTrySuccesses:2,attempts:4,needsPracticeCount:2,durationSeconds:30};
@@ -85,7 +85,7 @@ describe('Grammar evaluation, focused practice and localized UI',()=>{
   function evaluate(correct:boolean,exercise=source){const session=TestBed.inject(GrammarPracticeSession);session.reset([exercise]);session.start();session.answer(correct);return session;}
   it('incorrect adds two and correct subtracts one with actual attempt counts',()=>{
     evaluate(false);evaluate(false);evaluate(true);
-    expect(TestBed.inject(WeaknessService).records()[0]).toMatchObject({module:'grammar',activity:'learn',itemId:'05.1',attempts:3,failures:2,score:3,consecutiveCorrect:1});
+    expect(TestBed.inject(WeaknessService).records()[0]).toMatchObject({module:'grammar',activity:'learn',itemId:'10.2',attempts:3,failures:2,score:3,consecutiveCorrect:1});
   });
   it('aggregates different exercises from one lesson and separates types',()=>{
     evaluate(false);evaluate(false,{...source,id:'another'});evaluate(false,{...source,id:'third',exerciseType:'fill-gap'});
@@ -108,7 +108,7 @@ describe('Grammar evaluation, focused practice and localized UI',()=>{
   it('opens focused review using existing Grammar engine and records its completion',async()=>{
     evaluate(false);evaluate(false);
     const harness=await RouterTestingHarness.create();const page=await harness.navigateByUrl('/grammar/review?weak=1',GrammarReviewPage);
-    expect(page.focused()).toBe(true);expect(page.session.roundExercises().every(e=>e.conceptId==='05.1')).toBe(true);
+    expect(page.focused()).toBe(true);expect(page.session.roundExercises().every(e=>e.conceptId==='10.2')).toBe(true);
     page.session.start();while(page.session.stage()==='question'){page.answer(true);page.next();}
     expect(TestBed.inject(SessionHistoryService).sessions()[0].module).toBe('grammar');expect(TestBed.inject(WeaknessService).records().find(r=>r.questionType==='conjugation')!.score).toBe(3);
   });
@@ -120,6 +120,6 @@ describe('Grammar evaluation, focused practice and localized UI',()=>{
     const weak=TestBed.createComponent(WeaknessesPage);weak.detectChanges();expect(weak.componentInstance.empty()).toBe(false);
     expect(weak.nativeElement.querySelector('a[href*="/grammar/review?weak=1"]')).not.toBeNull();
     const stats=TestBed.createComponent(StatsPage);stats.detectChanges();
-    for(const fixture of [weak,stats]){const text=fixture.nativeElement.textContent;expect(text).toContain(({es,en,ca}[lang] as Record<string,string>)['grammar.weakness.type.conjugation']);expect(text).not.toContain('05.1');expect(text).not.toContain('fill-gap');expect(text).not.toContain('grammar.weakness.');}
+    for(const fixture of [weak,stats]){const text=fixture.nativeElement.textContent;expect(text).toContain(({es,en,ca}[lang] as Record<string,string>)['grammar.weakness.type.conjugation']);expect(text).not.toContain('10.2');expect(text).not.toContain('fill-gap');expect(text).not.toContain('grammar.weakness.');}
   });
 });

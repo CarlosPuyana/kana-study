@@ -4,6 +4,7 @@ import {addAdjectivesV2} from './grammar-n5-v2-adjectives.mjs';
 import {addVerbsV2} from './grammar-n5-v2-verbs.mjs';
 import {addLocationV2} from './grammar-n5-v2-location.mjs';
 import {grammarKanaBank} from './grammar-kana-bank.mjs';
+import {addPoliteV2} from './grammar-n5-v2-polite.mjs';
 const tr = value => value.split('|');
 const jp = value => [value,value,value];
 export function buildGrammarV2() {
@@ -286,6 +287,10 @@ export function buildGrammarV2() {
     startReview:()=>{reviewing=true;}});
   reviewing=false;
   addLocationV2({add,key,K,choice,fill,order,matching,valid,invalid,jp,
+    use:id=>{current=concepts.find(c=>c.id===id);if(!current)throw new Error(`Unknown concept ${id}`);},
+    startReview:()=>{reviewing=true;}});
+  reviewing=false;
+  addPoliteV2({add,key,K,choice,fill,order,matching,valid,invalid,jp,
     use:id=>{current=concepts.find(c=>c.id===id);if(!current)throw new Error(`Unknown concept ${id}`);},
     startReview:()=>{reviewing=true;}});
   concepts.forEach(c=>c.relatedIds=concepts.filter(other=>other.prerequisiteIds.includes(c.id)).map(other=>other.id));

@@ -29,7 +29,7 @@ const concept=(id:string)=>concepts.find(c=>c.id===id)!;
 describe('Grammar V2 Topic 04 authored content',()=>{
   it('has exactly eighteen ordered concepts, valid dependencies and semantic navigation',()=>{
     expect(concepts.map(c=>c.id)).toEqual(ids);
-    expect(GRAMMAR_V2_CONCEPTS.some(c=>['motion-purpose-ni-iku','verb-stem','existence-ga'].includes(c.id))).toBe(false);
+    expect(concepts.some(c=>['motion-purpose-ni-iku','verb-stem','existence-ga'].includes(c.id))).toBe(false);
     concepts.forEach((c,i)=>{
       expect(c).toMatchObject({order:i+1,track:'core',level:'N5'});
       expect(c.prerequisiteIds.every(id=>GRAMMAR_V2_CONCEPTS.slice(0,GRAMMAR_V2_CONCEPTS.indexOf(c)).some(p=>p.id===id))).toBe(true);
