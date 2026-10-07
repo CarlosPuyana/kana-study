@@ -31,7 +31,7 @@ describe('Grammar V2 Topic 02 content',()=>{
     expect(concepts.map(c=>c.id)).toEqual(ids);
     expect(GRAMMAR_LESSONS.filter(l=>l.topicId==='02').map(l=>l.id)).toEqual(ids);
     expect(GRAMMAR_SESSIONS.filter(s=>s.topicId==='02').map(s=>s.lessonIds)).toEqual(ids.map(id=>[id]));
-    expect(GRAMMAR_V2_CONCEPTS.some(c=>c.id==='adjective-adverb-ku-ni')).toBe(false);
+    expect(concepts.some(c=>c.id==='adjective-adverb-ku-ni')).toBe(false);
     concepts.forEach((c,index)=>{
       expect(c).toMatchObject({track:'core',level:'N5',order:index+1});
       expect(c.prerequisiteIds.length).toBeGreaterThan(0);
@@ -43,7 +43,7 @@ describe('Grammar V2 Topic 02 content',()=>{
   it('has 47 lessons exercises and 15 cumulative exercises, all answerable and correctly attributed',()=>{
     expect(concepts.map(c=>c.exercises.length)).toEqual([5,5,6,5,5,5,5,5,6]);
     expect(review).toHaveLength(15);expect(all).toHaveLength(62);
-    expect(new Set([...GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises),...GRAMMAR_V2_REVIEW].map(e=>e.id)).size).toBe(130);
+    expect(new Set([...GRAMMAR_V2_CONCEPTS.filter(c=>['01','02'].includes(c.topicId)).flatMap(c=>c.exercises),...GRAMMAR_V2_REVIEW.filter(e=>e.topicId&&['01','02'].includes(e.topicId))].map(e=>e.id)).size).toBe(130);
     expect(grammarTopicRound('02')).toEqual(review);
     for(const c of concepts)expect(grammarTopicRound('02',c.id)).toEqual(c.exercises);
     for(const e of all){

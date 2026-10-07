@@ -6,7 +6,7 @@ import { SessionHistoryService } from '../../core/services/session-history.servi
 import { GRAMMAR_INTERACTIVE } from './data/grammar-interactive';
 import { GRAMMAR_LESSONS, GRAMMAR_TOPICS } from './data/grammar-n5.generated';
 import { GrammarPracticeComponent } from './components/grammar-practice';
-import { GRAMMAR_PRACTICES } from './data/grammar-n5.generated';
+import { GRAMMAR_PRACTICES } from './data/grammar-catalog';
 import { GrammarExerciseComponent } from './components/grammar-exercise';
 import { GrammarPracticeSession } from './services/grammar-practice-session';
 import { grammarMixedExercises, grammarTopicExercises, grammarTopicRound, GRAMMAR_PRACTICE_CATALOG } from './services/grammar-interactive-catalog';
@@ -43,11 +43,11 @@ describe('Grammar interactive N5 catalog',()=>{
   });
   it('loads only the requested topic and supports every N5 topic',()=>{
     expect(grammarTopicRound('00')).toEqual([]);
-    for(const topic of GRAMMAR_TOPICS.filter(t=>t.id!=='00')){const round=grammarTopicRound(topic.id);expect(round.length).toBeGreaterThan(0);expect(round.length).toBeLessThanOrEqual(['01','02'].includes(topic.id)?15:10);expect(round.every(e=>e.topicId===topic.id)).toBe(true);}
+    for(const topic of GRAMMAR_TOPICS.filter(t=>t.id!=='00')){const round=grammarTopicRound(topic.id);expect(round.length).toBeGreaterThan(0);expect(round.length).toBeLessThanOrEqual(topic.id==='04'?20:['01','02','03'].includes(topic.id)?15:10);expect(round.every(e=>e.topicId===topic.id)).toBe(true);}
   });
   it('loads exercises belonging only to a requested lesson',()=>{
-    const exercises=grammarTopicRound('03','8');
-    expect(exercises.length).toBeGreaterThan(0);expect(exercises.every(e=>e.lessonId==='8'&&e.topicId==='03')).toBe(true);
+    const exercises=grammarTopicRound('03','verb-irregular-suru-kuru');
+    expect(exercises.length).toBeGreaterThan(0);expect(exercises.every(e=>e.lessonId==='verb-irregular-suru-kuru'&&e.topicId==='03')).toBe(true);
   });
   it('does not silently fall back for an unknown topic or lesson',()=>{
     expect(grammarTopicExercises('99')).toEqual([]);expect(grammarTopicRound('03','999')).toEqual([]);
@@ -58,7 +58,7 @@ describe('Grammar interactive N5 catalog',()=>{
     expect(new Set(exercises.map(e=>e.id)).size).toBe(10);
   });
   it('prioritizes a studied concept within its topic',()=>{
-    expect(grammarMixedExercises(['03.8'])[0].conceptId).toBe('03.8');
+    expect(grammarMixedExercises(['verb-past-plain'])[0].conceptId).toBe('verb-past-plain');
   });
   it('sentence reconstruction uses one constrained explicit order',()=>{
     for(const e of GRAMMAR_INTERACTIVE){if(e.kind!=='sentence-order')continue;
@@ -119,7 +119,7 @@ describe('Grammar interactive answers and completed sessions',()=>{
   });
   it('renders score, errors, percentage and topics at the end of a round',()=>{
     const fixture=TestBed.createComponent(GrammarPracticeComponent);
-    fixture.componentRef.setInput('practice',{...GRAMMAR_PRACTICES.find(p=>p.topicId==='03')!,exercises:grammarTopicRound('03','8')});fixture.detectChanges();
+    fixture.componentRef.setInput('practice',{...GRAMMAR_PRACTICES.find(p=>p.topicId==='03')!,exercises:grammarTopicRound('03','verb-irregular-suru-kuru')});fixture.detectChanges();
     const component=fixture.componentInstance;component.start();let index=0;
     while(component.session.stage()==='question'){component.answer(index++===0);component.next();}
     fixture.detectChanges();const text=fixture.nativeElement.querySelector('.practice-results').textContent;
@@ -135,11 +135,11 @@ describe('Grammar interactive answers and completed sessions',()=>{
     expect(session.index()).toBe(0);expect(session.answers()).toEqual([]);
   });
   it('opens filtered practice through the existing topic route',async()=>{
-    const harness=await RouterTestingHarness.create();const page=await harness.navigateByUrl('/grammar/n5/03/practice?lesson=8',GrammarPage);
-    expect(page.practice()!.exercises.every(e=>e.lessonId==='8')).toBe(true);expect(harness.routeNativeElement!.querySelector('.practice-start')).not.toBeNull();
+    const harness=await RouterTestingHarness.create();const page=await harness.navigateByUrl('/grammar/n5/03/practice?lesson=verb-irregular-suru-kuru',GrammarPage);
+    expect(page.practice()!.exercises.every(e=>e.lessonId==='verb-irregular-suru-kuru')).toBe(true);expect(harness.routeNativeElement!.querySelector('.practice-start')).not.toBeNull();
   });
   it('offers lesson practice while preserving the theory',async()=>{
-    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/03/8',GrammarPage);
+    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/05/8',GrammarPage);
     expect(harness.routeNativeElement!.querySelector('.lesson-theory-block')).not.toBeNull();
     expect(harness.routeNativeElement!.querySelector('a[href*="practice?lesson=8"]')).not.toBeNull();
   });
