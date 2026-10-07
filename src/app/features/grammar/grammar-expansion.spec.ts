@@ -31,14 +31,14 @@ describe('Expanded grammar concept practice',()=>{
  it('keeps the route within a concept until all exercises have been continued, then uses its existing next path',async()=>{
   vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
   TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t}}]});
-  const harness=await RouterTestingHarness.create(),page=await harness.navigateByUrl('/grammar/n5/06/1',GrammarPage);
+  const harness=await RouterTestingHarness.create(),page=await harness.navigateByUrl('/grammar/n5/08/1',GrammarPage);
   const router=TestBed.inject(Router),ids=page.exercises().map(e=>e.id),seen:string[]=[];
   for(let i=0;i<ids.length;i++){
-   seen.push(page.currentExercise()!.id);expect(harness.routeNativeElement!.querySelector('.lesson-exercise-count')!.textContent).toContain(`Ejercicio ${i+1} de 5`);
-   if(i<ids.length-1){page.continueExercise();harness.detectChanges();await harness.fixture.whenStable();expect(router.url).toBe('/grammar/n5/06/1');}
+   seen.push(page.currentExercise()!.id);expect(harness.routeNativeElement!.querySelector('.lesson-exercise-count')!.textContent).toContain(`Ejercicio ${i+1} de ${ids.length}`);
+   if(i<ids.length-1){page.continueExercise();harness.detectChanges();await harness.fixture.whenStable();expect(router.url).toBe('/grammar/n5/08/1');}
   }
   expect(seen).toEqual(ids);page.continueExercise();await harness.fixture.whenStable();harness.detectChanges();
-  expect(router.url).toBe('/grammar/n5/06/2');expect(page.exerciseIndex()).toBe(0);
+  expect(router.url).toBe('/grammar/n5/08/2');expect(page.exerciseIndex()).toBe(0);
  });
  it('resets answers and moves keyboard focus to the next exercise control',async()=>{
   vi.spyOn(window,'scrollTo').mockImplementation(()=>{});

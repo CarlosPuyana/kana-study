@@ -4,6 +4,7 @@ import { GrammarExerciseComponent } from './components/grammar-exercise';
 import { GRAMMAR_LESSONS } from './data/grammar-n5.generated';
 import es from '../../../assets/i18n/es.json';
 import {GRAMMAR_V2_CONCEPTS, GRAMMAR_V2_REVIEW} from '../../data/grammar/grammar-n5-v2.generated';
+import {GRAMMAR_LESSONS as LEGACY_LESSONS} from './data/grammar-n5.generated';
 import {GrammarFillExercise} from './models/grammar.model';
 
 const v2Gaps=[...GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises),...GRAMMAR_V2_REVIEW].filter((e):e is GrammarFillExercise=>e.kind==='fill-gap');
@@ -26,9 +27,9 @@ describe('Contextual kana assistance',()=>{
       if(required.length>1)expect(e.kanaBank!.filter(c=>required.includes(c)).join(''),e.id).not.toBe(required.join(''));
     }
   });
-  it('renders stable safe buttons in all five reported lessons and samples Topics 02–04',()=>{
+  it('renders stable safe buttons in all five reported lessons and samples Topics 02–07',()=>{
     const ids=['state-being-plain','state-being-negative','state-being-past','state-being-past-negative','particle-wa-topic'];
-    const examples=[...ids.map(id=>GRAMMAR_V2_CONCEPTS.find(c=>c.id===id)!.exercises.find(e=>e.kind==='fill-gap')!),...['02','03','04'].map(topic=>v2Gaps.find(e=>e.topicId===topic)!)];
+    const examples=[...ids.map(id=>GRAMMAR_V2_CONCEPTS.find(c=>c.id===id)!.exercises.find(e=>e.kind==='fill-gap')!),...['02','03','04','05','06','07'].map(topic=>v2Gaps.find(e=>e.topicId===topic)!)];
     for(const e of examples){
       if(e.kind!=='fill-gap')throw Error('fill-gap');
       const fixture=TestBed.createComponent(GrammarExerciseComponent);fixture.componentRef.setInput('exercise',e);fixture.detectChanges();
@@ -41,7 +42,7 @@ describe('Contextual kana assistance',()=>{
     }
   });
   function setup(){
-    const exercise=GRAMMAR_LESSONS.find(l=>l.topicId==='06'&&l.id==='3')!.exercise;
+    const exercise=LEGACY_LESSONS.find(l=>l.topicId==='06'&&l.id==='3')!.exercise;
     if(exercise.kind!=='fill-gap')throw new Error('Expected kana conjugation');
     const fixture=TestBed.createComponent(GrammarExerciseComponent);fixture.componentRef.setInput('exercise',exercise);fixture.detectChanges();
     const input=fixture.nativeElement.querySelector('input') as HTMLInputElement;

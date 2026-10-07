@@ -15,7 +15,7 @@ export function grammarTopicExercises(topicId: string, lessonId?: string): reado
 /** Mix topics round-robin, prioritizing reliable opened/answered concepts and difficulties. */
 export function grammarMixedExercises(preferredConcepts: readonly string[] = [], difficulties: readonly GrammarExercise[] = []): readonly GrammarExercise[] {
   const preferred = new Set(preferredConcepts);
-  const pool = [...difficulties, ...GRAMMAR_INTERACTIVE.filter(e=>Number(e.topicId)>=6), ...GRAMMAR_PRACTICE_CATALOG];
+  const pool = [...difficulties, ...GRAMMAR_INTERACTIVE.filter(e=>Number(e.topicId)>=8), ...GRAMMAR_PRACTICE_CATALOG];
   const ordered = [...pool.filter(e => e.conceptId && preferred.has(e.conceptId)), ...pool];
   const groups = new Map<string, GrammarExercise[]>();
   const seen = new Set<string>();
@@ -45,7 +45,7 @@ export function grammarMixedExercises(preferredConcepts: readonly string[] = [],
   return result;
 }
 export function grammarTopicRound(topicId: string, lessonId?: string): readonly GrammarExercise[] {
-  if(topicId==='01'||topicId==='02'||topicId==='03'||topicId==='04'||topicId==='05')return lessonId?grammarTopicExercises(topicId,lessonId).filter(e=>!e.id.startsWith(`topic${topicId}-review-`)):GRAMMAR_PRACTICES.find(p=>p.topicId===topicId)!.exercises;
+  if(topicId==='01'||topicId==='02'||topicId==='03'||topicId==='04'||topicId==='05'||topicId==='06'||topicId==='07')return lessonId?grammarTopicExercises(topicId,lessonId).filter(e=>!e.id.startsWith(`topic${topicId}-review-`)):GRAMMAR_PRACTICES.find(p=>p.topicId===topicId)!.exercises;
   const pool = grammarTopicExercises(topicId, lessonId);
   const prioritized = [...pool.filter(e => e.exerciseType), ...pool];
   return [...new Map(prioritized.map(e => [e.id, e])).values()].slice(0, 10);

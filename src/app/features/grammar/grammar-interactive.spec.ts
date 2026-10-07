@@ -43,7 +43,7 @@ describe('Grammar interactive N5 catalog',()=>{
   });
   it('loads only the requested topic and supports every N5 topic',()=>{
     expect(grammarTopicRound('00')).toEqual([]);
-    for(const topic of GRAMMAR_TOPICS.filter(t=>t.id!=='00')){const round=grammarTopicRound(topic.id);expect(round.length).toBeGreaterThan(0);expect(round.length).toBeLessThanOrEqual(topic.id==='04'?20:topic.id==='05'?16:['01','02','03'].includes(topic.id)?15:10);expect(round.every(e=>e.topicId===topic.id)).toBe(true);}
+    for(const topic of GRAMMAR_TOPICS.filter(t=>t.id!=='00')){const round=grammarTopicRound(topic.id);expect(round.length).toBeGreaterThan(0);expect(round.length).toBeLessThanOrEqual(topic.id==='04'?20:topic.id==='05'?16:topic.id==='06'?15:topic.id==='07'?18:['01','02','03'].includes(topic.id)?15:10);expect(round.every(e=>e.topicId===topic.id)).toBe(true);}
   });
   it('loads exercises belonging only to a requested lesson',()=>{
     const exercises=grammarTopicRound('03','verb-irregular-suru-kuru');
@@ -139,7 +139,7 @@ describe('Grammar interactive answers and completed sessions',()=>{
     expect(page.practice()!.exercises.every(e=>e.lessonId==='verb-irregular-suru-kuru')).toBe(true);expect(harness.routeNativeElement!.querySelector('.practice-start')).not.toBeNull();
   });
   it('offers lesson practice while preserving the theory',async()=>{
-    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/07/8',GrammarPage);
+    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/09/8',GrammarPage);
     expect(harness.routeNativeElement!.querySelector('.lesson-theory-block')).not.toBeNull();
     expect(harness.routeNativeElement!.querySelector('a[href*="practice?lesson=8"]')).not.toBeNull();
   });
