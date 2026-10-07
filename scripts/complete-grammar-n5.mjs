@@ -1,6 +1,7 @@
 // Canonical generation: foundation + course -> authored audit/stabilization -> validation -> generated/i18n.
 // Usage: npm run generate:grammar, then npm run audit:grammar and the generation tests.
 import fs from 'node:fs';
+import {generateGrammarV2} from './generate-grammar-v2.mjs';
 import { fileURLToPath } from 'node:url';
 import { N5_COURSE, N5_PRACTICE } from './grammar-n5-course.mjs';
 import { applyGrammarAudit, GRAMMAR_UI_TRANSLATIONS } from './grammar-n5-audit.mjs';
@@ -94,6 +95,6 @@ if(process.argv[1] && fileURLToPath(import.meta.url)===fs.realpathSync(process.a
     const dictionary=pruneGrammarTranslations({...existing,...copy,...GRAMMAR_UI_TRANSLATIONS[lang],...authored},[topics,lessons,practices,roadmap,sessions]);
     fs.writeFileSync(p,JSON.stringify(dictionary,null,2)+'\n');
   }
-  compileTranslations();
+  generateGrammarV2();
   console.log(`${lessons.length} microconceptos, ${sessions.length} sesiones, ${practices.reduce((n,p)=>n+p.exercises.length,0)} preguntas de práctica.`);
 }

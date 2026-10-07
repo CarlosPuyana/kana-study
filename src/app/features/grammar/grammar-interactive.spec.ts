@@ -42,7 +42,8 @@ describe('Grammar interactive N5 catalog',()=>{
     expect(GRAMMAR_INTERACTIVE.filter(e=>e.exerciseType!=='sentence-order').every(isChoiceExercise)).toBe(true);
   });
   it('loads only the requested topic and supports every N5 topic',()=>{
-    for(const topic of GRAMMAR_TOPICS){const round=grammarTopicRound(topic.id);expect(round.length).toBeGreaterThan(0);expect(round.length).toBeLessThanOrEqual(10);expect(round.every(e=>e.topicId===topic.id)).toBe(true);}
+    expect(grammarTopicRound('00')).toEqual([]);
+    for(const topic of GRAMMAR_TOPICS.filter(t=>t.id!=='00')){const round=grammarTopicRound(topic.id);expect(round.length).toBeGreaterThan(0);expect(round.length).toBeLessThanOrEqual(topic.id==='01'?15:10);expect(round.every(e=>e.topicId===topic.id)).toBe(true);}
   });
   it('loads exercises belonging only to a requested lesson',()=>{
     const exercises=grammarTopicRound('03','8');

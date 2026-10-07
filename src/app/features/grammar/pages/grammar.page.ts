@@ -1,9 +1,13 @@
+import {GrammarV2LessonComponent} from '../components/grammar-v2-lesson';
+import {GrammarPrerequisitesComponent} from '../components/grammar-prerequisites';
+import {grammarConceptId} from '../data/grammar-catalog';
+import {WeaknessService} from '../../../core/services/weakness.service';
 import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, signal, untracked, viewChild, ViewEncapsulation } from '@angular/core';
 import { GrammarProgressService } from '../../../core/services/grammar-progress.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
-import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES, GRAMMAR_ROADMAP, GRAMMAR_TOPICS, GRAMMAR_SESSIONS } from '../data/grammar-n5.generated';
+import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES, GRAMMAR_ROADMAP, GRAMMAR_TOPICS, GRAMMAR_SESSIONS } from '../data/grammar-catalog';
 import { FuriganaText } from '../../../shared/components/furigana-text/furigana-text';
 import { GrammarSidebar } from '../components/grammar-sidebar';
 import { GrammarExerciseComponent } from '../components/grammar-exercise';
@@ -11,8 +15,11 @@ import { GrammarPracticeComponent } from '../components/grammar-practice';
 import { grammarTopicRound } from '../services/grammar-interactive-catalog';
 import { grammarLessonExercises } from '../models/grammar.model';
 
-@Component({selector:'app-grammar-page',imports:[RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
+@Component({selector:'app-grammar-page',imports:[GrammarV2LessonComponent,GrammarPrerequisitesComponent,RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
 export class GrammarPage {
+  readonly conceptId=grammarConceptId;
+  private readonly weaknesses=inject(WeaknessService);
+  readonly retryPending=signal(false);
   readonly progress=inject(GrammarProgressService);
   readonly i18n=inject(TranslationService);private readonly route=inject(ActivatedRoute);private readonly router=inject(Router);
   private readonly params=toSignal(this.route.paramMap,{initialValue:this.route.snapshot.paramMap});
@@ -22,12 +29,12 @@ export class GrammarPage {
   readonly lesson=computed(()=>GRAMMAR_LESSONS.find(lesson=>lesson.topicId===this.topic()?.id&&lesson.id===this.params().get('lessonId'))??null);
   readonly exerciseIndex=signal(0);
   readonly exercises=computed(()=>this.lesson()?grammarLessonExercises(this.lesson()!):[]);
-  readonly currentExercise=computed(()=>this.exercises()[this.exerciseIndex()]??null);
+  readonly currentExercise=computed(()=>this.retryPending()?null:this.exercises()[this.exerciseIndex()]??null);
   readonly sessions=computed(()=>GRAMMAR_SESSIONS.filter(session=>session.topicId===this.topic()?.id));
   readonly studySession=computed(()=>this.sessions().find(session=>session.lessonIds.includes(this.lesson()?.id??''))??null);
   readonly sessionLessons=computed(()=>this.studySession()?.lessonIds.map(id=>GRAMMAR_LESSONS.find(l=>l.topicId===this.topic()?.id&&l.id===id)!)??[]);
   readonly sessionPosition=computed(()=>(this.studySession()?.lessonIds.indexOf(this.lesson()?.id??'')??-1)+1);
-  readonly sessionCompletedConcepts=computed(()=>this.sessionLessons().filter(lesson=>this.progress.conceptStatus(`${lesson.topicId}.${lesson.id}`)==='completed').length);
+  readonly sessionCompletedConcepts=computed(()=>this.sessionLessons().filter(lesson=>this.progress.conceptStatus(grammarConceptId(lesson))==='completed').length);
   readonly sessionCards=computed(()=>this.sessions().map(session=>({session,first:this.topic()!.lessons.find(l=>l.path?.endsWith('/'+session.lessonIds[0]))!,lessons:session.lessonIds.map(id=>GRAMMAR_LESSONS.find(l=>l.topicId===session.topicId&&l.id===id)!)})));
   readonly practice=computed(()=>{
     if(!this.route.snapshot.routeConfig?.path?.endsWith('/practice'))return null;
@@ -51,7 +58,9 @@ export class GrammarPage {
   private readonly focusNextExercise=signal(false);
   readonly rows=[this.topics.slice(0,3),this.topics.slice(3,6),this.topics.slice(6,9),this.topics.slice(9)];
   constructor(){effect(()=>{this.params();const lesson=this.lesson();untracked(()=>{
-    const id=lesson?`${lesson.topicId}.${lesson.id}`:null;
+    const id=lesson?grammarConceptId(lesson):null;
+    this.retryPending.set(false);
+    if(id)this.progress.openLesson(id);
     this.exerciseIndex.set(id?this.progress.resumeIndex(id):0);
     if(id)this.progress.saveResume(id,this.exerciseIndex());
   });window.scrollTo({top:0});});
@@ -79,9 +88,11 @@ export class GrammarPage {
   menuFocus(event:FocusEvent):void{if(this.mobileOpen()&&event.target instanceof Node&&!this.sidebar()?.nativeElement.contains(event.target))this.menuItems()[0]?.focus();}
   navigate(path:string):void{void this.router.navigateByUrl(path);window.scrollTo({top:0});}
   continueExercise():void{
-    if(this.exerciseIndex()+1<this.exercises().length){this.exerciseIndex.update(i=>i+1);this.progress.saveResume(`${this.lesson()!.topicId}.${this.lesson()!.id}`,this.exerciseIndex());this.focusNextExercise.set(true);}
+    if(this.exerciseIndex()+1<this.exercises().length){this.exerciseIndex.update(i=>i+1);this.progress.saveResume(grammarConceptId(this.lesson()!),this.exerciseIndex());this.focusNextExercise.set(true);}
+    else if(this.lesson()?.concept&&this.progress.conceptStatus(grammarConceptId(this.lesson()!))!=='completed')this.retryPending.set(true);
     else if(this.lesson())this.navigate(this.lesson()!.nextPath);
   }
-  answer(correct:boolean):void{const lesson=this.lesson(),exercise=this.currentExercise();if(lesson&&exercise)this.progress.recordAnswer(`${lesson.topicId}.${lesson.id}`,lesson.topicId,exercise.id,this.exerciseIndex(),correct);}
+  retryExercises():void{const lesson=this.lesson();if(!lesson)return;this.exerciseIndex.set(this.progress.firstPendingExerciseIndex(grammarConceptId(lesson)));this.retryPending.set(false);this.focusNextExercise.set(true);}
+  answer(correct:boolean):void{const lesson=this.lesson(),exercise=this.currentExercise();if(lesson&&exercise){this.progress.recordAnswer(grammarConceptId(lesson),lesson.topicId,exercise.id,this.exerciseIndex(),correct);if(lesson.concept)this.weaknesses.recordLearn('grammar',grammarConceptId(lesson),exercise.kind,correct?'good':'again');}}
   showProgress():void{document.getElementById('grammar-progress')?.scrollIntoView({behavior:'smooth',block:'start'});}
 }

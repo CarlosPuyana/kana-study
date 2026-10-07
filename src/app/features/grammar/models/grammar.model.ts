@@ -14,6 +14,9 @@ export interface GrammarDirection {
 }
 export type GrammarExerciseType = 'particle' | 'fill-gap' | 'sentence-order' | 'conjugation';
 interface GrammarExerciseBase {
+  readonly version?: 2;
+  readonly skill?: 'recognition' | 'formation' | 'usage' | 'contrast' | 'ordering' | 'error-detection';
+  readonly difficulty?: 1 | 2 | 3;
   readonly exerciseType?: GrammarExerciseType;
   readonly topicId?: string;
   readonly lessonId?: string;
@@ -34,6 +37,7 @@ interface GrammarExerciseBase {
   readonly orderPolicy?: 'constrained';
 }
 export interface GrammarChoiceExercise extends GrammarExerciseBase {
+  readonly options?: readonly {id: string; textKey: string; feedbackKey: string; grammarStatus?: 'valid' | 'invalid'}[];
   readonly kind: 'multiple-choice' | 'detect-error' | 'select-segment';
   readonly optionKeys: readonly string[]; readonly answer: number;
 }
@@ -73,6 +77,7 @@ export interface GrammarTopic {
   readonly stage: { readonly color: string; readonly icon: string; readonly bulletKeys: readonly string[] };
 }
 export interface GrammarLesson {
+  readonly concept?: import('../../../core/models/grammar-v2.model').GrammarConcept;
   readonly id: string; readonly topicId: string; readonly titleKey: string; readonly descriptionKey: string;
   readonly icon: string; readonly position: number; readonly total: number; readonly theory: readonly GrammarTheoryBlock[];
   readonly ideaKey: string; readonly notes: readonly (GrammarSummary & { readonly icon: string })[];

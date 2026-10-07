@@ -43,7 +43,7 @@ describe('Expanded grammar concept practice',()=>{
  it('resets answers and moves keyboard focus to the next exercise control',async()=>{
   vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
   TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t}}]});
-  const harness=await RouterTestingHarness.create(),page=await harness.navigateByUrl('/grammar/n5/01/1',GrammarPage);
+  const harness=await RouterTestingHarness.create(),page=await harness.navigateByUrl('/grammar/n5/01/sentence-structure-context',GrammarPage);
   const option=harness.routeNativeElement!.querySelector<HTMLButtonElement>('.exercise-option')!;option.click();harness.detectChanges();
   harness.routeNativeElement!.querySelector<HTMLButtonElement>('.check-answer')!.click();harness.detectChanges();
   harness.routeNativeElement!.querySelector<HTMLButtonElement>('.continue-answer')!.click();harness.detectChanges();await harness.fixture.whenStable();

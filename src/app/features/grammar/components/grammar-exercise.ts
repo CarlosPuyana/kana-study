@@ -14,6 +14,10 @@ export class GrammarExerciseComponent {
   readonly textAnswer=signal(''); readonly sequence=signal<readonly number[]>([]);
   readonly matches=signal<Readonly<Record<number,number>>>({}); readonly matchingLeft=signal<number|null>(null);
   readonly choice=computed(()=>{const e=this.exercise();return isChoiceExercise(e)?e:null;});
+  readonly detectingError=computed(()=>this.exercise().version===2&&this.exercise().kind==='detect-error');
+  readonly feedbackKey=computed(()=>this.choice()?.options?.[this.selected()??-1]?.feedbackKey??(this.correct()?this.exercise().successKey:this.exercise().errorKey));
+  optionValid(index:number):boolean{return this.choice()?.options?.[index]?.grammarStatus==='valid';}
+  optionInvalid(index:number):boolean{return this.choice()?.options?.[index]?.grammarStatus==='invalid';}
   readonly ordered=computed(()=>{const e=this.exercise();return e.kind==='sentence-builder'||e.kind==='sentence-order'?e:null;});
   readonly matching=computed(()=>{const e=this.exercise();return e.kind==='matching'?e:null;});
   readonly gap=computed(()=>{const e=this.exercise();return e.kind==='fill-gap'?e:null;});

@@ -1,7 +1,7 @@
 // Compact build representation only. The three JSON dictionaries remain the editable source of truth.
 import fs from 'node:fs';
 import {fileURLToPath} from 'node:url';
-export const GRAMMAR_COPY_KEY=/^grammar\.(content|n5|audit|stable|expansion)\./;
+export const GRAMMAR_COPY_KEY=/^grammar\.(content|n5|audit|stable|expansion|v2)\./;
 export function compiledDomain(grammar){
  const languages=['es','en','ca'],dictionaries=Object.fromEntries(languages.map(lang=>[lang,Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync(`src/assets/i18n/${lang}.json`,'utf8'))).filter(([key])=>GRAMMAR_COPY_KEY.test(key)===grammar))]));
  const shared=Object.fromEntries(Object.entries(dictionaries.es).filter(([key,value])=>languages.every(lang=>Object.hasOwn(dictionaries[lang],key)&&dictionaries[lang][key]===value)));

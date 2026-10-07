@@ -1,3 +1,4 @@
+import * as activeCatalog from './data/grammar-catalog';
 import {grammarLessonExercises} from './models/grammar.model';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
@@ -130,24 +131,22 @@ describe('Grammar navigation',()=>{
   });
   it('renders every topic overview and every micro-lesson from data',async()=>{
     const harness=await RouterTestingHarness.create();
-    for(const topic of GRAMMAR_TOPICS){await harness.navigateByUrl(`/grammar/n5/${topic.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelectorAll('.lesson-card')).toHaveLength(GRAMMAR_SESSIONS.filter(s=>s.topicId===topic.id).length);}
-    for(const lesson of GRAMMAR_LESSONS){await harness.navigateByUrl(`/grammar/n5/${lesson.topicId}/${lesson.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe(translate(lesson.titleKey));if(isChoiceExercise(grammarLessonExercises(lesson)[0]))expect(harness.routeNativeElement?.querySelectorAll('.exercise-option')).toHaveLength((grammarLessonExercises(lesson)[0] as import('./models/grammar.model').GrammarChoiceExercise).optionKeys.length);else expect(harness.routeNativeElement?.querySelector('.check-answer')).not.toBeNull();}
+    for(const topic of activeCatalog.GRAMMAR_TOPICS){await harness.navigateByUrl(`/grammar/n5/${topic.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelectorAll('.lesson-card')).toHaveLength(activeCatalog.GRAMMAR_SESSIONS.filter(s=>s.topicId===topic.id).length);}
+    for(const lesson of activeCatalog.GRAMMAR_LESSONS){await harness.navigateByUrl(`/grammar/n5/${lesson.topicId}/${lesson.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe(translate(lesson.titleKey));if(isChoiceExercise(grammarLessonExercises(lesson)[0]))expect(harness.routeNativeElement?.querySelectorAll('.exercise-option')).toHaveLength((grammarLessonExercises(lesson)[0] as import('./models/grammar.model').GrammarChoiceExercise).optionKeys.length);else expect(harness.routeNativeElement?.querySelector('.check-answer')).not.toBeNull();}
   });
   it('opens all cumulative practices and handles unsupported lessons without inventing content',async()=>{
     const harness=await RouterTestingHarness.create();
-    for(const p of GRAMMAR_PRACTICES){await harness.navigateByUrl(`/grammar/n5/${p.topicId}/practice`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.practice-intro h1')?.textContent).toBe(translate(p.intro.titleKey));}
+    for(const p of activeCatalog.GRAMMAR_PRACTICES){await harness.navigateByUrl(`/grammar/n5/${p.topicId}/practice`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.practice-intro h1')?.textContent).toBe(translate(p.intro.titleKey));}
     await harness.navigateByUrl('/grammar/n5/02/99',GrammarPage);expect(harness.routeNativeElement?.querySelector('.exercise-block')).toBeNull();
   });
-  it('resets lesson feedback when navigating to the next lesson',async()=>{
-    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/00/1',GrammarPage);
-    (harness.routeNativeElement?.querySelectorAll('.exercise-option')[1] as HTMLButtonElement).click();harness.detectChanges();
-    (harness.routeNativeElement?.querySelector('.check-answer') as HTMLButtonElement).click();harness.detectChanges();
-    (harness.routeNativeElement?.querySelector('.continue-answer') as HTMLButtonElement).click();await harness.fixture.whenStable();harness.detectChanges();
-    expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe('Los sistemas de escritura');
-    const page=harness.routeDebugElement!.componentInstance as GrammarPage;
-    page.continueExercise();await harness.fixture.whenStable();harness.detectChanges();
-    expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe('Hiragana básico');
-    expect((harness.routeNativeElement?.querySelector('.check-answer')as HTMLButtonElement).disabled).toBe(true);
-    expect(harness.routeNativeElement?.querySelector('.exercise-feedback')).toBeNull();
+  it('resets feedback when navigating between semantic lessons',async()=>{
+    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/01/sentence-structure-context',GrammarPage);
+    (harness.routeNativeElement!.querySelector('.exercise-option') as HTMLButtonElement).click();harness.detectChanges();
+    (harness.routeNativeElement!.querySelector('.check-answer') as HTMLButtonElement).click();harness.detectChanges();
+    expect(harness.routeNativeElement!.querySelector('.exercise-feedback')).not.toBeNull();
+    await harness.navigateByUrl('/grammar/n5/01/state-being-plain',GrammarPage);
+    expect(harness.routeNativeElement!.querySelector('.lesson-heading-card h2')!.textContent).toBe(translate(activeCatalog.GRAMMAR_LESSONS[1].titleKey));
+    expect((harness.routeNativeElement!.querySelector('.check-answer') as HTMLButtonElement).disabled).toBe(true);
+    expect(harness.routeNativeElement!.querySelector('.exercise-feedback')).toBeNull();
   });
 });

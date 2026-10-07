@@ -8,7 +8,7 @@ export function shuffleGrammar<T>(values:readonly T[],random:()=>number=Math.ran
 export function shuffleGrammarExercise(exercise:GrammarExercise,random:()=>number=Math.random):GrammarExercise {
   if(exercise.kind==='multiple-choice'){
     const order=shuffleGrammar(exercise.optionKeys.map((_,i)=>i),random);
-    return {...exercise,optionKeys:order.map(i=>exercise.optionKeys[i]),answer:order.indexOf(exercise.answer)};
+    return {...exercise,optionKeys:order.map(i=>exercise.optionKeys[i]),...(exercise.options?{options:order.map(i=>exercise.options![i])}:{}),answer:order.indexOf(exercise.answer)};
   }
   if(exercise.kind==='sentence-builder'||exercise.kind==='sentence-order'){
     const order=shuffleGrammar(exercise.tokenKeys.map((_,i)=>i),random);

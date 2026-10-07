@@ -166,16 +166,16 @@ describe('Grammar grouped content and routes',()=>{
     const reference=harness.routeNativeElement!.querySelector('.kanji-reference')!;
     expect(reference.querySelector('ruby')!.textContent).toBe('飲の');expect(reference.querySelector('rt')!.textContent).toBe('の');expect(reference.textContent).toContain('Bebo / beberé.');
   });
-  it('shows reading and meaning for the exact inline kanji exception',async()=>{
+  it('shows readings and meanings in the V2 nominal examples',async()=>{
     vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
-    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/00/1',GrammarPage);
-    const explanation=harness.routeNativeElement!.querySelector('.kanji-reference')!.textContent;
-    expect(explanation).toContain('漢字（かんじ）');expect(explanation).toContain('caracteres que representan significado');
+    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/01/state-being-plain',GrammarPage);
+    const explanation=harness.routeNativeElement!.querySelector('app-grammar-v2-lesson')!.textContent;
+    expect(explanation).toContain('がくせいだ。');expect(explanation).toContain('Es estudiante.');
   });
   it('offers both Kana entry points from Topic 00 with from=grammar',async()=>{
     vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
     const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/00',GrammarPage);
-    const links=harness.routeNativeElement!.querySelectorAll('.kana-practice-links a');expect(links).toHaveLength(2);
+    const links=harness.routeNativeElement!.querySelectorAll('app-grammar-prerequisites .prerequisites nav a');expect(links).toHaveLength(2);
     expect(links[0].getAttribute('href')).toContain('kana=hiragana');expect(links[1].getAttribute('href')).toContain('kana=katakana');expect(links[0].getAttribute('href')).toContain('from=grammar');
   });
   it.each(['hiragana','katakana'] as const)('preselects %s in the existing Kana module as an unsaved draft',kana=>{

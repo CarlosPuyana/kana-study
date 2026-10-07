@@ -1,11 +1,12 @@
+import {grammarConceptId} from '../data/grammar-catalog';
 import { GRAMMAR_INTERACTIVE } from '../data/grammar-interactive';
-import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES } from '../data/grammar-n5.generated';
+import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES } from '../data/grammar-catalog';
 import { GrammarExercise, grammarLessonExercises } from '../models/grammar.model';
 
 const adapted = new Map(GRAMMAR_INTERACTIVE.map(exercise => [exercise.id, exercise]));
 export const GRAMMAR_PRACTICE_CATALOG: readonly GrammarExercise[] = [
   ...GRAMMAR_LESSONS.flatMap(lesson => grammarLessonExercises(lesson).map(exercise => adapted.get(exercise.id) ??
-    {...exercise, topicId: lesson.topicId, lessonId: lesson.id, conceptId: `${lesson.topicId}.${lesson.id}`})),
+    {...exercise, topicId: lesson.topicId, lessonId: lesson.id, conceptId: grammarConceptId(lesson)})),
   ...GRAMMAR_PRACTICES.flatMap(practice => practice.exercises.map(exercise => ({...exercise, topicId: practice.topicId}))),
 ];
 export function grammarTopicExercises(topicId: string, lessonId?: string): readonly GrammarExercise[] {
@@ -14,7 +15,7 @@ export function grammarTopicExercises(topicId: string, lessonId?: string): reado
 /** Mix topics round-robin, prioritizing reliable opened/answered concepts and difficulties. */
 export function grammarMixedExercises(preferredConcepts: readonly string[] = [], difficulties: readonly GrammarExercise[] = []): readonly GrammarExercise[] {
   const preferred = new Set(preferredConcepts);
-  const pool = [...difficulties, ...GRAMMAR_INTERACTIVE, ...GRAMMAR_PRACTICE_CATALOG];
+  const pool = [...difficulties, ...GRAMMAR_INTERACTIVE.filter(e=>Number(e.topicId)>=2), ...GRAMMAR_PRACTICE_CATALOG];
   const ordered = [...pool.filter(e => e.conceptId && preferred.has(e.conceptId)), ...pool];
   const groups = new Map<string, GrammarExercise[]>();
   const seen = new Set<string>();
@@ -44,6 +45,7 @@ export function grammarMixedExercises(preferredConcepts: readonly string[] = [],
   return result;
 }
 export function grammarTopicRound(topicId: string, lessonId?: string): readonly GrammarExercise[] {
+  if(topicId==='01')return lessonId?grammarTopicExercises(topicId,lessonId).filter(e=>!e.id.startsWith('topic01-review-')):GRAMMAR_PRACTICES.find(p=>p.topicId==='01')!.exercises;
   const pool = grammarTopicExercises(topicId, lessonId);
   const prioritized = [...pool.filter(e => e.exerciseType), ...pool];
   return [...new Map(prioritized.map(e => [e.id, e])).values()].slice(0, 10);

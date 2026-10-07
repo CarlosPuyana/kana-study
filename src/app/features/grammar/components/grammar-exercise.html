@@ -10,7 +10,7 @@
   @if(choice();as choice){
     <div [class]="(practice()?'practice-options-grid':'exercise-options')+(choice.kind==='multiple-choice'?'':' segment-options')" role="group" [attr.aria-label]="i18n.t(exercise().questionKey)">
       @for(option of choice.optionKeys;track $index){
-        <button type="button" [class]="practice()?'practice-option':'exercise-option'" [class.selected]="selected()===$index" [class.correct]="checked()&&$index===choice.answer" [class.wrong]="checked()&&selected()===$index&&!correct()" [disabled]="checked()" [attr.aria-pressed]="selected()===$index" (click)="select($index)">{{i18n.t(option)}}</button>
+        <button type="button" [class]="practice()?'practice-option':'exercise-option'" [class.selected]="selected()===$index" [class.correct]="checked()&&(detectingError()?optionValid($index):$index===choice.answer)" [class.wrong]="checked()&&(detectingError()?optionInvalid($index):selected()===$index&&!correct())" [disabled]="checked()" [attr.aria-pressed]="selected()===$index" (click)="select($index)">{{i18n.t(option)}}@if(checked()&&detectingError()){<small class="grammar-validity">{{i18n.t(optionInvalid($index)?'grammar.v2.invalid':'grammar.v2.valid')}}</small>}</button>
       }
     </div>
   } @else if(gap();as gap){
@@ -33,14 +33,14 @@
   }
   @if(checked()){
     <div [class]="practice()?'practice-feedback-box':'exercise-feedback show'" [class.success]="correct()" [class.error]="!correct()" role="status">
-      <div [class]="practice()?'practice-feedback-icon':'feedback-icon'">{{correct()?'✓':'!'}}</div><div><strong>{{i18n.t(correct()?'grammar.correct':practice()?'grammar.review':'grammar.almost')}}</strong><p>{{i18n.t(correct()?exercise().successKey:exercise().errorKey)}}</p>
+      <div [class]="practice()?'practice-feedback-icon':'feedback-icon'">{{correct()?'✓':'!'}}</div><div><strong>{{i18n.t(correct()?(detectingError()?'grammar.v2.identified':'grammar.correct'):practice()?'grammar.review':'grammar.almost')}}</strong><p>{{i18n.t(feedbackKey())}}</p>
         @if(!correct()){
           <p><strong>{{i18n.t('grammar.interactive.yourAnswer')}}</strong>: {{userAnswer()}}</p>
-          <p><strong>{{i18n.t('grammar.solution')}}</strong>
+          <p><strong>{{i18n.t(detectingError()?'grammar.v2.errorTarget':'grammar.solution')}}</strong>
           @if(gap();as gap){ {{i18n.t(gap.solutionKey)}} }
           @if(ordered();as ordered){ @for(index of ordered.solution;track $index){ {{i18n.t(ordered.tokenKeys[index])}} } }
           @if(matching();as matching){ @for(pair of matching.pairs;track $index){<span class="solution-pair">{{i18n.t(pair.leftKey)}} → {{i18n.t(pair.rightKey)}}</span>} }
-          @if(choice();as choice){ {{i18n.t(choice.optionKeys[choice.answer])}} }
+          @if(choice();as choice){ <span [class.invalid-japanese]="detectingError()">@if(detectingError()){❌ }{{i18n.t(choice.optionKeys[choice.answer])}}</span> }
           </p>
         }
       </div>

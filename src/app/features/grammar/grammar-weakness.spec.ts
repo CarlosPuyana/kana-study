@@ -56,8 +56,8 @@ describe('Grammar weakness identities and analytics',()=>{
     expect(stats.difficult.map(d=>d.questionType)).toEqual(['particle','sentence-order']);expect(stats.strengths[0].questionType).toBe('sentence-order');
   });
   it('aggregates concepts across types, applies minimum attempts and ranks ties',()=>{
-    const stats=calculate([record({attempts:2,failures:1}),record({questionType:'fill-gap',attempts:2,failures:1}),record({itemId:'03.9',attempts:8,failures:4}),record({itemId:'01.4',attempts:4,failures:3}),record({itemId:'01.6',attempts:1,failures:1})]);
-    expect(stats.grammarConcepts.map(c=>c.itemId)).toEqual(['01.4','03.9','03.8']);expect(stats.grammarConcepts[2].attempts).toBe(4);
+    const stats=calculate([record({attempts:2,failures:1}),record({questionType:'fill-gap',attempts:2,failures:1}),record({itemId:'03.9',attempts:8,failures:4}),record({itemId:'state-being-plain',attempts:4,failures:3}),record({itemId:'01.6',attempts:1,failures:1})]);
+    expect(stats.grammarConcepts.map(c=>c.itemId)).toEqual(['state-being-plain','03.9','03.8']);expect(stats.grammarConcepts[2].attempts).toBe(4);
   });
   it('includes old Grammar sessions in 7/30-day activity without duplication',()=>{
     const base:CompletedSessionSummary={module:'grammar',sessionId:'g1',completedAt:'2026-10-25T10:00:00Z',mode:'quick-practice',exercisesCompleted:4,firstTrySuccesses:2,attempts:4,needsPracticeCount:2,durationSeconds:30};
