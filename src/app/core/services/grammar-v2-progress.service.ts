@@ -24,7 +24,7 @@ export class GrammarV2ProgressService {
   private readonly saved=signal(this.read(this.storage.get<unknown>(GRAMMAR_PROGRESS_V2_KEY,null)));
   readonly state=this.saved.asReadonly();
   readonly started=computed(()=>Object.keys(this.state().concepts).length>0);
-  constructor(){effect(()=>{this.workspace.active();this.workspace.dataRevision();untracked(()=>this.saved.set(this.read(this.storage.get<unknown>(GRAMMAR_PROGRESS_V2_KEY,null))));});}
+  constructor(){effect(()=>{this.workspace.active();this.workspace.dataRevision();this.storage.cloudRevision();untracked(()=>this.saved.set(this.read(this.storage.get<unknown>(GRAMMAR_PROGRESS_V2_KEY,null))));});}
   has(id:string):boolean{return catalog.has(id);}
   open(id:string):void {
     const concept=catalog.get(id);if(!concept)return;

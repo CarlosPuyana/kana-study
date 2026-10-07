@@ -84,7 +84,7 @@ describe('Grammar V2 Topic 08 content',()=>{
     const keys=new Set<string>();const visit=(v:unknown):void=>{if(typeof v==='string'&&v.startsWith('grammar.'))keys.add(v);else if(Array.isArray(v))v.forEach(visit);else if(v&&typeof v==='object')Object.values(v).forEach(visit);};visit(concepts);visit(review);visit(GRAMMAR_PRACTICES.find(p=>p.topicId==='08'));
     for(const key of keys)for(const dict of [es,en,ca])expect((dict as Record<string,string>)[key],key).toBeTruthy();
     expect([...keys].map(t).join(' ')).not.toMatch(/なければならない|なければいけない|なくてはだめ|食べてほしい|読める|食べられる|てみる/);
-    expect(GRAMMAR_V2_CONCEPTS.some(c=>Number(c.topicId)>=9)).toBe(false);
+    expect(GRAMMAR_V2_CONCEPTS.some(c=>Number(c.topicId)>=11)).toBe(false);
     expect(GRAMMAR_V2_CONCEPTS.filter(c=>c.id==='nai-de-kudasai')).toHaveLength(1);
   });
 });
@@ -102,8 +102,8 @@ describe('Grammar V2 Topic 08 Core and Bridge integration',()=>{
       progress.openLesson(concept.id);concept.exercises.forEach((e,i)=>progress.recordAnswer(concept.id,concept.topicId,e.id,i,true));
     }
     expect(progress.topicProgress('08')).toEqual({completed:8,total:8});expect(progress.conceptStatus('obligation-colloquial')).toBe('not-started');
-    expect(progress.continuePath()).toBe('/grammar/n5/09/1');
-    expect(progress.completedSessions()).toBe(76);expect(progress.totalSessions).toBe(89);
+    expect(progress.continuePath()).toBe('/grammar/n5/09/kara-reason');
+    expect(progress.completedSessions()).toBe(76);expect(progress.totalSessions).toBe(94);
     TestBed.resetTestingModule();expect(TestBed.inject(GrammarProgressService).topicProgress('08')).toEqual({completed:8,total:8});
   });
   it('allows optional Bridge practice with its own Weakness, semantic resume and cumulative review ID',async()=>{

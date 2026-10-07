@@ -1,3 +1,4 @@
+import {FuriganaText} from '../../shared/components/furigana-text/furigana-text';
 import {grammarLessonExercises} from './models/grammar.model';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
@@ -150,21 +151,18 @@ describe('Grammar grouped content and routes',()=>{
     expect(translate(lesson('8').exercise.contextKey!)).toContain('<table>');
     expect(translate(lesson('9').ideaKey)).toContain('Repasar errores');
   });
-  it('keeps an old microconcept URL and its grouped navigation, with clear within-session position',async()=>{
+  it('shows the semantic lesson and its position in Topic 10 navigation',async()=>{
     vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
-    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/10/4',GrammarPage);
-    expect(harness.routeNativeElement!.querySelector('.lesson-progress-wrap')!.textContent).toContain('Concepto 2 de 2');
-    expect(harness.routeNativeElement!.querySelectorAll('.topic-subnav-item')).toHaveLength(6);
-    const concepts=harness.routeNativeElement!.querySelectorAll('.session-concepts a');expect(concepts).toHaveLength(2);expect(concepts[1].getAttribute('aria-current')).toBe('step');
-    expect(concepts[0].textContent).toContain('Paso 1');expect(concepts[1].textContent).toContain('Paso 2');
-    expect(harness.routeNativeElement!.querySelector('.lesson-top-title')!.textContent).toContain('Sesión 2');
-    expect(GRAMMAR_LESSONS.find(l=>l.topicId==='10'&&l.id==='4')!.nextPath).toBe('/grammar/n5/10/5');
+    const harness=await RouterTestingHarness.create();const page=await harness.navigateByUrl('/grammar/n5/10/change-naru',GrammarPage);
+    expect(page.lesson()!.concept!.id).toBe('change-naru');expect(page.lesson()!.position).toBe(5);
+    expect(harness.routeNativeElement!.querySelectorAll('.topic-subnav-item')).toHaveLength(9);
+    expect(harness.routeNativeElement!.querySelector('.topic-subnav-item[aria-current=step]')).not.toBeNull();
+    expect(page.lesson()!.nextPath).toBe('/grammar/n5/10/choice-ni-suru');
   });
-  it('renders authored kanji reading help through the existing ruby component',async()=>{
-    vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
-    const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/09/12',GrammarPage);
-    const reference=harness.routeNativeElement!.querySelector('.kanji-reference')!;
-    const example=GRAMMAR_LESSONS.find(l=>l.topicId==='09'&&l.id==='12')!.kanjiExamples![0];const segment=example.segments.find(s=>s.reading)!;expect(reference.querySelector('ruby')!.textContent).toBe(segment.text+segment.reading);expect(reference.querySelector('rt')!.textContent).toBe(segment.reading);expect(reference.textContent).toContain(translate(GRAMMAR_LESSONS.find(l=>l.topicId==='09'&&l.id==='12')!.kanjiExamples![0].meaningKey));
+  it('renders authored kanji reading help through the existing ruby component',()=>{
+    const example=GRAMMAR_LESSONS.find(l=>l.topicId==='09'&&l.id==='12')!.kanjiExamples![0];
+    const fixture=TestBed.createComponent(FuriganaText);fixture.componentRef.setInput('segments',example.segments);fixture.detectChanges();
+    const segment=example.segments.find(s=>s.reading)!;expect(fixture.nativeElement.querySelector('ruby').textContent).toBe(segment.text+segment.reading);expect(fixture.nativeElement.querySelector('rt').textContent).toBe(segment.reading);
   });
   it('shows readings and meanings in the V2 nominal examples',async()=>{
     vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
