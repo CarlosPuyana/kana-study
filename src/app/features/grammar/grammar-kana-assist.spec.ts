@@ -27,9 +27,9 @@ describe('Contextual kana assistance',()=>{
       if(required.length>1)expect(e.kanaBank!.filter(c=>required.includes(c)).join(''),e.id).not.toBe(required.join(''));
     }
   });
-  it('renders stable safe buttons in all five reported lessons and samples Topics 02–07',()=>{
+  it('renders stable safe buttons in all five reported lessons and samples Topics 02–08',()=>{
     const ids=['state-being-plain','state-being-negative','state-being-past','state-being-past-negative','particle-wa-topic'];
-    const examples=[...ids.map(id=>GRAMMAR_V2_CONCEPTS.find(c=>c.id===id)!.exercises.find(e=>e.kind==='fill-gap')!),...['02','03','04','05','06','07'].map(topic=>v2Gaps.find(e=>e.topicId===topic)!)];
+    const examples=[...ids.map(id=>GRAMMAR_V2_CONCEPTS.find(c=>c.id===id)!.exercises.find(e=>e.kind==='fill-gap')!),...['02','03','04','05','06','07','08'].map(topic=>v2Gaps.find(e=>e.topicId===topic)!)];
     for(const e of examples){
       if(e.kind!=='fill-gap')throw Error('fill-gap');
       const fixture=TestBed.createComponent(GrammarExerciseComponent);fixture.componentRef.setInput('exercise',e);fixture.detectChanges();

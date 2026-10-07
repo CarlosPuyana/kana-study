@@ -48,10 +48,10 @@ describe('Grammar V2 canonical catalog',()=>{
       expect(c.lesson.detailedExplanation.length).toBeGreaterThanOrEqual(2);
     }
   });
-  it('keeps Topics 08–10 byte-for-byte equivalent at the data boundary',()=>{
+  it('keeps Topics 09–10 byte-for-byte equivalent at the data boundary',()=>{
     for(const [actual,original] of [[GRAMMAR_LESSONS,legacy.GRAMMAR_LESSONS],[GRAMMAR_PRACTICES,legacy.GRAMMAR_PRACTICES],[GRAMMAR_SESSIONS,legacy.GRAMMAR_SESSIONS]] as const)
-      expect(actual.filter(x=>Number(x.topicId)>=8)).toEqual(original.filter(x=>Number(x.topicId)>=8));
-    expect(GRAMMAR_TOPICS.slice(8)).toEqual(legacy.GRAMMAR_TOPICS.slice(8));
+      expect(actual.filter(x=>Number(x.topicId)>=9)).toEqual(original.filter(x=>Number(x.topicId)>=9));
+    expect(GRAMMAR_TOPICS.slice(9)).toEqual(legacy.GRAMMAR_TOPICS.slice(9));
   });
   it('has 53 lesson exercises and 15 distinct cumulative exercises with real concepts and answer-specific feedback',()=>{
     expect(GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises)).toHaveLength(53);expect(GRAMMAR_V2_REVIEW).toHaveLength(15);
@@ -192,7 +192,7 @@ describe('Grammar V2 progress, routes and rendering',()=>{
     const weaknesses=TestBed.inject(WeaknessService);for(let i=0;i<3;i++)weaknesses.recordLearn('grammar',identity.itemId,identity.questionType,'again');
     const round=grammarFocusedExercises(weaknesses.weak());expect(round.length).toBeGreaterThan(0);expect(round.every(e=>e.conceptId===identity.itemId)).toBe(true);
   });
-  it.each(['08','09','10'])('still loads legacy topic %s, its first lesson and practice',async topic=>{
+  it.each(['09','10'])('still loads legacy topic %s, its first lesson and practice',async topic=>{
     const harness=await RouterTestingHarness.create();let page=await harness.navigateByUrl(`/grammar/n5/${topic}`,GrammarPage);expect(page.invalid()).toBe(false);
     page=await harness.navigateByUrl(`/grammar/n5/${topic}/1`,GrammarPage);expect(page.lesson()?.concept).toBeUndefined();expect(page.currentExercise()).toBeTruthy();
     page=await harness.navigateByUrl(`/grammar/n5/${topic}/practice`,GrammarPage);expect(page.practice()?.exercises.length).toBeGreaterThan(0);

@@ -107,7 +107,7 @@ describe('Grammar V2 Topic 06 content',()=>{
       expect(e.options![e.answer].grammarStatus).toBe('invalid');bad.push(t(e.optionKeys[e.answer]));
     }
     expect(bad).toEqual(['昨日買いました本','学生んです。','学生じゃないなんです。']);
-    expect(GRAMMAR_V2_CONCEPTS.some(c=>Number(c.topicId)>=8)).toBe(false);
+    expect(GRAMMAR_V2_CONCEPTS.some(c=>Number(c.topicId)>=9)).toBe(false);
     const keys=new Set<string>();const visit=(v:unknown):void=>{if(typeof v==='string'&&v.startsWith('grammar.'))keys.add(v);else if(Array.isArray(v))v.forEach(visit);else if(v&&typeof v==='object')Object.values(v).forEach(visit);};
     visit(concepts);visit(review);visit(GRAMMAR_PRACTICES.find(p=>p.topicId==='06'));
     for(const key of keys)for(const dict of [es,en,ca])expect((dict as Record<string,string>)[key],key).toBeTruthy();

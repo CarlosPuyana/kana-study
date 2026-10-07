@@ -1,3 +1,4 @@
+import {addInteractionV2} from './grammar-n5-v2-interaction.mjs';
 import {addTeV2} from './grammar-n5-v2-te.mjs';
 // Canonical, original Kana Study copy. Triplets are ES | EN | CA, never fallbacks.
 // Editorial references are source-only; the PDF is not reproduced in the runtime.
@@ -301,6 +302,10 @@ export function buildGrammarV2() {
     startReview:()=>{reviewing=true;}});
   reviewing=false;
   addTeV2({add,key,K,choice,fill,order,matching,valid,invalid,jp,
+    use:id=>{current=concepts.find(c=>c.id===id);if(!current)throw new Error(`Unknown concept ${id}`);},
+    startReview:()=>{reviewing=true;}});
+  reviewing=false;
+  addInteractionV2({add,key,K,choice,fill,order,matching,valid,invalid,jp,
     use:id=>{current=concepts.find(c=>c.id===id);if(!current)throw new Error(`Unknown concept ${id}`);},
     startReview:()=>{reviewing=true;}});
   concepts.forEach(c=>c.relatedIds=concepts.filter(other=>other.prerequisiteIds.includes(c.id)).map(other=>other.id));

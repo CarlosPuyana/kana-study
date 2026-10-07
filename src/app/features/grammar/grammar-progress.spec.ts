@@ -22,60 +22,60 @@ describe('Grammar progress UI and complete practice integration', () => {
       {provide: TranslationService, useValue: {t}}, {provide: SyncOutboxService, useValue: {enqueue: vi.fn().mockResolvedValue(undefined)}}]});
   });
   afterEach(() => { TestBed.resetTestingModule(); vi.restoreAllMocks(); });
-  it('shows real 0/87 and starts Continuar at the first semantic concept', async () => {
+  it('shows real 0/89 and starts Continuar at the first semantic concept', async () => {
     const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar', GrammarPage);
-    expect(harness.routeNativeElement!.textContent).toContain('0 / 87 sesiones completadas');
+    expect(harness.routeNativeElement!.textContent).toContain('0 / 89 sesiones completadas');
     expect(harness.routeNativeElement!.querySelector('.primary-action')!.getAttribute('href')).toContain('/grammar/n5/01/sentence-structure-context');
     expect(harness.routeNativeElement!.textContent).not.toContain('grammar.progressState.');
   });
   it('opens a concept without starting it and records the exercise answered output', async () => {
-    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/08/3', GrammarPage);
-    const progress = TestBed.inject(GrammarProgressService); expect(progress.conceptStatus('08.3')).toBe('not-started');
+    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/09/2', GrammarPage);
+    const progress = TestBed.inject(GrammarProgressService); expect(progress.conceptStatus('09.2')).toBe('not-started');
     harness.routeNativeElement!.querySelector<HTMLButtonElement>('.exercise-option')!.click(); harness.detectChanges();
     harness.routeNativeElement!.querySelector<HTMLButtonElement>('.check-answer')!.click(); harness.detectChanges();
-    expect(progress.conceptStatus('08.3')).toBe('in-progress'); expect(Object.keys(progress.state().concepts['08.3'].answers)).toHaveLength(1);
+    expect(progress.conceptStatus('09.2')).toBe('in-progress'); expect(Object.keys(progress.state().concepts['09.2'].answers)).toHaveLength(1);
   });
   it('restores the exact exercise through Continuar and route re-entry', async () => {
-    const harness = await RouterTestingHarness.create(), page = await harness.navigateByUrl('/grammar/n5/08/1', GrammarPage);
+    const harness = await RouterTestingHarness.create(), page = await harness.navigateByUrl('/grammar/n5/09/1', GrammarPage);
     for(let index=0;index<2;index++){
       page.answer(true);page.continueExercise();harness.detectChanges();
       await harness.fixture.whenStable();
     }
     await harness.navigateByUrl('/grammar', GrammarPage);
-    expect(harness.routeNativeElement!.querySelector('.primary-action')!.getAttribute('href')).toContain('/grammar/n5/08/1');
-    const resumed = await harness.navigateByUrl('/grammar/n5/08/1', GrammarPage);
-    expect(resumed.exerciseIndex()).toBe(2); expect(harness.routeNativeElement!.textContent).toContain('Ejercicio 3 de 3');
+    expect(harness.routeNativeElement!.querySelector('.primary-action')!.getAttribute('href')).toContain('/grammar/n5/09/1');
+    const resumed = await harness.navigateByUrl('/grammar/n5/09/1', GrammarPage);
+    expect(resumed.exerciseIndex()).toBe(2); expect(harness.routeNativeElement!.textContent).toContain('Ejercicio 3 de 4');
   });
   it('shows partial steps and a completed session plus difficulty as independent states', async () => {
     const progress = TestBed.inject(GrammarProgressService);
-    GRAMMAR_LESSONS.filter(lesson => lesson.topicId === '08' && Number(lesson.id) <= 2).forEach(lesson => grammarLessonExercises(lesson).forEach((exercise, index) => progress.recordAnswer(`08.${lesson.id}`, '08', exercise.id, index, lesson.id !== '1')));
-    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/08', GrammarPage);
+    GRAMMAR_LESSONS.filter(lesson => lesson.topicId === '09' && Number(lesson.id) <= 2).forEach(lesson => grammarLessonExercises(lesson).forEach((exercise, index) => progress.recordAnswer(`09.${lesson.id}`, '09', exercise.id, index, lesson.id !== '1')));
+    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/09', GrammarPage);
     const first = harness.routeNativeElement!.querySelector('.lesson-card')!;
     expect(first.textContent).toContain('✓ Completada'); expect(first.textContent).toContain('⚠ 1 concepto por repasar');
-    expect(harness.routeNativeElement!.textContent).toContain('1 / 6 sesiones completadas');
+    expect(harness.routeNativeElement!.textContent).toContain('1 / 7 sesiones completadas');
   });
   it('saves only the full original practice and keeps immediate error review available', () => {
-    const fixture = TestBed.createComponent(GrammarPracticeComponent); fixture.componentRef.setInput('practice', GRAMMAR_PRACTICES.find(p=>p.topicId==='09')!); fixture.detectChanges();
+    const fixture = TestBed.createComponent(GrammarPracticeComponent); fixture.componentRef.setInput('practice', GRAMMAR_PRACTICES.find(p=>p.topicId==='10')!); fixture.detectChanges();
     const component = fixture.componentInstance; component.start();
     for (let index = 0; index < 10; index++) { component.answer(index > 1); component.next(); }
-    const progress = TestBed.inject(GrammarProgressService); expect(progress.state().practices['09']).toMatchObject({score: 8, total: 10}); expect(progress.difficulties().length).toBeGreaterThan(0);
+    const progress = TestBed.inject(GrammarProgressService); expect(progress.state().practices['10']).toMatchObject({score: 8, total: 10}); expect(progress.difficulties().length).toBeGreaterThan(0);
     component.session.reviewErrors(); const count = component.session.total(); expect(count).toBe(2);
     for (let index = 0; index < count; index++) { component.answer(true); component.next(); }
-    expect(component.session.score()).toBe(2); expect(progress.state().practices['09'].score).toBe(8); expect(progress.difficulties()).toHaveLength(0);
+    expect(component.session.score()).toBe(2); expect(progress.state().practices['10'].score).toBe(8); expect(progress.difficulties()).toHaveLength(0);
     fixture.detectChanges(); expect(fixture.nativeElement.textContent).toContain(t('grammar.reviewingErrors'));
   });
   it('shows the last persisted full practice score on the topic', async () => {
-    TestBed.inject(GrammarProgressService).recordPractice('09', 8, 10, [], new Date().toISOString());
-    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/09', GrammarPage);
+    TestBed.inject(GrammarProgressService).recordPractice('10', 8, 10, [], new Date().toISOString());
+    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/10', GrammarPage);
     expect(harness.routeNativeElement!.textContent).toContain('Última práctica: 8 / 10');
   });
   it('global review clears only fully correct selected concepts and preserves failures', async () => {
-    const progress = TestBed.inject(GrammarProgressService), a = GRAMMAR_LESSONS.find(lesson => lesson.topicId === '08' && lesson.id === '1')!, b = GRAMMAR_LESSONS.find(lesson => lesson.topicId === '08' && lesson.id === '2')!;
-    progress.flagDifficulty('08.1', a.exercise.id); progress.flagDifficulty('08.2', b.exercise.id);
+    const progress = TestBed.inject(GrammarProgressService), a = GRAMMAR_LESSONS.find(lesson => lesson.topicId === '09' && lesson.id === '1')!, b = GRAMMAR_LESSONS.find(lesson => lesson.topicId === '09' && lesson.id === '2')!;
+    progress.flagDifficulty('09.1', a.exercise.id); progress.flagDifficulty('09.2', b.exercise.id);
     const harness = await RouterTestingHarness.create(), page = await harness.navigateByUrl('/grammar/review', GrammarReviewPage);
     page.session.start(); const total = page.session.total();
-    for (let index = 0; index < total; index++) { page.answer(page.session.current()!.conceptId === '08.1'); page.next(); }
-    harness.detectChanges(); expect(progress.state().review['08.1'].active).toBe(false); expect(progress.state().review['08.2'].active).toBe(true);
+    for (let index = 0; index < total; index++) { page.answer(page.session.current()!.conceptId === '09.1'); page.next(); }
+    harness.detectChanges(); expect(progress.state().review['09.1'].active).toBe(false); expect(progress.state().review['09.2'].active).toBe(true);
     expect(progress.state().concepts).toEqual({}); expect(progress.state().practices).toEqual({});
   });
   it('global review offers mixed practice even without saved difficulties', async () => {
@@ -84,18 +84,18 @@ describe('Grammar progress UI and complete practice integration', () => {
     expect(harness.routeNativeElement!.querySelector('.practice-start')).not.toBeNull();
   });
   it('reloads the lesson at exercise two after answering without pressing Continue', async () => {
-    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/08/1', GrammarPage);
+    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/09/1', GrammarPage);
     harness.routeNativeElement!.querySelector<HTMLButtonElement>('.exercise-option')!.click(); harness.detectChanges();
     harness.routeNativeElement!.querySelector<HTMLButtonElement>('.check-answer')!.click(); harness.detectChanges();
     // Recreate the app while retaining localStorage, as a browser reload does.
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({providers: [provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]), {provide:TranslationService,useValue:{t}}, {provide:SyncOutboxService,useValue:{enqueue:vi.fn().mockResolvedValue(undefined)}}]});
-    const reloaded = await RouterTestingHarness.create(); const page = await reloaded.navigateByUrl('/grammar/n5/08/1', GrammarPage);
-    expect(page.exerciseIndex()).toBe(1); expect(reloaded.routeNativeElement!.textContent).toContain('Ejercicio 2 de 3');
+    const reloaded = await RouterTestingHarness.create(); const page = await reloaded.navigateByUrl('/grammar/n5/09/1', GrammarPage);
+    expect(page.exerciseIndex()).toBe(1); expect(reloaded.routeNativeElement!.textContent).toContain('Ejercicio 2 de 4');
   });
   it('refreshes an empty review intro when cloud difficulties arrive without route reload', async () => {
     const harness = await RouterTestingHarness.create(), page = await harness.navigateByUrl('/grammar/review', GrammarReviewPage);
-    const cloud = emptyGrammarProgress(); cloud.review['08.1'] = {conceptId:'08.1',topicId:'08',active:true,updatedAt:new Date().toISOString()};
+    const cloud = emptyGrammarProgress(); cloud.review['09.1'] = {conceptId:'09.1',topicId:'09',active:true,updatedAt:new Date().toISOString()};
     TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY, cloud); TestBed.tick(); harness.detectChanges(); await harness.fixture.whenStable();
     expect(page.session.stage()).toBe('intro'); expect(page.session.total()).toBeGreaterThan(0);
     expect(harness.routeNativeElement!.querySelector('.practice-start')).not.toBeNull();
@@ -103,11 +103,11 @@ describe('Grammar progress UI and complete practice integration', () => {
   });
   it('never resets an active review or its results on sync, but explicit retry rebuilds it', async () => {
     const progress = TestBed.inject(GrammarProgressService);
-    const lesson = GRAMMAR_LESSONS.find(lesson=>lesson.topicId==='08'&&lesson.id==='1')!; progress.flagDifficulty('08.1',lesson.exercise.id);
+    const lesson = GRAMMAR_LESSONS.find(lesson=>lesson.topicId==='09'&&lesson.id==='1')!; progress.flagDifficulty('09.1',lesson.exercise.id);
     const harness = await RouterTestingHarness.create(), page = await harness.navigateByUrl('/grammar/review', GrammarReviewPage);
     page.session.start(); page.answer(true); page.next();
     const questions = page.session.roundExercises(), index = page.session.index(), answers = page.session.answers();
-    const cloud = emptyGrammarProgress(); cloud.review['09.1'] = {conceptId:'09.1',topicId:'09',active:true,updatedAt:new Date().toISOString()};
+    const cloud = emptyGrammarProgress(); cloud.review['10.1'] = {conceptId:'10.1',topicId:'10',active:true,updatedAt:new Date().toISOString()};
     TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY,cloud); TestBed.tick(); harness.detectChanges();
     expect(page.session.stage()).toBe('question'); expect(page.session.roundExercises()).toBe(questions);
     expect(page.session.index()).toBe(index); expect(page.session.answers()).toEqual(answers);
@@ -116,7 +116,7 @@ describe('Grammar progress UI and complete practice integration', () => {
     TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY,cloud); TestBed.tick(); harness.detectChanges();
     expect(page.session.stage()).toBe('results'); expect(page.session.roundExercises()).toBe(questions); expect(page.session.score()).toBe(score);
     page.reset(); harness.detectChanges(); await harness.fixture.whenStable();
-    expect(page.session.stage()).toBe('intro'); expect(page.session.roundExercises().some(exercise=>exercise.conceptId==='09.1')).toBe(true);
+    expect(page.session.stage()).toBe('intro'); expect(page.session.roundExercises().some(exercise=>exercise.conceptId==='10.1')).toBe(true);
     expect(new Set(page.session.roundExercises().map(e=>e.topicId)).size).toBeGreaterThan(1);
   });
 });

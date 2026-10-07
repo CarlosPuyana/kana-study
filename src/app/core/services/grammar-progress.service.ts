@@ -10,7 +10,8 @@ import { WorkspaceService } from './workspace.service';
 
 export interface GrammarReviewAnswer { conceptId: string; exerciseId: string; correct: boolean }
 const concepts = new Map(GRAMMAR_LESSONS.map(lesson => [grammarConceptId(lesson), {lesson, exercises: grammarLessonExercises(lesson)}]));
-const order = GRAMMAR_SESSIONS.flatMap(session => session.lessonIds.map(id => grammarSessionConceptId(session.topicId,id)));
+const coreSession = (session: GrammarStudySession): boolean => session.lessonIds.some(id => concepts.get(grammarSessionConceptId(session.topicId,id))?.lesson.concept?.track !== 'bridge');
+const order = GRAMMAR_SESSIONS.filter(coreSession).flatMap(session => session.lessonIds.map(id => grammarSessionConceptId(session.topicId,id)));
 const exerciseConcepts = new Map([...GRAMMAR_LESSONS.flatMap(lesson => grammarLessonExercises(lesson).map(exercise => [exercise.id, grammarConceptId(lesson)] as const)),
   ...GRAMMAR_PRACTICES.flatMap(practice => practice.exercises.map(exercise => [exercise.id, exercise.conceptId ?? exercise.id] as const))]);
 const pathFor = (id: string): string => {const lesson=concepts.get(id)!.lesson;return `/grammar/n5/${lesson.topicId}/${lesson.id}`;};
@@ -36,8 +37,8 @@ export class GrammarProgressService {
   });
   openLesson(conceptId:string):void {if(this.v2.has(conceptId))this.v2.open(conceptId);}
   readonly difficulties = computed(() => Object.values(this.state().review).filter(row => row.active));
-  readonly completedSessions = computed(() => GRAMMAR_SESSIONS.filter(session => this.sessionStatus(session) === 'completed').length);
-  readonly totalSessions = GRAMMAR_SESSIONS.length;
+  readonly completedSessions = computed(() => GRAMMAR_SESSIONS.filter(coreSession).filter(session => this.sessionStatus(session) === 'completed').length);
+  readonly totalSessions = GRAMMAR_SESSIONS.filter(coreSession).length;
   readonly continuePath = computed(() => {
     const resume = this.state().resume;
     if (resume && this.conceptStatus(resume.conceptId) !== 'completed') return resume.path;
@@ -60,7 +61,7 @@ export class GrammarProgressService {
   }
   sessionDifficulties(session: GrammarStudySession): number { return session.lessonIds.filter(id => this.state().review[grammarSessionConceptId(session.topicId,id)]?.active).length; }
   topicProgress(topicId: string): {completed: number; total: number} {
-    const sessions = GRAMMAR_SESSIONS.filter(session => session.topicId === topicId);
+    const sessions = GRAMMAR_SESSIONS.filter(session => session.topicId === topicId && coreSession(session));
     return {completed: sessions.filter(session => this.sessionStatus(session) === 'completed').length, total: sessions.length};
   }
   firstPendingExerciseIndex(conceptId: string): number {
@@ -95,7 +96,7 @@ export class GrammarProgressService {
     this.write({...this.state(), review: {...this.state().review, [conceptId]: {...old, conceptId, topicId: concept.lesson.topicId, active: true, updatedAt: now, flaggedAt: now, lastFailedExerciseId: exerciseId}}});
   }
   recordPractice(topicId: string, score: number, total: number, errorConceptIds: readonly string[], attemptedAt: string): void {
-    if(topicId==='01'||topicId==='02'||topicId==='03'||topicId==='04'||topicId==='05'||topicId==='06'||topicId==='07'){this.v2.practice(score,total,errorConceptIds,attemptedAt,topicId);return;}
+    if(topicId==='01'||topicId==='02'||topicId==='03'||topicId==='04'||topicId==='05'||topicId==='06'||topicId==='07'||topicId==='08'){this.v2.practice(score,total,errorConceptIds,attemptedAt,topicId);return;}
     const practice = GRAMMAR_PRACTICES.find(practice => practice.topicId === topicId);
     if (!practice || (!Number.isInteger(total) || total < 1 || total > practice.exercises.length) || score < 0 || score > total || !Number.isInteger(score) || !Number.isFinite(Date.parse(attemptedAt))) return;
     this.write({...this.state(), practices: {...this.state().practices, [topicId]: {topicId, score, total, attemptedAt, updatedAt: this.now(), errorConceptIds: [...new Set(errorConceptIds.filter(id => concepts.has(id) && id.startsWith(topicId + '.')))]}}});
@@ -146,7 +147,7 @@ export class GrammarProgressService {
       state.concepts[id] = {...rest, answers, status: completed ? 'completed' : 'in-progress', lastExerciseIndex: row.lastExerciseIndex < concept.exercises.length ? row.lastExerciseIndex : 0,
         ...(completed ? {completedAt: completedAt ?? row.updatedAt} : {})};
     }
-    for (const [id, row] of Object.entries(input.practices)) if (Number(id)>=8 && GRAMMAR_PRACTICES.some(practice => practice.topicId === id)) state.practices[id] = {...row, errorConceptIds: row.errorConceptIds.filter(id => concepts.has(id))};
+    for (const [id, row] of Object.entries(input.practices)) if (Number(id)>=9 && GRAMMAR_PRACTICES.some(practice => practice.topicId === id)) state.practices[id] = {...row, errorConceptIds: row.errorConceptIds.filter(id => concepts.has(id))};
     for (const [id, row] of Object.entries(input.review)) if (concepts.has(id)) {
       const {lastFailedExerciseId, ...rest} = row;
       state.review[id] = {...rest, ...(lastFailedExerciseId && exerciseConcepts.get(lastFailedExerciseId) === id ? {lastFailedExerciseId} : {})};
