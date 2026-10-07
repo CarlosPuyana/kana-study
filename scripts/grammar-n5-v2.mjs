@@ -3,6 +3,7 @@
 import {addAdjectivesV2} from './grammar-n5-v2-adjectives.mjs';
 import {addVerbsV2} from './grammar-n5-v2-verbs.mjs';
 import {addLocationV2} from './grammar-n5-v2-location.mjs';
+import {grammarKanaBank} from './grammar-kana-bank.mjs';
 const tr = value => value.split('|');
 const jp = value => [value,value,value];
 export function buildGrammarV2() {
@@ -151,7 +152,7 @@ export function buildGrammarV2() {
     e.options=options.map(([text,feedback,status],i)=>({id:`${e.id}-option-${i}`,textKey:key(`${e.id}.option.${i}`,text),feedbackKey:key(`${e.id}.feedback.${i}`,feedback),...(status?{grammarStatus:status}:{})}));
     e.optionKeys=e.options.map(o=>o.textKey);e.answer=answer;push(e);
   };
-  const fill=(prompt,answer,explanation)=>{const e=base('fill-gap','formation',prompt,explanation),answers=Array.isArray(answer)?answer:[answer];push({...e,acceptedAnswers:answers,solutionKey:key(`${e.id}.solution`,jp(answers[0])),kanaBank:[...new Set(Array.from(answers.join('')))]});};
+  const fill=(prompt,answer,explanation)=>{const e=base('fill-gap','formation',prompt,explanation),answers=Array.isArray(answer)?answer:[answer];push({...e,acceptedAnswers:answers,solutionKey:key(`${e.id}.solution`,jp(answers[0])),kanaBank:grammarKanaBank(e.id,answers)});};
   const order=(prompt,tokens,solution,explanation,kind='sentence-order')=>{const e=base(kind,'ordering',prompt,explanation);push({...e,tokenKeys:tokens.map((t,i)=>key(`${e.id}.token.${i}`,jp(t))),solution,orderPolicy:'constrained'});};
   const matching=(prompt,pairs,explanation)=>{const e=base('matching','recognition',prompt,explanation);push({...e,pairs:pairs.map(([left,right],i)=>({leftKey:key(`${e.id}.left.${i}`,jp(left)),rightKey:key(`${e.id}.right.${i}`,right)}))});};
   const valid=(text,feedback)=>[jp(text),feedback,'valid'];

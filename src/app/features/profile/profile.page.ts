@@ -31,5 +31,10 @@ export class ProfilePage {
   }
   async signOut(){await this.auth.signOut();window.location.href=`${window.location.pathname}#/`;window.location.reload();}
   formatDate(value:string){return new Intl.DateTimeFormat(this.i18n.language()==='en'?'en-US':this.i18n.language()==='ca'?'ca-ES':'es-ES',{dateStyle:'long'}).format(new Date(value))}
-  formatDuration(seconds:number){const hours=Math.floor(seconds/3600),minutes=Math.floor(seconds%3600/60);return hours?`${hours} h ${minutes} min`:`${minutes} min`}
+  formatDuration(seconds:number){
+    const total=Number.isFinite(seconds)?Math.max(0,Math.floor(seconds)):0;
+    const hours=Math.floor(total/3600),minutes=Math.floor(total%3600/60),remaining=total%60;
+    const base=hours?`${hours} h ${minutes} min`:`${minutes} min`;
+    return remaining?`${base} ${remaining} s`:base;
+  }
 }

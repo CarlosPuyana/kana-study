@@ -25,11 +25,21 @@ describe('Profile V2',()=>{
   it('defaults to summary, renders all owned badges and does not load ranking',async()=>{
     const f=TestBed.createComponent(ProfilePage);await f.whenStable();f.detectChanges();
     expect(rpc).not.toHaveBeenCalled();expect(f.nativeElement.querySelectorAll('app-medal-badge')).toHaveLength(5);
-    expect(f.componentInstance.formatDuration(3599)).toBe('59 min');expect(f.componentInstance.formatDuration(0)).toBe('0 min');
+    expect(f.componentInstance.formatDuration(3599)).toBe('59 min 59 s');expect(f.componentInstance.formatDuration(0)).toBe('0 min');
   });
   it('shows a clean zero-medal state',async()=>{
     load.mockResolvedValue({...stats,medals:[]});const f=TestBed.createComponent(ProfilePage);await f.whenStable();f.detectChanges();
     expect(f.nativeElement.querySelector('.empty-medals').textContent).toContain('Sin medallas');expect(f.nativeElement.querySelectorAll('app-medal-badge')).toHaveLength(0);
+  });
+  it('shows small real time increases after reloading statistics without rounding up',async()=>{
+    load.mockResolvedValue({...stats,studySeconds:1325});
+    const f=TestBed.createComponent(ProfilePage);await f.whenStable();f.detectChanges();
+    expect(f.nativeElement.textContent).toContain('22 min 5 s');
+    load.mockResolvedValue({...stats,studySeconds:1365});await f.componentInstance.load();f.detectChanges();
+    expect(f.nativeElement.textContent).toContain('22 min 45 s');
+    expect(f.componentInstance.formatDuration(0.9)).toBe('0 min');
+    expect(f.componentInstance.formatDuration(5.9)).toBe('0 min 5 s');
+    expect(f.componentInstance.formatDuration(8299)).toBe('2 h 18 min 19 s');
   });
   it('loads only on opening ranking, highlights current user and reuses loaded entries',async()=>{
     const f=TestBed.createComponent(ProfilePage);f.componentInstance.selectView('leaderboard');await f.whenStable();f.detectChanges();

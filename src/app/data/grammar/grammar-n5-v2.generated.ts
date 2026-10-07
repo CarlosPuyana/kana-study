@@ -328,6 +328,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.state-being-plain-2.solution",
         "kanaBank": [
+          "い",
+          "う",
+          "が",
+          "く",
+          "え",
           "だ"
         ]
       },
@@ -567,10 +572,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.state-being-negative-2.solution",
         "kanaBank": [
-          "じ",
-          "ゃ",
+          "だ",
+          "で",
           "な",
-          "い"
+          "い",
+          "じ",
+          "ゃ"
         ]
       },
       {
@@ -804,8 +811,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.state-being-past-2.solution",
         "kanaBank": [
-          "だ",
+          "を",
+          "ん",
+          "る",
           "っ",
+          "だ",
           "た"
         ]
       },
@@ -1042,11 +1052,13 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.state-being-past-negative-2.solution",
         "kanaBank": [
-          "じ",
+          "ら",
+          "る",
           "ゃ",
           "な",
-          "か",
           "っ",
+          "か",
+          "じ",
           "た"
         ]
       },
@@ -1338,6 +1350,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-wa-topic-3.solution",
         "kanaBank": [
+          "し",
+          "か",
+          "え",
+          "く",
+          "が",
           "は"
         ]
       },
@@ -1449,6 +1466,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-mo-inclusive-1.solution",
         "kanaBank": [
+          "ん",
+          "を",
+          "れ",
+          "る",
+          "ら",
           "も"
         ]
       },
@@ -1674,6 +1696,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-ga-identifier-1.solution",
         "kanaBank": [
+          "も",
+          "ゃ",
+          "や",
+          "る",
+          "ら",
           "が"
         ]
       },
@@ -2183,6 +2210,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-no-noun-link-3.solution",
         "kanaBank": [
+          "い",
+          "か",
+          "え",
+          "く",
+          "が",
           "の"
         ]
       },
@@ -2473,8 +2505,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.demonstratives-ko-so-a-do-3.solution",
         "kanaBank": [
-          "こ",
-          "の"
+          "と",
+          "に",
+          "な",
+          "は",
+          "の",
+          "こ"
         ]
       },
       {
@@ -2765,6 +2801,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjective-na-2.solution",
         "kanaBank": [
+          "ん",
+          "を",
+          "れ",
+          "ら",
+          "る",
           "だ"
         ]
       },
@@ -3261,6 +3302,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjective-noun-modification-1.solution",
         "kanaBank": [
+          "し",
+          "か",
+          "え",
+          "く",
+          "が",
           "な"
         ]
       },
@@ -3559,8 +3605,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjective-negative-1.solution",
         "kanaBank": [
-          "く",
+          "の",
+          "は",
+          "と",
           "な",
+          "く",
           "い"
         ]
       },
@@ -3853,9 +3902,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjective-past-1.solution",
         "kanaBank": [
-          "か",
+          "や",
+          "ゃ",
+          "も",
           "っ",
-          "た"
+          "た",
+          "か"
         ]
       },
       {
@@ -4191,10 +4243,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjective-past-negative-2.solution",
         "kanaBank": [
-          "な",
+          "を",
+          "ん",
+          "た",
           "か",
-          "っ",
-          "た"
+          "な",
+          "っ"
         ]
       },
       {
@@ -4476,10 +4530,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjective-ii-irregular-2.solution",
         "kanaBank": [
-          "よ",
+          "い",
+          "う",
           "か",
+          "た",
           "っ",
-          "た"
+          "よ"
         ]
       },
       {
@@ -4776,8 +4832,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.degree-adverbs-3.solution",
         "kanaBank": [
+          "い",
           "な",
-          "い"
+          "も",
+          "ゃ",
+          "を",
+          "ん"
         ]
       },
       {
@@ -4946,6 +5006,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjectival-predicates-ga-1.solution",
         "kanaBank": [
+          "の",
+          "は",
+          "だ",
+          "で",
+          "じ",
           "が"
         ]
       },
@@ -5530,8 +5595,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-ichidan-2.solution",
         "kanaBank": [
+          "き",
           "起",
-          "き"
+          "る",
+          "れ",
+          "ん",
+          "を"
         ]
       },
       {
@@ -6367,10 +6436,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-negative-plain-1.solution",
         "kanaBank": [
-          "食",
+          "ま",
           "べ",
+          "へ",
           "な",
-          "い"
+          "い",
+          "食"
         ]
       },
       {
@@ -6485,9 +6556,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-negative-plain-4.solution",
         "kanaBank": [
+          "や",
+          "も",
+          "ゃ",
+          "い",
           "し",
-          "な",
-          "い"
+          "な"
         ]
       },
       {
@@ -6510,9 +6584,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-negative-plain-5.solution",
         "kanaBank": [
+          "か",
+          "え",
+          "く",
+          "い",
           "こ",
-          "な",
-          "い"
+          "な"
         ]
       },
       {
@@ -6707,8 +6784,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-past-plain-1.solution",
         "kanaBank": [
+          "た",
           "見",
-          "た"
+          "る",
+          "れ",
+          "ん",
+          "を"
         ]
       },
       {
@@ -6853,8 +6934,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-past-plain-5.solution",
         "kanaBank": [
+          "た",
           "し",
-          "た"
+          "で",
+          "だ",
+          "ま",
+          "へ"
         ]
       },
       {
@@ -6877,8 +6962,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-past-plain-6.solution",
         "kanaBank": [
-          "き",
-          "た"
+          "ん",
+          "を",
+          "れ",
+          "ら",
+          "た",
+          "き"
         ]
       },
       {
@@ -7049,11 +7138,13 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-past-negative-plain-1.solution",
         "kanaBank": [
-          "食",
-          "べ",
-          "な",
+          "う",
+          "が",
           "か",
+          "べ",
           "っ",
+          "な",
+          "食",
           "た"
         ]
       },
@@ -7078,11 +7169,13 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         "solutionKey": "grammar.v2.verb-past-negative-plain-2.solution",
         "kanaBank": [
           "飲",
-          "ま",
-          "な",
           "か",
+          "え",
+          "く",
+          "た",
+          "な",
           "っ",
-          "た"
+          "ま"
         ]
       },
       {
@@ -7320,6 +7413,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjective-adverb-ku-ni-1.solution",
         "kanaBank": [
+          "を",
+          "ん",
+          "れ",
+          "ら",
+          "る",
           "く"
         ]
       },
@@ -7343,6 +7441,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.adjective-adverb-ku-ni-2.solution",
         "kanaBank": [
+          "を",
+          "ゃ",
+          "も",
+          "や",
+          "る",
           "に"
         ]
       },
@@ -7545,6 +7648,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-wo-object-2.solution",
         "kanaBank": [
+          "た",
+          "す",
+          "じ",
+          "し",
+          "は",
           "を"
         ]
       },
@@ -7764,6 +7872,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.verb-transitivity-basic-2.solution",
         "kanaBank": [
+          "う",
+          "い",
+          "す",
+          "じ",
+          "た",
           "を"
         ]
       },
@@ -7911,8 +8024,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-ni-destination-1.solution",
         "kanaBank": [
-          "に",
-          "へ"
+          "し",
+          "た",
+          "じ",
+          "す",
+          "へ",
+          "に"
         ]
       },
       {
@@ -8125,8 +8242,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-he-direction-3.solution",
         "kanaBank": [
-          "に",
-          "へ"
+          "ん",
+          "を",
+          "れ",
+          "ら",
+          "へ",
+          "に"
         ]
       }
     ]
@@ -8279,6 +8400,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-de-action-location-3.solution",
         "kanaBank": [
+          "ら",
+          "る",
+          "れ",
+          "を",
+          "ん",
           "で"
         ]
       },
@@ -8403,6 +8529,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-ni-time-1.solution",
         "kanaBank": [
+          "え",
+          "か",
+          "が",
+          "く",
+          "い",
           "に"
         ]
       },
@@ -8552,6 +8683,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-to-companion-1.solution",
         "kanaBank": [
+          "た",
+          "じ",
+          "す",
+          "し",
+          "が",
           "と"
         ]
       },
@@ -8726,8 +8862,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.particle-kara-made-2.solution",
         "kanaBank": [
-          "か",
-          "ら"
+          "る",
+          "ら",
+          "れ",
+          "も",
+          "ゃ",
+          "か"
         ]
       },
       {
@@ -8884,8 +9024,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.existence-aru-iru-1.solution",
         "kanaBank": [
+          "る",
           "あ",
-          "る"
+          "は",
+          "な",
+          "に",
+          "と"
         ]
       },
       {
@@ -8941,8 +9085,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.existence-aru-iru-3.solution",
         "kanaBank": [
+          "い",
           "な",
-          "い"
+          "ら",
+          "る",
+          "を",
+          "ん"
         ]
       },
       {
@@ -8965,8 +9113,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.existence-aru-iru-4.solution",
         "kanaBank": [
+          "な",
           "い",
-          "な"
+          "も",
+          "れ",
+          "る",
+          "ら"
         ]
       },
       {
@@ -9391,6 +9543,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.position-words-2.solution",
         "kanaBank": [
+          "ん",
+          "を",
+          "れ",
+          "ら",
+          "る",
           "の"
         ]
       },
@@ -9609,6 +9766,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.question-words-basic-2.solution",
         "kanaBank": [
+          "た",
+          "す",
+          "じ",
+          "で",
+          "だ",
           "誰"
         ]
       },
@@ -9796,6 +9958,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.question-words-ka-mo-1.solution",
         "kanaBank": [
+          "ゃ",
+          "も",
+          "れ",
+          "ら",
+          "る",
           "か"
         ]
       },
@@ -10050,8 +10217,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.basic-counters-2.solution",
         "kanaBank": [
-          "ひ",
+          "が",
+          "く",
+          "え",
           "と",
+          "ひ",
           "り"
         ]
       },
@@ -10075,9 +10245,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.basic-counters-3.solution",
         "kanaBank": [
+          "ん",
+          "を",
+          "ゃ",
+          "り",
           "ふ",
-          "た",
-          "り"
+          "た"
         ]
       },
       {
@@ -10100,10 +10273,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.basic-counters-4.solution",
         "kanaBank": [
-          "い",
-          "っ",
+          "を",
+          "ん",
+          "る",
           "ぽ",
-          "ん"
+          "っ",
+          "い"
         ]
       }
     ]
@@ -10295,8 +10470,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.clock-time-3.solution",
         "kanaBank": [
-          "な",
           "ん",
+          "を",
+          "や",
+          "ゃ",
+          "な",
           "じ"
         ]
       },
@@ -10320,6 +10498,11 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.clock-time-4.solution",
         "kanaBank": [
+          "を",
+          "ん",
+          "や",
+          "も",
+          "ゃ",
           "に"
         ]
       }
@@ -10927,10 +11110,12 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ],
         "solutionKey": "grammar.v2.duration-gurai-1.solution",
         "kanaBank": [
+          "ま",
+          "へ",
+          "ぐ",
           "く",
-          "ら",
           "い",
-          "ぐ"
+          "ら"
         ]
       },
       {
@@ -11048,10 +11233,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic01-review-02.solution",
     "kanaBank": [
+      "や",
+      "ん",
+      "い",
       "じ",
-      "ゃ",
       "な",
-      "い"
+      "ゃ"
     ]
   },
   {
@@ -11214,6 +11401,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic01-review-06.solution",
     "kanaBank": [
+      "ん",
+      "を",
+      "れ",
+      "る",
+      "ら",
       "も"
     ]
   },
@@ -11237,7 +11429,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic01-review-07.solution",
     "kanaBank": [
-      "が"
+      "く",
+      "が",
+      "し",
+      "じ",
+      "す",
+      "た"
     ]
   },
   {
@@ -11495,8 +11692,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic01-review-14.solution",
     "kanaBank": [
-      "そ",
-      "の"
+      "へ",
+      "ま",
+      "だ",
+      "で",
+      "の",
+      "そ"
     ]
   },
   {
@@ -11652,6 +11853,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic02-review-04.solution",
     "kanaBank": [
+      "や",
+      "も",
+      "ゃ",
+      "れ",
+      "る",
       "な"
     ]
   },
@@ -11675,9 +11881,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic02-review-05.solution",
     "kanaBank": [
+      "う",
+      "い",
+      "か",
+      "え",
       "く",
-      "な",
-      "い"
+      "な"
     ]
   },
   {
@@ -11700,10 +11909,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic02-review-06.solution",
     "kanaBank": [
+      "が",
+      "く",
+      "い",
       "じ",
-      "ゃ",
       "な",
-      "い"
+      "ゃ"
     ]
   },
   {
@@ -11726,9 +11937,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic02-review-07.solution",
     "kanaBank": [
-      "か",
+      "へ",
+      "ま",
+      "だ",
       "っ",
-      "た"
+      "た",
+      "か"
     ]
   },
   {
@@ -11751,9 +11965,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic02-review-08.solution",
     "kanaBank": [
-      "だ",
+      "じ",
+      "す",
+      "た",
       "っ",
-      "た"
+      "だ",
+      "で"
     ]
   },
   {
@@ -11815,10 +12032,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic02-review-10.solution",
     "kanaBank": [
-      "な",
-      "か",
+      "ま",
+      "へ",
       "っ",
-      "た"
+      "な",
+      "た",
+      "か"
     ]
   },
   {
@@ -11841,11 +12060,13 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic02-review-11.solution",
     "kanaBank": [
+      "も",
+      "ゃ",
       "よ",
-      "く",
+      "っ",
       "な",
       "か",
-      "っ",
+      "く",
       "た"
     ]
   },
@@ -11911,6 +12132,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic02-review-13.solution",
     "kanaBank": [
+      "る",
+      "ら",
+      "れ",
+      "も",
+      "ゃ",
       "が"
     ]
   },
@@ -12179,10 +12405,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic03-review-06.solution",
     "kanaBank": [
+      "し",
+      "が",
+      "い",
       "買",
       "わ",
-      "な",
-      "い"
+      "な"
     ]
   },
   {
@@ -12239,9 +12467,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic03-review-08.solution",
     "kanaBank": [
+      "ん",
+      "を",
+      "ゃ",
+      "た",
       "行",
-      "っ",
-      "た"
+      "っ"
     ]
   },
   {
@@ -12317,11 +12548,13 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     "solutionKey": "grammar.v2.topic03-review-11.solution",
     "kanaBank": [
       "飲",
-      "ま",
-      "な",
+      "ん",
+      "を",
+      "た",
       "か",
+      "ま",
       "っ",
-      "た"
+      "な"
     ]
   },
   {
@@ -12345,12 +12578,14 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     "solutionKey": "grammar.v2.topic03-review-12.solution",
     "kanaBank": [
       "勉",
-      "強",
-      "し",
+      "る",
+      "ら",
       "な",
-      "か",
       "っ",
-      "た"
+      "か",
+      "た",
+      "し",
+      "強"
     ]
   },
   {
@@ -12488,6 +12723,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-01.solution",
     "kanaBank": [
+      "へ",
+      "ま",
+      "だ",
+      "で",
+      "と",
       "を"
     ]
   },
@@ -12511,6 +12751,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-02.solution",
     "kanaBank": [
+      "ま",
+      "へ",
+      "や",
+      "も",
+      "ゃ",
       "が"
     ]
   },
@@ -12534,6 +12779,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-03.solution",
     "kanaBank": [
+      "う",
+      "い",
+      "か",
+      "え",
+      "く",
       "を"
     ]
   },
@@ -12558,8 +12808,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-04.solution",
     "kanaBank": [
-      "に",
-      "へ"
+      "を",
+      "ん",
+      "も",
+      "ゃ",
+      "へ",
+      "に"
     ]
   },
   {
@@ -12582,6 +12836,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-05.solution",
     "kanaBank": [
+      "い",
+      "う",
+      "が",
+      "く",
+      "え",
       "へ"
     ]
   },
@@ -12605,6 +12864,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-06.solution",
     "kanaBank": [
+      "を",
+      "ん",
+      "る",
+      "ら",
+      "れ",
       "で"
     ]
   },
@@ -12628,6 +12892,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-07.solution",
     "kanaBank": [
+      "や",
+      "ゃ",
+      "も",
+      "れ",
+      "る",
       "に"
     ]
   },
@@ -12651,6 +12920,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-08.solution",
     "kanaBank": [
+      "を",
+      "ん",
+      "や",
+      "も",
+      "ゃ",
       "と"
     ]
   },
@@ -12731,6 +13005,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-11.solution",
     "kanaBank": [
+      "る",
+      "ら",
+      "れ",
+      "も",
+      "ゃ",
       "に"
     ]
   },
@@ -12787,6 +13066,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-13.solution",
     "kanaBank": [
+      "も",
+      "ゃ",
+      "や",
+      "ら",
+      "る",
       "に"
     ]
   },
@@ -12810,7 +13094,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-14.solution",
     "kanaBank": [
-      "何"
+      "し",
+      "何",
+      "す",
+      "じ",
+      "た",
+      "う"
     ]
   },
   {
@@ -12898,8 +13187,12 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-17.solution",
     "kanaBank": [
-      "く",
-      "じ"
+      "た",
+      "じ",
+      "す",
+      "し",
+      "が",
+      "く"
     ]
   },
   {
@@ -12982,9 +13275,11 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
     ],
     "solutionKey": "grammar.v2.topic04-review-20.solution",
     "kanaBank": [
-      "く",
+      "も",
+      "ゃ",
       "ら",
       "い",
+      "く",
       "ぐ"
     ]
   }

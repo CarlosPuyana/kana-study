@@ -92,7 +92,8 @@ describe('Grammar V2 Topic 03 authored content',()=>{
       if(/[A-Za-zÀ-ÿ]/u.test(source))for(const dict of [en,ca])expect((dict as Record<string,string>)[key],key).not.toBe(source);
       expect(source).not.toMatch(/です|ます|ません|ました|ませんでした/);
     }
-    expect(JSON.stringify(concepts)).not.toMatch(/を|へ|で[。 ]/);
+    // Input-bank distractors are not lesson content about verbal particles.
+    expect(JSON.stringify(concepts,(key,value)=>key==='kanaBank'?undefined:value)).not.toMatch(/を|へ|で[。 ]/);
     expect(t(concept('adjective-adverb-ku-ni').lesson.detailedExplanation[1].bodyKey)).toContain('formas independientes');
   });
 });
