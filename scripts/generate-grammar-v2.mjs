@@ -4,14 +4,15 @@ import {buildGrammarV2} from './grammar-n5-v2.mjs';
 import {compileTranslations} from './compile-i18n.mjs';
 
 export function generateGrammarV2() {
-  const {concepts,review,copy}=buildGrammarV2();
+  const {concepts,review,integration,copy}=buildGrammarV2();
   fs.mkdirSync('src/app/data/grammar',{recursive:true});
   fs.writeFileSync('src/app/data/grammar/grammar-n5-v2.generated.ts',
     "// Generated from scripts/grammar-n5-v2.mjs. Do not edit manually.\n"+
-    "import {GrammarConcept} from '../../core/models/grammar-v2.model';\n"+
+    "import {GrammarConcept,GrammarIntegrationSection} from '../../core/models/grammar-v2.model';\n"+
     "import {GrammarExercise} from '../../features/grammar/models/grammar.model';\n"+
     `export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = ${JSON.stringify(concepts,null,2)};\n`+
-    `export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = ${JSON.stringify(review,null,2)};\n`);
+    `export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = ${JSON.stringify(review,null,2)};\n`+
+    `export const GRAMMAR_V2_INTEGRATION: readonly GrammarIntegrationSection[] = ${JSON.stringify(integration,null,2)};\n`);
   for(const lang of ['es','en','ca']) {
     const path=`src/assets/i18n/${lang}.json`, existing=JSON.parse(fs.readFileSync(path,'utf8'));
     for(const id of Object.keys(existing))if(id.startsWith('grammar.v2.'))delete existing[id];

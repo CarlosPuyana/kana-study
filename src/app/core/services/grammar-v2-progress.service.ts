@@ -1,22 +1,23 @@
 import {computed, effect, inject, Injectable, signal, untracked} from '@angular/core';
-import {GRAMMAR_PROGRESS_V2_KEY, GrammarV2ConceptProgress} from '../models/grammar-v2.model';
+import {GRAMMAR_PROGRESS_V2_KEY, GrammarV2ConceptProgress, GrammarIntegrationProgress} from '../models/grammar-v2.model';
 import {GrammarDifficulty, GrammarPracticeProgress, GrammarResume} from '../models/grammar-progress.model';
-import {GRAMMAR_V2_CONCEPTS, GRAMMAR_V2_REVIEW} from '../../data/grammar/grammar-n5-v2.generated';
+import {GRAMMAR_V2_CONCEPTS, GRAMMAR_V2_REVIEW, GRAMMAR_V2_INTEGRATION} from '../../data/grammar/grammar-n5-v2.generated';
 import {StorageService} from './storage.service';
 import {WorkspaceService} from './workspace.service';
 
 interface ProgressV2 {
   version: 2; concepts: Record<string, GrammarV2ConceptProgress>;
   practices: Record<string, GrammarPracticeProgress>; review: Record<string, GrammarDifficulty>; resume?: GrammarResume;
+  integration?: GrammarIntegrationProgress;
 }
 const empty=():ProgressV2=>({version:2,concepts:{},practices:{},review:{}});
 const catalog=new Map(GRAMMAR_V2_CONCEPTS.map(c=>[c.id,c]));
-const allExercises=[...GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises),...GRAMMAR_V2_REVIEW];
+const allExercises=[...GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises),...GRAMMAR_V2_REVIEW,...GRAMMAR_V2_INTEGRATION.flatMap(s=>s.exercises)];
 const object=(v:unknown):Record<string,unknown>=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,unknown>:{};
 const count=(v:unknown)=>typeof v==='number'&&Number.isSafeInteger(v)&&v>=0?v:0;
 const date=(v:unknown):string|undefined=>typeof v==='string'&&Number.isFinite(Date.parse(v))?v:undefined;
 
-/** Semantic concepts only. Never reads the V1 key or imports its records. */
+/** Semantic progress and separate integration activities. Never imports V1 records. */
 @Injectable({providedIn:'root'})
 export class GrammarV2ProgressService {
   private readonly storage=inject(StorageService);
@@ -24,8 +25,31 @@ export class GrammarV2ProgressService {
   private readonly saved=signal(this.read(this.storage.get<unknown>(GRAMMAR_PROGRESS_V2_KEY,null)));
   readonly state=this.saved.asReadonly();
   readonly started=computed(()=>Object.keys(this.state().concepts).length>0);
+  readonly integrationCompleted=computed(()=>!!this.state().integration?.openedAt&&GRAMMAR_V2_INTEGRATION.filter(s=>s.track==='core').every(s=>this.integrationStatus(s.id)==='completed'));
+  readonly coreCompleted=computed(()=>GRAMMAR_V2_CONCEPTS.filter(c=>c.track==='core').every(c=>this.state().concepts[c.id]?.status==='completed')&&this.integrationCompleted());
   constructor(){effect(()=>{this.workspace.active();this.workspace.dataRevision();this.storage.cloudRevision();untracked(()=>this.saved.set(this.read(this.storage.get<unknown>(GRAMMAR_PROGRESS_V2_KEY,null))));});}
   has(id:string):boolean{return catalog.has(id);}
+  integrationStatus(id:string):'not-started'|'in-progress'|'completed' {
+    if(id==='00')return this.state().integration?.openedAt?'completed':'not-started';
+    const section=GRAMMAR_V2_INTEGRATION.find(s=>s.id===id),row=this.state().integration?.activities[id];
+    if(!section||!row)return 'not-started';
+    return section.exercises.every(e=>row.answers[e.id]?.solved)?'completed':'in-progress';
+  }
+  integrationContinuePath():string {
+    const id=!this.state().integration?.openedAt?'00':GRAMMAR_V2_INTEGRATION.find(s=>s.track==='core'&&this.integrationStatus(s.id)!=='completed')?.id;
+    return id?`/grammar/n5/11/${id}`:'/grammar/review';
+  }
+  openIntegration(id:string):void {
+    if(id!=='00'&&!GRAMMAR_V2_INTEGRATION.some(s=>s.id===id))return;
+    const now=new Date().toISOString(),integration=this.state().integration??{activities:{}};
+    this.write({...this.state(),integration:{...integration,resumeActivityId:id,...(id==='00'?{openedAt:integration.openedAt??now}:{activities:{...integration.activities,[id]:integration.activities[id]??{openedAt:now,updatedAt:now,answers:{}}}})}});
+  }
+  recordIntegration(activityId:string,exerciseId:string,correct:boolean):void {
+    const section=GRAMMAR_V2_INTEGRATION.find(s=>s.id===activityId),e=section?.exercises.find(e=>e.id===exerciseId);if(!e)return;
+    const now=new Date().toISOString(),integration=this.state().integration??{activities:{}},row=integration.activities[activityId]??{openedAt:now,updatedAt:now,answers:{}},old=row.answers[exerciseId];
+    this.write({...this.state(),integration:{...integration,resumeActivityId:activityId,activities:{...integration.activities,[activityId]:{...row,updatedAt:now,answers:{...row.answers,[exerciseId]:{correct,solved:correct||!!old?.solved,attempts:(old?.attempts??0)+1,correctCount:(old?.correctCount??0)+Number(correct),answeredAt:now}}}}}});
+    if(!correct)this.flag(e.conceptId!,e.id);
+  }
   open(id:string):void {
     const concept=catalog.get(id);if(!concept)return;
     const now=new Date().toISOString(),old=this.state().concepts[id];
@@ -96,6 +120,18 @@ export class GrammarV2ProgressService {
         state.practices[topicId]={topicId,score:count(practice['score']),total:count(practice['total']),attemptedAt:practice['attemptedAt'] as string,updatedAt:practice['updatedAt'] as string,errorConceptIds:Array.isArray(practice['errorConceptIds'])?practice['errorConceptIds'].filter((id):id is string=>typeof id==='string'&&catalog.get(id)?.topicId===topicId):[]};
     }
     const resume=object(input['resume']);if(typeof resume['conceptId']==='string'&&catalog.has(resume['conceptId'])&&date(resume['updatedAt']))state.resume={conceptId:resume['conceptId'],path:`/grammar/n5/${catalog.get(resume['conceptId'])!.topicId}/${resume['conceptId']}`,exerciseIndex:count(resume['exerciseIndex']),updatedAt:resume['updatedAt'] as string};
+    const integration=object(input['integration']);
+    if(Object.keys(integration).length){
+      const openedAt=date(integration['openedAt']);state.integration={activities:{},...(openedAt?{openedAt}:{})};
+      for(const section of GRAMMAR_V2_INTEGRATION){
+        const row=object(object(integration['activities'])[section.id]),openedAt=date(row['openedAt']),updatedAt=date(row['updatedAt']);if(!openedAt||!updatedAt)continue;
+        const answers:GrammarV2ConceptProgress['answers']={};
+        for(const e of section.exercises){const a=object(object(row['answers'])[e.id]),answeredAt=date(a['answeredAt']),attempts=count(a['attempts']);if(typeof a['correct']!=='boolean'||!answeredAt||!attempts)continue;
+          const correctCount=Math.min(attempts,count(a['correctCount']));answers[e.id]={correct:a['correct'],solved:correctCount>0,attempts,correctCount,answeredAt};}
+        state.integration.activities[section.id]={openedAt,updatedAt,answers};
+      }
+      const id=integration['resumeActivityId'];if(typeof id==='string'&&(id==='00'||GRAMMAR_V2_INTEGRATION.some(s=>s.id===id)))state.integration.resumeActivityId=id;
+    }
     return state;
   }
 }

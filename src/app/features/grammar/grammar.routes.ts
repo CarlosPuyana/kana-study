@@ -4,6 +4,7 @@ import { TranslationService } from '../../core/services/translation.service';
 const page = () => import('./pages/grammar.page').then(module => module.GrammarPage);
 const title = () => `${inject(TranslationService).t('grammar.title')} · Kana Study`;
 export const GRAMMAR_ROUTES: Routes = [
+  {path:'n5/11/practice',redirectTo:'n5/11/07',pathMatch:'full'},
   {path:'n5/00/:lessonId',redirectTo:'n5/00',pathMatch:'full'},
   {path:'', data: {titleKey: 'grammar.title'},loadComponent:page,title},
   {path:'review', data: {titleKey: 'grammar.title'},loadComponent:()=>import('./pages/grammar-review.page').then(module=>module.GrammarReviewPage),title},

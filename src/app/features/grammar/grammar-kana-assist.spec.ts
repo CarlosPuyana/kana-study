@@ -3,11 +3,11 @@ import { TranslationService } from '../../core/services/translation.service';
 import { GrammarExerciseComponent } from './components/grammar-exercise';
 import { GRAMMAR_LESSONS } from './data/grammar-n5.generated';
 import es from '../../../assets/i18n/es.json';
-import {GRAMMAR_V2_CONCEPTS, GRAMMAR_V2_REVIEW} from '../../data/grammar/grammar-n5-v2.generated';
+import {GRAMMAR_V2_CONCEPTS, GRAMMAR_V2_REVIEW,GRAMMAR_V2_INTEGRATION} from '../../data/grammar/grammar-n5-v2.generated';
 import {GRAMMAR_LESSONS as LEGACY_LESSONS} from './data/grammar-n5.generated';
 import {GrammarFillExercise} from './models/grammar.model';
 
-const v2Gaps=[...GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises),...GRAMMAR_V2_REVIEW].filter((e):e is GrammarFillExercise=>e.kind==='fill-gap');
+const v2Gaps=[...GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises),...GRAMMAR_V2_REVIEW,...GRAMMAR_V2_INTEGRATION.flatMap(s=>s.exercises)].filter((e):e is GrammarFillExercise=>e.kind==='fill-gap');
 function safeBank(e:Pick<GrammarFillExercise,'acceptedAnswers'|'kanaBank'>):boolean {
   const required=new Set(Array.from(e.acceptedAnswers.join(''))),bank=e.kanaBank??[];
   return bank.length>=6&&new Set(bank).size===bank.length&&[...required].every(c=>bank.includes(c))

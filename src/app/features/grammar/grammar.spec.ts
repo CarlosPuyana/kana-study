@@ -123,7 +123,7 @@ describe('Grammar navigation',()=>{
   it('starts with N5 expanded, roadmap selected and all eleven topic links',async()=>{
     const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar',GrammarPage);
     const root=harness.routeNativeElement!;
-    expect(root.querySelectorAll('.stage-card')).toHaveLength(11);
+    expect(root.querySelectorAll('.stage-card')).toHaveLength(12);
     expect(root.querySelector('.group-title')?.getAttribute('aria-expanded')).toBe('true');
     expect(root.querySelector('.subnav-item.selected')?.textContent).toContain('ROADMAP');
     expect(APP_MODULES.find(m=>m.id==='grammar')?.available).toBe(true);

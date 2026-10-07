@@ -1,3 +1,5 @@
+import {GrammarIntegrationComponent} from '../components/grammar-integration';
+import {GRAMMAR_V2_INTEGRATION} from '../../../data/grammar/grammar-n5-v2.generated';
 import {GrammarV2LessonComponent} from '../components/grammar-v2-lesson';
 import {GrammarPrerequisitesComponent} from '../components/grammar-prerequisites';
 import {grammarConceptId} from '../data/grammar-catalog';
@@ -15,7 +17,7 @@ import { GrammarPracticeComponent } from '../components/grammar-practice';
 import { grammarTopicRound } from '../services/grammar-interactive-catalog';
 import { grammarLessonExercises } from '../models/grammar.model';
 
-@Component({selector:'app-grammar-page',imports:[GrammarV2LessonComponent,GrammarPrerequisitesComponent,RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
+@Component({selector:'app-grammar-page',imports:[GrammarIntegrationComponent,GrammarV2LessonComponent,GrammarPrerequisitesComponent,RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
 export class GrammarPage {
   readonly conceptId=grammarConceptId;
   private readonly weaknesses=inject(WeaknessService);
@@ -49,7 +51,8 @@ export class GrammarPage {
       ...(lesson?{intro:{...practice.intro,titleKey:lesson.titleKey,bodyKey:'grammar.interactive.lessonIntro'},philosophyKeys:[],areas:[],
         tip:GRAMMAR_PRACTICES.find(p=>p.topicId==='03')!.tip,nextPath:`/grammar/n5/${practice.topicId}/${lesson.id}`,nextLabelKey:'grammar.learn'}:{})};
   });
-  readonly invalid=computed(()=>!!this.params().get('topicId')&&(!this.topic()||!!this.params().get('lessonId')&&!this.lesson()||this.route.snapshot.routeConfig?.path?.endsWith('/practice')&&!this.practice()));
+  readonly integrationActivityId=computed(()=>this.params().get('lessonId'));
+  readonly invalid=computed(()=>this.topic()?.id==='11'?!!this.integrationActivityId()&&this.integrationActivityId()!=='00'&&!GRAMMAR_V2_INTEGRATION.some(s=>s.id===this.integrationActivityId()):!!this.params().get('topicId')&&(!this.topic()||!!this.params().get('lessonId')&&!this.lesson()||this.route.snapshot.routeConfig?.path?.endsWith('/practice')&&!this.practice()));
   readonly mobileOpen=signal(false);readonly collapsed=signal(false);
   private readonly sidebar=viewChild<ElementRef<HTMLElement>>('sidebar');
   private readonly menuTrigger=viewChild<ElementRef<HTMLButtonElement>>('menuTrigger');

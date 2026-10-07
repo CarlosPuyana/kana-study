@@ -1,3 +1,4 @@
+import {GRAMMAR_V2_INTEGRATION} from '../../../data/grammar/grammar-n5-v2.generated';
 import {grammarConceptId} from '../data/grammar-catalog';
 import { GRAMMAR_INTERACTIVE } from '../data/grammar-interactive';
 import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES } from '../data/grammar-catalog';
@@ -8,14 +9,15 @@ export const GRAMMAR_PRACTICE_CATALOG: readonly GrammarExercise[] = [
   ...GRAMMAR_LESSONS.flatMap(lesson => grammarLessonExercises(lesson).map(exercise => adapted.get(exercise.id) ??
     {...exercise, topicId: lesson.topicId, lessonId: lesson.id, conceptId: grammarConceptId(lesson)})),
   ...GRAMMAR_PRACTICES.flatMap(practice => practice.exercises.map(exercise => ({...exercise, topicId: practice.topicId}))),
+  ...GRAMMAR_V2_INTEGRATION.flatMap(s=>s.exercises),
 ];
 export function grammarTopicExercises(topicId: string, lessonId?: string): readonly GrammarExercise[] {
-  return GRAMMAR_PRACTICE_CATALOG.filter(exercise => exercise.topicId === topicId && (!lessonId || exercise.lessonId === lessonId));
+  return GRAMMAR_PRACTICE_CATALOG.filter(exercise => !exercise.id.startsWith('n5-integration-') && exercise.topicId === topicId && (!lessonId || exercise.lessonId === lessonId));
 }
 /** Mix topics round-robin, prioritizing reliable opened/answered concepts and difficulties. */
 export function grammarMixedExercises(preferredConcepts: readonly string[] = [], difficulties: readonly GrammarExercise[] = []): readonly GrammarExercise[] {
   const preferred = new Set(preferredConcepts);
-  const pool = [...difficulties, ...GRAMMAR_INTERACTIVE.filter(e=>Number(e.topicId)>=11), ...GRAMMAR_PRACTICE_CATALOG];
+  const pool = [...difficulties, ...GRAMMAR_INTERACTIVE.filter(e=>Number(e.topicId)>=12), ...GRAMMAR_PRACTICE_CATALOG];
   const ordered = [...pool.filter(e => e.conceptId && preferred.has(e.conceptId)), ...pool];
   const groups = new Map<string, GrammarExercise[]>();
   const seen = new Set<string>();

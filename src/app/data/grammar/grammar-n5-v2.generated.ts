@@ -1,5 +1,5 @@
 // Generated from scripts/grammar-n5-v2.mjs. Do not edit manually.
-import {GrammarConcept} from '../../core/models/grammar-v2.model';
+import {GrammarConcept,GrammarIntegrationSection} from '../../core/models/grammar-v2.model';
 import {GrammarExercise} from '../../features/grammar/models/grammar.model';
 export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
   {
@@ -29635,5 +29635,2693 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
       "grammar.v2.topic10-review-18.option.1"
     ],
     "answer": 1
+  }
+];
+export const GRAMMAR_V2_INTEGRATION: readonly GrammarIntegrationSection[] = [
+  {
+    "id": "01",
+    "titleKey": "grammar.v2.integration.01.title",
+    "bodyKey": "grammar.v2.integration.goal",
+    "track": "core",
+    "exercises": [
+      {
+        "id": "n5-integration-01-1",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "particle-ni-destination",
+        "lessonId": "particle-ni-destination",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-01-1.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-1.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-1.feedback",
+        "acceptedAnswers": [
+          "に"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-01-1.solution",
+        "kanaBank": [
+          "ん",
+          "を",
+          "る",
+          "ら",
+          "れ",
+          "に"
+        ]
+      },
+      {
+        "id": "n5-integration-01-2",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "particle-de-action-location",
+        "lessonId": "particle-de-action-location",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-01-2.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-2.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-2.feedback",
+        "acceptedAnswers": [
+          "で"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-01-2.solution",
+        "kanaBank": [
+          "ま",
+          "へ",
+          "い",
+          "う",
+          "が",
+          "で"
+        ]
+      },
+      {
+        "id": "n5-integration-01-3",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "location-ni-vs-de",
+        "lessonId": "location-ni-vs-de",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-01-3.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-3.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-3.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-01-3.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-01-3.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-01-3.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-01-3.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-01-4",
+        "version": 2,
+        "topicId": "01",
+        "conceptId": "particle-wa-vs-ga",
+        "lessonId": "particle-wa-vs-ga",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-01-4.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-4.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-4.feedback",
+        "acceptedAnswers": [
+          "が"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-01-4.solution",
+        "kanaBank": [
+          "も",
+          "ゃ",
+          "や",
+          "る",
+          "ら",
+          "が"
+        ]
+      },
+      {
+        "id": "n5-integration-01-5",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "particle-wo-object",
+        "lessonId": "particle-wo-object",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-01-5.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-5.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-5.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-01-5.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-01-5.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-01-5.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-01-5.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-01-6",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "particle-he-direction",
+        "lessonId": "particle-he-direction",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-01-6.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-6.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-6.feedback",
+        "options": [
+          {
+            "id": "n5-integration-01-6-0",
+            "textKey": "grammar.v2.integration.n5-integration-01-6.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-01-6.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-01-6-1",
+            "textKey": "grammar.v2.integration.n5-integration-01-6.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-01-6.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-01-6-2",
+            "textKey": "grammar.v2.integration.n5-integration-01-6.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-01-6.optionFeedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-01-6.option.0",
+          "grammar.v2.integration.n5-integration-01-6.option.1",
+          "grammar.v2.integration.n5-integration-01-6.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-01-7",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "particle-to-companion",
+        "lessonId": "particle-to-companion",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-01-7.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-7.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-7.feedback",
+        "acceptedAnswers": [
+          "と"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-01-7.solution",
+        "kanaBank": [
+          "ん",
+          "を",
+          "れ",
+          "ら",
+          "る",
+          "と"
+        ]
+      },
+      {
+        "id": "n5-integration-01-8",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "particle-kara-made",
+        "lessonId": "particle-kara-made",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-01-8.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-8.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-8.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-01-8.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-01-8.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-01-8.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-01-8.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-01-9",
+        "version": 2,
+        "topicId": "01",
+        "conceptId": "particle-no-noun-link",
+        "lessonId": "particle-no-noun-link",
+        "kind": "sentence-builder",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.integration.n5-integration-01-9.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-9.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-9.feedback",
+        "tokenKeys": [
+          "grammar.v2.integration.n5-integration-01-9.token.0",
+          "grammar.v2.integration.n5-integration-01-9.token.1",
+          "grammar.v2.integration.n5-integration-01-9.token.2"
+        ],
+        "solution": [
+          0,
+          1,
+          2
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "n5-integration-01-10",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "ya-open-list",
+        "lessonId": "ya-open-list",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-01-10.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-01-10.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-01-10.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-01-10.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-01-10.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-01-10.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-01-10.right.1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "02",
+    "titleKey": "grammar.v2.integration.02.title",
+    "bodyKey": "grammar.v2.integration.goal",
+    "track": "core",
+    "exercises": [
+      {
+        "id": "n5-integration-02-1",
+        "version": 2,
+        "topicId": "05",
+        "conceptId": "plain-vs-polite",
+        "lessonId": "plain-vs-polite",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-02-1.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-02-1.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-02-1.feedback",
+        "options": [
+          {
+            "id": "n5-integration-02-1-0",
+            "textKey": "grammar.v2.integration.n5-integration-02-1.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-02-1.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-02-1-1",
+            "textKey": "grammar.v2.integration.n5-integration-02-1.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-02-1.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-02-1-2",
+            "textKey": "grammar.v2.integration.n5-integration-02-1.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-02-1.optionFeedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-02-1.option.0",
+          "grammar.v2.integration.n5-integration-02-1.option.1",
+          "grammar.v2.integration.n5-integration-02-1.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-02-2",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-form-formation",
+        "lessonId": "te-form-formation",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-02-2.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-02-2.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-02-2.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-02-2.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-02-2.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-02-2.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-02-2.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-02-3",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "mae-ni",
+        "lessonId": "mae-ni",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-02-3.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-02-3.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-02-3.feedback",
+        "acceptedAnswers": [
+          "寝る"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-02-3.solution",
+        "kanaBank": [
+          "る",
+          "寝",
+          "え",
+          "か",
+          "が",
+          "く"
+        ]
+      },
+      {
+        "id": "n5-integration-02-4",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "experience-ta-koto-ga-aru",
+        "lessonId": "experience-ta-koto-ga-aru",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-02-4.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-02-4.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-02-4.feedback",
+        "acceptedAnswers": [
+          "行った"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-02-4.solution",
+        "kanaBank": [
+          "や",
+          "ゃ",
+          "も",
+          "行",
+          "た",
+          "っ"
+        ]
+      },
+      {
+        "id": "n5-integration-02-5",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "ato-de",
+        "lessonId": "ato-de",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-02-5.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-02-5.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-02-5.feedback",
+        "acceptedAnswers": [
+          "食べた"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-02-5.solution",
+        "kanaBank": [
+          "た",
+          "べ",
+          "も",
+          "ん",
+          "を",
+          "食"
+        ]
+      },
+      {
+        "id": "n5-integration-02-6",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "tai",
+        "lessonId": "tai",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-02-6.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-02-6.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-02-6.feedback",
+        "acceptedAnswers": [
+          "行き"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-02-6.solution",
+        "kanaBank": [
+          "う",
+          "い",
+          "く",
+          "き",
+          "が",
+          "行"
+        ]
+      },
+      {
+        "id": "n5-integration-02-7",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "obligation-standard",
+        "lessonId": "obligation-standard",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-02-7.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-02-7.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-02-7.feedback",
+        "acceptedAnswers": [
+          "なくて"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-02-7.solution",
+        "kanaBank": [
+          "を",
+          "ん",
+          "る",
+          "く",
+          "な",
+          "て"
+        ]
+      },
+      {
+        "id": "n5-integration-02-8",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-form-formation",
+        "lessonId": "te-form-formation",
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.integration.n5-integration-02-8.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-02-8.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-02-8.feedback",
+        "options": [
+          {
+            "id": "n5-integration-02-8-0",
+            "textKey": "grammar.v2.integration.n5-integration-02-8.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-02-8.optionFeedback.0",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "n5-integration-02-8-1",
+            "textKey": "grammar.v2.integration.n5-integration-02-8.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-02-8.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-02-8.option.0",
+          "grammar.v2.integration.n5-integration-02-8.option.1"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "03",
+    "titleKey": "grammar.v2.integration.03.title",
+    "bodyKey": "grammar.v2.integration.goal",
+    "track": "core",
+    "exercises": [
+      {
+        "id": "n5-integration-03-1",
+        "version": 2,
+        "topicId": "06",
+        "conceptId": "relative-clause-noun",
+        "lessonId": "relative-clause-noun",
+        "kind": "sentence-builder",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.integration.n5-integration-03-1.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-03-1.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-03-1.feedback",
+        "tokenKeys": [
+          "grammar.v2.integration.n5-integration-03-1.token.0",
+          "grammar.v2.integration.n5-integration-03-1.token.1",
+          "grammar.v2.integration.n5-integration-03-1.token.2"
+        ],
+        "solution": [
+          0,
+          1,
+          2
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "n5-integration-03-2",
+        "version": 2,
+        "topicId": "06",
+        "conceptId": "nominalizer-no",
+        "lessonId": "nominalizer-no",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-03-2.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-03-2.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-03-2.feedback",
+        "acceptedAnswers": [
+          "の"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-03-2.solution",
+        "kanaBank": [
+          "を",
+          "ん",
+          "る",
+          "ら",
+          "れ",
+          "の"
+        ]
+      },
+      {
+        "id": "n5-integration-03-3",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "node-reason",
+        "lessonId": "node-reason",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-03-3.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-03-3.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-03-3.feedback",
+        "acceptedAnswers": [
+          "なので"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-03-3.solution",
+        "kanaBank": [
+          "か",
+          "え",
+          "ま",
+          "で",
+          "の",
+          "な"
+        ]
+      },
+      {
+        "id": "n5-integration-03-4",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "ga-kedo-contrast",
+        "lessonId": "ga-kedo-contrast",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-03-4.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-03-4.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-03-4.feedback",
+        "acceptedAnswers": [
+          "けど"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-03-4.solution",
+        "kanaBank": [
+          "れ",
+          "ら",
+          "る",
+          "や",
+          "ど",
+          "け"
+        ]
+      },
+      {
+        "id": "n5-integration-03-5",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-action-sequence",
+        "lessonId": "te-action-sequence",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-03-5.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-03-5.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-03-5.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-03-5.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-03-5.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-03-5.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-03-5.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-03-5.left.2",
+            "rightKey": "grammar.v2.integration.n5-integration-03-5.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-03-5.left.3",
+            "rightKey": "grammar.v2.integration.n5-integration-03-5.right.3"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-03-6",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-kara",
+        "lessonId": "te-kara",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-03-6.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-03-6.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-03-6.feedback",
+        "options": [
+          {
+            "id": "n5-integration-03-6-0",
+            "textKey": "grammar.v2.integration.n5-integration-03-6.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-03-6.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-03-6-1",
+            "textKey": "grammar.v2.integration.n5-integration-03-6.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-03-6.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-03-6.option.0",
+          "grammar.v2.integration.n5-integration-03-6.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-03-7",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "ato-de",
+        "lessonId": "ato-de",
+        "kind": "sentence-order",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.integration.n5-integration-03-7.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-03-7.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-03-7.feedback",
+        "tokenKeys": [
+          "grammar.v2.integration.n5-integration-03-7.token.0",
+          "grammar.v2.integration.n5-integration-03-7.token.1"
+        ],
+        "solution": [
+          0,
+          1
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "n5-integration-03-8",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "tari-tari",
+        "lessonId": "tari-tari",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-03-8.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-03-8.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-03-8.feedback",
+        "options": [
+          {
+            "id": "n5-integration-03-8-0",
+            "textKey": "grammar.v2.integration.n5-integration-03-8.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-03-8.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-03-8-1",
+            "textKey": "grammar.v2.integration.n5-integration-03-8.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-03-8.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-03-8.option.0",
+          "grammar.v2.integration.n5-integration-03-8.option.1"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "04",
+    "titleKey": "grammar.v2.integration.04.title",
+    "bodyKey": "grammar.v2.integration.goal",
+    "track": "core",
+    "exercises": [
+      {
+        "id": "n5-integration-04-1",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "masen-ka",
+        "lessonId": "masen-ka",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-04-1.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-04-1.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-04-1.feedback",
+        "options": [
+          {
+            "id": "n5-integration-04-1-0",
+            "textKey": "grammar.v2.integration.n5-integration-04-1.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-1.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-04-1-1",
+            "textKey": "grammar.v2.integration.n5-integration-04-1.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-1.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-04-1-2",
+            "textKey": "grammar.v2.integration.n5-integration-04-1.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-1.optionFeedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-04-1-3",
+            "textKey": "grammar.v2.integration.n5-integration-04-1.option.3",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-1.optionFeedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-04-1.option.0",
+          "grammar.v2.integration.n5-integration-04-1.option.1",
+          "grammar.v2.integration.n5-integration-04-1.option.2",
+          "grammar.v2.integration.n5-integration-04-1.option.3"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-04-2",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "mashou",
+        "lessonId": "mashou",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-04-2.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-04-2.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-04-2.feedback",
+        "options": [
+          {
+            "id": "n5-integration-04-2-0",
+            "textKey": "grammar.v2.integration.n5-integration-04-2.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-2.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-04-2-1",
+            "textKey": "grammar.v2.integration.n5-integration-04-2.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-2.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-04-2-2",
+            "textKey": "grammar.v2.integration.n5-integration-04-2.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-2.optionFeedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-04-2.option.0",
+          "grammar.v2.integration.n5-integration-04-2.option.1",
+          "grammar.v2.integration.n5-integration-04-2.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-04-3",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "mashou-ka",
+        "lessonId": "mashou-ka",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-04-3.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-04-3.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-04-3.feedback",
+        "options": [
+          {
+            "id": "n5-integration-04-3-0",
+            "textKey": "grammar.v2.integration.n5-integration-04-3.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-3.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-04-3-1",
+            "textKey": "grammar.v2.integration.n5-integration-04-3.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-3.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-04-3.option.0",
+          "grammar.v2.integration.n5-integration-04-3.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-04-4",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-kudasai",
+        "lessonId": "te-kudasai",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-04-4.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-04-4.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-04-4.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-04-4.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-04-4.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-04-4.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-04-4.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-04-4.left.2",
+            "rightKey": "grammar.v2.integration.n5-integration-04-4.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-04-4.left.3",
+            "rightKey": "grammar.v2.integration.n5-integration-04-4.right.3"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-04-5",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-wa-ikenai",
+        "lessonId": "te-wa-ikenai",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-04-5.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-04-5.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-04-5.feedback",
+        "options": [
+          {
+            "id": "n5-integration-04-5-0",
+            "textKey": "grammar.v2.integration.n5-integration-04-5.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-5.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-04-5-1",
+            "textKey": "grammar.v2.integration.n5-integration-04-5.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-5.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-04-5-2",
+            "textKey": "grammar.v2.integration.n5-integration-04-5.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-04-5.optionFeedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-04-5.option.0",
+          "grammar.v2.integration.n5-integration-04-5.option.1",
+          "grammar.v2.integration.n5-integration-04-5.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-04-6",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "hou-ga-ii",
+        "lessonId": "hou-ga-ii",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-04-6.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-04-6.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-04-6.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-04-6.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-04-6.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-04-6.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-04-6.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-04-7",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "hoshii",
+        "lessonId": "hoshii",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-04-7.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-04-7.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-04-7.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-04-7.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-04-7.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-04-7.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-04-7.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-04-8",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-mo-ii",
+        "lessonId": "te-mo-ii",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-04-8.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-04-8.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-04-8.feedback",
+        "acceptedAnswers": [
+          "もいい"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-04-8.solution",
+        "kanaBank": [
+          "に",
+          "な",
+          "と",
+          "は",
+          "い",
+          "も"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "05",
+    "titleKey": "grammar.v2.integration.05.title",
+    "bodyKey": "grammar.v2.integration.goal",
+    "track": "core",
+    "exercises": [
+      {
+        "id": "n5-integration-05-1",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-iru-progressive",
+        "lessonId": "te-iru-progressive",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-05-1.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-05-1.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-05-1.feedback",
+        "options": [
+          {
+            "id": "n5-integration-05-1-0",
+            "textKey": "grammar.v2.integration.n5-integration-05-1.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-05-1.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-05-1-1",
+            "textKey": "grammar.v2.integration.n5-integration-05-1.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-05-1.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-05-1.option.0",
+          "grammar.v2.integration.n5-integration-05-1.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-05-2",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-iru-result-state",
+        "lessonId": "te-iru-result-state",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-05-2.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-05-2.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-05-2.feedback",
+        "options": [
+          {
+            "id": "n5-integration-05-2-0",
+            "textKey": "grammar.v2.integration.n5-integration-05-2.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-05-2.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-05-2-1",
+            "textKey": "grammar.v2.integration.n5-integration-05-2.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-05-2.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-05-2.option.0",
+          "grammar.v2.integration.n5-integration-05-2.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-05-3",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "mou-mada",
+        "lessonId": "mou-mada",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-05-3.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-05-3.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-05-3.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-05-3.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-05-3.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-05-3.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-05-3.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-05-3.left.2",
+            "rightKey": "grammar.v2.integration.n5-integration-05-3.right.2"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-05-4",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "mada-te-inai",
+        "lessonId": "mada-te-inai",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-05-4.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-05-4.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-05-4.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-05-4.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-05-4.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-05-4.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-05-4.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-05-5",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "mae-ni",
+        "lessonId": "mae-ni",
+        "kind": "sentence-order",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.integration.n5-integration-05-5.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-05-5.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-05-5.feedback",
+        "tokenKeys": [
+          "grammar.v2.integration.n5-integration-05-5.token.0",
+          "grammar.v2.integration.n5-integration-05-5.token.1"
+        ],
+        "solution": [
+          0,
+          1
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "n5-integration-05-6",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "ato-de",
+        "lessonId": "ato-de",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-05-6.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-05-6.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-05-6.feedback",
+        "options": [
+          {
+            "id": "n5-integration-05-6-0",
+            "textKey": "grammar.v2.integration.n5-integration-05-6.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-05-6.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-05-6-1",
+            "textKey": "grammar.v2.integration.n5-integration-05-6.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-05-6.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-05-6.option.0",
+          "grammar.v2.integration.n5-integration-05-6.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-05-7",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "toki",
+        "lessonId": "toki",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-05-7.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-05-7.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-05-7.feedback",
+        "options": [
+          {
+            "id": "n5-integration-05-7-0",
+            "textKey": "grammar.v2.integration.n5-integration-05-7.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-05-7.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-05-7-1",
+            "textKey": "grammar.v2.integration.n5-integration-05-7.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-05-7.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-05-7.option.0",
+          "grammar.v2.integration.n5-integration-05-7.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-05-8",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-kara",
+        "lessonId": "te-kara",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-05-8.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-05-8.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-05-8.feedback",
+        "acceptedAnswers": [
+          "てから"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-05-8.solution",
+        "kanaBank": [
+          "る",
+          "ら",
+          "れ",
+          "も",
+          "て",
+          "か"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "06",
+    "titleKey": "grammar.v2.integration.06.title",
+    "bodyKey": "grammar.v2.integration.goal",
+    "track": "core",
+    "exercises": [
+      {
+        "id": "n5-integration-06-1",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "experience-ta-koto-ga-aru",
+        "lessonId": "experience-ta-koto-ga-aru",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-06-1.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-06-1.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-06-1.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-06-1.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-06-1.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-06-1.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-06-1.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-06-2",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "comparison-yori-hou-ga",
+        "lessonId": "comparison-yori-hou-ga",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-06-2.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-06-2.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-06-2.feedback",
+        "options": [
+          {
+            "id": "n5-integration-06-2-0",
+            "textKey": "grammar.v2.integration.n5-integration-06-2.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-06-2.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-06-2-1",
+            "textKey": "grammar.v2.integration.n5-integration-06-2.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-06-2.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-06-2.option.0",
+          "grammar.v2.integration.n5-integration-06-2.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-06-3",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "superlative-naka-de-ichiban",
+        "lessonId": "superlative-naka-de-ichiban",
+        "kind": "sentence-order",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.integration.n5-integration-06-3.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-06-3.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-06-3.feedback",
+        "tokenKeys": [
+          "grammar.v2.integration.n5-integration-06-3.token.0",
+          "grammar.v2.integration.n5-integration-06-3.token.1",
+          "grammar.v2.integration.n5-integration-06-3.token.2",
+          "grammar.v2.integration.n5-integration-06-3.token.3"
+        ],
+        "solution": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "n5-integration-06-4",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "change-naru",
+        "lessonId": "change-naru",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-06-4.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-06-4.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-06-4.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-06-4.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-06-4.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-06-4.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-06-4.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-06-5",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "choice-ni-suru",
+        "lessonId": "choice-ni-suru",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-06-5.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-06-5.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-06-5.feedback",
+        "acceptedAnswers": [
+          "に"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-06-5.solution",
+        "kanaBank": [
+          "れ",
+          "ら",
+          "る",
+          "や",
+          "も",
+          "に"
+        ]
+      },
+      {
+        "id": "n5-integration-06-6",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "deshou-darou",
+        "lessonId": "deshou-darou",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-06-6.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-06-6.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-06-6.feedback",
+        "options": [
+          {
+            "id": "n5-integration-06-6-0",
+            "textKey": "grammar.v2.integration.n5-integration-06-6.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-06-6.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-06-6-1",
+            "textKey": "grammar.v2.integration.n5-integration-06-6.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-06-6.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-06-6.option.0",
+          "grammar.v2.integration.n5-integration-06-6.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-06-7",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "giving-receiving",
+        "lessonId": "giving-receiving",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-06-7.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-06-7.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-06-7.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-06-7.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-06-7.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-06-7.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-06-7.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-06-7.left.2",
+            "rightKey": "grammar.v2.integration.n5-integration-06-7.right.2"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-06-8",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "giving-receiving",
+        "lessonId": "giving-receiving",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-06-8.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-06-8.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-06-8.feedback",
+        "options": [
+          {
+            "id": "n5-integration-06-8-0",
+            "textKey": "grammar.v2.integration.n5-integration-06-8.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-06-8.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-06-8-1",
+            "textKey": "grammar.v2.integration.n5-integration-06-8.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-06-8.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-06-8.option.0",
+          "grammar.v2.integration.n5-integration-06-8.option.1"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "07",
+    "titleKey": "grammar.v2.integration.07.title",
+    "bodyKey": "grammar.v2.integration.finalBody",
+    "track": "core",
+    "exercises": [
+      {
+        "id": "n5-integration-07-1",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "experience-ta-koto-ga-aru",
+        "lessonId": "experience-ta-koto-ga-aru",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-07-1.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-1.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-1.feedback",
+        "acceptedAnswers": [
+          "こと"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-07-1.solution",
+        "kanaBank": [
+          "と",
+          "に",
+          "な",
+          "は",
+          "の",
+          "こ"
+        ]
+      },
+      {
+        "id": "n5-integration-07-2",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-mo-ii",
+        "lessonId": "te-mo-ii",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-2.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-2.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-2.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-2-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-2.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-2.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-2-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-2.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-2.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-2-2",
+            "textKey": "grammar.v2.integration.n5-integration-07-2.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-2.optionFeedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-2.option.0",
+          "grammar.v2.integration.n5-integration-07-2.option.1",
+          "grammar.v2.integration.n5-integration-07-2.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-3",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "kara-reason",
+        "lessonId": "kara-reason",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-3.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-3.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-3.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-3-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-3.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-3.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-3-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-3.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-3.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-3.option.0",
+          "grammar.v2.integration.n5-integration-07-3.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-4",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "superlative-naka-de-ichiban",
+        "lessonId": "superlative-naka-de-ichiban",
+        "kind": "sentence-order",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.integration.n5-integration-07-4.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-4.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-4.feedback",
+        "tokenKeys": [
+          "grammar.v2.integration.n5-integration-07-4.token.0",
+          "grammar.v2.integration.n5-integration-07-4.token.1",
+          "grammar.v2.integration.n5-integration-07-4.token.2",
+          "grammar.v2.integration.n5-integration-07-4.token.3"
+        ],
+        "solution": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "n5-integration-07-5",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "giving-receiving",
+        "lessonId": "giving-receiving",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-5.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-5.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-5.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-5-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-5.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-5.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-5-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-5.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-5.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-5.option.0",
+          "grammar.v2.integration.n5-integration-07-5.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-6",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "node-reason",
+        "lessonId": "node-reason",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-6.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-6.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-6.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-6-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-6.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-6.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-6-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-6.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-6.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-6.option.0",
+          "grammar.v2.integration.n5-integration-07-6.option.1"
+        ],
+        "answer": 0,
+        "contextKey": "grammar.v2.integration.text.home"
+      },
+      {
+        "id": "n5-integration-07-7",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "tari-tari",
+        "lessonId": "tari-tari",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-7.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-7.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-7.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-7-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-7.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-7.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-7-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-7.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-7.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-7.option.0",
+          "grammar.v2.integration.n5-integration-07-7.option.1"
+        ],
+        "answer": 0,
+        "contextKey": "grammar.v2.integration.text.home"
+      },
+      {
+        "id": "n5-integration-07-8",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "mada-te-inai",
+        "lessonId": "mada-te-inai",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-8.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-8.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-8.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-8-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-8.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-8.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-8-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-8.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-8.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-8.option.0",
+          "grammar.v2.integration.n5-integration-07-8.option.1"
+        ],
+        "answer": 0,
+        "contextKey": "grammar.v2.integration.text.home"
+      },
+      {
+        "id": "n5-integration-07-9",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "particle-kara-made",
+        "lessonId": "particle-kara-made",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-9.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-9.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-9.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-9-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-9.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-9.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-9-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-9.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-9.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-9.option.0",
+          "grammar.v2.integration.n5-integration-07-9.option.1"
+        ],
+        "answer": 0,
+        "contextKey": "grammar.v2.integration.text.library"
+      },
+      {
+        "id": "n5-integration-07-10",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-wa-ikenai",
+        "lessonId": "te-wa-ikenai",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-10.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-10.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-10.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-10-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-10.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-10.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-10-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-10.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-10.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-10.option.0",
+          "grammar.v2.integration.n5-integration-07-10.option.1"
+        ],
+        "answer": 0,
+        "contextKey": "grammar.v2.integration.text.library"
+      },
+      {
+        "id": "n5-integration-07-11",
+        "version": 2,
+        "topicId": "04",
+        "conceptId": "location-ni-vs-de",
+        "lessonId": "location-ni-vs-de",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-07-11.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-11.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-11.feedback",
+        "acceptedAnswers": [
+          "で"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-07-11.solution",
+        "kanaBank": [
+          "ま",
+          "へ",
+          "で",
+          "だ",
+          "の",
+          "は"
+        ]
+      },
+      {
+        "id": "n5-integration-07-12",
+        "version": 2,
+        "topicId": "01",
+        "conceptId": "particle-wa-vs-ga",
+        "lessonId": "particle-wa-vs-ga",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-07-12.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-12.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-12.feedback",
+        "acceptedAnswers": [
+          "が"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-07-12.solution",
+        "kanaBank": [
+          "ん",
+          "を",
+          "だ",
+          "で",
+          "と",
+          "が"
+        ]
+      },
+      {
+        "id": "n5-integration-07-13",
+        "version": 2,
+        "topicId": "05",
+        "conceptId": "plain-vs-polite",
+        "lessonId": "plain-vs-polite",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-13.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-13.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-13.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-13-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-13.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-13.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-13-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-13.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-13.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-13-2",
+            "textKey": "grammar.v2.integration.n5-integration-07-13.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-13.optionFeedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-13.option.0",
+          "grammar.v2.integration.n5-integration-07-13.option.1",
+          "grammar.v2.integration.n5-integration-07-13.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-14",
+        "version": 2,
+        "topicId": "02",
+        "conceptId": "adjective-past",
+        "lessonId": "adjective-past",
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.integration.n5-integration-07-14.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-14.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-14.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-14-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-14.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-14.optionFeedback.0",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "n5-integration-07-14-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-14.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-14.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-14.option.0",
+          "grammar.v2.integration.n5-integration-07-14.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-15",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "node-reason",
+        "lessonId": "node-reason",
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.integration.n5-integration-07-15.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-15.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-15.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-15-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-15.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-15.optionFeedback.0",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "n5-integration-07-15-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-15.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-15.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-15.option.0",
+          "grammar.v2.integration.n5-integration-07-15.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-16",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "deshou-darou",
+        "lessonId": "deshou-darou",
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.integration.n5-integration-07-16.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-16.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-16.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-16-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-16.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-16.optionFeedback.0",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "n5-integration-07-16-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-16.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-16.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-16.option.0",
+          "grammar.v2.integration.n5-integration-07-16.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-17",
+        "version": 2,
+        "topicId": "06",
+        "conceptId": "relative-clause-noun",
+        "lessonId": "relative-clause-noun",
+        "kind": "sentence-builder",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.integration.n5-integration-07-17.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-17.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-17.feedback",
+        "tokenKeys": [
+          "grammar.v2.integration.n5-integration-07-17.token.0",
+          "grammar.v2.integration.n5-integration-07-17.token.1",
+          "grammar.v2.integration.n5-integration-07-17.token.2"
+        ],
+        "solution": [
+          0,
+          1,
+          2
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "n5-integration-07-18",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "te-kara",
+        "lessonId": "te-kara",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-07-18.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-18.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-18.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-07-18.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-07-18.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-07-18.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-07-18.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-07-18.left.2",
+            "rightKey": "grammar.v2.integration.n5-integration-07-18.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-07-18.left.3",
+            "rightKey": "grammar.v2.integration.n5-integration-07-18.right.3"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-07-19",
+        "version": 2,
+        "topicId": "07",
+        "conceptId": "nai-de-kudasai",
+        "lessonId": "nai-de-kudasai",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-19.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-19.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-19.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-19-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-19.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-19.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-19-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-19.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-19.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-19-2",
+            "textKey": "grammar.v2.integration.n5-integration-07-19.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-19.optionFeedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-19.option.0",
+          "grammar.v2.integration.n5-integration-07-19.option.1",
+          "grammar.v2.integration.n5-integration-07-19.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-20",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "obligation-standard",
+        "lessonId": "obligation-standard",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-07-20.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-20.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-20.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-07-20.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-07-20.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-07-20.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-07-20.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-07-21",
+        "version": 2,
+        "topicId": "09",
+        "conceptId": "mou-mada",
+        "lessonId": "mou-mada",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-21.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-21.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-21.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-21-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-21.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-21.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-21-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-21.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-21.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-21.option.0",
+          "grammar.v2.integration.n5-integration-07-21.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-07-22",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "comparison-yori-hou-ga",
+        "lessonId": "comparison-yori-hou-ga",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-07-22.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-22.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-22.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-07-22.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-07-22.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-07-22.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-07-22.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-07-23",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "change-naru",
+        "lessonId": "change-naru",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-07-23.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-23.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-23.feedback",
+        "acceptedAnswers": [
+          "に"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-07-23.solution",
+        "kanaBank": [
+          "へ",
+          "ま",
+          "と",
+          "に",
+          "な",
+          "は"
+        ]
+      },
+      {
+        "id": "n5-integration-07-24",
+        "version": 2,
+        "topicId": "06",
+        "conceptId": "nominalizer-no",
+        "lessonId": "nominalizer-no",
+        "kind": "select-segment",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-07-24.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-07-24.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-07-24.feedback",
+        "options": [
+          {
+            "id": "n5-integration-07-24-0",
+            "textKey": "grammar.v2.integration.n5-integration-07-24.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-24.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-24-1",
+            "textKey": "grammar.v2.integration.n5-integration-07-24.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-24.optionFeedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-07-24-2",
+            "textKey": "grammar.v2.integration.n5-integration-07-24.option.2",
+            "feedbackKey": "grammar.v2.integration.n5-integration-07-24.optionFeedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-07-24.option.0",
+          "grammar.v2.integration.n5-integration-07-24.option.1",
+          "grammar.v2.integration.n5-integration-07-24.option.2"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "bridge",
+    "titleKey": "grammar.v2.integration.bridge.title",
+    "bodyKey": "grammar.v2.integration.bridgeBody",
+    "track": "bridge",
+    "exercises": [
+      {
+        "id": "n5-integration-bridge-1",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "obligation-colloquial",
+        "lessonId": "obligation-colloquial",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-1.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-1.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-1.feedback",
+        "options": [
+          {
+            "id": "n5-integration-bridge-1-0",
+            "textKey": "grammar.v2.integration.n5-integration-bridge-1.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-bridge-1.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-bridge-1-1",
+            "textKey": "grammar.v2.integration.n5-integration-bridge-1.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-bridge-1.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-bridge-1.option.0",
+          "grammar.v2.integration.n5-integration-bridge-1.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-bridge-2",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "obligation-colloquial",
+        "lessonId": "obligation-colloquial",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-2.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-2.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-2.feedback",
+        "acceptedAnswers": [
+          "なきゃ"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-bridge-2.solution",
+        "kanaBank": [
+          "く",
+          "が",
+          "き",
+          "か",
+          "な",
+          "ゃ"
+        ]
+      },
+      {
+        "id": "n5-integration-bridge-3",
+        "version": 2,
+        "topicId": "08",
+        "conceptId": "obligation-colloquial",
+        "lessonId": "obligation-colloquial",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-3.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-3.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-3.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-bridge-3.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-bridge-3.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-bridge-3.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-bridge-3.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-bridge-4",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "tsumori",
+        "lessonId": "tsumori",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-4.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-4.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-4.feedback",
+        "acceptedAnswers": [
+          "つもり"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-bridge-4.solution",
+        "kanaBank": [
+          "を",
+          "ん",
+          "ら",
+          "り",
+          "も",
+          "つ"
+        ]
+      },
+      {
+        "id": "n5-integration-bridge-5",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "tsumori",
+        "lessonId": "tsumori",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-5.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-5.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-5.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-bridge-5.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-bridge-5.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-bridge-5.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-bridge-5.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-bridge-6",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "tsumori",
+        "lessonId": "tsumori",
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-6.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-6.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-6.feedback",
+        "options": [
+          {
+            "id": "n5-integration-bridge-6-0",
+            "textKey": "grammar.v2.integration.n5-integration-bridge-6.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-bridge-6.optionFeedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "n5-integration-bridge-6-1",
+            "textKey": "grammar.v2.integration.n5-integration-bridge-6.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-bridge-6.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-bridge-6.option.0",
+          "grammar.v2.integration.n5-integration-bridge-6.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "n5-integration-bridge-7",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "sugiru",
+        "lessonId": "sugiru",
+        "kind": "fill-gap",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-7.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-7.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-7.feedback",
+        "acceptedAnswers": [
+          "すぎた"
+        ],
+        "solutionKey": "grammar.v2.integration.n5-integration-bridge-7.solution",
+        "kanaBank": [
+          "ん",
+          "を",
+          "れ",
+          "た",
+          "す",
+          "ぎ"
+        ]
+      },
+      {
+        "id": "n5-integration-bridge-8",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "sugiru",
+        "lessonId": "sugiru",
+        "kind": "matching",
+        "skill": "usage",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-8.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-8.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-8.feedback",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-bridge-8.left.0",
+            "rightKey": "grammar.v2.integration.n5-integration-bridge-8.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.integration.n5-integration-bridge-8.left.1",
+            "rightKey": "grammar.v2.integration.n5-integration-bridge-8.right.1"
+          }
+        ]
+      },
+      {
+        "id": "n5-integration-bridge-9",
+        "version": 2,
+        "topicId": "10",
+        "conceptId": "sugiru",
+        "lessonId": "sugiru",
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 3,
+        "labelKey": "grammar.v2.integration.practice",
+        "topicKey": "grammar.v2.integration.title",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.integration.n5-integration-bridge-9.prompt",
+        "successKey": "grammar.v2.integration.n5-integration-bridge-9.feedback",
+        "errorKey": "grammar.v2.integration.n5-integration-bridge-9.feedback",
+        "options": [
+          {
+            "id": "n5-integration-bridge-9-0",
+            "textKey": "grammar.v2.integration.n5-integration-bridge-9.option.0",
+            "feedbackKey": "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.0",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "n5-integration-bridge-9-1",
+            "textKey": "grammar.v2.integration.n5-integration-bridge-9.option.1",
+            "feedbackKey": "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.integration.n5-integration-bridge-9.option.0",
+          "grammar.v2.integration.n5-integration-bridge-9.option.1"
+        ],
+        "answer": 0
+      }
+    ]
   }
 ];

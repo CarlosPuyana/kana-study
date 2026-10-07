@@ -91,14 +91,14 @@ describe('Persistent grammar participation and difficulties', () => {
   it('continues by curriculum order when the saved concept is completed', () => {
     answerAll('sentence-structure-context'); expect(progress.continuePath()).toBe('/grammar/n5/01/state-being-plain');
   });
-  it('continues to review when every concept is completed and difficulties remain', () => {
+  it('continues to integration when every Core concept is completed and difficulties remain', () => {
     GRAMMAR_LESSONS.forEach(lesson => answerAll(grammarConceptId(lesson)));
     progress.flagDifficulty('change-naru', exercises[0].id);
-    expect(progress.completedSessions()).toBe(94); expect(progress.continuePath()).toBe('/grammar/review');
+    expect(progress.completedSessions()).toBe(94); expect(progress.continuePath()).toBe('/grammar/n5/11/00');
   });
-  it('continues to final practice when the course is complete with no difficulties', () => {
+  it('continues to integration after the semantic curriculum with no difficulties', () => {
     GRAMMAR_LESSONS.forEach(lesson => answerAll(grammarConceptId(lesson)));
-    expect(progress.continuePath()).toBe('/grammar/n5/10/practice');
+    expect(progress.continuePath()).toBe('/grammar/n5/11/00');
   });
   it('a normal correct answer never clears an earlier difficulty', () => {
     progress.recordAnswer('change-naru', '10', exercises[0].id, 0, false);

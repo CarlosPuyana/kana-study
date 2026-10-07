@@ -95,7 +95,7 @@ describe('Grammar V2 Topic 10 content',()=>{
     expect(c('giving-receiving').exercises.some(e=>e.kind==='detect-error')).toBe(false);
     expect(new Set(forms).size).toBe(3);
   });
-  it('limits error detection to malformed Japanese, supplies ES/EN/CA and introduces no favours or Topic 11',()=>{
+  it('limits error detection to malformed Japanese, supplies ES/EN/CA and introduces no favours or new Topic 11 concepts',()=>{
     const bad=[];for(const e of all.filter(e=>e.kind==='detect-error')){
       if(!isChoiceExercise(e))throw Error('choice');expect(e.options!.filter(o=>o.grammarStatus==='invalid')).toHaveLength(1);expect(e.options![e.answer].grammarStatus).toBe('invalid');bad.push(t(e.optionKeys[e.answer]));
     }
@@ -103,7 +103,7 @@ describe('Grammar V2 Topic 10 content',()=>{
     const keys=new Set<string>();const visit=(v:unknown):void=>{if(typeof v==='string'&&v.startsWith('grammar.'))keys.add(v);else if(Array.isArray(v))v.forEach(visit);else if(v&&typeof v==='object')Object.values(v).forEach(visit);};visit(concepts);visit(review);visit(GRAMMAR_PRACTICES.find(p=>p.topicId==='10'));
     for(const key of keys)for(const dict of [es,en,ca])expect((dict as Record<string,string>)[key],key).toBeTruthy();
     expect([...keys].map(t).join(' ')).not.toMatch(/てあげる|てくれる|てもらう|くださる|いただく|もらえますか|かもしれない|ようと思う|予定|てしまう|ておく|てみる/);
-    expect(GRAMMAR_V2_CONCEPTS.some(c=>Number(c.topicId)>=11)).toBe(false);expect(GRAMMAR_TOPICS.some(t=>t.id==='11')).toBe(false);
+    expect(GRAMMAR_V2_CONCEPTS.some(c=>Number(c.topicId)>=11)).toBe(false);expect(GRAMMAR_TOPICS.find(t=>t.id==='11')!.lessons).toEqual([]);
   });
 });
 
@@ -121,14 +121,14 @@ describe('Grammar V2 Topic 10 Core and Bridge integration',()=>{
     for(const id of ['tsumori','sugiru'])expect(progress.conceptStatus(id)).toBe('not-started');
     TestBed.resetTestingModule();expect(TestBed.inject(GrammarProgressService).topicProgress('10')).toEqual({completed:7,total:7});
   });
-  it('keeps optional Bridge progress, resume and distinct Weakness, and ends review without inventing Topic 11',async()=>{
+  it('keeps optional Bridge progress, resume and distinct Weakness, and continues to integration without new concepts',async()=>{
     const harness=await RouterTestingHarness.create(),progress=TestBed.inject(GrammarProgressService),weakness=TestBed.inject(WeaknessService);
     for(const id of ['tsumori','sugiru']){const page=await harness.navigateByUrl(`/grammar/n5/10/${id}`,GrammarPage);page.answer(false);expect(weakness.records().some(r=>r.itemId===id)).toBe(true);}
     expect(new Set(['tsumori','sugiru'].map(id=>grammarWeaknessIdentity(c(id).exercises[0])!.itemId)).size).toBe(2);
     expect(progress.topicProgress('10')).toEqual({completed:0,total:7});expect(TestBed.inject(GrammarV2ProgressService).state().resume?.path).toBe('/grammar/n5/10/sugiru');
     for(const id of ['tsumori','sugiru'])expect(review.filter(e=>e.conceptId===id)).toHaveLength(1);
     progress.recordPractice('10',16,18,['tsumori','sugiru'],new Date().toISOString());
-    const practice=await harness.navigateByUrl('/grammar/n5/10/practice',GrammarPage);expect(practice.practice()!.exercises).toHaveLength(18);expect(practice.practice()!.nextPath).toBe('/grammar/review');
+    const practice=await harness.navigateByUrl('/grammar/n5/10/practice',GrammarPage);expect(practice.practice()!.exercises).toHaveLength(18);expect(practice.practice()!.nextPath).toBe('/grammar/n5/11');
     TestBed.resetTestingModule();expect(TestBed.inject(GrammarV2ProgressService).state().practices['10']).toMatchObject({score:16,total:18,errorConceptIds:['tsumori','sugiru']});
   });
 });

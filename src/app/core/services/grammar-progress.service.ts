@@ -43,7 +43,7 @@ export class GrammarProgressService {
     const resume = this.state().resume;
     if (resume && this.conceptStatus(resume.conceptId) !== 'completed') return resume.path;
     const pending = order.find(id => this.conceptStatus(id) !== 'completed');
-    return pending ? pathFor(pending) : this.difficulties().length ? '/grammar/review' : '/grammar/n5/10/practice';
+    return pending?pathFor(pending):!this.v2.integrationCompleted()?this.v2.integrationContinuePath():'/grammar/review';
   });
 
   constructor() {
@@ -61,6 +61,7 @@ export class GrammarProgressService {
   }
   sessionDifficulties(session: GrammarStudySession): number { return session.lessonIds.filter(id => this.state().review[grammarSessionConceptId(session.topicId,id)]?.active).length; }
   topicProgress(topicId: string): {completed: number; total: number} {
+    if(topicId==='11')return {completed:Number(this.v2.integrationStatus('00')==='completed')+['01','02','03','04','05','06','07'].filter(id=>this.v2.integrationStatus(id)==='completed').length,total:8};
     const sessions = GRAMMAR_SESSIONS.filter(session => session.topicId === topicId && coreSession(session));
     return {completed: sessions.filter(session => this.sessionStatus(session) === 'completed').length, total: sessions.length};
   }

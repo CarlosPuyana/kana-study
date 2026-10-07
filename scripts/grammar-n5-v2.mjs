@@ -1,4 +1,5 @@
 import {addExperienceV2} from './grammar-n5-v2-experience.mjs';
+import {buildIntegrationV2} from './grammar-n5-v2-integration.mjs';
 import {addConnectionsV2} from './grammar-n5-v2-connections.mjs';
 import {addInteractionV2} from './grammar-n5-v2-interaction.mjs';
 import {addTeV2} from './grammar-n5-v2-te.mjs';
@@ -319,5 +320,6 @@ export function buildGrammarV2() {
     use:id=>{current=concepts.find(c=>c.id===id);if(!current)throw new Error(`Unknown concept ${id}`);},
     startReview:()=>{reviewing=true;}});
   concepts.forEach(c=>c.relatedIds=concepts.filter(other=>other.prerequisiteIds.includes(c.id)).map(other=>other.id));
-  return {concepts,review,copy,editorialReferences};
+  const integration=buildIntegrationV2({concepts,key});
+  return {concepts,review,integration,copy,editorialReferences};
 }
