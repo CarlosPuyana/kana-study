@@ -13,7 +13,7 @@ const concepts = new Map(GRAMMAR_LESSONS.map(lesson => [grammarConceptId(lesson)
 const order = GRAMMAR_SESSIONS.flatMap(session => session.lessonIds.map(id => grammarSessionConceptId(session.topicId,id)));
 const exerciseConcepts = new Map([...GRAMMAR_LESSONS.flatMap(lesson => grammarLessonExercises(lesson).map(exercise => [exercise.id, grammarConceptId(lesson)] as const)),
   ...GRAMMAR_PRACTICES.flatMap(practice => practice.exercises.map(exercise => [exercise.id, exercise.conceptId ?? exercise.id] as const))]);
-const pathFor = (id: string): string => id.includes('.') ? `/grammar/n5/${id.replace('.', '/')}` : `/grammar/n5/01/${id}`;
+const pathFor = (id: string): string => {const lesson=concepts.get(id)!.lesson;return `/grammar/n5/${lesson.topicId}/${lesson.id}`;};
 function firstPendingIndex(conceptId: string, state: GrammarProgressStateV1): number {
   const exercises = concepts.get(conceptId)?.exercises ?? [];
   const answers = state.concepts[conceptId]?.answers ?? {};
@@ -75,7 +75,7 @@ export class GrammarProgressService {
     this.write({...this.state(), resume: {conceptId, path: pathFor(conceptId), exerciseIndex: safeIndex, updatedAt: this.now()}});
   }
   recordAnswer(conceptId: string, topicId: string, exerciseId: string, exerciseIndex: number, correct: boolean): void {
-    if(this.v2.has(conceptId)){if(topicId==='01')this.v2.record(conceptId,exerciseId,exerciseIndex,correct);return;}
+    if(this.v2.has(conceptId)){if(concepts.get(conceptId)?.lesson.topicId===topicId)this.v2.record(conceptId,exerciseId,exerciseIndex,correct);return;}
     const concept = concepts.get(conceptId);
     if (!concept || concept.lesson.topicId !== topicId || concept.exercises[exerciseIndex]?.id !== exerciseId) return;
     const now = this.now(), old = this.state().concepts[conceptId];
@@ -95,7 +95,7 @@ export class GrammarProgressService {
     this.write({...this.state(), review: {...this.state().review, [conceptId]: {...old, conceptId, topicId: concept.lesson.topicId, active: true, updatedAt: now, flaggedAt: now, lastFailedExerciseId: exerciseId}}});
   }
   recordPractice(topicId: string, score: number, total: number, errorConceptIds: readonly string[], attemptedAt: string): void {
-    if(topicId==='01'){this.v2.practice(score,total,errorConceptIds,attemptedAt);return;}
+    if(topicId==='01'||topicId==='02'){this.v2.practice(score,total,errorConceptIds,attemptedAt,topicId);return;}
     const practice = GRAMMAR_PRACTICES.find(practice => practice.topicId === topicId);
     if (!practice || (!Number.isInteger(total) || total < 1 || total > practice.exercises.length) || score < 0 || score > total || !Number.isInteger(score) || !Number.isFinite(Date.parse(attemptedAt))) return;
     this.write({...this.state(), practices: {...this.state().practices, [topicId]: {topicId, score, total, attemptedAt, updatedAt: this.now(), errorConceptIds: [...new Set(errorConceptIds.filter(id => concepts.has(id) && id.startsWith(topicId + '.')))]}}});
@@ -146,7 +146,7 @@ export class GrammarProgressService {
       state.concepts[id] = {...rest, answers, status: completed ? 'completed' : 'in-progress', lastExerciseIndex: row.lastExerciseIndex < concept.exercises.length ? row.lastExerciseIndex : 0,
         ...(completed ? {completedAt: completedAt ?? row.updatedAt} : {})};
     }
-    for (const [id, row] of Object.entries(input.practices)) if (Number(id)>=2 && GRAMMAR_PRACTICES.some(practice => practice.topicId === id)) state.practices[id] = {...row, errorConceptIds: row.errorConceptIds.filter(id => concepts.has(id))};
+    for (const [id, row] of Object.entries(input.practices)) if (Number(id)>=3 && GRAMMAR_PRACTICES.some(practice => practice.topicId === id)) state.practices[id] = {...row, errorConceptIds: row.errorConceptIds.filter(id => concepts.has(id))};
     for (const [id, row] of Object.entries(input.review)) if (concepts.has(id)) {
       const {lastFailedExerciseId, ...rest} = row;
       state.review[id] = {...rest, ...(lastFailedExerciseId && exerciseConcepts.get(lastFailedExerciseId) === id ? {lastFailedExerciseId} : {})};

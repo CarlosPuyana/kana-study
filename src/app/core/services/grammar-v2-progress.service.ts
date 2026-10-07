@@ -33,7 +33,7 @@ export class GrammarV2ProgressService {
     this.setConcept(row);this.resume(id);
   }
   firstPending(id:string):number{const answers=this.state().concepts[id]?.answers;const i=catalog.get(id)?.exercises.findIndex(e=>!answers?.[e.id]?.solved)??0;return Math.max(0,i);}
-  resume(id:string):void {if(!catalog.has(id))return;this.write({...this.state(),resume:{conceptId:id,path:`/grammar/n5/01/${id}`,exerciseIndex:this.firstPending(id),updatedAt:new Date().toISOString()}});}
+  resume(id:string):void {if(!catalog.has(id))return;this.write({...this.state(),resume:{conceptId:id,path:`/grammar/n5/${catalog.get(id)!.topicId}/${id}`,exerciseIndex:this.firstPending(id),updatedAt:new Date().toISOString()}});}
   record(id:string,exerciseId:string,index:number,correct:boolean):void {
     const concept=catalog.get(id);if(!concept||concept.exercises[index]?.id!==exerciseId)return;
     const now=new Date().toISOString(),old=this.state().concepts[id];
@@ -46,21 +46,22 @@ export class GrammarV2ProgressService {
   }
   flag(id:string,exerciseId:string):void {
     if(!allExercises.some(e=>e.conceptId===id&&e.id===exerciseId))return;
-    const now=new Date().toISOString();this.write({...this.state(),review:{...this.state().review,[id]:{conceptId:id,topicId:'01',active:true,updatedAt:now,flaggedAt:now,lastFailedExerciseId:exerciseId}}});
+    const now=new Date().toISOString();this.write({...this.state(),review:{...this.state().review,[id]:{conceptId:id,topicId:catalog.get(id)!.topicId,active:true,updatedAt:now,flaggedAt:now,lastFailedExerciseId:exerciseId}}});
   }
   finishReview(answers:readonly {conceptId:string;exerciseId:string;correct:boolean}[]):void {
     const review={...this.state().review},now=new Date().toISOString();
     for(const id of new Set(answers.map(a=>a.conceptId))){
       const valid=answers.filter(a=>a.conceptId===id&&allExercises.some(e=>e.id===a.exerciseId&&e.conceptId===id));if(!valid.length)continue;
       const failed=valid.find(a=>!a.correct);
-      if(failed)review[id]={conceptId:id,topicId:'01',active:true,updatedAt:now,flaggedAt:now,lastFailedExerciseId:failed.exerciseId};
+      if(failed)review[id]={conceptId:id,topicId:catalog.get(id)!.topicId,active:true,updatedAt:now,flaggedAt:now,lastFailedExerciseId:failed.exerciseId};
       else if(review[id])review[id]={...review[id],active:false,updatedAt:now,clearedAt:now};
     }
     this.write({...this.state(),review});
   }
-  practice(score:number,total:number,ids:readonly string[],attemptedAt:string):void {
-    if(!Number.isInteger(score)||!Number.isInteger(total)||total<1||total>GRAMMAR_V2_REVIEW.length||score<0||score>total||!date(attemptedAt))return;
-    this.write({...this.state(),practices:{'01':{topicId:'01',score,total,errorConceptIds:[...new Set(ids.filter(id=>catalog.has(id)))],attemptedAt,updatedAt:new Date().toISOString()}}});
+  practice(score:number,total:number,ids:readonly string[],attemptedAt:string,topicId='01'):void {
+    const exercises=GRAMMAR_V2_REVIEW.filter(e=>e.topicId===topicId);
+    if(!Number.isInteger(score)||!Number.isInteger(total)||total<1||total>exercises.length||score<0||score>total||!date(attemptedAt))return;
+    this.write({...this.state(),practices:{...this.state().practices,[topicId]:{topicId,score,total,errorConceptIds:[...new Set(ids.filter(id=>catalog.get(id)?.topicId===topicId))],attemptedAt,updatedAt:new Date().toISOString()}}});
   }
   private setConcept(row:GrammarV2ConceptProgress):void {
     const completed=!!row.openedAt&&catalog.get(row.conceptId)!.exercises.every(e=>row.answers[e.id]?.solved);
@@ -85,14 +86,16 @@ export class GrammarV2ProgressService {
         answers,attempts:Object.values(answers).reduce((n,a)=>n+a.attempts,0),correct:Object.values(answers).reduce((n,a)=>n+a.correctCount,0),lastExerciseIndex:Math.min(count(row['lastExerciseIndex']),concept.exercises.length-1),...(completed?{completedAt:date(row['completedAt'])??updatedAt}:{})};
     }
     for(const [id,value] of Object.entries(object(input['review']))){const row=object(value),updatedAt=date(row['updatedAt']);
-      if(catalog.has(id)&&row['conceptId']===id&&row['topicId']==='01'&&typeof row['active']==='boolean'&&updatedAt)state.review[id]={conceptId:id,topicId:'01',active:row['active'],updatedAt,
+      if(catalog.has(id)&&row['conceptId']===id&&row['topicId']===catalog.get(id)!.topicId&&typeof row['active']==='boolean'&&updatedAt)state.review[id]={conceptId:id,topicId:catalog.get(id)!.topicId,active:row['active'],updatedAt,
         ...(date(row['flaggedAt'])?{flaggedAt:date(row['flaggedAt'])}:{}),...(date(row['clearedAt'])?{clearedAt:date(row['clearedAt'])}:{}),
         ...(allExercises.some(e=>e.conceptId===id&&e.id===row['lastFailedExerciseId'])?{lastFailedExerciseId:row['lastFailedExerciseId'] as string}:{})};
     }
-    const practice=object(object(input['practices'])['01']);
-    if(practice['topicId']==='01'&&date(practice['attemptedAt'])&&date(practice['updatedAt'])&&count(practice['total'])>0&&count(practice['total'])<=GRAMMAR_V2_REVIEW.length&&typeof practice['score']==='number'&&practice['score']===count(practice['score'])&&count(practice['score'])<=count(practice['total']))
-      state.practices['01']={topicId:'01',score:count(practice['score']),total:count(practice['total']),attemptedAt:practice['attemptedAt'] as string,updatedAt:practice['updatedAt'] as string,errorConceptIds:Array.isArray(practice['errorConceptIds'])?practice['errorConceptIds'].filter((id):id is string=>typeof id==='string'&&catalog.has(id)):[]};
-    const resume=object(input['resume']);if(typeof resume['conceptId']==='string'&&catalog.has(resume['conceptId'])&&date(resume['updatedAt']))state.resume={conceptId:resume['conceptId'],path:`/grammar/n5/01/${resume['conceptId']}`,exerciseIndex:count(resume['exerciseIndex']),updatedAt:resume['updatedAt'] as string};
+    for(const topicId of new Set(GRAMMAR_V2_CONCEPTS.map(c=>c.topicId))){
+      const practice=object(object(input['practices'])[topicId]);
+      if(practice['topicId']===topicId&&date(practice['attemptedAt'])&&date(practice['updatedAt'])&&count(practice['total'])>0&&count(practice['total'])<=GRAMMAR_V2_REVIEW.filter(e=>e.topicId===topicId).length&&typeof practice['score']==='number'&&practice['score']===count(practice['score'])&&count(practice['score'])<=count(practice['total']))
+        state.practices[topicId]={topicId,score:count(practice['score']),total:count(practice['total']),attemptedAt:practice['attemptedAt'] as string,updatedAt:practice['updatedAt'] as string,errorConceptIds:Array.isArray(practice['errorConceptIds'])?practice['errorConceptIds'].filter((id):id is string=>typeof id==='string'&&catalog.get(id)?.topicId===topicId):[]};
+    }
+    const resume=object(input['resume']);if(typeof resume['conceptId']==='string'&&catalog.has(resume['conceptId'])&&date(resume['updatedAt']))state.resume={conceptId:resume['conceptId'],path:`/grammar/n5/${catalog.get(resume['conceptId'])!.topicId}/${resume['conceptId']}`,exerciseIndex:count(resume['exerciseIndex']),updatedAt:resume['updatedAt'] as string};
     return state;
   }
 }

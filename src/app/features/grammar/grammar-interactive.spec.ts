@@ -43,7 +43,7 @@ describe('Grammar interactive N5 catalog',()=>{
   });
   it('loads only the requested topic and supports every N5 topic',()=>{
     expect(grammarTopicRound('00')).toEqual([]);
-    for(const topic of GRAMMAR_TOPICS.filter(t=>t.id!=='00')){const round=grammarTopicRound(topic.id);expect(round.length).toBeGreaterThan(0);expect(round.length).toBeLessThanOrEqual(topic.id==='01'?15:10);expect(round.every(e=>e.topicId===topic.id)).toBe(true);}
+    for(const topic of GRAMMAR_TOPICS.filter(t=>t.id!=='00')){const round=grammarTopicRound(topic.id);expect(round.length).toBeGreaterThan(0);expect(round.length).toBeLessThanOrEqual(['01','02'].includes(topic.id)?15:10);expect(round.every(e=>e.topicId===topic.id)).toBe(true);}
   });
   it('loads exercises belonging only to a requested lesson',()=>{
     const exercises=grammarTopicRound('03','8');

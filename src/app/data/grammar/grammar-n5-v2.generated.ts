@@ -203,7 +203,9 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "state-being-negative",
       "state-being-past",
       "particle-wa-topic",
-      "particle-no-noun-link"
+      "particle-no-noun-link",
+      "adjective-na",
+      "adjective-i"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.state-being-plain.idea",
@@ -452,7 +454,9 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
     ],
     "relatedIds": [
       "state-being-past-negative",
-      "particle-mo-inclusive"
+      "particle-mo-inclusive",
+      "adjective-na",
+      "adjective-negative"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.state-being-negative.idea",
@@ -686,7 +690,9 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "state-being-plain"
     ],
     "relatedIds": [
-      "state-being-past-negative"
+      "state-being-past-negative",
+      "adjective-na",
+      "adjective-past"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.state-being-past.idea",
@@ -901,7 +907,10 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "state-being-negative",
       "state-being-past"
     ],
-    "relatedIds": [],
+    "relatedIds": [
+      "adjective-na",
+      "adjective-past-negative"
+    ],
     "lesson": {
       "ideaKey": "grammar.v2.state-being-past-negative.idea",
       "formation": [
@@ -1191,7 +1200,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "particle-mo-inclusive",
       "particle-ga-identifier",
       "particle-wa-vs-ga",
-      "demonstratives-ko-so-a-do"
+      "demonstratives-ko-so-a-do",
+      "adjectival-predicates-ga"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.particle-wa-topic.idea",
@@ -1607,7 +1617,8 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "particle-wa-topic"
     ],
     "relatedIds": [
-      "particle-wa-vs-ga"
+      "particle-wa-vs-ga",
+      "adjectival-predicates-ga"
     ],
     "lesson": {
       "ideaKey": "grammar.v2.particle-ga-identifier.idea",
@@ -1786,7 +1797,9 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
       "particle-wa-topic",
       "particle-ga-identifier"
     ],
-    "relatedIds": [],
+    "relatedIds": [
+      "adjectival-predicates-ga"
+    ],
     "lesson": {
       "ideaKey": "grammar.v2.particle-wa-vs-ga.idea",
       "formation": [],
@@ -2603,6 +2616,2505 @@ export const GRAMMAR_V2_CONCEPTS: readonly GrammarConcept[] = [
         ]
       }
     ]
+  },
+  {
+    "id": "adjective-na",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 1,
+    "titleKey": "grammar.v2.adjective-na.title",
+    "summaryKey": "grammar.v2.adjective-na.summary",
+    "goalKey": "grammar.v2.adjective-na.goal",
+    "prerequisiteIds": [
+      "state-being-plain",
+      "state-being-negative",
+      "state-being-past",
+      "state-being-past-negative"
+    ],
+    "relatedIds": [
+      "adjective-i",
+      "adjective-noun-modification",
+      "adjective-negative",
+      "adjective-past",
+      "adjectival-predicates-ga"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.adjective-na.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "学生だ → 静かだ"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "静か + な + 町 → 静かな町"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "静かだ。",
+          "reading": "しずかだ。",
+          "meaningKey": "grammar.v2.adjective-na.example.0"
+        },
+        {
+          "japanese": "静かじゃない。",
+          "reading": "しずかじゃない。",
+          "meaningKey": "grammar.v2.adjective-na.example.1"
+        },
+        {
+          "japanese": "静かだった。",
+          "reading": "しずかだった。",
+          "meaningKey": "grammar.v2.adjective-na.example.2"
+        },
+        {
+          "japanese": "静かじゃなかった。",
+          "reading": "しずかじゃなかった。",
+          "meaningKey": "grammar.v2.adjective-na.example.3"
+        },
+        {
+          "japanese": "元気だ。",
+          "reading": "げんきだ。",
+          "meaningKey": "grammar.v2.adjective-na.example.4"
+        },
+        {
+          "japanese": "静かな町",
+          "reading": "しずかなまち",
+          "meaningKey": "grammar.v2.adjective-na.example.5"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.adjective-na.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.adjective-na.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": [
+        {
+          "left": "学生じゃなかった。",
+          "right": "静かじゃなかった。",
+          "explanationKey": "grammar.v2.adjective-na.contrast.0"
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "adjective-na-1",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-na",
+        "conceptId": "adjective-na",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-na-1.prompt",
+        "successKey": "grammar.v2.adjective-na-1.explanation",
+        "errorKey": "grammar.v2.adjective-na-1.explanation",
+        "options": [
+          {
+            "id": "adjective-na-1-option-0",
+            "textKey": "grammar.v2.adjective-na-1.option.0",
+            "feedbackKey": "grammar.v2.adjective-na-1.feedback.0"
+          },
+          {
+            "id": "adjective-na-1-option-1",
+            "textKey": "grammar.v2.adjective-na-1.option.1",
+            "feedbackKey": "grammar.v2.adjective-na-1.feedback.1"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-na-1.option.0",
+          "grammar.v2.adjective-na-1.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "adjective-na-2",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-na",
+        "conceptId": "adjective-na",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.adjective-na-2.prompt",
+        "successKey": "grammar.v2.adjective-na-2.explanation",
+        "errorKey": "grammar.v2.adjective-na-2.explanation",
+        "acceptedAnswers": [
+          "だ"
+        ],
+        "solutionKey": "grammar.v2.adjective-na-2.solution",
+        "kanaBank": [
+          "だ"
+        ]
+      },
+      {
+        "id": "adjective-na-3",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-na",
+        "conceptId": "adjective-na",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.adjective-na-3.prompt",
+        "successKey": "grammar.v2.adjective-na-3.explanation",
+        "errorKey": "grammar.v2.adjective-na-3.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.adjective-na-3.left.0",
+            "rightKey": "grammar.v2.adjective-na-3.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-na-3.left.1",
+            "rightKey": "grammar.v2.adjective-na-3.right.1"
+          }
+        ]
+      },
+      {
+        "id": "adjective-na-4",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-na",
+        "conceptId": "adjective-na",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-na-4.prompt",
+        "successKey": "grammar.v2.adjective-na-4.explanation",
+        "errorKey": "grammar.v2.adjective-na-4.explanation",
+        "options": [
+          {
+            "id": "adjective-na-4-option-0",
+            "textKey": "grammar.v2.adjective-na-4.option.0",
+            "feedbackKey": "grammar.v2.adjective-na-4.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-na-4-option-1",
+            "textKey": "grammar.v2.adjective-na-4.option.1",
+            "feedbackKey": "grammar.v2.adjective-na-4.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-na-4-option-2",
+            "textKey": "grammar.v2.adjective-na-4.option.2",
+            "feedbackKey": "grammar.v2.adjective-na-4.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-na-4-option-3",
+            "textKey": "grammar.v2.adjective-na-4.option.3",
+            "feedbackKey": "grammar.v2.adjective-na-4.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-na-4.option.0",
+          "grammar.v2.adjective-na-4.option.1",
+          "grammar.v2.adjective-na-4.option.2",
+          "grammar.v2.adjective-na-4.option.3"
+        ],
+        "answer": 2
+      },
+      {
+        "id": "adjective-na-5",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-na",
+        "conceptId": "adjective-na",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-na-5.prompt",
+        "successKey": "grammar.v2.adjective-na-5.explanation",
+        "errorKey": "grammar.v2.adjective-na-5.explanation",
+        "options": [
+          {
+            "id": "adjective-na-5-option-0",
+            "textKey": "grammar.v2.adjective-na-5.option.0",
+            "feedbackKey": "grammar.v2.adjective-na-5.feedback.0"
+          },
+          {
+            "id": "adjective-na-5-option-1",
+            "textKey": "grammar.v2.adjective-na-5.option.1",
+            "feedbackKey": "grammar.v2.adjective-na-5.feedback.1"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-na-5.option.0",
+          "grammar.v2.adjective-na-5.option.1"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "adjective-i",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 2,
+    "titleKey": "grammar.v2.adjective-i.title",
+    "summaryKey": "grammar.v2.adjective-i.summary",
+    "goalKey": "grammar.v2.adjective-i.goal",
+    "prerequisiteIds": [
+      "state-being-plain",
+      "adjective-na"
+    ],
+    "relatedIds": [
+      "adjective-noun-modification",
+      "adjective-negative",
+      "adjective-past"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.adjective-i.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "高い。"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "かわいい。"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "高い。",
+          "reading": "たかい。",
+          "meaningKey": "grammar.v2.adjective-i.example.0"
+        },
+        {
+          "japanese": "面白い。",
+          "reading": "おもしろい。",
+          "meaningKey": "grammar.v2.adjective-i.example.1"
+        },
+        {
+          "japanese": "かわいい。",
+          "reading": "かわいい。",
+          "meaningKey": "grammar.v2.adjective-i.example.2"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.adjective-i.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.adjective-i.detail.1"
+        }
+      ],
+      "mistakes": [
+        {
+          "wrong": "高いだ。",
+          "correction": "高い。",
+          "explanationKey": "grammar.v2.adjective-i.mistake.0"
+        },
+        {
+          "wrong": "かわいいだ。",
+          "correction": "かわいい。",
+          "explanationKey": "grammar.v2.adjective-i.mistake.1"
+        }
+      ],
+      "contrasts": []
+    },
+    "exercises": [
+      {
+        "id": "adjective-i-1",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-i",
+        "conceptId": "adjective-i",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-i-1.prompt",
+        "successKey": "grammar.v2.adjective-i-1.explanation",
+        "errorKey": "grammar.v2.adjective-i-1.explanation",
+        "options": [
+          {
+            "id": "adjective-i-1-option-0",
+            "textKey": "grammar.v2.adjective-i-1.option.0",
+            "feedbackKey": "grammar.v2.adjective-i-1.feedback.0"
+          },
+          {
+            "id": "adjective-i-1-option-1",
+            "textKey": "grammar.v2.adjective-i-1.option.1",
+            "feedbackKey": "grammar.v2.adjective-i-1.feedback.1"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-i-1.option.0",
+          "grammar.v2.adjective-i-1.option.1"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "adjective-i-2",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-i",
+        "conceptId": "adjective-i",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.adjective-i-2.prompt",
+        "successKey": "grammar.v2.adjective-i-2.explanation",
+        "errorKey": "grammar.v2.adjective-i-2.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.adjective-i-2.left.0",
+            "rightKey": "grammar.v2.adjective-i-2.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-i-2.left.1",
+            "rightKey": "grammar.v2.adjective-i-2.right.1"
+          }
+        ]
+      },
+      {
+        "id": "adjective-i-3",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-i",
+        "conceptId": "adjective-i",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.adjective-i-3.prompt",
+        "successKey": "grammar.v2.adjective-i-3.explanation",
+        "errorKey": "grammar.v2.adjective-i-3.explanation",
+        "options": [
+          {
+            "id": "adjective-i-3-option-0",
+            "textKey": "grammar.v2.adjective-i-3.option.0",
+            "feedbackKey": "grammar.v2.adjective-i-3.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-i-3-option-1",
+            "textKey": "grammar.v2.adjective-i-3.option.1",
+            "feedbackKey": "grammar.v2.adjective-i-3.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-i-3-option-2",
+            "textKey": "grammar.v2.adjective-i-3.option.2",
+            "feedbackKey": "grammar.v2.adjective-i-3.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-i-3.option.0",
+          "grammar.v2.adjective-i-3.option.1",
+          "grammar.v2.adjective-i-3.option.2"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "adjective-i-4",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-i",
+        "conceptId": "adjective-i",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-i-4.prompt",
+        "successKey": "grammar.v2.adjective-i-4.explanation",
+        "errorKey": "grammar.v2.adjective-i-4.explanation",
+        "options": [
+          {
+            "id": "adjective-i-4-option-0",
+            "textKey": "grammar.v2.adjective-i-4.option.0",
+            "feedbackKey": "grammar.v2.adjective-i-4.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-i-4-option-1",
+            "textKey": "grammar.v2.adjective-i-4.option.1",
+            "feedbackKey": "grammar.v2.adjective-i-4.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-i-4-option-2",
+            "textKey": "grammar.v2.adjective-i-4.option.2",
+            "feedbackKey": "grammar.v2.adjective-i-4.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-i-4.option.0",
+          "grammar.v2.adjective-i-4.option.1",
+          "grammar.v2.adjective-i-4.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "adjective-i-5",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-i",
+        "conceptId": "adjective-i",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-i-5.prompt",
+        "successKey": "grammar.v2.adjective-i-5.explanation",
+        "errorKey": "grammar.v2.adjective-i-5.explanation",
+        "options": [
+          {
+            "id": "adjective-i-5-option-0",
+            "textKey": "grammar.v2.adjective-i-5.option.0",
+            "feedbackKey": "grammar.v2.adjective-i-5.feedback.0"
+          },
+          {
+            "id": "adjective-i-5-option-1",
+            "textKey": "grammar.v2.adjective-i-5.option.1",
+            "feedbackKey": "grammar.v2.adjective-i-5.feedback.1"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-i-5.option.0",
+          "grammar.v2.adjective-i-5.option.1"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "adjective-noun-modification",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 3,
+    "titleKey": "grammar.v2.adjective-noun-modification.title",
+    "summaryKey": "grammar.v2.adjective-noun-modification.summary",
+    "goalKey": "grammar.v2.adjective-noun-modification.goal",
+    "prerequisiteIds": [
+      "adjective-na",
+      "adjective-i"
+    ],
+    "relatedIds": [],
+    "lesson": {
+      "ideaKey": "grammar.v2.adjective-noun-modification.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "高い + 本 → 高い本"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "静かだ → 静か + な + 町"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "大きい家",
+          "reading": "おおきいいえ",
+          "meaningKey": "grammar.v2.adjective-noun-modification.example.0"
+        },
+        {
+          "japanese": "新しい本",
+          "reading": "あたらしいほん",
+          "meaningKey": "grammar.v2.adjective-noun-modification.example.1"
+        },
+        {
+          "japanese": "おいしい食べ物",
+          "reading": "おいしいたべもの",
+          "meaningKey": "grammar.v2.adjective-noun-modification.example.2"
+        },
+        {
+          "japanese": "静かな町",
+          "reading": "しずかなまち",
+          "meaningKey": "grammar.v2.adjective-noun-modification.example.3"
+        },
+        {
+          "japanese": "きれいな部屋",
+          "reading": "きれいなへや",
+          "meaningKey": "grammar.v2.adjective-noun-modification.example.4"
+        },
+        {
+          "japanese": "元気な人",
+          "reading": "げんきなひと",
+          "meaningKey": "grammar.v2.adjective-noun-modification.example.5"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.adjective-noun-modification.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.adjective-noun-modification.detail.1"
+        }
+      ],
+      "mistakes": [
+        {
+          "wrong": "大きいな家",
+          "correction": "大きい家",
+          "explanationKey": "grammar.v2.adjective-noun-modification.mistake.0"
+        },
+        {
+          "wrong": "静か町",
+          "correction": "静かな町",
+          "explanationKey": "grammar.v2.adjective-noun-modification.mistake.1"
+        }
+      ],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.adjectives.link",
+          "headerKeys": [
+            "grammar.v2.adjectives.pred",
+            "grammar.v2.adjectives.noun"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.adjectives.i",
+              "cells": [
+                "高い",
+                "高い本"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.adjectives.na",
+              "cells": [
+                "静かだ",
+                "静かな町"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "adjective-noun-modification-1",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-noun-modification",
+        "conceptId": "adjective-noun-modification",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.adjective-noun-modification-1.prompt",
+        "successKey": "grammar.v2.adjective-noun-modification-1.explanation",
+        "errorKey": "grammar.v2.adjective-noun-modification-1.explanation",
+        "acceptedAnswers": [
+          "な"
+        ],
+        "solutionKey": "grammar.v2.adjective-noun-modification-1.solution",
+        "kanaBank": [
+          "な"
+        ]
+      },
+      {
+        "id": "adjective-noun-modification-2",
+        "version": 2,
+        "kind": "sentence-builder",
+        "skill": "ordering",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-noun-modification",
+        "conceptId": "adjective-noun-modification",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.adjective-noun-modification-2.prompt",
+        "successKey": "grammar.v2.adjective-noun-modification-2.explanation",
+        "errorKey": "grammar.v2.adjective-noun-modification-2.explanation",
+        "tokenKeys": [
+          "grammar.v2.adjective-noun-modification-2.token.0",
+          "grammar.v2.adjective-noun-modification-2.token.1"
+        ],
+        "solution": [
+          1,
+          0
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "adjective-noun-modification-3",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-noun-modification",
+        "conceptId": "adjective-noun-modification",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-noun-modification-3.prompt",
+        "successKey": "grammar.v2.adjective-noun-modification-3.explanation",
+        "errorKey": "grammar.v2.adjective-noun-modification-3.explanation",
+        "options": [
+          {
+            "id": "adjective-noun-modification-3-option-0",
+            "textKey": "grammar.v2.adjective-noun-modification-3.option.0",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-3.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-noun-modification-3-option-1",
+            "textKey": "grammar.v2.adjective-noun-modification-3.option.1",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-3.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-noun-modification-3-option-2",
+            "textKey": "grammar.v2.adjective-noun-modification-3.option.2",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-3.feedback.2",
+            "grammarStatus": "invalid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-noun-modification-3.option.0",
+          "grammar.v2.adjective-noun-modification-3.option.1",
+          "grammar.v2.adjective-noun-modification-3.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "adjective-noun-modification-4",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-noun-modification",
+        "conceptId": "adjective-noun-modification",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.adjective-noun-modification-4.prompt",
+        "successKey": "grammar.v2.adjective-noun-modification-4.explanation",
+        "errorKey": "grammar.v2.adjective-noun-modification-4.explanation",
+        "options": [
+          {
+            "id": "adjective-noun-modification-4-option-0",
+            "textKey": "grammar.v2.adjective-noun-modification-4.option.0",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-4.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-noun-modification-4-option-1",
+            "textKey": "grammar.v2.adjective-noun-modification-4.option.1",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-4.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-noun-modification-4-option-2",
+            "textKey": "grammar.v2.adjective-noun-modification-4.option.2",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-4.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-noun-modification-4.option.0",
+          "grammar.v2.adjective-noun-modification-4.option.1",
+          "grammar.v2.adjective-noun-modification-4.option.2"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "adjective-noun-modification-5",
+        "version": 2,
+        "kind": "sentence-order",
+        "skill": "ordering",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-noun-modification",
+        "conceptId": "adjective-noun-modification",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.adjective-noun-modification-5.prompt",
+        "successKey": "grammar.v2.adjective-noun-modification-5.explanation",
+        "errorKey": "grammar.v2.adjective-noun-modification-5.explanation",
+        "tokenKeys": [
+          "grammar.v2.adjective-noun-modification-5.token.0",
+          "grammar.v2.adjective-noun-modification-5.token.1",
+          "grammar.v2.adjective-noun-modification-5.token.2"
+        ],
+        "solution": [
+          2,
+          1,
+          0
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "adjective-noun-modification-6",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-noun-modification",
+        "conceptId": "adjective-noun-modification",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-noun-modification-6.prompt",
+        "successKey": "grammar.v2.adjective-noun-modification-6.explanation",
+        "errorKey": "grammar.v2.adjective-noun-modification-6.explanation",
+        "options": [
+          {
+            "id": "adjective-noun-modification-6-option-0",
+            "textKey": "grammar.v2.adjective-noun-modification-6.option.0",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-6.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-noun-modification-6-option-1",
+            "textKey": "grammar.v2.adjective-noun-modification-6.option.1",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-6.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-noun-modification-6-option-2",
+            "textKey": "grammar.v2.adjective-noun-modification-6.option.2",
+            "feedbackKey": "grammar.v2.adjective-noun-modification-6.feedback.2",
+            "grammarStatus": "invalid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-noun-modification-6.option.0",
+          "grammar.v2.adjective-noun-modification-6.option.1",
+          "grammar.v2.adjective-noun-modification-6.option.2"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "adjective-negative",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 4,
+    "titleKey": "grammar.v2.adjective-negative.title",
+    "summaryKey": "grammar.v2.adjective-negative.summary",
+    "goalKey": "grammar.v2.adjective-negative.goal",
+    "prerequisiteIds": [
+      "adjective-na",
+      "adjective-i",
+      "state-being-negative"
+    ],
+    "relatedIds": [
+      "adjective-past-negative",
+      "adjective-ii-irregular",
+      "degree-adverbs"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.adjective-negative.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "静かだ → 静かじゃない"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "高い → 高くない"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "静かじゃない。",
+          "reading": "しずかじゃない。",
+          "meaningKey": "grammar.v2.adjective-negative.example.0"
+        },
+        {
+          "japanese": "高くない。",
+          "reading": "たかくない。",
+          "meaningKey": "grammar.v2.adjective-negative.example.1"
+        },
+        {
+          "japanese": "かわいくない。",
+          "reading": "かわいくない。",
+          "meaningKey": "grammar.v2.adjective-negative.example.2"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.adjective-negative.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.adjective-negative.detail.1"
+        }
+      ],
+      "mistakes": [
+        {
+          "wrong": "高いくない。",
+          "correction": "高くない。",
+          "explanationKey": "grammar.v2.adjective-negative.mistake.0"
+        }
+      ],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.adjectives.negative",
+          "headerKeys": [
+            "grammar.v2.positive",
+            "grammar.v2.negative"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.adjectives.na",
+              "cells": [
+                "静かだ",
+                "静かじゃない"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.adjectives.i",
+              "cells": [
+                "高い",
+                "高くない"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "adjective-negative-1",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-negative",
+        "conceptId": "adjective-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.adjective-negative-1.prompt",
+        "successKey": "grammar.v2.adjective-negative-1.explanation",
+        "errorKey": "grammar.v2.adjective-negative-1.explanation",
+        "acceptedAnswers": [
+          "くない"
+        ],
+        "solutionKey": "grammar.v2.adjective-negative-1.solution",
+        "kanaBank": [
+          "く",
+          "な",
+          "い"
+        ]
+      },
+      {
+        "id": "adjective-negative-2",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-negative",
+        "conceptId": "adjective-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-negative-2.prompt",
+        "successKey": "grammar.v2.adjective-negative-2.explanation",
+        "errorKey": "grammar.v2.adjective-negative-2.explanation",
+        "options": [
+          {
+            "id": "adjective-negative-2-option-0",
+            "textKey": "grammar.v2.adjective-negative-2.option.0",
+            "feedbackKey": "grammar.v2.adjective-negative-2.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-negative-2-option-1",
+            "textKey": "grammar.v2.adjective-negative-2.option.1",
+            "feedbackKey": "grammar.v2.adjective-negative-2.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-negative-2-option-2",
+            "textKey": "grammar.v2.adjective-negative-2.option.2",
+            "feedbackKey": "grammar.v2.adjective-negative-2.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-negative-2-option-3",
+            "textKey": "grammar.v2.adjective-negative-2.option.3",
+            "feedbackKey": "grammar.v2.adjective-negative-2.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-negative-2.option.0",
+          "grammar.v2.adjective-negative-2.option.1",
+          "grammar.v2.adjective-negative-2.option.2",
+          "grammar.v2.adjective-negative-2.option.3"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "adjective-negative-3",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-negative",
+        "conceptId": "adjective-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-negative-3.prompt",
+        "successKey": "grammar.v2.adjective-negative-3.explanation",
+        "errorKey": "grammar.v2.adjective-negative-3.explanation",
+        "options": [
+          {
+            "id": "adjective-negative-3-option-0",
+            "textKey": "grammar.v2.adjective-negative-3.option.0",
+            "feedbackKey": "grammar.v2.adjective-negative-3.feedback.0"
+          },
+          {
+            "id": "adjective-negative-3-option-1",
+            "textKey": "grammar.v2.adjective-negative-3.option.1",
+            "feedbackKey": "grammar.v2.adjective-negative-3.feedback.1"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-negative-3.option.0",
+          "grammar.v2.adjective-negative-3.option.1"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "adjective-negative-4",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-negative",
+        "conceptId": "adjective-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-negative-4.prompt",
+        "successKey": "grammar.v2.adjective-negative-4.explanation",
+        "errorKey": "grammar.v2.adjective-negative-4.explanation",
+        "options": [
+          {
+            "id": "adjective-negative-4-option-0",
+            "textKey": "grammar.v2.adjective-negative-4.option.0",
+            "feedbackKey": "grammar.v2.adjective-negative-4.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-negative-4-option-1",
+            "textKey": "grammar.v2.adjective-negative-4.option.1",
+            "feedbackKey": "grammar.v2.adjective-negative-4.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-negative-4-option-2",
+            "textKey": "grammar.v2.adjective-negative-4.option.2",
+            "feedbackKey": "grammar.v2.adjective-negative-4.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-negative-4-option-3",
+            "textKey": "grammar.v2.adjective-negative-4.option.3",
+            "feedbackKey": "grammar.v2.adjective-negative-4.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-negative-4.option.0",
+          "grammar.v2.adjective-negative-4.option.1",
+          "grammar.v2.adjective-negative-4.option.2",
+          "grammar.v2.adjective-negative-4.option.3"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "adjective-negative-5",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-negative",
+        "conceptId": "adjective-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.adjective-negative-5.prompt",
+        "successKey": "grammar.v2.adjective-negative-5.explanation",
+        "errorKey": "grammar.v2.adjective-negative-5.explanation",
+        "options": [
+          {
+            "id": "adjective-negative-5-option-0",
+            "textKey": "grammar.v2.adjective-negative-5.option.0",
+            "feedbackKey": "grammar.v2.adjective-negative-5.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-negative-5-option-1",
+            "textKey": "grammar.v2.adjective-negative-5.option.1",
+            "feedbackKey": "grammar.v2.adjective-negative-5.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-negative-5-option-2",
+            "textKey": "grammar.v2.adjective-negative-5.option.2",
+            "feedbackKey": "grammar.v2.adjective-negative-5.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-negative-5.option.0",
+          "grammar.v2.adjective-negative-5.option.1",
+          "grammar.v2.adjective-negative-5.option.2"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "adjective-past",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 5,
+    "titleKey": "grammar.v2.adjective-past.title",
+    "summaryKey": "grammar.v2.adjective-past.summary",
+    "goalKey": "grammar.v2.adjective-past.goal",
+    "prerequisiteIds": [
+      "adjective-na",
+      "adjective-i",
+      "state-being-past"
+    ],
+    "relatedIds": [
+      "adjective-past-negative",
+      "adjective-ii-irregular"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.adjective-past.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "静かだ → 静かだった"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "高い → 高かった"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "昨日、町は静かだった。",
+          "reading": "きのう、まちはしずかだった。",
+          "meaningKey": "grammar.v2.adjective-past.example.0"
+        },
+        {
+          "japanese": "本は高かった。",
+          "reading": "ほんはたかかった。",
+          "meaningKey": "grammar.v2.adjective-past.example.1"
+        },
+        {
+          "japanese": "面白かった。",
+          "reading": "おもしろかった。",
+          "meaningKey": "grammar.v2.adjective-past.example.2"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.adjective-past.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.adjective-past.detail.1"
+        }
+      ],
+      "mistakes": [
+        {
+          "wrong": "高いだった。",
+          "correction": "高かった。",
+          "explanationKey": "grammar.v2.adjective-past.mistake.0"
+        }
+      ],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.adjectives.past",
+          "headerKeys": [
+            "grammar.v2.nonpast",
+            "grammar.v2.past"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.adjectives.na",
+              "cells": [
+                "静かだ",
+                "静かだった"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.adjectives.i",
+              "cells": [
+                "高い",
+                "高かった"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "adjective-past-1",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-past",
+        "conceptId": "adjective-past",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.adjective-past-1.prompt",
+        "successKey": "grammar.v2.adjective-past-1.explanation",
+        "errorKey": "grammar.v2.adjective-past-1.explanation",
+        "acceptedAnswers": [
+          "かった"
+        ],
+        "solutionKey": "grammar.v2.adjective-past-1.solution",
+        "kanaBank": [
+          "か",
+          "っ",
+          "た"
+        ]
+      },
+      {
+        "id": "adjective-past-2",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-past",
+        "conceptId": "adjective-past",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-past-2.prompt",
+        "successKey": "grammar.v2.adjective-past-2.explanation",
+        "errorKey": "grammar.v2.adjective-past-2.explanation",
+        "options": [
+          {
+            "id": "adjective-past-2-option-0",
+            "textKey": "grammar.v2.adjective-past-2.option.0",
+            "feedbackKey": "grammar.v2.adjective-past-2.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-2-option-1",
+            "textKey": "grammar.v2.adjective-past-2.option.1",
+            "feedbackKey": "grammar.v2.adjective-past-2.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-2-option-2",
+            "textKey": "grammar.v2.adjective-past-2.option.2",
+            "feedbackKey": "grammar.v2.adjective-past-2.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-2-option-3",
+            "textKey": "grammar.v2.adjective-past-2.option.3",
+            "feedbackKey": "grammar.v2.adjective-past-2.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-past-2.option.0",
+          "grammar.v2.adjective-past-2.option.1",
+          "grammar.v2.adjective-past-2.option.2",
+          "grammar.v2.adjective-past-2.option.3"
+        ],
+        "answer": 2
+      },
+      {
+        "id": "adjective-past-3",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-past",
+        "conceptId": "adjective-past",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.adjective-past-3.prompt",
+        "successKey": "grammar.v2.adjective-past-3.explanation",
+        "errorKey": "grammar.v2.adjective-past-3.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.adjective-past-3.left.0",
+            "rightKey": "grammar.v2.adjective-past-3.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-past-3.left.1",
+            "rightKey": "grammar.v2.adjective-past-3.right.1"
+          }
+        ]
+      },
+      {
+        "id": "adjective-past-4",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-past",
+        "conceptId": "adjective-past",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-past-4.prompt",
+        "successKey": "grammar.v2.adjective-past-4.explanation",
+        "errorKey": "grammar.v2.adjective-past-4.explanation",
+        "options": [
+          {
+            "id": "adjective-past-4-option-0",
+            "textKey": "grammar.v2.adjective-past-4.option.0",
+            "feedbackKey": "grammar.v2.adjective-past-4.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-4-option-1",
+            "textKey": "grammar.v2.adjective-past-4.option.1",
+            "feedbackKey": "grammar.v2.adjective-past-4.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-4-option-2",
+            "textKey": "grammar.v2.adjective-past-4.option.2",
+            "feedbackKey": "grammar.v2.adjective-past-4.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-4-option-3",
+            "textKey": "grammar.v2.adjective-past-4.option.3",
+            "feedbackKey": "grammar.v2.adjective-past-4.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-past-4.option.0",
+          "grammar.v2.adjective-past-4.option.1",
+          "grammar.v2.adjective-past-4.option.2",
+          "grammar.v2.adjective-past-4.option.3"
+        ],
+        "answer": 2
+      },
+      {
+        "id": "adjective-past-5",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-past",
+        "conceptId": "adjective-past",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.adjective-past-5.prompt",
+        "successKey": "grammar.v2.adjective-past-5.explanation",
+        "errorKey": "grammar.v2.adjective-past-5.explanation",
+        "options": [
+          {
+            "id": "adjective-past-5-option-0",
+            "textKey": "grammar.v2.adjective-past-5.option.0",
+            "feedbackKey": "grammar.v2.adjective-past-5.feedback.0",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-past-5-option-1",
+            "textKey": "grammar.v2.adjective-past-5.option.1",
+            "feedbackKey": "grammar.v2.adjective-past-5.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-5-option-2",
+            "textKey": "grammar.v2.adjective-past-5.option.2",
+            "feedbackKey": "grammar.v2.adjective-past-5.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-past-5.option.0",
+          "grammar.v2.adjective-past-5.option.1",
+          "grammar.v2.adjective-past-5.option.2"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "adjective-past-negative",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 6,
+    "titleKey": "grammar.v2.adjective-past-negative.title",
+    "summaryKey": "grammar.v2.adjective-past-negative.summary",
+    "goalKey": "grammar.v2.adjective-past-negative.goal",
+    "prerequisiteIds": [
+      "adjective-negative",
+      "adjective-past",
+      "state-being-past-negative"
+    ],
+    "relatedIds": [
+      "adjective-ii-irregular"
+    ],
+    "lesson": {
+      "ideaKey": "grammar.v2.adjective-past-negative.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "静かじゃない → 静かじゃなかった"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "高くない → 高くなかった"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "昨日、町は静かじゃなかった。",
+          "reading": "きのう、まちはしずかじゃなかった。",
+          "meaningKey": "grammar.v2.adjective-past-negative.example.0"
+        },
+        {
+          "japanese": "本は高くなかった。",
+          "reading": "ほんはたかくなかった。",
+          "meaningKey": "grammar.v2.adjective-past-negative.example.1"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.adjective-past-negative.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.adjective-past-negative.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.adjectives.system",
+          "headerKeys": [
+            "grammar.v2.positive",
+            "grammar.v2.negative"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.adjectives.naNow",
+              "cells": [
+                "静かだ",
+                "静かじゃない"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.adjectives.naPast",
+              "cells": [
+                "静かだった",
+                "静かじゃなかった"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.adjectives.iNow",
+              "cells": [
+                "高い",
+                "高くない"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.adjectives.iPast",
+              "cells": [
+                "高かった",
+                "高くなかった"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "adjective-past-negative-1",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-past-negative",
+        "conceptId": "adjective-past-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-past-negative-1.prompt",
+        "successKey": "grammar.v2.adjective-past-negative-1.explanation",
+        "errorKey": "grammar.v2.adjective-past-negative-1.explanation",
+        "options": [
+          {
+            "id": "adjective-past-negative-1-option-0",
+            "textKey": "grammar.v2.adjective-past-negative-1.option.0",
+            "feedbackKey": "grammar.v2.adjective-past-negative-1.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-negative-1-option-1",
+            "textKey": "grammar.v2.adjective-past-negative-1.option.1",
+            "feedbackKey": "grammar.v2.adjective-past-negative-1.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-negative-1-option-2",
+            "textKey": "grammar.v2.adjective-past-negative-1.option.2",
+            "feedbackKey": "grammar.v2.adjective-past-negative-1.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-negative-1-option-3",
+            "textKey": "grammar.v2.adjective-past-negative-1.option.3",
+            "feedbackKey": "grammar.v2.adjective-past-negative-1.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-past-negative-1.option.0",
+          "grammar.v2.adjective-past-negative-1.option.1",
+          "grammar.v2.adjective-past-negative-1.option.2",
+          "grammar.v2.adjective-past-negative-1.option.3"
+        ],
+        "answer": 3
+      },
+      {
+        "id": "adjective-past-negative-2",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-past-negative",
+        "conceptId": "adjective-past-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.adjective-past-negative-2.prompt",
+        "successKey": "grammar.v2.adjective-past-negative-2.explanation",
+        "errorKey": "grammar.v2.adjective-past-negative-2.explanation",
+        "acceptedAnswers": [
+          "なかった"
+        ],
+        "solutionKey": "grammar.v2.adjective-past-negative-2.solution",
+        "kanaBank": [
+          "な",
+          "か",
+          "っ",
+          "た"
+        ]
+      },
+      {
+        "id": "adjective-past-negative-3",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-past-negative",
+        "conceptId": "adjective-past-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-past-negative-3.prompt",
+        "successKey": "grammar.v2.adjective-past-negative-3.explanation",
+        "errorKey": "grammar.v2.adjective-past-negative-3.explanation",
+        "options": [
+          {
+            "id": "adjective-past-negative-3-option-0",
+            "textKey": "grammar.v2.adjective-past-negative-3.option.0",
+            "feedbackKey": "grammar.v2.adjective-past-negative-3.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-negative-3-option-1",
+            "textKey": "grammar.v2.adjective-past-negative-3.option.1",
+            "feedbackKey": "grammar.v2.adjective-past-negative-3.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-negative-3-option-2",
+            "textKey": "grammar.v2.adjective-past-negative-3.option.2",
+            "feedbackKey": "grammar.v2.adjective-past-negative-3.feedback.2",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-past-negative-3-option-3",
+            "textKey": "grammar.v2.adjective-past-negative-3.option.3",
+            "feedbackKey": "grammar.v2.adjective-past-negative-3.feedback.3",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-past-negative-3.option.0",
+          "grammar.v2.adjective-past-negative-3.option.1",
+          "grammar.v2.adjective-past-negative-3.option.2",
+          "grammar.v2.adjective-past-negative-3.option.3"
+        ],
+        "answer": 3
+      },
+      {
+        "id": "adjective-past-negative-4",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-past-negative",
+        "conceptId": "adjective-past-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.adjective-past-negative-4.prompt",
+        "successKey": "grammar.v2.adjective-past-negative-4.explanation",
+        "errorKey": "grammar.v2.adjective-past-negative-4.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.adjective-past-negative-4.left.0",
+            "rightKey": "grammar.v2.adjective-past-negative-4.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-past-negative-4.left.1",
+            "rightKey": "grammar.v2.adjective-past-negative-4.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-past-negative-4.left.2",
+            "rightKey": "grammar.v2.adjective-past-negative-4.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-past-negative-4.left.3",
+            "rightKey": "grammar.v2.adjective-past-negative-4.right.3"
+          }
+        ]
+      },
+      {
+        "id": "adjective-past-negative-5",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-past-negative",
+        "conceptId": "adjective-past-negative",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-past-negative-5.prompt",
+        "successKey": "grammar.v2.adjective-past-negative-5.explanation",
+        "errorKey": "grammar.v2.adjective-past-negative-5.explanation",
+        "options": [
+          {
+            "id": "adjective-past-negative-5-option-0",
+            "textKey": "grammar.v2.adjective-past-negative-5.option.0",
+            "feedbackKey": "grammar.v2.adjective-past-negative-5.feedback.0"
+          },
+          {
+            "id": "adjective-past-negative-5-option-1",
+            "textKey": "grammar.v2.adjective-past-negative-5.option.1",
+            "feedbackKey": "grammar.v2.adjective-past-negative-5.feedback.1"
+          },
+          {
+            "id": "adjective-past-negative-5-option-2",
+            "textKey": "grammar.v2.adjective-past-negative-5.option.2",
+            "feedbackKey": "grammar.v2.adjective-past-negative-5.feedback.2"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-past-negative-5.option.0",
+          "grammar.v2.adjective-past-negative-5.option.1",
+          "grammar.v2.adjective-past-negative-5.option.2"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "adjective-ii-irregular",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 7,
+    "titleKey": "grammar.v2.adjective-ii-irregular.title",
+    "summaryKey": "grammar.v2.adjective-ii-irregular.summary",
+    "goalKey": "grammar.v2.adjective-ii-irregular.goal",
+    "prerequisiteIds": [
+      "adjective-negative",
+      "adjective-past",
+      "adjective-past-negative"
+    ],
+    "relatedIds": [],
+    "lesson": {
+      "ideaKey": "grammar.v2.adjective-ii-irregular.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "いい / よい → よくない → よくなかった"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "よい → よかった"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "いい。",
+          "reading": "いい。",
+          "meaningKey": "grammar.v2.adjective-ii-irregular.example.0"
+        },
+        {
+          "japanese": "よくない。",
+          "reading": "よくない。",
+          "meaningKey": "grammar.v2.adjective-ii-irregular.example.1"
+        },
+        {
+          "japanese": "よかった。",
+          "reading": "よかった。",
+          "meaningKey": "grammar.v2.adjective-ii-irregular.example.2"
+        },
+        {
+          "japanese": "よくなかった。",
+          "reading": "よくなかった。",
+          "meaningKey": "grammar.v2.adjective-ii-irregular.example.3"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.adjective-ii-irregular.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.adjective-ii-irregular.detail.1"
+        }
+      ],
+      "mistakes": [
+        {
+          "wrong": "いくない。",
+          "correction": "よくない。",
+          "explanationKey": "grammar.v2.adjective-ii-irregular.mistake.0"
+        },
+        {
+          "wrong": "いかった。",
+          "correction": "よかった。",
+          "explanationKey": "grammar.v2.adjective-ii-irregular.mistake.1"
+        }
+      ],
+      "contrasts": [],
+      "tables": [
+        {
+          "captionKey": "grammar.v2.adjectives.ii",
+          "headerKeys": [
+            "grammar.v2.positive",
+            "grammar.v2.negative"
+          ],
+          "rows": [
+            {
+              "labelKey": "grammar.v2.adjectives.iNow",
+              "cells": [
+                "いい",
+                "よくない"
+              ]
+            },
+            {
+              "labelKey": "grammar.v2.adjectives.iPast",
+              "cells": [
+                "よかった",
+                "よくなかった"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "id": "adjective-ii-irregular-1",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjective-ii-irregular",
+        "conceptId": "adjective-ii-irregular",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.adjective-ii-irregular-1.prompt",
+        "successKey": "grammar.v2.adjective-ii-irregular-1.explanation",
+        "errorKey": "grammar.v2.adjective-ii-irregular-1.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.adjective-ii-irregular-1.left.0",
+            "rightKey": "grammar.v2.adjective-ii-irregular-1.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-ii-irregular-1.left.1",
+            "rightKey": "grammar.v2.adjective-ii-irregular-1.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-ii-irregular-1.left.2",
+            "rightKey": "grammar.v2.adjective-ii-irregular-1.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.adjective-ii-irregular-1.left.3",
+            "rightKey": "grammar.v2.adjective-ii-irregular-1.right.3"
+          }
+        ]
+      },
+      {
+        "id": "adjective-ii-irregular-2",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-ii-irregular",
+        "conceptId": "adjective-ii-irregular",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.adjective-ii-irregular-2.prompt",
+        "successKey": "grammar.v2.adjective-ii-irregular-2.explanation",
+        "errorKey": "grammar.v2.adjective-ii-irregular-2.explanation",
+        "acceptedAnswers": [
+          "よかった"
+        ],
+        "solutionKey": "grammar.v2.adjective-ii-irregular-2.solution",
+        "kanaBank": [
+          "よ",
+          "か",
+          "っ",
+          "た"
+        ]
+      },
+      {
+        "id": "adjective-ii-irregular-3",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-ii-irregular",
+        "conceptId": "adjective-ii-irregular",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.adjective-ii-irregular-3.prompt",
+        "successKey": "grammar.v2.adjective-ii-irregular-3.explanation",
+        "errorKey": "grammar.v2.adjective-ii-irregular-3.explanation",
+        "options": [
+          {
+            "id": "adjective-ii-irregular-3-option-0",
+            "textKey": "grammar.v2.adjective-ii-irregular-3.option.0",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-3.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-ii-irregular-3-option-1",
+            "textKey": "grammar.v2.adjective-ii-irregular-3.option.1",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-3.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-ii-irregular-3-option-2",
+            "textKey": "grammar.v2.adjective-ii-irregular-3.option.2",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-3.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-ii-irregular-3.option.0",
+          "grammar.v2.adjective-ii-irregular-3.option.1",
+          "grammar.v2.adjective-ii-irregular-3.option.2"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "adjective-ii-irregular-4",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-ii-irregular",
+        "conceptId": "adjective-ii-irregular",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.adjective-ii-irregular-4.prompt",
+        "successKey": "grammar.v2.adjective-ii-irregular-4.explanation",
+        "errorKey": "grammar.v2.adjective-ii-irregular-4.explanation",
+        "options": [
+          {
+            "id": "adjective-ii-irregular-4-option-0",
+            "textKey": "grammar.v2.adjective-ii-irregular-4.option.0",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-4.feedback.0",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjective-ii-irregular-4-option-1",
+            "textKey": "grammar.v2.adjective-ii-irregular-4.option.1",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-4.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-ii-irregular-4-option-2",
+            "textKey": "grammar.v2.adjective-ii-irregular-4.option.2",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-4.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-ii-irregular-4.option.0",
+          "grammar.v2.adjective-ii-irregular-4.option.1",
+          "grammar.v2.adjective-ii-irregular-4.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "adjective-ii-irregular-5",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjective-ii-irregular",
+        "conceptId": "adjective-ii-irregular",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjective-ii-irregular-5.prompt",
+        "successKey": "grammar.v2.adjective-ii-irregular-5.explanation",
+        "errorKey": "grammar.v2.adjective-ii-irregular-5.explanation",
+        "options": [
+          {
+            "id": "adjective-ii-irregular-5-option-0",
+            "textKey": "grammar.v2.adjective-ii-irregular-5.option.0",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-5.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-ii-irregular-5-option-1",
+            "textKey": "grammar.v2.adjective-ii-irregular-5.option.1",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-5.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjective-ii-irregular-5-option-2",
+            "textKey": "grammar.v2.adjective-ii-irregular-5.option.2",
+            "feedbackKey": "grammar.v2.adjective-ii-irregular-5.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjective-ii-irregular-5.option.0",
+          "grammar.v2.adjective-ii-irregular-5.option.1",
+          "grammar.v2.adjective-ii-irregular-5.option.2"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": "degree-adverbs",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 8,
+    "titleKey": "grammar.v2.degree-adverbs.title",
+    "summaryKey": "grammar.v2.degree-adverbs.summary",
+    "goalKey": "grammar.v2.degree-adverbs.goal",
+    "prerequisiteIds": [
+      "adjective-negative"
+    ],
+    "relatedIds": [],
+    "lesson": {
+      "ideaKey": "grammar.v2.degree-adverbs.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "とても + 高い"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "あまり + 高くない"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "ぜんぜん + 高くない"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "とても高い。",
+          "reading": "とてもたかい。",
+          "meaningKey": "grammar.v2.degree-adverbs.example.0"
+        },
+        {
+          "japanese": "あまり高くない。",
+          "reading": "あまりたかくない。",
+          "meaningKey": "grammar.v2.degree-adverbs.example.1"
+        },
+        {
+          "japanese": "ぜんぜん高くない。",
+          "reading": "ぜんぜんたかくない。",
+          "meaningKey": "grammar.v2.degree-adverbs.example.2"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.degree-adverbs.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.degree-adverbs.detail.1"
+        }
+      ],
+      "mistakes": [],
+      "contrasts": []
+    },
+    "exercises": [
+      {
+        "id": "degree-adverbs-1",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "degree-adverbs",
+        "conceptId": "degree-adverbs",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.degree-adverbs-1.prompt",
+        "successKey": "grammar.v2.degree-adverbs-1.explanation",
+        "errorKey": "grammar.v2.degree-adverbs-1.explanation",
+        "options": [
+          {
+            "id": "degree-adverbs-1-option-0",
+            "textKey": "grammar.v2.degree-adverbs-1.option.0",
+            "feedbackKey": "grammar.v2.degree-adverbs-1.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "degree-adverbs-1-option-1",
+            "textKey": "grammar.v2.degree-adverbs-1.option.1",
+            "feedbackKey": "grammar.v2.degree-adverbs-1.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "degree-adverbs-1-option-2",
+            "textKey": "grammar.v2.degree-adverbs-1.option.2",
+            "feedbackKey": "grammar.v2.degree-adverbs-1.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.degree-adverbs-1.option.0",
+          "grammar.v2.degree-adverbs-1.option.1",
+          "grammar.v2.degree-adverbs-1.option.2"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "degree-adverbs-2",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "degree-adverbs",
+        "conceptId": "degree-adverbs",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.degree-adverbs-2.prompt",
+        "successKey": "grammar.v2.degree-adverbs-2.explanation",
+        "errorKey": "grammar.v2.degree-adverbs-2.explanation",
+        "options": [
+          {
+            "id": "degree-adverbs-2-option-0",
+            "textKey": "grammar.v2.degree-adverbs-2.option.0",
+            "feedbackKey": "grammar.v2.degree-adverbs-2.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "degree-adverbs-2-option-1",
+            "textKey": "grammar.v2.degree-adverbs-2.option.1",
+            "feedbackKey": "grammar.v2.degree-adverbs-2.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "degree-adverbs-2-option-2",
+            "textKey": "grammar.v2.degree-adverbs-2.option.2",
+            "feedbackKey": "grammar.v2.degree-adverbs-2.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.degree-adverbs-2.option.0",
+          "grammar.v2.degree-adverbs-2.option.1",
+          "grammar.v2.degree-adverbs-2.option.2"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "degree-adverbs-3",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "degree-adverbs",
+        "conceptId": "degree-adverbs",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.degree-adverbs-3.prompt",
+        "successKey": "grammar.v2.degree-adverbs-3.explanation",
+        "errorKey": "grammar.v2.degree-adverbs-3.explanation",
+        "acceptedAnswers": [
+          "ない"
+        ],
+        "solutionKey": "grammar.v2.degree-adverbs-3.solution",
+        "kanaBank": [
+          "な",
+          "い"
+        ]
+      },
+      {
+        "id": "degree-adverbs-4",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "degree-adverbs",
+        "conceptId": "degree-adverbs",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.degree-adverbs-4.prompt",
+        "successKey": "grammar.v2.degree-adverbs-4.explanation",
+        "errorKey": "grammar.v2.degree-adverbs-4.explanation",
+        "options": [
+          {
+            "id": "degree-adverbs-4-option-0",
+            "textKey": "grammar.v2.degree-adverbs-4.option.0",
+            "feedbackKey": "grammar.v2.degree-adverbs-4.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "degree-adverbs-4-option-1",
+            "textKey": "grammar.v2.degree-adverbs-4.option.1",
+            "feedbackKey": "grammar.v2.degree-adverbs-4.feedback.1",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "degree-adverbs-4-option-2",
+            "textKey": "grammar.v2.degree-adverbs-4.option.2",
+            "feedbackKey": "grammar.v2.degree-adverbs-4.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.degree-adverbs-4.option.0",
+          "grammar.v2.degree-adverbs-4.option.1",
+          "grammar.v2.degree-adverbs-4.option.2"
+        ],
+        "answer": 2
+      },
+      {
+        "id": "degree-adverbs-5",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "degree-adverbs",
+        "conceptId": "degree-adverbs",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.degree-adverbs-5.prompt",
+        "successKey": "grammar.v2.degree-adverbs-5.explanation",
+        "errorKey": "grammar.v2.degree-adverbs-5.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.degree-adverbs-5.left.0",
+            "rightKey": "grammar.v2.degree-adverbs-5.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.degree-adverbs-5.left.1",
+            "rightKey": "grammar.v2.degree-adverbs-5.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.degree-adverbs-5.left.2",
+            "rightKey": "grammar.v2.degree-adverbs-5.right.2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "adjectival-predicates-ga",
+    "level": "N5",
+    "track": "core",
+    "topicId": "02",
+    "order": 9,
+    "titleKey": "grammar.v2.adjectival-predicates-ga.title",
+    "summaryKey": "grammar.v2.adjectival-predicates-ga.summary",
+    "goalKey": "grammar.v2.adjectival-predicates-ga.goal",
+    "prerequisiteIds": [
+      "adjective-na",
+      "particle-wa-topic",
+      "particle-ga-identifier",
+      "particle-wa-vs-ga"
+    ],
+    "relatedIds": [],
+    "lesson": {
+      "ideaKey": "grammar.v2.adjectival-predicates-ga.idea",
+      "formation": [
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "私は + 魚が + 好きだ。"
+        },
+        {
+          "labelKey": "grammar.v2.pattern",
+          "pattern": "田中さんは + 料理が + 上手だ。"
+        }
+      ],
+      "examples": [
+        {
+          "japanese": "私は魚が好きだ。",
+          "reading": "わたしはさかながすきだ。",
+          "meaningKey": "grammar.v2.adjectival-predicates-ga.example.0"
+        },
+        {
+          "japanese": "私は魚が嫌いだ。",
+          "reading": "わたしはさかながきらいだ。",
+          "meaningKey": "grammar.v2.adjectival-predicates-ga.example.1"
+        },
+        {
+          "japanese": "田中さんは料理が上手だ。",
+          "reading": "たなかさんはりょうりがじょうずだ。",
+          "meaningKey": "grammar.v2.adjectival-predicates-ga.example.2"
+        },
+        {
+          "japanese": "私は料理が下手だ。",
+          "reading": "わたしはりょうりがへただ。",
+          "meaningKey": "grammar.v2.adjectival-predicates-ga.example.3"
+        }
+      ],
+      "detailedExplanation": [
+        {
+          "id": "why",
+          "titleKey": "grammar.v2.detailWhy",
+          "bodyKey": "grammar.v2.adjectival-predicates-ga.detail.0"
+        },
+        {
+          "id": "nuance",
+          "titleKey": "grammar.v2.detailNuance",
+          "bodyKey": "grammar.v2.adjectival-predicates-ga.detail.1"
+        }
+      ],
+      "mistakes": [
+        {
+          "wrong": "私は魚を好きだ。",
+          "correction": "私は魚が好きだ。",
+          "explanationKey": "grammar.v2.adjectival-predicates-ga.mistake.0"
+        }
+      ],
+      "contrasts": []
+    },
+    "exercises": [
+      {
+        "id": "adjectival-predicates-ga-1",
+        "version": 2,
+        "kind": "fill-gap",
+        "skill": "formation",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjectival-predicates-ga",
+        "conceptId": "adjectival-predicates-ga",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.fill",
+        "promptKey": "grammar.v2.adjectival-predicates-ga-1.prompt",
+        "successKey": "grammar.v2.adjectival-predicates-ga-1.explanation",
+        "errorKey": "grammar.v2.adjectival-predicates-ga-1.explanation",
+        "acceptedAnswers": [
+          "が"
+        ],
+        "solutionKey": "grammar.v2.adjectival-predicates-ga-1.solution",
+        "kanaBank": [
+          "が"
+        ]
+      },
+      {
+        "id": "adjectival-predicates-ga-2",
+        "version": 2,
+        "kind": "matching",
+        "skill": "recognition",
+        "difficulty": 1,
+        "topicId": "02",
+        "lessonId": "adjectival-predicates-ga",
+        "conceptId": "adjectival-predicates-ga",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.match",
+        "promptKey": "grammar.v2.adjectival-predicates-ga-2.prompt",
+        "successKey": "grammar.v2.adjectival-predicates-ga-2.explanation",
+        "errorKey": "grammar.v2.adjectival-predicates-ga-2.explanation",
+        "pairs": [
+          {
+            "leftKey": "grammar.v2.adjectival-predicates-ga-2.left.0",
+            "rightKey": "grammar.v2.adjectival-predicates-ga-2.right.0"
+          },
+          {
+            "leftKey": "grammar.v2.adjectival-predicates-ga-2.left.1",
+            "rightKey": "grammar.v2.adjectival-predicates-ga-2.right.1"
+          },
+          {
+            "leftKey": "grammar.v2.adjectival-predicates-ga-2.left.2",
+            "rightKey": "grammar.v2.adjectival-predicates-ga-2.right.2"
+          },
+          {
+            "leftKey": "grammar.v2.adjectival-predicates-ga-2.left.3",
+            "rightKey": "grammar.v2.adjectival-predicates-ga-2.right.3"
+          }
+        ]
+      },
+      {
+        "id": "adjectival-predicates-ga-3",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "contrast",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjectival-predicates-ga",
+        "conceptId": "adjectival-predicates-ga",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjectival-predicates-ga-3.prompt",
+        "successKey": "grammar.v2.adjectival-predicates-ga-3.explanation",
+        "errorKey": "grammar.v2.adjectival-predicates-ga-3.explanation",
+        "options": [
+          {
+            "id": "adjectival-predicates-ga-3-option-0",
+            "textKey": "grammar.v2.adjectival-predicates-ga-3.option.0",
+            "feedbackKey": "grammar.v2.adjectival-predicates-ga-3.feedback.0"
+          },
+          {
+            "id": "adjectival-predicates-ga-3-option-1",
+            "textKey": "grammar.v2.adjectival-predicates-ga-3.option.1",
+            "feedbackKey": "grammar.v2.adjectival-predicates-ga-3.feedback.1"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjectival-predicates-ga-3.option.0",
+          "grammar.v2.adjectival-predicates-ga-3.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "adjectival-predicates-ga-4",
+        "version": 2,
+        "kind": "sentence-builder",
+        "skill": "ordering",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjectival-predicates-ga",
+        "conceptId": "adjectival-predicates-ga",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.order",
+        "promptKey": "grammar.v2.adjectival-predicates-ga-4.prompt",
+        "successKey": "grammar.v2.adjectival-predicates-ga-4.explanation",
+        "errorKey": "grammar.v2.adjectival-predicates-ga-4.explanation",
+        "tokenKeys": [
+          "grammar.v2.adjectival-predicates-ga-4.token.0",
+          "grammar.v2.adjectival-predicates-ga-4.token.1",
+          "grammar.v2.adjectival-predicates-ga-4.token.2",
+          "grammar.v2.adjectival-predicates-ga-4.token.3"
+        ],
+        "solution": [
+          2,
+          1,
+          3,
+          0
+        ],
+        "orderPolicy": "constrained"
+      },
+      {
+        "id": "adjectival-predicates-ga-5",
+        "version": 2,
+        "kind": "multiple-choice",
+        "skill": "usage",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjectival-predicates-ga",
+        "conceptId": "adjectival-predicates-ga",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.choose",
+        "promptKey": "grammar.v2.adjectival-predicates-ga-5.prompt",
+        "successKey": "grammar.v2.adjectival-predicates-ga-5.explanation",
+        "errorKey": "grammar.v2.adjectival-predicates-ga-5.explanation",
+        "options": [
+          {
+            "id": "adjectival-predicates-ga-5-option-0",
+            "textKey": "grammar.v2.adjectival-predicates-ga-5.option.0",
+            "feedbackKey": "grammar.v2.adjectival-predicates-ga-5.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjectival-predicates-ga-5-option-1",
+            "textKey": "grammar.v2.adjectival-predicates-ga-5.option.1",
+            "feedbackKey": "grammar.v2.adjectival-predicates-ga-5.feedback.1",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjectival-predicates-ga-5.option.0",
+          "grammar.v2.adjectival-predicates-ga-5.option.1"
+        ],
+        "answer": 0
+      },
+      {
+        "id": "adjectival-predicates-ga-6",
+        "version": 2,
+        "kind": "detect-error",
+        "skill": "error-detection",
+        "difficulty": 2,
+        "topicId": "02",
+        "lessonId": "adjectival-predicates-ga",
+        "conceptId": "adjectival-predicates-ga",
+        "labelKey": "grammar.v2.practice",
+        "topicKey": "grammar.v2.topic02",
+        "questionKey": "grammar.v2.detect",
+        "promptKey": "grammar.v2.adjectival-predicates-ga-6.prompt",
+        "successKey": "grammar.v2.adjectival-predicates-ga-6.explanation",
+        "errorKey": "grammar.v2.adjectival-predicates-ga-6.explanation",
+        "options": [
+          {
+            "id": "adjectival-predicates-ga-6-option-0",
+            "textKey": "grammar.v2.adjectival-predicates-ga-6.option.0",
+            "feedbackKey": "grammar.v2.adjectival-predicates-ga-6.feedback.0",
+            "grammarStatus": "valid"
+          },
+          {
+            "id": "adjectival-predicates-ga-6-option-1",
+            "textKey": "grammar.v2.adjectival-predicates-ga-6.option.1",
+            "feedbackKey": "grammar.v2.adjectival-predicates-ga-6.feedback.1",
+            "grammarStatus": "invalid"
+          },
+          {
+            "id": "adjectival-predicates-ga-6-option-2",
+            "textKey": "grammar.v2.adjectival-predicates-ga-6.option.2",
+            "feedbackKey": "grammar.v2.adjectival-predicates-ga-6.feedback.2",
+            "grammarStatus": "valid"
+          }
+        ],
+        "optionKeys": [
+          "grammar.v2.adjectival-predicates-ga-6.option.0",
+          "grammar.v2.adjectival-predicates-ga-6.option.1",
+          "grammar.v2.adjectival-predicates-ga-6.option.2"
+        ],
+        "answer": 1
+      }
+    ]
   }
 ];
 export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
@@ -3141,6 +5653,441 @@ export const GRAMMAR_V2_REVIEW: readonly GrammarExercise[] = [
       "grammar.v2.topic01-review-15.option.0",
       "grammar.v2.topic01-review-15.option.1",
       "grammar.v2.topic01-review-15.option.2"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "topic02-review-01",
+    "version": 2,
+    "kind": "multiple-choice",
+    "skill": "recognition",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-na",
+    "conceptId": "adjective-na",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.choose",
+    "promptKey": "grammar.v2.topic02-review-01.prompt",
+    "successKey": "grammar.v2.topic02-review-01.explanation",
+    "errorKey": "grammar.v2.topic02-review-01.explanation",
+    "options": [
+      {
+        "id": "topic02-review-01-option-0",
+        "textKey": "grammar.v2.topic02-review-01.option.0",
+        "feedbackKey": "grammar.v2.topic02-review-01.feedback.0"
+      },
+      {
+        "id": "topic02-review-01-option-1",
+        "textKey": "grammar.v2.topic02-review-01.option.1",
+        "feedbackKey": "grammar.v2.topic02-review-01.feedback.1"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic02-review-01.option.0",
+      "grammar.v2.topic02-review-01.option.1"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "topic02-review-02",
+    "version": 2,
+    "kind": "multiple-choice",
+    "skill": "recognition",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-i",
+    "conceptId": "adjective-i",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.choose",
+    "promptKey": "grammar.v2.topic02-review-02.prompt",
+    "successKey": "grammar.v2.topic02-review-02.explanation",
+    "errorKey": "grammar.v2.topic02-review-02.explanation",
+    "options": [
+      {
+        "id": "topic02-review-02-option-0",
+        "textKey": "grammar.v2.topic02-review-02.option.0",
+        "feedbackKey": "grammar.v2.topic02-review-02.feedback.0"
+      },
+      {
+        "id": "topic02-review-02-option-1",
+        "textKey": "grammar.v2.topic02-review-02.option.1",
+        "feedbackKey": "grammar.v2.topic02-review-02.feedback.1"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic02-review-02.option.0",
+      "grammar.v2.topic02-review-02.option.1"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "topic02-review-03",
+    "version": 2,
+    "kind": "sentence-builder",
+    "skill": "ordering",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-noun-modification",
+    "conceptId": "adjective-noun-modification",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.order",
+    "promptKey": "grammar.v2.topic02-review-03.prompt",
+    "successKey": "grammar.v2.topic02-review-03.explanation",
+    "errorKey": "grammar.v2.topic02-review-03.explanation",
+    "tokenKeys": [
+      "grammar.v2.topic02-review-03.token.0",
+      "grammar.v2.topic02-review-03.token.1"
+    ],
+    "solution": [
+      1,
+      0
+    ],
+    "orderPolicy": "constrained"
+  },
+  {
+    "id": "topic02-review-04",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-noun-modification",
+    "conceptId": "adjective-noun-modification",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic02-review-04.prompt",
+    "successKey": "grammar.v2.topic02-review-04.explanation",
+    "errorKey": "grammar.v2.topic02-review-04.explanation",
+    "acceptedAnswers": [
+      "な"
+    ],
+    "solutionKey": "grammar.v2.topic02-review-04.solution",
+    "kanaBank": [
+      "な"
+    ]
+  },
+  {
+    "id": "topic02-review-05",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-negative",
+    "conceptId": "adjective-negative",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic02-review-05.prompt",
+    "successKey": "grammar.v2.topic02-review-05.explanation",
+    "errorKey": "grammar.v2.topic02-review-05.explanation",
+    "acceptedAnswers": [
+      "くない"
+    ],
+    "solutionKey": "grammar.v2.topic02-review-05.solution",
+    "kanaBank": [
+      "く",
+      "な",
+      "い"
+    ]
+  },
+  {
+    "id": "topic02-review-06",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-negative",
+    "conceptId": "adjective-negative",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic02-review-06.prompt",
+    "successKey": "grammar.v2.topic02-review-06.explanation",
+    "errorKey": "grammar.v2.topic02-review-06.explanation",
+    "acceptedAnswers": [
+      "じゃない"
+    ],
+    "solutionKey": "grammar.v2.topic02-review-06.solution",
+    "kanaBank": [
+      "じ",
+      "ゃ",
+      "な",
+      "い"
+    ]
+  },
+  {
+    "id": "topic02-review-07",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-past",
+    "conceptId": "adjective-past",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic02-review-07.prompt",
+    "successKey": "grammar.v2.topic02-review-07.explanation",
+    "errorKey": "grammar.v2.topic02-review-07.explanation",
+    "acceptedAnswers": [
+      "かった"
+    ],
+    "solutionKey": "grammar.v2.topic02-review-07.solution",
+    "kanaBank": [
+      "か",
+      "っ",
+      "た"
+    ]
+  },
+  {
+    "id": "topic02-review-08",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-past",
+    "conceptId": "adjective-past",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic02-review-08.prompt",
+    "successKey": "grammar.v2.topic02-review-08.explanation",
+    "errorKey": "grammar.v2.topic02-review-08.explanation",
+    "acceptedAnswers": [
+      "だった"
+    ],
+    "solutionKey": "grammar.v2.topic02-review-08.solution",
+    "kanaBank": [
+      "だ",
+      "っ",
+      "た"
+    ]
+  },
+  {
+    "id": "topic02-review-09",
+    "version": 2,
+    "kind": "multiple-choice",
+    "skill": "recognition",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-past-negative",
+    "conceptId": "adjective-past-negative",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.choose",
+    "promptKey": "grammar.v2.topic02-review-09.prompt",
+    "successKey": "grammar.v2.topic02-review-09.explanation",
+    "errorKey": "grammar.v2.topic02-review-09.explanation",
+    "options": [
+      {
+        "id": "topic02-review-09-option-0",
+        "textKey": "grammar.v2.topic02-review-09.option.0",
+        "feedbackKey": "grammar.v2.topic02-review-09.feedback.0"
+      },
+      {
+        "id": "topic02-review-09-option-1",
+        "textKey": "grammar.v2.topic02-review-09.option.1",
+        "feedbackKey": "grammar.v2.topic02-review-09.feedback.1"
+      },
+      {
+        "id": "topic02-review-09-option-2",
+        "textKey": "grammar.v2.topic02-review-09.option.2",
+        "feedbackKey": "grammar.v2.topic02-review-09.feedback.2"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic02-review-09.option.0",
+      "grammar.v2.topic02-review-09.option.1",
+      "grammar.v2.topic02-review-09.option.2"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "topic02-review-10",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-past-negative",
+    "conceptId": "adjective-past-negative",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic02-review-10.prompt",
+    "successKey": "grammar.v2.topic02-review-10.explanation",
+    "errorKey": "grammar.v2.topic02-review-10.explanation",
+    "acceptedAnswers": [
+      "なかった"
+    ],
+    "solutionKey": "grammar.v2.topic02-review-10.solution",
+    "kanaBank": [
+      "な",
+      "か",
+      "っ",
+      "た"
+    ]
+  },
+  {
+    "id": "topic02-review-11",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjective-ii-irregular",
+    "conceptId": "adjective-ii-irregular",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic02-review-11.prompt",
+    "successKey": "grammar.v2.topic02-review-11.explanation",
+    "errorKey": "grammar.v2.topic02-review-11.explanation",
+    "acceptedAnswers": [
+      "よくなかった"
+    ],
+    "solutionKey": "grammar.v2.topic02-review-11.solution",
+    "kanaBank": [
+      "よ",
+      "く",
+      "な",
+      "か",
+      "っ",
+      "た"
+    ]
+  },
+  {
+    "id": "topic02-review-12",
+    "version": 2,
+    "kind": "multiple-choice",
+    "skill": "usage",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "degree-adverbs",
+    "conceptId": "degree-adverbs",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.choose",
+    "promptKey": "grammar.v2.topic02-review-12.prompt",
+    "successKey": "grammar.v2.topic02-review-12.explanation",
+    "errorKey": "grammar.v2.topic02-review-12.explanation",
+    "options": [
+      {
+        "id": "topic02-review-12-option-0",
+        "textKey": "grammar.v2.topic02-review-12.option.0",
+        "feedbackKey": "grammar.v2.topic02-review-12.feedback.0",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic02-review-12-option-1",
+        "textKey": "grammar.v2.topic02-review-12.option.1",
+        "feedbackKey": "grammar.v2.topic02-review-12.feedback.1",
+        "grammarStatus": "valid"
+      },
+      {
+        "id": "topic02-review-12-option-2",
+        "textKey": "grammar.v2.topic02-review-12.option.2",
+        "feedbackKey": "grammar.v2.topic02-review-12.feedback.2",
+        "grammarStatus": "valid"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic02-review-12.option.0",
+      "grammar.v2.topic02-review-12.option.1",
+      "grammar.v2.topic02-review-12.option.2"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "topic02-review-13",
+    "version": 2,
+    "kind": "fill-gap",
+    "skill": "formation",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjectival-predicates-ga",
+    "conceptId": "adjectival-predicates-ga",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.fill",
+    "promptKey": "grammar.v2.topic02-review-13.prompt",
+    "successKey": "grammar.v2.topic02-review-13.explanation",
+    "errorKey": "grammar.v2.topic02-review-13.explanation",
+    "acceptedAnswers": [
+      "が"
+    ],
+    "solutionKey": "grammar.v2.topic02-review-13.solution",
+    "kanaBank": [
+      "が"
+    ]
+  },
+  {
+    "id": "topic02-review-14",
+    "version": 2,
+    "kind": "sentence-builder",
+    "skill": "ordering",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjectival-predicates-ga",
+    "conceptId": "adjectival-predicates-ga",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.order",
+    "promptKey": "grammar.v2.topic02-review-14.prompt",
+    "successKey": "grammar.v2.topic02-review-14.explanation",
+    "errorKey": "grammar.v2.topic02-review-14.explanation",
+    "tokenKeys": [
+      "grammar.v2.topic02-review-14.token.0",
+      "grammar.v2.topic02-review-14.token.1",
+      "grammar.v2.topic02-review-14.token.2",
+      "grammar.v2.topic02-review-14.token.3"
+    ],
+    "solution": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "orderPolicy": "constrained"
+  },
+  {
+    "id": "topic02-review-15",
+    "version": 2,
+    "kind": "multiple-choice",
+    "skill": "contrast",
+    "difficulty": 3,
+    "topicId": "02",
+    "lessonId": "adjectival-predicates-ga",
+    "conceptId": "adjectival-predicates-ga",
+    "labelKey": "grammar.v2.practice",
+    "topicKey": "grammar.v2.topic02",
+    "questionKey": "grammar.v2.choose",
+    "promptKey": "grammar.v2.topic02-review-15.prompt",
+    "successKey": "grammar.v2.topic02-review-15.explanation",
+    "errorKey": "grammar.v2.topic02-review-15.explanation",
+    "options": [
+      {
+        "id": "topic02-review-15-option-0",
+        "textKey": "grammar.v2.topic02-review-15.option.0",
+        "feedbackKey": "grammar.v2.topic02-review-15.feedback.0"
+      },
+      {
+        "id": "topic02-review-15-option-1",
+        "textKey": "grammar.v2.topic02-review-15.option.1",
+        "feedbackKey": "grammar.v2.topic02-review-15.feedback.1"
+      }
+    ],
+    "optionKeys": [
+      "grammar.v2.topic02-review-15.option.0",
+      "grammar.v2.topic02-review-15.option.1"
     ],
     "answer": 0
   }

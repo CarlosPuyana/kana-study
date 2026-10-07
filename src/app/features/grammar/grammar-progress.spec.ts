@@ -22,18 +22,18 @@ describe('Grammar progress UI and complete practice integration', () => {
       {provide: TranslationService, useValue: {t}}, {provide: SyncOutboxService, useValue: {enqueue: vi.fn().mockResolvedValue(undefined)}}]});
   });
   afterEach(() => { TestBed.resetTestingModule(); vi.restoreAllMocks(); });
-  it('shows real 0/70 and starts Continuar at the first semantic concept', async () => {
+  it('shows real 0/73 and starts Continuar at the first semantic concept', async () => {
     const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar', GrammarPage);
-    expect(harness.routeNativeElement!.textContent).toContain('0 / 70 sesiones completadas');
+    expect(harness.routeNativeElement!.textContent).toContain('0 / 73 sesiones completadas');
     expect(harness.routeNativeElement!.querySelector('.primary-action')!.getAttribute('href')).toContain('/grammar/n5/01/sentence-structure-context');
     expect(harness.routeNativeElement!.textContent).not.toContain('grammar.progressState.');
   });
   it('opens a concept without starting it and records the exercise answered output', async () => {
-    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/02/1', GrammarPage);
-    const progress = TestBed.inject(GrammarProgressService); expect(progress.conceptStatus('02.1')).toBe('not-started');
+    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/03/1', GrammarPage);
+    const progress = TestBed.inject(GrammarProgressService); expect(progress.conceptStatus('03.1')).toBe('not-started');
     harness.routeNativeElement!.querySelector<HTMLButtonElement>('.exercise-option')!.click(); harness.detectChanges();
     harness.routeNativeElement!.querySelector<HTMLButtonElement>('.check-answer')!.click(); harness.detectChanges();
-    expect(progress.conceptStatus('02.1')).toBe('in-progress'); expect(Object.keys(progress.state().concepts['02.1'].answers)).toHaveLength(1);
+    expect(progress.conceptStatus('03.1')).toBe('in-progress'); expect(Object.keys(progress.state().concepts['03.1'].answers)).toHaveLength(1);
   });
   it('restores the exact exercise through Continuar and route re-entry', async () => {
     const harness = await RouterTestingHarness.create(), page = await harness.navigateByUrl('/grammar/n5/06/1', GrammarPage);
@@ -57,18 +57,18 @@ describe('Grammar progress UI and complete practice integration', () => {
     expect(harness.routeNativeElement!.textContent).toContain('1 / 4 sesiones completadas');
   });
   it('saves only the full original practice and keeps immediate error review available', () => {
-    const fixture = TestBed.createComponent(GrammarPracticeComponent); fixture.componentRef.setInput('practice', GRAMMAR_PRACTICES.find(p=>p.topicId==='02')!); fixture.detectChanges();
+    const fixture = TestBed.createComponent(GrammarPracticeComponent); fixture.componentRef.setInput('practice', GRAMMAR_PRACTICES.find(p=>p.topicId==='03')!); fixture.detectChanges();
     const component = fixture.componentInstance; component.start();
     for (let index = 0; index < 10; index++) { component.answer(index > 1); component.next(); }
-    const progress = TestBed.inject(GrammarProgressService); expect(progress.state().practices['02']).toMatchObject({score: 8, total: 10}); expect(progress.difficulties().length).toBeGreaterThan(0);
+    const progress = TestBed.inject(GrammarProgressService); expect(progress.state().practices['03']).toMatchObject({score: 8, total: 10}); expect(progress.difficulties().length).toBeGreaterThan(0);
     component.session.reviewErrors(); const count = component.session.total(); expect(count).toBe(2);
     for (let index = 0; index < count; index++) { component.answer(true); component.next(); }
-    expect(component.session.score()).toBe(2); expect(progress.state().practices['02'].score).toBe(8); expect(progress.difficulties()).toHaveLength(0);
+    expect(component.session.score()).toBe(2); expect(progress.state().practices['03'].score).toBe(8); expect(progress.difficulties()).toHaveLength(0);
     fixture.detectChanges(); expect(fixture.nativeElement.textContent).toContain(t('grammar.reviewingErrors'));
   });
   it('shows the last persisted full practice score on the topic', async () => {
-    TestBed.inject(GrammarProgressService).recordPractice('02', 8, 10, [], new Date().toISOString());
-    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/02', GrammarPage);
+    TestBed.inject(GrammarProgressService).recordPractice('03', 8, 10, [], new Date().toISOString());
+    const harness = await RouterTestingHarness.create(); await harness.navigateByUrl('/grammar/n5/03', GrammarPage);
     expect(harness.routeNativeElement!.textContent).toContain('Última práctica: 8 / 10');
   });
   it('global review clears only fully correct selected concepts and preserves failures', async () => {
@@ -109,7 +109,7 @@ describe('Grammar progress UI and complete practice integration', () => {
     const harness = await RouterTestingHarness.create(), page = await harness.navigateByUrl('/grammar/review', GrammarReviewPage);
     page.session.start(); page.answer(true); page.next();
     const questions = page.session.roundExercises(), index = page.session.index(), answers = page.session.answers();
-    const cloud = emptyGrammarProgress(); cloud.review['02.1'] = {conceptId:'02.1',topicId:'02',active:true,updatedAt:new Date().toISOString()};
+    const cloud = emptyGrammarProgress(); cloud.review['03.1'] = {conceptId:'03.1',topicId:'03',active:true,updatedAt:new Date().toISOString()};
     TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY,cloud); TestBed.tick(); harness.detectChanges();
     expect(page.session.stage()).toBe('question'); expect(page.session.roundExercises()).toBe(questions);
     expect(page.session.index()).toBe(index); expect(page.session.answers()).toEqual(answers);
@@ -118,7 +118,7 @@ describe('Grammar progress UI and complete practice integration', () => {
     TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY,cloud); TestBed.tick(); harness.detectChanges();
     expect(page.session.stage()).toBe('results'); expect(page.session.roundExercises()).toBe(questions); expect(page.session.score()).toBe(score);
     page.reset(); harness.detectChanges(); await harness.fixture.whenStable();
-    expect(page.session.stage()).toBe('intro'); expect(page.session.roundExercises().some(exercise=>exercise.conceptId==='02.1')).toBe(true);
+    expect(page.session.stage()).toBe('intro'); expect(page.session.roundExercises().some(exercise=>exercise.conceptId==='03.1')).toBe(true);
     expect(new Set(page.session.roundExercises().map(e=>e.topicId)).size).toBeGreaterThan(1);
   });
 });

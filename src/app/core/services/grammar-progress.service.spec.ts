@@ -29,7 +29,7 @@ describe('Persistent grammar participation and difficulties', () => {
 
   it('starts at zero and the first V2 concept without creating empty records', () => {
     expect(progress.conceptStatus('06.1')).toBe('not-started');
-    expect(progress.completedSessions()).toBe(0); expect(progress.totalSessions).toBe(70);
+    expect(progress.completedSessions()).toBe(0); expect(progress.totalSessions).toBe(73);
     expect(progress.continuePath()).toBe('/grammar/n5/01/sentence-structure-context');
     expect(localStorage.getItem(GRAMMAR_PROGRESS_KEY)).toBeNull();
   });
@@ -63,10 +63,10 @@ describe('Persistent grammar participation and difficulties', () => {
     answerAll(`06.${session.lessonIds.at(-1)}`); expect(progress.sessionStatus(session)).toBe('completed');
     expect(progress.topicProgress('06')).toEqual({completed: 1, total: 4}); expect(progress.completedSessions()).toBe(1);
   });
-  it('combines 70 sessions and 121 concepts in the incremental catalog', () => {
-    expect(GRAMMAR_SESSIONS).toHaveLength(70); expect(GRAMMAR_LESSONS).toHaveLength(121);
-    expect(GRAMMAR_SESSIONS.reduce((sum, session) => sum + session.lessonIds.length, 0)).toBe(121);
-    expect(GRAMMAR_LESSONS.flatMap(grammarLessonExercises).length + GRAMMAR_PRACTICES.flatMap(practice => practice.exercises).length).toBe(532);
+  it('combines 73 sessions and 119 concepts in the incremental catalog', () => {
+    expect(GRAMMAR_SESSIONS).toHaveLength(73); expect(GRAMMAR_LESSONS).toHaveLength(119);
+    expect(GRAMMAR_SESSIONS.reduce((sum, session) => sum + session.lessonIds.length, 0)).toBe(119);
+    expect(GRAMMAR_LESSONS.flatMap(grammarLessonExercises).length + GRAMMAR_PRACTICES.flatMap(practice => practice.exercises).length).toBe(546);
   });
   it('persists an exact index and restores it after a service/app reload', () => {
     progress.recordAnswer('06.1', '06', exercises[0].id, 0, true);
@@ -92,7 +92,7 @@ describe('Persistent grammar participation and difficulties', () => {
   it('continues to review when every concept is completed and difficulties remain', () => {
     GRAMMAR_LESSONS.forEach(lesson => answerAll(grammarConceptId(lesson)));
     progress.flagDifficulty('06.1', exercises[0].id);
-    expect(progress.completedSessions()).toBe(70); expect(progress.continuePath()).toBe('/grammar/review');
+    expect(progress.completedSessions()).toBe(73); expect(progress.continuePath()).toBe('/grammar/review');
   });
   it('continues to final practice when the course is complete with no difficulties', () => {
     GRAMMAR_LESSONS.forEach(lesson => answerAll(grammarConceptId(lesson)));
@@ -126,17 +126,17 @@ describe('Persistent grammar participation and difficulties', () => {
   });
   it('does not fabricate a round when there are no difficulties', () => expect(progress.buildReview()).toEqual([]));
   it('persists the original complete practice score', () => {
-    const practice = GRAMMAR_PRACTICES.find(p=>p.topicId==='02')!; progress.recordPractice(practice.topicId, 8, 10, ['02.1'], '2026-10-03T10:00:00Z'); reload();
-    expect(progress.state().practices['02']).toMatchObject({score: 8, total: 10, errorConceptIds: ['02.1']});
+    const practice = GRAMMAR_PRACTICES.find(p=>p.topicId==='03')!; progress.recordPractice(practice.topicId, 8, 10, ['03.1'], '2026-10-03T10:00:00Z'); reload();
+    expect(progress.state().practices['03']).toMatchObject({score: 8, total: 10, errorConceptIds: ['03.1']});
   });
   it('error review never replaces the original full practice score', () => {
-    progress.recordPractice('02', 8, 10, ['02.1'], '2026-10-03T10:00:00Z');
-    const exercise = GRAMMAR_PRACTICES.find(p=>p.topicId==='02')!.exercises[0];
+    progress.recordPractice('03', 8, 10, ['03.1'], '2026-10-03T10:00:00Z');
+    const exercise = GRAMMAR_PRACTICES.find(p=>p.topicId==='03')!.exercises[0];
     progress.flagDifficulty(exercise.conceptId!, exercise.id); progress.finishReview([{conceptId: exercise.conceptId!, exerciseId: exercise.id, correct: true}]);
-    expect(progress.state().practices['02'].score).toBe(8); expect(progress.state().practices['02'].total).toBe(10);
+    expect(progress.state().practices['03'].score).toBe(8); expect(progress.state().practices['03'].total).toBe(10);
   });
   it('practice errors can flag difficulties without completing lesson exercises', () => {
-    const exercise = GRAMMAR_PRACTICES.find(p=>p.topicId==='02')!.exercises[0]; progress.flagDifficulty(exercise.conceptId!, exercise.id);
+    const exercise = GRAMMAR_PRACTICES.find(p=>p.topicId==='03')!.exercises[0]; progress.flagDifficulty(exercise.conceptId!, exercise.id);
     expect(progress.difficulties()).toHaveLength(1); expect(progress.state().concepts).toEqual({});
   });
   it('ignores invalid topic/exercise/index combinations', () => {
@@ -168,11 +168,11 @@ describe('Persistent grammar participation and difficulties', () => {
     workspace.activateUser('carlos'); TestBed.tick(); expect(progress.conceptStatus('06.1')).toBe('completed');
   });
   it('imports guest Grammar progress by merging an existing account without deleting guest', () => {
-    answerAll('02.1'); const workspace = TestBed.inject(WorkspaceService);
+    answerAll('03.1'); const workspace = TestBed.inject(WorkspaceService);
     workspace.activateUser('carlos'); TestBed.tick(); answerAll('06.1');
     workspace.copyGuestLocalStorageToUser('carlos'); TestBed.tick();
-    expect(progress.conceptStatus('02.1')).toBe('completed'); expect(progress.conceptStatus('06.1')).toBe('completed');
-    workspace.activateGuest(); TestBed.tick(); expect(progress.conceptStatus('02.1')).toBe('completed'); expect(progress.conceptStatus('06.1')).toBe('not-started');
+    expect(progress.conceptStatus('03.1')).toBe('completed'); expect(progress.conceptStatus('06.1')).toBe('completed');
+    workspace.activateGuest(); TestBed.tick(); expect(progress.conceptStatus('03.1')).toBe('completed'); expect(progress.conceptStatus('06.1')).toBe('not-started');
   });
   it('does not treat resume-only data as answered guest progress', () => {
     progress.saveResume('06.1', 2); expect(TestBed.inject(WorkspaceService).hasGuestProgress()).toBe(false);
@@ -197,8 +197,8 @@ describe('Persistent grammar participation and difficulties', () => {
   });
   it('opens a partial concept at its first pending exercise even with a different global resume', () => {
     progress.recordAnswer('06.1', '06', exercises[0].id, 0, true);
-    progress.saveResume('02.1', 0);
-    expect(progress.state().resume?.conceptId).toBe('02.1');
+    progress.saveResume('03.1', 0);
+    expect(progress.state().resume?.conceptId).toBe('03.1');
     expect(progress.resumeIndex('06.1')).toBe(1);
   });
   it('always opens manually completed concepts at zero without changing completion', () => {
@@ -217,15 +217,15 @@ describe('Persistent grammar participation and difficulties', () => {
   it('guest import reactively respects both newer cleared and newer active difficulty marks', () => {
     const guest = emptyGrammarProgress(), account = emptyGrammarProgress();
     const early = '2026-10-03T10:00:00Z', late = '2026-10-03T11:00:00Z';
-    guest.review['02.1'] = {conceptId: '02.1', topicId: '02', active: true, updatedAt: early};
+    guest.review['03.1'] = {conceptId: '03.1', topicId: '03', active: true, updatedAt: early};
     guest.review['06.1'] = {conceptId: '06.1', topicId: '06', active: true, updatedAt: late};
-    account.review['02.1'] = {conceptId: '02.1', topicId: '02', active: false, clearedAt: late, updatedAt: late};
+    account.review['03.1'] = {conceptId: '03.1', topicId: '03', active: false, clearedAt: late, updatedAt: late};
     account.review['06.1'] = {conceptId: '06.1', topicId: '06', active: false, clearedAt: early, updatedAt: early};
     reload(guest); const originalGuest = localStorage.getItem(GRAMMAR_PROGRESS_KEY);
     const workspace = TestBed.inject(WorkspaceService); workspace.activateUser('carlos'); TestBed.tick();
     TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY, account); TestBed.tick();
     workspace.copyGuestLocalStorageToUser('carlos'); TestBed.tick();
-    expect(progress.state().review['02.1'].active).toBe(false); expect(progress.state().review['06.1'].active).toBe(true);
+    expect(progress.state().review['03.1'].active).toBe(false); expect(progress.state().review['06.1'].active).toBe(true);
     expect(localStorage.getItem(GRAMMAR_PROGRESS_KEY)).toBe(originalGuest);
     const revision = workspace.dataRevision(); workspace.copyGuestLocalStorageToUser('carlos');
     expect(workspace.dataRevision()).toBe(revision);

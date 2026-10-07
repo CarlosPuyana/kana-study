@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {provideRouter} from '@angular/router';
 import {RouterTestingHarness} from '@angular/router/testing';
-import {GRAMMAR_V2_CONCEPTS, GRAMMAR_V2_REVIEW} from '../../data/grammar/grammar-n5-v2.generated';
+import {GRAMMAR_V2_CONCEPTS as ALL_V2_CONCEPTS, GRAMMAR_V2_REVIEW as ALL_V2_REVIEW} from '../../data/grammar/grammar-n5-v2.generated';
 import {GRAMMAR_PROGRESS_V2_KEY} from '../../core/models/grammar-v2.model';
 import {GRAMMAR_PROGRESS_KEY, emptyGrammarProgress} from '../../core/models/grammar-progress.model';
 import {GrammarProgressService} from '../../core/services/grammar-progress.service';
@@ -26,6 +26,8 @@ import es from '../../../assets/i18n/es.json';
 import en from '../../../assets/i18n/en.json';
 import ca from '../../../assets/i18n/ca.json';
 
+const GRAMMAR_V2_CONCEPTS=ALL_V2_CONCEPTS.filter(c=>c.topicId==='01');
+const GRAMMAR_V2_REVIEW=ALL_V2_REVIEW.filter(e=>e.topicId==='01');
 const ids=['sentence-structure-context','state-being-plain','state-being-negative','state-being-past','state-being-past-negative','particle-wa-topic','particle-mo-inclusive','particle-ga-identifier','particle-wa-vs-ga','particle-no-noun-link','demonstratives-ko-so-a-do'];
 const t=(key:string,params:Record<string,string|number>={})=>Object.entries(params).reduce((s,[name,value])=>s.replaceAll(`{{${name}}}`,String(value)),(es as Record<string,string>)[key]??key);
 const all=[...GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises),...GRAMMAR_V2_REVIEW];
@@ -42,14 +44,14 @@ describe('Grammar V2 canonical catalog',()=>{
       expect(c).toMatchObject({level:'N5',track:'core',topicId:'01',order:i+1});
       expect(c.id).not.toMatch(/^\d+\.\d+$/);
       expect(c.prerequisiteIds.every(id=>ids.slice(0,i).includes(id))).toBe(true);
-      expect(c.relatedIds.every(id=>ids.includes(id))).toBe(true);
+      expect(c.relatedIds.every(id=>ALL_V2_CONCEPTS.some(other=>other.id===id))).toBe(true);
       expect(c.lesson.detailedExplanation.length).toBeGreaterThanOrEqual(2);
     }
   });
-  it('keeps Topics 02–10 byte-for-byte equivalent at the data boundary',()=>{
+  it('keeps Topics 03–10 byte-for-byte equivalent at the data boundary',()=>{
     for(const [actual,original] of [[GRAMMAR_LESSONS,legacy.GRAMMAR_LESSONS],[GRAMMAR_PRACTICES,legacy.GRAMMAR_PRACTICES],[GRAMMAR_SESSIONS,legacy.GRAMMAR_SESSIONS]] as const)
-      expect(actual.filter(x=>Number(x.topicId)>=2)).toEqual(original.filter(x=>Number(x.topicId)>=2));
-    expect(GRAMMAR_TOPICS.slice(2)).toEqual(legacy.GRAMMAR_TOPICS.slice(2));
+      expect(actual.filter(x=>Number(x.topicId)>=3)).toEqual(original.filter(x=>Number(x.topicId)>=3));
+    expect(GRAMMAR_TOPICS.slice(3)).toEqual(legacy.GRAMMAR_TOPICS.slice(3));
   });
   it('has 53 lesson exercises and 15 distinct cumulative exercises with real concepts and answer-specific feedback',()=>{
     expect(GRAMMAR_V2_CONCEPTS.flatMap(c=>c.exercises)).toHaveLength(53);expect(GRAMMAR_V2_REVIEW).toHaveLength(15);
@@ -190,7 +192,7 @@ describe('Grammar V2 progress, routes and rendering',()=>{
     const weaknesses=TestBed.inject(WeaknessService);for(let i=0;i<3;i++)weaknesses.recordLearn('grammar',identity.itemId,identity.questionType,'again');
     const round=grammarFocusedExercises(weaknesses.weak());expect(round.length).toBeGreaterThan(0);expect(round.every(e=>e.conceptId===identity.itemId)).toBe(true);
   });
-  it.each(['02','03','04','05','06','07','08','09','10'])('still loads legacy topic %s, its first lesson and practice',async topic=>{
+  it.each(['03','04','05','06','07','08','09','10'])('still loads legacy topic %s, its first lesson and practice',async topic=>{
     const harness=await RouterTestingHarness.create();let page=await harness.navigateByUrl(`/grammar/n5/${topic}`,GrammarPage);expect(page.invalid()).toBe(false);
     page=await harness.navigateByUrl(`/grammar/n5/${topic}/1`,GrammarPage);expect(page.lesson()?.concept).toBeUndefined();expect(page.currentExercise()).toBeTruthy();
     page=await harness.navigateByUrl(`/grammar/n5/${topic}/practice`,GrammarPage);expect(page.practice()?.exercises.length).toBeGreaterThan(0);

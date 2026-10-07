@@ -1,5 +1,6 @@
 // Canonical, original Kana Study copy. Triplets are ES | EN | CA, never fallbacks.
 // Editorial references are source-only; the PDF is not reproduced in the runtime.
+import {addAdjectivesV2} from './grammar-n5-v2-adjectives.mjs';
 const tr = value => value.split('|');
 const jp = value => [value,value,value];
 export function buildGrammarV2() {
@@ -45,9 +46,9 @@ export function buildGrammarV2() {
   Object.entries(ui).forEach(([id,value])=>key(id,value));
   const K=id=>`grammar.v2.${id}`;
   const concepts=[];const editorialReferences={};
-  const add=(id,title,goal,idea,patterns,examples,details,{mistakes=[],contrasts=[],prerequisites=[],sections=[]}={})=>{
+  const add=(id,title,goal,idea,patterns,examples,details,{mistakes=[],contrasts=[],prerequisites=[],sections=[],topicId='01'}={})=>{
     const prefix=id;
-    const concept={id,level:'N5',track:'core',topicId:'01',order:concepts.length+1,titleKey:key(`${prefix}.title`,title),summaryKey:key(`${prefix}.summary`,idea),goalKey:key(`${prefix}.goal`,goal),prerequisiteIds:prerequisites,relatedIds:[],lesson:{
+    const concept={id,level:'N5',track:'core',topicId,order:concepts.filter(c=>c.topicId===topicId).length+1,titleKey:key(`${prefix}.title`,title),summaryKey:key(`${prefix}.summary`,idea),goalKey:key(`${prefix}.goal`,goal),prerequisiteIds:prerequisites,relatedIds:[],lesson:{
       ideaKey:key(`${prefix}.idea`,idea),formation:patterns.map(pattern=>({labelKey:K('pattern'),pattern})),
       examples:examples.map(([japanese,reading,meaning],i)=>({japanese,reading,meaningKey:key(`${prefix}.example.${i}`,meaning)})),
       detailedExplanation:details.map((body,i)=>({id:i?'nuance':'why',titleKey:K(i?'detailNuance':'detailWhy'),bodyKey:key(`${prefix}.detail.${i}`,body)})),
@@ -137,10 +138,10 @@ export function buildGrammarV2() {
   let current=concepts[0];let reviewing=false;
   const use=index=>{current=concepts[index];};
   const base=(kind,skill,prompt,explanation)=>{
-    const number=reviewing?review.length+1:current.exercises.length+1;
-    const id=reviewing?`topic01-review-${String(number).padStart(2,'0')}`:`${current.id}-${number}`;
-    return {id,version:2,kind,skill,difficulty:reviewing?3:skill==='recognition'?1:2,topicId:'01',lessonId:current.id,conceptId:current.id,
-      labelKey:K('practice'),topicKey:K('topic'),questionKey:K(kind==='detect-error'?'detect':kind==='fill-gap'?'fill':kind==='matching'?'match':kind==='sentence-order'||kind==='sentence-builder'?'order':'choose'),promptKey:key(`${id}.prompt`,prompt),successKey:key(`${id}.explanation`,explanation),errorKey:K(`${id}.explanation`)};
+    const number=reviewing?review.filter(e=>e.topicId===current.topicId).length+1:current.exercises.length+1;
+    const id=reviewing?`topic${current.topicId}-review-${String(number).padStart(2,'0')}`:`${current.id}-${number}`;
+    return {id,version:2,kind,skill,difficulty:reviewing?3:skill==='recognition'?1:2,topicId:current.topicId,lessonId:current.id,conceptId:current.id,
+      labelKey:K('practice'),topicKey:K(current.topicId==='01'?'topic':`topic${current.topicId}`),questionKey:K(kind==='detect-error'?'detect':kind==='fill-gap'?'fill':kind==='matching'?'match':kind==='sentence-order'||kind==='sentence-builder'?'order':'choose'),promptKey:key(`${id}.prompt`,prompt),successKey:key(`${id}.explanation`,explanation),errorKey:K(`${id}.explanation`)};
   };
   const push=e=>(reviewing?review:current.exercises).push(e);
   const choice=(skill,prompt,options,answer,explanation,kind='multiple-choice')=>{
@@ -272,5 +273,10 @@ export function buildGrammarV2() {
   fill('Un libro junto al oyente: ＿本。|A book next to the listener: ＿本。|Un llibre al costat de l’oient: ＿本。','その','その acompaña un nombre y corresponde aquí al lado del oyente.|その accompanies a noun and here refers to the listener’s side.|その acompanya un nom i correspon aquí al costat de l’oient.');
   choice('usage','Quieres señalar el lugar donde tú estás. Elige la forma de lugar.|You want to point to the place where you are. Choose the place form.|Vols assenyalar el lloc on ets tu. Tria la forma de lloc.',[
     valid('ここ','ここ señala el lugar del hablante.|ここ indicates the speaker’s place.|ここ assenyala el lloc de qui parla.'),valid('これ','これ señala una cosa, no un lugar.|これ indicates a thing, not a place.|これ assenyala una cosa, no un lloc.'),valid('そこ','そこ señala aquí el lado del oyente.|そこ indicates the listener’s side here.|そこ assenyala aquí el costat de l’oient.')],0,'Para un lugar usa la fila ここ・そこ・あそこ・どこ.|For a place use the ここ・そこ・あそこ・どこ row.|Per a un lloc fes servir la fila ここ・そこ・あそこ・どこ.');
+  reviewing=false;
+  addAdjectivesV2({add,key,K,choice,fill,order,matching,valid,invalid,jp,
+    use:id=>{current=concepts.find(c=>c.id===id);if(!current)throw new Error(`Unknown concept ${id}`);},
+    startReview:()=>{reviewing=true;}});
+  concepts.forEach(c=>c.relatedIds=concepts.filter(other=>other.prerequisiteIds.includes(c.id)).map(other=>other.id));
   return {concepts,review,copy,editorialReferences};
 }
