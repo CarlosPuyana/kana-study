@@ -1,6 +1,11 @@
+// @vitest-environment jsdom
+import '@angular/compiler';
+import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
+import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
+import { SyncDiagnosticsService } from './sync-diagnostics.service';
 import { MangaSavedSyncService } from './manga-saved-sync.service';
 import { MangaStudySavedRepository } from './manga-study-saved.repository';
-import { TestBed } from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { SyncService } from './sync.service';
 import { SyncOutboxService, makeOutboxItem } from './sync-outbox.service';
 import { StorageService } from './storage.service';
@@ -18,6 +23,9 @@ import { IDBFactory } from 'fake-indexeddb';
 import { GRAMMAR_V2_INTEGRATION } from '../../data/grammar/grammar-n5-v2.generated';
 import { ProfileStatsService } from './profile-stats.service';
 import { CardStudyTimer } from './card-study-time';
+
+// ng test initializes this already; direct Vitest runs need the same TestBed.
+if(!getTestBed().platform)getTestBed().initTestEnvironment(BrowserTestingModule,platformBrowserTesting());
 
 /** Two independent browser caches against one simulated Supabase account. */
 describe('account sync reconciliation regressions', () => {
@@ -126,6 +134,17 @@ describe('account sync reconciliation regressions', () => {
   it('H: a remote settings read failure is visible and preserves the outbox',async()=>{
     const d=device();d.storage.set('kana-study.settings.v1',{language:'ca'});fail='user_preferences';
     expect(await d.sync.syncNow()).toBe(false);expect(d.sync.status()).toBe('error');expect(queued.size).toBe(1);expect(writes).toEqual([]);
+  });
+  it.each([false,true])('preserves ACKs when a delayed workspace effect runs during push, account change=%s',async(changeAccount)=>{
+    const d=device();if(changeAccount){TestBed.tick();d.workspace.activateUser('next-account');}
+    d.storage.set('kana-study.settings.v1',{language:'ca'});
+    const diagnostics=TestBed.inject(SyncDiagnosticsService),confirmed=diagnostics.confirmed.bind(diagnostics);
+    const reset=vi.spyOn(diagnostics,'reset'),outbox=TestBed.inject(SyncOutboxService),remove=vi.spyOn(outbox,'removeProcessed');
+    vi.spyOn(diagnostics,'confirmed').mockImplementation(item=>{confirmed(item);TestBed.tick();});
+    const success=await d.sync.syncNow();
+    expect(success).toBe(true);expect(d.sync.status()).toBe('synced');expect(queued.size).toBe(0);
+    expect(reset).toHaveBeenCalledTimes(changeAccount?1:0);expect(remove.mock.calls[0][0]).toHaveLength(1);
+    expect(d.sync.pendingCount()).toBe(0);expect((await d.sync.inspectDiagnostics())?.failure).toBeNull();
   });
   it('reads all pages even with an old client-clock cursor far in the future',async()=>{
     const d=device();meta={lastPulledAt:'2099-01-01T00:00:00Z'};

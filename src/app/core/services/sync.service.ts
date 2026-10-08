@@ -55,6 +55,7 @@ export class SyncService {
   private readonly manga = inject(MangaSavedSyncService);
   private readonly diagnostics = inject(SyncDiagnosticsService);
   private readonly savedManga = inject(MangaStudySavedRepository);
+  private diagnosticWorkspace = this.workspace.active();
   private readonly destroyRef = inject(DestroyRef);
   private readonly statusState = signal<SyncStatus>(this.workspace.active() === 'guest' ? 'guest' : 'pending');
   private readonly pendingState = signal(0);
@@ -91,7 +92,7 @@ export class SyncService {
     effect(() => {
       const workspace = this.workspace.active();
       untracked(() => {
-        this.lastSyncState.set(null); this.pendingState.set(0);this.diagnostics.reset();
+        this.lastSyncState.set(null); this.pendingState.set(0);this.alignDiagnostics(workspace);
         if (workspace === 'guest') { this.statusState.set('guest'); if (this.timer) clearTimeout(this.timer); return; }
         void this.outbox.getMeta(workspace, 'all').then(meta => {
           if (this.workspace.active() === workspace) this.lastSyncState.set(meta?.lastSyncedAt ?? null);
@@ -114,7 +115,7 @@ export class SyncService {
 
   private async runSync(workspace: ReturnType<WorkspaceService['active']>): Promise<boolean> {
     const userId = workspace.startsWith('user:') ? workspace.slice(5) : null;
-    if(this.workspace.active()===workspace)this.diagnostics.begin();
+    if(this.workspace.active()===workspace){this.alignDiagnostics(workspace);this.diagnostics.begin();}
     let client:SupabaseClient|null;
     try{client=await this.diagnostics.run('connect','supabase',()=>this.supabase.getClient());}
     catch(error){
@@ -170,6 +171,13 @@ export class SyncService {
 
   private assertWorkspace(userId: string): void {
     if (this.workspace.userId() !== userId) throw new Error('Workspace changed during sync');
+  }
+
+  private alignDiagnostics(workspace: ReturnType<WorkspaceService['active']>): void {
+    // Angular can run the workspace effect for the first time after push has
+    // confirmed writes. Initialization must not erase ACKs for that same workspace.
+    // Align synchronously at cycle start as well, before a delayed account effect.
+    if(workspace!==this.diagnosticWorkspace){this.diagnostics.reset();this.diagnosticWorkspace=workspace;}
   }
 
   schedule(delay = 900): void {
