@@ -74,8 +74,8 @@ describe('Manga review session',()=>{
     vi.spyOn(TestBed.inject(SyncOutboxService),'enqueue').mockRejectedValueOnce(new Error('interrupted'));
     await session.answer(true);expect(session.error()).toBe(true);
     TestBed.resetTestingModule();const enqueue=vi.fn(async()=>{});
-    TestBed.configureTestingModule({providers:[{provide:SyncOutboxService,useValue:{enqueue,pending:async()=>[]}}]});
-    await TestBed.inject(MangaReviewHistoryService).recover();expect(enqueue).toHaveBeenCalledTimes(1);
+    TestBed.configureTestingModule({providers:[{provide:SyncOutboxService,useValue:{enqueueIfAbsent:enqueue,pending:async()=>[]}}]});
+    await TestBed.inject(MangaReviewHistoryService).recover({workspace:TestBed.inject(WorkspaceService).active(),eventIds:new Set(),sessionIds:new Set()});expect(enqueue).toHaveBeenCalledTimes(1);
     expect(enqueue.mock.calls[0]).toHaveLength(1);expect(TestBed.inject(MangaReviewHistoryService).events()).toHaveLength(1);
     expect(TestBed.inject(SessionHistoryService).sessions()).toHaveLength(0);
   });

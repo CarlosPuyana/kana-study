@@ -1,7 +1,7 @@
 import { SyncDiagnosticReport, SyncDiagnosticsService } from './sync-diagnostics.service';
 import { MangaSavedSyncService } from './manga-saved-sync.service';
 import { MangaStudySavedRepository } from './manga-study-saved.repository';
-import { MangaReviewHistoryService } from './manga-review-history.service';
+import { MangaReviewConfirmed, MangaReviewHistoryService } from './manga-review-history.service';
 import { MANGA_REVIEW_EVENTS_KEY } from '../models/manga-review.model';
 import { computed, DestroyRef, effect, inject, Injectable, signal, untracked } from '@angular/core';
 import { CompletedSessionSummary } from '../models/learning-session.model';
@@ -138,16 +138,16 @@ export class SyncService {
     try {
       await this.diagnostics.run('prepare','manga-indexeddb',()=>this.manga.prepare(client,userId));
       this.assertWorkspace(userId);
-      await this.diagnostics.run('prepare','manga-review-history',()=>this.mangaReviews.recover());
-      this.assertWorkspace(userId);
       this.processed = await this.diagnostics.run('pending','sync-indexeddb',()=>this.outbox.pending(workspace));
       this.assertWorkspace(userId);
       if (this.processed.length) await this.push(this.processed, userId);
       this.assertWorkspace(userId);
-      await this.diagnostics.run('pull','local-reconciliation',()=>this.pull(userId));
+      const confirmed = await this.diagnostics.run('pull','local-reconciliation',()=>this.pull(userId));
       await this.diagnostics.run('pull','manga-indexeddb',()=>this.manga.pull(client,userId));
       this.assertWorkspace(userId);
       await this.cleanConfirmed();
+      this.assertWorkspace(userId);
+      await this.diagnostics.run('pull','manga-review-history',()=>this.mangaReviews.recover(confirmed));
       await this.refreshPending();
       this.assertWorkspace(userId);
       if (this.pendingState() > 0) { this.statusState.set('pending'); this.schedule(); return false; }
@@ -335,7 +335,7 @@ export class SyncService {
     return items.filter(item => !this.processed.some(done => done.id === item.id && done.revision === item.revision));
   }
 
-  private async pull(userId: string): Promise<void> {
+  private async pull(userId: string): Promise<MangaReviewConfirmed> {
     // Full, ordered pages deliberately ignore legacy client-clock cursors.
     const since = null;
     const [progress, events, sessions, medals, preferences, deckProgress, deckEvents, deckDaily, deckSettings, rushSessions, rushCoverage] = await Promise.all([
@@ -404,6 +404,9 @@ export class SyncService {
       coverage: rushCoverage.filter(row => !protectedEntity('rush-coverage', `${row['module']}:${row['content_id']}`)).map(row => ({ module: row['module'], contentId: String(row['content_id']), firstSeenAt: new Date(row['first_seen_at']).getTime() })),
     });
     this.assertWorkspace(userId);
+    return {workspace: `user:${userId}`,
+      eventIds: new Set(events.filter(row => row['module'] === 'manga').map(row => field(row['payload'], 'id')).filter((id): id is string => typeof id === 'string')),
+      sessionIds: new Set(sessions.map(row => field(row['payload'], 'sessionId')).filter((id): id is string => typeof id === 'string'))};
   }
 
   private async selectChanged(table: string, userId: string, _since: string | null): Promise<Record<string, any>[]> {

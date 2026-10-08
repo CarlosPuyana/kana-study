@@ -48,6 +48,9 @@ describe('account sync reconciliation regressions', () => {
   let writes: string[];
   let meta: any;
   let loseSessionResponse: boolean;
+  let onWrite: ((table: string) => Promise<void>) | null;
+  const mangaEvent=(id:string):MangaReviewEvent=>({id,key:'word',savedItemId:'word',sessionId:'manga-recovery',reviewedAt:'2026-10-08T12:00:00Z',exerciseType:'reading',correct:true,repetition:false,answerMode:'self-assessment',rating:'good'});
+  const mangaSession=(sessionId:string):CompletedSessionSummary=>({module:'manga',sessionId,completedAt:'2026-10-08T12:00:00Z',mode:'quick-practice',exercisesCompleted:1,firstTrySuccesses:1,attempts:1,needsPracticeCount:0,durationSeconds:7});
   const keys: Record<string, string[]> = {
     study_progress: ['user_id','module','unit_key'], user_preferences: ['user_id','preference_key'],
     deck_card_progress: ['user_id','deck_id','entry_id'], deck_daily_state: ['user_id','deck_id','local_day'],
@@ -74,6 +77,7 @@ describe('account sync reconciliation regressions', () => {
         writes.push(table);cloud[table]??=[];
         for(const row of rows){const pk=keys[table]??['id'];const index=cloud[table].findIndex(old=>pk.every(k=>old[k]===row[k]));
           const saved=structuredClone({...row,updated_at:'2026-10-08T12:00:00Z'});if(index<0)cloud[table].push(saved);else cloud[table][index]=saved;}
+        await onWrite?.(table);
         if(table==='completed_sessions'&&loseSessionResponse){loseSessionResponse=false;return {error:new Error('response lost after commit')};}
         return {error:null};
       },
@@ -85,7 +89,8 @@ describe('account sync reconciliation regressions', () => {
       {provide:SupabaseClientService,useValue:{config:{configured:true},getClient:async()=>client}},
       {provide:DeviceService,useValue:{id:'simulated-device'}},
       {provide:SyncOutboxService,useValue:{markLegacyGuestMapped:async()=>{},
-        enqueue:async(item:SyncOutboxItem)=>{queued.set(item.id,item);},
+        enqueue:async(item:SyncOutboxItem)=>{queued.set(item.id,item);window.dispatchEvent(new CustomEvent('kana-study:sync-pending'));},
+        enqueueIfAbsent:async(item:SyncOutboxItem)=>{if(queued.has(item.id))return false;queued.set(item.id,item);window.dispatchEvent(new CustomEvent('kana-study:sync-pending'));return true;},
         pending:async(workspace:string)=>[...queued.values()].filter(i=>i.workspace===workspace),
         count:async(workspace:string)=>[...queued.values()].filter(i=>i.workspace===workspace).length,
         getMeta:async()=>meta,putMeta:async(value:any)=>{meta=value;},
@@ -100,7 +105,7 @@ describe('account sync reconciliation regressions', () => {
     TestBed.inject(WorkspaceService).activateUser(user);
     return {sync:TestBed.inject(SyncService),storage:TestBed.inject(StorageService),workspace:TestBed.inject(WorkspaceService),grammar:TestBed.inject(GrammarV2ProgressService)};
   }
-  beforeEach(()=>{vi.useFakeTimers();cloud={};fail=null;onRead=null;writes=[];loseSessionResponse=false;vi.spyOn(navigator,'onLine','get').mockReturnValue(true);});
+  beforeEach(()=>{vi.useFakeTimers();cloud={};fail=null;onRead=null;onWrite=null;writes=[];loseSessionResponse=false;vi.spyOn(navigator,'onLine','get').mockReturnValue(true);});
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
   it('keeps the SQL completed-session CHECK compatible with every summary module',()=>{
     expect(sqlSessionModules.sort()).toEqual(Object.keys(summaryModules).sort());
@@ -170,6 +175,80 @@ describe('account sync reconciliation regressions', () => {
     expect(cloud['review_events']).toHaveLength(3);expect(cloud['completed_sessions']).toHaveLength(1);
     expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(7);
   });
+  it('Manga converges across two browsers: automatic sync and ten unchanged cycles never reupload confirmed history',async()=>{
+    const event=(i:number):MangaReviewEvent=>({id:`manga-convergence:${i}`,key:`word:${i}`,savedItemId:`word:${i}`,sessionId:'manga-convergence',reviewedAt:'2026-10-08T12:00:00Z',exerciseType:'reading',correct:true,repetition:false,answerMode:'self-assessment',rating:'good'});
+    let d=device();TestBed.tick();
+    for(let i=0;i<5;i++)await TestBed.inject(MangaReviewHistoryService).record(event(i));
+    TestBed.inject(SessionHistoryService).record({module:'manga',sessionId:'manga-convergence',completedAt:'2026-10-08T12:00:00Z',mode:'quick-practice',exercisesCompleted:5,firstTrySuccesses:5,attempts:5,needsPracticeCount:0,durationSeconds:21});
+    expect(await d.sync.syncNow()).toBe(true);expect(d.sync.pendingCount()).toBe(0);
+    const baseline=writes.length;
+    d=device();TestBed.tick();expect(await d.sync.syncNow()).toBe(true);
+    expect(TestBed.inject(MangaReviewHistoryService).events()).toHaveLength(5);
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(d.sync.status()).toBe('synced');expect(d.sync.pendingCount()).toBe(0);expect(queued.size).toBe(0);
+    expect(writes).toHaveLength(baseline);
+    for(let cycle=0;cycle<10;cycle++){
+      expect(await d.sync.syncNow()).toBe(true);await vi.advanceTimersByTimeAsync(1000);
+      expect(d.sync.status()).toBe('synced');expect(d.sync.pendingCount()).toBe(0);expect(queued.size).toBe(0);
+      expect(writes).toHaveLength(baseline);
+    }
+    expect(vi.getTimerCount()).toBe(0);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(21);
+    await TestBed.inject(MangaReviewHistoryService).record(event(5));TestBed.inject(SessionHistoryService).record(mangaSession('mobile-return'));
+    expect(await d.sync.syncNow()).toBe(true);const returned=writes.length;
+    d=device();TestBed.tick();expect(await d.sync.syncNow()).toBe(true);await vi.advanceTimersByTimeAsync(1000);
+    expect(TestBed.inject(MangaReviewHistoryService).events()).toHaveLength(6);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(28);
+    expect(writes).toHaveLength(returned);expect(d.sync.pendingCount()).toBe(0);expect(vi.getTimerCount()).toBe(0);
+  });
+  it('recovers interrupted local event/session enqueues after reopening and offline, uploading only IDs absent from pull',async()=>{
+    let d=device();TestBed.tick();const history=TestBed.inject(MangaReviewHistoryService),outbox=TestBed.inject(SyncOutboxService);
+    vi.spyOn(outbox,'enqueue').mockRejectedValue(new Error('IndexedDB interrupted'));
+    await expect(history.record(mangaEvent('lost-enqueue'))).rejects.toThrow('IndexedDB interrupted');
+    TestBed.inject(SessionHistoryService).record(mangaSession('lost-session'));
+    const events=history.events(),sessions=TestBed.inject(SessionHistoryService).sessions();
+    d=device();TestBed.tick();d.storage.setFromCloud(MANGA_REVIEW_EVENTS_KEY,events);d.storage.setFromCloud('kana-study.completed-sessions.v1',sessions);
+    vi.spyOn(navigator,'onLine','get').mockReturnValue(false);expect(await d.sync.syncNow()).toBe(false);expect(writes).toEqual([]);
+    vi.spyOn(navigator,'onLine','get').mockReturnValue(true);
+    expect(await d.sync.syncNow()).toBe(false);expect(d.sync.status()).toBe('pending');expect(d.sync.pendingCount()).toBe(2);
+    expect([...queued.values()].map(item=>(item.payload as unknown[]).length)).toEqual([1,1]);
+    expect(await d.sync.syncNow()).toBe(true);expect(cloud['review_events']).toHaveLength(1);expect(cloud['completed_sessions']).toHaveLength(1);
+    const baseline=writes.length;expect(await d.sync.syncNow()).toBe(true);expect(writes).toHaveLength(baseline);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(7);
+  });
+  it('keeps a new response created during pull pending until its own ACK',async()=>{
+    const d=device();TestBed.tick();const history=TestBed.inject(MangaReviewHistoryService);await history.record(mangaEvent('before-pull'));
+    let once=true;onRead=async table=>{if(table==='review_events'&&once){once=false;await history.record(mangaEvent('during-pull'));}};
+    expect(await d.sync.syncNow()).toBe(false);expect(d.sync.status()).toBe('pending');expect(d.sync.pendingCount()).toBe(1);
+    expect((queued.values().next().value!.payload as MangaReviewEvent[]).map(e=>e.id)).toContain('during-pull');
+    expect(await d.sync.syncNow()).toBe(true);expect(cloud['review_events']).toHaveLength(2);
+    const baseline=writes.length;expect(await d.sync.syncNow()).toBe(true);expect(writes).toHaveLength(baseline);
+  });
+  it('an old session ACK cannot remove a session revision created during push',async()=>{
+    const d=device();TestBed.tick();const history=TestBed.inject(SessionHistoryService);history.record(mangaSession('before-push'));
+    const oldRevision=[...queued.values()][0].revision;let once=true;
+    onWrite=async table=>{if(table==='completed_sessions'&&once){once=false;history.record(mangaSession('during-push'));}};
+    expect(await d.sync.syncNow()).toBe(false);expect(d.sync.pendingCount()).toBe(1);expect([...queued.values()][0].revision).not.toBe(oldRevision);
+    expect(await d.sync.syncNow()).toBe(true);expect(cloud['completed_sessions']).toHaveLength(2);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(14);
+  });
+  it('an event arriving after remote ACK but before cleanup keeps its newer outbox revision',async()=>{
+    const d=device();TestBed.tick();const history=TestBed.inject(MangaReviewHistoryService),outbox=TestBed.inject(SyncOutboxService);
+    await history.record(mangaEvent('acked'));const remove=outbox.removeProcessed.bind(outbox);
+    let release!:()=>void,entered!:()=>void;const started=new Promise<void>(resolve=>entered=resolve),gate=new Promise<void>(resolve=>release=resolve);
+    const cleanup=vi.spyOn(outbox,'removeProcessed').mockImplementationOnce(async items=>{entered();await gate;await remove(items);});
+    const syncing=d.sync.syncNow();await started;
+    expect((await d.sync.inspectDiagnostics())?.pending[0]).toMatchObject({remote:'confirmed',confirmedAwaitingCleanup:true});
+    await history.record(mangaEvent('after-ack'));const newer=[...queued.values()][0].revision;release();
+    expect(await syncing).toBe(false);expect([...queued.values()][0].revision).toBe(newer);cleanup.mockRestore();
+    expect(await d.sync.syncNow()).toBe(true);expect(cloud['review_events']).toHaveLength(2);
+  });
+  it('a failed pull cannot treat unverified local history as remote-confirmed or enqueue speculative recovery',async()=>{
+    const d=device();TestBed.tick();d.storage.setFromCloud(MANGA_REVIEW_EVENTS_KEY,[mangaEvent('local-only')]);fail='review_events';
+    expect(await d.sync.syncNow()).toBe(false);expect(d.sync.status()).toBe('error');expect(queued.size).toBe(0);expect(writes).toEqual([]);
+    fail=null;expect(await d.sync.syncNow()).toBe(false);expect(d.sync.status()).toBe('pending');expect(queued.size).toBe(1);
+    expect(await d.sync.syncNow()).toBe(true);expect(queued.size).toBe(0);
+  });
   it('Guest Manga attempts stay local and explicit import unions by ID without losing the account history',async()=>{
     const d=device(),workspace=d.workspace;workspace.activateGuest();TestBed.tick();
     const history=TestBed.inject(MangaReviewHistoryService);
@@ -181,8 +260,8 @@ describe('account sync reconciliation regressions', () => {
     TestBed.inject(SessionHistoryService).record({...summary,sessionId:'account-session',module:'grammar',durationSeconds:4});
     workspace.copyGuestLocalStorageToUser('same-account');TestBed.tick();
     // Import queues the union rather than replaying an older account outbox payload.
-    d.storage.set(MANGA_REVIEW_EVENTS_KEY,history.events());expect(await d.sync.syncNow()).toBe(true);
-    // AuthService queues the imported session union as part of the existing Merge flow.
+    d.storage.set(MANGA_REVIEW_EVENTS_KEY,history.events());
+    // AuthService queues both unions before synchronization in the Merge flow.
     d.storage.set('kana-study.completed-sessions.v1',TestBed.inject(SessionHistoryService).sessions());expect(await d.sync.syncNow()).toBe(true);
     expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(11);
     expect(cloud['completed_sessions']).toHaveLength(2);

@@ -162,8 +162,13 @@ Completed Manga sessions use the existing channel and count study time exactly o
 Abandoned attempts remain useful history but add no Profile or leaderboard time. Guest history is local;
 only explicit Merge imports it by ID. Account switches cancel an active session. Failed local writes
 show recovery without accepting another answer; failed outbox enqueues replay the same immutable IDs.
-For interrupted enqueues, synchronization conservatively replays the local Manga history/session list;
-this is idempotent but uploads historical lightweight rows again, rather than introducing a new journal.
+For interrupted enqueues, synchronization compares local immutable Manga IDs with the records already
+received by the existing full pull. After revision-protected ACK cleanup, only locally present IDs absent
+from that successful pull are recovered. A non-empty category is left to its current revision; recovery
+uses an atomic insert-if-absent to avoid replacing concurrent work. Downloaded or confirmed history does
+not create new operations, timers or repeated upserts. A failed/offline pull makes no remote confirmation
+assumptions and leaves local data intact. Recovery of genuinely missing IDs leaves Pending for the next
+automatic cycle; an unchanged account converges to Synced with zero pending operations.
 
 Optional local PostgreSQL validation: install `@electric-sql/pglite` outside the repository and run
 `node scripts/test-manga-review-sql.mjs <absolute-path-to-pglite/dist/index.js>`. This executes the actual

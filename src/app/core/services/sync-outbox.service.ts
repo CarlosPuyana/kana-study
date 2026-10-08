@@ -34,6 +34,33 @@ export class SyncOutboxService {
     if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kana-study:sync-pending'));
   }
 
+  /** Recovery may add missing work, but cannot overwrite a concurrent revision. */
+  enqueueIfAbsent(item: SyncOutboxItem): Promise<boolean> {
+    const operation = this.persistIfAbsent(item);
+    const write = operation.then(() => undefined);
+    this.writes.add(write);
+    void write.finally(() => this.writes.delete(write)).catch(() => undefined);
+    return operation;
+  }
+
+  private async persistIfAbsent(item: SyncOutboxItem): Promise<boolean> {
+    if (!hasIndexedDb()) {
+      if (this.memory.has(item.id)) return false;
+      this.memory.set(item.id, item);
+    } else {
+      const db = await this.database(), transaction = db.transaction(OUTBOX, 'readwrite');
+      const done = transactionDone(transaction);
+      void done.catch(() => undefined);
+      const store = transaction.objectStore(OUTBOX);
+      const existing = await request<SyncOutboxItem | undefined>(store.get(item.id));
+      if (!existing) store.put(item);
+      await done;
+      if (existing) return false;
+    }
+    if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kana-study:sync-pending'));
+    return true;
+  }
+
   async pending(workspace: LocalWorkspaceId): Promise<SyncOutboxItem[]> {
     while (this.writes.size) await Promise.all([...this.writes]);
     if (!hasIndexedDb()) return [...this.memory.values()].filter(item => item.workspace === workspace);
