@@ -17,6 +17,7 @@ import {LocalRushRepository} from './rush-repository.service';
 import {DeviceService} from './device.service';
 import {AuthService} from './auth.service';
 import {SyncDiagnosticsService} from './sync-diagnostics.service';
+import {MangaReviewHistoryService} from './manga-review-history.service';
 import {makeOutboxItem} from './sync-outbox.service';
 
 const word=(expression='食べる',reading='たべる',page=3):MangaStudySavedItem=>({schemaVersion:1,id:'dictionary:'+JSON.stringify([expression,reading]),expression,reading,kanji:[],context:'First context',meaning:'meaning',source:{volumeId:'volume',pageNumber:page},createdAt:100});
@@ -72,7 +73,7 @@ describe('Manga Saved Sync V1 with independent durable browser caches',()=>{
   afterEach(()=>{for(const d of devices)if(!d.env.destroyed)d.env.destroy();TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
   async function device(user='a',factory=new IDBFactory()):Promise<Device>{
     vi.stubGlobal('indexedDB',factory);
-    const env=createEnvironmentInjector([SyncDiagnosticsService,AuthService,WorkspaceService,MangaStudySavedRepository,MangaSavedSyncService,SyncService,SyncOutboxService,StorageService,SessionHistoryService,WorkspaceMigrationService,
+    const env=createEnvironmentInjector([MangaReviewHistoryService,SyncDiagnosticsService,AuthService,WorkspaceService,MangaStudySavedRepository,MangaSavedSyncService,SyncService,SyncOutboxService,StorageService,SessionHistoryService,WorkspaceMigrationService,
       {provide:SupabaseClientService,useValue:{config:{configured:true},getClient:async()=>cloud.client(user)}},{provide:DeviceService,useValue:{id:'test'}},
       {provide:DeckDatabaseService,useValue:{getDeckProgress:async()=>[],getDeckReviewEvents:async()=>[],getAllDailyStates:async()=>[],mergeFromCloud:async()=>{}}},
       {provide:LocalRushRepository,useValue:{getStats:async()=>({sessions:[],coverage:[]}),mergeFromCloud:async()=>{}}},
@@ -143,6 +144,11 @@ describe('Manga Saved Sync V1 with independent durable browser caches',()=>{
   });
   it('duplicate concurrent device saves retain the first confirmed context, while written homophones remain distinct',async()=>{
     const pc=await device(),mobile=await device(),a=word();await pc.saved.save(a);await mobile.saved.save({...a,context:'page 18',source:{...a.source,pageNumber:18}});
+    // Invocation order is not server commit order. Establish the first confirmed
+    // save explicitly while both sync cycles still run concurrently.
+    let confirmed!:()=>void;const firstConfirmed=new Promise<void>(resolve=>confirmed=resolve);
+    cloud.writeHook=async(_user,args)=>{if(args.p_payload?.context==='page 18')await firstConfirmed;};
+    cloud.responseHook=async()=>confirmed();
     await Promise.all([pc.sync.syncNow(),mobile.sync.syncNow()]);await mobile.sync.syncNow();
     expect(cloud.rows.size).toBe(1);expect(mobile.saved.items()[0].context).toBe('First context');
     await pc.saved.save(word('橋','はし'));await pc.saved.save(word('箸','はし'));await pc.sync.syncNow();expect(cloud.rows.size).toBe(3);

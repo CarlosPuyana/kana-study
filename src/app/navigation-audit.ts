@@ -46,6 +46,7 @@ export const NAVIGATION_AUDIT:readonly RouteAuditEntry[]=[
   {route:'anki/:deckId/study',entryPoint:'Deck card study action',type:'dynamic'},
   {route:'manga',entryPoint:'More Manga',type:'ui'},
   {route:'manga/study',entryPoint:'Manga saved words link',type:'ui'},
+  {route:'manga/study/review',entryPoint:'Saved Manga words: review button',type:'ui'},
   {route:'manga/guide',entryPoint:'Manga how-to link',type:'ui'},
   {route:'manga/read/:volumeId',entryPoint:'Manga library volume read action',type:'dynamic'},
   {route:'grammar',entryPoint:'More Grammar',type:'ui'},

@@ -40,7 +40,8 @@ export interface CompletedSessionSummary {
   readonly attempts: number;
   readonly needsPracticeCount: number;
   readonly durationSeconds: number;
-  readonly module?: 'kana' | 'flags' | 'kanji' | 'vocabulary' | 'grammar';
+  readonly module?: 'kana' | 'flags' | 'kanji' | 'vocabulary' | 'grammar' | 'manga';
+  readonly mangaResult?: import('./manga-review.model').MangaReviewResult;
   readonly questionTypes?: readonly (FlagQuestionType | KanjiQuestionType | VocabularyQuestionType)[];
   readonly grammarTopicIds?: readonly string[];
   readonly grammarLessonIds?: readonly string[];

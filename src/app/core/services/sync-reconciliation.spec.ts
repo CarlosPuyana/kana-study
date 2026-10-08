@@ -24,13 +24,16 @@ import { GRAMMAR_V2_INTEGRATION } from '../../data/grammar/grammar-n5-v2.generat
 import { ProfileStatsService } from './profile-stats.service';
 import { CardStudyTimer } from './card-study-time';
 import { CompletedSessionSummary } from '../models/learning-session.model';
+import { MangaReviewHistoryService } from './manga-review-history.service';
+import { MANGA_REVIEW_EVENTS_KEY, MangaReviewEvent } from '../models/manga-review.model';
 
 const fs = (globalThis as unknown as {process: {getBuiltinModule: (id: string) => {readFileSync: (path: string, encoding: string) => string}}}).process.getBuiltinModule('fs');
-const sessionMigration = fs.readFileSync('supabase/migrations/202610080004_completed_sessions_grammar.sql', 'utf8');
-const sqlSessionModules = [...sessionMigration.matchAll(/'([^']+)'/g)].map(match => match[1]);
+const sessionMigration = fs.readFileSync('supabase/migrations/202610080005_manga_study_v3.sql', 'utf8');
+const sqlSessionModules = [...sessionMigration.match(/add constraint completed_sessions_module_check\s+check\s*\(module in\s*\(([^)]+)\)/)![1].matchAll(/'([^']+)'/g)].map(match => match[1]);
+const sqlEventModules = [...sessionMigration.match(/add constraint review_events_module_check\s+check\s*\(module in\s*\(([^)]+)\)/)![1].matchAll(/'([^']+)'/g)].map(match => match[1]);
 // Exhaustive at compile time: a new summary module must also update this contract.
 const summaryModules: Record<NonNullable<CompletedSessionSummary['module']>, true> = {
-  kana: true, flags: true, kanji: true, vocabulary: true, grammar: true,
+  kana: true, flags: true, kanji: true, vocabulary: true, grammar: true, manga: true,
 };
 
 // ng test initializes this already; direct Vitest runs need the same TestBed.
@@ -67,6 +70,7 @@ describe('account sync reconciliation regressions', () => {
       upsert: async (rows: any[]) => {
         if(fail===table)return {error:new Error('network')};
         if(table==='completed_sessions'&&rows.some(row=>!sqlSessionModules.includes(row.module)))return {error:{code:'23514'}};
+        if(table==='review_events'&&rows.some(row=>!sqlEventModules.includes(row.module)))return {error:{code:'23514'}};
         writes.push(table);cloud[table]??=[];
         for(const row of rows){const pk=keys[table]??['id'];const index=cloud[table].findIndex(old=>pk.every(k=>old[k]===row[k]));
           const saved=structuredClone({...row,updated_at:'2026-10-08T12:00:00Z'});if(index<0)cloud[table].push(saved);else cloud[table][index]=saved;}
@@ -105,7 +109,9 @@ describe('account sync reconciliation regressions', () => {
     const initialCheck = initial.match(/create table public.completed_sessions\s*\([\s\S]*?check\s*\(module in\s*\(([^)]+)\)/)?.[1];
     expect(initialCheck).toBeDefined();
     const historicalModules = [...initialCheck!.matchAll(/'([^']+)'/g)].map(match => match[1]);
-    expect(sqlSessionModules).toEqual([...historicalModules, 'grammar'].sort());
+    expect(sqlSessionModules).toEqual([...historicalModules, 'grammar', 'manga'].sort());
+    const grammarMigration=fs.readFileSync('supabase/migrations/202610080004_completed_sessions_grammar.sql','utf8');
+    expect(grammarMigration).toContain("'grammar'");expect(sqlEventModules).toContain('manga');
   });
   it.each([...Object.keys(summaryModules), undefined])('synchronizes the supported session module %s',async(module)=>{
     const d=device();
@@ -144,6 +150,54 @@ describe('account sync reconciliation regressions', () => {
     const remote=cloud['user_preferences'].find(r=>r.preference_key===GRAMMAR_PROGRESS_V2_KEY).payload;
     remote.concepts[c.id].answers[c.exercises[1].id]={correct:true,solved:true,attempts:1,correctCount:1,answeredAt:'2026-10-08T13:00:00Z'};
     expect(await d.sync.syncNow()).toBe(true);TestBed.tick();expect(d.grammar.state().concepts[c.id].answers[c.exercises[1].id].solved).toBe(true);
+  });
+  it('Manga sessions and immutable attempts travel to another browser without duplicate time, including offline concurrent attempts',async()=>{
+    const event=(id:string):MangaReviewEvent=>({id,key:'dictionary:word',savedItemId:'dictionary:word',sessionId:'manga-session',reviewedAt:'2026-10-08T12:00:00Z',exerciseType:'meaning',correct:true,repetition:false,answerMode:'self-assessment',rating:'good'});
+    let d=device();const history=TestBed.inject(MangaReviewHistoryService);
+    const summary:CompletedSessionSummary={sessionId:'manga-session',module:'manga',completedAt:'2026-10-08T12:00:00Z',mode:'quick-practice',exercisesCompleted:1,firstTrySuccesses:1,attempts:1,needsPracticeCount:0,durationSeconds:7};
+    vi.spyOn(navigator,'onLine','get').mockReturnValue(false);await history.record(event('pc-answer'));TestBed.inject(SessionHistoryService).record(summary);
+    expect(await d.sync.syncNow()).toBe(false);expect(queued.size).toBe(2);
+    vi.spyOn(navigator,'onLine','get').mockReturnValue(true);expect(await d.sync.syncNow()).toBe(true);
+    const pc=history.events();
+    d=device();expect(await d.sync.syncNow()).toBe(true);TestBed.tick();
+    expect(TestBed.inject(MangaReviewHistoryService).events()).toEqual(pc);
+    expect(TestBed.inject(SessionHistoryService).sessions()).toEqual([summary]);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(7);
+    const mobile=TestBed.inject(MangaReviewHistoryService);await mobile.record(event('mobile-answer'));expect(await d.sync.syncNow()).toBe(true);
+    d=device();d.storage.setFromCloud(MANGA_REVIEW_EVENTS_KEY,pc);await TestBed.inject(MangaReviewHistoryService).record(event('pc-offline-answer'));
+    expect(await d.sync.syncNow()).toBe(true);expect(await d.sync.syncNow()).toBe(true);TestBed.tick();
+    expect(new Set(TestBed.inject(MangaReviewHistoryService).events().map(e=>e.id))).toEqual(new Set(['pc-answer','mobile-answer','pc-offline-answer']));
+    expect(cloud['review_events']).toHaveLength(3);expect(cloud['completed_sessions']).toHaveLength(1);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(7);
+  });
+  it('Guest Manga attempts stay local and explicit import unions by ID without losing the account history',async()=>{
+    const d=device(),workspace=d.workspace;workspace.activateGuest();TestBed.tick();
+    const history=TestBed.inject(MangaReviewHistoryService);
+    const guest:MangaReviewEvent={id:'guest-attempt',key:'word',savedItemId:'word',sessionId:'guest-session',reviewedAt:'2026-10-08T12:00:00Z',exerciseType:'reading',correct:false,repetition:false,answerMode:'self-assessment',rating:'again'};
+    await history.record(guest);expect(queued.size).toBe(0);expect(await d.sync.syncNow()).toBe(false);
+    const summary:CompletedSessionSummary={module:'manga',sessionId:'guest-session',completedAt:guest.reviewedAt,mode:'quick-practice',exercisesCompleted:1,firstTrySuccesses:0,attempts:2,needsPracticeCount:0,durationSeconds:7};
+    TestBed.inject(SessionHistoryService).record(summary);
+    workspace.activateUser('same-account');await history.record({...guest,id:'account-attempt'});
+    TestBed.inject(SessionHistoryService).record({...summary,sessionId:'account-session',module:'grammar',durationSeconds:4});
+    workspace.copyGuestLocalStorageToUser('same-account');TestBed.tick();
+    // Import queues the union rather than replaying an older account outbox payload.
+    d.storage.set(MANGA_REVIEW_EVENTS_KEY,history.events());expect(await d.sync.syncNow()).toBe(true);
+    // AuthService queues the imported session union as part of the existing Merge flow.
+    d.storage.set('kana-study.completed-sessions.v1',TestBed.inject(SessionHistoryService).sessions());expect(await d.sync.syncNow()).toBe(true);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(11);
+    expect(cloud['completed_sessions']).toHaveLength(2);
+    expect(cloud['review_events']).toHaveLength(2);workspace.activateGuest();TestBed.tick();expect(history.events()).toEqual([guest]);
+  });
+  it('qualifies only Manga transport IDs by owner while keeping logical Guest IDs immutable',async()=>{
+    const event:MangaReviewEvent={id:'shared-guest-event',key:'word',savedItemId:'word',sessionId:'shared-guest-session',reviewedAt:'2026-10-08T12:00:00Z',exerciseType:'reading',correct:true,repetition:false,answerMode:'self-assessment',rating:'good'};
+    const summary:CompletedSessionSummary={module:'manga',sessionId:event.sessionId,completedAt:event.reviewedAt,mode:'quick-practice',exercisesCompleted:1,firstTrySuccesses:1,attempts:1,needsPracticeCount:0,durationSeconds:4};
+    for(const user of ['a','b']){
+      const d=device(user);await TestBed.inject(MangaReviewHistoryService).record(event);TestBed.inject(SessionHistoryService).record(summary);
+      expect(await d.sync.syncNow()).toBe(true);
+      expect(cloud['review_events'].find(row=>row.user_id===user)).toMatchObject({id:`${user}:${event.id}`,payload:event});
+      expect(cloud['completed_sessions'].find(row=>row.user_id===user)).toMatchObject({id:`${user}:${summary.sessionId}`,payload:summary});
+    }
+    expect(cloud['review_events']).toHaveLength(2);expect(cloud['completed_sessions']).toHaveLength(2);
   });
   it('C: different answers from the same baseline are unioned and repeated sync is idempotent',async()=>{
     let d=device();const c=GRAMMAR_V2_CONCEPTS[0];d.grammar.open(c.id);const baseline=d.grammar.state();

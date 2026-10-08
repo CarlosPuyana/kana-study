@@ -7,3 +7,4 @@ blockquote{margin:.75rem 0;padding-left:.75rem;border-left:3px solid var(--borde
 .source{font-size:.85rem}.actions{display:flex;gap:.5rem;flex-wrap:wrap}.footer{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--border)}
 button,a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:.5rem .75rem;border:1px solid var(--border);border-radius:.65rem;background:var(--surface-raised);color:var(--primary);font:inherit;text-decoration:none;cursor:pointer;max-width:100%}
 button:disabled{opacity:.5;cursor:default}button:focus-visible,a:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.review{font-weight:700;border-color:var(--primary)}

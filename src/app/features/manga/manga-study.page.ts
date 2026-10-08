@@ -14,6 +14,7 @@ import {JapaneseAudioService} from '../../core/services/japanese-audio.service';
     @if(saved.failed()){<p role="alert">{{i18n.t('manga.saved.error')}}</p><button (click)="saved.reload()">{{i18n.t('manga.catalog.retry')}}</button>}
     @if(!saved.loading() && !saved.failed() && !rows().length){<section class="empty"><h2>{{i18n.t('manga.saved.empty')}}</h2><p>{{i18n.t('manga.saved.emptyHelp')}}</p><a routerLink="/manga">{{i18n.t('manga.saved.back')}}</a></section>}
     @if(removeError()){<p role="alert">{{i18n.t('manga.saved.error')}}</p>}
+    @if(rows().length && !saved.loading() && !saved.failed()){<p><a class="review" routerLink="/manga/study/review">{{i18n.t('manga.review.title')}}</a></p>}
     <section class="saved-grid">
     @for(row of rows();track row.item.id){
       <article><h2 lang="ja">{{row.item.expression}}</h2>

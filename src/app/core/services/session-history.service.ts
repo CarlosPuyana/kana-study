@@ -20,9 +20,9 @@ export class SessionHistoryService {
     return readSessions(this.storage);
   });
 
-  record(summary: CompletedSessionSummary): void {
+  record(summary: CompletedSessionSummary, options: {strict?: boolean} = {}): void {
     if (this.sessions().some(item => item.sessionId === summary.sessionId)) return;
-    this.storage.set(COMPLETED_SESSIONS_KEY, [...this.sessions(), summary]);
+    this.storage.set(COMPLETED_SESSIONS_KEY, [...this.sessions(), summary], options);
     this.revision.update(value => value + 1);
   }
 

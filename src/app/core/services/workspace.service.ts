@@ -11,6 +11,7 @@ const IMPORT_PREFIX = 'kana-study.workspace.import-decision.v1.';
 const USER_PREFIX = 'kana-study.workspace.';
 
 export const WORKSPACE_LOCAL_KEYS = [
+  'kana-study.manga-review-events.v1',
   'kana-study.settings.v1',
   'kana-study.grammar-progress.v1',
   'kana-study.grammar-progress.v2',
@@ -101,6 +102,17 @@ export class WorkspaceService {
           const merge = key === GRAMMAR_PROGRESS_V2_KEY ? mergeGrammarV2Progress : mergeGrammarProgress;
           const merged = JSON.stringify(merge(JSON.parse(source), JSON.parse(localStorage.getItem(target) ?? 'null')));
           if (merged !== localStorage.getItem(target)) { localStorage.setItem(target, merged); changed = true; }
+        } else if (source !== null && key === 'kana-study.manga-review-events.v1') {
+          const guest = JSON.parse(source) as {id:string}[], account = JSON.parse(localStorage.getItem(target) ?? '[]') as {id:string}[];
+          const merged = JSON.stringify([...new Map([...guest, ...account].map(event => [event.id, event])).values()]);
+          if (merged !== localStorage.getItem(target)) { localStorage.setItem(target, merged); changed = true; }
+        } else if (source !== null && key === 'kana-study.completed-sessions.v1' && localStorage.getItem(target) !== null) {
+          // V3 imports Manga completions by stable ID. Preserve the established
+          // import policy for other modules and never add the same study time twice.
+          const guest = (JSON.parse(source) as {sessionId:string;module?:string}[]).filter(s => s.module === 'manga');
+          const account = JSON.parse(localStorage.getItem(target)!) as {sessionId:string}[];
+          const merged = JSON.stringify([...new Map([...guest, ...account].map(session => [session.sessionId, session])).values()]);
+          if (guest.length && merged !== localStorage.getItem(target)) { localStorage.setItem(target, merged); changed = true; }
         } else if (source !== null && localStorage.getItem(target) === null) { localStorage.setItem(target, source); changed = true; }
       } catch { /* preserve Guest data if storage is unavailable/full */ }
     }

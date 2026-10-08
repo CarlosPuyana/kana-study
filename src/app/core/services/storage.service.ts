@@ -19,12 +19,13 @@ export class StorageService {
     }
   }
 
-  set<T>(key: string, value: T, options: {localOnly?: boolean; silent?: boolean} = {}): void {
+  set<T>(key: string, value: T, options: {localOnly?: boolean; silent?: boolean; strict?: boolean} = {}): void {
     try {
       localStorage.setItem(this.workspace.storageKey(key), JSON.stringify(value));
       if (!options.localOnly) this.enqueue(key, value, 'upsert');
-    } catch {
+    } catch (error) {
       if (!options.silent) this.persistenceFailed.set(true);
+      if (options.strict) throw error;
     }
   }
 

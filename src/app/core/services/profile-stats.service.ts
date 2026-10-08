@@ -31,7 +31,7 @@ export class ProfileStatsService {
 
   async load(now = new Date()): Promise<ProfileStats> {
     const sessions = this.storage.get<any[]>('kana-study.completed-sessions.v1', []);
-    const eventKeys = ['kana-study.review-events.v1','kana-study.flags-review-events.v1','kana-study.kanji-review-events.v1','kana-study.vocabulary-review-events.v1'];
+    const eventKeys = ['kana-study.review-events.v1','kana-study.flags-review-events.v1','kana-study.kanji-review-events.v1','kana-study.vocabulary-review-events.v1','kana-study.manga-review-events.v1'];
     const events = eventKeys.flatMap(key => this.storage.get<any[]>(key, []));
     const [deckProgress, deckEvents, rush] = await Promise.all([
       this.decks.getDeckProgress(STUDY_DECKS[0].id), this.decks.getDeckReviewEvents(STUDY_DECKS[0].id), this.rush.getStats(),

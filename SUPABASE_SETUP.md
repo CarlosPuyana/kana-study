@@ -142,6 +142,36 @@ Page numbers and creation timestamps must be safe integers, matching server vali
 serialization. The SQL validation script imports the same local validator and shared boundary fixtures
 (requires Node 22.18+ with TypeScript stripping); it checks accepted items through the actual RPC.
 
+## Manga Study V3: contextual review (manual migration)
+
+Grammar's correction is already documented by `202610080004_completed_sessions_grammar.sql`;
+do not repeat or edit the initial migration. After it, manually apply
+`supabase/migrations/202610080005_manga_study_v3.sql` in the correct Supabase SQL Editor.
+**The V3 migration is pending manual execution until the operator applies it.** Frontend builds
+and GitHub Actions do not execute SQL. It extends only the module CHECKs: completed sessions
+retain `grammar` and add `manga`; review events retain their four original modules and add `manga`.
+Saved-word tables, tombstones, RPCs, RLS, indexes, permissions and leaderboard logic are untouched.
+
+Review attempts are immutable, lightweight `review_events` payloads, using the stable saved-word ID
+as `unit_key`, `good`/`again` as the existing rating transport, and an explicit automatic/self-assessment
+mode. These ratings do not invoke FSRS. No contexts, dictionary snapshots or blobs are uploaded in events.
+Manga transport row IDs are qualified as `user_id:logical_id` because the existing tables have global
+text primary keys. Logical event/session IDs remain unchanged in payloads, including on Guest import;
+two explicit imports into different accounts cannot collide with an owner's row or bypass RLS.
+Completed Manga sessions use the existing channel and count study time exactly once via `durationSeconds`.
+Abandoned attempts remain useful history but add no Profile or leaderboard time. Guest history is local;
+only explicit Merge imports it by ID. Account switches cancel an active session. Failed local writes
+show recovery without accepting another answer; failed outbox enqueues replay the same immutable IDs.
+For interrupted enqueues, synchronization conservatively replays the local Manga history/session list;
+this is idempotent but uploads historical lightweight rows again, rather than introducing a new journal.
+
+Optional local PostgreSQL validation: install `@electric-sql/pglite` outside the repository and run
+`node scripts/test-manga-review-sql.mjs <absolute-path-to-pglite/dist/index.js>`. This executes the actual
+initial, leaderboard, Grammar and V3 SQL and verifies CHECK rejection/acceptance, historical rows,
+session idempotency, leaderboard totals, indexes, grants, owner isolation and anonymous denial.
+It is not a real Supabase PC/mobile test. After applying SQL, complete and sync on PC, synchronize
+on mobile, verify one session and identical attempt IDs/time, then test two offline attempts on both.
+
 ## Inspect incomplete synchronization on an existing device
 
 In the authenticated Profile, open **Synchronization diagnostics** and select **Inspect local diagnostics**

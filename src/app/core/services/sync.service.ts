@@ -1,6 +1,8 @@
 import { SyncDiagnosticReport, SyncDiagnosticsService } from './sync-diagnostics.service';
 import { MangaSavedSyncService } from './manga-saved-sync.service';
 import { MangaStudySavedRepository } from './manga-study-saved.repository';
+import { MangaReviewHistoryService } from './manga-review-history.service';
+import { MANGA_REVIEW_EVENTS_KEY } from '../models/manga-review.model';
 import { computed, DestroyRef, effect, inject, Injectable, signal, untracked } from '@angular/core';
 import { CompletedSessionSummary } from '../models/learning-session.model';
 import { MedalUnlock } from '../models/medal.model';
@@ -27,6 +29,7 @@ const PROGRESS_KEYS: Record<string, string> = {
   'kana-study.vocabulary-progress.v1': 'vocabulary',
 };
 const EVENT_KEYS: Record<string, string> = {
+  [MANGA_REVIEW_EVENTS_KEY]: 'manga',
   'kana-study.review-events.v1': 'kana',
   'kana-study.flags-review-events.v1': 'flags',
   'kana-study.kanji-review-events.v1': 'kanji',
@@ -55,6 +58,7 @@ export class SyncService {
   private readonly manga = inject(MangaSavedSyncService);
   private readonly diagnostics = inject(SyncDiagnosticsService);
   private readonly savedManga = inject(MangaStudySavedRepository);
+  private readonly mangaReviews = inject(MangaReviewHistoryService);
   private diagnosticWorkspace = this.workspace.active();
   private readonly destroyRef = inject(DestroyRef);
   private readonly statusState = signal<SyncStatus>(this.workspace.active() === 'guest' ? 'guest' : 'pending');
@@ -133,6 +137,8 @@ export class SyncService {
     this.statusState.set('syncing'); this.processed = [];
     try {
       await this.diagnostics.run('prepare','manga-indexeddb',()=>this.manga.prepare(client,userId));
+      this.assertWorkspace(userId);
+      await this.diagnostics.run('prepare','manga-review-history',()=>this.mangaReviews.recover());
       this.assertWorkspace(userId);
       this.processed = await this.diagnostics.run('pending','sync-indexeddb',()=>this.outbox.pending(workspace));
       this.assertWorkspace(userId);
@@ -257,13 +263,15 @@ export class SyncService {
     if (key in EVENT_KEYS) {
       const module = EVENT_KEYS[key];
       await this.upsert('review_events', asArray(value).map(event => ({
-        id: field(event, 'id'), user_id: userId, module, unit_key: field(event, 'key'),
+        // Manga's logical ID stays immutable in payload. Qualify the transport
+        // primary key so an explicit Guest import into two accounts stays private.
+        id: module === 'manga' ? `${userId}:${field(event, 'id')}` : field(event, 'id'), user_id: userId, module, unit_key: field(event, 'key'),
         reviewed_at: field(event, 'reviewedAt'), rating: field(event, 'rating'), payload: event, device_id: this.device.id,
       }))); return;
     }
     if (key === SESSION_KEY) {
       await this.upsert('completed_sessions', asArray(value).map(session => ({
-        id: field(session, 'sessionId'), user_id: userId, module: field(session, 'module') ?? 'kana',
+        id: field(session, 'module') === 'manga' ? `${userId}:${field(session, 'sessionId')}` : field(session, 'sessionId'), user_id: userId, module: field(session, 'module') ?? 'kana',
         completed_at: field(session, 'completedAt'), spain_day: getSpainDayKey(new Date(String(field(session, 'completedAt')))),
         payload: session, device_id: this.device.id,
       }))); return;
