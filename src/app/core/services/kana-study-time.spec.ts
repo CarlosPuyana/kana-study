@@ -1,3 +1,5 @@
+import { MangaSavedSyncService } from './manga-saved-sync.service';
+import { MangaStudySavedRepository } from './manga-study-saved.repository';
 import {STUDY_MONOTONIC_NOW} from './study-clock';
 import {TestBed} from '@angular/core/testing';
 import {ALL_KANA} from '../../data/kana';
@@ -33,7 +35,7 @@ describe('Daily KANA study time through local history, profile and synchronizati
         then:(resolve:(value:unknown)=>unknown)=>Promise.resolve(resolve({data:table==='completed_sessions'?remote.map(payload=>({payload})):[],error:null})),
         upsert:async(rows: {payload:CompletedSessionSummary}[])=>{if(table==='completed_sessions')uploaded.push(...rows.map(r=>r.payload));return {error:null};}};return query;
     }};
-    TestBed.configureTestingModule({providers:[{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},
+    TestBed.configureTestingModule({providers:[{provide:MangaSavedSyncService,useValue:{prepare:async()=>{},push:async()=>{},pull:async()=>{}}},{provide:MangaStudySavedRepository,useValue:{pending:async()=>[]}},{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},
       {provide:ProgressService,useValue:{buildRound:()=>[unit],recordReview:vi.fn(),recordPracticeAttempt:vi.fn()}},
       {provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:vi.fn()}},
       {provide:MedalService,useValue:{evaluateUnlocks:()=>[]}},

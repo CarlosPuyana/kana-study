@@ -1,3 +1,5 @@
+import { MangaSavedSyncService } from './manga-saved-sync.service';
+import { MangaStudySavedRepository } from './manga-study-saved.repository';
 import { computed, DestroyRef, effect, inject, Injectable, signal, untracked } from '@angular/core';
 import { CompletedSessionSummary } from '../models/learning-session.model';
 import { MedalUnlock } from '../models/medal.model';
@@ -49,6 +51,8 @@ export class SyncService {
   private readonly device = inject(DeviceService);
   private readonly decks = inject(DeckDatabaseService);
   private readonly rush = inject(LocalRushRepository);
+  private readonly manga = inject(MangaSavedSyncService);
+  private readonly savedManga = inject(MangaStudySavedRepository);
   private readonly destroyRef = inject(DestroyRef);
   private readonly statusState = signal<SyncStatus>(this.workspace.active() === 'guest' ? 'guest' : 'pending');
   private readonly pendingState = signal(0);
@@ -115,11 +119,14 @@ export class SyncService {
     if (!navigator.onLine) { this.statusState.set('offline'); await this.refreshPending(); return false; }
     this.statusState.set('syncing'); this.processed = [];
     try {
+      await this.manga.prepare(client,userId);
+      this.assertWorkspace(userId);
       this.processed = await this.outbox.pending(workspace);
       this.assertWorkspace(userId);
       if (this.processed.length) await this.push(this.processed, userId);
       this.assertWorkspace(userId);
       await this.pull(userId);
+      await this.manga.pull(client,userId);
       this.assertWorkspace(userId);
       await this.outbox.removeProcessed(this.processed);
       await this.refreshPending();
@@ -152,12 +159,13 @@ export class SyncService {
   schedule(delay = 900): void {
     if (!this.available()) { this.statusState.set('guest'); return; }
     if (!this.running || this.running.workspace !== this.workspace.active()) this.statusState.set(navigator.onLine ? 'pending' : 'offline');
-    void this.refreshPending();
+    void this.refreshPending().catch(()=>{if(this.available())this.statusState.set('error');});
     if (this.timer) clearTimeout(this.timer);
     this.timer = setTimeout(() => { this.timer = null; void this.syncNow(); }, delay);
   }
 
   private async push(items: readonly SyncOutboxItem[], userId: string): Promise<void> {
+    await this.manga.push(this.client!,userId,items);
     const localItems = items.filter(item => item.entityType === 'local-storage');
     for (const item of localItems) { this.assertWorkspace(userId); await this.pushLocalStorage(item, userId); }
     const reconciled: SyncOutboxItem[] = [];
@@ -199,7 +207,7 @@ export class SyncService {
       user_id: userId, module: field(item.payload, 'module'), content_id: field(item.payload, 'contentId'),
       first_seen_at: timestamp(field(item.payload, 'firstSeenAt')),
     })));
-    for (const item of items.filter(item => item.operation === 'delete' && item.entityType !== 'local-storage')) await this.deleteEntity(item, userId);
+    for (const item of items.filter(item => item.operation === 'delete' && item.entityType !== 'local-storage' && item.entityType !== 'manga-saved-item')) await this.deleteEntity(item, userId);
   }
 
   private async pushLocalStorage(item: SyncOutboxItem, userId: string): Promise<void> {
@@ -408,7 +416,9 @@ export class SyncService {
 
   private async refreshPending(): Promise<void> {
     const workspace = this.workspace.active();
-    const count = await this.outbox.count(workspace);
+    const queued = await this.outbox.pending(workspace);
+    const manga = await this.savedManga.pending(workspace);
+    const count = new Set([...queued.map(item=>item.id),...manga.map(item=>`${workspace}:manga-saved-item:${item.id}`)]).size;
     if (this.workspace.active() === workspace) this.pendingState.set(count);
   }
 

@@ -1,3 +1,4 @@
+import { MangaStudySavedRepository } from './manga-study-saved.repository';
 import { inject, Injectable } from '@angular/core';
 import { WorkspaceService } from './workspace.service';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
@@ -6,6 +7,7 @@ import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
 export class WorkspaceMigrationService {
   private readonly workspace = inject(WorkspaceService);
   private readonly outbox = inject(SyncOutboxService);
+  private readonly manga = inject(MangaStudySavedRepository);
 
   async copyGuestToUser(userId: string): Promise<void> {
     this.workspace.copyGuestLocalStorageToUser(userId);
@@ -20,6 +22,7 @@ export class WorkspaceMigrationService {
       { name: 'coverage', keyPath: ['module', 'contentId'], indexes: [['module', 'module']] },
     ]);
     const workspace = `user:${userId}` as const;
+    for(const item of await this.manga.list('guest'))await this.manga.save(item,workspace,'import');
     for (const item of deck['card-progress'] ?? []) await this.queue(workspace, 'deck-card-progress', `${item.deckId}:${item.entryId}`, item);
     for (const item of deck['review-events'] ?? []) await this.queue(workspace, 'deck-review-event', item.id, item);
     for (const item of deck['daily-state'] ?? []) await this.queue(workspace, 'deck-daily-state', `${item.deckId}:${item.localDate}`, item);
@@ -31,7 +34,8 @@ export class WorkspaceMigrationService {
     if (this.workspace.hasGuestProgress()) return true;
     if (typeof indexedDB === 'undefined') return false;
     return await databaseHasAny('kana-study-decks', ['card-progress', 'review-events', 'daily-state'])
-      || await databaseHasAny('kana-study-rush', ['sessions', 'coverage']);
+      || await databaseHasAny('kana-study-rush', ['sessions', 'coverage'])
+      || (await this.manga.list('guest')).length>0;
   }
 
   private async queue(workspace: `user:${string}`, type: Parameters<typeof makeOutboxItem>[1], key: string, payload: unknown): Promise<void> {

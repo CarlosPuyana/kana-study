@@ -1,3 +1,5 @@
+import { MangaSavedSyncService } from './manga-saved-sync.service';
+import { MangaStudySavedRepository } from './manga-study-saved.repository';
 import { TestBed } from '@angular/core/testing';
 import { MedalUnlock } from '../models/medal.model';
 import { SyncService } from './sync.service';
@@ -25,7 +27,7 @@ describe('Medal synchronization', () => {
         upsert: async () => ({error: null}),
       }; return query;
     }};
-    TestBed.configureTestingModule({providers: [
+    TestBed.configureTestingModule({providers: [{provide:MangaSavedSyncService,useValue:{prepare:async()=>{},push:async()=>{},pull:async()=>{}}},{provide:MangaStudySavedRepository,useValue:{pending:async()=>[]}},
       {provide: SupabaseClientService, useValue: {config: {configured: true}, getClient: async () => client}},
       {provide: SyncOutboxService, useValue: {
         markLegacyGuestMapped: async () => undefined, enqueue: async () => undefined, pending: async () => [],

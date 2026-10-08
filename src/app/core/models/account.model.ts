@@ -18,7 +18,8 @@ export type SyncEntityType =
   | 'deck-review-event'
   | 'deck-daily-state'
   | 'rush-session'
-  | 'rush-coverage';
+  | 'rush-coverage'
+  | 'manga-saved-item';
 
 export interface SyncOutboxItem {
   readonly id: string;

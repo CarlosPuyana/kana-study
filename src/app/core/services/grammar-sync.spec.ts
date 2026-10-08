@@ -1,3 +1,5 @@
+import { MangaSavedSyncService } from './manga-saved-sync.service';
+import { MangaStudySavedRepository } from './manga-study-saved.repository';
 import { TestBed } from '@angular/core/testing';
 import { GRAMMAR_PROGRESS_KEY, emptyGrammarProgress, GrammarProgressStateV1 } from '../models/grammar-progress.model';
 import { SyncOutboxItem } from '../models/account.model';
@@ -24,7 +26,7 @@ describe('Grammar sync through the existing preferences transport', () => {
         upsert: async (rows: Record<string, unknown>[]) => { if (table === 'user_preferences') { writes.push(...rows); remote = rows.find(row => row['preference_key'] === GRAMMAR_PROGRESS_KEY)?.['payload'] as GrammarProgressStateV1 ?? remote; } return {error: null}; },
       }; return query;
     }};
-    TestBed.configureTestingModule({providers: [
+    TestBed.configureTestingModule({providers: [{provide:MangaSavedSyncService,useValue:{prepare:async()=>{},push:async()=>{},pull:async()=>{}}},{provide:MangaStudySavedRepository,useValue:{pending:async()=>[]}},
       {provide: SupabaseClientService, useValue: {config: {configured: true}, getClient: async () => client}},
       {provide: SyncOutboxService, useValue: {
         markLegacyGuestMapped: async () => undefined, enqueue: async (item: SyncOutboxItem) => { pending = [item]; }, pending: async () => pending,

@@ -1,3 +1,5 @@
+import { MangaSavedSyncService } from './manga-saved-sync.service';
+import { MangaStudySavedRepository } from './manga-study-saved.repository';
 import { TestBed } from '@angular/core/testing';
 import { SyncService } from './sync.service';
 import { SyncOutboxService, makeOutboxItem } from './sync-outbox.service';
@@ -55,7 +57,7 @@ describe('account sync reconciliation regressions', () => {
   }};
   function device(user='same-account', realDatabases=false) {
     TestBed.resetTestingModule(); localStorage.clear();queued=new Map();meta=null;
-    TestBed.configureTestingModule({providers:[
+    TestBed.configureTestingModule({providers:[{provide:MangaSavedSyncService,useValue:{prepare:async()=>{},push:async()=>{},pull:async()=>{}}},{provide:MangaStudySavedRepository,useValue:{pending:async()=>[]}},
       {provide:SupabaseClientService,useValue:{config:{configured:true},getClient:async()=>client}},
       {provide:DeviceService,useValue:{id:'simulated-device'}},
       {provide:SyncOutboxService,useValue:{markLegacyGuestMapped:async()=>{},

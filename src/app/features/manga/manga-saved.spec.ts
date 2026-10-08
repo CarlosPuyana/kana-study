@@ -18,6 +18,7 @@ import {DailyLearningService} from '../../core/services/daily-learning.service';
 import {SessionHistoryService} from '../../core/services/session-history.service';
 import {SpacedRepetitionService} from '../../core/services/spaced-repetition.service';
 import {DictionaryLookup} from '../../core/models/dictionary.model';
+import {WorkspaceService} from '../../core/services/workspace.service';
 
 function lookup(expression='食べる',reading='たべる'):DictionaryLookup{return {installed:true,query:expression,surface:expression==='食べる'?'食べなかった':expression,baseForm:expression,terms:[{id:'fixture',dictionaryId:'fixture',expression,reading,glossaries:['meaning'],definitionTags:'',rules:'',score:0,sequence:1,termTags:''}]};}
 describe('Manga saved UI',()=>{
@@ -36,6 +37,19 @@ describe('Manga saved UI',()=>{
   it('shows an explanatory empty state and return link',async()=>{const f=await page();expect(f.nativeElement.textContent).toContain('Aún no has guardado');expect(f.nativeElement.querySelector('.empty a').getAttribute('href')).toBe('/manga');});
   it('saves from popup and reacts without reopening, with lightweight removal confirmation',async()=>{const f=await popup();expect(f.nativeElement.querySelector('.saved-actions').textContent).toContain('Guardar para estudiar');await f.componentInstance.saveWord();f.detectChanges();expect(f.nativeElement.querySelector('.saved-actions').textContent).toContain('✓ Guardada');f.nativeElement.querySelector('.saved-actions button').click();f.detectChanges();expect(await repository().list()).toHaveLength(1);expect(f.nativeElement.querySelector('[role=group]')).not.toBeNull();await f.componentInstance.removeWord();f.detectChanges();expect(f.componentInstance.isSaved()).toBe(false);expect(repository().count()).toBe(0);});
   it('responds to saving/removing elsewhere in the same workspace',async()=>{const f=await popup();const item=await save();f.detectChanges();expect(f.componentInstance.isSaved()).toBe(true);await repository().remove(item.id);f.detectChanges();expect(f.componentInstance.isSaved()).toBe(false);});
+  it('reflects remote records and tombstones in an open popup and collection without reloading',async()=>{
+    const f=await popup(),collection=await page();
+    // PageHeader initializes local Auth; activate the account after that bootstrap.
+    TestBed.inject(WorkspaceService).activateUser('a');TestBed.tick();await repository().reload();
+    const item=TestBed.inject(MangaStudyIntegrationService).snapshot(lookup(),{volumeId:'fixture',pageNumber:18,volumeTitle:'Volume 1'},'昨日何も食べなかった。')!;
+    await repository().mergeFromCloud([{item_id:item.id,payload:item,deleted_at:null,revision:1,last_operation:null}],'user:a');
+    f.detectChanges();collection.detectChanges();
+    expect(f.componentInstance.isSaved()).toBe(true);expect(f.nativeElement.querySelector('.saved-actions').textContent).toContain('✓ Guardada');
+    expect(collection.nativeElement.querySelector('.saved-grid article')).not.toBeNull();expect(repository().count()).toBe(1);
+    await repository().mergeFromCloud([{item_id:item.id,payload:null,deleted_at:'2026-10-08T00:00:00Z',revision:2,last_operation:null}],'user:a');
+    f.detectChanges();collection.detectChanges();
+    expect(f.componentInstance.isSaved()).toBe(false);expect(collection.nativeElement.querySelector('.empty')).not.toBeNull();expect(repository().count()).toBe(0);
+  });
   it('permits unknown dictionary terms and never fabricates Vocabulary actions',async()=>{const f=await popup('龍','りゅう');expect(f.nativeElement.querySelector('.saved-actions')).not.toBeNull();await f.componentInstance.saveWord();f.detectChanges();expect(f.componentInstance.isSaved()).toBe(true);expect(f.nativeElement.querySelector('.study-vocabulary')).toBeNull();});
   it('keeps a failed save unsaved and displays an error',async()=>{const f=await popup();vi.spyOn(repository(),'save').mockRejectedValueOnce(new Error('disk'));await f.componentInstance.saveWord();f.detectChanges();expect(f.componentInstance.isSaved()).toBe(false);expect(f.nativeElement.querySelector('[role=alert]')).not.toBeNull();});
   it('does not show saving on loading or failed lookup',async()=>{const f=await popup();f.componentRef.setInput('loading',true);f.detectChanges();expect(f.nativeElement.querySelector('.saved-actions')).toBeNull();f.componentRef.setInput('loading',false);f.componentRef.setInput('failed',true);f.detectChanges();expect(f.nativeElement.querySelector('.saved-actions')).toBeNull();});
