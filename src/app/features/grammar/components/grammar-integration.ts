@@ -1,3 +1,4 @@
+import { StudyTimer } from '../../../shared/components/study-timer/study-timer';
 import {ChangeDetectionStrategy,Component,computed,effect,inject,input,untracked} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TranslationService} from '../../../core/services/translation.service';
@@ -6,7 +7,7 @@ import {GRAMMAR_V2_INTEGRATION} from '../../../data/grammar/grammar-n5-v2.genera
 import {GrammarExerciseComponent} from './grammar-exercise';
 import {GrammarPracticeSession} from '../services/grammar-practice-session';
 
-@Component({selector:'app-grammar-integration',imports:[RouterLink,GrammarExerciseComponent],providers:[GrammarPracticeSession],changeDetection:ChangeDetectionStrategy.OnPush,template:`
+@Component({selector:'app-grammar-integration',imports:[StudyTimer,RouterLink,GrammarExerciseComponent],providers:[GrammarPracticeSession],changeDetection:ChangeDetectionStrategy.OnPush,template:`
   <section class="topic-content integration-content">
     <a class="secondary-link" routerLink="/grammar/n5/11">← {{i18n.t('grammar.v2.integration.title')}}</a>
     <h2>{{i18n.t(section()?.titleKey??(activityId()==='00'?'grammar.v2.integration.intro':'grammar.v2.integration.title'))}}</h2>
@@ -22,9 +23,11 @@ import {GrammarPracticeSession} from '../services/grammar-practice-session';
         @if(solved()>0&&solved()<section.exercises.length){<button class="primary-link button-link" (click)="start(true)">{{i18n.t('grammar.v2.retry')}}</button>}
         <button class="primary-link button-link" (click)="start()">{{i18n.t('grammar.start')}}</button>
       } @else if(session.stage()==='question'){
+        <app-study-timer [clock]="session.clock"/>
         <p class="lesson-exercise-count" aria-live="polite">{{i18n.t('grammar.exerciseStep',{current:session.index()+1,total:session.total()})}}</p>
         @if(session.current();as exercise){<app-grammar-exercise [exercise]="exercise" [practice]="true" [last]="session.index()===session.total()-1" (answered)="answer($event)" (continued)="session.next()"/>}
       } @else {
+        <app-study-timer [clock]="session.clock" [result]="true"/>
         <p role="status">{{i18n.t('grammar.v2.integration.'+(progress.integrationStatus(section.id)==='completed'?'activityComplete':'pending'))}}</p>
         @if(solved()<section.exercises.length){<button class="primary-link button-link" (click)="start(true)">{{i18n.t('grammar.v2.retry')}}</button>}
         <button class="secondary-link button-link" (click)="start()">{{i18n.t('grammar.retry')}}</button>

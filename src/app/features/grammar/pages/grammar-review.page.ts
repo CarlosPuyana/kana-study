@@ -1,3 +1,4 @@
+import { StudyTimer } from '../../../shared/components/study-timer/study-timer';
 import { ChangeDetectionStrategy, Component, effect, inject, untracked, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -9,7 +10,7 @@ import { GrammarExerciseComponent } from '../components/grammar-exercise';
 import { grammarMixedExercises } from '../services/grammar-interactive-catalog';
 import { GrammarPracticeSession } from '../services/grammar-practice-session';
 
-@Component({selector: 'app-grammar-review', imports: [RouterLink, GrammarExerciseComponent], providers: [GrammarPracticeSession],
+@Component({selector: 'app-grammar-review', imports: [StudyTimer, RouterLink, GrammarExerciseComponent], providers: [GrammarPracticeSession],
   styleUrls: ['./grammar-roadmap.scss', './grammar-lesson.scss', './grammar-practice.scss', './grammar.page.scss'], encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush, template: `
   <div class="grammar-shell"><div class="practice-app">
@@ -20,10 +21,11 @@ import { GrammarPracticeSession } from '../services/grammar-practice-session';
       } @else if(session.stage()==='intro'){
         <section class="practice-intro"><h2>{{i18n.t(titleKey())}}</h2><p>{{i18n.t('grammar.progressState.reviewDescription',{total:session.total()})}}</p><button class="practice-start" (click)="session.start()">{{i18n.t('grammar.start')}}</button></section>
       } @else if(session.stage()==='question'){
+        <app-study-timer [clock]="session.clock"/>
         <p class="lesson-exercise-count" aria-live="polite">{{i18n.t('grammar.exerciseStep',{current:session.index()+1,total:session.total()})}}</p>
         @if(session.current();as exercise){<app-grammar-exercise [exercise]="exercise" [practice]="true" [last]="session.index()===session.total()-1" (answered)="answer($event)" (continued)="next()"/>}
       } @else {
-        <section class="practice-results"><h2>{{i18n.t('grammar.completed')}}</h2><p>{{i18n.t('grammar.interactive.result',{correct:session.score(),total:session.total(),percent:session.percent(),errors:session.total()-session.score()})}}</p><p>{{i18n.t('grammar.interactive.practicedTopics',{topics:session.topicIds().join(', ')})}}</p><p>{{i18n.t('grammar.progressState.reviewRemaining',{count:progress.difficulties().length})}}</p><div class="results-actions"><button class="secondary-link button-link" (click)="reset()">{{i18n.t('grammar.retry')}}</button><a class="primary-link" routerLink="/grammar">{{i18n.t('grammar.roadmap')}}</a></div></section>
+        <section class="practice-results"><app-study-timer [clock]="session.clock" [result]="true"/><h2>{{i18n.t('grammar.completed')}}</h2><p>{{i18n.t('grammar.interactive.result',{correct:session.score(),total:session.total(),percent:session.percent(),errors:session.total()-session.score()})}}</p><p>{{i18n.t('grammar.interactive.practicedTopics',{topics:session.topicIds().join(', ')})}}</p><p>{{i18n.t('grammar.progressState.reviewRemaining',{count:progress.difficulties().length})}}</p><div class="results-actions"><button class="secondary-link button-link" (click)="reset()">{{i18n.t('grammar.retry')}}</button><a class="primary-link" routerLink="/grammar">{{i18n.t('grammar.roadmap')}}</a></div></section>
       }
     </main>
   </div></div>`})

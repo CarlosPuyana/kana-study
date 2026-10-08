@@ -59,4 +59,12 @@ describe('Profile V2',()=>{
     let resolve!:(value:unknown)=>void;rpc.mockImplementation(()=>new Promise(r=>resolve=r));const f=TestBed.createComponent(ProfilePage);f.componentInstance.selectView('leaderboard');await Promise.resolve();f.detectChanges();
     expect(f.nativeElement.querySelector('[role=status]')).not.toBeNull();resolve({data:[],error:null});await f.whenStable();
   });
+  it('waits for synchronization, disables repeated clicks and displays failure',async()=>{
+    const f=TestBed.createComponent(ProfilePage);await f.whenStable();load.mockClear();
+    let resolve!:(value:boolean)=>void;syncNow.mockImplementation(()=>new Promise<boolean>(r=>resolve=r));
+    const run=f.componentInstance.synchronize();f.detectChanges();
+    expect(f.nativeElement.querySelector('.account-actions .primary').disabled).toBe(true);
+    expect(load).not.toHaveBeenCalled();resolve(false);await run;f.detectChanges();
+    expect(f.nativeElement.querySelector('[role=alert]')).not.toBeNull();expect(load).toHaveBeenCalledTimes(1);
+  });
 });

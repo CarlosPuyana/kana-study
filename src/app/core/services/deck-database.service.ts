@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { LocalWorkspaceId } from '../models/account.model';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { DeckCardProgress, DeckDailyState, DeckReviewEvent } from '../models/deck-study.model';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
 import { WorkspaceService } from './workspace.service';
@@ -14,6 +15,8 @@ export class DeckDatabaseService {
   private readonly workspace = inject(WorkspaceService);
   private readonly outbox = inject(SyncOutboxService);
   private readonly databases = new Map<string, Promise<IDBDatabase>>();
+
+  constructor() { inject(DestroyRef).onDestroy(() => { for (const db of this.databases.values()) void db.then(value => value.close()).catch(() => undefined); }); }
 
   async getProgress(deckId: string, entryId: string): Promise<DeckCardProgress | null> {
     const db = await this.database();
@@ -46,27 +49,30 @@ export class DeckDatabaseService {
   }
 
   async writeDailyState(state: DeckDailyState): Promise<void> {
-    const db = await this.database();
+    const workspace = this.workspace.active();
+    const db = await this.database(workspace);
     const transaction = db.transaction(DAILY_STORE, 'readwrite');
     transaction.objectStore(DAILY_STORE).put(state);
     await transactionDone(transaction);
-    this.enqueue('deck-daily-state', `${state.deckId}:${state.localDate}`, state);
+    await this.enqueue(workspace, 'deck-daily-state', `${state.deckId}:${state.localDate}`, state);
   }
 
   async commitReview(progress: DeckCardProgress, event: DeckReviewEvent, dailyState: DeckDailyState): Promise<void> {
-    const db = await this.database();
+    const workspace = this.workspace.active();
+    const db = await this.database(workspace);
     const transaction = db.transaction([PROGRESS_STORE, EVENTS_STORE, DAILY_STORE], 'readwrite');
     transaction.objectStore(PROGRESS_STORE).put(progress);
     transaction.objectStore(EVENTS_STORE).add(event);
     transaction.objectStore(DAILY_STORE).put(dailyState);
     await transactionDone(transaction);
-    this.enqueue('deck-card-progress', `${progress.deckId}:${progress.entryId}`, progress);
-    this.enqueue('deck-review-event', event.id, event);
-    this.enqueue('deck-daily-state', `${dailyState.deckId}:${dailyState.localDate}`, dailyState);
+    await this.enqueue(workspace, 'deck-card-progress', `${progress.deckId}:${progress.entryId}`, progress);
+    await this.enqueue(workspace, 'deck-review-event', event.id, event);
+    await this.enqueue(workspace, 'deck-daily-state', `${dailyState.deckId}:${dailyState.localDate}`, dailyState);
   }
 
   async undoReview(event: DeckReviewEvent, dailyState: DeckDailyState): Promise<void> {
-    const db = await this.database();
+    const workspace = this.workspace.active();
+    const db = await this.database(workspace);
     const transaction = db.transaction([PROGRESS_STORE, EVENTS_STORE, DAILY_STORE], 'readwrite');
     const progressStore = transaction.objectStore(PROGRESS_STORE);
     if (event.cardBefore) {
@@ -83,11 +89,11 @@ export class DeckDatabaseService {
     transaction.objectStore(EVENTS_STORE).delete(event.id);
     transaction.objectStore(DAILY_STORE).put(dailyState);
     await transactionDone(transaction);
-    this.enqueue('deck-card-progress', `${event.deckId}:${event.entryId}`, event.cardBefore ? {
+    await this.enqueue(workspace, 'deck-card-progress', `${event.deckId}:${event.entryId}`, event.cardBefore ? {
       deckId: event.deckId, entryId: event.entryId, due: event.cardBefore.due, state: event.cardBefore.state, card: event.cardBefore,
     } : null, event.cardBefore ? 'upsert' : 'delete');
-    this.enqueue('deck-review-event', event.id, event, 'delete');
-    this.enqueue('deck-daily-state', `${dailyState.deckId}:${dailyState.localDate}`, dailyState);
+    await this.enqueue(workspace, 'deck-review-event', event.id, event, 'delete');
+    await this.enqueue(workspace, 'deck-daily-state', `${dailyState.deckId}:${dailyState.localDate}`, dailyState);
   }
 
   async mergeFromCloud(input: { progress: readonly DeckCardProgress[]; events: readonly DeckReviewEvent[]; daily: readonly DeckDailyState[] }): Promise<void> {
@@ -108,16 +114,16 @@ export class DeckDatabaseService {
     await transactionDone(transaction);
   }
 
-  private database(): Promise<IDBDatabase> {
-    const name = this.workspace.databaseName(DATABASE_NAME);
+  private database(workspace = this.workspace.active()): Promise<IDBDatabase> {
+    const name = this.workspace.databaseName(DATABASE_NAME, workspace);
     let database = this.databases.get(name);
     if (!database) { database = openDatabase(name); this.databases.set(name, database); }
     return database;
   }
 
-  private enqueue(type: 'deck-card-progress' | 'deck-review-event' | 'deck-daily-state', key: string, payload: unknown, operation: 'upsert' | 'delete' = 'upsert'): void {
-    const item = makeOutboxItem(this.workspace.active(), type, key, payload, operation);
-    if (item) void this.outbox.enqueue(item).catch(() => undefined);
+  private async enqueue(workspace: LocalWorkspaceId, type: 'deck-card-progress' | 'deck-review-event' | 'deck-daily-state', key: string, payload: unknown, operation: 'upsert' | 'delete' = 'upsert'): Promise<void> {
+    const item = makeOutboxItem(workspace, type, key, payload, operation);
+    if (item) await this.outbox.enqueue(item);
   }
 }
 

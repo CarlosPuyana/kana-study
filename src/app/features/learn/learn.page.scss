@@ -60,3 +60,5 @@
 .medal-unlock-dialog small { margin-top: 0.7rem; color: var(--text-muted); }
 @media (hover: hover) { .options button:not(:disabled):hover, .ratings button:hover, .secondary-button:hover { background: var(--surface-hover); } }
 @media (max-width: 460px) { .learn-shell { width: calc(100% - 1.25rem); } .exercise { padding-top: 2.5rem; } .exit-actions { grid-template-columns: 1fr; } .exit-button { order: 2; } }
+
+.session-header app-study-timer { grid-column: 1 / -1; }

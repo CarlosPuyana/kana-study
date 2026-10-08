@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { createStudyClock } from '../../core/services/study-clock';
+import { StudyTimer } from '../../shared/components/study-timer/study-timer';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { JapaneseWordDeckEntry } from '../../core/models/japanese-word-deck-entry.model';
 import { DeckMixedCursor, DeckQueueChoice, DeckQueueSnapshot, DeckRating, DeckReviewEvent } from '../../core/models/deck-study.model';
@@ -15,7 +17,7 @@ import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/de
 
 @Component({
   selector: 'app-anki-study-page',
-  imports: [RouterLink, FuriganaText, DeckSentenceText],
+  imports: [StudyTimer, RouterLink, FuriganaText, DeckSentenceText],
   templateUrl: './anki-study.page.html',
   styleUrl: './anki-study.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,8 +28,8 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   private readonly study = inject(DeckStudyService);
   private readonly entriesById = new Map(JAPANESE_1500_ENTRIES.map(entry => [entry.id, entry]));
   private cursor: DeckMixedCursor = { debt: 0 };
-  private sessionStartedAt = Date.now();
-  private cardShownAt = Date.now();
+  readonly clock = createStudyClock();
+  private destroyed = false;
   private timerId: ReturnType<typeof setInterval> | null = null;
   private day = getLocalStudyDayKey(new Date());
 
@@ -43,53 +45,57 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   readonly translationOpen = signal(false);
   readonly preview = signal<DeckSchedulePreview | null>(null);
   readonly lastEvent = signal<DeckReviewEvent | null>(null);
-  readonly elapsedSeconds = signal(0);
-  readonly elapsedLabel = computed(() => `${Math.floor(this.elapsedSeconds() / 60)}:${String(this.elapsedSeconds() % 60).padStart(2, '0')}`);
+  readonly elapsedSeconds = this.clock.seconds;
+  readonly elapsedLabel = this.clock.label;
 
   ngOnInit(): void {
     this.timerId = setInterval(() => {
-      this.elapsedSeconds.set(Math.floor((Date.now() - this.sessionStartedAt) / 1000));
       if (getLocalStudyDayKey(new Date()) !== this.day) this.refreshAvailability();
     }, 1000);
     void this.loadNext();
   }
 
   ngOnDestroy(): void {
+    this.destroyed = true; this.clock.detach();
     if (this.timerId) clearInterval(this.timerId);
   }
 
   refreshAvailability(): void {
-    if (this.saving()) return;
+    if (this.saving() || this.loading() || document.hidden) return;
+    this.clock.pause();
     this.day = getLocalStudyDayKey(new Date());
-    void this.loadNext();
+    void this.loadNext(true);
   }
 
   reveal(): void {
-    if (!this.deck || !this.choice() || this.revealed()) return;
+    if (!this.deck || !this.choice() || this.revealed() || this.loading() || this.saving()) return;
     this.preview.set(this.study.preview(this.deck, this.choice()!));
     this.translationOpen.set(false);
     this.revealed.set(true);
   }
 
   async rate(rating: DeckRating): Promise<void> {
-    if (!this.deck || !this.choice() || !this.preview() || !this.revealed() || this.saving()) return;
-    this.saving.set(true); this.error.set(false);
+    if (!this.deck || !this.choice() || !this.preview() || !this.revealed() || this.saving() || this.loading()) return;
+    this.saving.set(true); this.error.set(false); this.clock.pause();
     try {
       const event = await this.study.rate(
-        this.deck, this.choice()!, this.preview()!, rating, Date.now() - this.cardShownAt,
+        this.deck, this.choice()!, this.preview()!, rating, this.clock.appearanceMilliseconds(),
       );
-      this.lastEvent.set(event);
+      this.clock.commitAppearance(); this.lastEvent.set(event);
+      this.choice.set(null); this.revealed.set(false);
       await this.loadNext();
     } catch { this.error.set(true); }
-    finally { this.saving.set(false); }
+    finally { this.saving.set(false); if (!this.destroyed && this.choice()) this.clock.resume(); }
   }
 
   async undo(): Promise<void> {
     const event = this.lastEvent();
     if (!event || !this.deck || this.saving() || this.snapshot()?.completedToday) return;
-    this.saving.set(true); this.error.set(false);
+    this.saving.set(true); this.error.set(false); this.clock.pause();
     try {
       await this.study.undo(event);
+      this.clock.discardAppearance(); this.clock.undo(event.elapsedAnswerMs); this.lastEvent.set(null);
+      this.choice.set(null);
       const snapshot = await this.study.snapshot(this.deck, JAPANESE_1500_INDEX);
       this.snapshot.set(snapshot);
       const progress = snapshot.progress.find(item => item.entryId === event.entryId) ?? null;
@@ -100,7 +106,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
       });
       this.lastEvent.set(null);
     } catch { this.error.set(true); }
-    finally { this.saving.set(false); }
+    finally { this.saving.set(false); if (!this.destroyed && this.choice()) this.clock.resume(); }
   }
 
   intervalLabel(rating: DeckRating): string {
@@ -138,7 +144,8 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     else if (this.revealed() && event.key === '2') { event.preventDefault(); void this.rate('good'); }
   }
 
-  private async loadNext(): Promise<void> {
+  private async loadNext(preserveAppearance = false): Promise<void> {
+    this.clock.pause();this.loading.set(true);
     if (!this.deck) { this.loading.set(false); return; }
     this.error.set(false);
     try {
@@ -149,9 +156,11 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
         await this.study.completeSession(this.deck, JAPANESE_1500_INDEX);
         snapshot = await this.study.snapshot(this.deck, JAPANESE_1500_INDEX);
       }
+      if (this.destroyed) return;
       this.cursor = decision.cursor;
       this.snapshot.set(snapshot);
-      this.setCurrent(decision.choice);
+      if (preserveAppearance && decision.choice?.entryId === this.choice()?.entryId && this.choice()) this.clock.resume();
+      else this.setCurrent(decision.choice);
     } catch { this.error.set(true); }
     finally { this.loading.set(false); }
   }
@@ -160,6 +169,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     this.choice.set(choice);
     this.entry.set(choice ? this.entriesById.get(choice.entryId) ?? null : null);
     this.revealed.set(false); this.translationOpen.set(false); this.preview.set(null);
-    this.cardShownAt = Date.now();
+    if (choice && this.entry()) this.clock.startAppearance();
+    else { this.clock.discardAppearance(); this.clock.pause(); }
   }
 }

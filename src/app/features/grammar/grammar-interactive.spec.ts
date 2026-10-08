@@ -1,3 +1,4 @@
+import {STUDY_MONOTONIC_NOW} from '../../core/services/study-clock';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
@@ -78,8 +79,8 @@ describe('Grammar interactive N5 catalog',()=>{
   });
 });
 
-describe('Grammar interactive answers and completed sessions',()=>{
-  beforeEach(()=>{localStorage.clear();vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),GrammarPracticeSession,{provide:TranslationService,useValue:{t}}]});});
+describe('Grammar interactive answers and completed sessions',()=>{let monotonic=0;
+  beforeEach(()=>{monotonic=0;localStorage.clear();vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),GrammarPracticeSession,{provide:TranslationService,useValue:{t}}]});});
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();});
   function fixtureFor(id:string){const fixture=TestBed.createComponent(GrammarExerciseComponent);fixture.componentRef.setInput('exercise',GRAMMAR_INTERACTIVE.find(e=>e.id===id));fixture.componentRef.setInput('practice',true);fixture.detectChanges();return fixture;}
   it('reports an incorrect answer and solution, waiting for Continue',()=>{
@@ -143,4 +144,27 @@ describe('Grammar interactive answers and completed sessions',()=>{
     expect(harness.routeNativeElement!.querySelector('app-grammar-v2-lesson')).not.toBeNull();
     expect(harness.routeNativeElement!.querySelector('app-grammar-exercise')).not.toBeNull();
   });
+
+ it('counts real exercises only, records 21 seconds once and resets an error-review round',()=>{
+ const session=TestBed.inject(GrammarPracticeSession),history=TestBed.inject(SessionHistoryService);
+ session.reset(grammarTopicRound('03').slice(0,3));monotonic=60000;expect(session.clock.seconds()).toBe(0);
+ session.start();session.clock.attach();for(const seconds of [4,15,7]){monotonic+=seconds*1000;session.answer(false);session.answer(true);session.next();session.next();}
+ expect(history.sessions()).toHaveLength(1);expect(history.sessions()[0].durationSeconds).toBe(21);
+ monotonic+=60000;session.clock.pause();expect(session.clock.label()).toBe('00:21');session.next();expect(history.sessions()).toHaveLength(1);
+ session.reviewErrors();expect(session.clock.seconds()).toBe(0);session.clock.attach();monotonic+=15000;session.answer(true);session.next();expect(session.clock.committedSeconds).toBe(10);
+ });
+ it('lesson exercises show their final credited time without creating another history source, and reset on route change',async()=>{
+ const harness=await RouterTestingHarness.create();const page=await harness.navigateByUrl('/grammar/n5/01/sentence-structure-context',GrammarPage);
+ const total=page.exercises().length;expect(total).toBeGreaterThan(0);
+ for(let i=0;i<total;i++){
+   monotonic+=15000;page.answer(true);page.answer(true);harness.detectChanges();
+   if(i<total-1){page.continueExercise();page.continueExercise();harness.detectChanges();}
+ }
+ expect(page.clock.committedSeconds).toBe(total*10);expect(page.exerciseFinished()).toBe(true);
+ expect(harness.routeNativeElement!.querySelector('app-study-timer [role="status"]')).not.toBeNull();
+ monotonic+=60000;page.clock.pause();expect(page.clock.seconds()).toBe(total*10);
+ expect(TestBed.inject(SessionHistoryService).sessions()).toHaveLength(0);
+ const roadmap=await harness.navigateByUrl('/grammar',GrammarPage);expect(roadmap.clock.seconds()).toBe(0);
+ expect(harness.routeNativeElement!.querySelector('app-study-timer')).toBeNull();
+ });
 });

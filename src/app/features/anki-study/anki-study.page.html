@@ -1,14 +1,14 @@
 <main class="study-shell">
   <header class="study-header">
     <a routerLink="/anki" class="back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg><span>{{ i18n.t('anki.title') }}</span></a>
-    <time>{{ elapsedLabel() }}</time>
+    @if (!loading()) { <app-study-timer [clock]="clock" [result]="!choice()"/> }
     @if (snapshot(); as counts) { <span class="header-counts">{{ counts.newAvailable }} · {{ counts.learningDue }} · {{ counts.reviewDue }}</span> }
     <button type="button" class="undo" [disabled]="!lastEvent() || saving() || snapshot()?.completedToday" (click)="undo()">{{ i18n.t('anki.studyPage.undo') }}</button>
   </header>
 
   @if (error()) { <p class="storage-error" role="alert">{{ i18n.t('anki.storageError') }}</p> }
   @if (!deck) {
-    <section class="end-state"><h1>{{ i18n.t('anki.deckNotFound') }}</h1><a routerLink="/anki">{{ i18n.t('anki.title') }}</a></section>
+    <section class="end-state"><app-study-timer [clock]="clock" [result]="true"/><h1>{{ i18n.t('anki.deckNotFound') }}</h1><a routerLink="/anki">{{ i18n.t('anki.title') }}</a></section>
   } @else if (loading()) {
     <p class="loading" aria-busy="true">{{ i18n.t('common.loading') }}</p>
   } @else if (entry(); as card) {
@@ -40,6 +40,6 @@
       }
     </footer>
   } @else if (snapshot(); as currentSnapshot) {
-    <section class="end-state"><div class="end-mark">✓</div><h1>{{ i18n.t(endTitleKey(currentSnapshot)) }}</h1>@if(currentSnapshot.completedToday){<p>{{i18n.t('anki.daily.tomorrow')}}</p>}@if(nextDueLabel(currentSnapshot);as next){<p>{{next}}</p>}<a routerLink="/anki">{{i18n.t('anki.studyPage.backToDecks')}}</a></section>
+    <section class="end-state"><app-study-timer [clock]="clock" [result]="true"/><div class="end-mark">✓</div><h1>{{ i18n.t(endTitleKey(currentSnapshot)) }}</h1>@if(currentSnapshot.completedToday){<p>{{i18n.t('anki.daily.tomorrow')}}</p>}@if(nextDueLabel(currentSnapshot);as next){<p>{{next}}</p>}<a routerLink="/anki">{{i18n.t('anki.studyPage.backToDecks')}}</a></section>
   }
 </main>

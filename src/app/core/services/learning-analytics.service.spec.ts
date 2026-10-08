@@ -122,7 +122,7 @@ describe('LearningAnalyticsService projections',()=>{
   });
   for(const stored of [null,{},[null,{},session(undefined,{module:undefined})]]){
     it(`loads partially empty session storage safely: ${JSON.stringify(stored)}`,()=>{
-      const set=vi.fn();TestBed.configureTestingModule({providers:[{provide:StorageService,useValue:{get:()=>stored,set}}]});
+      const set=vi.fn();TestBed.configureTestingModule({providers:[{provide:StorageService,useValue:{get:()=>stored,set,cloudRevision:signal(0)}}]});
       const history=TestBed.inject(SessionHistoryService);
       expect(()=>calculate([],history.sessions())).not.toThrow();expect(set).not.toHaveBeenCalled();
     });

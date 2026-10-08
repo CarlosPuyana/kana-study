@@ -5,3 +5,5 @@
 .options button{height:auto;padding-block:1rem}.feedback-answer{display:grid;justify-items:center;gap:.2rem;width:min(100%,24rem);margin-top:.75rem;padding:.8rem;border-radius:.8rem;background:var(--surface-raised)}.feedback-answer>span{color:var(--text-secondary);font-size:.85rem}
 
 .shortcut{display:none;font:inherit;font-size:.8em;opacity:.85}.romaji{color:var(--text-secondary);font-size:.85rem}@media(hover:hover) and (pointer:fine){.shortcut{display:inline}}
+
+.play-header app-study-timer { grid-column: 1 / -1; }

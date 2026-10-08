@@ -7,7 +7,7 @@
       <button type="button" (click)="confirmExit()">{{ i18n.t('common.returnHome') }}</button>
     </section>
   } @else {
-    <header class="session-header">
+    <header class="session-header"><app-study-timer [clock]="learning.clock" [result]="learning.completed()"/>
       <button class="icon-button sound" type="button" disabled [attr.aria-label]="i18n.t('learn.interfaceSounds')">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h3l4 3V7L8 10H5Z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>
       </button>
@@ -20,7 +20,7 @@
     </header>
 
     @if (learning.completed()) {
-      <section class="results">
+      <section class="results"><app-study-timer [clock]="learning.clock" [result]="true"/>
         <span class="result-mark" aria-hidden="true">✓</span>
         <h1>{{ i18n.t('learn.roundComplete') }}</h1>
         <p>{{ i18n.t('learn.completedSummary', {

@@ -1,3 +1,4 @@
+import { createStudyClock } from './study-clock';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { COUNTRIES } from '../../data/countries.generated';
 import { AppLanguage, FlagStudyUnit } from '../models/country.model';
@@ -23,6 +24,8 @@ const AGAIN_GAP = 2;
 
 @Injectable({ providedIn: 'root' })
 export class FlagSessionService {
+  readonly clock = createStudyClock();
+
   private readonly progress = inject(FlagProgressService);
   private readonly history = inject(SessionHistoryService);
   private readonly medals = inject(FlagMedalService);
@@ -57,6 +60,7 @@ export class FlagSessionService {
   start(): boolean {
     const units = this.progress.buildRound();
     if (!units.length) return false;
+    this.clock.reset();
     const session: FlagLearningSession = {
       id: globalThis.crypto?.randomUUID?.() ?? `flag-session-${Date.now()}`,
       startedAt: new Date().toISOString(), completedAt: null, sessionSize: units.length, units,
@@ -91,7 +95,7 @@ export class FlagSessionService {
   }
 
   restart(): boolean { return this.start(); }
-  clear(): void { this.state.set(null); this.medalState.set([]); }
+  clear(): void { this.clock.detach(); this.clock.reset(); this.state.set(null); this.medalState.set([]); }
   dismissNextMedal(): void { this.medalState.update(items => items.slice(1)); }
 
   private registerAttempt(rating: StudyRating, resolved: boolean): void {
@@ -122,7 +126,8 @@ export class FlagSessionService {
 
   private advance(): void {
     const state = this.state();
-    if (!state) return;
+    if (!state || state.session.completedAt) return;
+    this.clock.commitAppearance();
     const next = state.queueIndex + 1;
     if (next < state.queue.length) {
       this.state.set({ ...state, queueIndex: next, feedback: null });
@@ -140,8 +145,7 @@ export class FlagSessionService {
       firstTrySuccesses: completed.items.filter(item => item.initialRating === 'good').length,
       attempts: completed.attempts,
       needsPracticeCount: completed.items.filter(item => item.needsPractice).length,
-      durationSeconds: Math.max(0, Math.round((completedAt.getTime()
-        - new Date(completed.startedAt).getTime()) / 1000)),
+      durationSeconds: this.clock.committedSeconds,
       questionTypes: [...new Set(completed.units.map(unit => unit.questionType))],
       countryIds: [...new Set(completed.units.map(unit => unit.countryId))],
       studyRegions: [...new Set(countries.map(country => country.studyRegion))],
@@ -153,6 +157,7 @@ export class FlagSessionService {
     const state = this.state();
     const unit = this.currentUnit();
     if (!state || !unit) return;
+    this.clock.startAppearance();
     this.state.set({ ...state, session: { ...state.session,
       items: state.session.items.map(item => item.studyKey === unit.key
         ? { ...item, appearances: item.appearances + 1 } : item) } });

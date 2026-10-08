@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { LocalWorkspaceId, SyncMeta, SyncOutboxItem } from '../models/account.model';
 
 const DB_NAME = 'kana-study-sync';
@@ -11,17 +11,31 @@ const WORKSPACE_META = 'workspace-meta';
 export class SyncOutboxService {
   private dbPromise: Promise<IDBDatabase> | null = null;
   private readonly memory = new Map<string, SyncOutboxItem>();
+  private readonly writes = new Set<Promise<void>>();
+  private readonly metadata = new Map<string, SyncMeta>();
 
-  async enqueue(item: SyncOutboxItem): Promise<void> {
+  constructor() { inject(DestroyRef).onDestroy(() => { void this.dbPromise?.then(db => db.close()).catch(() => undefined); }); }
+
+  enqueue(item: SyncOutboxItem): Promise<void> {
+    const write = this.persist(item);
+    this.writes.add(write);
+    void write.finally(() => this.writes.delete(write)).catch(() => undefined);
+    return write;
+  }
+
+  private async persist(item: SyncOutboxItem): Promise<void> {
     if (!hasIndexedDb()) this.memory.set(item.id, item);
     else {
       const db = await this.database();
-      await request(db.transaction(OUTBOX, 'readwrite').objectStore(OUTBOX).put(item));
+      const transaction = db.transaction(OUTBOX, 'readwrite');
+      transaction.objectStore(OUTBOX).put(item);
+      await transactionDone(transaction);
     }
     if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kana-study:sync-pending'));
   }
 
   async pending(workspace: LocalWorkspaceId): Promise<SyncOutboxItem[]> {
+    while (this.writes.size) await Promise.all([...this.writes]);
     if (!hasIndexedDb()) return [...this.memory.values()].filter(item => item.workspace === workspace);
     const db = await this.database();
     return request(db.transaction(OUTBOX).objectStore(OUTBOX).index('workspace').getAll(workspace));
@@ -51,7 +65,17 @@ export class SyncOutboxService {
   }
 
   async markAttempt(items: readonly SyncOutboxItem[]): Promise<void> {
-    for (const item of items) await this.enqueue({ ...item, attempts: item.attempts + 1 });
+    if (!hasIndexedDb()) {
+      for (const item of items) if (this.memory.get(item.id)?.revision === item.revision) this.memory.set(item.id, {...item, attempts: item.attempts + 1});
+      return;
+    }
+    const db = await this.database();
+    const transaction = db.transaction(OUTBOX, 'readwrite'), store = transaction.objectStore(OUTBOX);
+    for (const item of items) {
+      const current = await request<SyncOutboxItem | undefined>(store.get(item.id));
+      if (current?.revision === item.revision) store.put({...current, attempts: current.attempts + 1});
+    }
+    await transactionDone(transaction);
   }
 
   async count(workspace: LocalWorkspaceId): Promise<number> {
@@ -59,15 +83,16 @@ export class SyncOutboxService {
   }
 
   async getMeta(workspace: LocalWorkspaceId, table: string): Promise<SyncMeta | null> {
-    if (!hasIndexedDb()) return null;
+    if (!hasIndexedDb()) return this.metadata.get(`${workspace}:${table}`) ?? null;
     const db = await this.database();
     return (await request<SyncMeta | undefined>(db.transaction(SYNC_META).objectStore(SYNC_META).get([workspace, table]))) ?? null;
   }
 
   async putMeta(meta: SyncMeta): Promise<void> {
-    if (!hasIndexedDb()) return;
+    if (!hasIndexedDb()) { this.metadata.set(`${meta.workspace}:${meta.table}`, meta); return; }
     const db = await this.database();
-    await request(db.transaction(SYNC_META, 'readwrite').objectStore(SYNC_META).put(meta));
+    const transaction = db.transaction(SYNC_META, 'readwrite');
+    transaction.objectStore(SYNC_META).put(meta); await transactionDone(transaction);
   }
 
   async markLegacyGuestMapped(): Promise<void> {

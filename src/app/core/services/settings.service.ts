@@ -1,4 +1,4 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable } from '@angular/core';
 import { KanaType, KanaVariant } from '../models/kana.model';
 import {
   AppLanguage,
@@ -11,7 +11,7 @@ import {
   VariantSettings,
 } from '../models/settings.model';
 import { QUESTION_TYPES, QuestionType } from '../models/progress.model';
-import { StorageService } from './storage.service';
+import { StorageService, workspaceStorageSignal } from './storage.service';
 
 const SETTINGS_KEY = 'kana-study.settings.v1';
 const TYPES: readonly KanaType[] = ['hiragana', 'katakana'];
@@ -26,11 +26,8 @@ const DEFAULT_SETTINGS: AppSettings = {
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-  private userChanged = false;
   private readonly storage = inject(StorageService);
-  private readonly state = signal<AppSettings>(
-    this.normalize(this.storage.get<unknown>(SETTINGS_KEY, DEFAULT_SETTINGS)),
-  );
+  private readonly state = workspaceStorageSignal<AppSettings>(() => this.normalize(this.storage.get<unknown>(SETTINGS_KEY, DEFAULT_SETTINGS)));
   private readonly systemDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
   readonly settings = this.state.asReadonly();
@@ -61,7 +58,6 @@ export class SettingsService {
   constructor() {
     effect(() => {
       const settings = this.state();
-      this.storage.set(SETTINGS_KEY, settings, {silent: !this.userChanged});
       this.applyTheme(settings.theme);
       document.documentElement.lang = settings.language;
     });
@@ -80,7 +76,6 @@ export class SettingsService {
   }
 
   saveLearningSelection(selection: LearningSelection): void {
-    this.userChanged = true;
     this.state.update(current => ({
       ...current,
       learning: {
@@ -88,6 +83,7 @@ export class SettingsService {
         questionTypes: selection.questionTypes.filter(type => AVAILABLE_QUESTION_TYPES.includes(type)),
       },
     }));
+    this.storage.set(SETTINGS_KEY, this.state());
   }
 
   setContent(key: keyof ContentSettings, enabled: boolean): void {
@@ -104,13 +100,13 @@ export class SettingsService {
   }
 
   reset(): void {
-    this.userChanged = true;
     this.state.set(structuredClone(DEFAULT_SETTINGS));
+    this.storage.set(SETTINGS_KEY, this.state());
   }
 
   private patch(partial: Partial<AppSettings>): void {
-    this.userChanged = true;
     this.state.update(current => ({ ...current, ...partial }));
+    this.storage.set(SETTINGS_KEY, this.state());
   }
 
   private normalize(stored: unknown): AppSettings {

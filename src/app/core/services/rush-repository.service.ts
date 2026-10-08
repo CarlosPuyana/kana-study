@@ -1,4 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { mergeRushSession } from './sync-merge';
+import { LocalWorkspaceId } from '../models/account.model';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { RushAggregateStats, RushCoverage, RushSession } from '../models/rush.model';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
 import { WorkspaceService } from './workspace.service';
@@ -23,6 +25,8 @@ export class LocalRushRepository extends RushRepository {
   private readonly outbox = inject(SyncOutboxService);
   private readonly databases = new Map<string, Promise<IDBDatabase>>();
 
+  constructor() { super(); inject(DestroyRef).onDestroy(() => { for (const db of this.databases.values()) void db.then(value => value.close()).catch(() => undefined); }); }
+
   async markOpenSessionsInterrupted(): Promise<void> {
     const db = await this.open();
     const sessions = await asPromise<RushSession[]>(db.transaction(SESSIONS).objectStore(SESSIONS).getAll());
@@ -34,13 +38,16 @@ export class LocalRushRepository extends RushRepository {
   }
 
   async createSession(session: RushSession): Promise<void> {
-    const db = await this.open();
-    await asPromise(db.transaction(SESSIONS, 'readwrite').objectStore(SESSIONS).add(session));
-    this.enqueue('rush-session', session.id, session);
+    const workspace = this.workspace.active();
+    const db = await this.open(workspace);
+    const transaction = db.transaction(SESSIONS, 'readwrite');
+    transaction.objectStore(SESSIONS).add(session); await transactionDone(transaction);
+    await this.enqueue(workspace, 'rush-session', session.id, session);
   }
 
   async saveProgress(session: RushSession, contentId?: string): Promise<void> {
-    const db = await this.open();
+    const workspace = this.workspace.active();
+    const db = await this.open(workspace);
     const transaction = db.transaction([SESSIONS, COVERAGE], 'readwrite');
     transaction.objectStore(SESSIONS).put(session);
     if (contentId) {
@@ -50,8 +57,8 @@ export class LocalRushRepository extends RushRepository {
       if (!existing) store.add(coverage);
     }
     await transactionDone(transaction);
-    this.enqueue('rush-session', session.id, session);
-    if (contentId) this.enqueue('rush-coverage', `${session.module}:${contentId}`, {
+    await this.enqueue(workspace, 'rush-session', session.id, session);
+    if (contentId) await this.enqueue(workspace, 'rush-coverage', `${session.module}:${contentId}`, {
       module: session.module, contentId, firstSeenAt: Date.now(),
     });
   }
@@ -59,9 +66,11 @@ export class LocalRushRepository extends RushRepository {
   finishSession(session: RushSession): Promise<void> { return this.saveProgress(session); }
 
   async discardSession(id: string): Promise<void> {
-    const db = await this.open();
-    await asPromise(db.transaction(SESSIONS, 'readwrite').objectStore(SESSIONS).delete(id));
-    this.enqueue('rush-session', id, null, 'delete');
+    const workspace = this.workspace.active();
+    const db = await this.open(workspace);
+    const transaction = db.transaction(SESSIONS, 'readwrite');
+    transaction.objectStore(SESSIONS).delete(id); await transactionDone(transaction);
+    await this.enqueue(workspace, 'rush-session', id, null, 'delete');
   }
 
   async getStats(): Promise<RushAggregateStats> {
@@ -78,7 +87,10 @@ export class LocalRushRepository extends RushRepository {
     const db = await this.open();
     const transaction = db.transaction([SESSIONS, COVERAGE], 'readwrite');
     const sessionStore = transaction.objectStore(SESSIONS);
-    for (const session of input.sessions) sessionStore.put(session);
+    for (const session of input.sessions) {
+      const local = await asPromise<RushSession | undefined>(sessionStore.get(session.id));
+      sessionStore.put(mergeRushSession(local, session));
+    }
     const coverageStore = transaction.objectStore(COVERAGE);
     for (const remote of input.coverage) {
       const local = await asPromise<RushCoverage | undefined>(coverageStore.get([remote.module, remote.contentId]));
@@ -87,8 +99,8 @@ export class LocalRushRepository extends RushRepository {
     await transactionDone(transaction);
   }
 
-  private open(): Promise<IDBDatabase> {
-    const name = this.workspace.databaseName(DB_NAME);
+  private open(workspace = this.workspace.active()): Promise<IDBDatabase> {
+    const name = this.workspace.databaseName(DB_NAME, workspace);
     const current = this.databases.get(name);
     if (current) return current;
     const database = new Promise<IDBDatabase>((resolve, reject) => {
@@ -109,9 +121,9 @@ export class LocalRushRepository extends RushRepository {
     return database;
   }
 
-  private enqueue(type: 'rush-session' | 'rush-coverage', key: string, payload: unknown, operation: 'upsert' | 'delete' = 'upsert'): void {
-    const item = makeOutboxItem(this.workspace.active(), type, key, payload, operation);
-    if (item) void this.outbox.enqueue(item).catch(() => undefined);
+  private async enqueue(workspace: LocalWorkspaceId, type: 'rush-session' | 'rush-coverage', key: string, payload: unknown, operation: 'upsert' | 'delete' = 'upsert'): Promise<void> {
+    const item = makeOutboxItem(workspace, type, key, payload, operation);
+    if (item) await this.outbox.enqueue(item);
   }
 }
 

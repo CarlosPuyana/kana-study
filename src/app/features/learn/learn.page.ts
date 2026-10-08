@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { StudyTimer } from '../../shared/components/study-timer/study-timer';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudyRating } from '../../core/models/progress.model';
 import { LearningSessionService } from '../../core/services/learning-session.service';
@@ -8,12 +9,14 @@ import { DailyLearningService } from '../../core/services/daily-learning.service
 
 @Component({
   selector: 'app-learn-page',
-  imports: [MedalBadge],
+  imports: [StudyTimer, MedalBadge],
   templateUrl: './learn.page.html',
   styleUrl: './learn.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LearnPage {
+  constructor(){inject(DestroyRef).onDestroy(()=>this.learning.clear());}
+
   readonly learning = inject(LearningSessionService);
   readonly i18n = inject(TranslationService);
   readonly daily = inject(DailyLearningService);

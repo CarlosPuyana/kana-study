@@ -1,3 +1,4 @@
+import {STUDY_MONOTONIC_NOW} from './study-clock';
 import {TestBed} from '@angular/core/testing';
 import {ALL_KANA} from '../../data/kana';
 import {CompletedSessionSummary} from '../models/learning-session.model';
@@ -21,17 +22,18 @@ import {calculateLearningAnalytics} from './learning-analytics.service';
 describe('Daily KANA study time through local history, profile and synchronization',()=>{
   const key='kana-study.completed-sessions.v1';
   const baseline:CompletedSessionSummary={module:'kana',sessionId:'historic',completedAt:'2026-10-01T10:00:00Z',mode:'self-assessment',exercisesCompleted:1,firstTrySuccesses:1,attempts:1,needsPracticeCount:0,durationSeconds:1325};
+  let monotonic=0;
   let remote:CompletedSessionSummary[];
   let pending:SyncOutboxItem[],uploaded:CompletedSessionSummary[];
   const unit={key:`${ALL_KANA[0].id}:kana-to-romaji`,kanaId:ALL_KANA[0].id,questionType:'kana-to-romaji' as const};
   beforeEach(()=>{
-    localStorage.clear();vi.useFakeTimers();vi.setSystemTime(new Date('2026-10-02T10:00:00Z'));remote=[baseline];pending=[];uploaded=[];
+    monotonic=0;localStorage.clear();vi.useFakeTimers();vi.setSystemTime(new Date('2026-10-02T10:00:00Z'));remote=[baseline];pending=[];uploaded=[];
     const client={from:(table:string)=>{
-      const query={select:()=>query,eq:()=>query,gte:()=>query,maybeSingle:async()=>({data:null,error:null}),
+      const query={select:()=>query,eq:()=>query,order:()=>query,range:()=>query,gte:()=>query,maybeSingle:async()=>({data:null,error:null}),
         then:(resolve:(value:unknown)=>unknown)=>Promise.resolve(resolve({data:table==='completed_sessions'?remote.map(payload=>({payload})):[],error:null})),
         upsert:async(rows: {payload:CompletedSessionSummary}[])=>{if(table==='completed_sessions')uploaded.push(...rows.map(r=>r.payload));return {error:null};}};return query;
     }};
-    TestBed.configureTestingModule({providers:[
+    TestBed.configureTestingModule({providers:[{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},
       {provide:ProgressService,useValue:{buildRound:()=>[unit],recordReview:vi.fn(),recordPracticeAttempt:vi.fn()}},
       {provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:vi.fn()}},
       {provide:MedalService,useValue:{evaluateUnlocks:()=>[]}},
@@ -48,31 +50,31 @@ describe('Daily KANA study time through local history, profile and synchronizati
   function complete(seconds:number){
     const learning=TestBed.inject(LearningSessionService);
     expect(learning.start('self-assessment')).toBe(true);
-    vi.setSystemTime(new Date(Date.now()+seconds*1000));learning.reveal();learning.rate('good');
+    learning.clock.attach();monotonic+=seconds*1000;vi.setSystemTime(new Date(Date.now()+seconds*1000));learning.reveal();learning.rate('good');
     expect(learning.completed()).toBe(true);
     learning.rate('good'); // Repeated UI action cannot record the completion twice.
     return learning.session()!.id;
   }
-  it('adds two real durations exactly once, retains them after stale pulls and reload, and agrees with Analytics',async()=>{
+  it('caps two new durations exactly once, retains them after stale pulls and reload, and agrees with Analytics',async()=>{
     const history=TestBed.inject(SessionHistoryService),stats=TestBed.inject(ProfileStatsService);
     expect((await stats.load()).studySeconds).toBe(1325);
     const a=complete(40);expect(history.sessions()).toHaveLength(2);
-    expect(history.sessions().find(s=>s.sessionId===a)?.durationSeconds).toBe(40);
+    expect(history.sessions().find(s=>s.sessionId===a)?.durationSeconds).toBe(10);
     vi.setSystemTime(new Date('2026-10-03T10:00:00Z'));
     const b=complete(10);expect(b).not.toBe(a);expect(history.sessions()).toHaveLength(3);
     expect(history.sessions().find(s=>s.sessionId===b)?.durationSeconds).toBe(10);
-    expect((await stats.load()).studySeconds).toBe(1375);
+    expect((await stats.load()).studySeconds).toBe(1345);
     const sync=TestBed.inject(SyncService);expect(await sync.syncNow()).toBe(true);
-    expect(uploaded.some(s=>s.sessionId===a&&s.durationSeconds===40)).toBe(true);
+    expect(uploaded.some(s=>s.sessionId===a&&s.durationSeconds===10)).toBe(true);
     expect(uploaded.some(s=>s.sessionId===b&&s.durationSeconds===10)).toBe(true);
     remote=[{...baseline,durationSeconds:1}];expect(await sync.syncNow()).toBe(true);
     const stored=TestBed.inject(StorageService).get<CompletedSessionSummary[]>(key,[]);
     expect(new Set(stored.map(s=>s.sessionId))).toEqual(new Set(['historic',a,b]));
-    expect((await stats.load()).studySeconds).toBe(1375);
+    expect((await stats.load()).studySeconds).toBe(1345);
     const reloaded=TestBed.runInInjectionContext(()=>new SessionHistoryService());
     expect(reloaded.sessions()).toEqual(stored);
-    expect(calculateLearningAnalytics([],reloaded.sessions(),new Date()).summary.seconds).toBe(1375);
-    expect((await TestBed.runInInjectionContext(()=>new ProfileStatsService()).load()).studySeconds).toBe(1375);
+    expect(calculateLearningAnalytics([],reloaded.sessions(),new Date()).summary.seconds).toBe(1345);
+    expect((await TestBed.runInInjectionContext(()=>new ProfileStatsService()).load()).studySeconds).toBe(1345);
   });
   it('does not record practice as daily time or invent unknown legacy durations',async()=>{
     const storage=TestBed.inject(StorageService);

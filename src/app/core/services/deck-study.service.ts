@@ -118,7 +118,7 @@ export class DeckStudyService {
       difficultyBefore: preview.cardBefore.difficulty, difficultyAfter: branch.card.difficulty,
       retrievabilityBefore: preview.retrievabilityBefore,
       desiredRetention: preview.desiredRetention,
-      elapsedAnswerMs: Math.max(0, Math.round(elapsedAnswerMs)),
+      elapsedAnswerMs: Math.min(10_000, Math.max(0, Math.round(elapsedAnswerMs))),
       fsrsLog: branch.log,
       cardBefore: choice.progress?.card ?? null,
     };

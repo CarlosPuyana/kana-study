@@ -1,6 +1,6 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { DeckSettings, NewCardOrder, StudyDeck } from '../models/deck.model';
-import { StorageService } from './storage.service';
+import { StorageService, workspaceStorageSignal } from './storage.service';
 
 const STORAGE_KEY = 'kana-study.deck-settings.v1';
 const ORDERS: readonly NewCardOrder[] = ['mixed', 'after-reviews', 'before-reviews'];
@@ -9,7 +9,7 @@ type StoredDeckSettings = Record<string, DeckSettings>;
 @Injectable({ providedIn: 'root' })
 export class DeckSettingsService {
   private readonly storage = inject(StorageService);
-  private readonly state = signal<StoredDeckSettings>(this.storage.get(STORAGE_KEY, {}));
+  private readonly state = workspaceStorageSignal<StoredDeckSettings>(() => this.storage.get(STORAGE_KEY, {}));
   readonly all = this.state.asReadonly();
 
   settingsFor(deck: StudyDeck): DeckSettings {

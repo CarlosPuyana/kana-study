@@ -1,6 +1,7 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { computed, Injectable, inject, signal } from '@angular/core';
 import { CompletedSessionSummary } from '../models/learning-session.model';
 import { StorageService } from './storage.service';
+import { WorkspaceService } from './workspace.service';
 
 const COMPLETED_SESSIONS_KEY = 'kana-study.completed-sessions.v1';
 function readSessions(storage:StorageService):readonly CompletedSessionSummary[] {
@@ -12,25 +13,27 @@ function readSessions(storage:StorageService):readonly CompletedSessionSummary[]
 @Injectable({ providedIn: 'root' })
 export class SessionHistoryService {
   private readonly storage = inject(StorageService);
-  private readonly state = signal<readonly CompletedSessionSummary[]>(
-    readSessions(this.storage),
-  );
-  readonly sessions = this.state.asReadonly();
+  private readonly workspace = inject(WorkspaceService);
+  private readonly revision = signal(0);
+  readonly sessions = computed(() => {
+    this.workspace.active(); this.workspace.dataRevision(); this.storage.cloudRevision(); this.revision();
+    return readSessions(this.storage);
+  });
 
   record(summary: CompletedSessionSummary): void {
-    if (this.state().some(item => item.sessionId === summary.sessionId)) return;
-    this.state.update(items => [...items, summary]);
-    this.storage.set(COMPLETED_SESSIONS_KEY, this.state());
+    if (this.sessions().some(item => item.sessionId === summary.sessionId)) return;
+    this.storage.set(COMPLETED_SESSIONS_KEY, [...this.sessions(), summary]);
+    this.revision.update(value => value + 1);
   }
 
   mergeFromCloud(summaries: readonly CompletedSessionSummary[]): void {
-    const merged = new Map(this.state().map(item => [item.sessionId, item]));
+    const merged = new Map(this.sessions().map(item => [item.sessionId, item]));
     for (const summary of summaries) if (!merged.has(summary.sessionId)) merged.set(summary.sessionId, summary);
-    this.state.set([...merged.values()]);
+    this.storage.setFromCloud(COMPLETED_SESSIONS_KEY, [...merged.values()]);
   }
 
   reset(): void {
-    this.state.set([]);
     this.storage.remove(COMPLETED_SESSIONS_KEY);
+    this.revision.update(value => value + 1);
   }
 }

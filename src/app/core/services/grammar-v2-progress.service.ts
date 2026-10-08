@@ -5,7 +5,7 @@ import {GRAMMAR_V2_CONCEPTS, GRAMMAR_V2_REVIEW, GRAMMAR_V2_INTEGRATION} from '..
 import {StorageService} from './storage.service';
 import {WorkspaceService} from './workspace.service';
 
-interface ProgressV2 {
+export interface ProgressV2 {
   version: 2; concepts: Record<string, GrammarV2ConceptProgress>;
   practices: Record<string, GrammarPracticeProgress>; review: Record<string, GrammarDifficulty>; resume?: GrammarResume;
   integration?: GrammarIntegrationProgress;

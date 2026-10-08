@@ -23,10 +23,10 @@
             }
             @if(lesson.prerequisites.inlineExplanations?.length){<aside class="kanji-reference">@for(explanation of lesson.prerequisites.inlineExplanations;track explanation.term){<p><strong>{{explanation.term}}（{{explanation.reading}}）</strong> — {{i18n.t(explanation.meaningKey)}}</p>}</aside>}
             @if(lesson.kanjiExamples?.length){<section class="kanji-reference"><h3>{{i18n.t('grammar.kanjiReference')}}</h3>@for(example of lesson.kanjiExamples;track $index){<div><app-furigana-text [segments]="example.segments"/><p>{{i18n.t(example.meaningKey)}}</p></div>}</section>}
-            @if(retryPending()){<section class="lesson-note" role="status"><p>{{i18n.t('grammar.v2.pending')}}</p><button class="primary-link button-link" (click)="retryExercises()">{{i18n.t('grammar.v2.retry')}}</button></section>}
+            @if(retryPending()){<app-study-timer [clock]="clock" [result]="true"/><section class="lesson-note" role="status"><p>{{i18n.t('grammar.v2.pending')}}</p><button class="primary-link button-link" (click)="retryExercises()">{{i18n.t('grammar.v2.retry')}}</button></section>}
             @if(currentExercise(); as exercise){
               <p class="lesson-exercise-count" aria-live="polite">{{ i18n.t('grammar.exerciseStep', {current: exerciseIndex()+1, total: exercises().length}) }}</p>
-              <app-grammar-exercise [exercise]="exercise" (answered)="answer($event)" (continued)="continueExercise()"/>
+              <app-study-timer [clock]="clock" [result]="exerciseFinished()"/><app-grammar-exercise [exercise]="exercise" (answered)="answer($event)" (continued)="continueExercise()"/>
             }
           </section><aside class="lesson-note-column">@for(note of lesson.notes;track note.titleKey){<div class="lesson-note" [class.compact-note]="$last"><span class="note-icon">{{note.icon}}</span><h3>{{i18n.t(note.titleKey)}}</h3><p [innerHTML]="i18n.t(note.bodyKey)"></p></div>}<details class="lesson-note vocabulary-note"><summary>{{i18n.t('grammar.vocabulary')}}</summary><p>{{lesson.prerequisites.intendedVocabulary.join(' · ')}}</p>@if(lesson.prerequisites.requiredKana.length){<small>{{i18n.t('grammar.requiredKana')}}: @for(kana of lesson.prerequisites.requiredKana;track kana){ {{i18n.t('content.'+kana)}} @if(!$last){ / } }</small>}</details></aside></section>
         } @else if(topic();as topic){

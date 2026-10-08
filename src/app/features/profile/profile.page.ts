@@ -22,7 +22,15 @@ export class ProfilePage {
   async load(){this.stats.set(await this.statsService.load());}
   resetForm(){const p=this.auth.profile();this.displayName=p?.displayName??'';this.username=p?.username??'';this.bio=p?.bio??'';}
   async save(){this.error.set(null);if(!validUsername(this.username)){this.error.set(this.i18n.t('auth.usernameInvalid'));return;}this.saving.set(true);try{const result=await this.auth.updateProfile({displayName:this.displayName,username:this.username,bio:this.bio});if(result.error)this.error.set(this.i18n.t('profile.saveError'));else this.editing.set(false);}finally{this.saving.set(false)}}
-  async synchronize(){await this.sync.syncNow();await this.load();}
+  readonly synchronizing=signal(false);readonly syncError=signal(false);
+  async synchronize(){
+    if(this.synchronizing())return;
+    this.synchronizing.set(true);this.syncError.set(false);
+    try{this.syncError.set(!await this.sync.syncNow());await this.load();}
+    catch{this.syncError.set(true);}
+    finally{this.synchronizing.set(false);}
+  }
+  formatSyncDate(value:string){return new Intl.DateTimeFormat(this.i18n.language()==='en'?'en-US':this.i18n.language()==='ca'?'ca-ES':'es-ES',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));}
   selectView(view:'summary'|'leaderboard'){this.view.set(view);if(view==='leaderboard')void this.leaderboard.load();}
   async refreshLeaderboard(){
     if(this.refreshing())return;this.refreshing.set(true);

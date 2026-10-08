@@ -19,7 +19,7 @@ describe('Medal synchronization', () => {
     localStorage.clear(); vi.useFakeTimers(); rows = [];
     const client = {from: (table: string) => {
       const query = {
-        select: () => query, eq: () => query, gte: () => query,
+        select: () => query, eq: () => query, order: () => query, range: () => query, gte: () => query,
         maybeSingle: async () => ({data: null, error: null}),
         then: (resolve: (value: unknown) => unknown) => Promise.resolve(resolve({data: table === 'medal_unlocks' ? rows : [], error: null})),
         upsert: async () => ({error: null}),

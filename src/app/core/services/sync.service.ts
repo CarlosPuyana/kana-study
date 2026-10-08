@@ -1,4 +1,4 @@
-import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { computed, DestroyRef, effect, inject, Injectable, signal, untracked } from '@angular/core';
 import { CompletedSessionSummary } from '../models/learning-session.model';
 import { MedalUnlock } from '../models/medal.model';
 import { SyncOutboxItem, SyncStatus } from '../models/account.model';
@@ -7,14 +7,15 @@ import { DeviceService } from './device.service';
 import { SessionHistoryService } from './session-history.service';
 import { StorageService } from './storage.service';
 import { SupabaseClientService } from './supabase-client.service';
-import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
-import { mergeGrammarProgress, mergeMedalUnlocks, mergeProgressSnapshots, unionById } from './sync-merge';
+import { SyncOutboxService } from './sync-outbox.service';
+import { mergeGrammarProgress as mergeGrammarV1, mergeMedalUnlocks, mergeProgressSnapshots, mergeRushSession, unionById } from './sync-merge';
 import { GRAMMAR_PROGRESS_KEY } from '../models/grammar-progress.model';
-import { WORKSPACE_LOCAL_KEYS, WorkspaceService } from './workspace.service';
+import { WorkspaceService } from './workspace.service';
 import { DeckDatabaseService } from './deck-database.service';
 import { LocalRushRepository } from './rush-repository.service';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { STUDY_DECKS } from '../../data/study-decks';
+import { GRAMMAR_PROGRESS_V2_KEY } from '../models/grammar-v2.model';
+import { mergeGrammarV2Progress } from './grammar-v2-progress-state';
 
 const PROGRESS_KEYS: Record<string, string> = {
   'kana-study.study-progress.v2': 'kana',
@@ -31,7 +32,12 @@ const EVENT_KEYS: Record<string, string> = {
 const MEDAL_KEYS = new Set(['kana-study.medal-unlocks.v1', 'kana-study.rush.medal-unlocks.v1']);
 const SESSION_KEY = 'kana-study.completed-sessions.v1';
 const DECK_SETTINGS_KEY = 'kana-study.deck-settings.v1';
-const OVERLAP_MS = 60_000;
+const PAGE_SIZE = 500;
+const TABLE_KEYS: Record<string, string[]> = {
+  study_progress: ['module', 'unit_key'], medal_unlocks: ['medal_id'], user_preferences: ['preference_key'],
+  deck_card_progress: ['deck_id', 'entry_id'], deck_daily_state: ['deck_id', 'local_day'],
+  deck_settings: ['deck_id'], rush_coverage: ['module', 'content_id'],
+};
 
 @Injectable({ providedIn: 'root' })
 export class SyncService {
@@ -49,7 +55,8 @@ export class SyncService {
   private readonly lastSyncState = signal<string | null>(null);
   private timer: ReturnType<typeof setTimeout> | null = null;
   private client: SupabaseClient | null = null;
-  private reconciledThisBoot = false;
+  private running: {workspace: string; promise: Promise<boolean>} | null = null;
+  private processed: readonly SyncOutboxItem[] = [];
 
   readonly status = this.statusState.asReadonly();
   readonly pendingCount = this.pendingState.asReadonly();
@@ -63,46 +70,88 @@ export class SyncService {
     const visible = () => { if (!document.hidden && this.available()) this.schedule(150); };
     window.addEventListener('kana-study:sync-pending', schedule);
     window.addEventListener('online', online);
-    window.addEventListener('offline', () => this.statusState.set(this.available() ? 'offline' : 'guest'));
+    const offline = () => this.statusState.set(this.available() ? 'offline' : 'guest');
+    window.addEventListener('offline', offline);
     window.addEventListener('focus', visible);
     document.addEventListener('visibilitychange', visible);
     this.destroyRef.onDestroy(() => {
       window.removeEventListener('kana-study:sync-pending', schedule);
       window.removeEventListener('online', online);
+      window.removeEventListener('offline', offline);
       window.removeEventListener('focus', visible);
       document.removeEventListener('visibilitychange', visible);
       if (this.timer) clearTimeout(this.timer);
     });
-    if (this.available()) this.schedule(0);
+    effect(() => {
+      const workspace = this.workspace.active();
+      untracked(() => {
+        this.lastSyncState.set(null); this.pendingState.set(0);
+        if (workspace === 'guest') { this.statusState.set('guest'); if (this.timer) clearTimeout(this.timer); return; }
+        void this.outbox.getMeta(workspace, 'all').then(meta => {
+          if (this.workspace.active() === workspace) this.lastSyncState.set(meta?.lastSyncedAt ?? null);
+        }).catch(() => undefined);
+        this.schedule(0);
+      });
+    });
   }
 
-  async syncNow(): Promise<boolean> {
-    const client = await this.supabase.getClient(); const userId = this.workspace.userId(); const workspace = this.workspace.active();
-    if (!client || !userId || workspace === 'guest') { this.statusState.set('guest'); return false; }
+  syncNow(): Promise<boolean> {
+    const workspace = this.workspace.active();
+    if (this.running) {
+      if (this.running.workspace === workspace) return this.running.promise;
+      return this.running.promise.then(() => this.syncNow());
+    }
+    const promise = this.runSync(workspace).finally(() => { this.running = null; });
+    this.running = {workspace, promise};
+    return promise;
+  }
+
+  private async runSync(workspace: ReturnType<WorkspaceService['active']>): Promise<boolean> {
+    const userId = workspace.startsWith('user:') ? workspace.slice(5) : null;
+    const client = await this.supabase.getClient();
+    if (!client || !userId) { this.statusState.set('guest'); return false; }
     this.client = client;
+    if (this.workspace.active() !== workspace) return false;
     if (!navigator.onLine) { this.statusState.set('offline'); await this.refreshPending(); return false; }
-    if (this.statusState() === 'syncing') return false;
-    this.statusState.set('syncing');
+    this.statusState.set('syncing'); this.processed = [];
     try {
-      if (!this.reconciledThisBoot) { await this.reconcileLocalSnapshot(); this.reconciledThisBoot = true; }
-      const items = await this.outbox.pending(workspace);
-      if (items.length) await this.push(items, userId);
+      this.processed = await this.outbox.pending(workspace);
+      this.assertWorkspace(userId);
+      if (this.processed.length) await this.push(this.processed, userId);
+      this.assertWorkspace(userId);
       await this.pull(userId);
-      if (items.length) await this.outbox.removeProcessed(items);
+      this.assertWorkspace(userId);
+      await this.outbox.removeProcessed(this.processed);
+      await this.refreshPending();
+      this.assertWorkspace(userId);
+      if (this.pendingState() > 0) { this.statusState.set('pending'); this.schedule(); return false; }
       const now = new Date().toISOString();
-      this.lastSyncState.set(now); this.statusState.set('synced'); await this.refreshPending();
+      await this.outbox.putMeta({workspace, table: 'all', lastPulledAt: null, lastSyncedAt: now});
+      await this.refreshPending();
+      this.assertWorkspace(userId);
+      if (this.pendingState() > 0) {
+        await this.outbox.putMeta({workspace, table: 'all', lastPulledAt: null, lastSyncedAt: this.lastSyncState()});
+        this.statusState.set('pending'); this.schedule(); return false;
+      }
+      this.lastSyncState.set(now); this.statusState.set('synced');
       return true;
     } catch {
-      const items = await this.outbox.pending(workspace);
-      if (items.length) await this.outbox.markAttempt(items).catch(() => undefined);
-      this.statusState.set(navigator.onLine ? 'error' : 'offline'); await this.refreshPending();
+      await this.outbox.markAttempt(this.processed).catch(() => undefined);
+      if (this.workspace.active() === workspace) {
+        this.statusState.set(navigator.onLine ? 'error' : 'offline');
+        await this.refreshPending().catch(() => undefined);
+      }
       return false;
     }
   }
 
+  private assertWorkspace(userId: string): void {
+    if (this.workspace.userId() !== userId) throw new Error('Workspace changed during sync');
+  }
+
   schedule(delay = 900): void {
     if (!this.available()) { this.statusState.set('guest'); return; }
-    this.statusState.set(navigator.onLine ? 'pending' : 'offline');
+    if (!this.running || this.running.workspace !== this.workspace.active()) this.statusState.set(navigator.onLine ? 'pending' : 'offline');
     void this.refreshPending();
     if (this.timer) clearTimeout(this.timer);
     this.timer = setTimeout(() => { this.timer = null; void this.syncNow(); }, delay);
@@ -110,7 +159,29 @@ export class SyncService {
 
   private async push(items: readonly SyncOutboxItem[], userId: string): Promise<void> {
     const localItems = items.filter(item => item.entityType === 'local-storage');
-    for (const item of localItems) await this.pushLocalStorage(item, userId);
+    for (const item of localItems) { this.assertWorkspace(userId); await this.pushLocalStorage(item, userId); }
+    const reconciled: SyncOutboxItem[] = [];
+    for (const type of ['deck-card-progress', 'deck-daily-state', 'rush-session', 'rush-coverage'] as const) {
+      const values = upsertsByType(items, type); if (!values.length) continue;
+      const table = {'deck-card-progress':'deck_card_progress', 'deck-daily-state':'deck_daily_state',
+        'rush-session':'rush_sessions', 'rush-coverage':'rush_coverage'}[type];
+      const remote = await this.selectChanged(table, userId, null);
+      for (const item of values) {
+        const value = item.payload as any;
+        const row = remote.find(row => type === 'rush-session' ? row['id'] === item.entityKey
+          : type === 'rush-coverage' ? row['module'] === value.module && row['content_id'] === value.contentId
+          : row['deck_id'] === value.deckId && (type === 'deck-card-progress' ? row['entry_id'] === value.entryId : row['local_day'] === value.localDate));
+        let payload = value;
+        if (row) {
+          if (type === 'deck-card-progress' && (row['card_json']?.card?.lastReview ?? 0) >= (value.card?.lastReview ?? 0)) payload = row['card_json'];
+          if (type === 'deck-daily-state') payload = {...value, introducedEntryIds: [...new Set([...(row['introduced_entry_ids'] ?? []), ...value.introducedEntryIds])]};
+          if (type === 'rush-session') payload = mergeRushSession(value, rushSessionFromRow(row));
+          if (type === 'rush-coverage') payload = {...value, firstSeenAt: Math.min(value.firstSeenAt, new Date(row['first_seen_at']).getTime())};
+        }
+        reconciled.push({...item, payload});
+      }
+    }
+    items = items.map(item => reconciled.find(value => value.id === item.id) ?? item);
     await this.upsert('deck_card_progress', upsertsByType(items, 'deck-card-progress').map(item => ({
       user_id: userId, deck_id: field(item.payload, 'deckId'), entry_id: field(item.payload, 'entryId'),
       card_json: item.payload, last_review_at: timestamp(field(item.payload, 'card.lastReview')),
@@ -132,10 +203,14 @@ export class SyncService {
   }
 
   private async pushLocalStorage(item: SyncOutboxItem, userId: string): Promise<void> {
-    const key = item.entityKey; const value = item.payload;
+    const key = item.entityKey; let value = item.payload;
     if (item.operation === 'delete') { await this.deleteForKey(key, userId); return; }
     if (key in PROGRESS_KEYS) {
-      const module = PROGRESS_KEYS[key]; const records = Object.values(asRecord(value));
+      const module = PROGRESS_KEYS[key];
+      const remoteRows = await this.selectChanged('study_progress', userId, null); this.assertWorkspace(userId);
+      const remote = Object.fromEntries(remoteRows.filter(row => row['module'] === module).map(row => [String(row['unit_key']), row['card_json']]));
+      value = mergeProgressSnapshots(asRecord(value), remote);
+      const records = Object.values(asRecord(value));
       await this.upsert('study_progress', records.map(progress => ({
         user_id: userId, module, unit_key: field(progress, 'key'), card_json: progress,
         last_review_at: field(progress, 'lastSeenAt'),
@@ -163,11 +238,12 @@ export class SyncService {
       }))); return;
     }
     if (key === DECK_SETTINGS_KEY) {
-      const { data: remote } = await this.client!.from('deck_settings').select('deck_id,payload,updated_at').eq('user_id', userId);
+      const { data: remote, error } = await this.client!.from('deck_settings').select('deck_id,payload,updated_at').eq('user_id', userId);
+      if (error) throw error; this.assertWorkspace(userId);
       const newestRemote = (remote ?? []).reduce((latest, row) => String(row.updated_at) > latest ? String(row.updated_at) : latest, '');
       if (newestRemote > item.createdAt) {
         const merged = Object.fromEntries((remote ?? []).map(row => [String(row.deck_id), row.payload]));
-        this.storage.setFromCloud(DECK_SETTINGS_KEY, merged); return;
+        await this.hydrateProcessedPreference(item, merged, userId); return;
       }
       await this.upsert('deck_settings', Object.entries(asRecord(value)).map(([deckId, settings]) => ({
         user_id: userId, deck_id: deckId, payload: settings,
@@ -175,8 +251,10 @@ export class SyncService {
     }
     const { data: remotePreference, error: preferenceError } = await this.client!.from('user_preferences').select('payload,updated_at')
       .eq('user_id', userId).eq('preference_key', key).maybeSingle();
-    if (key === GRAMMAR_PROGRESS_KEY) {
-      if (preferenceError) throw preferenceError;
+    if (preferenceError) throw preferenceError; this.assertWorkspace(userId);
+    if (key === GRAMMAR_PROGRESS_KEY || key === GRAMMAR_PROGRESS_V2_KEY) {
+      const mergeGrammarProgress = await this.grammarMerge(key);
+      this.assertWorkspace(userId);
       if (this.workspace.userId() !== userId) throw new Error('Workspace changed during grammar sync');
       const merged = mergeGrammarProgress(mergeGrammarProgress(value, this.storage.get(key, null)), remotePreference?.payload);
       await this.upsert('user_preferences', [{user_id: userId, preference_key: key, payload: merged}]);
@@ -185,13 +263,35 @@ export class SyncService {
       return;
     }
     if (remotePreference && String(remotePreference.updated_at) > item.createdAt) {
-      this.storage.setFromCloud(key, remotePreference.payload); return;
+      await this.hydrateProcessedPreference(item, remotePreference.payload, userId); return;
     }
     await this.upsert('user_preferences', [{ user_id: userId, preference_key: key, payload: value }]);
   }
 
+  private async grammarMerge(key: string) {
+    if (key !== GRAMMAR_PROGRESS_V2_KEY) return mergeGrammarV1;
+    // The curriculum remains a lazy feature dependency, including during Guest import.
+    const {GRAMMAR_V2_CONCEPTS} = await import('../../data/grammar/grammar-n5-v2.generated');
+    const catalog = new Map(GRAMMAR_V2_CONCEPTS.map(concept => [concept.id, concept.exercises.map(exercise => exercise.id)]));
+    return (local: unknown, remote: unknown) => mergeGrammarV2Progress(local, remote, catalog);
+  }
+
+  private async hydrateProcessedPreference(item: SyncOutboxItem, value: unknown, userId: string): Promise<void> {
+    const pending = await this.outbox.pending(item.workspace);
+    this.assertWorkspace(userId);
+    if (!pending.some(current => current.id === item.id && current.revision !== item.revision))
+      this.storage.setFromCloud(item.entityKey, value);
+  }
+
+  private async unprocessedItems(userId: string): Promise<SyncOutboxItem[]> {
+    const items = await this.outbox.pending(`user:${userId}`);
+    this.assertWorkspace(userId);
+    return items.filter(item => !this.processed.some(done => done.id === item.id && done.revision === item.revision));
+  }
+
   private async pull(userId: string): Promise<void> {
-    const since = await this.incrementalSince('all');
+    // Full, ordered pages deliberately ignore legacy client-clock cursors.
+    const since = null;
     const [progress, events, sessions, medals, preferences, deckProgress, deckEvents, deckDaily, deckSettings, rushSessions, rushCoverage] = await Promise.all([
       this.selectChanged('study_progress', userId, since), this.selectChanged('review_events', userId, since),
       this.selectChanged('completed_sessions', userId, since), this.selectChanged('medal_unlocks', userId, since),
@@ -200,6 +300,8 @@ export class SyncService {
       this.selectChanged('deck_daily_state', userId, since), this.selectChanged('deck_settings', userId, since),
       this.selectChanged('rush_sessions', userId, since), this.selectChanged('rush_coverage', userId, since),
     ]);
+    this.assertWorkspace(userId);
+    await this.unprocessedItems(userId);
     for (const [key, module] of Object.entries(PROGRESS_KEYS)) {
       const local = this.storage.get<Record<string, any>>(key, {});
       const remote = Object.fromEntries(progress.filter(row => row['module'] === module).map(row => [String(row['unit_key']), row['card_json']]));
@@ -224,7 +326,9 @@ export class SyncService {
     }
     for (const row of preferences) {
       const key = String(row['preference_key']);
-      if (key === GRAMMAR_PROGRESS_KEY) {
+      if (key === GRAMMAR_PROGRESS_KEY || key === GRAMMAR_PROGRESS_V2_KEY) {
+        const mergeGrammarProgress = await this.grammarMerge(key);
+        this.assertWorkspace(userId);
         if (this.workspace.userId() !== userId) throw new Error('Workspace changed during grammar sync');
         const merged = mergeGrammarProgress(this.storage.get(key, null), row['payload']);
         // Reconcile the union back to the existing preference row, including on pull-only syncs.
@@ -233,89 +337,81 @@ export class SyncService {
         }
         if (this.workspace.userId() !== userId) throw new Error('Workspace changed during grammar sync');
         this.storage.setFromCloud(key, mergeGrammarProgress(merged, this.storage.get(key, null)));
-      } else this.storage.setFromCloud(key, row['payload']);
+      } else if (!(await this.unprocessedItems(userId)).some(item => item.entityType === 'local-storage' && item.entityKey === key)) this.storage.setFromCloud(key, row['payload']);
     }
-    if (deckSettings.length) {
+    if (deckSettings.length && !(await this.unprocessedItems(userId)).some(item => item.entityType === 'local-storage' && item.entityKey === DECK_SETTINGS_KEY)) {
       const local = this.storage.get<Record<string, unknown>>(DECK_SETTINGS_KEY, {});
       for (const row of deckSettings) local[String(row['deck_id'])] = row['payload'];
       this.storage.setFromCloud(DECK_SETTINGS_KEY, local);
     }
+    let changed = await this.unprocessedItems(userId);
+    const protectedEntity = (type: SyncOutboxItem['entityType'], key: string) => changed.some(item => item.entityType === type && item.entityKey === key);
     await this.decks.mergeFromCloud({
-      progress: deckProgress.map(row => row['card_json']),
-      events: deckEvents.map(row => row['payload']),
-      daily: deckDaily.map(row => ({ deckId: String(row['deck_id']), localDate: String(row['local_day']),
+      progress: deckProgress.filter(row => !protectedEntity('deck-card-progress', `${row['deck_id']}:${row['entry_id']}`)).map(row => row['card_json']),
+      events: deckEvents.filter(row => !protectedEntity('deck-review-event', String(row['id']))).map(row => row['payload']),
+      daily: deckDaily.filter(row => !protectedEntity('deck-daily-state', `${row['deck_id']}:${row['local_day']}`)).map(row => ({ deckId: String(row['deck_id']), localDate: String(row['local_day']),
         introducedEntryIds: row['introduced_entry_ids'] ?? [], newLimitOverride: row['new_limit_override'] ?? null })),
     });
+    changed = await this.unprocessedItems(userId);
     await this.rush.mergeFromCloud({
-      sessions: rushSessions.map(rushSessionFromRow),
-      coverage: rushCoverage.map(row => ({ module: row['module'], contentId: String(row['content_id']), firstSeenAt: new Date(row['first_seen_at']).getTime() })),
+      sessions: rushSessions.filter(row => !protectedEntity('rush-session', String(row['id']))).map(rushSessionFromRow),
+      coverage: rushCoverage.filter(row => !protectedEntity('rush-coverage', `${row['module']}:${row['content_id']}`)).map(row => ({ module: row['module'], contentId: String(row['content_id']), firstSeenAt: new Date(row['first_seen_at']).getTime() })),
     });
-    const now = new Date().toISOString();
-    await this.outbox.putMeta({ workspace: this.workspace.active(), table: 'all', lastPulledAt: now, lastSyncedAt: now });
+    this.assertWorkspace(userId);
   }
 
-  private async selectChanged(table: string, userId: string, since: string | null): Promise<Record<string, any>[]> {
-    let query = this.client!.from(table).select('*').eq('user_id', userId);
-    if (since) query = query.gte('updated_at', since);
-    const { data, error } = await query;
-    if (error) throw error;
-    return (data ?? []) as Record<string, any>[];
-  }
-
-  private async incrementalSince(table: string): Promise<string | null> {
-    const meta = await this.outbox.getMeta(this.workspace.active(), table);
-    if (!meta?.lastPulledAt) return null;
-    return new Date(new Date(meta.lastPulledAt).getTime() - OVERLAP_MS).toISOString();
+  private async selectChanged(table: string, userId: string, _since: string | null): Promise<Record<string, any>[]> {
+    const rows: Record<string, any>[] = [];
+    for (let offset = 0; ; offset += PAGE_SIZE) {
+      this.assertWorkspace(userId);
+      let query = this.client!.from(table).select('*').eq('user_id', userId);
+      for (const key of TABLE_KEYS[table] ?? ['id']) query = query.order(key, {ascending: true});
+      const {data, error} = await query.range(offset, offset + PAGE_SIZE - 1);
+      if (error) throw error;
+      this.assertWorkspace(userId);
+      rows.push(...(data ?? []));
+      if ((data?.length ?? 0) < PAGE_SIZE) return rows;
+    }
   }
 
   private async upsert(table: string, rows: readonly Record<string, unknown>[]): Promise<void> {
     if (!rows.length) return;
     for (let index = 0; index < rows.length; index += 200) {
+      this.assertWorkspace(String(rows[index]['user_id']));
       const { error } = await this.client!.from(table).upsert(rows.slice(index, index + 200));
       if (error) throw error;
     }
   }
 
   private async deleteForKey(key: string, userId: string): Promise<void> {
-    if (key in PROGRESS_KEYS) await this.client!.from('study_progress').delete().eq('user_id', userId).eq('module', PROGRESS_KEYS[key]);
-    else if (key in EVENT_KEYS) await this.client!.from('review_events').delete().eq('user_id', userId).eq('module', EVENT_KEYS[key]);
-    else if (key === SESSION_KEY) await this.client!.from('completed_sessions').delete().eq('user_id', userId);
-    else if (MEDAL_KEYS.has(key)) await this.client!.from('medal_unlocks').delete().eq('user_id', userId);
-    else await this.client!.from('user_preferences').delete().eq('user_id', userId).eq('preference_key', key);
+    if (key in PROGRESS_KEYS) await this.checkDelete(this.client!.from('study_progress').delete().eq('user_id', userId).eq('module', PROGRESS_KEYS[key]), userId);
+    else if (key in EVENT_KEYS) await this.checkDelete(this.client!.from('review_events').delete().eq('user_id', userId).eq('module', EVENT_KEYS[key]), userId);
+    else if (key === SESSION_KEY) await this.checkDelete(this.client!.from('completed_sessions').delete().eq('user_id', userId), userId);
+    else if (MEDAL_KEYS.has(key)) await this.checkDelete(this.client!.from('medal_unlocks').delete().eq('user_id', userId), userId);
+    else await this.checkDelete(this.client!.from('user_preferences').delete().eq('user_id', userId).eq('preference_key', key), userId);
   }
 
   private async deleteEntity(item: SyncOutboxItem, userId: string): Promise<void> {
-    if (item.entityType === 'deck-review-event') await this.client!.from('deck_review_events').delete().eq('user_id', userId).eq('id', item.entityKey);
+    if (item.entityType === 'deck-review-event') await this.checkDelete(this.client!.from('deck_review_events').delete().eq('user_id', userId).eq('id', item.entityKey), userId);
     else if (item.entityType === 'deck-card-progress') {
       const [deckId, ...entry] = item.entityKey.split(':');
-      await this.client!.from('deck_card_progress').delete().eq('user_id', userId).eq('deck_id', deckId).eq('entry_id', entry.join(':'));
-    } else if (item.entityType === 'rush-session') await this.client!.from('rush_sessions').delete().eq('user_id', userId).eq('id', item.entityKey);
+      await this.checkDelete(this.client!.from('deck_card_progress').delete().eq('user_id', userId).eq('deck_id', deckId).eq('entry_id', entry.join(':')), userId);
+    } else if (item.entityType === 'rush-session') await this.checkDelete(this.client!.from('rush_sessions').delete().eq('user_id', userId).eq('id', item.entityKey), userId);
   }
 
-  private async refreshPending(): Promise<void> { this.pendingState.set(await this.outbox.count(this.workspace.active())); }
+  private async checkDelete(query: PromiseLike<{error: unknown}>, userId: string): Promise<void> {
+    this.assertWorkspace(userId);
+    const {error} = await query;
+    if (error) throw error;
+    this.assertWorkspace(userId);
+  }
 
-  private async reconcileLocalSnapshot(): Promise<void> {
+  private async refreshPending(): Promise<void> {
     const workspace = this.workspace.active();
-    for (const key of WORKSPACE_LOCAL_KEYS) {
-      try {
-        const raw = localStorage.getItem(this.workspace.storageKey(key));
-        if (raw !== null) { const item = makeOutboxItem(workspace, 'local-storage', key, JSON.parse(raw)); if (item) await this.outbox.enqueue(item); }
-      } catch { /* invalid/blocked storage is ignored without affecting local study */ }
-    }
-    for (const deck of STUDY_DECKS) {
-      const [progress, events] = await Promise.all([this.decks.getDeckProgress(deck.id), this.decks.getDeckReviewEvents(deck.id)]);
-      for (const value of progress) await this.enqueueSnapshot('deck-card-progress', `${value.deckId}:${value.entryId}`, value);
-      for (const value of events) await this.enqueueSnapshot('deck-review-event', value.id, value);
-    }
-    for (const value of await this.decks.getAllDailyStates()) await this.enqueueSnapshot('deck-daily-state', `${value.deckId}:${value.localDate}`, value);
-    const rush = await this.rush.getStats();
-    for (const value of rush.sessions) await this.enqueueSnapshot('rush-session', value.id, value);
-    for (const value of rush.coverage) await this.enqueueSnapshot('rush-coverage', `${value.module}:${value.contentId}`, value);
+    const count = await this.outbox.count(workspace);
+    if (this.workspace.active() === workspace) this.pendingState.set(count);
   }
 
-  private async enqueueSnapshot(type: SyncOutboxItem['entityType'], key: string, payload: unknown): Promise<void> {
-    const item = makeOutboxItem(this.workspace.active(), type, key, payload); if (item) await this.outbox.enqueue(item);
-  }
 }
 
 function asRecord(value: unknown): Record<string, any> { return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, any> : {}; }

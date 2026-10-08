@@ -1,12 +1,12 @@
 import { readStudyProgress, readReviewEvents } from './study-progress-validation';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { ALL_KANA } from '../../data/kana';
 import {
   ProgressStats, QUESTION_TYPES, ReviewEvent, RoundSummary, StudyProgress, StudyRating, StudyUnit,
 } from '../models/progress.model';
 import { SettingsService } from './settings.service';
 import { SpacedRepetitionService } from './spaced-repetition.service';
-import { StorageService } from './storage.service';
+import { StorageService, workspaceStorageSignal } from './storage.service';
 import { buildStudyRound } from './study-round-builder';
 
 export const ROUND_SIZE = 10;
@@ -20,12 +20,8 @@ export class ProgressService {
   private readonly storage = inject(StorageService);
   private readonly settingsService = inject(SettingsService);
   private readonly spacedRepetition = inject(SpacedRepetitionService);
-  private readonly progress = signal<ProgressMap>(
-    readStudyProgress<StudyProgress>(this.storage.get<unknown>(PROGRESS_KEY, {}), 'kanaId', QUESTION_TYPES),
-  );
-  private readonly reviewEventState = signal<readonly ReviewEvent[]>(
-    readReviewEvents<ReviewEvent>(this.storage.get<unknown>(REVIEW_EVENTS_KEY, []), 'kanaId', QUESTION_TYPES),
-  );
+  private readonly progress = workspaceStorageSignal<ProgressMap>(() => readStudyProgress<StudyProgress>(this.storage.get<unknown>(PROGRESS_KEY, {}), 'kanaId', QUESTION_TYPES));
+  private readonly reviewEventState = workspaceStorageSignal<readonly ReviewEvent[]>(() => readReviewEvents<ReviewEvent>(this.storage.get<unknown>(REVIEW_EVENTS_KEY, []), 'kanaId', QUESTION_TYPES));
   readonly reviewEvents = this.reviewEventState.asReadonly();
   readonly allProgress = this.progress.asReadonly();
 

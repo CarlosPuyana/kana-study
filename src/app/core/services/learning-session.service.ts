@@ -1,3 +1,4 @@
+import { createStudyClock } from './study-clock';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { ALL_KANA } from '../../data/kana';
 import {
@@ -27,6 +28,8 @@ const HARD_GAP = 4;
 
 @Injectable({ providedIn: 'root' })
 export class LearningSessionService {
+  readonly clock = createStudyClock();
+
   private readonly progress = inject(ProgressService);
   private readonly history = inject(SessionHistoryService);
   private readonly medals = inject(MedalService);
@@ -108,6 +111,7 @@ export class LearningSessionService {
 
   private initialize(units: readonly StudyUnit[], mode: LearningMode, practice: boolean): boolean {
     if (!units.length) return false;
+    this.clock.reset();
     const session: LearningSession = {
       id: globalThis.crypto?.randomUUID?.() ?? `session-${Date.now()}`,
       startedAt: new Date().toISOString(),
@@ -163,6 +167,7 @@ export class LearningSessionService {
   }
 
   clear(): void {
+    this.clock.reset(); this.clock.detach();
     this.state.set(null);
     this.newMedalState.set([]);
   }
@@ -215,7 +220,8 @@ export class LearningSessionService {
 
   private advance(): void {
     const state = this.state();
-    if (!state) return;
+    if (!state || state.session.completedAt) return;
+    this.clock.commitAppearance();
     const nextIndex = state.queueIndex + 1;
     if (nextIndex >= state.queue.length) {
       const completedAt = new Date();
@@ -237,9 +243,7 @@ export class LearningSessionService {
         firstTrySuccesses: completedSession.items.filter(item => item.initialRating === 'good').length,
         attempts: completedSession.attempts,
         needsPracticeCount: completedSession.items.filter(item => item.needsPractice).length,
-        durationSeconds: Math.max(0, Math.round(
-          (completedAt.getTime() - new Date(completedSession.startedAt).getTime()) / 1000,
-        )),
+        durationSeconds: this.clock.committedSeconds,
       });
       this.newMedalState.set(this.medals.evaluateUnlocks(completedAt));
       return;
@@ -252,6 +256,7 @@ export class LearningSessionService {
     const state = this.state();
     const unit = this.currentUnit();
     if (!state || !unit) return;
+    this.clock.startAppearance();
     this.state.set({ ...state, session: { ...state.session,
       items: state.session.items.map(item => item.studyKey === unit.key
         ? { ...item, appearances: item.appearances + 1 } : item),

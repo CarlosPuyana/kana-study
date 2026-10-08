@@ -18,7 +18,7 @@ describe('Grammar sync through the existing preferences transport', () => {
     localStorage.clear(); vi.useFakeTimers(); remote = emptyGrammarProgress(); pending = []; failRead = false; writes.length = 0;
     const client = {from: (table: string) => {
       const query = {
-        select: () => query, eq: () => query, gte: () => query,
+        select: () => query, eq: () => query, order: () => query, range: () => query, gte: () => query,
         maybeSingle: async () => ({data: {payload: remote, updated_at: '2027-01-01T00:00:00Z'}, error: failRead ? new Error('network') : null}),
         then: (resolve: (value: unknown) => unknown) => Promise.resolve(resolve({data: table === 'user_preferences' ? [{preference_key: GRAMMAR_PROGRESS_KEY, payload: remote}] : [], error: null})),
         upsert: async (rows: Record<string, unknown>[]) => { if (table === 'user_preferences') { writes.push(...rows); remote = rows.find(row => row['preference_key'] === GRAMMAR_PROGRESS_KEY)?.['payload'] as GrammarProgressStateV1 ?? remote; } return {error: null}; },

@@ -21,6 +21,7 @@ export class AuthService {
   private readonly profileState = signal<UserProfile | null>(null);
   private readonly readyState = signal(false);
   private readonly importState = signal(false);
+  private authGeneration = 0;
 
   readonly configured = this.supabase.config.configured;
   readonly user = this.userState.asReadonly();
@@ -84,11 +85,12 @@ export class AuthService {
       bio: input.bio.trim() || null,
     };
     const { data, error } = await client.from('profiles').update(row).eq('id', user.id).select().single();
-    if (!error && data) this.profileState.set(profileFromRow(data));
+    if (!error && data && this.userState()?.id === user.id) this.profileState.set(profileFromRow(data));
     return { error: safeAuthError(error) };
   }
 
   async signOut(): Promise<void> {
+    ++this.authGeneration;
     await (await this.supabase.getClient())?.auth.signOut();
     this.userState.set(null); this.profileState.set(null); this.importState.set(false);
     this.workspace.activateGuest();
@@ -98,6 +100,7 @@ export class AuthService {
     const user = this.userState();
     if (!user) return;
     if (decision === 'merge') await this.migration.copyGuestToUser(user.id);
+    if (this.userState()?.id !== user.id) return;
     this.workspace.markImportDecision(user.id, decision);
     this.workspace.activateUser(user.id);
     if (decision === 'merge') {
@@ -110,16 +113,20 @@ export class AuthService {
   }
 
   private async handleAuthEvent(event: AuthChangeEvent, session: Session | null): Promise<void> {
+    const generation = ++this.authGeneration;
     if (event === 'SIGNED_OUT' || !session?.user) {
       this.userState.set(null); this.profileState.set(null); this.importState.set(false);
       this.workspace.activateGuest(); this.readyState.set(true); return;
     }
+    if (this.userState()?.id !== session.user.id) this.profileState.set(null);
     this.userState.set(session.user);
     const decision = this.workspace.importDecision(session.user.id);
     const needsDecision = decision === null && this.workspace.active() === 'guest' && await this.migration.hasGuestData();
+    if (generation !== this.authGeneration) return;
     this.importState.set(needsDecision);
     if (!needsDecision) this.workspace.activateUser(session.user.id);
     await this.loadProfile(session.user.id);
+    if (generation !== this.authGeneration) return;
     this.readyState.set(true);
   }
 
@@ -127,7 +134,7 @@ export class AuthService {
     const client = await this.supabase.getClient();
     if (!client) return;
     const { data } = await client.from('profiles').select('*').eq('id', userId).maybeSingle();
-    if (data) this.profileState.set(profileFromRow(data));
+    if (data && this.userState()?.id === userId) this.profileState.set(profileFromRow(data));
   }
 }
 

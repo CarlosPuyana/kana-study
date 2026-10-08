@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { StudyTimer } from '../../shared/components/study-timer/study-timer';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FlagQuestionType } from '../../core/models/country.model';
 import { FlagProgressService } from '../../core/services/flag-progress.service';
@@ -7,8 +8,10 @@ import { TranslationService } from '../../core/services/translation.service';
 import { CountryFlag } from '../../shared/components/country-flag/country-flag';
 import { MedalBadge } from '../../shared/components/medal-badge/medal-badge';
 
-@Component({ selector: 'app-flags-play-page', imports: [CountryFlag, MedalBadge], templateUrl: './flags-play.page.html', styleUrl: './flags-play.page.scss', changeDetection: ChangeDetectionStrategy.OnPush })
+@Component({ selector: 'app-flags-play-page', imports: [StudyTimer, CountryFlag, MedalBadge], templateUrl: './flags-play.page.html', styleUrl: './flags-play.page.scss', changeDetection: ChangeDetectionStrategy.OnPush })
 export class FlagsPlayPage {
+  constructor(){inject(DestroyRef).onDestroy(()=>this.learning.clear());}
+
   readonly learning = inject(FlagSessionService);
   readonly progress = inject(FlagProgressService);
   readonly i18n = inject(TranslationService);
@@ -30,5 +33,5 @@ export class FlagsPlayPage {
   requestExit(): void { const session = this.learning.session(); if (!session || session.attempts === 0 || session.completedAt) this.exit(); else this.showExit.set(true); }
   exit(): void { this.learning.clear(); void this.router.navigateByUrl('/flags'); }
   anotherRound(): void { if (!this.learning.restart()) void this.router.navigateByUrl('/flags'); }
-  duration(): string { const session = this.learning.session(); if (!session?.completedAt) return '0:00'; const seconds = Math.max(0, Math.round((new Date(session.completedAt).getTime() - new Date(session.startedAt).getTime()) / 1000)); return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`; }
+  duration():string{return this.learning.clock?.label()??'00:00';}
 }

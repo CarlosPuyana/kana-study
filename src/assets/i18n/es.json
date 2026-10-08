@@ -11832,5 +11832,7 @@
   "grammar.v2.integration.n5-integration-bridge-9.option.0": "食べるすぎる。",
   "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.0": "すぎる expresa exceso; usa raíz verbal o adjetival.",
   "grammar.v2.integration.n5-integration-bridge-9.option.1": "食べすぎる。",
-  "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.1": "Esta construcción está bien formada."
+  "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.1": "Esta construcción está bien formada.",
+  "profile.syncIncomplete": "La sincronización no ha terminado. Los cambios pendientes se conservan; revisa la conexión y vuelve a intentarlo.",
+  "studyTime.label": "Tiempo de estudio"
 }

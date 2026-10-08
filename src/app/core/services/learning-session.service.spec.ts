@@ -1,3 +1,4 @@
+import { STUDY_MONOTONIC_NOW } from './study-clock';
 import { TestBed } from '@angular/core/testing';
 import { ALL_KANA } from '../../data/kana';
 import { StudyRating, StudyUnit } from '../models/progress.model';
@@ -13,7 +14,7 @@ function makeUnits(count: number): StudyUnit[] {
   }));
 }
 
-describe('LearningSessionService', () => {
+describe('LearningSessionService', () => {let monotonic=0;
   let service: LearningSessionService;
   let round: StudyUnit[];
   let progress: {
@@ -25,7 +26,7 @@ describe('LearningSessionService', () => {
   let medals: { evaluateUnlocks: ReturnType<typeof vi.fn> };
   let daily: { isCompletedToday: ReturnType<typeof vi.fn>; refresh: ReturnType<typeof vi.fn> };
 
-  beforeEach(() => {
+  beforeEach(() => { monotonic=0;
     round = makeUnits(10);
     progress = {
       buildRound: vi.fn(() => round),
@@ -36,7 +37,7 @@ describe('LearningSessionService', () => {
     medals = { evaluateUnlocks: vi.fn(() => []) };
     daily = { isCompletedToday: vi.fn(() => false), refresh: vi.fn() };
     TestBed.configureTestingModule({
-      providers: [
+      providers: [{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},
         LearningSessionService,
         { provide: ProgressService, useValue: progress },
         { provide: SessionHistoryService, useValue: history },
@@ -201,4 +202,16 @@ describe('LearningSessionService', () => {
     expect(progress.buildRound).not.toHaveBeenCalled();
     expect(service.session()).toBeNull();
   });
+
+ it('credits a fresh ten second allowance on failure repetition and records once',()=>{
+ round=round.slice(0,1);service.start('self-assessment');service.clock.attach();
+ monotonic+=15000;service.reveal();service.rate('again');expect(service.clock.committedSeconds).toBe(10);
+ monotonic+=4000;service.reveal();service.rate('good');expect(service.clock.committedSeconds).toBe(14);
+ service.reveal();service.rate('good');expect(history.record).toHaveBeenCalledTimes(1);
+ expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:14}));
+ monotonic+=60000;expect(service.clock.label()).toBe('00:14');
+ service.clear();expect(service.clock.seconds()).toBe(0);
+ service.start('self-assessment');monotonic+=60000;expect(service.clock.appearanceMilliseconds()).toBe(0);
+ service.clock.attach();monotonic+=7000;service.reveal();service.rate('good');expect(history.record).toHaveBeenLastCalledWith(expect.objectContaining({durationSeconds:7}));
+ });
 });

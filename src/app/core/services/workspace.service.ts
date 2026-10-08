@@ -2,6 +2,8 @@ import { Injectable, signal } from '@angular/core';
 import { LocalWorkspaceId } from '../models/account.model';
 import { GRAMMAR_PROGRESS_KEY } from '../models/grammar-progress.model';
 import { mergeGrammarProgress } from './grammar-progress-state';
+import { GRAMMAR_PROGRESS_V2_KEY } from '../models/grammar-v2.model';
+import { mergeGrammarV2Progress } from './grammar-v2-progress-state';
 
 const ACTIVE_KEY = 'kana-study.workspace.active.v1';
 const LEGACY_MARKER = 'kana-study.workspace.legacy-guest.v1';
@@ -11,6 +13,7 @@ const USER_PREFIX = 'kana-study.workspace.';
 export const WORKSPACE_LOCAL_KEYS = [
   'kana-study.settings.v1',
   'kana-study.grammar-progress.v1',
+  'kana-study.grammar-progress.v2',
   'kana-study.study-progress.v2',
   'kana-study.review-events.v1',
   'kana-study.completed-sessions.v1',
@@ -66,10 +69,11 @@ export class WorkspaceService {
   hasGuestProgress(): boolean {
     const meaningful = WORKSPACE_LOCAL_KEYS.filter(key => !key.includes('settings') && !key.includes('selection'));
     try { return meaningful.some(key => {
-      if (key === GRAMMAR_PROGRESS_KEY) {
+      if (key === GRAMMAR_PROGRESS_KEY || key === GRAMMAR_PROGRESS_V2_KEY) {
         try {
           const value = JSON.parse(localStorage.getItem(key) ?? 'null');
-          return !!value && ['concepts', 'practices', 'review'].some(field => Object.keys(value[field] ?? {}).length > 0);
+          return !!value && (['concepts', 'practices', 'review'].some(field => Object.keys(value[field] ?? {}).length > 0)
+            || (key === GRAMMAR_PROGRESS_V2_KEY && (!!value.integration?.openedAt || Object.keys(value.integration?.activities ?? {}).length > 0)));
         } catch { return false; }
       }
       return hasMeaningfulValue(localStorage.getItem(key));
@@ -93,8 +97,9 @@ export class WorkspaceService {
       try {
         const source = localStorage.getItem(key);
         const target = this.storageKey(key, `user:${userId}`);
-        if (source !== null && key === GRAMMAR_PROGRESS_KEY) {
-          const merged = JSON.stringify(mergeGrammarProgress(JSON.parse(source), JSON.parse(localStorage.getItem(target) ?? 'null')));
+        if (source !== null && (key === GRAMMAR_PROGRESS_KEY || key === GRAMMAR_PROGRESS_V2_KEY)) {
+          const merge = key === GRAMMAR_PROGRESS_V2_KEY ? mergeGrammarV2Progress : mergeGrammarProgress;
+          const merged = JSON.stringify(merge(JSON.parse(source), JSON.parse(localStorage.getItem(target) ?? 'null')));
           if (merged !== localStorage.getItem(target)) { localStorage.setItem(target, merged); changed = true; }
         } else if (source !== null && localStorage.getItem(target) === null) { localStorage.setItem(target, source); changed = true; }
       } catch { /* preserve Guest data if storage is unavailable/full */ }

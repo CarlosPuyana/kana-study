@@ -1,3 +1,5 @@
+import { createStudyClock } from '../../../core/services/study-clock';
+import { StudyTimer } from '../../../shared/components/study-timer/study-timer';
 import {GrammarIntegrationComponent} from '../components/grammar-integration';
 import {GRAMMAR_V2_INTEGRATION} from '../../../data/grammar/grammar-n5-v2.generated';
 import {GrammarV2LessonComponent} from '../components/grammar-v2-lesson';
@@ -17,8 +19,11 @@ import { GrammarPracticeComponent } from '../components/grammar-practice';
 import { grammarTopicRound } from '../services/grammar-interactive-catalog';
 import { grammarLessonExercises } from '../models/grammar.model';
 
-@Component({selector:'app-grammar-page',imports:[GrammarIntegrationComponent,GrammarV2LessonComponent,GrammarPrerequisitesComponent,RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
+@Component({selector:'app-grammar-page',imports:[StudyTimer,GrammarIntegrationComponent,GrammarV2LessonComponent,GrammarPrerequisitesComponent,RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
 export class GrammarPage {
+  readonly clock=createStudyClock();
+  private exerciseAnswered=false;
+  readonly exerciseFinished=signal(false);
   readonly conceptId=grammarConceptId;
   private readonly weaknesses=inject(WeaknessService);
   readonly retryPending=signal(false);
@@ -62,6 +67,7 @@ export class GrammarPage {
   readonly rows=[this.topics.slice(0,3),this.topics.slice(3,6),this.topics.slice(6,9),this.topics.slice(9)];
   constructor(){effect(()=>{this.params();const lesson=this.lesson();untracked(()=>{
     const id=lesson?grammarConceptId(lesson):null;
+    this.clock.reset();this.clock.pause();this.exerciseAnswered=false;
     this.retryPending.set(false);
     if(id)this.progress.openLesson(id);
     this.exerciseIndex.set(id?this.progress.resumeIndex(id):0);
@@ -71,6 +77,7 @@ export class GrammarPage {
       if(this.mobileOpen())this.menuItems()[0]?.focus();
       else if(this.restoreFocus()){this.menuTrigger()?.nativeElement.focus();this.restoreFocus.set(false);}
     });
+    afterRenderEffect(()=>{const exercise=this.currentExercise();untracked(()=>{this.exerciseAnswered=false;this.exerciseFinished.set(false);if(exercise)this.clock.startAppearance();else this.clock.pause();});});
     afterRenderEffect(()=>{if(this.focusNextExercise()){this.exerciseComponent()?.focusAnswer();this.focusNextExercise.set(false);}});
   }
   toggleMenu():void{
@@ -91,11 +98,13 @@ export class GrammarPage {
   menuFocus(event:FocusEvent):void{if(this.mobileOpen()&&event.target instanceof Node&&!this.sidebar()?.nativeElement.contains(event.target))this.menuItems()[0]?.focus();}
   navigate(path:string):void{void this.router.navigateByUrl(path);window.scrollTo({top:0});}
   continueExercise():void{
+    if(!this.exerciseAnswered)return;
+    this.exerciseAnswered=false;this.clock.commitAppearance();this.clock.pause();
     if(this.exerciseIndex()+1<this.exercises().length){this.exerciseIndex.update(i=>i+1);this.progress.saveResume(grammarConceptId(this.lesson()!),this.exerciseIndex());this.focusNextExercise.set(true);}
     else if(this.lesson()?.concept&&this.progress.conceptStatus(grammarConceptId(this.lesson()!))!=='completed')this.retryPending.set(true);
     else if(this.lesson())this.navigate(this.lesson()!.nextPath);
   }
   retryExercises():void{const lesson=this.lesson();if(!lesson)return;this.exerciseIndex.set(this.progress.firstPendingExerciseIndex(grammarConceptId(lesson)));this.retryPending.set(false);this.focusNextExercise.set(true);}
-  answer(correct:boolean):void{const lesson=this.lesson(),exercise=this.currentExercise();if(lesson&&exercise){this.progress.recordAnswer(grammarConceptId(lesson),lesson.topicId,exercise.id,this.exerciseIndex(),correct);if(lesson.concept)this.weaknesses.recordLearn('grammar',grammarConceptId(lesson),exercise.kind,correct?'good':'again');}}
+  answer(correct:boolean):void{if(this.exerciseAnswered)return;this.exerciseAnswered=true;const lesson=this.lesson(),exercise=this.currentExercise();if(lesson&&exercise){this.progress.recordAnswer(grammarConceptId(lesson),lesson.topicId,exercise.id,this.exerciseIndex(),correct);if(lesson.concept)this.weaknesses.recordLearn('grammar',grammarConceptId(lesson),exercise.kind,correct?'good':'again');if(this.exerciseIndex()===this.exercises().length-1){this.clock.commitAppearance();this.clock.pause();this.exerciseFinished.set(true);}}}
   showProgress():void{document.getElementById('grammar-progress')?.scrollIntoView({behavior:'smooth',block:'start'});}
 }

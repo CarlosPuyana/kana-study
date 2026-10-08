@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, linkedSignal, signal, untracked, WritableSignal } from '@angular/core';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
 import { WorkspaceService } from './workspace.service';
 
@@ -48,4 +48,13 @@ export class StorageService {
     const item = makeOutboxItem(this.workspace.active(), 'local-storage', key, value, operation);
     if (item) void this.outbox.enqueue(item).catch(() => undefined);
   }
+}
+
+/** Writable local state that reloads synchronously when its workspace/cache changes. */
+export function workspaceStorageSignal<T>(read: () => T): WritableSignal<T> {
+  const workspace = inject(WorkspaceService), storage = inject(StorageService);
+  return linkedSignal(() => {
+    workspace.active(); workspace.dataRevision(); storage.cloudRevision?.();
+    return untracked(read);
+  });
 }

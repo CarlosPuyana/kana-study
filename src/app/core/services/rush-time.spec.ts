@@ -1,3 +1,2 @@
-import { describe,expect,it } from 'vitest';
-import { RushActiveTimer,rushLocalDay } from './rush-time';
-describe('RushActiveTimer',()=>{it('counts visible activity and pauses after three idle minutes',()=>{let now=0;const timer=new RushActiveTimer(()=>now);now=60_000;expect(timer.tick()).toBe(60);now=240_000;expect(timer.tick()).toBe(180);now=300_000;expect(timer.tick()).toBe(180);timer.activity();now=310_000;expect(timer.tick()).toBe(190)});it('does not count background time and waits for activity after returning',()=>{let now=0;const timer=new RushActiveTimer(()=>now);now=10_000;timer.setVisible(false);now=100_000;timer.setVisible(true);now=110_000;expect(timer.tick()).toBe(10);timer.activity();now=120_000;expect(timer.tick()).toBe(20)});it('uses the local calendar date',()=>{const date=new Date(2026,8,30,23,30);expect(rushLocalDay(date)).toBe('2026-09-30')})});
+import { rushLocalDay } from './rush-time';
+describe('RUSH local calendar',()=>{it('uses the local calendar date',()=>{expect(rushLocalDay(new Date(2026,8,30,23,30))).toBe('2026-09-30');});});

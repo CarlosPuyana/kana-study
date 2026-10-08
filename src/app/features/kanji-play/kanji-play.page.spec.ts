@@ -12,6 +12,7 @@ describe('Kanji Daily keyboard shortcuts', () => {
   const mode = signal('self-assessment');
   const revealed = signal(false);
   const learning = {
+    clear: vi.fn(),
     session: computed(() => ({ mode: mode(), sessionSize: 1, attempts: 0 })),
     currentKanji: signal(KANJI_N5[0]),
     currentUnit: signal({ key: 'test', questionType: 'kanji-to-meaning' }),

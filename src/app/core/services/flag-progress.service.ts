@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { COUNTRIES } from '../../data/countries.generated';
 import { FLAG_QUESTION_TYPES, FLAG_REGIONS, FlagStudyUnit } from '../models/country.model';
 import {
@@ -9,7 +9,7 @@ import { flagStudyUnits } from './flag-selection';
 import { buildFlagRound } from './flag-round-builder';
 import { FlagSettingsService } from './flag-settings.service';
 import { SpacedRepetitionService } from './spaced-repetition.service';
-import { StorageService } from './storage.service';
+import { StorageService, workspaceStorageSignal } from './storage.service';
 
 export const FLAG_ROUND_SIZE = 10;
 const FLAG_PROGRESS_KEY = 'kana-study.flags-progress.v1';
@@ -21,10 +21,8 @@ export class FlagProgressService {
   private readonly storage = inject(StorageService);
   private readonly settings = inject(FlagSettingsService);
   private readonly spacedRepetition = inject(SpacedRepetitionService);
-  private readonly state = signal<FlagProgressMap>(this.storage.get(FLAG_PROGRESS_KEY, {}));
-  private readonly eventState = signal<readonly FlagReviewEvent[]>(
-    this.storage.get(FLAG_EVENTS_KEY, []),
-  );
+  private readonly state = workspaceStorageSignal<FlagProgressMap>(() => this.storage.get(FLAG_PROGRESS_KEY, {}));
+  private readonly eventState = workspaceStorageSignal<readonly FlagReviewEvent[]>(() => this.storage.get(FLAG_EVENTS_KEY, []));
   readonly allProgress = this.state.asReadonly();
   readonly reviewEvents = this.eventState.asReadonly();
   readonly activeCountries = computed(() => COUNTRIES.filter(country =>
