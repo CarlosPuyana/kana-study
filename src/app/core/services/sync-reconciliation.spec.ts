@@ -26,6 +26,8 @@ import { CardStudyTimer } from './card-study-time';
 import { CompletedSessionSummary } from '../models/learning-session.model';
 import { MangaReviewHistoryService } from './manga-review-history.service';
 import { MANGA_REVIEW_EVENTS_KEY, MangaReviewEvent } from '../models/manga-review.model';
+import { MangaFsrsEvent, MANGA_FSRS_SETTINGS_KEY } from '../models/manga-fsrs.model';
+import { replayMangaFsrs } from './manga-fsrs-scheduler';
 
 const fs = (globalThis as unknown as {process: {getBuiltinModule: (id: string) => {readFileSync: (path: string, encoding: string) => string}}}).process.getBuiltinModule('fs');
 const sessionMigration = fs.readFileSync('supabase/migrations/202610080005_manga_study_v3.sql', 'utf8');
@@ -117,6 +119,42 @@ describe('account sync reconciliation regressions', () => {
     expect(sqlSessionModules).toEqual([...historicalModules, 'grammar', 'manga'].sort());
     const grammarMigration=fs.readFileSync('supabase/migrations/202610080004_completed_sessions_grammar.sql','utf8');
     expect(grammarMigration).toContain("'grammar'");expect(sqlEventModules).toContain('manga');
+  });
+  it('Manga FSRS offline reviews converge in both directions without replay writes or duplicate time',async()=>{
+    const word={schemaVersion:1,id:'word',expression:'龍',reading:'りゅう',meaning:'dragon',kanji:[],source:{volumeId:'fixture',pageNumber:1},createdAt:1} as const;
+    const words=[{...word,kanji:[]}];
+    const a:MangaFsrsEvent={...mangaEvent('fsrs-a'),answerMode:'self-assessment',repetition:false,reviewKind:'fsrs',fsrsVersion:1,fsrsGrade:3};
+    const b:MangaFsrsEvent={...mangaEvent('fsrs-b'),answerMode:'self-assessment',repetition:false,reviewKind:'fsrs',fsrsVersion:1,fsrsGrade:1,rating:'again',correct:false,reviewedAt:'2026-10-08T11:59:58Z'};
+    // Both browsers create immutable reviews offline before either sees the other.
+    let d=device();await TestBed.inject(MangaReviewHistoryService).record(a);
+    d.storage.set(MANGA_FSRS_SETTINGS_KEY,{enabled:true});
+    TestBed.inject(SessionHistoryService).record({...mangaSession('fsrs-session-a'),mangaSessionKind:'fsrs'});
+    const online=vi.spyOn(navigator,'onLine','get').mockReturnValue(false);
+    expect(await d.sync.syncNow()).toBe(false);expect(cloud['review_events']).toBeUndefined();
+    online.mockReturnValue(true);expect(await d.sync.syncNow()).toBe(true);
+    d=device();await TestBed.inject(MangaReviewHistoryService).record(b);
+    TestBed.inject(SessionHistoryService).record({...mangaSession('fsrs-session-b'),mangaSessionKind:'fsrs'});
+    expect(await d.sync.syncNow()).toBe(true);
+    const history=d.storage.get<MangaReviewEvent[]>(MANGA_REVIEW_EVENTS_KEY,[]);
+    const schedule=replayMangaFsrs(words,history,'es');expect(schedule[0].card.reps).toBe(2);
+    expect(d.storage.get(MANGA_FSRS_SETTINGS_KEY,null)).toEqual({enabled:true});
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(14);
+    expect(cloud['review_events'].map(row=>row.payload.fsrsGrade).sort()).toEqual([1,3]);
+    expect(cloud['completed_sessions']).toHaveLength(2);
+    d=device();d.storage.set(MANGA_REVIEW_EVENTS_KEY,[a],{localOnly:true});
+    expect(await d.sync.syncNow()).toBe(true);
+    expect(replayMangaFsrs(words,d.storage.get(MANGA_REVIEW_EVENTS_KEY,[]),'es')).toEqual(schedule);
+    const baseline=writes.length;
+    for(let cycle=0;cycle<10;cycle++){
+      expect(await d.sync.syncNow()).toBe(true);await vi.advanceTimersByTimeAsync(1000);
+      expect(d.sync.status()).toBe('synced');expect(d.sync.pendingCount()).toBe(0);expect(queued.size).toBe(0);
+      expect(writes.length).toBe(baseline);
+    }
+    expect(vi.getTimerCount()).toBe(0);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(14);
+    d=device();expect(await d.sync.syncNow()).toBe(true);
+    expect(replayMangaFsrs(words,d.storage.get(MANGA_REVIEW_EVENTS_KEY,[]),'es')).toEqual(schedule);
+    expect(writes.length).toBe(baseline);
   });
   it.each([...Object.keys(summaryModules), undefined])('synchronizes the supported session module %s',async(module)=>{
     const d=device();

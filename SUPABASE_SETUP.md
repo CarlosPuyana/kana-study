@@ -197,3 +197,18 @@ No new SQL migration or browser-data reset is required for this synchronization 
 On mobile after deployment, save on PC, sync on mobile, delete there, sync both, then verify zero Manga
 journals/outbox entries and Synced when all modules succeeded. If two changes remain, inspect their
 categories and failure target/code; do not assume they are Manga. Preserve the browser's stored data.
+
+## Manga Study V4: optional FSRS
+
+No additional SQL migration is required. Apply the existing Manga V3 migration
+`202610080005_manga_study_v3.sql` if it is not already installed. V4 uses the same
+Manga review_events and completed_sessions transport and owner RLS. FSRS payloads
+add reviewKind='fsrs', fsrsVersion=1 and fsrsGrade=1|3; the rating column still
+contains only 'again' or 'good'. Completed summaries add mangaSessionKind='fsrs'.
+The workspace opt-in is stored through existing user_preferences under
+`kana-study.manga-fsrs-settings.v1`. Saved-word RPCs and tombstones are unchanged.
+
+See [MANGA_FSRS.md](MANGA_FSRS.md) for deterministic replay, parameters, clock
+skew, offline recovery and account isolation. The local PostgreSQL script
+`scripts/test-manga-review-sql.mjs` also checks both FSRS grades, preference
+payloads, idempotent retries and unchanged leaderboard time/RLS.

@@ -11,6 +11,7 @@ const IMPORT_PREFIX = 'kana-study.workspace.import-decision.v1.';
 const USER_PREFIX = 'kana-study.workspace.';
 
 export const WORKSPACE_LOCAL_KEYS = [
+  'kana-study.manga-fsrs-settings.v1',
   'kana-study.manga-review-events.v1',
   'kana-study.settings.v1',
   'kana-study.grammar-progress.v1',

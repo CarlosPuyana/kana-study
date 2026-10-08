@@ -10,6 +10,7 @@ import {JapaneseAudioService} from '../../core/services/japanese-audio.service';
 
 @Component({selector:'app-manga-study-page',imports:[RouterLink,PageHeader],styleUrl:'./manga-study.scss',template:`
   <main><app-page-header titleKey="manga.saved.title" backRoute="/manga" />
+    <p><a class="review" routerLink="/manga/study/fsrs">{{i18n.t('manga.fsrs.title')}}</a></p>
     @if(saved.loading()){<p role="status">{{i18n.t('common.loading')}}</p>}
     @if(saved.failed()){<p role="alert">{{i18n.t('manga.saved.error')}}</p><button (click)="saved.reload()">{{i18n.t('manga.catalog.retry')}}</button>}
     @if(!saved.loading() && !saved.failed() && !rows().length){<section class="empty"><h2>{{i18n.t('manga.saved.empty')}}</h2><p>{{i18n.t('manga.saved.emptyHelp')}}</p><a routerLink="/manga">{{i18n.t('manga.saved.back')}}</a></section>}

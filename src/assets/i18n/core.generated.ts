@@ -1296,7 +1296,22 @@ export const es:Record<string,string> = {...shared,...{
   "manga.review.remaining": "Errores que permanecen",
   "manga.review.appearances": "Apariciones totales",
   "manga.review.repeat": "Configurar otro repaso",
-  "manga.review.back": "Volver a guardadas"
+  "manga.review.back": "Volver a guardadas",
+  "manga.fsrs.title": "Repaso programado",
+  "manga.fsrs.help": "Activa el repaso espaciado de tus palabras guardadas. Desactivarlo conserva tus tarjetas e historial.",
+  "manga.fsrs.enabled": "Activar repaso programado",
+  "manga.fsrs.due": "Pendientes ahora",
+  "manga.fsrs.new": "Palabras nuevas",
+  "manga.fsrs.next": "Próximo repaso",
+  "manga.fsrs.none": "Sin repasos programados",
+  "manga.fsrs.ineligible": "{{count}} palabras todavía no son elegibles: falta significado y lectura.",
+  "manga.fsrs.limit": "Cada sesión incluye hasta 10 palabras vencidas y 5 nuevas.",
+  "manga.fsrs.empty": "No hay palabras pendientes ahora.",
+  "manga.fsrs.start": "Comenzar repaso programado",
+  "manga.fsrs.free": "Repaso libre",
+  "manga.fsrs.again": "Otra vez",
+  "manga.fsrs.good": "Bien",
+  "manga.fsrs.results": "Repaso programado completado"
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -2479,7 +2494,22 @@ export const en:Record<string,string> = {...shared,...{
   "manga.review.remaining": "Remaining errors",
   "manga.review.appearances": "Total appearances",
   "manga.review.repeat": "Configure another review",
-  "manga.review.back": "Back to saved words"
+  "manga.review.back": "Back to saved words",
+  "manga.fsrs.title": "Scheduled review",
+  "manga.fsrs.help": "Enable spaced repetition for your saved words. Turning it off keeps your cards and history.",
+  "manga.fsrs.enabled": "Enable scheduled review",
+  "manga.fsrs.due": "Due now",
+  "manga.fsrs.new": "New words",
+  "manga.fsrs.next": "Next review",
+  "manga.fsrs.none": "No scheduled reviews",
+  "manga.fsrs.ineligible": "{{count}} words are not eligible yet: meaning and reading are missing.",
+  "manga.fsrs.limit": "Each session includes up to 10 due words and 5 new words.",
+  "manga.fsrs.empty": "No words are due now.",
+  "manga.fsrs.start": "Start scheduled review",
+  "manga.fsrs.free": "Free review",
+  "manga.fsrs.again": "Again",
+  "manga.fsrs.good": "Good",
+  "manga.fsrs.results": "Scheduled review completed"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -3662,5 +3692,20 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.review.remaining": "Errors que romanen",
   "manga.review.appearances": "Aparicions totals",
   "manga.review.repeat": "Configurar un altre repàs",
-  "manga.review.back": "Tornar a les desades"
+  "manga.review.back": "Tornar a les desades",
+  "manga.fsrs.title": "Repàs programat",
+  "manga.fsrs.help": "Activa el repàs espaiat de les paraules desades. Desactivar-lo conserva les targetes i l’historial.",
+  "manga.fsrs.enabled": "Activar repàs programat",
+  "manga.fsrs.due": "Pendents ara",
+  "manga.fsrs.new": "Paraules noves",
+  "manga.fsrs.next": "Pròxim repàs",
+  "manga.fsrs.none": "Sense repassos programats",
+  "manga.fsrs.ineligible": "{{count}} paraules encara no són elegibles: falta significat i lectura.",
+  "manga.fsrs.limit": "Cada sessió inclou fins a 10 paraules vençudes i 5 de noves.",
+  "manga.fsrs.empty": "No hi ha paraules pendents ara.",
+  "manga.fsrs.start": "Començar repàs programat",
+  "manga.fsrs.free": "Repàs lliure",
+  "manga.fsrs.again": "Una altra vegada",
+  "manga.fsrs.good": "Bé",
+  "manga.fsrs.results": "Repàs programat completat"
 }};

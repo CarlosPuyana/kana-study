@@ -4,6 +4,10 @@ export const MANGA_REVIEW_EVENTS_KEY = 'kana-study.manga-review-events.v1';
 export type MangaExerciseType = 'meaning' | 'expression' | 'reading' | 'context';
 export type MangaReviewMode = 'mixed' | 'contextual';
 export interface MangaReviewEvent {
+  /** Absent on immutable V3 history. FSRS reviews use a separate scheduler. */
+  readonly reviewKind?: 'fsrs';
+  readonly fsrsVersion?: 1;
+  readonly fsrsGrade?: 1 | 3;
   readonly id: string;
   readonly key: string;
   readonly savedItemId: string;

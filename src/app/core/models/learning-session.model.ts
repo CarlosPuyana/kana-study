@@ -42,6 +42,7 @@ export interface CompletedSessionSummary {
   readonly durationSeconds: number;
   readonly module?: 'kana' | 'flags' | 'kanji' | 'vocabulary' | 'grammar' | 'manga';
   readonly mangaResult?: import('./manga-review.model').MangaReviewResult;
+  readonly mangaSessionKind?: 'fsrs';
   readonly questionTypes?: readonly (FlagQuestionType | KanjiQuestionType | VocabularyQuestionType)[];
   readonly grammarTopicIds?: readonly string[];
   readonly grammarLessonIds?: readonly string[];

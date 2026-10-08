@@ -11876,5 +11876,20 @@
   "manga.review.remaining": "Errores que permanecen",
   "manga.review.appearances": "Apariciones totales",
   "manga.review.repeat": "Configurar otro repaso",
-  "manga.review.back": "Volver a guardadas"
+  "manga.review.back": "Volver a guardadas",
+  "manga.fsrs.title": "Repaso programado",
+  "manga.fsrs.help": "Activa el repaso espaciado de tus palabras guardadas. Desactivarlo conserva tus tarjetas e historial.",
+  "manga.fsrs.enabled": "Activar repaso programado",
+  "manga.fsrs.due": "Pendientes ahora",
+  "manga.fsrs.new": "Palabras nuevas",
+  "manga.fsrs.next": "Próximo repaso",
+  "manga.fsrs.none": "Sin repasos programados",
+  "manga.fsrs.ineligible": "{{count}} palabras todavía no son elegibles: falta significado y lectura.",
+  "manga.fsrs.limit": "Cada sesión incluye hasta 10 palabras vencidas y 5 nuevas.",
+  "manga.fsrs.empty": "No hay palabras pendientes ahora.",
+  "manga.fsrs.start": "Comenzar repaso programado",
+  "manga.fsrs.free": "Repaso libre",
+  "manga.fsrs.again": "Otra vez",
+  "manga.fsrs.good": "Bien",
+  "manga.fsrs.results": "Repaso programado completado"
 }

@@ -11876,5 +11876,20 @@
   "manga.review.remaining": "Remaining errors",
   "manga.review.appearances": "Total appearances",
   "manga.review.repeat": "Configure another review",
-  "manga.review.back": "Back to saved words"
+  "manga.review.back": "Back to saved words",
+  "manga.fsrs.title": "Scheduled review",
+  "manga.fsrs.help": "Enable spaced repetition for your saved words. Turning it off keeps your cards and history.",
+  "manga.fsrs.enabled": "Enable scheduled review",
+  "manga.fsrs.due": "Due now",
+  "manga.fsrs.new": "New words",
+  "manga.fsrs.next": "Next review",
+  "manga.fsrs.none": "No scheduled reviews",
+  "manga.fsrs.ineligible": "{{count}} words are not eligible yet: meaning and reading are missing.",
+  "manga.fsrs.limit": "Each session includes up to 10 due words and 5 new words.",
+  "manga.fsrs.empty": "No words are due now.",
+  "manga.fsrs.start": "Start scheduled review",
+  "manga.fsrs.free": "Free review",
+  "manga.fsrs.again": "Again",
+  "manga.fsrs.good": "Good",
+  "manga.fsrs.results": "Scheduled review completed"
 }

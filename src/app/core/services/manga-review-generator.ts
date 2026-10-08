@@ -48,6 +48,12 @@ function catalogEntry(item: MangaStudySavedItem, catalog: readonly VocabularyEnt
 function meanings(entry: VocabularyEntry, language: AppLanguage): Set<string> {
   return new Set([entry.quizMeaning[language], ...entry.meanings[language]].flatMap(text => text.split(/[,;/]|\s(?:or|o|ou)\s/)).map(normalize).filter(Boolean));
 }
+/** Same validated evidence for scheduled recall; no invented external answers. */
+export function mangaRecallEvidence(item: MangaStudySavedItem, language: AppLanguage) {
+  const entry = catalogEntry(item, VOCABULARY_N5);
+  return {meaning: entry?.quizMeaning[language]?.trim() || item.meaning?.trim() || '',
+    reading: item.reading?.trim() || entry?.primaryReading || ''};
+}
 /** Distractors come only from saved, unambiguously matched catalog entries.
  * External definitions have no synonym/alternative-reading contract, so use
  * self-assessment rather than declaring another documented answer incorrect. */
@@ -62,7 +68,7 @@ export function generateMangaReview(input: {
     return {item, entry, meaning: entry?.quizMeaning[input.language]?.trim() || item.meaning?.trim() || '', reading: item.reading?.trim() || entry?.primaryReading || ''};
   }).filter(row => row.meaning || row.reading);
   const stats = evidence.map(row => {
-    const events = input.history.filter(e => e.savedItemId === row.item.id).sort((a, b) => a.reviewedAt.localeCompare(b.reviewedAt) || a.id.localeCompare(b.id));
+    const events = input.history.filter(e => !e.reviewKind && e.savedItemId === row.item.id).sort((a, b) => a.reviewedAt.localeCompare(b.reviewedAt) || a.id.localeCompare(b.id));
     const recent = events.slice(-6), failure = recent.filter(e => !e.correct).length / Math.max(1, recent.length);
     return {...row, last: events.at(-1)?.reviewedAt ?? '', failure, tie: rng()};
   });
