@@ -10,14 +10,16 @@ import {JapaneseAudioService} from '../../../core/services/japanese-audio.servic
 import {MangaStudyMatch} from '../../../core/models/manga-study.model';
 import {safeReturnUrl} from '../../../core/services/return-navigation';
 import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTranslationResult } from '../../../core/models/manga-context.model';
+import { MangaGrammarReference } from './manga-grammar-reference';
 @Component({
-  selector:'app-dictionary-popup',imports:[RouterLink],styleUrl:'./dictionary-popup.scss',
+  selector:'app-dictionary-popup',imports:[RouterLink,MangaGrammarReference],styleUrl:'./dictionary-popup.scss',
   template:`<div class="backdrop" (click)="closed.emit()"></div>
     <section #dialog class="dictionary-sheet" role="dialog" aria-modal="true" [attr.aria-label]="i18n.t('dictionary.title')" [style.left.px]="left()" [style.top.px]="top()" (pointerdown)="$event.stopPropagation()" (click)="$event.stopPropagation()">
       <button #close class="close" [attr.aria-label]="i18n.t('common.close')" (click)="closed.emit()">×</button>
       <nav class="tabs" [attr.aria-label]="i18n.t('manga.assist.tabs')">
         <button [attr.aria-pressed]="tab()==='word'" (click)="tab.set('word')">{{i18n.t('manga.assist.word')}}</button>
         <button [attr.aria-pressed]="tab()==='context'" (click)="tab.set('context')">{{i18n.t('manga.assist.context')}}</button>
+        <button [attr.aria-pressed]="tab()==='grammar'" (click)="tab.set('grammar')">{{i18n.t('manga.grammar.title')}}</button>
       </nav>
       @if(isSelection()){<small>{{i18n.t('manga.assist.selectedText')}}</small><p class="ocr-context selected-text">{{selectedText()}}</p>}
       @if(tab()==='word'){
@@ -77,7 +79,7 @@ import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTra
             </section>
           }
         }
-      } @else {
+      } @else if(tab()==='context') {
         <h2>{{i18n.t('manga.assist.inContext')}}</h2>
         <p class="ocr-context">{{highlight().before}}<mark>{{highlight().selected}}</mark>{{highlight().after}}</p>
         <div class="context-actions"><button [disabled]="!assistant.available || !context() || busy()" (click)="ask('translate')">✨ {{i18n.t('manga.assist.translate')}}</button></div>
@@ -88,6 +90,8 @@ import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTra
         @if(selectionLimitError()){<p role="alert">{{i18n.t('manga.assist.selectionLimit')}}</p>}
         @if(translation();as value){<p>{{value.natural}}</p>@if(value.literal){<p><strong>{{i18n.t('manga.assist.literal')}}:</strong> {{value.literal}}</p>}@for(note of value.notes;track $index){<p>{{note}}</p>}}
         @if(study();as value){<p>{{value.natural}}</p>@for(note of value.notes;track $index){<p class="study-note">{{note}}</p>}<h3>{{i18n.t('manga.assist.vocabulary')}}</h3><ul>@for(word of value.vocabulary;track $index){<li><strong>{{word.expression}}</strong> {{word.reading}} @if(word.baseForm){· {{word.baseForm}}} — {{word.meaning}}</li>}</ul><h3>{{i18n.t('manga.assist.grammar')}}</h3><ul>@for(item of value.grammar;track $index){<li><strong>{{item.expression}}</strong> — {{item.explanation}}</li>}</ul>}
+      } @else {
+        <app-manga-grammar-reference [point]="context()" [lookup]="loading()||failed()?null:result()" [returnTo]="studyReturn()" />
       }
     </section>`,
 })
@@ -106,7 +110,7 @@ export class DictionaryPopup implements OnDestroy {
   readonly audioRequested=signal(false);private playingEntry:string|null=null;
   readonly result=input.required<DictionaryLookup>();readonly loading=input(false);readonly failed=input(false);readonly x=input(0);readonly y=input(0);readonly closed=output<void>();
   readonly context=input<OcrLookupPoint|null>(null);readonly location=input<MangaContextLocation>({volumeId:'',pageIndex:0,blockIndex:0});
-  readonly tab=signal<'word'|'context'>('word');readonly busy=signal(false);readonly contextError=signal(false);
+  readonly tab=signal<'word'|'context'|'grammar'>('word');readonly busy=signal(false);readonly contextError=signal(false);
   readonly selectionLimitError=signal(false);
   readonly translation=signal<MangaTranslationResult|null>(null);readonly study=signal<MangaStudyExplanation|null>(null);
   private controller:AbortController|null=null;private readonly previousFocus=document.activeElement;
@@ -140,7 +144,7 @@ export class DictionaryPopup implements OnDestroy {
   top():number{return Math.max(8,Math.min(this.y()+12,window.innerHeight-Math.min(440,window.innerHeight*.65)-8));}
   @HostListener('document:keydown',['$event']) key(event:KeyboardEvent):void {
     if(event.key==='Escape'){event.preventDefault();event.stopPropagation();this.closed.emit();}
-    if(event.key==='Tab'){const controls=Array.from(this.dialog()?.nativeElement.querySelectorAll<HTMLElement>('button:not(:disabled),a,summary')??[]);const first=controls[0],last=controls.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}}
+    if(event.key==='Tab'){const controls=Array.from(this.dialog()?.nativeElement.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],summary,input:not(:disabled)')??[]);const first=controls[0],last=controls.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}}
   }
   ngOnDestroy():void{this.cancel();if(this.audioRequested())this.audio.stop();if(this.previousFocus instanceof HTMLElement && this.previousFocus.isConnected)this.previousFocus.focus();}
 }

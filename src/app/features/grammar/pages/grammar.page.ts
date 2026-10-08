@@ -1,5 +1,6 @@
 import { createStudyClock } from '../../../core/services/study-clock';
 import { StudyTimer } from '../../../shared/components/study-timer/study-timer';
+import { safeReturnUrl } from '../../../core/services/return-navigation';
 import {GrammarIntegrationComponent} from '../components/grammar-integration';
 import {GRAMMAR_V2_INTEGRATION} from '../../../data/grammar/grammar-n5-v2.generated';
 import {GrammarV2LessonComponent} from '../components/grammar-v2-lesson';
@@ -31,6 +32,11 @@ export class GrammarPage {
   readonly i18n=inject(TranslationService);private readonly route=inject(ActivatedRoute);private readonly router=inject(Router);
   private readonly params=toSignal(this.route.paramMap,{initialValue:this.route.snapshot.paramMap});
   private readonly query=toSignal(this.route.queryParamMap,{initialValue:this.route.snapshot.queryParamMap});
+  readonly mangaReturn=computed(()=>{
+    const url=safeReturnUrl(this.query().get('return'),'');
+    return /^\/manga\/read\/[^/?#]+(?:\?[^#]*)?$/u.test(url)?url:null;
+  });
+  readonly mangaReturnLink=computed(()=>this.mangaReturn()?this.router.parseUrl(this.mangaReturn()!):null);
   readonly topics=GRAMMAR_TOPICS;readonly roadmap=GRAMMAR_ROADMAP;
   readonly topic=computed(()=>this.topics.find(topic=>topic.id===this.params().get('topicId'))??null);
   readonly lesson=computed(()=>GRAMMAR_LESSONS.find(lesson=>lesson.topicId===this.topic()?.id&&lesson.id===this.params().get('lessonId'))??null);

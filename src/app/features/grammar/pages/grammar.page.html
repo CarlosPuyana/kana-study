@@ -1,4 +1,5 @@
 <div class="grammar-shell" [class.compact-sidebar]="collapsed()">
+  @if(mangaReturnLink();as returnUrl){<div class="manga-return"><a [routerLink]="returnUrl">← {{i18n.t('manga.grammar.return')}}</a></div>}
   @if(practice();as practice){
     <app-grammar-practice [practice]="practice"/>
   } @else {

@@ -81,3 +81,5 @@
   .grammar-session-status, .grammar-difficulty { font-size: .8rem; margin-block: .35rem; color: var(--text-secondary); }
   .grammar-topic-count { display: block; padding: .5rem 1rem; color: var(--text-secondary); font-size: .75rem; }
 }
+
+.grammar-shell .manga-return{padding:.5rem 1rem;background:var(--surface);border-bottom:1px solid var(--border)}.grammar-shell .manga-return a{display:inline-flex;align-items:center;min-height:44px;color:var(--primary);overflow-wrap:anywhere}.grammar-shell .manga-return a:focus-visible{outline:2px solid var(--focus-ring);outline-offset:3px}

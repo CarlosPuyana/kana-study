@@ -12,6 +12,10 @@ export class TranslationService {
   private readonly pending=inject(PendingTasks);
   private readonly grammar=signal<Record<AppLanguage,Dictionary>|null>(null);
   private grammarLoading:Promise<void>|null=null;
+  /** Reader bundles these existing course translations for first-use offline reference. */
+  useBundledGrammar(dictionary:Record<AppLanguage,Dictionary>):void {
+    if(!this.grammar())this.grammar.set(dictionary);
+  }
   /** All three languages share one feature chunk; later switches need no network. */
   loadGrammar():Promise<void>{
     if(this.grammar())return Promise.resolve();

@@ -1,7 +1,7 @@
 import {MangaSourceService} from '../../core/services/manga-source.service';
 import {MangaLanguage} from '../../core/models/local-manga.model';
 import {MangaError} from '../../core/services/mokuro-parser';
-import { Component, computed, effect, ElementRef, HostListener, inject, OnDestroy, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, HostListener, inject, OnDestroy, signal, untracked, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslationService } from '../../core/services/translation.service';
 import { MangaRepository } from '../../core/services/manga.repository';
@@ -90,7 +90,7 @@ export class MangaReaderPage implements OnDestroy {
   constructor() {
     effect(onCleanup=>{const stage=this.stage()?.nativeElement;if(!stage)return;const measure=()=>this.measureStage();measure();if(typeof ResizeObserver==='function'){const observer=new ResizeObserver(measure);observer.observe(stage);onCleanup(()=>observer.disconnect());}});
     effect(()=>{this.panelClose()?.nativeElement.focus();});
-    effect(() => { if (this.workspaceService.active() !== this.workspace) void this.router.navigateByUrl('/manga'); });
+    effect(() => { if (this.workspaceService.active() !== this.workspace) untracked(()=>{this.closeDictionary();void this.router.navigateByUrl('/manga');}); });
     void this.start();
   }
   private readonly requestedPage=inject(ActivatedRoute).snapshot.queryParamMap?.get('page');
