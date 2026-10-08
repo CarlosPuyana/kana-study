@@ -16,12 +16,15 @@ import {DeckDatabaseService} from './deck-database.service';
 import {LocalRushRepository} from './rush-repository.service';
 import {DeviceService} from './device.service';
 import {AuthService} from './auth.service';
+import {SyncDiagnosticsService} from './sync-diagnostics.service';
+import {makeOutboxItem} from './sync-outbox.service';
 
 const word=(expression='食べる',reading='たべる',page=3):MangaStudySavedItem=>({schemaVersion:1,id:'dictionary:'+JSON.stringify([expression,reading]),expression,reading,kanji:[],context:'First context',meaning:'meaning',source:{volumeId:'volume',pageNumber:page},createdAt:100});
 const req=<T>(r:IDBRequest<T>)=>new Promise<T>((resolve,reject)=>{r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});
 interface CloudRow extends MangaSavedRemoteRow {user_id:string;restored_revision:number}
 class Cloud {
   rows=new Map<string,CloudRow>();calls=0;fail:string|null=null;
+  failWrites=new Set<string>();upserted:string[]=[];
   readHook:((user:string)=>Promise<void>)|null=null;
   writeHook:((user:string,args:any)=>Promise<void>)|null=null;
   authEvent:((event:AuthChangeEvent,session:Session|null)=>void)|null=null;
@@ -40,7 +43,7 @@ class Cloud {
             return {data:structuredClone([...this.rows.values()].filter(r=>r.user_id===user).sort((a,b)=>a.item_id.localeCompare(b.item_id)).slice(start,end+1)),error:null};
           }
           return {data:[],error:null};
-        })().then(resolve,reject),upsert:async()=>({error:null})};return query;
+        })().then(resolve,reject),upsert:async()=>{this.upserted.push(table);return {error:this.failWrites.has(table)?{code:'42501',message:'permission denied: private secret 食べる user a'}:null};}};return query;
     },
     rpc:async(_name:string,args:any)=>{
       this.calls++;await this.writeHook?.(user,args);
@@ -69,7 +72,7 @@ describe('Manga Saved Sync V1 with independent durable browser caches',()=>{
   afterEach(()=>{for(const d of devices)if(!d.env.destroyed)d.env.destroy();TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
   async function device(user='a',factory=new IDBFactory()):Promise<Device>{
     vi.stubGlobal('indexedDB',factory);
-    const env=createEnvironmentInjector([AuthService,WorkspaceService,MangaStudySavedRepository,MangaSavedSyncService,SyncService,SyncOutboxService,StorageService,SessionHistoryService,WorkspaceMigrationService,
+    const env=createEnvironmentInjector([SyncDiagnosticsService,AuthService,WorkspaceService,MangaStudySavedRepository,MangaSavedSyncService,SyncService,SyncOutboxService,StorageService,SessionHistoryService,WorkspaceMigrationService,
       {provide:SupabaseClientService,useValue:{config:{configured:true},getClient:async()=>cloud.client(user)}},{provide:DeviceService,useValue:{id:'test'}},
       {provide:DeckDatabaseService,useValue:{getDeckProgress:async()=>[],getDeckReviewEvents:async()=>[],getAllDailyStates:async()=>[],mergeFromCloud:async()=>{}}},
       {provide:LocalRushRepository,useValue:{getStats:async()=>({sessions:[],coverage:[]}),mergeFromCloud:async()=>{}}},
@@ -85,6 +88,58 @@ describe('Manga Saved Sync V1 with independent durable browser caches',()=>{
     expect(mobile.saved.items()).toEqual([a]);expect(mobile.saved.count()).toBe(1);
     await mobile.saved.save(b);await mobile.sync.syncNow();await pc.sync.syncNow();await pc.sync.syncNow();
     expect(pc.saved.count()).toBe(2);expect(cloud.rows.size).toBe(2);expect(pc.sync.pendingCount()).toBe(0);
+  });
+  it.each([false,true])('clears journals and confirmed outbox after mobile deletion, with two other module changes=%s',async(others)=>{
+    const pc=await device(),mobile=await device(),a=word();await pc.saved.save(a);await pc.sync.syncNow();await mobile.sync.syncNow();
+    await mobile.saved.remove(a.id);
+    if(others){await mobile.outbox.enqueue(makeOutboxItem('user:a','local-storage','kana-study.settings.v1',{theme:'dark'})!);await mobile.outbox.enqueue(makeOutboxItem('user:a','local-storage','kana-study.deck-settings.v1',{deck:{newLimit:5}})!);}
+    expect(await mobile.sync.syncNow()).toBe(true);await pc.sync.syncNow();
+    for(const d of [pc,mobile]){expect(d.saved.count()).toBe(0);expect(await d.saved.pending()).toEqual([]);expect(await d.outbox.pending('user:a')).toEqual([]);expect(d.sync.pendingCount()).toBe(0);expect(d.sync.status()).toBe('synced');}
+  });
+  it.each([1,2])('keeps only %s unconfirmed operations when Manga deletion succeeds before another module fails',async(blocked)=>{
+    const pc=await device(),mobile=await device(),a=word();await pc.saved.save(a);await pc.sync.syncNow();await mobile.sync.syncNow();await mobile.saved.remove(a.id);
+    for(const key of ['kana-study.settings.v1','kana-study.deck-settings.v1'])await mobile.outbox.enqueue(makeOutboxItem('user:a','local-storage',key,{value:true})!);
+    cloud.failWrites.add('user_preferences');if(blocked===2)cloud.failWrites.add('deck_settings');expect(await mobile.sync.syncNow()).toBe(false);
+    await pc.sync.syncNow();expect(pc.saved.count()).toBe(0);expect(await mobile.saved.pending()).toEqual([]);
+    const pending=await mobile.outbox.pending('user:a');expect(pending).toHaveLength(blocked);expect(pending.every(i=>i.entityType==='local-storage')).toBe(true);expect(mobile.sync.pendingCount()).toBe(blocked);
+    const diagnostic=await mobile.sync.inspectDiagnostics();expect(diagnostic?.failure?.phase).toBe('push');expect(diagnostic?.failure?.code).toBe('42501');expect(diagnostic?.failure?.entityType).toBe('local-storage');expect(diagnostic?.pending).toHaveLength(blocked);
+    expect(JSON.stringify(diagnostic)).not.toMatch(/食べる|private secret|user:a|dictionary:|revision|token/);
+    cloud.failWrites.clear();expect(await mobile.sync.syncNow()).toBe(true);expect(mobile.sync.pendingCount()).toBe(0);
+  });
+  it('preserves a verified Manga outbox entry if cleanup fails and verifies its journal-free retry',async()=>{
+    const pc=await device();await pc.saved.save(word());vi.spyOn(pc.outbox,'removeProcessed').mockRejectedValue(new DOMException('private text','QuotaExceededError'));
+    expect(await pc.sync.syncNow()).toBe(false);expect(await pc.saved.pending()).toEqual([]);expect(await pc.outbox.pending('user:a')).toHaveLength(1);
+    const diagnostic=await pc.sync.inspectDiagnostics();expect(diagnostic?.failure?.phase).toBe('outbox-ack');expect(diagnostic?.pending[0]).toMatchObject({journalAssociated:false,remote:'confirmed',confirmedAwaitingCleanup:true});
+    const factory=pc.factory;pc.env.destroy();const reopened=await device('a',factory);const calls=cloud.calls;
+    expect(await reopened.sync.syncNow()).toBe(true);expect(cloud.calls).toBe(calls+1);expect([...cloud.rows.values()][0].revision).toBe(1);expect(await reopened.outbox.pending('user:a')).toEqual([]);
+  });
+  it('does not remove a replacement Manga outbox revision when cleaning a confirmed earlier push after another module fails',async()=>{
+    const pc=await device(),a=word();await pc.saved.save(a);await pc.outbox.enqueue(makeOutboxItem('user:a','local-storage','kana-study.settings.v1',{theme:'dark'})!);
+    let once=true;cloud.writeHook=async()=>{if(once){once=false;await pc.saved.remove(a.id);}};cloud.failWrites.add('user_preferences');
+    expect(await pc.sync.syncNow()).toBe(false);expect(await pc.saved.pending()).toHaveLength(1);expect((await pc.outbox.pending('user:a')).filter(i=>i.entityType==='manga-saved-item')).toHaveLength(1);
+    cloud.failWrites.clear();cloud.writeHook=null;expect(await pc.sync.syncNow()).toBe(true);expect([...cloud.rows.values()][0].deleted_at).not.toBeNull();
+  });
+  it('reports the exact RPC failure phase and preserves an unverified journal and outbox',async()=>{
+    const pc=await device();await pc.saved.save(word());cloud.writeHook=async()=>{throw {code:'42501',message:'JWT private word 食べる 00000000-0000-0000-0000-000000000001'};};
+    expect(await pc.sync.syncNow()).toBe(false);const report=await pc.sync.inspectDiagnostics();
+    expect(report?.failure).toMatchObject({phase:'push',target:'apply_manga_saved_change_v1',entityType:'manga-saved-item',code:'42501'});
+    expect(report?.pending[0]).toMatchObject({journalAssociated:true,remote:'unverified',attempts:1});
+    expect(JSON.stringify(report)).not.toMatch(/JWT|private word|食べる|00000000|user:a|dictionary:/);expect(await pc.saved.pending()).toHaveLength(1);
+    cloud.writeHook=null;expect(await pc.sync.syncNow()).toBe(true);
+  });
+  it('clears diagnostics on logout and cannot expose a late inspection to the next account',async()=>{
+    const pc=await device();await pc.saved.save(word());cloud.fail='network';await pc.sync.syncNow();
+    expect((await pc.sync.inspectDiagnostics())?.pending).toHaveLength(1);
+    const pending=pc.outbox.pending.bind(pc.outbox);vi.spyOn(pc.outbox,'pending').mockImplementationOnce(async workspace=>{pc.workspace.activateUser('b');TestBed.tick();return pending(workspace);});
+    expect(await pc.sync.inspectDiagnostics()).toBeNull();await pc.saved.reload();expect((await pc.sync.inspectDiagnostics())?.failure).toBeNull();
+    pc.workspace.activateGuest();TestBed.tick();expect(await pc.sync.inspectDiagnostics()).toBeNull();
+  });
+  it('reports connection/session acquisition failure without losing pending local changes',async()=>{
+    const pc=await device();await pc.saved.save(word());const supabase=pc.env.get(SupabaseClientService);
+    vi.spyOn(supabase,'getClient').mockRejectedValueOnce({code:'PGRST301',message:'private expired JWT'});
+    expect(await pc.sync.syncNow()).toBe(false);expect(pc.sync.status()).toBe('error');
+    expect((await pc.sync.inspectDiagnostics())?.failure).toMatchObject({phase:'connect',target:'supabase',code:'PGRST301'});
+    expect(await pc.saved.pending()).toHaveLength(1);expect(await pc.sync.syncNow()).toBe(true);
   });
   it('duplicate concurrent device saves retain the first confirmed context, while written homophones remain distinct',async()=>{
     const pc=await device(),mobile=await device(),a=word();await pc.saved.save(a);await mobile.saved.save({...a,context:'page 18',source:{...a.source,pageNumber:18}});

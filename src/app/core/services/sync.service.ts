@@ -1,3 +1,4 @@
+import { SyncDiagnosticReport, SyncDiagnosticsService } from './sync-diagnostics.service';
 import { MangaSavedSyncService } from './manga-saved-sync.service';
 import { MangaStudySavedRepository } from './manga-study-saved.repository';
 import { computed, DestroyRef, effect, inject, Injectable, signal, untracked } from '@angular/core';
@@ -52,6 +53,7 @@ export class SyncService {
   private readonly decks = inject(DeckDatabaseService);
   private readonly rush = inject(LocalRushRepository);
   private readonly manga = inject(MangaSavedSyncService);
+  private readonly diagnostics = inject(SyncDiagnosticsService);
   private readonly savedManga = inject(MangaStudySavedRepository);
   private readonly destroyRef = inject(DestroyRef);
   private readonly statusState = signal<SyncStatus>(this.workspace.active() === 'guest' ? 'guest' : 'pending');
@@ -89,7 +91,7 @@ export class SyncService {
     effect(() => {
       const workspace = this.workspace.active();
       untracked(() => {
-        this.lastSyncState.set(null); this.pendingState.set(0);
+        this.lastSyncState.set(null); this.pendingState.set(0);this.diagnostics.reset();
         if (workspace === 'guest') { this.statusState.set('guest'); if (this.timer) clearTimeout(this.timer); return; }
         void this.outbox.getMeta(workspace, 'all').then(meta => {
           if (this.workspace.active() === workspace) this.lastSyncState.set(meta?.lastSyncedAt ?? null);
@@ -112,41 +114,55 @@ export class SyncService {
 
   private async runSync(workspace: ReturnType<WorkspaceService['active']>): Promise<boolean> {
     const userId = workspace.startsWith('user:') ? workspace.slice(5) : null;
-    const client = await this.supabase.getClient();
+    if(this.workspace.active()===workspace)this.diagnostics.begin();
+    let client:SupabaseClient|null;
+    try{client=await this.diagnostics.run('connect','supabase',()=>this.supabase.getClient());}
+    catch(error){
+      if(this.workspace.active()===workspace){this.diagnostics.capture(error,'connect','supabase');this.statusState.set(navigator.onLine?'error':'offline');}
+      return false;
+    }
     if (!client || !userId) { this.statusState.set('guest'); return false; }
     this.client = client;
     if (this.workspace.active() !== workspace) return false;
-    if (!navigator.onLine) { this.statusState.set('offline'); await this.refreshPending(); return false; }
+    if (!navigator.onLine) {
+      this.statusState.set('offline');
+      await this.refreshPending().catch(error=>{if(this.workspace.active()===workspace)this.diagnostics.capture(error,'pending','indexeddb');});
+      return false;
+    }
     this.statusState.set('syncing'); this.processed = [];
     try {
-      await this.manga.prepare(client,userId);
+      await this.diagnostics.run('prepare','manga-indexeddb',()=>this.manga.prepare(client,userId));
       this.assertWorkspace(userId);
-      this.processed = await this.outbox.pending(workspace);
+      this.processed = await this.diagnostics.run('pending','sync-indexeddb',()=>this.outbox.pending(workspace));
       this.assertWorkspace(userId);
       if (this.processed.length) await this.push(this.processed, userId);
       this.assertWorkspace(userId);
-      await this.pull(userId);
-      await this.manga.pull(client,userId);
+      await this.diagnostics.run('pull','local-reconciliation',()=>this.pull(userId));
+      await this.diagnostics.run('pull','manga-indexeddb',()=>this.manga.pull(client,userId));
       this.assertWorkspace(userId);
-      await this.outbox.removeProcessed(this.processed);
+      await this.cleanConfirmed();
       await this.refreshPending();
       this.assertWorkspace(userId);
       if (this.pendingState() > 0) { this.statusState.set('pending'); this.schedule(); return false; }
       const now = new Date().toISOString();
-      await this.outbox.putMeta({workspace, table: 'all', lastPulledAt: null, lastSyncedAt: now});
+      await this.diagnostics.run('metadata','sync-indexeddb',()=>this.outbox.putMeta({workspace,table:'all',lastPulledAt:null,lastSyncedAt:now}));
       await this.refreshPending();
       this.assertWorkspace(userId);
       if (this.pendingState() > 0) {
-        await this.outbox.putMeta({workspace, table: 'all', lastPulledAt: null, lastSyncedAt: this.lastSyncState()});
+        await this.diagnostics.run('metadata','sync-indexeddb',()=>this.outbox.putMeta({workspace,table:'all',lastPulledAt:null,lastSyncedAt:this.lastSyncState()}));
         this.statusState.set('pending'); this.schedule(); return false;
       }
       this.lastSyncState.set(now); this.statusState.set('synced');
       return true;
-    } catch {
-      await this.outbox.markAttempt(this.processed).catch(() => undefined);
+    } catch(error) {
+      if(this.workspace.active()===workspace)this.diagnostics.capture(error,'push','sync');
+      // A later module/pull failure must not retain already verified writes.
+      // removeProcessed still protects a replacement outbox revision.
+      await this.cleanConfirmed().catch(error=>{if(this.workspace.active()===workspace)this.diagnostics.capture(error,'outbox-ack','sync-indexeddb');});
+      await this.outbox.markAttempt(this.diagnostics.attemptedItems(this.processed)).catch(error=>{if(this.workspace.active()===workspace)this.diagnostics.capture(error,'outbox-ack','sync-indexeddb');});
       if (this.workspace.active() === workspace) {
         this.statusState.set(navigator.onLine ? 'error' : 'offline');
-        await this.refreshPending().catch(() => undefined);
+        await this.refreshPending().catch(error=>this.diagnostics.capture(error,'pending','indexeddb'));
       }
       return false;
     }
@@ -159,7 +175,8 @@ export class SyncService {
   schedule(delay = 900): void {
     if (!this.available()) { this.statusState.set('guest'); return; }
     if (!this.running || this.running.workspace !== this.workspace.active()) this.statusState.set(navigator.onLine ? 'pending' : 'offline');
-    void this.refreshPending().catch(()=>{if(this.available())this.statusState.set('error');});
+    const workspace=this.workspace.active();
+    void this.refreshPending().catch(error=>{if(this.workspace.active()===workspace&&this.available()){this.diagnostics.capture(error,'pending','indexeddb');this.statusState.set('error');}});
     if (this.timer) clearTimeout(this.timer);
     this.timer = setTimeout(() => { this.timer = null; void this.syncNow(); }, delay);
   }
@@ -167,10 +184,10 @@ export class SyncService {
   private async push(items: readonly SyncOutboxItem[], userId: string): Promise<void> {
     await this.manga.push(this.client!,userId,items);
     const localItems = items.filter(item => item.entityType === 'local-storage');
-    for (const item of localItems) { this.assertWorkspace(userId); await this.pushLocalStorage(item, userId); }
+    for (const item of localItems) { this.assertWorkspace(userId); await this.diagnostics.run('push','local-storage',()=>this.pushLocalStorage(item,userId),item);this.diagnostics.confirmed(item); }
     const reconciled: SyncOutboxItem[] = [];
     for (const type of ['deck-card-progress', 'deck-daily-state', 'rush-session', 'rush-coverage'] as const) {
-      const values = upsertsByType(items, type); if (!values.length) continue;
+      const values = upsertsByType(items, type); if (!values.length) continue;this.diagnostics.attempting(values);
       const table = {'deck-card-progress':'deck_card_progress', 'deck-daily-state':'deck_daily_state',
         'rush-session':'rush_sessions', 'rush-coverage':'rush_coverage'}[type];
       const remote = await this.selectChanged(table, userId, null);
@@ -194,20 +211,25 @@ export class SyncService {
       user_id: userId, deck_id: field(item.payload, 'deckId'), entry_id: field(item.payload, 'entryId'),
       card_json: item.payload, last_review_at: timestamp(field(item.payload, 'card.lastReview')),
     })));
+    for(const item of upsertsByType(items,'deck-card-progress'))this.diagnostics.confirmed(item);
     await this.upsert('deck_review_events', upsertsByType(items, 'deck-review-event').map(item => ({
       id: item.entityKey, user_id: userId, deck_id: field(item.payload, 'deckId'), entry_id: field(item.payload, 'entryId'),
       reviewed_at: timestamp(field(item.payload, 'reviewedAt')), payload: item.payload, device_id: this.device.id,
     })));
+    for(const item of upsertsByType(items,'deck-review-event'))this.diagnostics.confirmed(item);
     await this.upsert('deck_daily_state', upsertsByType(items, 'deck-daily-state').map(item => ({
       user_id: userId, deck_id: field(item.payload, 'deckId'), local_day: field(item.payload, 'localDate'),
       introduced_entry_ids: field(item.payload, 'introducedEntryIds') ?? [], new_limit_override: field(item.payload, 'newLimitOverride'),
     })));
+    for(const item of upsertsByType(items,'deck-daily-state'))this.diagnostics.confirmed(item);
     await this.upsert('rush_sessions', upsertsByType(items, 'rush-session').map(item => rushSessionRow(item, userId)));
+    for(const item of upsertsByType(items,'rush-session'))this.diagnostics.confirmed(item);
     await this.upsert('rush_coverage', upsertsByType(items, 'rush-coverage').map(item => ({
       user_id: userId, module: field(item.payload, 'module'), content_id: field(item.payload, 'contentId'),
       first_seen_at: timestamp(field(item.payload, 'firstSeenAt')),
     })));
-    for (const item of items.filter(item => item.operation === 'delete' && item.entityType !== 'local-storage' && item.entityType !== 'manga-saved-item')) await this.deleteEntity(item, userId);
+    for(const item of upsertsByType(items,'rush-coverage'))this.diagnostics.confirmed(item);
+    for(const item of items.filter(item=>item.operation==='delete'&&item.entityType!=='local-storage'&&item.entityType!=='manga-saved-item')){await this.diagnostics.run('push',item.entityType,()=>this.deleteEntity(item,userId),item);this.diagnostics.confirmed(item);}
   }
 
   private async pushLocalStorage(item: SyncOutboxItem, userId: string): Promise<void> {
@@ -374,8 +396,7 @@ export class SyncService {
       this.assertWorkspace(userId);
       let query = this.client!.from(table).select('*').eq('user_id', userId);
       for (const key of TABLE_KEYS[table] ?? ['id']) query = query.order(key, {ascending: true});
-      const {data, error} = await query.range(offset, offset + PAGE_SIZE - 1);
-      if (error) throw error;
+      const data=await this.diagnostics.run('pull',table,async()=>{const {data,error}=await query.range(offset,offset+PAGE_SIZE-1);if(error)throw error;return data;});
       this.assertWorkspace(userId);
       rows.push(...(data ?? []));
       if ((data?.length ?? 0) < PAGE_SIZE) return rows;
@@ -386,8 +407,7 @@ export class SyncService {
     if (!rows.length) return;
     for (let index = 0; index < rows.length; index += 200) {
       this.assertWorkspace(String(rows[index]['user_id']));
-      const { error } = await this.client!.from(table).upsert(rows.slice(index, index + 200));
-      if (error) throw error;
+      await this.diagnostics.run('push',table,async()=>{const {error}=await this.client!.from(table).upsert(rows.slice(index,index+200));if(error)throw error;});
     }
   }
 
@@ -414,10 +434,28 @@ export class SyncService {
     this.assertWorkspace(userId);
   }
 
+  async inspectDiagnostics():Promise<SyncDiagnosticReport|null> {
+    const workspace=this.workspace.active();if(workspace==='guest')return null;
+    try{
+      const queued=await this.outbox.pending(workspace),journals=await this.savedManga.pending(workspace);
+      if(this.workspace.active()!==workspace)return null;
+      return this.diagnostics.report(this.status(),queued,journals);
+    }catch(error){
+      if(this.workspace.active()!==workspace)return null;
+      this.diagnostics.capture(error,'pending','indexeddb');return this.diagnostics.report(this.status(),[],[]);
+    }
+  }
+  private async cleanConfirmed():Promise<void> {
+    const items=this.diagnostics.confirmedItems(this.processed);
+    if(!items.length)return;
+    await this.diagnostics.run('outbox-ack','sync-indexeddb',()=>this.outbox.removeProcessed(items));
+    this.diagnostics.cleaned(items);
+  }
+
   private async refreshPending(): Promise<void> {
     const workspace = this.workspace.active();
-    const queued = await this.outbox.pending(workspace);
-    const manga = await this.savedManga.pending(workspace);
+    const queued = await this.diagnostics.run('pending','sync-indexeddb',()=>this.outbox.pending(workspace));
+    const manga = await this.diagnostics.run('pending','manga-indexeddb',()=>this.savedManga.pending(workspace));
     const count = new Set([...queued.map(item=>item.id),...manga.map(item=>`${workspace}:manga-saved-item:${item.id}`)]).size;
     if (this.workspace.active() === workspace) this.pendingState.set(count);
   }

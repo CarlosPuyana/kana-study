@@ -11833,6 +11833,10 @@
   "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.0": "すぎる expresses excess; it uses a verb or adjective stem.",
   "grammar.v2.integration.n5-integration-bridge-9.option.1": "食べすぎる。",
   "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.1": "This construction is well formed.",
-  "profile.syncIncomplete": "Synchronization has not finished. Pending changes are retained; check your connection and try again.",
+  "profile.syncIncomplete": "Synchronization failed. Pending changes are preserved. Try again; if it persists, inspect the diagnostics.",
+  "profile.syncPending": "New changes are pending. Synchronization will continue automatically.",
+  "profile.syncOffline": "Offline. Your changes are preserved and will sync when you reconnect.",
+  "profile.syncDiagnostics": "Synchronization diagnostics",
+  "profile.syncInspect": "Inspect local diagnostics",
   "studyTime.label": "Study time"
 }

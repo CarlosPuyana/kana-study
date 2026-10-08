@@ -133,3 +133,24 @@ Local validation rejects NUL and unpaired surrogates, which PostgreSQL jsonb can
 Page numbers and creation timestamps must be safe integers, matching server validation and numeric
 serialization. The SQL validation script imports the same local validator and shared boundary fixtures
 (requires Node 22.18+ with TypeScript stripping); it checks accepted items through the actual RPC.
+
+## Inspect incomplete synchronization on an existing device
+
+In the authenticated Profile, open **Synchronization diagnostics** and select **Inspect local diagnostics**
+after attempting Sync now. This is an opt-in, memory-only snapshot; it is not uploaded or logged.
+It reports entity type/category, age, attempts, journal association/revision match, whether a server
+response was received, verified remote state and a confirmed operation awaiting outbox cleanup.
+The failure identifies the phase and table/RPC plus a safe error code and redacted technical message.
+Raw server messages, record IDs, user UUIDs, tokens and private payloads never appear. Unknown remote
+state means unverified: a lost response cannot prove whether the server committed until an idempotent
+retry. Reloading clears transient confirmation diagnostics; the durable outbox and Manga journal remain.
+
+`pending` means new work remains and another automatic pass is scheduled, not a network failure.
+`error` means a concrete phase failed; `offline` means no connection. Successfully verified writes are
+removed by matching outbox revision even when another module fails; unverified/replaced operations stay.
+A journal-free Manga outbox retry rechecks the durable operation through the RPC before cleanup.
+No new SQL migration or browser-data reset is required for this synchronization correction.
+
+On mobile after deployment, save on PC, sync on mobile, delete there, sync both, then verify zero Manga
+journals/outbox entries and Synced when all modules succeeded. If two changes remain, inspect their
+categories and failure target/code; do not assume they are Manga. Preserve the browser's stored data.

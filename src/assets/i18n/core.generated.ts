@@ -1253,7 +1253,11 @@ export const es:Record<string,string> = {...shared,...{
   "manga.builtin.preparing": "Preparando manga incluido…",
   "manga.builtin.failed": "No se pudo preparar el manga incluido. Se reintentará al volver a Manga.",
   "vocabulary.shortcuts.space": "Espacio",
-  "profile.syncIncomplete": "La sincronización no ha terminado. Los cambios pendientes se conservan; revisa la conexión y vuelve a intentarlo.",
+  "profile.syncIncomplete": "La sincronización ha fallado. Los cambios pendientes se conservan. Inténtalo de nuevo; si persiste, consulta el diagnóstico.",
+  "profile.syncPending": "Hay cambios nuevos pendientes. La sincronización continuará automáticamente.",
+  "profile.syncOffline": "Sin conexión. Tus cambios se conservan y se sincronizarán al reconectar.",
+  "profile.syncDiagnostics": "Diagnóstico de sincronización",
+  "profile.syncInspect": "Consultar diagnóstico local",
   "studyTime.label": "Tiempo de estudio"
 }};
 export const en:Record<string,string> = {...shared,...{
@@ -2395,7 +2399,11 @@ export const en:Record<string,string> = {...shared,...{
   "manga.builtin.preparing": "Preparing included manga…",
   "manga.builtin.failed": "Could not prepare the included manga. It will be retried when you return to Manga.",
   "vocabulary.shortcuts.space": "Space",
-  "profile.syncIncomplete": "Synchronization has not finished. Pending changes are retained; check your connection and try again.",
+  "profile.syncIncomplete": "Synchronization failed. Pending changes are preserved. Try again; if it persists, inspect the diagnostics.",
+  "profile.syncPending": "New changes are pending. Synchronization will continue automatically.",
+  "profile.syncOffline": "Offline. Your changes are preserved and will sync when you reconnect.",
+  "profile.syncDiagnostics": "Synchronization diagnostics",
+  "profile.syncInspect": "Inspect local diagnostics",
   "studyTime.label": "Study time"
 }};
 export const ca:Record<string,string> = {...shared,...{
@@ -3537,6 +3545,10 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.builtin.preparing": "S’està preparant el manga inclòs…",
   "manga.builtin.failed": "No s’ha pogut preparar el manga inclòs. Es tornarà a intentar quan tornis a Manga.",
   "vocabulary.shortcuts.space": "Espai",
-  "profile.syncIncomplete": "La sincronització no ha acabat. Els canvis pendents es conserven; revisa la connexió i torna-ho a provar.",
+  "profile.syncIncomplete": "La sincronització ha fallat. Els canvis pendents es conserven. Torna-ho a provar; si persisteix, consulta el diagnòstic.",
+  "profile.syncPending": "Hi ha canvis nous pendents. La sincronització continuarà automàticament.",
+  "profile.syncOffline": "Sense connexió. Els canvis es conserven i es sincronitzaran en reconnectar.",
+  "profile.syncDiagnostics": "Diagnòstic de sincronització",
+  "profile.syncInspect": "Consultar diagnòstic local",
   "studyTime.label": "Temps d’estudi"
 }};

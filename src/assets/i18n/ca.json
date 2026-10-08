@@ -11833,6 +11833,10 @@
   "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.0": "すぎる expressa excés; fa servir arrel verbal o adjectival.",
   "grammar.v2.integration.n5-integration-bridge-9.option.1": "食べすぎる。",
   "grammar.v2.integration.n5-integration-bridge-9.optionFeedback.1": "Aquesta construcció està ben formada.",
-  "profile.syncIncomplete": "La sincronització no ha acabat. Els canvis pendents es conserven; revisa la connexió i torna-ho a provar.",
+  "profile.syncIncomplete": "La sincronització ha fallat. Els canvis pendents es conserven. Torna-ho a provar; si persisteix, consulta el diagnòstic.",
+  "profile.syncPending": "Hi ha canvis nous pendents. La sincronització continuarà automàticament.",
+  "profile.syncOffline": "Sense connexió. Els canvis es conserven i es sincronitzaran en reconnectar.",
+  "profile.syncDiagnostics": "Diagnòstic de sincronització",
+  "profile.syncInspect": "Consultar diagnòstic local",
   "studyTime.label": "Temps d’estudi"
 }

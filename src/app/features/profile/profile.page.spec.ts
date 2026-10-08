@@ -17,7 +17,7 @@ describe('Profile V2',()=>{
     syncNow=vi.fn(async()=>true);load=vi.fn(async()=>stats);
     TestBed.configureTestingModule({providers:[provideRouter([]),
       {provide:AuthService,useValue:{authenticated:()=>true,profile:()=>({displayName:'Tester',username:'tester',bio:'Bio',createdAt:'2026-10-01T00:00:00Z'}),initials:()=> 'T',user:()=>({email:'private@example.test'})}},
-      {provide:SyncService,useValue:{syncNow,status:signal('idle'),lastSyncedAt:signal(null),pendingCount:signal(0)}},
+      {provide:SyncService,useValue:{syncNow,status:signal('idle'),lastSyncedAt:signal(null),pendingCount:signal(0),inspectDiagnostics:vi.fn(async()=>({status:'pending',failure:null,pending:[]}))}},
       {provide:ProfileStatsService,useValue:{load}}, {provide:SupabaseClientService,useValue:{getClient:async()=>({rpc})}},
     ]});
   });
@@ -64,7 +64,23 @@ describe('Profile V2',()=>{
     let resolve!:(value:boolean)=>void;syncNow.mockImplementation(()=>new Promise<boolean>(r=>resolve=r));
     const run=f.componentInstance.synchronize();f.detectChanges();
     expect(f.nativeElement.querySelector('.account-actions .primary').disabled).toBe(true);
-    expect(load).not.toHaveBeenCalled();resolve(false);await run;f.detectChanges();
+    expect(load).not.toHaveBeenCalled();(TestBed.inject(SyncService).status as ReturnType<typeof signal<string>>).set('error');resolve(false);await run;f.detectChanges();
     expect(f.nativeElement.querySelector('[role=alert]')).not.toBeNull();expect(load).toHaveBeenCalledTimes(1);
+  });  it.each(['pending','offline'] as const)('does not present %s as a synchronization error',async(status)=>{
+    const f=TestBed.createComponent(ProfilePage);await f.whenStable();
+    (TestBed.inject(SyncService).status as ReturnType<typeof signal<string>>).set(status);syncNow.mockResolvedValue(false);
+    await f.componentInstance.synchronize();f.detectChanges();expect(f.componentInstance.syncError()).toBe(false);
+    expect(f.nativeElement.querySelector('.account [role=alert]')).toBeNull();expect(f.nativeElement.querySelector('.account [role=status]')).not.toBeNull();
   });
+  it('loads diagnostics only on explicit inspection',async()=>{
+    const f=TestBed.createComponent(ProfilePage);await f.whenStable();const inspect=TestBed.inject(SyncService).inspectDiagnostics;
+    expect(inspect).not.toHaveBeenCalled();await f.componentInstance.inspectSync();f.detectChanges();expect(inspect).toHaveBeenCalledTimes(1);
+    expect(f.nativeElement.querySelector('.sync-diagnostic').textContent).not.toContain('private@example.test');
+  });
+  it('clears a manual failure alert after automatic recovery reaches Synced',async()=>{
+    const f=TestBed.createComponent(ProfilePage);await f.whenStable();const status=TestBed.inject(SyncService).status as ReturnType<typeof signal<string>>;
+    status.set('error');syncNow.mockResolvedValue(false);await f.componentInstance.synchronize();f.detectChanges();expect(f.nativeElement.querySelector('.account [role=alert]')).not.toBeNull();
+    status.set('synced');f.detectChanges();expect(f.componentInstance.syncError()).toBe(false);expect(f.nativeElement.querySelector('.account [role=alert]')).toBeNull();
+  });
+
 });
