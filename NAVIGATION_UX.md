@@ -13,7 +13,8 @@ All new styles use existing tokens, focus indicators and 44px header targets.
 
 ## Routes and titles
 
-`navigation-audit.ts` documents the entry points of all 49 public routed screens.
+`navigation-audit.ts` documents the entry points of all public routed screens,
+including `/daily` from Home.
 Its test loads child route definitions without loading page components and compares
 all non-redirect screens against the registry. New screens require a reviewed entry
 point, including programmatic session actions. Redirect aliases/wildcards are exempt.

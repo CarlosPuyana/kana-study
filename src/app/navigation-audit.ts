@@ -5,6 +5,7 @@
 export interface RouteAuditEntry {route:string;entryPoint:string;type:'ui'|'dynamic'|'external-deeplink';}
 export const NAVIGATION_AUDIT:readonly RouteAuditEntry[]=[
   {route:'',entryPoint:'Home / brand',type:'ui'},
+  {route:'daily',entryPoint:'Home My daily study',type:'ui'},
   {route:'settings',entryPoint:'Home settings / More tools',type:'ui'},
   {route:'learn',entryPoint:'Home Learn start panel',type:'ui'},
   {route:'cards',entryPoint:'Home Explore cards',type:'ui'},

@@ -1,0 +1,37 @@
+<main class="page-shell">
+  <app-page-header titleKey="daily.title" backRoute="/" />
+  <section class="daily-summary" aria-labelledby="daily-heading">
+    <span class="eyebrow">{{date()}}</span>
+    <h1 id="daily-heading">{{i18n.t('daily.heading')}}</h1>
+    <p>{{i18n.t('daily.description')}}</p>
+    <fieldset><legend>{{i18n.t('daily.duration')}}</legend><div class="duration-options">@for(minutes of durations;track minutes){<button type="button" [attr.aria-pressed]="planner.duration()===minutes" (click)="planner.duration.set(minutes)">{{i18n.t('daily.minutes',{count:minutes})}}</button>}</div></fieldset>
+    <p class="budget-note">{{i18n.t('daily.budget')}}</p>
+  </section>
+  @if(planner.offline()){<p class="notice" role="status">{{i18n.t('daily.offline')}}</p>}
+  @if(planner.loading()){<p role="status">{{i18n.t('daily.loading')}}</p>}
+  @if(planner.error()){<p class="notice" role="alert">{{i18n.t('daily.error')}} <button type="button" (click)="planner.retry()">{{i18n.t('daily.retry')}}</button></p>}
+  <section aria-labelledby="recommended-heading">
+    <h2 id="recommended-heading">{{i18n.t('daily.recommended')}}</h2>
+    @if(!planner.plan().recommended.length&&!planner.loading()){<p role="status">{{i18n.t('daily.empty')}}</p>}
+    <ol class="activities">@for(activity of planner.plan().recommended;track activity.id){<li class="activity" [class.featured]="$first" [attr.data-activity-id]="activity.id">
+      <span class="order" aria-hidden="true">{{$index+1}}</span><div><small>{{i18n.t('daily.module.'+activity.module)}} · {{i18n.t('daily.state.available')}}</small><h3>{{i18n.t(activity.titleKey)}}</h3>
+      @if(activity.detail){<p>{{detail(activity)}}</p>}<p>{{i18n.t(activity.reasonKey)}}</p>@if(activity.pendingCount){<small>{{i18n.t('daily.pendingCount',{count:activity.pendingCount})}}</small>}
+      @if(activity.reasonKey==='daily.reason.weak'){<p class="local-note">{{i18n.t('daily.localWeakness')}}</p>}
+      <div class="actions">@if(activity.panel){<button type="button" (click)="open(activity)">{{i18n.t('daily.start')}}</button>}@else if(activity.path){<a [routerLink]="activity.path.split('?')[0]" [queryParams]="activity.path.includes('?weak=1')?{weak:1}:null">{{i18n.t('daily.start')}}</a>}</div></div>
+    </li>}</ol>
+  </section>
+  <section aria-labelledby="available-heading"><h2 id="available-heading">{{i18n.t('daily.available')}}</h2>
+    <div class="secondary-grid">@for(activity of planner.plan().available;track activity.id){<article class="activity" [attr.data-activity-id]="activity.id"><div><small>{{i18n.t('daily.module.'+activity.module)}} · {{i18n.t('daily.state.available')}}</small><h3>{{i18n.t(activity.titleKey)}}</h3>@if(activity.detail){<p>{{detail(activity)}}</p>}<p>{{i18n.t(activity.reasonKey)}}</p>
+      @if(activity.panel){<button type="button" (click)="open(activity)">{{i18n.t('daily.start')}}</button>}@else if(activity.path){<a [routerLink]="activity.path.split('?')[0]" [queryParams]="activity.path.includes('?weak=1')?{weak:1}:null">{{i18n.t('daily.start')}}</a>}</div></article>}</div>
+    @if(!planner.plan().available.length){<p>{{i18n.t('daily.noMore')}}</p>}
+  </section>
+  <section aria-labelledby="performed-heading"><h2 id="performed-heading">{{i18n.t('daily.performed')}}</h2><p>{{i18n.t('daily.evidence')}}</p>
+    <ul class="performed">@for(activity of planner.plan().performed;track activity.id){<li><strong>{{i18n.t(activity.titleKey)}}</strong><span>{{i18n.t(activity.completed?'daily.state.completed':'daily.state.practiced')}} · {{i18n.t('daily.recorded',{count:activity.count})}}</span></li>}</ul>
+    @if(!planner.plan().performed.length){<p>{{i18n.t('daily.noPerformed')}}</p>}
+  </section>
+  <section aria-labelledby="pending-heading"><h2 id="pending-heading">{{i18n.t('daily.pending')}}</h2>
+    <ul class="performed">@for(activity of planner.plan().pending;track activity.id){<li><strong>{{i18n.t(activity.titleKey)}}</strong><span>{{i18n.t('daily.state.'+activity.state)}}</span><p>{{i18n.t(activity.reasonKey)}}</p>@if(activity.pendingCount){<small>{{i18n.t('daily.pendingCount',{count:activity.pendingCount})}}</small>}</li>}</ul>
+    @if(!planner.plan().pending.length){<p>{{i18n.t('daily.noPending')}}</p>}
+  </section>
+</main>
+@if(panel();as module){<div class="panel-focus" appModalFocus (modalClosed)="panel.set(null)">@switch(module){@case('kana'){<app-learning-start-panel (closed)="panel.set(null)"/>}@case('kanji'){<app-kanji-start-panel (closed)="panel.set(null)"/>}@case('vocabulary'){<app-vocabulary-start-panel (closed)="panel.set(null)"/>}}</div>}

@@ -28,6 +28,8 @@ import { MangaReviewHistoryService } from './manga-review-history.service';
 import { MANGA_REVIEW_EVENTS_KEY, MangaReviewEvent } from '../models/manga-review.model';
 import { MangaFsrsEvent, MANGA_FSRS_SETTINGS_KEY } from '../models/manga-fsrs.model';
 import { replayMangaFsrs } from './manga-fsrs-scheduler';
+import { signal } from '@angular/core';
+import { DailyStudyPlannerService } from './daily-study-planner.service';
 
 const fs = (globalThis as unknown as {process: {getBuiltinModule: (id: string) => {readFileSync: (path: string, encoding: string) => string}}}).process.getBuiltinModule('fs');
 const sessionMigration = fs.readFileSync('supabase/migrations/202610080005_manga_study_v3.sql', 'utf8');
@@ -87,7 +89,7 @@ describe('account sync reconciliation regressions', () => {
   }};
   function device(user='same-account', realDatabases=false) {
     TestBed.resetTestingModule(); localStorage.clear();queued=new Map();meta=null;
-    TestBed.configureTestingModule({providers:[{provide:MangaSavedSyncService,useValue:{prepare:async()=>{},push:async()=>{},pull:async()=>{}}},{provide:MangaStudySavedRepository,useValue:{pending:async()=>[]}},
+    TestBed.configureTestingModule({providers:[{provide:MangaSavedSyncService,useValue:{prepare:async()=>{},push:async()=>{},pull:async()=>{}}},{provide:MangaStudySavedRepository,useValue:{pending:async()=>[],items:signal([]),loading:signal(false),failed:signal(false)}},
       {provide:SupabaseClientService,useValue:{config:{configured:true},getClient:async()=>client}},
       {provide:DeviceService,useValue:{id:'simulated-device'}},
       {provide:SyncOutboxService,useValue:{markLegacyGuestMapped:async()=>{},
@@ -109,6 +111,18 @@ describe('account sync reconciliation regressions', () => {
   }
   beforeEach(()=>{vi.useFakeTimers();cloud={};fail=null;onRead=null;onWrite=null;writes=[];loseSessionResponse=false;vi.spyOn(navigator,'onLine','get').mockReturnValue(true);});
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
+  it('Daily Study remains a read-only projection through ten actual unchanged sync cycles',async()=>{
+    vi.useRealTimers();vi.stubGlobal('indexedDB',new IDBFactory());vi.stubGlobal('matchMedia',()=>({matches:false,addEventListener:()=>{},removeEventListener:()=>{}}));
+    const d=device('daily-account',true);
+    expect(await d.sync.syncNow()).toBe(true);
+    const planner=TestBed.runInInjectionContext(()=>new DailyStudyPlannerService());TestBed.tick();await planner.refreshDecks();
+    const baseline=writes.length,localWrite=vi.spyOn(d.storage,'set'),enqueue=vi.spyOn(TestBed.inject(SyncOutboxService),'enqueue');
+    for(let cycle=0;cycle<10;cycle++){
+      expect(await d.sync.syncNow()).toBe(true);TestBed.tick();await planner.refreshDecks();expect(planner.plan().recommended.length).toBeGreaterThan(0);
+      expect(queued.size).toBe(0);expect(writes.length).toBe(baseline);
+    }
+    expect(localWrite).not.toHaveBeenCalled();expect(enqueue).not.toHaveBeenCalled();
+  });
   it('keeps the SQL completed-session CHECK compatible with every summary module',()=>{
     expect(sqlSessionModules.sort()).toEqual(Object.keys(summaryModules).sort());
     expect(sessionMigration).toMatch(/add constraint completed_sessions_module_check\s+check\s*\(module in/);

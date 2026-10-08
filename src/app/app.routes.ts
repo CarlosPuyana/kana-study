@@ -6,6 +6,7 @@ import { HomePage } from './features/home/home.page';
 const grammarCopy=()=>inject(TranslationService).loadGrammar();
 
 export const routes: Routes = [
+  { path: 'daily', resolve:{translations:grammarCopy}, data:{titleKey:'daily.title'}, loadComponent:()=>import('./features/daily/daily.page').then(module=>module.DailyPage) },
   { path: '', data: {titleKey: 'navigation.home'}, component: HomePage, title: 'Kana Study' },
   { path: 'settings', data: {titleKey: 'settings.title'}, loadComponent: () => import('./features/settings/settings.page').then(module => module.SettingsPage), title: 'Settings · Kana Study' },
   {
