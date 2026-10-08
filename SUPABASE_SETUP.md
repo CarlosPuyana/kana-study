@@ -16,6 +16,14 @@ The leaderboard shares only display name, username, synchronized study seconds a
 
 Study time sums completed-session `durationSeconds`, rounded total deck `elapsedAnswerMs / 1000`, and RUSH `active_seconds` for finished sessions with at least one completed card. Invalid or negative JSON durations contribute zero. Profiles without activity remain in the ranking with zero time; equal times share a position, ordered by username within ties. Medal count includes normal and RUSH unlocks. No activity beyond the existing synchronized records is counted.
 
+Before synchronizing Grammar sessions, also execute
+`supabase/migrations/202610080004_completed_sessions_grammar.sql` manually in the project's SQL Editor.
+It extends `completed_sessions_module_check` to accept `grammar` alongside `kana`, `flags`, `kanji`
+and `vocabulary`. The replacement is transactional and validates historical rows; sessions, payloads,
+durations, indexes, primary keys, timestamps, grants and RLS remain unchanged. Deploying the frontend
+does not apply this migration. A missing migration causes PostgreSQL `23514`; preserve pending
+operations and retry synchronization after applying it. Session IDs remain stable on retry.
+
 ## 3. Obtain the public browser values
 
 In **Project Settings â†’ API**, copy:

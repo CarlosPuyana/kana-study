@@ -23,6 +23,15 @@ import { IDBFactory } from 'fake-indexeddb';
 import { GRAMMAR_V2_INTEGRATION } from '../../data/grammar/grammar-n5-v2.generated';
 import { ProfileStatsService } from './profile-stats.service';
 import { CardStudyTimer } from './card-study-time';
+import { CompletedSessionSummary } from '../models/learning-session.model';
+
+const fs = (globalThis as unknown as {process: {getBuiltinModule: (id: string) => {readFileSync: (path: string, encoding: string) => string}}}).process.getBuiltinModule('fs');
+const sessionMigration = fs.readFileSync('supabase/migrations/202610080004_completed_sessions_grammar.sql', 'utf8');
+const sqlSessionModules = [...sessionMigration.matchAll(/'([^']+)'/g)].map(match => match[1]);
+// Exhaustive at compile time: a new summary module must also update this contract.
+const summaryModules: Record<NonNullable<CompletedSessionSummary['module']>, true> = {
+  kana: true, flags: true, kanji: true, vocabulary: true, grammar: true,
+};
 
 // ng test initializes this already; direct Vitest runs need the same TestBed.
 if(!getTestBed().platform)getTestBed().initTestEnvironment(BrowserTestingModule,platformBrowserTesting());
@@ -35,6 +44,7 @@ describe('account sync reconciliation regressions', () => {
   let onRead: ((table: string) => Promise<void>) | null;
   let writes: string[];
   let meta: any;
+  let loseSessionResponse: boolean;
   const keys: Record<string, string[]> = {
     study_progress: ['user_id','module','unit_key'], user_preferences: ['user_id','preference_key'],
     deck_card_progress: ['user_id','deck_id','entry_id'], deck_daily_state: ['user_id','deck_id','local_day'],
@@ -56,9 +66,11 @@ describe('account sync reconciliation regressions', () => {
       })().then(resolve,reject),
       upsert: async (rows: any[]) => {
         if(fail===table)return {error:new Error('network')};
+        if(table==='completed_sessions'&&rows.some(row=>!sqlSessionModules.includes(row.module)))return {error:{code:'23514'}};
         writes.push(table);cloud[table]??=[];
         for(const row of rows){const pk=keys[table]??['id'];const index=cloud[table].findIndex(old=>pk.every(k=>old[k]===row[k]));
           const saved=structuredClone({...row,updated_at:'2026-10-08T12:00:00Z'});if(index<0)cloud[table].push(saved);else cloud[table][index]=saved;}
+        if(table==='completed_sessions'&&loseSessionResponse){loseSessionResponse=false;return {error:new Error('response lost after commit')};}
         return {error:null};
       },
     };return query;
@@ -84,8 +96,46 @@ describe('account sync reconciliation regressions', () => {
     TestBed.inject(WorkspaceService).activateUser(user);
     return {sync:TestBed.inject(SyncService),storage:TestBed.inject(StorageService),workspace:TestBed.inject(WorkspaceService),grammar:TestBed.inject(GrammarV2ProgressService)};
   }
-  beforeEach(()=>{vi.useFakeTimers();cloud={};fail=null;onRead=null;writes=[];vi.spyOn(navigator,'onLine','get').mockReturnValue(true);});
+  beforeEach(()=>{vi.useFakeTimers();cloud={};fail=null;onRead=null;writes=[];loseSessionResponse=false;vi.spyOn(navigator,'onLine','get').mockReturnValue(true);});
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
+  it('keeps the SQL completed-session CHECK compatible with every summary module',()=>{
+    expect(sqlSessionModules.sort()).toEqual(Object.keys(summaryModules).sort());
+    expect(sessionMigration).toMatch(/add constraint completed_sessions_module_check\s+check\s*\(module in/);
+    const initial = fs.readFileSync('supabase/migrations/202609300001_local_first_accounts.sql', 'utf8');
+    const initialCheck = initial.match(/create table public.completed_sessions\s*\([\s\S]*?check\s*\(module in\s*\(([^)]+)\)/)?.[1];
+    expect(initialCheck).toBeDefined();
+    const historicalModules = [...initialCheck!.matchAll(/'([^']+)'/g)].map(match => match[1]);
+    expect(sqlSessionModules).toEqual([...historicalModules, 'grammar'].sort());
+  });
+  it.each([...Object.keys(summaryModules), undefined])('synchronizes the supported session module %s',async(module)=>{
+    const d=device();
+    const summary:CompletedSessionSummary={module:module as CompletedSessionSummary['module'],sessionId:'module-contract',
+      completedAt:'2026-10-08T12:00:00.000Z',mode:'quick-practice',exercisesCompleted:1,
+      firstTrySuccesses:1,attempts:1,needsPracticeCount:0,durationSeconds:60};
+    TestBed.inject(SessionHistoryService).record(summary);
+    expect(await d.sync.syncNow()).toBe(true);
+    expect(cloud['completed_sessions']).toHaveLength(1);
+    expect(cloud['completed_sessions'][0]).toMatchObject({module:module??'kana',payload:JSON.parse(JSON.stringify(summary))});
+  });
+  it('prepares Grammar sessions unchanged and retries a lost server ACK without duplicates',async()=>{
+    const d=device(),history=TestBed.inject(SessionHistoryService);
+    const summary:CompletedSessionSummary={module:'grammar',sessionId:'grammar-v2-retry',completedAt:'2026-10-08T12:34:56.789Z',
+      mode:'quick-practice',exercisesCompleted:4,firstTrySuccesses:3,attempts:5,needsPracticeCount:1,durationSeconds:137,
+      grammarTopicIds:['11'],grammarLessonIds:['07'],grammarExerciseIds:['integration-1']};
+    history.record(summary);
+    expect([...queued.values()].find(item=>item.entityKey==='kana-study.completed-sessions.v1')?.payload).toEqual([summary]);
+    loseSessionResponse=true;
+    expect(await d.sync.syncNow()).toBe(false);
+    expect(d.sync.status()).toBe('error');expect(queued.size).toBe(1);
+    expect(cloud['completed_sessions']).toHaveLength(1);
+    expect(cloud['completed_sessions'][0]).toMatchObject({id:summary.sessionId,module:'grammar',completed_at:summary.completedAt,payload:summary});
+    expect(await d.sync.syncNow()).toBe(true);expect(queued.size).toBe(0);
+    expect(writes.filter(table=>table==='completed_sessions')).toHaveLength(2);
+    expect(cloud['completed_sessions']).toHaveLength(1);
+    expect(cloud['completed_sessions'][0].payload).toEqual(summary);
+    const next=device();expect(await next.sync.syncNow()).toBe(true);TestBed.tick();
+    expect(TestBed.inject(SessionHistoryService).sessions()).toEqual([summary]);
+  });
   it('A/B: another device hydrates Grammar V2 and updates the existing UI signal without reload',async()=>{
     let d=device();const c=GRAMMAR_V2_CONCEPTS[0];d.grammar.open(c.id);d.grammar.record(c.id,c.exercises[0].id,0,true);
     expect(await d.sync.syncNow()).toBe(true);
