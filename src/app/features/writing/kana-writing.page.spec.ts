@@ -4,6 +4,7 @@ import { KanaWritingPage } from './kana-writing.page';
 import { KanaStrokesService } from '../../core/services/kana-strokes.service';
 import { KanaCard } from '../../shared/components/kana-card/kana-card';
 import { ALL_KANA } from '../../data/kana';
+import { WeaknessService } from '../../core/services/weakness.service';
 
 describe('Writing entry points and manual practice',()=>{
   beforeEach(()=>{
@@ -19,8 +20,14 @@ describe('Writing entry points and manual practice',()=>{
       expect(f.nativeElement.querySelector('.script-label').textContent).toContain(c.i18n.t('content.'+script));
     }
   });
-  it.each(['hiragana','katakana'] as const)('keeps single-script practice concise: %s',async script=>{
-    const f=TestBed.createComponent(KanaWritingPage),c=f.componentInstance;c.type.set(script);c.start();await f.whenStable();f.detectChanges();expect(f.nativeElement.querySelector('.script-label')).toBeNull();
+  it.each(['hiragana','katakana'] as const)('labels single-script practice: %s',async script=>{
+    const f=TestBed.createComponent(KanaWritingPage),c=f.componentInstance;c.type.set(script);c.start();await f.whenStable();f.detectChanges();expect(f.nativeElement.querySelector('.script-label').textContent).toContain(c.i18n.t('content.'+script));
+  });
+  it('uses the actual Weakness character script even when the configured filter is Hiragana',async()=>{
+    const kana=ALL_KANA.find(k=>k.type==='katakana')!;
+    TestBed.overrideProvider(WeaknessService,{useValue:{items:()=>[kana]}});
+    const f=TestBed.createComponent(KanaWritingPage),c=f.componentInstance;c.weakMode.set(true);c.start();await f.whenStable();f.detectChanges();
+    expect(c.type()).toBe('hiragana');expect(f.nativeElement.querySelector('.script-label').textContent).toContain(c.i18n.t('content.katakana'));
   });
   it('offers script, existing categories and guide configuration',async()=>{
     const f=TestBed.createComponent(KanaWritingPage);await f.whenStable();f.detectChanges();

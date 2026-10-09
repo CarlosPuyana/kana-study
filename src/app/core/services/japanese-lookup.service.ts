@@ -1,9 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 import { DictionaryLookup } from '../models/dictionary.model';
 import { DictionaryRepository } from './dictionary.repository';
 import { DictionaryTerm } from '../models/dictionary.model';
 import { deinflect, Deinflection, inflectedReading, matchesInflectionRules } from './japanese-deinflection.service';
 const japanese=/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]/u;
+/** Read-only reference consumers must not perform import maintenance. */
+export const JAPANESE_LOOKUP_IMPORT_MAINTENANCE=new InjectionToken<boolean>('Japanese lookup import maintenance',{providedIn:'root',factory:()=>true});
 function rankedTerms(terms:DictionaryTerm[]):DictionaryTerm[] {
   const unique=new Map<string,DictionaryTerm>();
   for(const term of [...terms].sort((a,b)=>b.score-a.score || a.sequence-b.sequence)) {
@@ -65,7 +67,7 @@ export function japaneseSegment(text:string,offset:number):string {
 @Injectable({providedIn:'root'})
 export class JapaneseLookupService {
   private readonly repository=inject(DictionaryRepository);
-  constructor(){void this.repository.cleanup().catch(()=>undefined);}
+  constructor(){if(inject(JAPANESE_LOOKUP_IMPORT_MAINTENANCE))void this.repository.cleanup().catch(()=>undefined);}
   lookupAt(text:string,offset:number):Promise<DictionaryLookup> {return this.lookup(text,offset);}
   async lookupSelection(selectedText:string):Promise<DictionaryLookup> {
     const requestedText=selectedText.trim();const metadata=await this.repository.ready();

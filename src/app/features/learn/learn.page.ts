@@ -1,3 +1,4 @@
+import {LearningWritingPrompt} from '../../shared/components/learning-writing-prompt/learning-writing-prompt';
 import { StudyTimer } from '../../shared/components/study-timer/study-timer';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,12 +10,16 @@ import { DailyLearningService } from '../../core/services/daily-learning.service
 
 @Component({
   selector: 'app-learn-page',
-  imports: [StudyTimer, MedalBadge],
+  imports: [StudyTimer, MedalBadge, LearningWritingPrompt],
   templateUrl: './learn.page.html',
   styleUrl: './learn.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LearnPage {
+  readonly drawingOptionsKey=signal('');
+  writingKey():string {return `${this.learning.session()?.id}:${this.learning.currentUnit()?.key}:${this.learning.currentItem()?.appearances}`;}
+  writingOptionsVisible():boolean {return this.learning.currentUnit()?.questionType!=='romaji-to-kana' || this.drawingOptionsKey()===this.writingKey();}
+
   constructor(){inject(DestroyRef).onDestroy(()=>this.learning.clear());}
 
   readonly learning = inject(LearningSessionService);

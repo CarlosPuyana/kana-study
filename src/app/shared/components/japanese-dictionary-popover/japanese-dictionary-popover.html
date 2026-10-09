@@ -1,0 +1,21 @@
+<ng-content/>
+@if(open()){
+  <section #panel class="japanese-dictionary-panel" role="dialog" [attr.aria-label]="i18n.t('grammar.dictionary.title')"
+    [style.left.px]="left()" [style.top.px]="top()" [style.--popover-top]="top()+'px'">
+    <header><strong>{{i18n.t('grammar.dictionary.title')}}</strong><button #closeButton type="button" (click)="close()" [attr.aria-label]="i18n.t('common.close')">×</button></header>
+    <div aria-live="polite">
+      @if(loading()){<p>{{i18n.t('grammar.dictionary.loading')}}</p>}
+      @else if(failed()){<p>{{i18n.t('grammar.dictionary.error')}}</p>}
+      @else if(result();as lookup){
+        @if(lookup.baseForm){<p>{{i18n.t('grammar.dictionary.base')}}: <strong lang="ja">{{lookup.baseForm}}</strong></p>}
+        @if(lookup.terms.length){
+          @for(term of lookup.terms.slice(0,3);track term.id){<article><strong lang="ja">{{term.expression}}</strong><small lang="ja">{{term.reading}}</small><ul>@for(gloss of term.glossaries.slice(0,3);track $index){<li>{{gloss}}</li>}</ul></article>}
+        }@else if(fallbackMeanings().length){
+          <article><strong lang="ja">{{fallback().expression}}</strong><small lang="ja">{{fallback().reading}}</small><ul>@for(meaning of fallbackMeanings();track $index){<li>{{meaning}}</li>}</ul></article>
+        }@else{<p>{{i18n.t(lookup.installed?'grammar.dictionary.noMatch':'grammar.dictionary.notInstalled')}}</p>
+          @if(!lookup.installed){<a routerLink="/manga">{{i18n.t('grammar.dictionary.install')}}</a>}
+        }
+      }
+    </div>
+  </section>
+}

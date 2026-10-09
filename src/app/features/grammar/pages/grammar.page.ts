@@ -1,3 +1,5 @@
+import {GrammarIntendedVocabulary} from '../components/grammar-intended-vocabulary';
+import {JapaneseDictionaryPopover} from '../../../shared/components/japanese-dictionary-popover/japanese-dictionary-popover';
 import { createStudyClock } from '../../../core/services/study-clock';
 import { StudyTimer } from '../../../shared/components/study-timer/study-timer';
 import { safeReturnUrl } from '../../../core/services/return-navigation';
@@ -20,7 +22,7 @@ import { GrammarPracticeComponent } from '../components/grammar-practice';
 import { grammarTopicRound } from '../services/grammar-interactive-catalog';
 import { grammarLessonExercises } from '../models/grammar.model';
 
-@Component({selector:'app-grammar-page',imports:[StudyTimer,GrammarIntegrationComponent,GrammarV2LessonComponent,GrammarPrerequisitesComponent,RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
+@Component({selector:'app-grammar-page',imports:[GrammarIntendedVocabulary,JapaneseDictionaryPopover,StudyTimer,GrammarIntegrationComponent,GrammarV2LessonComponent,GrammarPrerequisitesComponent,RouterLink,FuriganaText,GrammarSidebar,GrammarExerciseComponent,GrammarPracticeComponent],templateUrl:'./grammar.page.html',styleUrls:['./grammar-roadmap.scss','./grammar-topic.scss','./grammar-lesson.scss','./grammar-practice.scss','./grammar.page.scss'],encapsulation:ViewEncapsulation.None,changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'menuKeydown($event)','(document:focusin)':'menuFocus($event)'}})
 export class GrammarPage {
   readonly clock=createStudyClock();
   private exerciseAnswered=false;

@@ -30,7 +30,7 @@ describe('Expanded grammar concept practice',()=>{
  });
  it('keeps the route within a concept until all exercises have been continued, then uses its existing next path',async()=>{
   vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
-  TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t}}]});
+  TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t,language:()=>'es'}}]});
   const harness=await RouterTestingHarness.create(),page=await harness.navigateByUrl('/grammar/n5/10/change-naru',GrammarPage);
   const router=TestBed.inject(Router),ids=page.exercises().map(e=>e.id),seen:string[]=[];
   for(let i=0;i<ids.length;i++){
@@ -42,7 +42,7 @@ describe('Expanded grammar concept practice',()=>{
  });
  it('resets answers and moves keyboard focus to the next exercise control',async()=>{
   vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
-  TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t}}]});
+  TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t,language:()=>'es'}}]});
   const harness=await RouterTestingHarness.create(),page=await harness.navigateByUrl('/grammar/n5/01/sentence-structure-context',GrammarPage);
   const option=harness.routeNativeElement!.querySelector<HTMLButtonElement>('.exercise-option')!;option.click();harness.detectChanges();
   harness.routeNativeElement!.querySelector<HTMLButtonElement>('.check-answer')!.click();harness.detectChanges();

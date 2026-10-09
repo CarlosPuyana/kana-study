@@ -80,7 +80,7 @@ describe('Grammar interactive N5 catalog',()=>{
 });
 
 describe('Grammar interactive answers and completed sessions',()=>{let monotonic=0;
-  beforeEach(()=>{monotonic=0;localStorage.clear();vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),GrammarPracticeSession,{provide:TranslationService,useValue:{t}}]});});
+  beforeEach(()=>{monotonic=0;localStorage.clear();vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),GrammarPracticeSession,{provide:TranslationService,useValue:{t,language:()=>'es'}}]});});
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();});
   function fixtureFor(id:string){const fixture=TestBed.createComponent(GrammarExerciseComponent);fixture.componentRef.setInput('exercise',GRAMMAR_INTERACTIVE.find(e=>e.id===id));fixture.componentRef.setInput('practice',true);fixture.detectChanges();return fixture;}
   it('reports an incorrect answer and solution, waiting for Continue',()=>{

@@ -1370,7 +1370,23 @@ export const es:Record<string,string> = {...shared,...{
   "daily.reason.voluntary": "Puedes practicar voluntariamente sin reiniciar la sesión normal del día.",
   "daily.reason.weak": "Hay dificultades practicables dentro de tu contenido activo.",
   "daily.reason.grammar": "Continúa con una lección N5 pendiente.",
-  "daily.reason.grammarDifficulty": "Esta lección tiene una dificultad activa registrada."
+  "daily.reason.grammarDifficulty": "Esta lección tiene una dificultad activa registrada.",
+  "rush.writingInstructions": "Dibuja tu respuesta. Puedes mostrar la respuesta aunque no hayas dibujado.",
+  "learningWriting.instructions": "Dibuja tu respuesta. Si no puedes dibujar, utiliza los botones para continuar y responder.",
+  "learningWriting.options": "Continuar a las opciones",
+  "learningWriting.skip": "Continuar sin dibujar",
+  "kanji.level.N5": "Kanji N5",
+  "grammar.vocabularyUnavailable": "Significado no disponible",
+  "grammar.vocabularyAll": "Ver todas ({{count}})",
+  "grammar.vocabularyLess": "Mostrar menos",
+  "grammar.dictionary.title": "Diccionario japonés",
+  "grammar.dictionary.loading": "Consultando el diccionario local…",
+  "grammar.dictionary.error": "No se ha podido consultar el diccionario local.",
+  "grammar.dictionary.base": "Forma base",
+  "grammar.dictionary.noMatch": "No hay una coincidencia fiable para este texto.",
+  "grammar.dictionary.notInstalled": "No hay diccionario instalado ni un significado local disponible para este texto.",
+  "grammar.dictionary.install": "Instalar diccionario en Manga",
+  "grammar.dictionary.hint": "Pulsa una palabra para consultar su significado sin salir de la lección."
 }};
 export const en:Record<string,string> = {...shared,...{
   "cards.title": "Browse",
@@ -2624,7 +2640,23 @@ export const en:Record<string,string> = {...shared,...{
   "daily.reason.voluntary": "You can practise voluntarily without restarting today’s normal session.",
   "daily.reason.weak": "There are practicable weaknesses within your active content.",
   "daily.reason.grammar": "Continue a pending N5 lesson.",
-  "daily.reason.grammarDifficulty": "This lesson has a recorded active difficulty."
+  "daily.reason.grammarDifficulty": "This lesson has a recorded active difficulty.",
+  "rush.writingInstructions": "Draw your answer. You can show the answer even without drawing.",
+  "learningWriting.instructions": "Draw your answer. If you cannot draw, use the buttons to continue and answer.",
+  "learningWriting.options": "Continue to the options",
+  "learningWriting.skip": "Continue without drawing",
+  "kanji.level.N5": "N5 Kanji",
+  "grammar.vocabularyUnavailable": "Meaning unavailable",
+  "grammar.vocabularyAll": "Show all ({{count}})",
+  "grammar.vocabularyLess": "Show fewer",
+  "grammar.dictionary.title": "Japanese dictionary",
+  "grammar.dictionary.loading": "Looking up the local dictionary…",
+  "grammar.dictionary.error": "Could not read the local dictionary.",
+  "grammar.dictionary.base": "Base form",
+  "grammar.dictionary.noMatch": "No reliable match for this text.",
+  "grammar.dictionary.notInstalled": "No dictionary is installed and no local meaning is available for this text.",
+  "grammar.dictionary.install": "Install a dictionary in Manga",
+  "grammar.dictionary.hint": "Press a word to look up its meaning without leaving the lesson."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "cards.title": "Navegar",
@@ -3878,5 +3910,21 @@ export const ca:Record<string,string> = {...shared,...{
   "daily.reason.voluntary": "Pots practicar voluntàriament sense reiniciar la sessió normal del dia.",
   "daily.reason.weak": "Hi ha dificultats practicables dins del teu contingut actiu.",
   "daily.reason.grammar": "Continua amb una lliçó N5 pendent.",
-  "daily.reason.grammarDifficulty": "Aquesta lliçó té una dificultat activa registrada."
+  "daily.reason.grammarDifficulty": "Aquesta lliçó té una dificultat activa registrada.",
+  "rush.writingInstructions": "Dibuixa la resposta. Pots mostrar la resposta encara que no hagis dibuixat.",
+  "learningWriting.instructions": "Dibuixa la resposta. Si no pots dibuixar, utilitza els botons per continuar i respondre.",
+  "learningWriting.options": "Continuar a les opcions",
+  "learningWriting.skip": "Continuar sense dibuixar",
+  "kanji.level.N5": "Kanji N5",
+  "grammar.vocabularyUnavailable": "Significat no disponible",
+  "grammar.vocabularyAll": "Veure totes ({{count}})",
+  "grammar.vocabularyLess": "Mostrar menys",
+  "grammar.dictionary.title": "Diccionari japonès",
+  "grammar.dictionary.loading": "Consultant el diccionari local…",
+  "grammar.dictionary.error": "No s’ha pogut consultar el diccionari local.",
+  "grammar.dictionary.base": "Forma de diccionari",
+  "grammar.dictionary.noMatch": "No hi ha cap coincidència fiable per a aquest text.",
+  "grammar.dictionary.notInstalled": "No hi ha cap diccionari instal·lat ni cap significat local disponible per a aquest text.",
+  "grammar.dictionary.install": "Instal·lar un diccionari a Manga",
+  "grammar.dictionary.hint": "Prem una paraula per consultar-ne el significat sense sortir de la lliçó."
 }};

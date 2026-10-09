@@ -20,7 +20,7 @@ describe('Grammar progress UI and complete practice integration', () => {
   beforeEach(() => {
     localStorage.clear(); vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined);
     TestBed.configureTestingModule({providers: [provideRouter([{path: 'grammar', children: GRAMMAR_ROUTES}]),
-      {provide: TranslationService, useValue: {t}}, {provide: SyncOutboxService, useValue: {enqueue: vi.fn().mockResolvedValue(undefined)}}]});
+      {provide: TranslationService, useValue: {t,language:()=> 'es'}}, {provide: SyncOutboxService, useValue: {enqueue: vi.fn().mockResolvedValue(undefined)}}]});
   });
   afterEach(() => { TestBed.resetTestingModule(); vi.restoreAllMocks(); });
   it('shows real 0/94 and starts Continuar at the first semantic concept', async () => {
@@ -90,7 +90,7 @@ describe('Grammar progress UI and complete practice integration', () => {
     initialPage.answer(true); harness.detectChanges();
     // Recreate the app while retaining localStorage, as a browser reload does.
     TestBed.resetTestingModule();
-    TestBed.configureTestingModule({providers: [provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]), {provide:TranslationService,useValue:{t}}, {provide:SyncOutboxService,useValue:{enqueue:vi.fn().mockResolvedValue(undefined)}}]});
+    TestBed.configureTestingModule({providers: [provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]), {provide:TranslationService,useValue:{t,language:()=>'es'}}, {provide:SyncOutboxService,useValue:{enqueue:vi.fn().mockResolvedValue(undefined)}}]});
     const reloaded = await RouterTestingHarness.create(); const page = await reloaded.navigateByUrl('/grammar/n5/10/change-naru', GrammarPage);
     expect(page.exerciseIndex()).toBe(1); expect(reloaded.routeNativeElement!.textContent).toContain('Ejercicio 2 de 6');
   });

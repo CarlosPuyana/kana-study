@@ -52,4 +52,10 @@ describe('KanaWritingCanvas',()=>{
     f.componentInstance.pointerUp(pointer(svg,110,120,1,'pointerup'));resolve([glyph('あ')]);await f.whenStable();
     expect(f.componentInstance.strokes()).toHaveLength(1);
   });
+  it('preserves ink when supplied glyphs arrive and resets for a new occurrence of the same character',async()=>{
+    const f=await fixture(),c=f.componentInstance,svg=f.nativeElement.querySelector('svg');
+    c.pointerDown(pointer(svg,110,120));c.pointerUp(pointer(svg,110,120,1,'pointerup'));
+    f.componentRef.setInput('suppliedGlyphs',[glyph('あ')]);await f.whenStable();expect(c.strokes()).toHaveLength(1);
+    f.componentRef.setInput('resetKey','session:unit:2');await f.whenStable();expect(c.strokes()).toHaveLength(0);
+  });
 });

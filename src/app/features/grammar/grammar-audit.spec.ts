@@ -24,7 +24,7 @@ const sample=(kind:GrammarExerciseKind)=>allExercises.find(e=>e.kind===kind)!;
 const answerFor=(e:GrammarExercise):GrammarAnswer=>({selected:isChoiceExercise(e)?e.answer:null,text:e.kind==='fill-gap'?e.acceptedAnswers[0]:'',sequence:e.kind==='sentence-builder'||e.kind==='sentence-order'?e.solution:[],matches:e.kind==='matching'?Object.fromEntries(e.pairs.map((_,i)=>[i,i])):{}});
 
 describe('Grammar exercise interactions',()=>{
-  beforeEach(()=>TestBed.configureTestingModule({providers:[{provide:TranslationService,useValue:{t:translate}}]}));
+  beforeEach(()=>TestBed.configureTestingModule({providers:[{provide:TranslationService,useValue:{t:translate,language:()=>'es'}}]}));
   afterEach(()=>TestBed.resetTestingModule());
   function respond(component:GrammarExerciseComponent,e:GrammarExercise,correct:boolean){
     if(isChoiceExercise(e))component.select(correct?e.answer:(e.answer+1)%e.optionKeys.length);
@@ -152,7 +152,7 @@ describe('Grammar grouped content and routes',()=>{
     expect(translate(lesson('9').ideaKey)).toContain('Repasar errores');
   });
   it('shows the semantic lesson and its position in Topic 10 navigation',async()=>{
-    vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
+    vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate,language:()=>'es'}}]});
     const harness=await RouterTestingHarness.create();const page=await harness.navigateByUrl('/grammar/n5/10/change-naru',GrammarPage);
     expect(page.lesson()!.concept!.id).toBe('change-naru');expect(page.lesson()!.position).toBe(5);
     expect(harness.routeNativeElement!.querySelectorAll('.topic-subnav-item')).toHaveLength(9);
@@ -165,19 +165,19 @@ describe('Grammar grouped content and routes',()=>{
     const segment=example.segments.find(s=>s.reading)!;expect(fixture.nativeElement.querySelector('ruby').textContent).toBe(segment.text+segment.reading);expect(fixture.nativeElement.querySelector('rt').textContent).toBe(segment.reading);
   });
   it('shows readings and meanings in the V2 nominal examples',async()=>{
-    vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
+    vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate,language:()=>'es'}}]});
     const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/01/state-being-plain',GrammarPage);
     const explanation=harness.routeNativeElement!.querySelector('app-grammar-v2-lesson')!.textContent;
     expect(explanation).toContain('がくせいだ。');expect(explanation).toContain('Es estudiante.');
   });
   it('offers both Kana entry points from Topic 00 with from=grammar',async()=>{
-    vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});
+    vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate,language:()=>'es'}}]});
     const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar/n5/00',GrammarPage);
     const links=harness.routeNativeElement!.querySelectorAll('app-grammar-prerequisites .prerequisites nav a');expect(links).toHaveLength(2);
     expect(links[0].getAttribute('href')).toContain('kana=hiragana');expect(links[1].getAttribute('href')).toContain('kana=katakana');expect(links[0].getAttribute('href')).toContain('from=grammar');
   });
   it.each(['hiragana','katakana'] as const)('preselects %s in the existing Kana module as an unsaved draft',kana=>{
-    const saved=structuredClone(DEFAULT_LEARNING_SELECTION),save=vi.fn();TestBed.configureTestingModule({providers:[provideRouter([]),{provide:TranslationService,useValue:{t:translate}},{provide:SettingsService,useValue:{selection:()=>saved,saveLearningSelection:save}},{provide:ActivatedRoute,useValue:{snapshot:{queryParamMap:convertToParamMap({from:'grammar',kana})}}}]});
+    const saved=structuredClone(DEFAULT_LEARNING_SELECTION),save=vi.fn();TestBed.configureTestingModule({providers:[provideRouter([]),{provide:TranslationService,useValue:{t:translate,language:()=>'es'}},{provide:SettingsService,useValue:{selection:()=>saved,saveLearningSelection:save}},{provide:ActivatedRoute,useValue:{snapshot:{queryParamMap:convertToParamMap({from:'grammar',kana})}}}]});
     const fixture=TestBed.createComponent(SelectionPage);fixture.detectChanges();const draft=fixture.componentInstance.draft();
     expect(Object.values(draft.categories[kana]).every(Boolean)).toBe(true);expect(Object.values(draft.categories[kana==='hiragana'?'katakana':'hiragana']).every(v=>!v)).toBe(true);
     expect(saved).toEqual(DEFAULT_LEARNING_SELECTION);expect(save).not.toHaveBeenCalled();

@@ -15,6 +15,8 @@ export class KanaWritingCanvas {
   /** Optional resolved glyphs let other writing features reuse the same drawing engine. */
   readonly suppliedGlyphs = input<readonly KanaStrokeGlyph[] | null>(null);
   readonly initialStrokes = input<readonly WritingStroke[]>([]);
+  /** A new question can repeat the same character without retaining its drawing. */
+  readonly resetKey = input('');
   readonly i18n = inject(TranslationService);
   private readonly data = inject(KanaStrokesService);
   private readonly destroy = inject(DestroyRef);
@@ -46,8 +48,12 @@ export class KanaWritingCanvas {
   constructor() {
     effect(() => this.guideVisible.set(this.guide()));
     effect(() => {
-      const character = this.character(), supplied = this.suppliedGlyphs(), initial = this.initialStrokes(), generation = ++this.generation;
-      this.clear(); this.strokes.set(initial); this.stopAnimation(); this.glyphs.set([]); this.loading.set(true); this.error.set(false);
+      this.character(); this.resetKey(); const initial = this.initialStrokes();
+      this.clear(); this.strokes.set(initial); this.stopAnimation();
+    });
+    effect(() => {
+      const character = this.character(), supplied = this.suppliedGlyphs(), generation = ++this.generation;
+      this.stopAnimation(); this.glyphs.set([]); this.loading.set(true); this.error.set(false);
       void (supplied ? Promise.resolve(supplied) : this.data.load(character)).then(glyphs => {
         if (generation === this.generation) {this.glyphs.set(glyphs); this.loading.set(false);}
       }).catch(() => {if (generation === this.generation) {this.error.set(true); this.loading.set(false);}});

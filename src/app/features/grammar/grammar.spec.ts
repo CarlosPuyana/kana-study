@@ -67,7 +67,7 @@ describe('Grammar N5 content and practice',()=>{
     expect(GRAMMAR_PRACTICES.at(-1)?.nextPath).toBe('/grammar');
   });
   it('shows the current topic in practice results and starts another attempt with zero answers',()=>{
-    TestBed.configureTestingModule({providers:[provideRouter([]),{provide:TranslationService,useValue:{t:translate}}]});
+    TestBed.configureTestingModule({providers:[provideRouter([]),{provide:TranslationService,useValue:{t:translate,language:()=>'es'}}]});
     const fixture=TestBed.createComponent(GrammarPracticeComponent);
     fixture.componentRef.setInput('practice',GRAMMAR_PRACTICES.find(p=>p.topicId==='09'));fixture.detectChanges();
     const session=fixture.componentInstance.session;session.start();
@@ -103,7 +103,7 @@ describe('Grammar N5 content and practice',()=>{
     session.start();expect(session.score()).toBe(0);expect(session.index()).toBe(0);expect(session.checked()).toBe(false);
   });
   it.each([true,false])('checks a lesson answer once, gives feedback and reveals the correct option (correct=%s)',correct=>{
-    TestBed.configureTestingModule({providers:[{provide:TranslationService,useValue:{t:translate}}]});
+    TestBed.configureTestingModule({providers:[{provide:TranslationService,useValue:{t:translate,language:()=>'es'}}]});
     const fixture=TestBed.createComponent(GrammarExerciseComponent);const exercise=GRAMMAR_LESSONS[0].exercise;
     if(!isChoiceExercise(exercise))throw new Error('Expected a choice exercise');
     fixture.componentRef.setInput('exercise',exercise);fixture.detectChanges();
@@ -118,7 +118,7 @@ describe('Grammar N5 content and practice',()=>{
 });
 
 describe('Grammar navigation',()=>{
-  beforeEach(()=>{vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate}}]});});
+  beforeEach(()=>{vi.spyOn(window,'scrollTo').mockImplementation(()=>{});TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),{provide:TranslationService,useValue:{t:translate,language:()=>'es'}}]});});
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();});
   it('starts with N5 expanded, roadmap selected and all eleven topic links',async()=>{
     const harness=await RouterTestingHarness.create();await harness.navigateByUrl('/grammar',GrammarPage);

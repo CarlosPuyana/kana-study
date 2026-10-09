@@ -11950,5 +11950,21 @@
   "daily.reason.voluntary": "Pots practicar voluntàriament sense reiniciar la sessió normal del dia.",
   "daily.reason.weak": "Hi ha dificultats practicables dins del teu contingut actiu.",
   "daily.reason.grammar": "Continua amb una lliçó N5 pendent.",
-  "daily.reason.grammarDifficulty": "Aquesta lliçó té una dificultat activa registrada."
+  "daily.reason.grammarDifficulty": "Aquesta lliçó té una dificultat activa registrada.",
+  "rush.writingInstructions": "Dibuixa la resposta. Pots mostrar la resposta encara que no hagis dibuixat.",
+  "learningWriting.instructions": "Dibuixa la resposta. Si no pots dibuixar, utilitza els botons per continuar i respondre.",
+  "learningWriting.options": "Continuar a les opcions",
+  "learningWriting.skip": "Continuar sense dibuixar",
+  "kanji.level.N5": "Kanji N5",
+  "grammar.vocabularyUnavailable": "Significat no disponible",
+  "grammar.vocabularyAll": "Veure totes ({{count}})",
+  "grammar.vocabularyLess": "Mostrar menys",
+  "grammar.dictionary.title": "Diccionari japonès",
+  "grammar.dictionary.loading": "Consultant el diccionari local…",
+  "grammar.dictionary.error": "No s’ha pogut consultar el diccionari local.",
+  "grammar.dictionary.base": "Forma de diccionari",
+  "grammar.dictionary.noMatch": "No hi ha cap coincidència fiable per a aquest text.",
+  "grammar.dictionary.notInstalled": "No hi ha cap diccionari instal·lat ni cap significat local disponible per a aquest text.",
+  "grammar.dictionary.install": "Instal·lar un diccionari a Manga",
+  "grammar.dictionary.hint": "Prem una paraula per consultar-ne el significat sense sortir de la lliçó."
 }

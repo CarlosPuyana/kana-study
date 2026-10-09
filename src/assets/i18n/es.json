@@ -11950,5 +11950,21 @@
   "daily.reason.voluntary": "Puedes practicar voluntariamente sin reiniciar la sesión normal del día.",
   "daily.reason.weak": "Hay dificultades practicables dentro de tu contenido activo.",
   "daily.reason.grammar": "Continúa con una lección N5 pendiente.",
-  "daily.reason.grammarDifficulty": "Esta lección tiene una dificultad activa registrada."
+  "daily.reason.grammarDifficulty": "Esta lección tiene una dificultad activa registrada.",
+  "rush.writingInstructions": "Dibuja tu respuesta. Puedes mostrar la respuesta aunque no hayas dibujado.",
+  "learningWriting.instructions": "Dibuja tu respuesta. Si no puedes dibujar, utiliza los botones para continuar y responder.",
+  "learningWriting.options": "Continuar a las opciones",
+  "learningWriting.skip": "Continuar sin dibujar",
+  "kanji.level.N5": "Kanji N5",
+  "grammar.vocabularyUnavailable": "Significado no disponible",
+  "grammar.vocabularyAll": "Ver todas ({{count}})",
+  "grammar.vocabularyLess": "Mostrar menos",
+  "grammar.dictionary.title": "Diccionario japonés",
+  "grammar.dictionary.loading": "Consultando el diccionario local…",
+  "grammar.dictionary.error": "No se ha podido consultar el diccionario local.",
+  "grammar.dictionary.base": "Forma base",
+  "grammar.dictionary.noMatch": "No hay una coincidencia fiable para este texto.",
+  "grammar.dictionary.notInstalled": "No hay diccionario instalado ni un significado local disponible para este texto.",
+  "grammar.dictionary.install": "Instalar diccionario en Manga",
+  "grammar.dictionary.hint": "Pulsa una palabra para consultar su significado sin salir de la lección."
 }
