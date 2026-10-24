@@ -1,0 +1,24 @@
+import {signal} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {CustomConflictRecoveryService} from './custom-conflict-recovery.service';
+import {CustomDeckSyncAdapter} from './custom-deck-sync-adapter';
+import {CUSTOM_DECK_TRANSPORT,CUSTOM_DECK_SYNC_ENABLED} from './custom-deck-sync-transport';
+import {WorkspaceService} from './workspace.service';
+import {CustomRemoteOperation} from '../models/custom-deck-sync.model';
+import {memory} from './lexical-knowledge.fixture';
+import {customCard} from './custom-deck.fixture';
+describe('Read-only recovery of submitted conflict evidence',()=>{
+ let owner:string,workspace:WorkspaceService,service:CustomConflictRecoveryService,op:CustomRemoteOperation,port:any,stored:any,rows:any[];
+ beforeEach(async()=>{localStorage.clear();owner='recovery-a';const card=await customCard();const m=memory(card.deckId,card.id);op={schemaVersion:1,operationId:'rejected-review',action:'review',before:m.event.cardBefore,expectedHead:'parent',changes:[{kind:'review-event',id:m.event.id,payload:m.event,baseRevision:'0'},{kind:'progress',id:card.id,payload:m.progress,baseRevision:'0'}]};
+  stored={user_id:owner,request:op,result:{schemaVersion:1,operationId:op.operationId,status:'conflict',reason:'history-head-conflict',serverRevision:'1',entities:[]}};rows=[{user_id:owner,operation_id:op.operationId,reason:stored.result.reason,evidence:op}];
+  port={principal:()=>owner,apply:vi.fn(),receipt:async()=>({owner,value:structuredClone(stored)}),conflictEvidence:async(_o:string,cursor:string|null)=>({owner,value:cursor?[]:structuredClone(rows)}),conflictResolutions:async()=>({owner,value:[]})};
+  TestBed.configureTestingModule({providers:[{provide:CUSTOM_DECK_SYNC_ENABLED,useValue:signal(true)},{provide:CUSTOM_DECK_TRANSPORT,useValue:port},{provide:CustomDeckSyncAdapter,useValue:{inspectRemote:async()=>({entities:[{kind:'card',id:card.id,payload:card,deleted:false}],confirmations:[]})}}]});workspace=TestBed.inject(WorkspaceService);workspace.activateUser(owner);service=TestBed.inject(CustomConflictRecoveryService);
+ });
+ afterEach(()=>{TestBed.resetTestingModule();localStorage.clear();});
+ it('returns exact submitted snapshots and times but explicitly leaves unsent tail unknown',async()=>{const result=await service.inspect();expect(result.coverage).toBe('observed-submitted-operations');expect(result.consistentSnapshot).toBe(false);expect(result.conflicts[0].operation).toEqual(op);expect(result.conflicts[0].events[0].elapsedAnswerMs).toBe(1000);expect(result.conflicts[0].missingParents).toEqual(['parent']);expect(result.conflicts[0].localTail).toBe('unknown');expect(result.conflicts[0].applied).toBe(false);expect(port.apply).not.toHaveBeenCalled();});
+ it('rejects a foreign owner before returning any evidence',async()=>{rows[0].user_id='other';await expect(service.inspect()).rejects.toThrow();expect(port.apply).not.toHaveBeenCalled();});
+ it('independently checks the original receipt instead of trusting the conflict body',async()=>{stored=structuredClone(stored);stored.request.operationId='different';await expect(service.inspect()).rejects.toThrow();});
+ it('rejects duplicate/non-progressing conflict pages',async()=>{port.conflictEvidence=async()=>({owner,value:structuredClone(rows)});await expect(service.inspect()).rejects.toThrow();});
+ it('A-B-A during a read invalidates the result without any mutation',async()=>{const original=port.receipt;port.receipt=async()=>{const r=await original();workspace.activateUser('b');workspace.activateUser(owner);return r;};await expect(service.inspect()).rejects.toThrow();expect(port.apply).not.toHaveBeenCalled();});
+ it('does not accept a forged accepted resolution receipt',async()=>{const resolution=structuredClone(stored);resolution.request={...op,operationId:'resolution',resolvesOperationId:op.operationId};resolution.result={...resolution.result,status:'accepted',operationId:'resolution'};port.conflictResolutions=async()=>({owner,value:[resolution]});await expect(service.inspect()).rejects.toThrow();});
+});

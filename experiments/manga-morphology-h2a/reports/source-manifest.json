@@ -1,0 +1,32 @@
+[
+  {
+    "path": "resources/jmdict.go",
+    "url": "https://raw.githubusercontent.com/yomidevs/yomitan-import/d2d4722ed2a22086be4dad214711012112a66706/jmdict.go",
+    "sha256": "58d044b0ce95f9b29c58fc88cc0f3b9a3f073ff80cec9b458dc20584594d65b4"
+  },
+  {
+    "path": "resources/jmdict_glossary.go",
+    "url": "https://raw.githubusercontent.com/yomidevs/yomitan-import/d2d4722ed2a22086be4dad214711012112a66706/jmdict_glossary.go",
+    "sha256": "732346d69e41cddadfce34f803e733f435bb01d83212b4d70db0d959da2f510d"
+  },
+  {
+    "path": "resources/jmdict_headword.go",
+    "url": "https://raw.githubusercontent.com/yomidevs/yomitan-import/d2d4722ed2a22086be4dad214711012112a66706/jmdict_headword.go",
+    "sha256": "09d106d1d68b0d6e7f9b17189d9fe0145ef86ff205ff91d26535b4ac6a984cf4"
+  },
+  {
+    "path": "resources/yomitan-go.mod",
+    "url": "https://raw.githubusercontent.com/yomidevs/yomitan-import/d2d4722ed2a22086be4dad214711012112a66706/go.mod",
+    "sha256": "f4423c7673c953bd6a267210cb79ce2b6439a9f9e5dc69901e1d5dab1ff096c7"
+  },
+  {
+    "path": "resources/jmdict-go.go",
+    "url": "https://raw.githubusercontent.com/yomidevs/jmdict-go/36b8b64ae145/jmdict.go",
+    "sha256": "2b690bb3b150e7abc4867703c8f9f3bdef7cda97439e14b4c4a152f375d2c647"
+  },
+  {
+    "path": "licenses/lindera-LICENSE",
+    "url": "https://raw.githubusercontent.com/lindera/lindera/v6.2.0/LICENSE",
+    "sha256": "d37249886de3136db31717f15f6ade215a36fbed1c782381e38b2bf6047e8ec4"
+  }
+]

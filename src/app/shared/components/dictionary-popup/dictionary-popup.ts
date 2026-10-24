@@ -1,6 +1,7 @@
 import {MangaStudySavedRepository} from '../../../core/services/manga-study-saved.repository';
+import { NgTemplateOutlet } from '@angular/common';
 import {WorkspaceService} from '../../../core/services/workspace.service';
-import { Component, computed, effect, ElementRef, HostListener, OnDestroy, afterNextRender, inject, input, output, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, HostListener, OnDestroy, afterNextRender, afterRenderEffect, inject, input, output, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslationService } from '../../../core/services/translation.service';
 import { DictionaryLookup, OcrLookupPoint } from '../../../core/models/dictionary.model';
@@ -11,18 +12,27 @@ import {MangaStudyMatch} from '../../../core/models/manga-study.model';
 import {safeReturnUrl} from '../../../core/services/return-navigation';
 import { MangaContextLocation, MangaContextMode, MangaStudyExplanation, MangaTranslationResult } from '../../../core/models/manga-context.model';
 import { MangaGrammarReference } from './manga-grammar-reference';
+import { MangaDeckReview } from '../../../features/manga/manga-deck-review';
+import { MANGA_DECK_ASSISTED_ENABLED } from '../../../core/services/manga-deck-gate';
+import { CUSTOM_DECKS_ENABLED } from '../../../core/services/custom-deck.repository';
 @Component({
-  selector:'app-dictionary-popup',imports:[RouterLink,MangaGrammarReference],styleUrl:'./dictionary-popup.scss',
+  selector:'app-dictionary-popup',imports:[RouterLink,MangaGrammarReference,MangaDeckReview,NgTemplateOutlet],styleUrl:'./dictionary-popup.scss',
   template:`<div class="backdrop" (click)="closed.emit()"></div>
-    <section #dialog class="dictionary-sheet" role="dialog" aria-modal="true" [attr.aria-label]="i18n.t('dictionary.title')" [style.left.px]="left()" [style.top.px]="top()" (pointerdown)="$event.stopPropagation()" (click)="$event.stopPropagation()">
+    <section #dialog class="dictionary-sheet" [class.quick-add]="quickMode()" role="dialog" aria-modal="true" [attr.aria-label]="i18n.t(quickMode()?'manga.deck.title':'dictionary.title')" [style.left.px]="left()" [style.top.px]="top()" (pointerdown)="$event.stopPropagation()" (click)="$event.stopPropagation()">
       <button #close class="close" [attr.aria-label]="i18n.t('common.close')" (click)="closed.emit()">×</button>
       <nav class="tabs" [attr.aria-label]="i18n.t('manga.assist.tabs')">
         <button [attr.aria-pressed]="tab()==='word'" (click)="tab.set('word')">{{i18n.t('manga.assist.word')}}</button>
         <button [attr.aria-pressed]="tab()==='context'" (click)="tab.set('context')">{{i18n.t('manga.assist.context')}}</button>
         <button [attr.aria-pressed]="tab()==='grammar'" (click)="tab.set('grammar')">{{i18n.t('manga.grammar.title')}}</button>
       </nav>
-      @if(isSelection()){<small>{{i18n.t('manga.assist.selectedText')}}</small><p class="ocr-context selected-text">{{selectedText()}}</p>}
+      @if(isSelection()){<small [hidden]="quickMode()">{{i18n.t('manga.assist.selectedText')}}</small><p class="ocr-context selected-text" [hidden]="quickMode()">{{selectedText()}}</p>}
+      @if(quickMode() && context();as point){
+        <div [hidden]="tab()!=='word'">
+          <app-manga-deck-review [point]="point" [lookup]="result()" [location]="location()" [volumeTitle]="volumeTitle()" [savedItemId]="isSaved()?savedCandidate()?.id:undefined" (saved)="completeCard()" (cancelled)="closeQuickAdd()" />
+        </div>
+      }
       @if(tab()==='word'){
+        <ng-template #dictionaryContent>
         @if (loading()) { <p role="status">{{i18n.t('common.loading')}}</p> }
         @else if (failed()) { <p role="alert">{{i18n.t('dictionary.lookupError')}}</p> }
         @else if (!result().installed) { <p>{{i18n.t('dictionary.missing')}}</p><a routerLink="/manga">{{i18n.t('dictionary.library')}}</a> }
@@ -40,9 +50,11 @@ import { MangaGrammarReference } from './manga-grammar-reference';
             </details>
           }
           @if(interpretations().length){<details><summary>{{i18n.t('manga.assist.interpretations')}}</summary>@for(term of interpretations();track term.id){<article><h3>{{term.expression}} · {{term.reading}}</h3><ul>@for(glossary of term.glossaries;track $index){<li>{{glossary}}</li>}</ul></article>}</details>}
-          @if(studyMatch().vocabulary || studyMatch().kanji.length || savedCandidate()){
+          <a class="dictionary-source" routerLink="/manga">{{i18n.t('dictionary.title')}}</a>
+          @if(studyMatch().vocabulary || studyMatch().kanji.length || savedCandidate() || canAdd()){
             <section class="study-integration" aria-labelledby="manga-study-title">
               <h3 id="manga-study-title">{{i18n.t('manga.study.title')}}</h3>
+              @if(canAdd()){<button #addToDeck class="add-to-deck" (click)="openQuickAdd()">＋ {{i18n.t('manga.deck.addAction')}}</button>}
               @if(savedCandidate()){
                 <div class="saved-actions">
                   @if(isSaved()){<span role="status">✓ {{i18n.t('manga.saved.saved')}}</span><button [disabled]="saving()" (click)="confirmRemove.set(true)">{{i18n.t('manga.saved.remove')}}</button>}
@@ -79,6 +91,11 @@ import { MangaGrammarReference } from './manga-grammar-reference';
             </section>
           }
         }
+        </ng-template>
+        @if(!quickMode()){
+          <ng-container [ngTemplateOutlet]="dictionaryContent" />
+          @if(canAdd() && !result().terms.length){<section class="study-integration"><h3>{{i18n.t('manga.study.title')}}</h3><button #addToDeck class="add-to-deck" (click)="openQuickAdd()">＋ {{i18n.t('manga.deck.addAction')}}</button></section>}
+        }
       } @else if(tab()==='context') {
         <h2>{{i18n.t('manga.assist.inContext')}}</h2>
         <p class="ocr-context">{{highlight().before}}<mark>{{highlight().selected}}</mark>{{highlight().after}}</p>
@@ -96,6 +113,19 @@ import { MangaGrammarReference } from './manga-grammar-reference';
     </section>`,
 })
 export class DictionaryPopup implements OnDestroy {
+  readonly cardAdded=output<void>();
+  private addedCard=false;
+  completeCard():void{this.addedCard=true;this.cardAdded.emit();}
+  readonly canAdd=computed(()=>this.assistedEnabled()&&this.customEnabled()&&!this.loading()&&!this.failed()&&!!this.context());
+  private readonly requestedCard=signal<string|null>(null);
+  private readonly cardScope=computed(()=>JSON.stringify([this.context(),this.location(),this.workspace.activationRevision()]));
+  readonly quickMode=computed(()=>this.canAdd()&&this.requestedCard()===this.cardScope());
+  private readonly addToDeck=viewChild<ElementRef<HTMLButtonElement>>('addToDeck');
+  private readonly restoreDictionaryFocus=signal(false);
+  openQuickAdd():void{if(this.canAdd()){this.requestedCard.set(this.cardScope());this.tab.set('word');}}
+  closeQuickAdd():void{this.requestedCard.set(null);this.restoreDictionaryFocus.set(true);}
+  readonly assistedEnabled=inject(MANGA_DECK_ASSISTED_ENABLED);
+  readonly customEnabled=inject(CUSTOM_DECKS_ENABLED);
   readonly i18n=inject(TranslationService);readonly assistant=inject(MangaContextService);
   private readonly integration=inject(MangaStudyIntegrationService);readonly audio=inject(JapaneseAudioService);
   readonly studyMatch=computed<MangaStudyMatch>(()=>this.loading()||this.failed()?{kanji:[],audioAvailable:false,writingAvailable:false}:this.integration.match(this.result()));
@@ -115,7 +145,13 @@ export class DictionaryPopup implements OnDestroy {
   readonly translation=signal<MangaTranslationResult|null>(null);readonly study=signal<MangaStudyExplanation|null>(null);
   private controller:AbortController|null=null;private readonly previousFocus=document.activeElement;
   private readonly close=viewChild<ElementRef<HTMLButtonElement>>('close');private readonly dialog=viewChild<ElementRef<HTMLElement>>('dialog');
-  constructor(){effect(()=>{this.savedCandidate();this.workspace.active();this.confirmRemove.set(false);this.saveError.set(false);});afterNextRender(()=>this.close()?.nativeElement.focus());effect(()=>{const entryId=this.studyMatch().vocabulary?.id;if(this.playingEntry && entryId!==this.playingEntry){this.audio.stop();this.playingEntry=null;this.audioRequested.set(false);}});}
+  constructor(){
+    effect(()=>{if(this.loading()||this.failed()||this.requestedCard()!==this.cardScope())this.requestedCard.set(null);});
+    effect(()=>{this.savedCandidate();this.workspace.active();this.confirmRemove.set(false);this.saveError.set(false);});
+    afterNextRender(()=>this.close()?.nativeElement.focus());
+    afterRenderEffect(()=>{if(this.restoreDictionaryFocus()&&!this.quickMode()&&this.addToDeck()){this.addToDeck()!.nativeElement.focus();this.restoreDictionaryFocus.set(false);}});
+    effect(()=>{const entryId=this.studyMatch().vocabulary?.id;if(this.playingEntry && entryId!==this.playingEntry){this.audio.stop();this.playingEntry=null;this.audioRequested.set(false);}});
+  }
   async listen():Promise<void>{const entry=this.studyMatch().vocabulary;if(!entry||!this.studyMatch().audioAvailable||this.audio.state()==='loading')return;this.playingEntry=entry.id;this.audioRequested.set(true);await this.audio.play(entry.id);}
   isSelection():boolean {const point=this.context();return point?point.mode==='selection':this.result().mode==='selection';}
   selectedText():string {return this.context()?.selectedText??this.result().requestedText??this.result().selectedText??this.result().surface??this.result().query;}
@@ -141,10 +177,17 @@ export class DictionaryPopup implements OnDestroy {
   }
   cancel():void{this.controller?.abort();this.controller=null;this.busy.set(false);}
   left():number{return Math.max(8,Math.min(this.x()+10,window.innerWidth-388));}
-  top():number{return Math.max(8,Math.min(this.y()+12,window.innerHeight-Math.min(440,window.innerHeight*.65)-8));}
+  top():number{return Math.max(8,Math.min(this.y()+12,window.innerHeight-(this.quickMode()?Math.min(560,window.innerHeight*.85):Math.min(440,window.innerHeight*.65))-8));}
+  private focusable(control:HTMLElement):boolean{
+    if(control.closest('[hidden]'))return false;
+    for(let parent=control.parentElement;parent&&parent!==this.dialog()?.nativeElement;parent=parent.parentElement){
+      if(parent.tagName==='DETAILS'&&!parent.hasAttribute('open')&&parent.querySelector('summary')!==control)return false;
+    }
+    return true;
+  }
   @HostListener('document:keydown',['$event']) key(event:KeyboardEvent):void {
     if(event.key==='Escape'){event.preventDefault();event.stopPropagation();this.closed.emit();}
-    if(event.key==='Tab'){const controls=Array.from(this.dialog()?.nativeElement.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],summary,input:not(:disabled)')??[]);const first=controls[0],last=controls.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}}
+    if(event.key==='Tab'){const controls=Array.from(this.dialog()?.nativeElement.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],summary,input:not(:disabled),select:not(:disabled),textarea:not(:disabled)')??[]).filter(control=>this.focusable(control));const first=controls[0],last=controls.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}}
   }
-  ngOnDestroy():void{this.cancel();if(this.audioRequested())this.audio.stop();if(this.previousFocus instanceof HTMLElement && this.previousFocus.isConnected)this.previousFocus.focus();}
+  ngOnDestroy():void{this.cancel();if(this.audioRequested())this.audio.stop();if(!this.addedCard&&this.previousFocus instanceof HTMLElement && this.previousFocus.isConnected)this.previousFocus.focus();}
 }

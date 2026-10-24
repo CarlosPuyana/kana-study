@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { DeckSettings, NewCardOrder, StudyDeck } from '../models/deck.model';
+import { DeckSettings, NewCardOrder } from '../models/deck.model';
+import { DeckDefinition } from '../models/deck-catalog.model';
 import { StorageService, workspaceStorageSignal } from './storage.service';
 
 const STORAGE_KEY = 'kana-study.deck-settings.v1';
@@ -12,8 +13,8 @@ export class DeckSettingsService {
   private readonly state = workspaceStorageSignal<StoredDeckSettings>(() => this.storage.get(STORAGE_KEY, {}));
   readonly all = this.state.asReadonly();
 
-  settingsFor(deck: StudyDeck): DeckSettings {
-    return this.state()[deck.id] ?? deck.settings;
+  settingsFor(deck: DeckDefinition): DeckSettings {
+    return deck.id.startsWith('md-') ? deck.settings : this.state()[deck.id] ?? deck.settings;
   }
 
   save(deckId: string, settings: DeckSettings): boolean {

@@ -1,0 +1,101 @@
+# id|category|difficulty|text|morpheme boundaries (space-free)|focus|lemma|lemma reading|surface reading|coarse POS|reference classification|rationale
+v01|negative|easy|食べなかった|食べ なかっ た|食べ|食べる|たべる|たべ|動詞|verified|Ichidan stem plus negative-past auxiliaries; not lemma 食べない.
+v02|literary-negative|hard|負けぬ|負け ぬ|負け|負ける|まける|まけ|動詞|verified|Negative ぬ; distinguish the verb from its auxiliary.
+v03|irregular|hard|来ました|来 まし た|来|来る|くる|き|動詞|verified|Irregular kuru: surface reading ki differs from dictionary kuru.
+v04|polite|easy|読みました|読み まし た|読み|読む|よむ|よみ|動詞|verified|Godan mu polite stem.
+v05|past|easy|書いた|書い た|書い|書く|かく|かい|動詞|verified|Godan ku i-onbin, not 書いる.
+v06|past|easy|泳いだ|泳い だ|泳い|泳ぐ|およぐ|およい|動詞|verified|Godan gu voiced past.
+v07|past|easy|話した|話し た|話し|話す|はなす|はなし|動詞|verified|Godan su stem: hanashi retains the lexical lemma hanasu.
+v08|past|hard|待った|待っ た|待っ|待つ|まつ|まっ|動詞|verified|Sokuon: tsu stem.
+v09|past|hard|買った|買っ た|買っ|買う|かう|かっ|動詞|verified|Sokuon of a godan u verb; recover the lemma 買う.
+v10|past|hard|帰った|帰っ た|帰っ|帰る|かえる|かえっ|動詞|verified|Godan ru rather than ichidan.
+v11|past|hard|死んだ|死ん だ|死ん|死ぬ|しぬ|しん|動詞|verified|Nasal onbin of a godan nu verb; recover 死ぬ.
+v12|past|hard|遊んだ|遊ん だ|遊ん|遊ぶ|あそぶ|あそん|動詞|verified|Nasal onbin of a godan bu verb; recover 遊ぶ.
+v13|te-form|easy|飲んで|飲ん で|飲ん|飲む|のむ|のん|動詞|verified|Nasal onbin of a godan mu verb; recover 飲む.
+v14|irregular|hard|行った|行っ た|行っ|行く|いく|いっ|動詞|verified|Exceptional iku past, no generic ku->ita.
+v15|irregular|hard|した|し た|し|する|する|し|動詞|verified|Suru irregular stem.
+v16|irregular|hard|来ない|来 ない|来|来る|くる|こ|動詞|verified|Kuru negative stem ko.
+v17|potential|hard|食べられる|食べ られる|食べ|食べる|たべる|たべ|動詞|ambiguous|Auxiliary cannot alone disambiguate potential versus passive senses.
+v18|causative|hard|読ませた|読ま せ た|読ま|読む|よむ|よま|動詞|verified|Godan causative, lexical root yomu.
+v19|volitional|hard|書こう|書こ う|書こ|書く|かく|かこ|動詞|verified|Godan volitional stem.
+v20|progressive|hard|食べている|食べ て いる|食べ|食べる|たべる|たべ|動詞|verified|Lexical root plus progressive auxiliaries, count root once.
+a01|adjective|easy|高かった|高かっ た|高かっ|高い|たかい|たかかっ|形容詞|verified|I-adjective past.
+a02|adjective|easy|安くない|安く ない|安く|安い|やすい|やすく|形容詞|verified|I-adjective negative.
+a03|adjective|easy|寒くなかった|寒く なかっ た|寒く|寒い|さむい|さむく|形容詞|verified|Negative-past auxiliary chain.
+a04|adjective|hard|よかった|よかっ た|よかっ|よい|よい|よかっ|形容詞|verified|Surface lemma よい; evidence needed before merging with いい.
+a05|adjective|hard|いい|いい|いい|いい|いい|いい|形容詞|ambiguous|Do not assume same homograph group as every 良い usage.
+a06|adjective|hard|きれいだった|きれい だっ た|きれい|きれい|きれい|きれい|名詞|verified|Na adjective stem, not i-adjective.
+a07|adjective|hard|嫌いではない|嫌い で は ない|嫌い|嫌い|きらい|きらい|名詞|verified|Na-adjective classification in IPADIC uses noun stem.
+a08|adjective|easy|新しくて|新しく て|新しく|新しい|あたらしい|あたらしく|形容詞|verified|I adjective linking form.
+a09|adjective|easy|忙しかった|忙しかっ た|忙しかっ|忙しい|いそがしい|いそがしかっ|形容詞|verified|I-adjective past stem; remove the past ending rather than kanji.
+a10|adjective|hard|強そうだ|強 そう だ|強|強い|つよい|つよ|形容詞|verified|Appearance suffix is not part of lexical adjective.
+n01|homophone|hard|橋|橋|橋|-|-|-|名詞|ambiguous|Has hi/kyou readings in bundled lexicon; no context to select one.
+n02|homophone|hard|箸|箸|箸|箸|はし|はし|名詞|verified|Different written entry from 橋; never merge on hashi.
+n03|homograph|hard|生|生|生|-|-|-|名詞|ambiguous|nama/ki/sei/shou/ubu require context and sense restrictions.
+n04|variant|hard|ここ|ここ|ここ|ここ|ここ|ここ|名詞|verified|Bundled authoritative entry 1288810 also lists 此処; not reading-only equivalence.
+n05|variant|hard|此処|此処|此処|此処|ここ|ここ|名詞|verified|Same entry evidence as ここ; preserve spelling.
+n06|noun|easy|猫|猫|猫|猫|ねこ|ねこ|名詞|verified|Common noun cat; no invented translation needed.
+n07|noun|easy|犬|犬|犬|犬|いぬ|いぬ|名詞|verified|Common noun dog.
+n08|homograph|hard|上手|上手|上手|-|-|-|名詞|ambiguous|jouzu/kamite/uwate are not interchangeable.
+n09|homograph|hard|人気|人気|人気|-|-|-|名詞|ambiguous|ninki/hitoke cannot be settled by spelling alone.
+n10|homograph|hard|今日|今日|今日|-|-|-|名詞|ambiguous|kyou/konnichi context unspecified.
+f01|particle|easy|は|は|は|は|は|は|助詞|excluded|Function particle is retained in analysis but not a vocabulary proposal.
+f02|particle|easy|を|を|を|を|を|を|助詞|excluded|Object particle; orthographic reading wo versus phonetic o kept distinct.
+f03|particle|hard|へ|へ|へ|へ|へ|へ|助詞|excluded|Particle has orthographic he versus pronunciation e.
+f04|consecutive-particles|hard|には|に は|には|-|-|-|-|excluded|Do not invent a lexical word for consecutive particles.
+f05|consecutive-particles|hard|からは|から は|からは|-|-|-|-|excluded|Two function particles, no compound vocabulary identity.
+f06|consecutive-particles|hard|とだけ|と だけ|とだけ|-|-|-|-|excluded|Quoted/limit particles; not a lexical entry inferred from adjacency.
+f07|auxiliary|hard|ました|まし た|ました|-|-|-|-|excluded|Polite/past auxiliaries, not an independent lemma for a card.
+f08|auxiliary|hard|なかった|なかっ た|なかった|-|-|-|-|excluded|Negative-past auxiliary sequence out of context.
+f09|interjection|easy|はい|はい|はい|はい|はい|はい|感動詞|verified|Acknowledgement interjection is not excluded just because short.
+f10|interjection|hard|えっ|えっ|えっ|えっ|えっ|えっ|感動詞|ambiguous|Expressive form; isolated function/reading uncertain.
+c01|colloquial|hard|食べちゃった|食べ ちゃっ た|食べ|食べる|たべる|たべ|動詞|verified|Contraction of te shimatta; lexical root only.
+c02|colloquial|hard|読んでる|読ん でる|読ん|読む|よむ|よん|動詞|verified|Progressive contraction, not a new lemma 読んでる.
+c03|colloquial|hard|わかんない|わかん ない|わかんない|-|-|-|-|ambiguous|Colloquial contraction needs a validated rule, not suffix guessing.
+c04|colloquial|hard|行かなきゃ|行か なきゃ|行か|行く|いく|いか|動詞|verified|Root survives contracted obligation.
+c05|colloquial|hard|すげえ|すげえ|すげえ|-|-|-|-|ambiguous|Cannot silently normalize colloquial e-vowel to すごい.
+c06|colloquial|hard|知らねえ|知ら ねえ|知ら|知る|しる|しら|動詞|verified|Lexical root known; colloquial negative remains separate.
+c07|onomatopoeia|hard|ドキドキ|ドキドキ|ドキドキ|ドキドキ|どきどき|どきどき|副詞|verified|Documented onomatopoeia; no blanket katakana exclusion.
+c08|onomatopoeia|hard|わくわく|わくわく|わくわく|わくわく|わくわく|わくわく|副詞|verified|Documented mimetic form.
+c09|onomatopoeia|hard|ザザザッ|?|ザザザッ|-|-|-|-|unknown|Creative sound sequence has no certified lexeme in reference.
+c10|interjection|hard|うわあああ|?|うわあああ|-|-|-|-|ambiguous|Expressive elongation is not silently contracted.
+e01|compound|hard|そういう|そう いう|そういう|そういう|そういう|そういう|-|verified|Lexical expression may span morphemes; segmentation is a separate metric.
+e02|compound|hard|ということ|と いう こと|ということ|-|-|-|-|ambiguous|Quotation/nominalization needs structural context, not concatenation.
+e03|compound|hard|気をつける|気 を つける|気をつける|気をつける|きをつける|きをつける|-|verified|Multiword expression; do not count whole and subwords as the same unit.
+e04|proper-name|hard|春さん|春 さん|春|-|-|-|-|ambiguous|Common noun can be a person's name in this context.
+e05|proper-name|hard|光さん|光 さん|光|-|-|-|-|ambiguous|Name reading cannot be inferred as hikaru/hikari automatically.
+e06|proper-name|hard|東京|東京|東京|-|-|-|名詞|excluded|Geographical proper name; excluded by proposed vocabulary policy.
+e07|proper-name|hard|田中|田中|田中|-|-|-|名詞|excluded|Family name is not a verified general vocabulary candidate.
+e08|compound|hard|お母さん|お母さん|お母さん|お母さん|おかあさん|おかあさん|名詞|verified|Lexicalized honorific noun, not arbitrary prefix merging.
+e09|compound|hard|取り戻した|取り戻し た|取り戻し|取り戻す|とりもどす|とりもどし|動詞|verified|Compound verb is not automatically split into independent counts.
+e10|compound|hard|一人|一 人|一人|-|-|-|-|ambiguous|hitori/ichinin depend on use; counting segmentation differs.
+o01|vertical-lines|hard|食\nべなかった|?|食\nべなかった|-|-|-|-|ambiguous|No evidence that separate OCR lines belong to one word.
+o02|blocks|hard|来\nました|?|来\nました|-|-|-|-|ambiguous|Do not bridge line/block boundaries without extraction evidence.
+o03|ocr-error|hard|百合姫谷も|?|百合姫谷も|-|-|-|-|ambiguous|OCR ambiguous sequence cannot certify names or lexical segmentation.
+o04|ocr-error|hard|食ベる|?|食ベる|-|-|-|-|ambiguous|Katakana ベ mixed into inflection; no automatic OCR repair.
+o05|ocr-error|hard|読め□い|?|読め□い|-|-|-|-|ambiguous|Missing recognition cannot be filled in.
+o06|ocr-error|hard|未�|?|未�|-|-|-|-|unknown|Replacement character; original code point lost.
+o07|incomplete|hard|食べな|食べ な|食べな|-|-|-|-|ambiguous|Truncated negative or imperative; not a certified complete form.
+o08|offsets|hard|😀猫|😀 猫|猫|猫|ねこ|ねこ|名詞|verified|Supplementary code point before focus tests UTF-16 mapping.
+o09|unicode|hard|が|が|が|-|-|-|-|ambiguous|NFC combines dakuten; preserve original two-unit source range.
+o10|unicode|hard|ｶﾀｶﾅ|ｶﾀｶﾅ|ｶﾀｶﾅ|-|-|-|-|ambiguous|No destructive NFKC conversion of halfwidth surface in spike.
+k01|katakana|easy|コンピューター|コンピューター|コンピューター|コンピューター|こんぴゅーたー|こんぴゅーたー|名詞|verified|Keep long-vowel mark; dictionary spelling evidence needed.
+k02|katakana|easy|テレビ|テレビ|テレビ|テレビ|てれび|てれび|名詞|verified|Loanword not excluded.
+k03|katakana|easy|コーヒー|コーヒー|コーヒー|コーヒー|こーひー|こーひー|名詞|verified|Preserve long vowels.
+k04|katakana|easy|ゲーム|ゲーム|ゲーム|ゲーム|げーむ|げーむ|名詞|verified|Loanword noun with its long-vowel mark preserved in reading.
+k05|katakana|hard|スーパー|スーパー|スーパー|-|-|-|名詞|ambiguous|Supermarket/prefix meanings unresolved without context.
+k06|katakana|hard|スマホ|スマホ|スマホ|スマホ|すまほ|すまほ|名詞|verified|Modern abbreviation tests old IPADIC coverage.
+k07|katakana|hard|ググる|ググる|ググる|ググる|ぐぐる|ぐぐる|動詞|verified|Modern verb may be unknown in old dictionary.
+k08|katakana|hard|メタバース|メタバース|メタバース|メタバース|めたばーす|めたばーす|名詞|verified|Modern noun requires actual lexical evidence.
+k09|katakana|hard|ヌポラギュ|?|ヌポラギュ|-|-|-|-|unknown|Authored nonce form, no intended verified entry.
+k10|katakana|hard|シン|シン|シン|-|-|-|-|ambiguous|Loan/name/character spelling does not determine a sense.
+s01|single-character|hard|木|木|木|-|-|-|名詞|ambiguous|ki/moku and prefix uses unresolved.
+s02|single-character|hard|目|目|目|-|-|-|名詞|ambiguous|me/moku and suffix uses unresolved.
+s03|single-character|hard|手|手|手|-|-|-|名詞|ambiguous|te/shu and senses unresolved.
+s04|single-character|hard|火|火|火|-|-|-|名詞|ambiguous|hi/ka reading not selected by ranking.
+s05|single-character|hard|雨|雨|雨|-|-|-|名詞|ambiguous|ame/ama context missing.
+s06|single-character|hard|あ|あ|あ|-|-|-|感動詞|ambiguous|One-letter fragment may be an interjection or OCR fragment.
+s07|single-character|hard|ん|ん|ん|-|-|-|-|ambiguous|Contraction/interjection/fragment unspecified.
+s08|single-character|hard|ー|ー|ー|-|-|-|-|excluded|Isolated prolongation mark is not a vocabulary card.
+s09|single-character|hard|。|。|。|-|-|-|記号|excluded|Punctuation retained for offsets, excluded from vocabulary.
+s10|single-character|hard|A|A|A|-|-|-|-|unknown|Latin fragment has no certified Japanese lexeme in reference.

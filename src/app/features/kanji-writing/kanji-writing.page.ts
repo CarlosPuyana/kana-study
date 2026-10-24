@@ -1,3 +1,4 @@
+import {AttemptRecordingService,AttemptRecordingSession} from '../../core/services/attempt-recording.service';
 import {safeReturnUrl} from '../../core/services/return-navigation';
 import {ChangeDetectionStrategy, Component, DestroyRef, computed, effect, inject, signal, viewChild} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -20,6 +21,7 @@ export class KanjiWritingPage {
   private readonly router=inject(Router);
   readonly returnLink=computed(()=>this.router.parseUrl(this.returnRoute()));
   readonly i18n = inject(TranslationService);
+  private readonly attempts=inject(AttemptRecordingService);private attemptSession?:AttemptRecordingSession;
   private readonly weaknesses = inject(WeaknessService);
   readonly weakMode = signal(false);
   readonly returnRoute=signal('/kanji');
@@ -69,12 +71,12 @@ export class KanjiWritingPage {
     const pool = this.weakMode() ? this.weaknesses.items('kanji',KANJI_N5.filter(k=>k.enabled),10) : this.pool();
     if (!pool.length && !this.weakMode()) return;
     const session = new KanjiWritingSession(pool);
-    this.session.set(session); this.current.set(session.current); this.resolved.set(0); this.revealed.set(false);
+    this.attemptSession=this.attempts.begin('kanji','writing');this.session.set(session); this.current.set(session.current); this.resolved.set(0); this.revealed.set(false);
   }
   answer(correct: boolean): void {
     if (!this.revealed() || !this.session()) return;
     if (!this.session()!.current) return;
-    this.weaknesses.record('kanji',this.session()!.current!.id,correct);
+    this.attemptSession?.record(this.session()!.current!.id,{source:'self',rating:correct?'good':'again'});this.weaknesses.record('kanji',this.session()!.current!.id,correct);
     this.session()!.answer(correct); this.canvas()?.clear();
     this.current.set(this.session()!.current); this.resolved.set(this.session()!.resolved); this.revealed.set(false);
   }

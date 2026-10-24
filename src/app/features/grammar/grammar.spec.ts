@@ -129,10 +129,12 @@ describe('Grammar navigation',()=>{
     expect(APP_MODULES.find(m=>m.id==='grammar')?.available).toBe(true);
     expect(root.querySelector('.grammar-toolbar a')?.getAttribute('href')).toContain('from=grammar');
   });
-  it('renders every topic overview and every micro-lesson from data',async()=>{
+  it.each(activeCatalog.GRAMMAR_TOPICS)('renders topic $id overview and all its micro-lessons from data',async(topic)=>{
+    // Every lesson is still exercised; splitting by topic avoids one aggregate deadline for the whole course.
+    expect(activeCatalog.GRAMMAR_LESSONS.every(lesson=>activeCatalog.GRAMMAR_TOPICS.some(t=>t.id===lesson.topicId))).toBe(true);
     const harness=await RouterTestingHarness.create();
-    for(const topic of activeCatalog.GRAMMAR_TOPICS){await harness.navigateByUrl(`/grammar/n5/${topic.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelectorAll('.lesson-card')).toHaveLength(activeCatalog.GRAMMAR_SESSIONS.filter(s=>s.topicId===topic.id).length);}
-    for(const lesson of activeCatalog.GRAMMAR_LESSONS){await harness.navigateByUrl(`/grammar/n5/${lesson.topicId}/${lesson.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe(translate(lesson.titleKey));if(isChoiceExercise(grammarLessonExercises(lesson)[0]))expect(harness.routeNativeElement?.querySelectorAll('.exercise-option')).toHaveLength((grammarLessonExercises(lesson)[0] as import('./models/grammar.model').GrammarChoiceExercise).optionKeys.length);else expect(harness.routeNativeElement?.querySelector('.check-answer')).not.toBeNull();}
+    await harness.navigateByUrl(`/grammar/n5/${topic.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelectorAll('.lesson-card')).toHaveLength(activeCatalog.GRAMMAR_SESSIONS.filter(s=>s.topicId===topic.id).length);
+    for(const lesson of activeCatalog.GRAMMAR_LESSONS.filter(lesson=>lesson.topicId===topic.id)){await harness.navigateByUrl(`/grammar/n5/${lesson.topicId}/${lesson.id}`,GrammarPage);expect(harness.routeNativeElement?.querySelector('.lesson-heading-card h2')?.textContent).toBe(translate(lesson.titleKey));if(isChoiceExercise(grammarLessonExercises(lesson)[0]))expect(harness.routeNativeElement?.querySelectorAll('.exercise-option')).toHaveLength((grammarLessonExercises(lesson)[0] as import('./models/grammar.model').GrammarChoiceExercise).optionKeys.length);else expect(harness.routeNativeElement?.querySelector('.check-answer')).not.toBeNull();}
   });
   it('opens all cumulative practices and handles unsupported lessons without inventing content',async()=>{
     const harness=await RouterTestingHarness.create();

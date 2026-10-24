@@ -1,0 +1,65 @@
+<section class="assisted-review" [attr.aria-label]="i18n.t('manga.deck.title')">
+  @if(draft();as value){
+    <div class="card-preview essentials">
+      <h4 lang="ja">{{word || value.source.surface}}</h4>
+      @if(advanced()){
+        <label>{{i18n.t('manga.deck.word')}}<input #wordInput data-field="word" lang="ja" maxlength="256" [(ngModel)]="word" (ngModelChange)="identityEdited()" [disabled]="busy()" [attr.aria-invalid]="attempted()&&invalid('word')" /></label>
+        @if(attempted()&&invalid('word')){<small role="alert">{{i18n.t('manga.deck.fieldError')}}</small>}
+      }
+      @if(value.proposals.length){
+        @if(!reading || advanced()){
+          <label>{{i18n.t('manga.deck.proposal')}}
+            <select [attr.data-field]="manualEntry()?'proposal':'reading'" [ngModel]="manualEntry()?'manual':selectedProposal" (ngModelChange)="selectProposal($event)" [disabled]="busy()" [attr.aria-invalid]="attempted()&&invalid('reading')">
+              <option value="" disabled>{{i18n.t('manga.deck.choose')}}</option>
+              @for(p of value.proposals;track $index){<option [value]="$index">{{p.expression}} · {{p.reading}}</option>}
+              <option value="manual">{{i18n.t('manga.deck.manual')}}</option>
+            </select>
+          </label>
+        }
+      }
+      @if(manualEntry()&&!value.proposals.length){<p class="manual-hint">{{i18n.t('manga.deck.manualRequired')}}</p>}
+      @if(manualEntry()||advanced()){
+        <label>{{i18n.t('anki.cards.reading')}}<input data-field="reading" lang="ja" maxlength="256" [(ngModel)]="reading" (ngModelChange)="identityEdited()" [disabled]="busy()" [attr.aria-invalid]="attempted()&&invalid('reading')" /></label>
+      }@else if(reading){<p class="reading" lang="ja">{{reading}}</p>}
+      @if(attempted()&&invalid('reading')){<small role="alert">{{i18n.t('manga.deck.fieldError')}}</small>}
+      @if(manualEntry()&&missing().includes('meaning')||advanced()||proposal()?.glosses?.length===0){
+        <div class="meaning-entry">
+          <label>{{i18n.t('anki.cards.meaning')}}<textarea data-field="meaning" rows="2" maxlength="2000" [(ngModel)]="meaning" (ngModelChange)="edit()" [disabled]="busy()" [attr.aria-invalid]="attempted()&&invalid('meaning')"></textarea></label>
+          <label class="language-label"><span>{{i18n.t('manga.deck.language')}}</span><select [(ngModel)]="language" (ngModelChange)="edit()" [disabled]="busy()"><option value="es">ES</option><option value="en">EN</option><option value="ca">CA</option></select></label>
+        </div>
+      }@else if(meaning){<p class="meaning" [attr.lang]="language">{{meaning}} <small>· {{language.toUpperCase()}}</small></p>}
+      @else if(proposal();as p){
+        <label>{{i18n.t('anki.cards.meaning')}}<select data-field="meaning" [ngModel]="meaning" (ngModelChange)="useMeaning($event)" [disabled]="busy()" [attr.aria-invalid]="attempted()&&invalid('meaning')">
+          <option value="" disabled>{{i18n.t('manga.deck.chooseMeaning')}}</option>@for(gloss of p.glosses;track $index){<option [value]="gloss">{{gloss}}</option>}
+        </select></label>
+      }
+      @if(attempted()&&invalid('meaning')){<small role="alert">{{i18n.t('manga.deck.fieldError')}}</small>}
+      @if(proposal()&&!manualEntry()){<small class="provenance">{{i18n.t('dictionary.title')}} · ES</small>}
+    </div>
+    @if(matchingEntities().length){
+      <div class="identity-choice">
+        <label>{{i18n.t('manga.deck.reuse')}}<select data-field="identity" [(ngModel)]="reuseEntityId" (ngModelChange)="chooseEntity()" [disabled]="busy()" [title]="value.entityDescriptions[reuseEntityId] || ''" [attr.aria-invalid]="attempted()&&invalid('identity')">
+          <option value="">{{i18n.t('manga.deck.newEntity')}}</option>@for(entity of matchingEntities();track entity.id){<option [value]="entity.id">{{entity.word}} · {{entity.reading}} · {{value.entityDescriptions[entity.id]}}</option>}
+        </select></label>
+        @if(reuseEntityId){<p class="reuse-note">{{i18n.t('manga.deck.reuseHint')}}</p>}
+        <button type="button" [disabled]="busy()" [attr.aria-pressed]="newIdentity" (click)="createIdentity()">{{i18n.t('manga.deck.differentIdentity')}}</button>
+        @if(attempted()&&invalid('identity')){<small role="alert">{{i18n.t('manga.deck.fieldError')}}</small>}
+      </div>
+    }
+    <details class="source-context"><summary><span lang="ja">{{contextBrief()}}</span> · {{i18n.t('manga.page',{number:value.source.pageNumber})}}</summary>
+      <blockquote lang="ja">{{value.source.fragment}}</blockquote><small>{{value.source.volumeTitle}}</small>
+    </details>
+    <p class="destination"><span>{{i18n.t('manga.deck.destination')}}:</span> <span [title]="value.source.volumeTitle">{{value.source.volumeTitle}}</span></p>
+    @if(advanced()){<p class="notice">{{i18n.t('manga.deck.userConfirmed')}}</p>}
+    <footer class="actions">
+      @if(failed()){<p role="alert">{{i18n.t(failureStage()==='prepare'?'manga.deck.prepareError':'manga.deck.error')}}</p>}
+      <button #saveButton data-field="save" class="add" type="button" [disabled]="busy()||completed()" (click)="confirm()">{{i18n.t(failed()?'manga.catalog.retry':'manga.deck.confirmCreate')}}</button>
+      <button type="button" [disabled]="busy()" [attr.aria-expanded]="advanced()" (click)="advanced()?closeEdit():openEdit()">{{i18n.t('profile.edit')}}</button>
+      <button type="button" [disabled]="busy()" (click)="cancelled.emit()">{{i18n.t('common.cancel')}}</button>
+      @if(busy()){<span role="status">{{i18n.t('common.loading')}}</span>}
+    </footer>
+  }@else{
+    @if(failed()){<p role="alert">{{i18n.t('manga.deck.error')}}</p><button type="button" (click)="start()">{{i18n.t('manga.catalog.retry')}}</button>}
+    @if(busy()){<p role="status">{{i18n.t('common.loading')}}</p>}
+  }
+</section>

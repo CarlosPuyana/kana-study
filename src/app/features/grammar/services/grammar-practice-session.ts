@@ -1,3 +1,4 @@
+import {AttemptRecordingService,AttemptRecordingSession} from '../../../core/services/attempt-recording.service';
 import { createStudyClock } from '../../../core/services/study-clock';
 import { Injectable, InjectionToken, computed, inject, signal } from '@angular/core';
 import { SessionHistoryService } from '../../../core/services/session-history.service';
@@ -11,6 +12,7 @@ export const GRAMMAR_RANDOM=new InjectionToken<()=>number>('GRAMMAR_RANDOM',{pro
 // Component-scoped, transient practice state. Does not read or write saved study progress.
 @Injectable()
 export class GrammarPracticeSession {
+  private readonly attempts=inject(AttemptRecordingService);private attemptSession?:AttemptRecordingSession;
   private readonly weaknesses=inject(WeaknessService);
   private readonly history=inject(SessionHistoryService);
   readonly clock=createStudyClock();
@@ -41,7 +43,7 @@ export class GrammarPracticeSession {
     const questions=this.failures();this.reviewing.set(true);this.startRound(questions);
   }
   private startRound(questions:readonly GrammarExercise[]):void {
-    this.clock.reset();this.sessionId=crypto.randomUUID();
+    this.clock.reset();this.sessionId=crypto.randomUUID();this.attemptSession=this.attempts.begin('grammar','learn',this.sessionId);
     questions=[...new Map(questions.map(e=>[e.id,e])).values()];
     this.questions.set(shuffleGrammar(questions,this.random).map(e=>shuffleGrammarExercise(e,this.random)));
     this.index.set(0);this.answers.set([]);this.failures.set([]);this.stage.set(questions.length?'question':'results');
@@ -49,6 +51,7 @@ export class GrammarPracticeSession {
   }
   answer(correct: boolean): void {
     if (this.stage() !== 'question' || this.checked()) return;
+    this.attemptSession?.record(this.current()!.id,{source:'objective',correct},this.current()!.kind,!this.reviewing());
     const identity=this.current()?grammarWeaknessIdentity(this.current()!):null;
     if(identity)this.weaknesses.recordLearn('grammar',identity.itemId,identity.questionType,correct?'good':'again');
     this.answers.update(answers => [...answers, correct]);

@@ -1,0 +1,26 @@
+<section class="history" aria-labelledby="history-title">
+  <h2 id="history-title">{{i18n.t('statsV2.title')}}</h2><p>{{i18n.t('statsV2.local')}}</p>
+  <div class="filters">
+    <label>{{i18n.t('statsV2.period')}}<select id="stats-period" [value]="period()" (change)="setPeriod($event)">@for(days of periods;track days){<option [value]="days">{{i18n.t('stats.lastDays',{count:days})}}</option>}</select></label>
+    <label>{{i18n.t('statsV2.module')}}<select id="stats-module" [value]="module()" (change)="setModule($event)"><option value="">{{i18n.t('statsV2.all')}}</option>@for(item of modules;track item){<option [value]="item">{{moduleLabel(item)}}</option>}</select></label>
+    <label>{{i18n.t('statsV2.skill')}}<select id="stats-skill" [value]="skill()" (change)="setSkill($event)"><option value="">{{i18n.t('statsV2.all')}}</option>@for(item of skills;track item){<option [value]="item">{{skillLabel(item)}}</option>}</select></label>
+  </div>
+  @if(repository.writeError()){<p role="alert">{{i18n.t('statsV2.writeError')}}</p><button (click)="retry()">{{i18n.t('statsV2.retry')}}</button>}
+  @if(loading()){<p role="status">{{i18n.t('statsV2.loading')}}</p>}
+  @else if(error()){<p role="alert">{{i18n.t('statsV2.error')}}</p><button (click)="retry()">{{i18n.t('statsV2.retry')}}</button>}
+  @else if(history();as h){
+    @if(!h.total.attempts){<p class="empty-history">{{i18n.t('statsV2.empty')}}</p>}
+    <div class="metrics" aria-live="polite"><p><strong data-testid="attempt-total">{{h.total.attempts}}</strong> {{i18n.t('stats.attempts')}}</p>
+      <p>{{i18n.t('statsV2.accuracy')}}: <strong>{{percentage(accuracy())}}</strong> ({{i18n.t('statsV2.sample',{count:h.total.objective})}})</p>
+      <p>{{i18n.t('statsV2.self')}}: {{i18n.t('statsV2.again')}} {{h.total.again}} · {{i18n.t('statsV2.hard')}} {{h.total.hard}} · {{i18n.t('statsV2.good')}} {{h.total.good}}</p>
+      <p>{{i18n.t('statsV2.repetitions',{count:h.total.repetitions})}}</p></div>
+    <div class="charts"><app-attempt-history-chart [days]="h.days"/><app-attempt-history-chart [days]="h.days" [accuracy]="true"/></div>
+    <h3>{{i18n.t('statsV2.comparison')}}</h3><p>{{i18n.t('statsV2.comparisonScope',{count:period()})}}</p>
+    <p>{{i18n.t('statsV2.previous')}}: {{percentage(accuracyOf(h.comparison.previous))}} ({{h.comparison.previous.objective}}) → {{i18n.t('statsV2.current')}}: {{percentage(accuracyOf(h.comparison.current))}} ({{h.comparison.current.objective}})</p>
+    <p>{{delta(h.comparison.delta)}}</p><p class="historical-recommendation">{{i18n.t('statsV2.recommend.'+h.recommendation)}}</p>
+    @if(h.weakSkill){<p>{{i18n.t('statsV2.recommend.skill',{skill:skillLabel(h.weakSkill)})}}</p>}
+    <h3>{{i18n.t('stats.modules')}}</h3><div class="categories">@for(row of h.modules;track row.module){<article><h4>{{moduleLabel(row.module)}}</h4><p>{{i18n.t('stats.attemptCount',{count:row.metrics.attempts})}}</p><p>{{i18n.t('statsV2.accuracy')}}: {{percentage(accuracyOf(row.metrics))}} ({{row.metrics.objective}})</p><p>{{i18n.t('statsV2.self')}}: {{row.metrics.again}} / {{row.metrics.hard}} / {{row.metrics.good}}</p><p>{{delta(h.moduleComparisons[$index].delta)}}</p></article>}</div>
+    <h3>{{i18n.t('stats.skills')}}</h3><div class="categories">@for(row of h.skills;track row.activity){<article><h4>{{skillLabel(row.activity)}}</h4><p>{{i18n.t('stats.attemptCount',{count:row.metrics.attempts})}}</p><p>{{i18n.t('statsV2.accuracy')}}: {{percentage(accuracyOf(row.metrics))}} ({{row.metrics.objective}})</p><p>{{i18n.t('statsV2.self')}}: {{row.metrics.again}} / {{row.metrics.hard}} / {{row.metrics.good}}</p><p>{{delta(h.skillComparisons[$index].delta)}}</p></article>}</div>
+    <details><summary>{{i18n.t('statsV2.weeks')}}</summary>@for(week of h.weeks;track week.day){<p>{{week.day}}: {{i18n.t('stats.attemptCount',{count:week.metrics.attempts})}} · {{percentage(accuracyOf(week.metrics))}} ({{week.metrics.objective}}) · {{i18n.t('statsV2.self')}} {{week.metrics.again}} / {{week.metrics.hard}} / {{week.metrics.good}}</p>}</details>
+  }
+</section>

@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:manga-manual": "ng serve --configuration manga-manual --host 127.0.0.1 --port 4401",
     "build": "ng build",
     "prebuild": "node scripts/audit-grammar-n5.mjs && node scripts/validate-grammar-i18n.mjs",
     "audit:i18n": "node scripts/validate-grammar-i18n.mjs",

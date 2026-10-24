@@ -40,6 +40,9 @@ export const WORKSPACE_LOCAL_KEYS = [
 export class WorkspaceService {
   private readonly state = signal<LocalWorkspaceId>(readActiveWorkspace());
   readonly active = this.state.asReadonly();
+  /** Monotonic fence also detects A -> B -> A during an asynchronous operation. */
+  private readonly activation = signal(0);
+  readonly activationRevision = this.activation.asReadonly();
   private readonly revision = signal(0);
   readonly dataRevision = this.revision.asReadonly();
 
@@ -52,6 +55,7 @@ export class WorkspaceService {
   activate(workspace: LocalWorkspaceId): boolean {
     if (workspace === this.state()) return false;
     this.state.set(workspace);
+    this.activation.update(n => n + 1);
     try { localStorage.setItem(ACTIVE_KEY, workspace); } catch { /* memory-only fallback */ }
     return true;
   }

@@ -1,0 +1,15 @@
+{
+  "sourceDatabaseSha256": "ed4f263de0192fb6256f8e945b3bce2ab1c0be05ff5f0cff92b3f17392cebf89",
+  "sqliteBytes": 214196224,
+  "gzipEntryPayloadBytes": 156487414,
+  "entries": 218945,
+  "formRows": 499554,
+  "uniqueForms": 465958,
+  "pageBytes": 4096,
+  "freePages": 0,
+  "physicalTableBytes": null,
+  "layoutNote": "dbstat unavailable; not measured",
+  "auditSeconds": 0.4747914000181481,
+  "prototypeImplemented": false,
+  "note": "Payload sums are measured. Payload-only size is not a functional index or browser resource."
+}

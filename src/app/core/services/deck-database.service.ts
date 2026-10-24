@@ -1,5 +1,5 @@
 import { LocalWorkspaceId } from '../models/account.model';
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { DeckCardProgress, DeckDailyState, DeckReviewEvent } from '../models/deck-study.model';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
 import { WorkspaceService } from './workspace.service';
@@ -12,6 +12,8 @@ const DAILY_STORE = 'daily-state';
 
 @Injectable({ providedIn: 'root' })
 export class DeckDatabaseService {
+  /** Read-model invalidation after the local commit, even if outbox enqueue later fails. */
+  readonly revision = signal(0);
   private readonly workspace = inject(WorkspaceService);
   private readonly outbox = inject(SyncOutboxService);
   private readonly databases = new Map<string, Promise<IDBDatabase>>();
@@ -65,6 +67,7 @@ export class DeckDatabaseService {
     transaction.objectStore(EVENTS_STORE).add(event);
     transaction.objectStore(DAILY_STORE).put(dailyState);
     await transactionDone(transaction);
+    this.revision.update(n => n + 1);
     await this.enqueue(workspace, 'deck-card-progress', `${progress.deckId}:${progress.entryId}`, progress);
     await this.enqueue(workspace, 'deck-review-event', event.id, event);
     await this.enqueue(workspace, 'deck-daily-state', `${dailyState.deckId}:${dailyState.localDate}`, dailyState);
@@ -89,6 +92,7 @@ export class DeckDatabaseService {
     transaction.objectStore(EVENTS_STORE).delete(event.id);
     transaction.objectStore(DAILY_STORE).put(dailyState);
     await transactionDone(transaction);
+    this.revision.update(n => n + 1);
     await this.enqueue(workspace, 'deck-card-progress', `${event.deckId}:${event.entryId}`, event.cardBefore ? {
       deckId: event.deckId, entryId: event.entryId, due: event.cardBefore.due, state: event.cardBefore.state, card: event.cardBefore,
     } : null, event.cardBefore ? 'upsert' : 'delete');
@@ -112,6 +116,7 @@ export class DeckDatabaseService {
       dailyStore.put({ ...remote, completedAt: local?.completedAt ?? remote.completedAt, introducedEntryIds: [...new Set([...(local?.introducedEntryIds ?? []), ...remote.introducedEntryIds])] });
     }
     await transactionDone(transaction);
+    this.revision.update(n => n + 1);
   }
 
   private database(workspace = this.workspace.active()): Promise<IDBDatabase> {

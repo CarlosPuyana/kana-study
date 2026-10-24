@@ -1,0 +1,51 @@
+<main>
+  <a routerLink="/manga">← {{i18n.t('mangaVocab.back')}}</a>
+  <h1>{{i18n.t('mangaVocab.title')}}</h1>
+  @if(allowed()) {
+    @if(title()){<h2>{{title()}}</h2>}
+    <p class="notice">{{i18n.t('mangaVocab.scope')}}</p>
+    @defer(when ocrQuery()){
+      @if(ocrQuery()){<app-manga-ocr-explorer [volumeId]="volumeId()" [query]="ocrQuery()" />}
+    }
+    @if(failed()){<p role="alert">{{i18n.t('mangaVocab.error')}}</p>}
+    @else if(result(); as data){
+      @if(data.incomplete){<p role="status">{{i18n.t('mangaVocab.incomplete')}}</p>}
+      <section class="summary" [attr.aria-label]="i18n.t('mangaVocab.summary')">
+        <p><strong>{{data.entries.length}}</strong>{{i18n.t('mangaVocab.total')}}</p>
+        @for(s of states;track s){<p><strong>{{counts()[s]}}</strong>{{i18n.t('mangaVocab.'+s)}}</p>}
+      </section>
+      @for(deck of decks();track deck.id){
+        @if(deck.status==='active'){<a class="study" [routerLink]="['/anki',deck.id,'study']">{{i18n.t('mangaVocab.study')}} · {{deck.title}}</a>}
+        @else{<p class="notice">{{i18n.t('mangaVocab.archived')}} · {{deck.title}}</p>}
+      }
+      @if(!data.entries.length){<p>{{i18n.t('mangaVocab.empty')}}</p>}
+      @else{
+        <div class="filters">
+          <label>{{i18n.t('mangaVocab.search')}}<input type="search" [ngModel]="search()" (ngModelChange)="search.set($event)" /></label>
+          <label>{{i18n.t('mangaVocab.state')}}<select [ngModel]="state()" (ngModelChange)="state.set($event)"><option value="all">{{i18n.t('mangaVocab.all')}}</option>@for(s of states;track s){<option [value]="s">{{i18n.t('mangaVocab.'+s)}}</option>}</select></label>
+          <label>{{i18n.t('mangaVocab.sort')}}<select [ngModel]="sort()" (ngModelChange)="sort.set($event)"><option value="page">{{i18n.t('mangaVocab.pageOrder')}}</option><option value="confirmed">{{i18n.t('mangaVocab.dateOrder')}}</option></select></label>
+        </div>
+        <p role="status">{{entries().length}} {{i18n.t('mangaVocab.results')}}</p>
+        <ul class="cards">
+          @for(entry of entries();track entry.card.deckId+' / '+entry.card.id){
+            <li><article>
+              <header><h2 lang="ja">{{entry.card.word}}</h2><span class="state">{{i18n.t('mangaVocab.'+entry.classification.state)}}</span></header>
+              <p class="reading" lang="ja">{{entry.card.reading}}</p>
+              <button type="button" (click)="explore(entry.card.word)">{{i18n.t('ocrExplorer.find')}} · {{entry.card.word}}</button>
+              @for(gloss of entry.card.glosses;track $index){<p [attr.lang]="gloss.language">{{gloss.text}} <small>({{gloss.language.toUpperCase()}})</small></p>}
+              <details><summary>{{i18n.t('mangaVocab.details')}} · {{entry.card.word}}</summary>
+                <p>{{i18n.t('mangaVocab.cardScope')}}</p>
+                @for(c of entry.confirmations;track c.id){
+                  <blockquote lang="ja">{{c.source.fragment}}</blockquote>
+                  <p>{{c.source.volumeTitle}} · {{i18n.t('mangaVocab.page')}} {{c.source.pageNumber}}</p>
+                  <p>{{i18n.t('mangaVocab.confirmed')}} <time [attr.datetime]="c.confirmedAt">{{c.confirmedAt}}</time></p>
+                  <p>{{c.confirmedMeaning}} ({{c.meaningLanguage.toUpperCase()}})</p>
+                }
+              </details>
+            </article></li>
+          }
+        </ul>
+      }
+    }@else{<p role="status">{{i18n.t('mangaVocab.loading')}}</p>}
+  }@else{<p>{{i18n.t('mangaVocab.unavailable')}}</p>}
+</main>

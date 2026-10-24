@@ -62,6 +62,13 @@
               ],
               "outputHashing": "all"
             },
+            "manga-manual": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "browser": "src/main.manga-manual.ts",
+              "tsConfig": "tsconfig.manga-manual.json"
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -73,6 +80,9 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
+            "manga-manual": {
+              "buildTarget": "kana-study:build:manga-manual"
+            },
             "production": {
               "buildTarget": "kana-study:build:production"
             },

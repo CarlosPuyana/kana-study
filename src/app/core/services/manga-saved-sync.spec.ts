@@ -1,6 +1,6 @@
 import {createEnvironmentInjector, EnvironmentInjector} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
-import {IDBFactory, IDBDatabase} from 'fake-indexeddb';
+import {IDBFactory, IDBDatabase, IDBKeyRange} from 'fake-indexeddb';
 import type {AuthChangeEvent, Session} from '@supabase/supabase-js';
 import {MangaSavedRemoteRow, MangaStudySavedItem} from '../models/manga-study-saved.model';
 import {MangaStudySavedRepository} from './manga-study-saved.repository';
@@ -72,7 +72,7 @@ describe('Manga Saved Sync V1 with independent durable browser caches',()=>{
   beforeEach(()=>{localStorage.clear();vi.useFakeTimers({toFake:['setTimeout','clearTimeout']});cloud=new Cloud();devices=[];vi.spyOn(navigator,'onLine','get').mockReturnValue(true);TestBed.configureTestingModule({});});
   afterEach(()=>{for(const d of devices)if(!d.env.destroyed)d.env.destroy();TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
   async function device(user='a',factory=new IDBFactory()):Promise<Device>{
-    vi.stubGlobal('indexedDB',factory);
+    vi.stubGlobal('indexedDB',factory);vi.stubGlobal('IDBKeyRange',IDBKeyRange);
     const env=createEnvironmentInjector([MangaReviewHistoryService,SyncDiagnosticsService,AuthService,WorkspaceService,MangaStudySavedRepository,MangaSavedSyncService,SyncService,SyncOutboxService,StorageService,SessionHistoryService,WorkspaceMigrationService,
       {provide:SupabaseClientService,useValue:{config:{configured:true},getClient:async()=>cloud.client(user)}},{provide:DeviceService,useValue:{id:'test'}},
       {provide:DeckDatabaseService,useValue:{getDeckProgress:async()=>[],getDeckReviewEvents:async()=>[],getAllDailyStates:async()=>[],mergeFromCloud:async()=>{}}},

@@ -14,7 +14,7 @@ export interface DailyGrammarSnapshot {
   readonly completed:boolean; readonly completedAt?:string; readonly answersToday:number; readonly difficult:boolean; readonly optional?:boolean;
 }
 export interface DailyDeckSnapshot {
-  readonly id:string; readonly titleKey:string; readonly due:number; readonly fresh:number;
+  readonly id:string; readonly titleKey:string; readonly literalTitle?:string; readonly due:number; readonly fresh:number;
   readonly completedToday:boolean; readonly reviewsToday:number; readonly nextDue:number|null;
 }
 export interface DailyWeaknessSnapshot { readonly record:WeaknessRecord; readonly titleKey:string; readonly path:string }
@@ -27,10 +27,10 @@ export interface DailyStudySnapshot {
   readonly sessions:readonly CompletedSessionSummary[];
 }
 export interface DailyStudyActivity {
-  readonly id:string; readonly module:DailyStudyModule; readonly titleKey:string; readonly detail?:string;
+  readonly id:string; readonly module:DailyStudyModule; readonly titleKey:string; readonly literalTitle?:string; readonly detail?:string;
   readonly reasonKey:string; readonly priority:number; readonly state:'available'|'pending'|'completed';
   readonly pendingCount:number; readonly path?:string; readonly panel?:'kana'|'kanji'|'vocabulary';
   readonly evidence?:readonly string[];
 }
-export interface DailyStudyPerformed { readonly id:string; readonly module:DailyStudyModule; readonly titleKey:string; readonly count:number; readonly completed:boolean }
+export interface DailyStudyPerformed { readonly id:string; readonly module:DailyStudyModule; readonly titleKey:string; readonly literalTitle?:string; readonly count:number; readonly completed:boolean }
 export interface DailyStudyPlan { readonly recommended:readonly DailyStudyActivity[]; readonly available:readonly DailyStudyActivity[]; readonly pending:readonly DailyStudyActivity[]; readonly performed:readonly DailyStudyPerformed[] }

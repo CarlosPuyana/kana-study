@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, effect, inject, untracked, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { DeckSettings, DesiredRetention, NewCardOrder } from '../../core/models/deck.model';
 import { DeckSettingsService } from '../../core/services/deck-settings.service';
 import { TranslationService } from '../../core/services/translation.service';
-import { findStudyDeck } from '../../data/study-decks';
+import { createDeckRouteResource } from '../../core/services/deck-route-resource';
 
 interface RetentionOption {
   readonly value: DesiredRetention;
@@ -23,10 +23,11 @@ interface OrderOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnkiSettingsPage {
-  private readonly route = inject(ActivatedRoute);
   private readonly settingsService = inject(DeckSettingsService);
   readonly i18n = inject(TranslationService);
-  readonly deck = findStudyDeck(this.route.snapshot.paramMap.get('deckId'));
+  readonly resource = createDeckRouteResource();
+  get deck() { return this.resource.deck; }
+  title(): string { return this.resource.title(this.i18n); }
   readonly retentions: readonly RetentionOption[] = [
     { value: 0.8, labelKey: 'anki.settings.retention.80' },
     { value: 0.85, labelKey: 'anki.settings.retention.85' },
@@ -49,6 +50,15 @@ export class AnkiSettingsPage {
   readonly newCardsValid = signal(true);
   readonly saved = signal(false);
 
+  constructor() {
+    void this.resource.ready().then(() => { if(this.deck) this.draft.set({...this.settingsService.settingsFor(this.deck)}); });
+    effect(() => {
+      const state=this.resource.state();this.resource.catalog.owner();
+      untracked(() => {this.saved.set(false);if(state.status==='ready'&&this.deck)this.draft.set({...this.settingsService.settingsFor(this.deck)});});
+    });
+  }
+  readonly error = signal(false);
+
   setRetention(value: DesiredRetention): void {
     this.update({ desiredRetention: value });
   }
@@ -66,9 +76,10 @@ export class AnkiSettingsPage {
     if (valid) this.update({ newCardsPerDay: value });
   }
 
-  save(): void {
+  async save(): Promise<void> {
     if (!this.deck || !this.newCardsValid()) return;
-    this.saved.set(this.settingsService.save(this.deck.id, this.draft()));
+    if(this.deck.kind === 'custom') { const owner=this.resource.catalog.owner(),deckId=this.deck.id; try { await this.resource.catalog.repository.saveSettings(crypto.randomUUID(),deckId,this.draft(),owner); if(owner===this.resource.catalog.owner())this.saved.set(true); } catch { if(owner===this.resource.catalog.owner())this.error.set(true); } }
+    else this.saved.set(this.settingsService.save(this.deck.id, this.draft()));
   }
 
   private update(patch: Partial<DeckSettings>): void {

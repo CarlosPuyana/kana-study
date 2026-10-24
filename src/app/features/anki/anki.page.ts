@@ -1,10 +1,9 @@
 import {PageHeader} from '../../shared/components/page-header/page-header';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, untracked, OnDestroy, OnInit, signal } from '@angular/core';
 import { DeckStudyCounts } from '../../core/models/deck-study.model';
 import { DeckStudyService, DECK_NEW_LIMIT_STEP } from '../../core/services/deck-study.service';
 import { TranslationService } from '../../core/services/translation.service';
-import { JAPANESE_1500_INDEX } from '../../data/japanese-1500.index.generated';
-import { STUDY_DECKS } from '../../data/study-decks';
+import { DeckCatalogService } from '../../core/services/deck-catalog.service';
 import { DeckCard } from './components/deck-card/deck-card';
 import { getLocalStudyDayKey } from '../../core/services/deck-study-time';
 
@@ -16,7 +15,10 @@ import { getLocalStudyDayKey } from '../../core/services/deck-study-time';
 export class AnkiPage implements OnInit, OnDestroy {
   private readonly study = inject(DeckStudyService);
   readonly i18n = inject(TranslationService);
-  readonly decks = STUDY_DECKS;
+  readonly catalog = inject(DeckCatalogService);
+  get decks() { return this.catalog.items(); }
+  private generation=0;
+  constructor(){effect(()=>{this.catalog.items();this.catalog.revision();this.catalog.repository.progressRevision();untracked(()=>{void this.refresh();});});}
   readonly counts = signal<Record<string, DeckStudyCounts>>({});
   readonly loading = signal(true);
   readonly error = signal(false);
@@ -42,13 +44,16 @@ export class AnkiPage implements OnInit, OnDestroy {
   }
 
   async refresh(): Promise<void> {
+    const owner=this.catalog.owner(),generation=++this.generation;
     this.loading.set(true); this.error.set(false);
     try {
+      await this.catalog.refresh();
+      if(this.catalog.error())throw this.catalog.error();
       const values = await Promise.all(this.decks.map(async deck => [
-        deck.id, await this.study.snapshot(deck, deck.id === 'japanese-1500' ? JAPANESE_1500_INDEX : []),
+        deck.id, await this.study.snapshot(deck, await this.catalog.index(deck.id)),
       ] as const));
-      this.counts.set(Object.fromEntries(values));
-    } catch { this.error.set(true); }
-    finally { this.loading.set(false); }
+      if(owner===this.catalog.owner()&&generation===this.generation)this.counts.set(Object.fromEntries(values));
+    } catch { if(owner===this.catalog.owner())this.error.set(true); }
+    finally { if(owner===this.catalog.owner()&&generation===this.generation)this.loading.set(false); }
   }
 }

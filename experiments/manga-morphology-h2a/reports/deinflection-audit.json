@@ -1,0 +1,685 @@
+{
+  "source": "src/app/core/services/japanese-deinflection.service.ts",
+  "sourceSha256": "f56c98b15ab505405f7332d482f77f47117c9ab209dab9338a55b349e41c5a37",
+  "note": "Pure functions transpiled for audit; Angular wrapper removed in memory, original file untouched. Not a full sentence parser.",
+  "cases": [
+    {
+      "id": "v01",
+      "surface": "食べなかった",
+      "referenceLemma": "食べる",
+      "candidates": [
+        {
+          "base": "食べる",
+          "classes": [
+            "v1"
+          ],
+          "reasons": [
+            "negative-past"
+          ],
+          "readingFromBase": "たべなかった"
+        }
+      ]
+    },
+    {
+      "id": "v02",
+      "surface": "負けぬ",
+      "referenceLemma": "負ける",
+      "candidates": [
+        {
+          "base": "負ける",
+          "classes": [
+            "v1"
+          ],
+          "reasons": [
+            "negative-nu"
+          ],
+          "readingFromBase": "まけぬ"
+        }
+      ]
+    },
+    {
+      "id": "v03",
+      "surface": "来ました",
+      "referenceLemma": "来る",
+      "candidates": [
+        {
+          "base": "来る",
+          "classes": [
+            "v1"
+          ],
+          "reasons": [
+            "polite-past"
+          ],
+          "readingFromBase": "くました"
+        },
+        {
+          "base": "来る",
+          "classes": [
+            "vk"
+          ],
+          "reasons": [
+            "polite-past"
+          ],
+          "readingFromBase": null
+        }
+      ]
+    },
+    {
+      "id": "v04",
+      "surface": "読みました",
+      "referenceLemma": "読む",
+      "candidates": [
+        {
+          "base": "読む",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "polite-past"
+          ],
+          "readingFromBase": "よみました"
+        }
+      ]
+    },
+    {
+      "id": "v05",
+      "surface": "書いた",
+      "referenceLemma": "書く",
+      "candidates": [
+        {
+          "base": "書く",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "かいた"
+        }
+      ]
+    },
+    {
+      "id": "v06",
+      "surface": "泳いだ",
+      "referenceLemma": "泳ぐ",
+      "candidates": [
+        {
+          "base": "泳ぐ",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "およいだ"
+        }
+      ]
+    },
+    {
+      "id": "v07",
+      "surface": "話した",
+      "referenceLemma": "話す",
+      "candidates": [
+        {
+          "base": "話す",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "はなした"
+        }
+      ]
+    },
+    {
+      "id": "v08",
+      "surface": "待った",
+      "referenceLemma": "待つ",
+      "candidates": [
+        {
+          "base": "待つ",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "まった"
+        }
+      ]
+    },
+    {
+      "id": "v09",
+      "surface": "買った",
+      "referenceLemma": "買う",
+      "candidates": [
+        {
+          "base": "買う",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "かった"
+        }
+      ]
+    },
+    {
+      "id": "v10",
+      "surface": "帰った",
+      "referenceLemma": "帰る",
+      "candidates": [
+        {
+          "base": "帰る",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "かえった"
+        }
+      ]
+    },
+    {
+      "id": "v11",
+      "surface": "死んだ",
+      "referenceLemma": "死ぬ",
+      "candidates": [
+        {
+          "base": "死ぬ",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "しんだ"
+        }
+      ]
+    },
+    {
+      "id": "v12",
+      "surface": "遊んだ",
+      "referenceLemma": "遊ぶ",
+      "candidates": [
+        {
+          "base": "遊ぶ",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "あそんだ"
+        }
+      ]
+    },
+    {
+      "id": "v13",
+      "surface": "飲んで",
+      "referenceLemma": "飲む",
+      "candidates": [
+        {
+          "base": "飲む",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "te"
+          ],
+          "readingFromBase": "のんで"
+        }
+      ]
+    },
+    {
+      "id": "v14",
+      "surface": "行った",
+      "referenceLemma": "行く",
+      "candidates": [
+        {
+          "base": "行く",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": null
+        }
+      ]
+    },
+    {
+      "id": "v15",
+      "surface": "した",
+      "referenceLemma": "する",
+      "candidates": [
+        {
+          "base": "する",
+          "classes": [
+            "vs"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "した"
+        }
+      ]
+    },
+    {
+      "id": "v16",
+      "surface": "来ない",
+      "referenceLemma": "来る",
+      "candidates": [
+        {
+          "base": "来る",
+          "classes": [
+            "v1"
+          ],
+          "reasons": [
+            "negative"
+          ],
+          "readingFromBase": "くない"
+        },
+        {
+          "base": "来る",
+          "classes": [
+            "vk"
+          ],
+          "reasons": [
+            "negative"
+          ],
+          "readingFromBase": null
+        }
+      ]
+    },
+    {
+      "id": "v17",
+      "surface": "食べられる",
+      "referenceLemma": "食べる",
+      "candidates": [
+        {
+          "base": "食べる",
+          "classes": [
+            "v1"
+          ],
+          "reasons": [
+            "potential-passive"
+          ],
+          "readingFromBase": "たべられる"
+        },
+        {
+          "base": "食べる",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "passive"
+          ],
+          "readingFromBase": "たべられる"
+        }
+      ]
+    },
+    {
+      "id": "v18",
+      "surface": "読ませた",
+      "referenceLemma": "読む",
+      "candidates": [
+        {
+          "base": "読む",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past",
+            "causative"
+          ],
+          "readingFromBase": "よませた"
+        }
+      ]
+    },
+    {
+      "id": "v19",
+      "surface": "書こう",
+      "referenceLemma": "書く",
+      "candidates": [
+        {
+          "base": "書く",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "volitional"
+          ],
+          "readingFromBase": "かこう"
+        }
+      ]
+    },
+    {
+      "id": "v20",
+      "surface": "食べている",
+      "referenceLemma": "食べる",
+      "candidates": [
+        {
+          "base": "食べる",
+          "classes": [
+            "v1"
+          ],
+          "reasons": [
+            "progressive",
+            "te"
+          ],
+          "readingFromBase": "たべている"
+        }
+      ]
+    },
+    {
+      "id": "a01",
+      "surface": "高かった",
+      "referenceLemma": "高い",
+      "candidates": [
+        {
+          "base": "高い",
+          "classes": [
+            "adj-i"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "たかかった"
+        }
+      ]
+    },
+    {
+      "id": "a02",
+      "surface": "安くない",
+      "referenceLemma": "安い",
+      "candidates": [
+        {
+          "base": "安い",
+          "classes": [
+            "adj-i"
+          ],
+          "reasons": [
+            "negative"
+          ],
+          "readingFromBase": "やすくない"
+        }
+      ]
+    },
+    {
+      "id": "a03",
+      "surface": "寒くなかった",
+      "referenceLemma": "寒い",
+      "candidates": [
+        {
+          "base": "寒い",
+          "classes": [
+            "adj-i"
+          ],
+          "reasons": [
+            "negative-past"
+          ],
+          "readingFromBase": "さむくなかった"
+        }
+      ]
+    },
+    {
+      "id": "a04",
+      "surface": "よかった",
+      "referenceLemma": "よい",
+      "candidates": [
+        {
+          "base": "よい",
+          "classes": [
+            "adj-i"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "よかった"
+        }
+      ]
+    },
+    {
+      "id": "a05",
+      "surface": "いい",
+      "referenceLemma": "いい",
+      "candidates": []
+    },
+    {
+      "id": "a06",
+      "surface": "きれいだった",
+      "referenceLemma": "きれい",
+      "candidates": []
+    },
+    {
+      "id": "a07",
+      "surface": "嫌いではない",
+      "referenceLemma": "嫌い",
+      "candidates": []
+    },
+    {
+      "id": "a08",
+      "surface": "新しくて",
+      "referenceLemma": "新しい",
+      "candidates": []
+    },
+    {
+      "id": "a09",
+      "surface": "忙しかった",
+      "referenceLemma": "忙しい",
+      "candidates": [
+        {
+          "base": "忙しい",
+          "classes": [
+            "adj-i"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "いそがしかった"
+        }
+      ]
+    },
+    {
+      "id": "a10",
+      "surface": "強そうだ",
+      "referenceLemma": "強い",
+      "candidates": []
+    },
+    {
+      "id": "n02",
+      "surface": "箸",
+      "referenceLemma": "箸",
+      "candidates": []
+    },
+    {
+      "id": "n04",
+      "surface": "ここ",
+      "referenceLemma": "ここ",
+      "candidates": []
+    },
+    {
+      "id": "n05",
+      "surface": "此処",
+      "referenceLemma": "此処",
+      "candidates": []
+    },
+    {
+      "id": "n06",
+      "surface": "猫",
+      "referenceLemma": "猫",
+      "candidates": []
+    },
+    {
+      "id": "n07",
+      "surface": "犬",
+      "referenceLemma": "犬",
+      "candidates": []
+    },
+    {
+      "id": "f01",
+      "surface": "は",
+      "referenceLemma": "は",
+      "candidates": []
+    },
+    {
+      "id": "f02",
+      "surface": "を",
+      "referenceLemma": "を",
+      "candidates": []
+    },
+    {
+      "id": "f03",
+      "surface": "へ",
+      "referenceLemma": "へ",
+      "candidates": []
+    },
+    {
+      "id": "f09",
+      "surface": "はい",
+      "referenceLemma": "はい",
+      "candidates": []
+    },
+    {
+      "id": "f10",
+      "surface": "えっ",
+      "referenceLemma": "えっ",
+      "candidates": []
+    },
+    {
+      "id": "c01",
+      "surface": "食べちゃった",
+      "referenceLemma": "食べる",
+      "candidates": []
+    },
+    {
+      "id": "c02",
+      "surface": "読んでる",
+      "referenceLemma": "読む",
+      "candidates": [
+        {
+          "base": "読む",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "progressive",
+            "te"
+          ],
+          "readingFromBase": "よんでる"
+        }
+      ]
+    },
+    {
+      "id": "c04",
+      "surface": "行かなきゃ",
+      "referenceLemma": "行く",
+      "candidates": []
+    },
+    {
+      "id": "c06",
+      "surface": "知らねえ",
+      "referenceLemma": "知る",
+      "candidates": []
+    },
+    {
+      "id": "c07",
+      "surface": "ドキドキ",
+      "referenceLemma": "ドキドキ",
+      "candidates": []
+    },
+    {
+      "id": "c08",
+      "surface": "わくわく",
+      "referenceLemma": "わくわく",
+      "candidates": []
+    },
+    {
+      "id": "e01",
+      "surface": "そういう",
+      "referenceLemma": "そういう",
+      "candidates": []
+    },
+    {
+      "id": "e03",
+      "surface": "気をつける",
+      "referenceLemma": "気をつける",
+      "candidates": []
+    },
+    {
+      "id": "e08",
+      "surface": "お母さん",
+      "referenceLemma": "お母さん",
+      "candidates": []
+    },
+    {
+      "id": "e09",
+      "surface": "取り戻した",
+      "referenceLemma": "取り戻す",
+      "candidates": [
+        {
+          "base": "取り戻す",
+          "classes": [
+            "v5"
+          ],
+          "reasons": [
+            "past"
+          ],
+          "readingFromBase": "とりもどした"
+        }
+      ]
+    },
+    {
+      "id": "o08",
+      "surface": "😀猫",
+      "referenceLemma": "猫",
+      "candidates": []
+    },
+    {
+      "id": "k01",
+      "surface": "コンピューター",
+      "referenceLemma": "コンピューター",
+      "candidates": []
+    },
+    {
+      "id": "k02",
+      "surface": "テレビ",
+      "referenceLemma": "テレビ",
+      "candidates": []
+    },
+    {
+      "id": "k03",
+      "surface": "コーヒー",
+      "referenceLemma": "コーヒー",
+      "candidates": []
+    },
+    {
+      "id": "k04",
+      "surface": "ゲーム",
+      "referenceLemma": "ゲーム",
+      "candidates": []
+    },
+    {
+      "id": "k06",
+      "surface": "スマホ",
+      "referenceLemma": "スマホ",
+      "candidates": []
+    },
+    {
+      "id": "k07",
+      "surface": "ググる",
+      "referenceLemma": "ググる",
+      "candidates": []
+    },
+    {
+      "id": "k08",
+      "surface": "メタバース",
+      "referenceLemma": "メタバース",
+      "candidates": []
+    }
+  ]
+}

@@ -7,7 +7,7 @@
   </header>
 
   @if (error()) { <p class="storage-error" role="alert">{{ i18n.t('anki.storageError') }}</p> }
-  @if (!deck) {
+  @if (loading()) { <p class="loading" aria-busy="true">{{ i18n.t('common.loading') }}</p> } @else if (!deck && resource.state().status === 'missing') {
     <section class="end-state"><app-study-timer [clock]="clock" [result]="true"/><h1>{{ i18n.t('anki.deckNotFound') }}</h1><a routerLink="/anki">{{ i18n.t('anki.title') }}</a></section>
   } @else if (loading()) {
     <p class="loading" aria-busy="true">{{ i18n.t('common.loading') }}</p>
@@ -17,15 +17,21 @@
         <section class="front">
           <span class="kind">{{ i18n.t('anki.studyPage.prompt') }}</span>
           <h1 lang="ja">{{ card.word }}</h1>
-          <app-deck-sentence-text class="front-sentence" [segments]="card.sentenceSegments" [showFurigana]="false" />
+          @if (!isCustom(card)) { <app-deck-sentence-text class="front-sentence" [segments]="card.sentenceSegments" [showFurigana]="false" /> }
         </section>
       } @else {
         <section class="back-content">
+          @if(isCustom(card)) {
+            <h1 lang="ja">{{card.word}}</h1>
+            <dl class="answer-facts"><div><dt>{{i18n.t('anki.cards.reading')}}</dt><dd lang="ja">{{card.reading}}</dd></div><div><dt>{{i18n.t('anki.cards.meaning')}}</dt><dd>{{customMeaning(card)}}</dd></div></dl>
+            @if(card.context; as context){<section class="example"><h2>{{i18n.t('anki.cards.example')}}</h2><p class="custom-ocr-context" lang="ja">{{context.text}}</p>@if(context.sourceTitle){<p>{{context.sourceTitle}}</p>}@if(context.pageNumber){<p>{{i18n.t('manga.page',{number:context.pageNumber})}}</p>}</section>}
+          } @else {
           <app-furigana-text class="answer-word" [segments]="card.wordSegments" size="large" />
           <dl class="answer-facts"><div><dt>{{ i18n.t('anki.cards.reading') }}</dt><dd lang="ja">{{ card.reading }}</dd></div><div><dt>{{ i18n.t('anki.cards.meaning') }}</dt><dd>{{ meaning(card) }}</dd></div></dl>
           <section class="example"><app-deck-sentence-text [segments]="card.sentenceSegments" /><button type="button" class="translation-toggle" [attr.aria-expanded]="translationOpen()" (click)="translationOpen.set(!translationOpen())">{{ translationOpen() ? '▼' : '▶' }} {{ i18n.t('anki.studyPage.translation') }}</button>@if(translationOpen()){<p>{{ sentenceMeaning(card) }}</p>}</section>
           <span class="frequency">{{ i18n.t('anki.cards.frequency', { rank: card.frequencyRank }) }}</span>
           @if(note(card);as noteText){<section class="notes"><h2>{{i18n.t('anki.cards.notes')}}</h2><p>{{noteText}}</p></section>}
+          }
         </section>
       }
     </article>

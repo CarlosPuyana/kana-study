@@ -6,7 +6,7 @@ import { ocrSelectionPoint } from './manga-ocr-selection';
   selector: 'app-manga-ocr',
   template: `@for (block of page().blocks; track $index; let blockIndex = $index) {
     @for (line of block.lines; track $index; let index = $index) {
-      <span class="ocr-line" [attr.data-block-index]="blockIndex" [attr.data-line-index]="index" (pointerdown)="pointerStart($event)" (click)="lookupClick($event,blockIndex,index)" [class.visible]="visible()" [style.left.%]="bounds(block.lines_coords[index], 0) / page().img_width * 100"
+      <span class="ocr-line" [attr.data-block-index]="blockIndex" [attr.data-line-index]="index" (pointerdown)="pointerStart($event)" (click)="lookupClick($event,blockIndex,index)" [class.visible]="visible()" [class.located-line]="locatedLine()?.blockIndex===blockIndex&&locatedLine()?.lineIndex===index" [style.left.%]="bounds(block.lines_coords[index], 0) / page().img_width * 100"
         [style.top.%]="bounds(block.lines_coords[index], 1) / page().img_height * 100"
         [style.width.%]="extent(block.lines_coords[index], 0) / page().img_width * 100"
         [style.height.%]="extent(block.lines_coords[index], 1) / page().img_height * 100"
@@ -14,12 +14,13 @@ import { ocrSelectionPoint } from './manga-ocr-selection';
         [style.font-size.cqw]="block.font_size / page().img_width * 100">{{ line }}</span>
     }
   }`,
-  styles: [`:host { position:absolute; inset:0; pointer-events:none; } .ocr-line { position:absolute; color:transparent; white-space:pre; line-height:1; pointer-events:auto; user-select:text; cursor:text; font-family:serif; } .visible { color:var(--text-primary); background:var(--surface); outline:1px solid var(--accent); } .ocr-line::selection { color:var(--text-primary); background:var(--primary-soft); }`],
+  styles: [`:host { position:absolute; inset:0; pointer-events:none; } .ocr-line { position:absolute; color:transparent; white-space:pre; line-height:1; pointer-events:auto; user-select:text; cursor:text; font-family:serif; } .visible { color:var(--text-primary); background:var(--surface); outline:1px solid var(--accent); } .located-line { outline:3px dashed var(--accent); outline-offset:2px; } .ocr-line::selection { color:var(--text-primary); background:var(--primary-soft); }`],
 })
 export class MangaOcrComponent implements OnDestroy {
   private readonly host=inject<ElementRef<HTMLElement>>(ElementRef);
   readonly page = input.required<MokuroPage>();
   readonly visible = input(false);
+  readonly locatedLine=input<{readonly blockIndex:number;readonly lineIndex:number}|null>(null);
   readonly wordClicked = output<OcrLookupPoint>();
   private pointer: {x:number;y:number} | null = null;
   private selecting=false;private dragged=false;private releasedSelection=false;private captured:OcrLookupPoint|null=null;private selectionTimer:ReturnType<typeof setTimeout>|undefined;
@@ -64,7 +65,7 @@ export class MangaOcrComponent implements OnDestroy {
     this.wordClicked.emit({mode:'caret',text,offset,x:event.clientX,y:event.clientY,blockIndex,lineIndex,selectedText:text,
       previousText:blocks[blockIndex-1]?.lines.join('\n'),nextText:blocks[blockIndex+1]?.lines.join('\n')});
   }
-  bounds(points: number[][], axis: number): number { return Math.min(...points.map(p => p[axis])); }
-  extent(points: number[][], axis: number): number { return Math.max(...points.map(p => p[axis])) - this.bounds(points, axis); }
+  bounds(points: number[][]|undefined, axis: number): number { return Array.isArray(points)&&points.length&&points.every(p=>Array.isArray(p)&&Number.isFinite(p[axis]))?Math.min(...points.map(p => p[axis])):0; }
+  extent(points: number[][]|undefined, axis: number): number { return Array.isArray(points)&&points.length&&points.every(p=>Array.isArray(p)&&Number.isFinite(p[axis]))?Math.max(...points.map(p => p[axis])) - this.bounds(points, axis):0; }
   ngOnDestroy():void {clearTimeout(this.selectionTimer);}
 }

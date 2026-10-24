@@ -5,12 +5,15 @@ import { safeReturnUrl } from '../../core/services/return-navigation';
 import { AuthMode, AuthService, validUsername } from '../../core/services/auth.service';
 import { SyncService } from '../../core/services/sync.service';
 import { TranslationService } from '../../core/services/translation.service';
+import {CustomCloudPanel} from '../profile/custom-cloud-panel';
+import {CUSTOM_DECK_SYNC_ENABLED} from '../../core/services/custom-deck-sync-transport';
 
 @Component({
-  selector: 'app-auth-page', imports: [FormsModule, RouterLink], templateUrl: './auth.page.html', styleUrl: './auth.page.scss',
+  selector: 'app-auth-page', imports: [FormsModule, RouterLink,CustomCloudPanel], templateUrl: './auth.page.html', styleUrl: './auth.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthPage implements AfterViewInit {
+  readonly customTools=inject(CUSTOM_DECK_SYNC_ENABLED);
   readonly auth = inject(AuthService); readonly i18n = inject(TranslationService);
   private readonly route = inject(ActivatedRoute); private readonly router = inject(Router); private readonly sync = inject(SyncService);
   readonly returnUrl=safeReturnUrl(this.route.snapshot.queryParamMap.get('return'),this.route.snapshot.queryParamMap.has('return')?'/':'/profile');

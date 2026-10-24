@@ -1,0 +1,13 @@
+<figure>
+  <figcaption>{{i18n.t(accuracy()?'statsV2.accuracy':'statsV2.activity')}}</figcaption>
+  <svg viewBox="0 0 600 170" role="img" [attr.aria-label]="i18n.t(accuracy()?'statsV2.accuracyChart':'statsV2.activityChart')">
+    <path class="axis" d="M0 150H600"/>
+    @if(accuracy()){<path class="line" [attr.d]="line()"/>@for(point of points();track point.day){<circle [attr.cx]="point.x" [attr.cy]="point.y" r="3"/>}}
+    @else{@for(bar of bars();track bar.day){<rect [attr.x]="bar.x" [attr.y]="bar.y" [attr.width]="bar.width" [attr.height]="bar.height"/>}}
+    <text x="0" y="168">{{days()[0]?.day}}</text><text x="600" y="168" text-anchor="end">{{days().at(-1)?.day}}</text>
+  </svg>
+  <details><summary>{{i18n.t('statsV2.chartTable')}}</summary><div class="table-scroll" tabindex="0" [attr.aria-label]="i18n.t('statsV2.chartTable')">
+    <table><thead><tr><th scope="col">{{i18n.t('statsV2.day')}}</th><th scope="col">{{i18n.t('stats.attempts')}}</th><th scope="col">{{i18n.t('statsV2.objectiveAnswers')}}</th><th scope="col">{{i18n.t('statsV2.objectiveFailures')}}</th><th scope="col">{{i18n.t('statsV2.accuracy')}}</th><th scope="col">{{i18n.t('statsV2.again')}}</th><th scope="col">{{i18n.t('statsV2.hard')}}</th><th scope="col">{{i18n.t('statsV2.good')}}</th></tr></thead>
+    <tbody>@for(day of days();track day.day){<tr><th scope="row">{{day.day}}</th><td>{{day.attempts}}</td><td>{{day.objective}}</td><td>{{day.objective-day.correct}}</td><td>{{percentage(accuracyOf(day))}}</td><td>{{day.again}}</td><td>{{day.hard}}</td><td>{{day.good}}</td></tr>}</tbody></table>
+  </div></details>
+</figure>

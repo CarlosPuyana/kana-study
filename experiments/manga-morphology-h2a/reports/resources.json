@@ -1,0 +1,227 @@
+[
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/base.dat.gz",
+    "bytes": 3956825,
+    "uncompressedBytes": 8388608,
+    "gzipTransportBytes": 3956825,
+    "sha256": "0803327762e1c93ca731e4319ab8343340f2806bb84941207782cde9d2d5a8eb"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/cc.dat.gz",
+    "bytes": 1692067,
+    "uncompressedBytes": 3463716,
+    "gzipTransportBytes": 1692067,
+    "sha256": "02b7631be0d4de3a1a75cd9f9cc51536e4f94c9e6b389b813e06ba0f6e7de765"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/check.dat.gz",
+    "bytes": 3111633,
+    "uncompressedBytes": 8388608,
+    "gzipTransportBytes": 3111633,
+    "sha256": "193ae0035fff6fe812b58d9ee730e7a7d7ee601d918481ce51075c58114f6cc9"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/tid.dat.gz",
+    "bytes": 1605820,
+    "uncompressedBytes": 10485760,
+    "gzipTransportBytes": 1605820,
+    "sha256": "d43d831cb6fb0f0a411739cd287a6d5e998e121a8daca614df14a81a0dcac586"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/tid_map.dat.gz",
+    "bytes": 1485576,
+    "uncompressedBytes": 4194304,
+    "gzipTransportBytes": 1485576,
+    "sha256": "33efd5ffd87a70f669add093fa39dee44341d58f940844ef107c8fd98bb795b2"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/tid_pos.dat.gz",
+    "bytes": 5916009,
+    "uncompressedBytes": 41943040,
+    "gzipTransportBytes": 5916009,
+    "sha256": "60dbfc99a6ab993f30c5dab648bec6ad7f9aaefa5c14e1843837d95e509f8895"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/unk.dat.gz",
+    "bytes": 10512,
+    "uncompressedBytes": 10485760,
+    "gzipTransportBytes": 10512,
+    "sha256": "f7f991cdeb9bfd3e9c0e4577cc50ee0815a11c508cccd444a9d3ab3c81521100"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/unk_char.dat.gz",
+    "bytes": 306,
+    "uncompressedBytes": 65536,
+    "gzipTransportBytes": 306,
+    "sha256": "9a8e86fd9aff32d323fbb59f5a7006f05927a11f8173c90712cc56293aeb3225"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/unk_compat.dat.gz",
+    "bytes": 338,
+    "uncompressedBytes": 262144,
+    "gzipTransportBytes": 338,
+    "sha256": "50f60aa29bc2e86c2903ab8c825bb6fa604d2b294d96941c1d3924259791899d"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/unk_invoke.dat.gz",
+    "bytes": 1140,
+    "uncompressedBytes": 1048576,
+    "gzipTransportBytes": 1140,
+    "sha256": "6b210889548457c3006913afd12c8b525562255f2709e404604be9614a25e94c"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/unk_map.dat.gz",
+    "bytes": 1190,
+    "uncompressedBytes": 1048576,
+    "gzipTransportBytes": 1190,
+    "sha256": "6df12460e5477230bb6fd9641def918b699fc0a8868016b6c9f794488630509b"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "dict/unk_pos.dat.gz",
+    "bytes": 10540,
+    "uncompressedBytes": 10485760,
+    "gzipTransportBytes": 10540,
+    "sha256": "5b183a29f281acc7e0542beca47b83f7985047c0a2d27e78a66f32276be5ad11"
+  },
+  {
+    "package": "kuromoji",
+    "version": "0.1.2",
+    "path": "build/kuromoji.js",
+    "bytes": 307967,
+    "uncompressedBytes": 307967,
+    "gzipTransportBytes": 67763,
+    "sha256": "ab0ac10f1c4a9b5e246e63e57b04ba14d3a6148cd7e8d62cb97a960d4f85a3e6"
+  },
+  {
+    "package": "lindera-wasm",
+    "version": "6.2.0",
+    "path": "lindera_wasm.js",
+    "bytes": 66542,
+    "uncompressedBytes": 66542,
+    "gzipTransportBytes": 11007,
+    "sha256": "a9e082fca426d6d225a439bac39c9d690aa5176598d7c902ca71e1fe4ba8d03a"
+  },
+  {
+    "package": "lindera-wasm",
+    "version": "6.2.0",
+    "path": "lindera_wasm_bg.wasm",
+    "bytes": 1784285,
+    "uncompressedBytes": 1784285,
+    "gzipTransportBytes": 707737,
+    "sha256": "52f4b492f9dd0edf876b90d3432ae2284b2d996bf8e697327d1fc3b0277e6431"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "char_def.bin",
+    "bytes": 2360,
+    "uncompressedBytes": 2360,
+    "gzipTransportBytes": 827,
+    "sha256": "ef37cf70d7e72ec023bec8e632783a6fe255b2d5fd1bce22600b595fccae48b1"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "dict.trie",
+    "bytes": 4587532,
+    "uncompressedBytes": 4587532,
+    "gzipTransportBytes": 2163544,
+    "sha256": "b176188057bbd78fa73c2161db1f00fbabf9afbc3471732c4b549bf707413dfb"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "dict.vals",
+    "bytes": 3921250,
+    "uncompressedBytes": 3921250,
+    "gzipTransportBytes": 1465649,
+    "sha256": "62af946542a17c4f16cf1122cb069b5d26f7cf652066b3b846cc4c230b6a8aa1"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "dict.valsidx",
+    "bytes": 1303480,
+    "uncompressedBytes": 1303480,
+    "gzipTransportBytes": 848412,
+    "sha256": "f1b17f1c4682a5bd42dabe95ab7cefb461c888b839a18d213dd5c7133d3a1a76"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "dict.words",
+    "bytes": 32674733,
+    "uncompressedBytes": 32674733,
+    "gzipTransportBytes": 4251234,
+    "sha256": "fc1d924e12af84a352feccce35b772383322760ee2b3da4be0e173ad82953938"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "dict.wordsidx",
+    "bytes": 1568504,
+    "uncompressedBytes": 1568504,
+    "gzipTransportBytes": 1192311,
+    "sha256": "a38e0b55d6e0fa67555078f8beb6f634f264b2a6b2ea2c9a7aa111f085ada721"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "matrix.mtx",
+    "bytes": 3463718,
+    "uncompressedBytes": 3463718,
+    "gzipTransportBytes": 1705184,
+    "sha256": "915733be6589bee90b8f2af5cd314c384a1f9a2fc3af498384555986447b168b"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "metadata.json",
+    "bytes": 779,
+    "uncompressedBytes": 779,
+    "gzipTransportBytes": 320,
+    "sha256": "305addfbf05e41d985a1541035c79a7b6f8ae254e4bc94f1721be21adf31068f"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "NOTICE.txt",
+    "bytes": 4092,
+    "uncompressedBytes": 4092,
+    "gzipTransportBytes": 1656,
+    "sha256": "2cf235bf0842d6d61eb0244fb22e645a321b12408a3cf75feb3a53577d885bde"
+  },
+  {
+    "package": "lindera-ipadic",
+    "version": "6.2.0",
+    "path": "unk.bin",
+    "bytes": 2492,
+    "uncompressedBytes": 2492,
+    "gzipTransportBytes": 708,
+    "sha256": "3eeebe0ef3f8907be325aa3acb0ccbd4ccb6f5ac20ff3dd0742ff1af1c468da6"
+  }
+]

@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, untracked, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { JapaneseWordDeckEntry } from '../../core/models/japanese-word-deck-entry.model';
 import { deckContentLanguage } from '../../core/services/deck-content-language';
 import { TranslationService } from '../../core/services/translation.service';
-import { JAPANESE_1500_ENTRIES } from '../../data/japanese-1500.generated';
-import { findStudyDeck } from '../../data/study-decks';
+import { BUILTIN_DECK_CONTENT } from '../../core/services/builtin-deck-content';
+import { createDeckRouteResource, entryMeaning } from '../../core/services/deck-route-resource';
+import { isCustomEntry, DeckStudyEntryView } from '../../core/models/deck-catalog.model';
 import { FuriganaText } from '../../shared/components/furigana-text/furigana-text';
 import { DeckSentenceText } from './components/deck-sentence-text/deck-sentence-text';
 
@@ -17,17 +18,28 @@ import { DeckSentenceText } from './components/deck-sentence-text/deck-sentence-
   host: { '(document:keydown.escape)': 'closeOverlay()' },
 })
 export class AnkiCardsPage {
-  private readonly route = inject(ActivatedRoute);
   readonly i18n = inject(TranslationService);
-  readonly deck = findStudyDeck(this.route.snapshot.paramMap.get('deckId'));
+  readonly resource = createDeckRouteResource(BUILTIN_DECK_CONTENT);
+  get deck() { return this.resource.deck; }
+  readonly isCustom = isCustomEntry;
+  title(): string { return this.resource.title(this.i18n); }
   readonly query = signal('');
   readonly visibleLimit = signal(120);
-  readonly selected = signal<JapaneseWordDeckEntry | null>(null);
-  readonly cards = computed(() => JAPANESE_1500_ENTRIES.filter(entry =>
-    japaneseDeckEntryMatchesQuery(entry, this.query()),
+  readonly selected = signal<DeckStudyEntryView | null>(null);
+  readonly cards = computed(() => (this.resource.content?.entries() ?? []).filter(entry =>
+    isCustomEntry(entry) ? [entry.word,entry.reading,...entry.glosses.map(g=>g.text),entry.context?.text ?? ''].some(v=>normalizeDeckSearch(v).includes(normalizeDeckSearch(this.query()))) : japaneseDeckEntryMatchesQuery(entry, this.query()),
   ));
   readonly visibleCards = computed(() => this.cards().slice(0, this.visibleLimit()));
   readonly hasMore = computed(() => this.visibleLimit() < this.cards().length);
+
+  constructor(){
+    let state=this.resource.state(),owner=this.resource.catalog.owner();
+    effect(()=>{
+      const nextState=this.resource.state(),nextOwner=this.resource.catalog.owner();
+      if(state!==nextState||owner!==nextOwner)untracked(()=>this.selected.set(null));
+      state=nextState;owner=nextOwner;
+    });
+  }
 
   updateQuery(event: Event): void {
     this.query.set((event.target as HTMLInputElement).value);
@@ -42,16 +54,16 @@ export class AnkiCardsPage {
     this.selected.set(null);
   }
 
-  meaning(entry: JapaneseWordDeckEntry): string {
-    return entry.meaning[deckContentLanguage(this.i18n.language())];
+  meaning(entry: DeckStudyEntryView): string {
+    return entryMeaning(entry, this.i18n.language());
   }
 
-  sentenceMeaning(entry: JapaneseWordDeckEntry): string {
-    return entry.sentenceMeaning[deckContentLanguage(this.i18n.language())];
+  sentenceMeaning(entry: DeckStudyEntryView): string {
+    return isCustomEntry(entry) ? '' : entry.sentenceMeaning[deckContentLanguage(this.i18n.language())];
   }
 
-  note(entry: JapaneseWordDeckEntry): string | null {
-    return entry.notes[deckContentLanguage(this.i18n.language())] ?? null;
+  note(entry: DeckStudyEntryView): string | null {
+    return isCustomEntry(entry) ? null : entry.notes[deckContentLanguage(this.i18n.language())] ?? null;
   }
 }
 

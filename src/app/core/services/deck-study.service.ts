@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { State } from 'ts-fsrs';
-import { StudyDeck } from '../models/deck.model';
+import { DeckDefinition } from '../models/deck-catalog.model';
 import {
   DeckCardProgress, DeckDailyState, DeckEntryIndexItem, DeckMixedCursor, DeckQueueChoice,
   DeckQueueDecision, DeckQueueSnapshot, DeckRating, DeckReviewEvent, DeckStudyStatistics,
 } from '../models/deck-study.model';
-import { DeckDatabaseService } from './deck-database.service';
+import { DeckPersistenceRouter } from './deck-persistence-router';
 import { DeckSchedulePreview, DeckSchedulerService } from './deck-scheduler.service';
 import { DeckSettingsService } from './deck-settings.service';
 import { getLocalStudyDayKey } from './deck-study-time';
@@ -14,15 +14,18 @@ export const DECK_NEW_LIMIT_STEP = 5;
 
 @Injectable({ providedIn: 'root' })
 export class DeckStudyService {
-  private readonly database = inject(DeckDatabaseService);
+  private readonly database = inject(DeckPersistenceRouter);
   private readonly scheduler = inject(DeckSchedulerService);
   private readonly settings = inject(DeckSettingsService);
 
-  async snapshot(deck: StudyDeck, index: readonly DeckEntryIndexItem[], now = new Date()): Promise<DeckQueueSnapshot> {
+  private readonly retries = new WeakMap<DeckSchedulePreview, Map<string, DeckReviewEvent>>();
+
+  async snapshot(deck: DeckDefinition, index: readonly DeckEntryIndexItem[], now = new Date()): Promise<DeckQueueSnapshot> {
+    const database = this.database.bind(deck.id);
     const localDate = getLocalStudyDayKey(now);
     const [progress, storedDaily] = await Promise.all([
-      this.database.getDeckProgress(deck.id),
-      this.database.getDailyState(deck.id, localDate),
+      database.getDeckProgress(deck.id),
+      database.getDailyState(deck.id, localDate),
     ]);
     const daily = storedDaily ?? emptyDailyState(deck.id, localDate);
     const completedToday = daily.completedAt != null;
@@ -60,7 +63,7 @@ export class DeckStudyService {
     };
   }
 
-  chooseNext(snapshot: DeckQueueSnapshot, deck: StudyDeck, cursor: DeckMixedCursor): DeckQueueDecision {
+  chooseNext(snapshot: DeckQueueSnapshot, deck: DeckDefinition, cursor: DeckMixedCursor): DeckQueueDecision {
     if (snapshot.completedToday) return { choice: null, cursor };
     const learning = snapshot.learningEntries[0];
     const nextNew = snapshot.newEntries[0];
@@ -83,21 +86,24 @@ export class DeckStudyService {
       : { choice: reviewChoice, cursor: { debt } };
   }
 
-  preview(deck: StudyDeck, choice: DeckQueueChoice, now = new Date()): DeckSchedulePreview {
+  preview(deck: DeckDefinition, choice: DeckQueueChoice, now = new Date()): DeckSchedulePreview {
     return this.scheduler.preview(choice.progress, this.settings.settingsFor(deck).desiredRetention, now);
   }
 
   async rate(
-    deck: StudyDeck,
+    deck: DeckDefinition,
     choice: DeckQueueChoice,
     preview: DeckSchedulePreview,
     rating: DeckRating,
     elapsedAnswerMs: number,
     reviewedAt = new Date(),
   ): Promise<DeckReviewEvent> {
+    const database = this.database.bind(deck.id);
     const branch = this.scheduler.branch(preview, rating);
-    const localDate = getLocalStudyDayKey(reviewedAt);
-    const daily = await this.database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
+    const retryKey=JSON.stringify([database.workspace,deck.id,choice.entryId,rating]);
+    const cached = deck.id.startsWith('md-') ? this.retries.get(preview)?.get(retryKey) : undefined;
+    const localDate = getLocalStudyDayKey(cached ? new Date(cached.reviewedAt) : reviewedAt);
+    const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
     if (daily.completedAt != null) throw new Error('Daily deck session is completed.');
     const firstIntroduction = choice.progress === null;
     const introducedEntryIds = firstIntroduction && !daily.introducedEntryIds.includes(choice.entryId)
@@ -108,7 +114,7 @@ export class DeckStudyService {
       deckId: deck.id, entryId: choice.entryId, due: branch.card.due,
       state: branch.card.state, card: branch.card,
     };
-    const event: DeckReviewEvent = {
+    const event: DeckReviewEvent = cached ?? {
       id: reviewEventId(), deckId: deck.id, entryId: choice.entryId,
       reviewedAt: reviewedAt.getTime(), rating,
       fsrsRating: branch.log.rating,
@@ -122,40 +128,47 @@ export class DeckStudyService {
       fsrsLog: branch.log,
       cardBefore: choice.progress?.card ?? null,
     };
-    await this.database.commitReview(progress, event, nextDaily);
+    if (deck.id.startsWith('md-')) { const ratings = this.retries.get(preview) ?? new Map(); ratings.set(retryKey, event); this.retries.set(preview, ratings); }
+    database.assertOwner();
+    await database.commitReview(progress, event, nextDaily);
     return event;
   }
 
   async undo(event: DeckReviewEvent): Promise<void> {
+    const database = this.database.bind(event.deckId);
     const localDate = getLocalStudyDayKey(new Date(event.reviewedAt));
-    const daily = await this.database.getDailyState(event.deckId, localDate)
+    const daily = await database.getDailyState(event.deckId, localDate)
       ?? emptyDailyState(event.deckId, localDate);
     const introducedEntryIds = event.cardBefore === null
       ? daily.introducedEntryIds.filter(entryId => entryId !== event.entryId)
       : [...daily.introducedEntryIds];
-    await this.database.undoReview(event, { ...daily, introducedEntryIds });
+    await database.undoReview(event, { ...daily, introducedEntryIds });
   }
 
-  async adjustTodayNewLimit(deck: StudyDeck, delta: number, now = new Date()): Promise<DeckDailyState> {
+  async adjustTodayNewLimit(deck: DeckDefinition, delta: number, now = new Date()): Promise<DeckDailyState> {
+    const database = this.database.bind(deck.id);
     const localDate = getLocalStudyDayKey(now);
-    const daily = await this.database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
+    const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
     const current = daily.newLimitOverride ?? this.settings.settingsFor(deck).newCardsPerDay;
     const next = { ...daily, newLimitOverride: Math.max(0, current + delta) };
-    await this.database.writeDailyState(next);
+    await database.writeDailyState(next);
     return next;
   }
 
-  async completeSession(deck: StudyDeck, index: readonly DeckEntryIndexItem[], now = new Date()): Promise<void> {
+  async completeSession(deck: DeckDefinition, index: readonly DeckEntryIndexItem[], now = new Date()): Promise<void> {
+    const database = this.database.bind(deck.id);
     const snapshot = await this.snapshot(deck, index, now);
     if (snapshot.completedToday || snapshot.newAvailable || snapshot.learningDue || snapshot.reviewDue) return;
+    database.assertOwner();
     const localDate = getLocalStudyDayKey(now);
-    const daily = await this.database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
-    await this.database.writeDailyState({ ...daily, completedAt: now.getTime() });
+    const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
+    await database.writeDailyState({ ...daily, completedAt: now.getTime() });
   }
 
-  async statistics(deck: StudyDeck, total: number, now = new Date()): Promise<DeckStudyStatistics> {
+  async statistics(deck: DeckDefinition, total: number, now = new Date()): Promise<DeckStudyStatistics> {
+    const database = this.database.bind(deck.id);
     const [progress, events] = await Promise.all([
-      this.database.getDeckProgress(deck.id), this.database.getDeckReviewEvents(deck.id),
+      database.getDeckProgress(deck.id), database.getDeckReviewEvents(deck.id),
     ]);
     const learning = progress.filter(isLearning).length;
     const review = progress.filter(item => item.card.state === State.Review).length;

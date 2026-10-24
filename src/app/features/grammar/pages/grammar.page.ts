@@ -1,3 +1,4 @@
+import {AttemptRecordingService,AttemptRecordingSession} from '../../../core/services/attempt-recording.service';
 import {GrammarIntendedVocabulary} from '../components/grammar-intended-vocabulary';
 import {JapaneseDictionaryPopover} from '../../../shared/components/japanese-dictionary-popover/japanese-dictionary-popover';
 import { createStudyClock } from '../../../core/services/study-clock';
@@ -28,6 +29,7 @@ export class GrammarPage {
   private exerciseAnswered=false;
   readonly exerciseFinished=signal(false);
   readonly conceptId=grammarConceptId;
+  private readonly attempts=inject(AttemptRecordingService);private attemptSession?:AttemptRecordingSession;
   private readonly weaknesses=inject(WeaknessService);
   readonly retryPending=signal(false);
   readonly progress=inject(GrammarProgressService);
@@ -75,7 +77,7 @@ export class GrammarPage {
   readonly rows=[this.topics.slice(0,3),this.topics.slice(3,6),this.topics.slice(6,9),this.topics.slice(9)];
   constructor(){effect(()=>{this.params();const lesson=this.lesson();untracked(()=>{
     const id=lesson?grammarConceptId(lesson):null;
-    this.clock.reset();this.clock.pause();this.exerciseAnswered=false;
+    this.clock.reset();this.clock.pause();this.exerciseAnswered=false;this.attemptSession=this.attempts.begin('grammar','learn');
     this.retryPending.set(false);
     if(id)this.progress.openLesson(id);
     this.exerciseIndex.set(id?this.progress.resumeIndex(id):0);
@@ -113,6 +115,6 @@ export class GrammarPage {
     else if(this.lesson())this.navigate(this.lesson()!.nextPath);
   }
   retryExercises():void{const lesson=this.lesson();if(!lesson)return;this.exerciseIndex.set(this.progress.firstPendingExerciseIndex(grammarConceptId(lesson)));this.retryPending.set(false);this.focusNextExercise.set(true);}
-  answer(correct:boolean):void{if(this.exerciseAnswered)return;this.exerciseAnswered=true;const lesson=this.lesson(),exercise=this.currentExercise();if(lesson&&exercise){this.progress.recordAnswer(grammarConceptId(lesson),lesson.topicId,exercise.id,this.exerciseIndex(),correct);if(lesson.concept)this.weaknesses.recordLearn('grammar',grammarConceptId(lesson),exercise.kind,correct?'good':'again');if(this.exerciseIndex()===this.exercises().length-1){this.clock.commitAppearance();this.clock.pause();this.exerciseFinished.set(true);}}}
+  answer(correct:boolean):void{if(this.exerciseAnswered)return;this.exerciseAnswered=true;const lesson=this.lesson(),exercise=this.currentExercise();if(lesson&&exercise){this.attemptSession?.record(exercise.id,{source:'objective',correct},exercise.kind);this.progress.recordAnswer(grammarConceptId(lesson),lesson.topicId,exercise.id,this.exerciseIndex(),correct);if(lesson.concept)this.weaknesses.recordLearn('grammar',grammarConceptId(lesson),exercise.kind,correct?'good':'again');if(this.exerciseIndex()===this.exercises().length-1){this.clock.commitAppearance();this.clock.pause();this.exerciseFinished.set(true);}}}
   showProgress():void{document.getElementById('grammar-progress')?.scrollIntoView({behavior:'smooth',block:'start'});}
 }

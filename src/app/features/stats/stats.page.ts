@@ -1,3 +1,4 @@
+import {HistoricalStats} from './historical-stats';
 import {PageHeader} from '../../shared/components/page-header/page-header';
 import {grammarQuestionLabelKey,grammarWeaknessTitleKey} from '../grammar/services/grammar-weakness';
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
@@ -7,7 +8,7 @@ import {LearningDirection, LearningRecommendation} from '../../core/models/learn
 import {WeaknessActivity, WeaknessModule} from '../../core/models/weakness.model';
 import {TranslationService} from '../../core/services/translation.service';
 
-@Component({selector:'app-stats-page',imports:[PageHeader,RouterLink],templateUrl:'./stats.page.html',styleUrl:'./stats.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-stats-page',imports:[PageHeader,RouterLink,HistoricalStats],templateUrl:'./stats.page.html',styleUrl:'./stats.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class StatsPage {
   readonly analytics=inject(LearningAnalyticsService);
   readonly i18n=inject(TranslationService);

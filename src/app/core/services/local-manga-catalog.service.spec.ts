@@ -11,7 +11,7 @@ describe('Local manga catalog',()=>{
   let fetcher:ReturnType<typeof vi.fn>;
   beforeEach(()=>{
     const files:Record<string,unknown>={'index.json':{schemaVersion:1,mangas:['test/metadata.json']},'test/metadata.json':metadata,'test/data/dialogue.json':[bubble],'test/ja.mokuro':{version:'0.2.0',title:'テスト',volume:'Test',pages:[{img_path:'pages/jp/01.webp',img_width:100,img_height:150,blocks:[{box:[0,0,100,40],vertical:false,font_size:20,lines:['学校'],lines_coords:[[[0,0],[100,0],[100,40],[0,40]]]}]}]}};
-    fetcher=vi.fn(async(input:URL)=>({ok:true,json:async()=>structuredClone(files[input.href.split('/manga/')[1]]),blob:async()=>new Blob(['local-image'],{type:'image/webp'})}));vi.stubGlobal('fetch',fetcher);
+    fetcher=vi.fn(async(input:URL)=>({ok:true,json:async()=>structuredClone(files[input.href.split('/manga/')[1]]),text:async()=>JSON.stringify(files[input.href.split('/manga/')[1]]),blob:async()=>new Blob(['local-image'],{type:'image/webp'})}));vi.stubGlobal('fetch',fetcher);
     TestBed.configureTestingModule({providers:[{provide:DOCUMENT,useValue:{baseURI:'https://example.test/kana-study/'}},{provide:MangaRepository,useValue:{volume:vi.fn(async()=>({id:'imported'})),page:vi.fn(async()=>({volumeId:'imported'}))}}]});
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.unstubAllGlobals();});
@@ -20,6 +20,12 @@ describe('Local manga catalog',()=>{
   it('resolves Japanese image and real Mokuro data',async()=>{const p=await TestBed.inject(LocalMangaCatalogService).page('test-manga',0);expect(p.image.size).toBeGreaterThan(0);expect(p.ocr.blocks[0].lines).toEqual(['学校']);expect(String(fetcher.mock.calls[2][0]).endsWith('/test/pages/jp/01.webp')).toBe(true);});
   it('resolves the same page in Spanish without manufacturing Japanese OCR',async()=>{const p=await TestBed.inject(LocalMangaCatalogService).page('test-manga',0,'es');expect(p.pageIndex).toBe(0);expect(p.ocr.blocks).toEqual([]);expect(String(fetcher.mock.calls[2][0]).endsWith('/test/pages/es/01.webp')).toBe(true);});
   it('loads official dialogue separately with stable IDs',async()=>expect(await TestBed.inject(LocalMangaCatalogService).dialogue('test-manga')).toEqual([bubble]));
+  it('reads fresh Japanese OCR separately without loading or decoding an image',async()=>{
+    const catalog=TestBed.inject(LocalMangaCatalogService),controller=new AbortController();
+    const doc=await catalog.ocrDocument('test-manga',controller.signal);expect(doc?.pages[0].blocks[0].lines).toEqual(['学校']);
+    expect(fetcher.mock.calls.map(c=>String(c[0]))).toEqual(['https://example.test/kana-study/manga/index.json','https://example.test/kana-study/manga/test/metadata.json','https://example.test/kana-study/manga/test/ja.mokuro']);
+    await catalog.ocrDocument('test-manga',controller.signal);expect(fetcher).toHaveBeenCalledTimes(4);
+  });
   it('reports missing manga and out-of-range pages',async()=>{const catalog=TestBed.inject(LocalMangaCatalogService);await expect(catalog.get('absent')).rejects.toThrow('catalogMissing');await expect(catalog.page('test-manga',3)).rejects.toThrow('catalogMissing');});
   it('rejects an unavailable language without fetching page images',async()=>{const catalog=TestBed.inject(LocalMangaCatalogService);await catalog.list();await expect(catalog.page('test-manga',0,'en' as 'ja')).rejects.toThrow('catalogLanguage');expect(fetcher).toHaveBeenCalledTimes(2);});
   it('retries failed catalog downloads',async()=>{fetcher.mockResolvedValueOnce({ok:false} as never);const catalog=TestBed.inject(LocalMangaCatalogService);await expect(catalog.list()).rejects.toThrow('catalogUnavailable');expect(await catalog.list()).toHaveLength(1);});

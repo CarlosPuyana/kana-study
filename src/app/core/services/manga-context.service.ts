@@ -8,7 +8,7 @@ export const MANGA_ASSISTANT_ENDPOINT = new InjectionToken<string | null>('MANGA
 });
 type ContextResult = MangaTranslationResult | MangaStudyExplanation;
 const CACHE_KEY='kana-study-manga-context-v1';
-function text(value:unknown):value is string { return typeof value==='string' && value.length>0 && value.length<=6000; }
+function text(value:unknown):value is string { return typeof value==='string' && value.trim().length>0 && value.length<=6000; }
 function optionalText(value:unknown):boolean {return value===undefined || text(value);}
 function studyNotes(value:unknown):boolean {
   return value===undefined || (Array.isArray(value) && value.length<=5 && value.every(note=>

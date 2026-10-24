@@ -1,0 +1,44 @@
+@if(enabled()){
+<section class="custom-cloud" aria-labelledby="custom-cloud-title">
+ <h2 id="custom-cloud-title">{{i18n.t('customCloud.title')}}</h2><p>{{i18n.t('customCloud.experimental')}}</p>
+ @if(error()){<p class="error" role="alert">{{i18n.t('customCloud.error')}}</p>}
+ @if(hasGuest()){
+  <p>{{i18n.t('customCloud.inventory',{decks:count('decks'),cards:count('cards'),events:count('events')})}}</p>
+  <p>{{i18n.t('customCloud.sourceKept')}}</p>
+  <div class="actions"><button type="button" [disabled]="busy()" (click)="useAccount()">{{i18n.t('customCloud.account')}}</button><button type="button" [disabled]="busy()" (click)="preview.set(true)">{{i18n.t('customCloud.preview')}}</button></div>
+ }
+ <details><summary>{{i18n.t('customCloud.privacy')}}</summary><p>{{i18n.t('customCloud.upload')}}</p><p>{{i18n.t('customCloud.excluded')}}</p><p>{{i18n.t('customCloud.access')}}</p><p>{{i18n.t('customCloud.withdrawPolicy')}}</p></details>
+ @if(!accepted()){
+  <label class="check"><input type="checkbox" [(ngModel)]="consentChecked" />{{i18n.t('customCloud.consent')}}</label>
+  @if(!preview()){<button type="button" [disabled]="busy()||!consentChecked||!transfer.workspace.userId()" (click)="allow()">{{i18n.t('customCloud.allow')}}</button>}
+ }@else{<p>{{i18n.t('customCloud.accepted')}}</p><button type="button" [disabled]="busy()" (click)="revoke()">{{i18n.t('customCloud.withdraw')}}</button>}
+ @if(preview()){
+  <div class="confirmation"><p>{{i18n.t('customCloud.mergeConsequences')}}</p><label class="check"><input type="checkbox" [(ngModel)]="confirmed" />{{i18n.t('customCloud.confirmImport')}}</label>
+  <button type="button" [disabled]="busy()||!confirmed||(!accepted()&&!consentChecked)" (click)="merge()">{{i18n.t('customCloud.merge')}}</button><button type="button" [disabled]="busy()" (click)="preview.set(false)">{{i18n.t('common.cancel')}}</button></div>
+ }
+ <p role="status" aria-live="polite">{{i18n.t('customCloud.state.'+transfer.status())}}</p>
+ @for(plan of plans();track plan.id){<article><h3>{{i18n.t('customCloud.import')}}</h3><p>{{i18n.t('customCloud.progress',{done:done(plan),total:total(plan)})}} · {{i18n.t('customCloud.state.'+(plan.status==='complete'&&!plan.published?'pending':plan.status))}}</p>
+ @if(plan.limit;as limit){<p role="alert">{{i18n.t('customCloud.limit',{step:limit.step,changes:limit.changes,bytes:limit.bytes})}} {{i18n.t('customCloud.limit.'+limit.reason)}}</p>}
+ @if(plan.sourceChanged){<p>{{i18n.t('customCloud.sourceChanged')}}</p>}@if(plan.blocked.length){<p>{{i18n.t('customV2.blocked.'+plan.blocked[0])}}</p>}
+ @if(plan.status!=='complete'||!plan.published){<button type="button" [disabled]="busy()||!accepted()" (click)="resume(plan.id)">{{i18n.t('customCloud.resume')}}</button>}</article>}
+ <h3>{{i18n.t('customCloud.conflicts')}}</h3><p>{{i18n.t('customCloud.noMerge')}}</p>
+ <p>{{i18n.t('customV2.privacy')}}</p>
+ @for(conflict of conflicts();track conflict.id){<article class="conflict"><h4>{{i18n.t('customCloud.kind.'+conflict.kind)}}</h4><p>{{i18n.t('customCloud.origin.'+conflict.origin)}}</p>
+  <p>{{i18n.t('customCloud.rejected')}}</p><div class="versions">
+   <div><h5>{{i18n.t('customCloud.canonical')}}</h5>@let server=version(conflict,false);<p>{{server.word}} {{server.meaning}}</p><p>{{server.context}}</p>@if(server.reps!==null){<p>{{i18n.t('customCloud.reps',{count:server.reps})}}</p>}</div>
+   <div><h5>{{i18n.t('customCloud.incoming')}}</h5>@let local=version(conflict,true);<p>{{local.word}} {{local.meaning}}</p><p>{{local.context}}</p>@if(local.reps!==null){<p>{{i18n.t('customCloud.reps',{count:local.reps})}}</p>}</div>
+  </div>
+  <div class="actions"><button type="button" [disabled]="busy()||!accepted()" (click)="select(conflict.id,'keep')">{{i18n.t('customCloud.keep')}}</button>
+  @if(conflict.kind==='review'||conflict.kind==='undo'){<button type="button" [disabled]="busy()||!accepted()" (click)="archive(conflict.id)">{{i18n.t('customV2.archive')}}</button>}
+  @if(conflict.kind==='content'||conflict.kind==='duplicate'){<button type="button" [disabled]="busy()||!accepted()" (click)="select(conflict.id,'rebase')">{{i18n.t('customCloud.rebase')}}</button>}
+  @if(conflict.kind==='restore'||conflict.kind==='delete-edit'){<button type="button" [disabled]="busy()||!accepted()" (click)="select(conflict.id,'restore')">{{i18n.t('customCloud.restore')}}</button>}</div>
+  @if(conflict.kind==='dependency'||conflict.kind==='identity'){<p>{{i18n.t('customCloud.blocked')}}</p>}
+ </article>}
+ @if(pending();as decision){<div class="confirmation" role="group" [attr.aria-label]="i18n.t('customCloud.confirmResolution')"><p>{{i18n.t('customCloud.consequence.'+decision.mode)}}</p><label class="check"><input type="checkbox" [(ngModel)]="resolutionConfirmed" />{{i18n.t('customCloud.confirmResolution')}}</label><button type="button" [disabled]="busy()||!resolutionConfirmed||!accepted()" (click)="resolve()">{{i18n.t('common.confirm')}}</button><button type="button" (click)="pending.set(null)">{{i18n.t('common.cancel')}}</button></div>}
+ <h3>{{i18n.t('customV2.recovery')}}</h3><p>{{i18n.t('customV2.knownId')}}</p>
+ <label class="archive-reference">{{i18n.t('customV2.reference')}}<input [(ngModel)]="archiveId" autocomplete="off" /></label><button type="button" [disabled]="busy()||!archiveId.trim()" (click)="inspectArchive()">{{i18n.t('customV2.inspect')}}</button>
+ @if(archiveView();as archive){<article role="status"><p>{{i18n.t(archive.verified?'customV2.verified':'customV2.partial')}}</p><p>{{i18n.t('customV2.summary',{count:archive.operations.length,missing:archive.missing,resolutions:archive.resolutions})}}</p><p>{{i18n.t('customV2.state.'+archive.state)}}</p><p>{{archiveWord()}}</p><p>{{archiveCard()?.context?.sourceTitle}}</p><p>{{archiveCard()?.context?.text}}</p><p>{{i18n.t('customCloud.reps',{count:archiveReps()})}}</p><p>{{i18n.t('customV2.canonicalSeparate')}}</p></article>}
+</section>
+}
+
+

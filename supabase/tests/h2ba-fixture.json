@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "deck": {
+    "schemaVersion": 1,
+    "id": "md-2ee06347b62cee536dfd83400054d253c479757d438d09abccb56f4cb920e598",
+    "title": "QA volume",
+    "contentType": "japanese-word",
+    "settings": {
+      "desiredRetention": 0.9,
+      "newCardsPerDay": 10,
+      "newCardOrder": "mixed"
+    },
+    "status": "active",
+    "createdAt": "2026-10-22T12:00:00.000Z",
+    "updatedAt": "2026-10-22T12:00:00.000Z"
+  },
+  "card": {
+    "schemaVersion": 1,
+    "id": "mc-8d15f34e778b9df52dd82f4660d10c81592226599b2edad3e6f0ab75d8d5e055",
+    "deckId": "md-2ee06347b62cee536dfd83400054d253c479757d438d09abccb56f4cb920e598",
+    "lexicalIdentity": {
+      "schemaVersion": 1,
+      "key": "lex1-5cfb6ac0241ae0f01b041175f88469075d72e7bccfa7039f172caac0e5f06a5f",
+      "anchor": {
+        "authority": "kana-study-curated",
+        "entryId": "mce-1788e4b82b0d4eb7dd36000c0725ff9efc9ffa58d6e21b79df95062f45f5121d",
+        "canonicalReading": "ねこ",
+        "homographGroup": "manga-user-entity-v1"
+      },
+      "spellings": [
+        "猫"
+      ],
+      "evidenceVersion": "manga-user-entity-v1"
+    },
+    "direction": "japanese-to-meaning",
+    "word": "猫",
+    "reading": "ねこ",
+    "glosses": [
+      {
+        "text": "Confirmed user meaning",
+        "language": "es",
+        "source": {
+          "kind": "user",
+          "sourceId": "confirmation-fixture-volume-猫",
+          "revision": "receipt-v1"
+        }
+      }
+    ],
+    "context": {
+      "text": "猫がいる。",
+      "sourceTitle": "QA volume",
+      "pageNumber": 2
+    },
+    "order": 0,
+    "contentVersion": 1,
+    "createdAt": "2026-10-22T12:00:00.000Z",
+    "updatedAt": "2026-10-22T12:00:00.000Z"
+  },
+  "expectedContentVersion": null,
+  "confirmation": {
+    "schemaVersion": 1,
+    "id": "confirmation-fixture-volume-猫",
+    "workspace": "guest",
+    "actor": {
+      "kind": "local-workspace-user",
+      "workspace": "guest"
+    },
+    "confirmedAt": "2026-10-22T12:00:00.000Z",
+    "source": {
+      "volumeId": "fixture-volume",
+      "volumeTitle": "QA volume",
+      "pageNumber": 2,
+      "blockIndex": 0,
+      "lineIndex": 0,
+      "range": [
+        0,
+        1
+      ],
+      "fragment": "猫がいる。",
+      "surface": "猫"
+    },
+    "entity": {
+      "schemaVersion": 1,
+      "id": "mce-1788e4b82b0d4eb7dd36000c0725ff9efc9ffa58d6e21b79df95062f45f5121d",
+      "identity": {
+        "schemaVersion": 1,
+        "key": "lex1-5cfb6ac0241ae0f01b041175f88469075d72e7bccfa7039f172caac0e5f06a5f",
+        "anchor": {
+          "authority": "kana-study-curated",
+          "entryId": "mce-1788e4b82b0d4eb7dd36000c0725ff9efc9ffa58d6e21b79df95062f45f5121d",
+          "canonicalReading": "ねこ",
+          "homographGroup": "manga-user-entity-v1"
+        },
+        "spellings": [
+          "猫"
+        ],
+        "evidenceVersion": "manga-user-entity-v1"
+      },
+      "word": "猫",
+      "reading": "ねこ",
+      "origin": "explicit-user-confirmation",
+      "expertCertified": false,
+      "originReference": "ocr-97751fc2cc70a5a46cc51a0187614c04f1bf019495cb7312a899893f349342d0",
+      "branch": "initial",
+      "registryNamespace": "00000000-0000-4000-8000-000000000001"
+    },
+    "selectedProposal": null,
+    "alternatives": [],
+    "totalAlternatives": 0,
+    "confirmedMeaning": "Confirmed user meaning",
+    "meaningLanguage": "es",
+    "reusedEntity": false,
+    "expertCertified": false
+  }
+}

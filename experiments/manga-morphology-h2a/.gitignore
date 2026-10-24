@@ -1,0 +1,4 @@
+node_modules/
+resources/
+reports/raw/
+__pycache__/

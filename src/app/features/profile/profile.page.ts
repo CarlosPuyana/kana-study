@@ -10,9 +10,14 @@ import { SyncService } from '../../core/services/sync.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { LeaderboardService } from '../../core/services/leaderboard.service';
 import { MedalBadge } from '../../shared/components/medal-badge/medal-badge';
+import {WorkspaceService} from '../../core/services/workspace.service';
+import {CustomCloudPanel} from './custom-cloud-panel';
+import {CUSTOM_DECK_SYNC_ENABLED} from '../../core/services/custom-deck-sync-transport';
 
-@Component({ selector:'app-profile-page', imports:[FormsModule,RouterLink,MedalBadge,JsonPipe], providers:[LeaderboardService], templateUrl:'./profile.page.html', styleUrl:'./profile.page.scss', changeDetection:ChangeDetectionStrategy.OnPush })
+@Component({ selector:'app-profile-page', imports:[FormsModule,RouterLink,MedalBadge,JsonPipe,CustomCloudPanel], providers:[LeaderboardService], templateUrl:'./profile.page.html', styleUrl:'./profile.page.scss', changeDetection:ChangeDetectionStrategy.OnPush })
 export class ProfilePage {
+  private readonly workspace=inject(WorkspaceService);
+  readonly customTools=inject(CUSTOM_DECK_SYNC_ENABLED);
   readonly auth=inject(AuthService);readonly sync=inject(SyncService);readonly i18n=inject(TranslationService);
   readonly leaderboard=inject(LeaderboardService);
   readonly view=signal<'summary'|'leaderboard'>('summary');readonly refreshing=signal(false);
@@ -20,8 +25,8 @@ export class ProfilePage {
   readonly returnUrl=safeReturnUrl(inject(ActivatedRoute).snapshot.queryParamMap.get('return'));
   readonly stats=signal<ProfileStats|null>(null);readonly editing=signal(false);readonly saving=signal(false);readonly error=signal<string|null>(null);
   displayName='';username='';bio='';
-  constructor(){effect(()=>{this.auth.user();this.syncDiagnostic.set(null);});effect(()=>{const status=this.sync.status();if(['synced','pending','offline','syncing'].includes(status))this.syncError.set(false);});if(!this.auth.authenticated()){void this.router.navigate(['/auth'],{queryParams:{return:this.returnUrl}});return;}this.resetForm();void this.load();}
-  async load(){this.stats.set(await this.statsService.load());}
+  constructor(){effect(()=>{this.auth.user();this.syncDiagnostic.set(null);});effect(()=>{const status=this.sync.status();if(['synced','pending','offline','syncing'].includes(status))this.syncError.set(false);});if(!this.auth.authenticated()){void this.router.navigate(['/auth'],{queryParams:{return:this.returnUrl}});return;}this.resetForm();effect(()=>{this.workspace.activationRevision();void this.load();});}
+  async load(){const epoch=this.workspace.activationRevision();try{const stats=await this.statsService.load();if(epoch===this.workspace.activationRevision())this.stats.set(stats);}catch(error){if(epoch===this.workspace.activationRevision())throw error;}}
   resetForm(){const p=this.auth.profile();this.displayName=p?.displayName??'';this.username=p?.username??'';this.bio=p?.bio??'';}
   async save(){this.error.set(null);if(!validUsername(this.username)){this.error.set(this.i18n.t('auth.usernameInvalid'));return;}this.saving.set(true);try{const result=await this.auth.updateProfile({displayName:this.displayName,username:this.username,bio:this.bio});if(result.error)this.error.set(this.i18n.t('profile.saveError'));else this.editing.set(false);}finally{this.saving.set(false)}}
   readonly synchronizing=signal(false);readonly syncError=signal(false);

@@ -1,13 +1,23 @@
+import {AttemptEventRepository} from './attempt-event.repository';
 import { MangaStudySavedRepository } from './manga-study-saved.repository';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { WorkspaceService } from './workspace.service';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
+import {CUSTOM_DECKS_ENABLED,CUSTOM_DECK_SYNC_ENABLED} from './custom-deck-gates';
+import {MANGA_DECK_ASSISTED_ENABLED} from './manga-deck-gate';
 
 @Injectable({ providedIn: 'root' })
 export class WorkspaceMigrationService {
   private readonly workspace = inject(WorkspaceService);
   private readonly outbox = inject(SyncOutboxService);
+  private readonly attempts=inject(AttemptEventRepository);
   private readonly manga = inject(MangaStudySavedRepository);
+  private readonly injector=inject(Injector);
+  private async custom(){const module=await import('./custom-guest-workspace-migration');return this.injector.get(module.CustomGuestWorkspaceMigration); }
+  private readonly customGate=inject(CUSTOM_DECKS_ENABLED);private readonly syncGate=inject(CUSTOM_DECK_SYNC_ENABLED);private readonly mangaGate=inject(MANGA_DECK_ASSISTED_ENABLED);
+  private customAllowed(){return this.customGate()&&this.syncGate()&&this.mangaGate();}
+  async hasCustomGuestData(){return this.customAllowed()&&(await this.custom()).hasGuestData();}
+  async customImportComplete(userId:string){return this.customAllowed()&&(await this.custom()).complete(userId);}
 
   async copyGuestToUser(userId: string): Promise<void> {
     this.workspace.copyGuestLocalStorageToUser(userId);
@@ -21,6 +31,7 @@ export class WorkspaceMigrationService {
       { name: 'sessions', keyPath: 'id', indexes: [['module', 'module'], ['startedAt', 'startedAt'], ['localDay', 'localDay']] },
       { name: 'coverage', keyPath: ['module', 'contentId'], indexes: [['module', 'module']] },
     ]);
+    await this.attempts.copyGuestToUser(userId);
     const workspace = `user:${userId}` as const;
     for(const item of await this.manga.list('guest'))await this.manga.save(item,workspace,'import');
     for (const item of deck['card-progress'] ?? []) await this.queue(workspace, 'deck-card-progress', `${item.deckId}:${item.entryId}`, item);
@@ -31,11 +42,13 @@ export class WorkspaceMigrationService {
   }
 
   async hasGuestData(): Promise<boolean> {
+    if(await this.hasCustomGuestData())return true;
     if (this.workspace.hasGuestProgress()) return true;
     if (typeof indexedDB === 'undefined') return false;
     return await databaseHasAny('kana-study-decks', ['card-progress', 'review-events', 'daily-state'])
       || await databaseHasAny('kana-study-rush', ['sessions', 'coverage'])
-      || (await this.manga.list('guest')).length>0;
+      || (await this.manga.list('guest')).length>0
+      || await this.attempts.hasGuestData();
   }
 
   private async queue(workspace: `user:${string}`, type: Parameters<typeof makeOutboxItem>[1], key: string, payload: unknown): Promise<void> {

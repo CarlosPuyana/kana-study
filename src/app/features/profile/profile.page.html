@@ -19,4 +19,5 @@
       @if(leaderboard.entries().length){<table><thead><tr><th scope="col" [attr.aria-label]="i18n.t('profile.position')">#</th><th scope="col">{{i18n.t('profile.rankingUser')}}</th><th scope="col">{{i18n.t('profile.studyTime')}}</th><th scope="col">{{i18n.t('profile.medals')}}</th></tr></thead><tbody>@for(entry of leaderboard.entries();track entry.username){<tr [class.current-user]="entry.isCurrentUser"><td>{{entry.position}} @if(entry.position<=3){<span aria-hidden="true">{{entry.position===1?'🥇':entry.position===2?'🥈':'🥉'}}</span>}</td><td><strong>{{entry.displayName}}</strong><span class="username">&#64;{{entry.username}}</span>@if(entry.isCurrentUser){<small class="you">{{i18n.t('profile.you')}}</small>}</td><td>{{formatDuration(entry.studySeconds)}}</td><td>{{entry.medalCount}}</td></tr>}</tbody></table>}@else if(leaderboard.status()==='loaded'){<p>{{i18n.t('profile.noUsers')}}</p>}
     </section>
   }
+  @if(customTools()){<app-custom-cloud-panel />}
 </main>

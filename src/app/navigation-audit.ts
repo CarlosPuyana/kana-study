@@ -51,6 +51,7 @@ export const NAVIGATION_AUDIT:readonly RouteAuditEntry[]=[
   {route:'manga/study/fsrs',entryPoint:'Saved Manga words: scheduled review link',type:'ui'},
   {route:'manga/guide',entryPoint:'Manga how-to link',type:'ui'},
   {route:'manga/read/:volumeId',entryPoint:'Manga library volume read action',type:'dynamic'},
+  {route:'manga/vocabulary/:volumeId',entryPoint:'Experimental volume action; requires both custom and assisted DI gates, disabled by default',type:'dynamic'},
   {route:'grammar',entryPoint:'More Grammar',type:'ui'},
   {route:'grammar/review',entryPoint:'Grammar roadmap mixed practice',type:'ui'},
   {route:'grammar/n5/:topicId',entryPoint:'Grammar roadmap / sidebar',type:'dynamic'},

@@ -1,3 +1,4 @@
+import {AttemptRecordingService,AttemptRecordingSession} from '../../core/services/attempt-recording.service';
 import {ChangeDetectionStrategy, Component, computed, effect, inject, OnDestroy, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {VOCABULARY_CATEGORIES, VocabularyStudyCategory} from '../../core/models/vocabulary.model';
@@ -11,6 +12,7 @@ import {VOCABULARY_N5} from '../../data/vocabulary-n5.generated';
   styleUrl:'./vocabulary-listening.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class VocabularyListeningPage implements OnDestroy {
   readonly i18n=inject(TranslationService);readonly audio=inject(JapaneseAudioService);
+  private readonly attempts=inject(AttemptRecordingService);private attemptSession?:AttemptRecordingSession;
   private readonly weaknesses=inject(WeaknessService);private readonly route=inject(ActivatedRoute);
   readonly validEntries=VOCABULARY_N5.filter(e=>e.enabled&&this.audio.hasAudio(e.id));
   readonly categories=VOCABULARY_CATEGORIES.filter(c=>this.validEntries.some(e=>e.studyCategory===c));
@@ -32,6 +34,7 @@ export class VocabularyListeningPage implements OnDestroy {
   start():void {
     this.interrupted.set(false);this.consecutiveErrors=0;
     const pool=this.weakMode?this.weaknesses.items('vocabulary',this.validEntries,15,'listening'):this.pool();
+    this.attemptSession=this.attempts.begin('vocabulary','listening');
     this.session.set(new VocabularyListeningSession(pool,this.validEntries,this.mode(),this.i18n.language(),Math.random,this.weakMode));
     this.skipped.set(0);this.refresh();
   }
@@ -52,8 +55,9 @@ export class VocabularyListeningPage implements OnDestroy {
   }
   next():void {
     const session=this.session(),question=this.question(),chosen=this.chosen();if(!session||!question||!chosen)return;
-    if(this.audio.state()!=='error')this.weaknesses.record('vocabulary',question.entry.id,
-      question.options.find(o=>o.id===chosen)!.correct,'listening');
+    if(this.audio.state()!=='error'){const correct=question.options.find(o=>o.id===chosen)!.correct;
+      this.attemptSession?.record(question.entry.id,{source:'objective',correct},question.kind);
+      this.weaknesses.record('vocabulary',question.entry.id,correct,'listening');}
     session.next();this.refresh();
   }
   configure():void{this.token++;this.audio.stop();this.session.set(null);this.question.set(null);this.chosen.set(null);this.canAnswer.set(false);this.interrupted.set(false);this.consecutiveErrors=0;}

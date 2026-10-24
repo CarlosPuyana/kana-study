@@ -1,3 +1,4 @@
+import {AttemptRecordingService,AttemptRecordingSession} from '../../core/services/attempt-recording.service';
 import {safeReturnUrl} from '../../core/services/return-navigation';
 import {ChangeDetectionStrategy,Component,computed,inject,signal,viewChild} from '@angular/core';
 import {ActivatedRoute,Router,RouterLink} from '@angular/router';
@@ -13,6 +14,7 @@ export class VocabularyWritingPage {
   private readonly router=inject(Router);
   readonly returnLink=computed(()=>this.router.parseUrl(this.returnRoute()));
   readonly i18n=inject(TranslationService);private readonly route=inject(ActivatedRoute);
+  private readonly attempts=inject(AttemptRecordingService);private attemptSession?:AttemptRecordingSession;
   private readonly weaknesses=inject(WeaknessService);readonly weakMode=signal(false);
   readonly categories=VOCABULARY_CATEGORIES.filter(c=>VOCABULARY_N5.some(e=>e.enabled&&e.studyCategory===c));
   readonly selected=signal<readonly VocabularyStudyCategory[]>([...this.categories]);
@@ -24,11 +26,11 @@ export class VocabularyWritingPage {
   readonly practice=viewChild(WordWritingPractice);
   constructor(){this.weakMode.set(this.route.snapshot.queryParamMap.get('weak')==='1');if(this.weakMode()){this.start();return;}const id=this.route.snapshot.queryParamMap.get('entry');if(id)this.individual.set(VOCABULARY_N5.find(e=>e.id===id)??null);}
   toggle(category:VocabularyStudyCategory):void{this.selected.update(c=>c.includes(category)?c.filter(x=>x!==category):[...c,category]);}
-  start():void{const pool=this.weakMode()?this.weaknesses.items('vocabulary',VOCABULARY_N5.filter(e=>e.enabled),10):this.pool();if(!pool.length&&!this.weakMode())return;const session=new VocabularyWritingSession(pool,this.weakMode()?this.categories:this.selected());this.session.set(session);this.current.set(session.current);this.resolved.set(0);this.revealed.set(false);this.wordFinished.set(false);}
+  start():void{const pool=this.weakMode()?this.weaknesses.items('vocabulary',VOCABULARY_N5.filter(e=>e.enabled),10):this.pool();if(!pool.length&&!this.weakMode())return;const session=new VocabularyWritingSession(pool,this.weakMode()?this.categories:this.selected());this.attemptSession=this.attempts.begin('vocabulary','writing');this.session.set(session);this.current.set(session.current);this.resolved.set(0);this.revealed.set(false);this.wordFinished.set(false);}
   answer(correct:boolean):void{
     if(!this.revealed()||!this.wordFinished())return;const session=this.session();if(!session)return;
     if(!session.current)return;
-    this.weaknesses.record('vocabulary',session.current.id,correct);
+    this.attemptSession?.record(session.current.id,{source:'self',rating:correct?'good':'again'});this.weaknesses.record('vocabulary',session.current.id,correct);
     session.answer(correct);this.practice()?.restart();this.current.set(session.current);this.resolved.set(session.resolved);this.revealed.set(false);this.wordFinished.set(false);
   }
   configure():void{if(this.weakMode()){this.start();return;}this.session.set(null);this.current.set(null);}

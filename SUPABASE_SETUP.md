@@ -212,3 +212,208 @@ See [MANGA_FSRS.md](MANGA_FSRS.md) for deterministic replay, parameters, clock
 skew, offline recovery and account isolation. The local PostgreSQL script
 `scripts/test-manga-review-sql.mjs` also checks both FSRS grades, preference
 payloads, idempotent retries and unchanged leaderboard time/RLS.
+
+## Manga × Mazos H4A — migración preparada, sin despliegue
+
+Nueva migración aditiva: `supabase/migrations/202610220001_custom_decks_foundation.sql`.
+Crea reloj, entidades, recibos y conflictos privados por propietario, RLS de lectura
+y tres RPC de operación/bundle/cambios. No modifica las tablas anteriores. No se ha
+aplicado a producción y ambos gates de mazos personalizados continúan desactivados.
+
+Para reproducir los tests locales desde la raíz, sin credenciales ni conexión remota:
+
+```powershell
+npm install --prefix .cache/h4a-sql-runtime --no-save --package-lock=false @electric-sql/pglite@0.3.14
+node scripts/test-custom-decks-sql.mjs
+```
+
+El runtime se instala solo en la caché ignorada; no cambia package.json/package-lock.
+El runner crea una base efímera, aplica las migraciones anteriores y la nueva, y
+comprueba 23 escenarios SQL/protocolo. Usa roles PostgreSQL reales y claims de prueba
+para auth.uid(); no valida firma/expiración JWT ni el gateway PostgREST de Supabase.
+PGlite tiene un backend: falta contención multisesión en PostgreSQL nativo.
+
+Antes de cualquier despliegue, ejecutar esas pruebas pendientes en una instancia
+local/staging aislada, verificar catálogos/permisos y preparar backup. Aplicar esta
+migración en orden mediante el procedimiento habitual de migraciones, únicamente
+con autorización separada para el entorno destino. No usar una base con datos reales
+para resets de pruebas. H4A no habilita transporte ni autoriza comenzar H4B.
+Véase `MANGA_DECKS_H4A.md` para límites, privacidad, resultados y bloqueos.
+
+## H4A.1 — PostgreSQL nativo y PostgREST portátiles (Windows x64)
+
+Preparación local utilizada, sin paquetes raíz ni servicios del sistema:
+
+```powershell
+npm install --prefix .cache/h4a1-runtime --no-save --package-lock=false embedded-postgres@17.5.0-beta.15 pg@8.16.3
+Invoke-WebRequest -Uri 'https://github.com/PostgREST/postgrest/releases/download/v16.5/postgrest-v16.5-windows-x86-64.zip' -OutFile .cache/h4a1-runtime/postgrest-v16.5.zip
+Get-FileHash .cache/h4a1-runtime/postgrest-v16.5.zip -Algorithm SHA256
+Expand-Archive -LiteralPath .cache/h4a1-runtime/postgrest-v16.5.zip -DestinationPath .cache/h4a1-runtime/postgrest-v16.5
+node scripts/test-custom-decks-native.mjs
+```
+
+SHA256 observado del ZIP: `17f595b0d8dd37473d0231417dea07c5ac9f791282ff5b017fae51ff29e5de2f`.
+Es una huella del artefacto descargado, no una firma independiente del proveedor.
+El runner actual usa las rutas Windows del paquete; no se afirma soporte Linux/macOS.
+No extraer encima de una preparación existente: reutilizar los binarios o preparar
+una caché nueva. No borrar ni resetear datos del usuario para reproducir estas pruebas.
+
+El runner crea clúster/bases nuevos, solo loopback, contraseña SCRAM y secreto JWT
+aleatorios. Ejecuta los 23 escenarios previos en una base nativa y las carreras/HTTP
+en otra; apaga procesos al terminar. No consume SUPABASE_URL, claves ni URLs externas.
+Los logs redactados y results.json quedan dentro del directorio run-* de caché.
+El polling espera condiciones observables de arranque/bloqueo; no reintenta operaciones.
+
+Resultado: batería ampliada 16/16 nativas (15 solapamientos), 8/8 HTTP/JWT en dos
+clústeres independientes. Se usa PostgREST real con autenticador NOINHERIT sin bypass
+RLS, pero el emisor de JWT es local al arnés. Supabase Auth/GoTrue, login/refresh y el
+gateway Supabase completo siguen pendientes, según confirmación del usuario. No deben
+darse por cubiertos con SET request.jwt.claims ni con estos JWT de prueba.
+
+La instalación portátil sigue la documentación de
+[embedded-postgres](https://github.com/leinelissen/embedded-postgres) y
+[PostgREST](https://docs.postgrest.org/en/stable/explanations/install.html).
+Véase `MANGA_DECKS_H4A1.md` para límites e incidencia de arranque observada. No se
+habilitan gates, se despliega producción ni se inicia H4B.
+
+## H4B-A — pruebas de transporte y dos navegadores, solo entorno aislado
+
+```powershell
+node scripts/test-custom-decks-sql.mjs
+node scripts/test-custom-decks-native.mjs --browser-tests --startup-probes=3
+```
+
+Se usan exclusivamente datos sintéticos del clúster portátil. El runner nativo mantiene
+PostgREST activo mientras Playwright ejecuta e2e/custom-decks-sync.spec.ts. Los JWT se
+quedan en el proceso Node de prueba; el navegador recibe un transporte inyectado mediante
+binding, no claves de Supabase. Los resultados se separan por SQL nativo, concurrencia,
+HTTP/JWT y navegador. browser-tests.log y logs redactados quedan en .cache/h4a1-runtime/run-*.
+
+El arnés acota db-pool=1 y normaliza LC_ALL/LANG=C. Las carreras multisesión nativas
+mantienen conexiones PostgreSQL independientes; el pool HTTP no pretende demostrar
+contención entre conexiones HTTP de producción. --startup-probes=3 realiza tres
+arranques independientes; cualquier fallo aborta, sin reintento automático. Se volvió
+a reproducir la salida 3 en Windows antes de normalizar locale, incluso con pool=1.
+Los probes posteriores pasan, pero la causa exacta no se declara demostrada ni resuelta.
+
+La migración H4A preparada (nunca desplegada a producción) corrige ahora la validación
+del reloj FSRS: preview/log/card.lastReview se conservan separados de reviewedAt al
+pulsar. Los escenarios SQL añaden regresión del contrato real. No ejecutar el fichero
+encima de una instalación existente como parche improvisado: estos tests crean una
+base nueva; cualquier despliegue o corrección en otro entorno necesita revisión y
+autorización independiente. No se modifica ninguna migración legacy.
+
+El adaptador técnico no se conecta al SyncService ni al outbox legacy. Su gate nuevo,
+CUSTOM_DECK_SYNC_ENABLED, queda false igual que los dos gates custom anteriores.
+No hay interruptor público o URL que active transporte. Supabase Auth/GoTrue, consentimiento,
+Guest, dispositivos físicos y activación real siguen pendientes. Véase MANGA_DECKS_H4BA.md.
+
+## H4B-B: Guest, consentimiento y resolución (2026-10-22)
+
+Este hito no añade ni modifica migraciones y no despliega SQL. Reutiliza el contrato H4A
+ya probado en bases locales nuevas. La importación Guest conserva IDs y procedencia, se
+confirma explícitamente, compara destino y guarda checkpoints. Las divergencias FSRS no
+se fusionan; las resoluciones admitidas requieren una nueva operación CAS.
+
+CUSTOM_DECKS_ENABLED, MANGA_DECK_ASSISTED_ENABLED y CUSTOM_DECK_SYNC_ENABLED continúan
+false. CUSTOM_REMOTE_UPLOAD_APPROVED=false bloquea además el apply del SDK real. El
+consentimiento experimental es por workspace, afirmativo y versionado; retirarlo no borra
+el servidor. No activar estos gates ni desplegar SQL a partir de este informe.
+
+Arnés local: `node scripts/test-custom-decks-native.mjs --guest-tests --browser-tests --startup-probes=3`.
+Ejecuta PostgreSQL 17.5, escenarios SQL, conexiones simultáneas, PostgREST 16.5 con firmas
+JWT reales y flujos H4B-A/B en navegadores sintéticos. No consume una URL de base externa;
+JWT y claves solo existen en el proceso Node. `node scripts/test-custom-decks-sql.mjs`
+valida aparte PGlite. Los resultados de cada entorno y límites están en MANGA_DECKS_H4BB.md.
+
+Esto no valida Supabase Auth/GoTrue ni gateway/CORS de Supabase real. Se mantienen los
+probes, logs redactados y la incidencia previa de salida 3 Windows como investigación
+pendiente, aunque los arranques locales de esta pasada sean correctos.
+
+## H4B-C — Recuperación readonly y medidas de escala (2026-10-22)
+
+No hay migración nueva ni SQL desplegado. Las lecturas de conflictos/recibos usan los
+SELECT ya autorizados por RLS, fijan owner/sesión y no generan reviews, ACKs ni escrituras.
+La evidencia que nunca salió del dispositivo no está en Supabase y no puede reconstruirse.
+Véase MANGA_DECKS_H4BC.md para cobertura, límites, matriz de pérdida de dispositivo y bloqueos.
+
+Reproducción en el arnés local existente, con datos exclusivamente sintéticos:
+
+```powershell
+node scripts/test-custom-decks-sql.mjs --limits
+node scripts/test-custom-decks-native.mjs --hardening-tests --browser-tests --guest-tests --startup-probes=5
+node scripts/measure-grammar-contention.mjs isolated-after 1
+npm test
+npx tsc -p tsconfig.app.json --noEmit
+npx tsc -p tsconfig.spec.json --noEmit
+npm run build -- --base-href /kana-study/ --stats-json
+```
+
+hardening-limits.json, postgrest-startups.json y logs redactados separan tamaño, proceso,
+readiness y parada intencional. Cualquier fallo de arranque aborta; no hay retry silencioso.
+Las etiquetas loaded de Grammar requieren la carga externa descrita en el informe; no
+modifican timeouts. El generador de JWT sigue únicamente en Node, sin secretos en frontend.
+
+El bundle paginado y el preflight no hacen atómica toda la migración Guest: una tarjeta
+puede estar publicada antes de su historial si se interrumpe la red. Esa ventana y el
+archivo de ramas no enviadas bloquean activación, junto a Auth/gateway y QA físico.
+CUSTOM_DECKS_ENABLED, MANGA_DECK_ASSISTED_ENABLED, CUSTOM_DECK_SYNC_ENABLED y
+CUSTOM_REMOTE_UPLOAD_APPROVED permanecen false. No activar ni desplegar desde este informe.
+
+## H4B-D1 — Protocolo V2 preparado, solo pruebas efímeras
+
+Nueva migración aditiva: `supabase/migrations/202610220002_custom_transfers_v2.sql`,
+posterior a H4A. No se ha desplegado ni debe aplicarse a producción desde este hito.
+Crea cuatro tablas privadas de transferencias/chunks/recibos/cuota y dos RPC:
+apply_custom_transfer_v2 y get_custom_transfer_v2. No reemplaza las RPC V1.
+
+```powershell
+node scripts/test-custom-decks-sql.mjs --transfers --limits
+node scripts/test-custom-decks-native.mjs --transfers --browser-tests --guest-tests --hardening-tests --startup-probes=3
+npm test
+npx tsc -p tsconfig.app.json --noEmit
+npx tsc -p tsconfig.spec.json --noEmit
+npm run build -- --base-href /kana-study/
+git diff --check
+```
+
+El runner aplica V2 únicamente a su base sintética efímera, después de comprobar
+las regresiones V1. Conserva resultados y logs redactados en caché. La recarga de
+schema PostgREST espera disponibilidad observable, sin reintentar operaciones.
+JWT sintéticos no certifican Supabase Auth. Véase MANGA_DECKS_H4BD1.md para estados,
+frontera de visibilidad, límites y retención sin purga automática.
+
+Angular/Guest aún usan V1: la integración corresponde a D2 y no se ha iniciado.
+Todos los gates siguen false. No habilitar cuentas reales ni anunciar recuperación
+de operaciones nunca enviadas; retirar consentimiento no borra los archivos remotos.
+
+## H4B-D2 — Integración Angular V2, sin activación pública
+
+No hay migración nueva. Se utilizan exactamente las RPC V1/V2 de las migraciones
+202610220001 y 202610220002, aplicadas solo a bases efímeras del arnés. El SDK existente
+mantiene Authorization por sesión y CUSTOM_REMOTE_UPLOAD_APPROVED=false. Guest no
+recurre al publicador V1 si falta V2: conserva checkpoint/origen y muestra bloqueo.
+
+```powershell
+node scripts/test-custom-decks-sql.mjs --transfers --limits
+node scripts/test-custom-decks-native.mjs --transfers --client-v2-tests --browser-tests --guest-tests --hardening-tests --startup-probes=3
+npm test
+npx tsc -p tsconfig.app.json --noEmit
+npx tsc -p tsconfig.spec.json --noEmit
+npm run build -- --base-href /kana-study/
+git diff --check
+```
+
+--client-v2-tests añade navegadores de prueba con servicios Angular reales, FSRS,
+checkpoints y PostgreSQL/PostgREST/JWT sintético; los tokens siguen en Node. Hay una
+cuenta sintética de frontera de cuota, nunca una cuenta externa. Los logs separan
+33 grupos nativos, HTTP/JWT, SQL anterior y Playwright. La alteración de firma de la
+fixture cambia bytes efectivos, evitando una variante equivalente de base64url.
+
+Consulta de archivos: requiere transferId conocido, owner autenticado y hashes
+verificados; no descubre todos los archivos, no fusiona ramas ni purga evidencia.
+Retirar consentimiento bloquea nuevas subidas, no borra commits previos. Migración
+de checkpoints V1 parciales, múltiples namespaces/solapamientos y reparación de
+publicaciones legacy anteriores requieren decisiones explícitas; no forzar SQL.
+Véase MANGA_DECKS_H4BD2.md. Gates false, Supabase Auth/gateway/CORS y dispositivos
+físicos pendientes. No desplegar ni activar desde este documento.

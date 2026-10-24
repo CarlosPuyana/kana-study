@@ -96,11 +96,16 @@ export class AuthService {
     this.workspace.activateGuest();
   }
 
-  async chooseGuestImport(decision: 'merge' | 'account'): Promise<void> {
-    const user = this.userState();
-    if (!user) return;
+  async chooseGuestImport(decision: 'merge' | 'account'): Promise<boolean> {
+    const user = this.userState(), generation=this.authGeneration, epoch=this.workspace.activationRevision();
+    const current=()=>this.userState()?.id===user?.id&&this.authGeneration===generation&&this.workspace.activationRevision()===epoch;
+    if (!user) return false;
     if (decision === 'merge') await this.migration.copyGuestToUser(user.id);
-    if (this.userState()?.id !== user.id) return;
+    if (!current()) return false;
+    // Legacy commits remain valid. Custom transfer is a separate, explicitly confirmed workflow.
+    if(decision==='merge'&&await this.migration.hasCustomGuestData()){
+      if(!current())return false;this.workspace.activateUser(user.id);this.importState.set(true);return true;
+    }
     this.workspace.markImportDecision(user.id, decision);
     this.workspace.activateUser(user.id);
     if (decision === 'merge') {
@@ -109,7 +114,12 @@ export class AuthService {
         if (value !== undefined) this.storage.set(key, value);
       }
     }
-    this.importState.set(false);
+    this.importState.set(false);return true;
+  }
+  async finishCustomGuestImport():Promise<boolean>{
+    const user=this.userState(),generation=this.authGeneration,epoch=this.workspace.activationRevision();if(!user||!await this.migration.customImportComplete(user.id))return false;
+    if(this.userState()?.id!==user.id||this.authGeneration!==generation||this.workspace.activationRevision()!==epoch||this.workspace.userId()!==user.id)return false;
+    this.workspace.markImportDecision(user.id,'merge');this.importState.set(false);return true;
   }
 
   private async handleAuthEvent(event: AuthChangeEvent, session: Session | null): Promise<void> {

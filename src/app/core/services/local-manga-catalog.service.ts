@@ -98,4 +98,15 @@ export class LocalMangaCatalogService {
     return {volumeId:LOCAL_MANGA_PREFIX+id,pageIndex:index,image,ocr};
   }
   async dialogue(id:string):Promise<MangaDialogueBubble[]>{const manga=await this.get(id);return manga.dialogue?parseMangaDialogue(await this.json(new URL(this.asset(manga,manga.dialogue))),manga):[];}
+  /** Fresh Japanese OCR only, for explicit local exploration. Never fetches page images. */
+  async ocrDocument(id:string,signal:AbortSignal):Promise<MokuroDocument|null>{
+    const manga=await this.get(id),source=manga.mokuro?.ja;if(!source)return null;
+    const url=new URL(this.asset(manga,source));
+    if(url.origin!==new URL(this.document.baseURI).origin)throw new MangaError('catalogInvalid');
+    const response=await fetch(url,{signal,cache:'no-cache'});if(!response.ok)throw new MangaError('catalogUnavailable');
+    const raw=await response.text();if(new TextEncoder().encode(raw).byteLength>16*1024*1024)throw new MangaError('ocrLimit');
+    const doc=parseMokuro(raw);
+    if(doc.pages.length!==manga.pages.length||doc.pages.some((p,i)=>p.img_width!==manga.pages[i].width||p.img_height!==manga.pages[i].height||p.img_path!==manga.pages[i].images.ja))throw new MangaError('catalogInvalid');
+    return doc;
+  }
 }

@@ -88,6 +88,7 @@ describe("AuthService local-first lifecycle", () => {
           provide: WorkspaceMigrationService,
           useValue: {
             hasGuestData: async () => false,
+            hasCustomGuestData: async () => false,
             copyGuestToUser: async () => undefined,
           },
         },

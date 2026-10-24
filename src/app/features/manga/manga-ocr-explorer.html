@@ -1,0 +1,43 @@
+<section class="explorer" aria-labelledby="ocr-title">
+  <h2 id="ocr-title">{{i18n.t('ocrExplorer.title')}}</h2>
+  <p class="notice">{{i18n.t('ocrExplorer.limitations')}}</p>
+  <p>{{i18n.t('ocrExplorer.query')}} <strong lang="ja">{{query()}}</strong></p>
+  <div class="actions">
+    <button type="button" (click)="scan()" [disabled]="busy()">{{i18n.t('ocrExplorer.restart')}}</button>
+    <button type="button" (click)="scan(true)" [disabled]="busy()||!result()?.fingerprint">{{i18n.t('ocrExplorer.verify')}}</button>
+    @if(busy()){<button type="button" (click)="cancel()">{{i18n.t('ocrExplorer.cancel')}}</button>}
+  </div>
+  @if(result(); as data){
+    <p role="status">{{i18n.t('ocrExplorer.status.'+data.status)}}</p>
+    @if(data.reason){<p>{{i18n.t('ocrExplorer.reason.'+data.reason)}}</p>}
+    @if(counts();as count){
+      @if(data.totalPages){<progress [value]="data.totalPages-count.pending" [max]="data.totalPages" [attr.aria-label]="i18n.t('ocrExplorer.examined')"></progress>}
+      <dl class="counts">
+        <div><dt>{{i18n.t('ocrExplorer.matches')}}</dt><dd>{{data.matches.length}}</dd></div>
+        <div><dt>{{i18n.t('ocrExplorer.examined')}}</dt><dd>{{count.examined}} / {{data.totalPages}}</dd></div>
+        <div><dt>{{i18n.t('ocrExplorer.pending')}}</dt><dd>{{count.pending}}</dd></div>
+        <div><dt>{{i18n.t('ocrExplorer.withoutOcr')}}</dt><dd>{{count.withoutOcr}}</dd></div>
+        <div><dt>{{i18n.t('ocrExplorer.errors')}}</dt><dd>{{count.errors}}</dd></div>
+      </dl>
+    }
+    <p>{{i18n.t('ocrExplorer.observedOnly')}}</p>
+    @if(data.fingerprint){<details><summary>{{i18n.t('ocrExplorer.fingerprint')}}</summary><code>{{data.fingerprint}}</code></details>}
+    @if(!data.matches.length){<p>{{i18n.t('ocrExplorer.emptyObserved')}}</p>}
+    <ol class="matches">
+      @for(match of visible();track match.pageIndex+':'+match.blockIndex+':'+match.lineIndex+':'+match.start){
+        <li>
+          <p class="fragment" lang="ja">{{match.fragment.slice(0,match.start)}}<mark>{{match.found}}</mark>{{match.fragment.slice(match.end)}}</p>
+          <p>{{i18n.t('ocrExplorer.page')}} {{match.pageIndex+1}} · {{i18n.t('ocrExplorer.block')}} {{match.blockIndex+1}} · {{i18n.t('ocrExplorer.line')}} {{match.lineIndex+1}}</p>
+          <p>{{i18n.t('ocrExplorer.range')}} [{{match.start}}, {{match.end}})</p>
+          <a [routerLink]="['/manga/read',volumeId()]" [queryParams]="{page:match.pageIndex+1}" [state]="navigation(match)">{{i18n.t('ocrExplorer.openPage')}} {{match.pageIndex+1}}</a>
+        </li>
+      }
+    </ol>
+    @if(data.matches.length>visible().length){<button type="button" (click)="more()">{{i18n.t('ocrExplorer.more')}}</button>}
+    @if(data.pages.length){
+      <details><summary>{{i18n.t('ocrExplorer.pageStates')}}</summary>
+        <ul>@for(page of data.pages;track page.pageIndex){<li>{{i18n.t('ocrExplorer.page')}} {{page.pageIndex+1}}: {{i18n.t('ocrExplorer.pageState.'+page.state)}}</li>}</ul>
+      </details>
+    }
+  }@else if(busy()){<p role="status">{{i18n.t('ocrExplorer.status.scanning')}}</p>}
+</section>

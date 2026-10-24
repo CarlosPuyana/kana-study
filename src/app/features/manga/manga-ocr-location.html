@@ -1,0 +1,10 @@
+<aside [attr.aria-label]="i18n.t('ocrExplorer.title')">
+  <div class="heading"><p role="status">{{i18n.t('ocrLocation.'+result().status)}}</p><button type="button" (click)="dismissed.emit()">{{i18n.t('ocrLocation.dismiss')}}</button></div>
+  @if(verified();as value){
+    <p class="sequence" lang="ja"><mark>{{value.reference.found}}</mark> · {{i18n.t('ocrExplorer.range')}} [{{value.reference.start}}, {{value.reference.end}})</p>
+    <details><summary>{{i18n.t('mangaVocab.details')}}</summary>
+      <p lang="ja">{{value.fragment.slice(0,value.reference.start)}}<mark>{{value.reference.found}}</mark>{{value.fragment.slice(value.reference.end)}}</p>
+      <p>{{i18n.t('ocrExplorer.limitations')}}</p>
+    </details>
+  }
+</aside>

@@ -1,3 +1,4 @@
+import {AttemptRecordingService,AttemptRecordingSession} from './attempt-recording.service';
 import { createStudyClock } from './study-clock';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { ALL_KANA } from '../../data/kana';
@@ -34,6 +35,7 @@ export class LearningSessionService {
   private readonly history = inject(SessionHistoryService);
   private readonly medals = inject(MedalService);
   private readonly dailyLearning = inject(DailyLearningService);
+  private readonly attempts=inject(AttemptRecordingService);private attemptSession?:AttemptRecordingSession;
   private readonly weaknesses = inject(WeaknessService);
   private readonly state = signal<SessionState | null>(null);
   private readonly newMedalState = signal<readonly MedalState[]>([]);
@@ -123,6 +125,7 @@ export class LearningSessionService {
       attempts: 0,
     };
     this.newMedalState.set([]);
+    this.attemptSession=this.attempts.begin('kana','learn',session.id);
     this.state.set({ session, practice, queue: units.map(unit => unit.key), queueIndex: 0,
       revealed: false, feedback: null });
     this.markAppearance();
@@ -136,7 +139,7 @@ export class LearningSessionService {
     if (!state || !kana || !unit || state.feedback) return;
     const answer = answerFor(kana, unit.questionType);
     const correct = selected === answer;
-    this.registerAttempt(correct ? 'good' : 'again', correct);
+    this.registerAttempt(correct ? 'good' : 'again', correct, 'objective');
     this.patchState({ feedback: { correct, selected, answer } });
   }
 
@@ -156,7 +159,7 @@ export class LearningSessionService {
   rate(rating: StudyRating): void {
     const state = this.state();
     if (!state?.revealed) return;
-    this.registerAttempt(rating, rating === 'good');
+    this.registerAttempt(rating, rating === 'good', 'self');
     if (rating !== 'good' && !this.currentItem()?.resolved) this.enqueueCurrent(rating);
     this.advance();
   }
@@ -176,10 +179,11 @@ export class LearningSessionService {
     this.newMedalState.update(medals => medals.slice(1));
   }
 
-  private registerAttempt(rating: StudyRating, resolved: boolean): void {
+  private registerAttempt(rating: StudyRating, resolved: boolean, source:'objective'|'self'): void {
     const state = this.state();
     const unit = this.currentUnit();
     if (!state || !unit) return;
+    this.attemptSession?.record(unit.kanaId,source==='objective'?{source,correct:resolved}:{source,rating},unit.questionType,this.currentItem()?.initialRating===null);
     this.weaknesses.recordLearn('kana',unit.kanaId,unit.questionType,rating);
     const items = state.session.items.map(item => {
       if (item.studyKey !== unit.key) return item;

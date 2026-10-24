@@ -1,0 +1,192 @@
+{
+  "sha256": "968c7ca9c63203315b97b0d1bdf0d021444ae9e65d8ff08c5359ba212c5abe10",
+  "index": {
+    "title": "JMdict (Spanish) [2026-10-01]",
+    "format": 3,
+    "revision": "JMdict.2026-10-01",
+    "sequenced": true,
+    "author": "yomitan-import",
+    "url": "https://github.com/yomidevs/yomitan-import",
+    "description": "",
+    "attribution": "This publication has included material from the JMdict (EDICT, etc.) dictionary files in accordance with the licence provisions of the Electronic Dictionaries Research Group. See http://www.edrdg.org/",
+    "isUpdatable": true,
+    "indexUrl": "https://github.com/yomidevs/jmdict-yomitan/releases/latest/download/JMdict_spanish.json",
+    "downloadUrl": "https://github.com/yomidevs/jmdict-yomitan/releases/latest/download/JMdict_spanish.zip"
+  },
+  "parserAccepted": {
+    "title": "JMdict (Spanish) [2026-10-01]",
+    "revision": "JMdict.2026-10-01"
+  },
+  "rows": 55017,
+  "sequences": 34310,
+  "nonPositiveSequences": 0,
+  "nonIntegerSequences": 0,
+  "readingFallbackRows": 0,
+  "structuredGlossRows": 0,
+  "tagCounts": {
+    "n": 42289,
+    "adv": 3556,
+    "v5r": 1491,
+    "vi": 5109,
+    "vs": 5949,
+    "exp": 2371,
+    "adj-i": 1139,
+    "v5s": 905,
+    "v1": 1884,
+    "vt": 6107,
+    "adj-no": 3507,
+    "v5k": 602,
+    "v5t": 117,
+    "suf": 535,
+    "v5u": 452,
+    "aux-v": 271,
+    "v5u-s": 7,
+    "n-pref": 167,
+    "pn": 451,
+    "adj-na": 2867,
+    "adv-to": 1433,
+    "adj-f": 271,
+    "conj": 217,
+    "int": 531,
+    "v5m": 375,
+    "vs-s": 87,
+    "n-suf": 739,
+    "v5b": 57,
+    "adj-t": 414,
+    "v5g": 87,
+    "adj-pn": 83,
+    "aux-adj": 13,
+    "ctr": 296,
+    "pref": 219,
+    "vk": 11,
+    "vz": 34,
+    "num": 402,
+    "adj-ix": 138,
+    "v5k-s": 29,
+    "prt": 156,
+    "unc": 8,
+    "vs-i": 65,
+    "cop": 3,
+    "aux": 20,
+    "v5r-i": 25,
+    "adj-shiku": 1,
+    "v5aru": 5,
+    "adj-nari": 12,
+    "v4r": 5,
+    "vr": 3,
+    "v2r-s": 6,
+    "vs-c": 2,
+    "v1-s": 2,
+    "v5n": 1,
+    "v4b": 2,
+    "v2h-k": 2,
+    "adj-ku": 7,
+    "v2a-s": 1,
+    "v2k-s": 1,
+    "v2r-k": 4
+  },
+  "importIdChanges": true,
+  "sequencePreserved": true,
+  "parserAcceptsUnverifiedSequence": true,
+  "specialCases": [
+    {
+      "expression": "来る",
+      "reading": "くる",
+      "sequence": 1547720,
+      "tags": "vk vi aux-v",
+      "glossCount": 2
+    },
+    {
+      "expression": "来る",
+      "reading": "きたる",
+      "sequence": 1591270,
+      "tags": "adj-pn v5r vi",
+      "glossCount": 4
+    },
+    {
+      "expression": "生",
+      "reading": "うぶ",
+      "sequence": 2036160,
+      "tags": "adj-na adj-no n",
+      "glossCount": 5
+    },
+    {
+      "expression": "生",
+      "reading": "せい",
+      "sequence": 2088240,
+      "tags": "n n-suf",
+      "glossCount": 1
+    },
+    {
+      "expression": "生",
+      "reading": "しょう",
+      "sequence": 2088240,
+      "tags": "n n-suf",
+      "glossCount": 1
+    },
+    {
+      "expression": "橋",
+      "reading": "きょう",
+      "sequence": 2151440,
+      "tags": "n",
+      "glossCount": 1
+    },
+    {
+      "expression": "橋",
+      "reading": "はし",
+      "sequence": 1237410,
+      "tags": "n",
+      "glossCount": 1
+    },
+    {
+      "expression": "ここ",
+      "reading": "ここ",
+      "sequence": 1288810,
+      "tags": "pn",
+      "glossCount": 5
+    },
+    {
+      "expression": "此処",
+      "reading": "ここ",
+      "sequence": 1288810,
+      "tags": "pn",
+      "glossCount": 5
+    },
+    {
+      "expression": "食べる",
+      "reading": "たべる",
+      "sequence": 1358280,
+      "tags": "v1 vt",
+      "glossCount": 1
+    },
+    {
+      "expression": "生",
+      "reading": "き",
+      "sequence": 1378440,
+      "tags": "n pref",
+      "glossCount": 3
+    },
+    {
+      "expression": "生",
+      "reading": "なま",
+      "sequence": 1378450,
+      "tags": "adj-no n pref",
+      "glossCount": 1
+    },
+    {
+      "expression": "生",
+      "reading": "なま",
+      "sequence": 1378450,
+      "tags": "adj-no n pref",
+      "glossCount": 2
+    },
+    {
+      "expression": "箸",
+      "reading": "はし",
+      "sequence": 1476410,
+      "tags": "n",
+      "glossCount": 2
+    }
+  ],
+  "availableGlossLanguage": "spa export (converter language filter), not per-gloss metadata"
+}

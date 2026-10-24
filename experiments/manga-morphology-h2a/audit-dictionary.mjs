@@ -1,0 +1,13 @@
+import fs from 'node:fs/promises';import{createHash}from'node:crypto';import ts from '../../node_modules/typescript/lib/typescript.js';
+const base=new URL('./',import.meta.url);const write=async(name,value)=>{await fs.mkdir(new URL('reports/',base),{recursive:true});await fs.writeFile(new URL(name,base),JSON.stringify(value,null,2)+'\n');};
+const source=await fs.readFile(new URL('../../src/app/core/services/yomitan-dictionary-parser.ts',base),'utf8');
+const parser=await import('data:text/javascript;base64,'+Buffer.from(ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText).toString('base64'));
+const file=await fs.readFile(new URL('../../public/dictionaries/JMdict_spanish.zip',base));
+const {ZipReader,Uint8ArrayReader,TextWriter}=await import('../../node_modules/@zip.js/zip.js/index.js');
+const zip=new ZipReader(new Uint8ArrayReader(file),{useWebWorkers:false});const entries=await zip.getEntries();const read=async e=>JSON.parse(await e.getData(new TextWriter()));const index=await read(entries.find(e=>e.filename==='index.json'));
+const rows=(await Promise.all(entries.filter(e=>/^term_bank_\d+\.json$/.test(e.filename)).map(read))).flat();
+await fs.mkdir(new URL('resources/',base),{recursive:true});await fs.writeFile(new URL('resources/spanish-rows.json',base),JSON.stringify(rows));
+const before=parser.parseDictionaryTerm(rows[0],'import-A',0),after=parser.parseDictionaryTerm(rows[0],'import-B',0);
+const tagCounts={};for(const row of rows)for(const tag of (row[2]??'').split(' '))tagCounts[tag]=(tagCounts[tag]??0)+1;
+const audit={sha256:createHash('sha256').update(file).digest('hex'),index,parserAccepted:parser.parseDictionaryIndex(index),rows:rows.length,sequences:new Set(rows.map(r=>r[6])).size,nonPositiveSequences:rows.filter(r=>r[6]<=0).length,nonIntegerSequences:rows.filter(r=>!Number.isInteger(r[6])).length,readingFallbackRows:rows.filter(r=>r[1]==='').length,structuredGlossRows:rows.filter(r=>r[5].some(g=>typeof g!=='string')).length,tagCounts,importIdChanges:before.id!==after.id,sequencePreserved:before.sequence===after.sequence,parserAcceptsUnverifiedSequence:parser.parseDictionaryTerm(['試験','しけん','n','',0,['prueba'],42,''],'untrusted',0).sequence===42,specialCases:rows.filter(r=>['橋','箸','生','ここ','此処','食べる','来る'].includes(r[0])).map(r=>({expression:r[0],reading:r[1],sequence:r[6],tags:r[2],glossCount:r[5].length})),availableGlossLanguage:'spa export (converter language filter), not per-gloss metadata'};
+await write('reports/dictionary-audit.json',audit);await zip.close();console.log(JSON.stringify({rows:audit.rows,sequences:audit.sequences,importIdChanges:audit.importIdChanges,unverifiedSequenceAccepted:audit.parserAcceptsUnverifiedSequence}));

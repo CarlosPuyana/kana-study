@@ -5,9 +5,11 @@
     @if (!auth.configured) {
       <h1 id="auth-title">{{ i18n.t('auth.cloudUnavailableTitle') }}</h1><p>{{ i18n.t('auth.notConfigured') }}</p>
     } @else if (auth.needsGuestImportDecision()) {
+      @if(customTools()){<h1 id="auth-title">{{i18n.t('auth.importTitle')}}</h1><app-custom-cloud-panel />}@else{
       <h1 id="auth-title">{{ i18n.t('auth.importTitle') }}</h1><p>{{ i18n.t('auth.importDescription') }}</p>
       <button class="primary" type="button" [disabled]="loading()" (click)="chooseImport('merge')"><strong>{{ i18n.t('auth.merge') }}</strong><span>{{ i18n.t('auth.mergeDescription') }}</span></button>
       <button class="secondary choice" type="button" [disabled]="loading()" (click)="chooseImport('account')"><strong>{{ i18n.t('auth.accountOnly') }}</strong><span>{{ i18n.t('auth.accountOnlyDescription') }}</span></button>
+      }
     } @else if (mode() === 'confirm') {
       <h1 id="auth-title">{{ i18n.t('auth.emailConfirmed') }}</h1><p>{{ i18n.t('auth.emailConfirmedDescription') }}</p>
       <button class="primary" type="button" (click)="finishConfirmation()">{{ i18n.t(auth.authenticated() ? 'account.profile' : 'auth.signIn') }}</button>

@@ -11,8 +11,34 @@ import { MangaContextService } from '../../core/services/manga-context.service';
 import { MANGA_ROUTES } from './manga.routes';
 import { DictionaryLookup } from '../../core/models/dictionary.model';
 import { SettingsService } from '../../core/services/settings.service';
+import {signal} from '@angular/core';
+import {CUSTOM_DECKS_ENABLED} from '../../core/services/custom-deck-gates';
+import {MANGA_DECK_ASSISTED_ENABLED} from '../../core/services/manga-deck-gate';
+import {MangaDeckAssistedService} from '../../core/services/manga-deck-assisted.service';
+import {WorkspaceService} from '../../core/services/workspace.service';
 const exact:DictionaryLookup={installed:true,query:'学校',terms:[{id:'school',dictionaryId:'test',expression:'学校',reading:'がっこう',glossaries:['escuela'],definitionTags:'',rules:'n',score:0,sequence:1,termTags:''}]};
 describe('Manga assisted reading UI',()=>{
+  it.each(['es','en','ca'] as const)('keeps informative dictionary visible with development gates in %s without opening or translating a card',language=>{
+    const open=vi.fn(),request=vi.fn();
+    TestBed.overrideProvider(CUSTOM_DECKS_ENABLED,{useValue:signal(true)});TestBed.overrideProvider(MANGA_DECK_ASSISTED_ENABLED,{useValue:signal(true)});
+    TestBed.overrideProvider(MangaDeckAssistedService,{useValue:{open}});TestBed.overrideProvider(MangaContextService,{useValue:{available:true,request}});
+    TestBed.inject(SettingsService).setLanguage(language);
+    const fixture=popup({...exact,terms:[{...exact.terms[0],glossaries:['escuela','colegio','centro','instituto','otra acepción']}]});
+    fixture.componentRef.setInput('context',{text:'学校へ行く。',offset:0,x:0,y:0});fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('h2').textContent).toBe('学校');expect(fixture.nativeElement.querySelector('.reading').textContent).toBe('がっこう');
+    expect(fixture.nativeElement.querySelector('article ul').textContent).toContain('escuela');expect(fixture.nativeElement.querySelector('details').textContent).toContain('otra acepción');
+    expect(fixture.nativeElement.querySelector('.add-to-deck').textContent).not.toContain('manga.deck.addAction');
+    expect(fixture.nativeElement.querySelector('app-manga-deck-review')).toBeNull();expect(fixture.componentInstance.quickMode()).toBe(false);
+    expect(open).not.toHaveBeenCalled();expect(request).not.toHaveBeenCalled();
+  });
+  it('requires a fresh explicit action after source or workspace activation changes, including A-B-A',()=>{
+    TestBed.overrideProvider(CUSTOM_DECKS_ENABLED,{useValue:signal(true)});TestBed.overrideProvider(MANGA_DECK_ASSISTED_ENABLED,{useValue:signal(true)});
+    const fixture=popup(),popupComponent=fixture.componentInstance;
+    fixture.componentRef.setInput('context',{text:'学校',offset:0,x:0,y:0});fixture.detectChanges();
+    popupComponent.openQuickAdd();expect(popupComponent.quickMode()).toBe(true);popupComponent.closeQuickAdd();expect(popupComponent.quickMode()).toBe(false);
+    popupComponent.openQuickAdd();fixture.componentRef.setInput('context',{text:'別の学校',offset:3,x:0,y:0});expect(popupComponent.quickMode()).toBe(false);
+    popupComponent.openQuickAdd();const workspace=TestBed.inject(WorkspaceService);workspace.activateUser('dictionary-test');workspace.activateGuest();expect(popupComponent.quickMode()).toBe(false);
+  });
   it('renders translation notes as text and allows responses without notes',()=>{
     const fixture=popup();fixture.componentInstance.tab.set('context');
     fixture.componentInstance.translation.set({natural:'Incierto',notes:['Posible OCR: <b>texto</b>']});fixture.detectChanges();

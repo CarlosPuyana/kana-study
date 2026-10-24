@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "adapter": "jmdict-xml-sqlite-v1",
+  "source": {
+    "url": "https://www.edrdg.org/pub/Nihongo/JMdict.gz",
+    "sha256": "038a98ddefa4382fc49b98eb839506a776e7fec0c6f2c8b6cf36a711f098d63c",
+    "xmlSha256": "b289a5ee1e9fa787ccc427261b49cd7026ff2059aaf7c909753ea5eca73b300a",
+    "lastModified": "Thu, 22 Oct 2026 03:30:22 GMT",
+    "compressedBytes": 22204622,
+    "expandedBytes": 120578678,
+    "license": "https://www.edrdg.org/edrdg/licence.html",
+    "redistribution": "blocked-pending-Spanish-rights-review; local-experiment-only"
+  },
+  "adapterSha256": "b67d837358b003278f6c2eda1f6af050e5e40920e2a2b21b4a7d486c8e5f7c21",
+  "databaseFile": "lexicon-v2.sqlite",
+  "entryEncoding": "gzip-json-utf8",
+  "databaseSha256": "ed4f263de0192fb6256f8e945b3bce2ab1c0be05ff5f0cff92b3f17392cebf89",
+  "databaseBytes": 214196224,
+  "counts": {
+    "entries": 218945,
+    "readingsRestricted": 4769,
+    "noKanji": 6648,
+    "senseStagk": 625,
+    "senseStagr": 1040
+  },
+  "glossLanguages": {
+    "eng": 443815,
+    "dut": 273205,
+    "ger": 336970,
+    "rus": 105081,
+    "spa": 68288,
+    "hun": 158811,
+    "swe": 17389,
+    "fre": 33782,
+    "slv": 21673
+  },
+  "buildSeconds": 46.86134940001648,
+  "note": "Full multilingual lexicon remains ignored/local. No entry/gloss redistribution."
+}

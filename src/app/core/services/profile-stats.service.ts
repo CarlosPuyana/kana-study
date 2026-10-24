@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { STUDY_DECKS } from '../../data/study-decks';
+import { DeckCatalogService } from './deck-catalog.service';
+import { DeckPersistenceRouter } from './deck-persistence-router';
 import { MEDAL_DEFINITIONS } from '../../data/medals';
 import { FLAG_MEDAL_DEFINITIONS } from '../../data/flag-medals';
 import { KANJI_MEDAL_DEFINITIONS } from '../../data/kanji-medals';
 import { VOCABULARY_MEDAL_DEFINITIONS } from '../../data/vocabulary-medals';
 import { RUSH_MEDAL_DEFINITIONS } from '../../data/rush-medals';
 import { getSpainDayKey } from './daily-learning.service';
-import { DeckDatabaseService } from './deck-database.service';
 import { LocalRushRepository } from './rush-repository.service';
 import { StorageService } from './storage.service';
 import { MedalDefinition } from '../models/medal.model';
@@ -27,15 +27,23 @@ export interface ProfileStats {
 
 @Injectable({ providedIn: 'root' })
 export class ProfileStatsService {
-  private readonly storage = inject(StorageService); private readonly decks = inject(DeckDatabaseService); private readonly rush = inject(LocalRushRepository);
+  private readonly storage = inject(StorageService); private readonly rush = inject(LocalRushRepository);
+
+  private readonly catalog=inject(DeckCatalogService);
+  private readonly ports=inject(DeckPersistenceRouter);
 
   async load(now = new Date()): Promise<ProfileStats> {
+    const owner=this.catalog.owner();
+    if(this.catalog.enabled()) await this.catalog.refresh();
+    if(this.catalog.error())throw this.catalog.error();
+    const catalog=this.catalog.items();
     const sessions = this.storage.get<any[]>('kana-study.completed-sessions.v1', []);
     const eventKeys = ['kana-study.review-events.v1','kana-study.flags-review-events.v1','kana-study.kanji-review-events.v1','kana-study.vocabulary-review-events.v1','kana-study.manga-review-events.v1'];
     const events = eventKeys.flatMap(key => this.storage.get<any[]>(key, []));
     const [deckProgress, deckEvents, rush] = await Promise.all([
-      this.decks.getDeckProgress(STUDY_DECKS[0].id), this.decks.getDeckReviewEvents(STUDY_DECKS[0].id), this.rush.getStats(),
+      Promise.all(catalog.map(d=>this.ports.bind(d.id).getDeckProgress(d.id))).then(rows=>rows.flat()), Promise.all(catalog.map(d=>this.ports.bind(d.id).getDeckReviewEvents(d.id))).then(rows=>rows.flat()), this.rush.getStats(),
     ]);
+    if(owner!==this.catalog.owner())throw new Error('Profile workspace changed');
     const finishedRush = rush.sessions.filter(session => session.endedAt !== null && session.cardsCompleted > 0);
     const activityDays = new Set<string>();
     for (const session of sessions) if (session.exercisesCompleted > 0) activityDays.add(getSpainDayKey(new Date(session.completedAt)));
@@ -53,7 +61,7 @@ export class ProfileStatsService {
       kana: uniqueProgress(this.storage.get('kana-study.study-progress.v2', {}), 'kanaId'),
       kanji: uniqueProgress(this.storage.get('kana-study.kanji-progress.v1', {}), 'kanjiId'),
       vocabulary: uniqueProgress(this.storage.get('kana-study.vocabulary-progress.v1', {}), 'entryId'),
-      deckUnseen: Math.max(0, STUDY_DECKS[0].cardCount - deckProgress.length),
+      deckUnseen: Math.max(0, catalog.reduce((sum,d)=>sum+d.cardCount,0) - deckProgress.length),
       deckLearning: deckProgress.filter(item => item.state !== 2).length,
       deckReview: deckProgress.filter(item => item.state === 2).length,
       medals: profileMedals(normalMedals, rushMedals),

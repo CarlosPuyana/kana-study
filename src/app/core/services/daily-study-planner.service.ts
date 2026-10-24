@@ -11,7 +11,6 @@ import { GrammarV2ProgressService } from './grammar-v2-progress.service';
 import { WeaknessService } from './weakness.service';
 import { JapaneseAudioService } from './japanese-audio.service';
 import { DeckStudyService } from './deck-study.service';
-import { DeckDatabaseService } from './deck-database.service';
 import { DeckSettingsService } from './deck-settings.service';
 import { MangaFsrsService } from './manga-fsrs.service';
 import { MangaReviewHistoryService } from './manga-review-history.service';
@@ -20,8 +19,8 @@ import { isMangaFsrsEvent } from '../models/manga-fsrs.model';
 import { WorkspaceService } from './workspace.service';
 import { StorageService } from './storage.service';
 import { SyncService } from './sync.service';
-import { STUDY_DECKS } from '../../data/study-decks';
-import { JAPANESE_1500_INDEX } from '../../data/japanese-1500.index.generated';
+import { DeckCatalogService } from './deck-catalog.service';
+import { DeckPersistenceRouter } from './deck-persistence-router';
 import { GRAMMAR_V2_CONCEPTS } from '../../data/grammar/grammar-n5-v2.generated';
 import { GRAMMAR_LESSONS } from '../../features/grammar/data/grammar-catalog';
 import { grammarFocusedExercises } from '../../features/grammar/services/grammar-weakness';
@@ -43,7 +42,8 @@ export class DailyStudyPlannerService {
   private readonly weaknesses=inject(WeaknessService);
   private readonly audio=inject(JapaneseAudioService);
   private readonly deckStudy=inject(DeckStudyService);
-  private readonly deckDb=inject(DeckDatabaseService);
+  private readonly catalog=inject(DeckCatalogService);
+  private readonly deckPorts=inject(DeckPersistenceRouter);
   private readonly deckSettings=inject(DeckSettingsService);
   private readonly manga=inject(MangaFsrsService);
   private readonly mangaHistory=inject(MangaReviewHistoryService);
@@ -96,7 +96,7 @@ export class DailyStudyPlannerService {
     window.addEventListener('focus',focus);document.addEventListener('visibilitychange',visibility);
     window.addEventListener('online',refresh);window.addEventListener('offline',refresh);
     destroy.onDestroy(()=>{this.generation++;window.removeEventListener('focus',focus);document.removeEventListener('visibilitychange',visibility);window.removeEventListener('online',refresh);window.removeEventListener('offline',refresh);});
-    effect(()=>{this.workspace.active();this.workspace.dataRevision();this.storage.cloudRevision();this.sync.lastSyncedAt();this.deckSettings.all();this.now();untracked(()=>{void this.refreshDecks();});});
+    effect(()=>{this.workspace.active();this.workspace.dataRevision();this.storage.cloudRevision();this.sync.lastSyncedAt();this.deckSettings.all();this.now();this.catalog.items();this.catalog.revision();this.catalog.repository.progressRevision();untracked(()=>{void this.refreshDecks();});});
     effect(onCleanup=>{
       const snapshot=this.snapshot();
       const dates=[...snapshot.normal.flatMap(n=>n.units.flatMap(u=>u.due!==null&&u.due>snapshot.now?[u.due]:[])),...snapshot.decks.flatMap(d=>d.nextDue!==null&&d.nextDue>snapshot.now?[d.nextDue]:[]),...(snapshot.manga.nextDue!==null?[snapshot.manga.nextDue]:[])];
@@ -108,9 +108,11 @@ export class DailyStudyPlannerService {
     const owner=this.workspace.active(),generation=++this.generation,now=new Date(this.now());
     this.deckState.set({owner,rows:[],loading:true,error:false});
     try{
-      const rows=await Promise.all(STUDY_DECKS.map(async deck=>{
-        const [queue,events]=await Promise.all([this.deckStudy.snapshot(deck,deck.id==='japanese-1500'?JAPANESE_1500_INDEX:[],now),this.deckDb.getDeckReviewEvents(deck.id)]);
-        return {id:deck.id,titleKey:deck.nameKey,due:queue.learningDue+queue.reviewDue,fresh:queue.newAvailable,completedToday:queue.completedToday===true,nextDue:queue.nextDue,reviewsToday:events.filter(e=>Number.isFinite(e.reviewedAt)&&e.reviewedAt<=now.getTime()&&getSpainDayKey(new Date(e.reviewedAt))===getSpainDayKey(now)).length};
+      await this.catalog.refresh();
+      if(this.catalog.error())throw this.catalog.error();
+      const rows=await Promise.all(this.catalog.items().map(async deck=>{
+        const [queue,events]=await Promise.all([this.deckStudy.snapshot(deck,await this.catalog.index(deck.id),now),this.deckPorts.bind(deck.id).getDeckReviewEvents(deck.id)]);
+        return {id:deck.id,titleKey:deck.displayName.kind==='i18n'?deck.displayName.key:'anki.title',...(deck.displayName.kind==='literal'?{literalTitle:deck.displayName.text}:{}),due:queue.learningDue+queue.reviewDue,fresh:queue.newAvailable,completedToday:queue.completedToday===true,nextDue:queue.nextDue,reviewsToday:events.filter(e=>Number.isFinite(e.reviewedAt)&&e.reviewedAt<=now.getTime()&&getSpainDayKey(new Date(e.reviewedAt))===getSpainDayKey(now)).length};
       }));
       if(this.workspace.active()===owner&&generation===this.generation)this.deckState.set({owner,rows,loading:false,error:false});
     }catch{if(this.workspace.active()===owner&&generation===this.generation)this.deckState.set({owner,rows:[],loading:false,error:true});}

@@ -22,6 +22,8 @@ import { MangaError } from "../../core/services/mokuro-parser";
 import { MangaProgress, MangaVolume } from "../../core/models/manga.model";
 import { AccountControl } from "../../shared/components/account-control/account-control";
 import { DictionaryInstallComponent } from './dictionary-install.component';
+import { CUSTOM_DECKS_ENABLED } from '../../core/services/custom-deck-gates';
+import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate';
 @Component({
   selector: "app-manga-page",
   imports: [FormsModule, RouterLink, AccountControl, DictionaryInstallComponent],
@@ -102,7 +104,7 @@ import { DictionaryInstallComponent } from './dictionary-install.component';
             <a [routerLink]="['/manga/read', volume.id]">{{
               i18n.t(progress()[volume.id] ? "manga.continue" : "manga.read")
             }}</a
-            ><details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
+            >@if(customEnabled()&&assistedEnabled()){<a [routerLink]="['/manga/vocabulary',volume.id]">{{i18n.t('mangaVocab.title')}}</a>}<details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
           </div>
         </article>
       }
@@ -145,6 +147,8 @@ export class MangaPage implements OnDestroy {
   private readonly repository = inject(MangaRepository);
   private readonly importer = inject(MangaImportService);
   readonly volumes = signal<MangaVolume[]>([]);
+  readonly customEnabled=inject(CUSTOM_DECKS_ENABLED);
+  readonly assistedEnabled=inject(MANGA_DECK_ASSISTED_ENABLED);
   readonly covers = signal<Record<string, string>>({});
   readonly progress = signal<Record<string, MangaProgress>>({});
   readonly busy = signal(false);

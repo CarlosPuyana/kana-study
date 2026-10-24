@@ -1,8 +1,8 @@
 import {MangaSourceService} from '../../core/services/manga-source.service';
 import {MangaLanguage} from '../../core/models/local-manga.model';
 import {MangaError} from '../../core/services/mokuro-parser';
-import { Component, computed, effect, ElementRef, HostListener, inject, OnDestroy, signal, untracked, viewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { afterNextRender, Component, computed, DestroyRef, effect, ElementRef, HostListener, inject, Injector, OnDestroy, signal, untracked, viewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router, RouterLink } from '@angular/router';
 import { TranslationService } from '../../core/services/translation.service';
 import { MangaRepository } from '../../core/services/manga.repository';
 import { WorkspaceService } from '../../core/services/workspace.service';
@@ -13,16 +13,23 @@ import { DictionaryPopup } from '../../shared/components/dictionary-popup/dictio
 import { JapaneseLookupService } from '../../core/services/japanese-lookup.service';
 import { DictionaryLookup, OcrLookupPoint } from '../../core/models/dictionary.model';
 import { MangaReaderPreferences, MANGA_READER_PREFERENCES_KEY, readMangaReaderPreferences } from '../../core/services/manga-reader-preferences';
+import { CUSTOM_DECKS_ENABLED } from '../../core/services/custom-deck-gates';
+import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate';
+import { MangaOcrLocation, type LocatedOcrLine } from './manga-ocr-location';
 @Component({
-  selector: 'app-manga-reader', imports: [RouterLink, MangaOcrComponent, DictionaryPopup], styleUrl: './manga.scss',
+  selector: 'app-manga-reader', imports: [RouterLink, MangaOcrComponent, DictionaryPopup, MangaOcrLocation], styleUrl: './manga.scss',
   template: `<main #readerRoot class="manga-reader" (pointerdown)="interact()" (wheel)="zoomWheel($event)">
     <header class="reader-header"><a routerLink="/manga" [attr.aria-label]="i18n.t('manga.library')" [title]="i18n.t('manga.library')"><span aria-hidden="true">←</span> {{ i18n.t('manga.library') }}</a><span class="reader-title" [title]="readerTitle()">{{readerTitle()}}</span><button class="fullscreen-button" [disabled]="!fullscreenAvailable()" [attr.aria-pressed]="fullscreen()" [attr.aria-label]="i18n.t(fullscreen()?'manga.exitFullscreen':'manga.enterFullscreen')" [title]="i18n.t(fullscreen()?'manga.exitFullscreen':'manga.enterFullscreen')" (click)="toggleFullscreen()"><span aria-hidden="true">{{fullscreen()?'⛶':'⛶'}}</span></button>@if(volume()?.catalogId){<label class="reader-language"><span>{{i18n.t('manga.catalog.language')}}</span><select [value]="language()" [disabled]="loading()" (change)="setLanguage($event)">@for(lang of volume()?.availableLanguages;track lang){<option [value]="lang">{{i18n.t('manga.catalog.language.'+lang)}}</option>}</select></label>}</header>
     @if (error()) { <p role="alert">{{ i18n.t('manga.error.' + error()) }}</p> }
+    @if(cardSaved()){<p role="status">{{i18n.t('manga.deck.created')}}</p>}
+    @defer(when locationEnabled()&&occurrenceRequest()!==undefined){
+      @if(locationEnabled()&&occurrenceRequest()!==undefined){<app-manga-ocr-location [reference]="occurrenceRequest()" [volumeId]="readerVolumeId" [page]="current()" [unavailable]="!!error()||language()!=='ja'" (located)="location.set($event)" (dismissed)="clearOccurrence(true)" />}
+    }
     <div #stage class="page-stage" tabindex="0" [attr.aria-label]="i18n.t('manga.viewport')" (pointerdown)="sidePointerDown($event)" (pointermove)="sidePointerMove($event)" (scroll)="sideScroll()" (click)="sideClick($event)">
     @if (current(); as page) {
       <div class="manga-canvas" [style.width.px]="baseWidth()*zoom()/100" [style.height.px]="baseWidth()*page.ocr.img_height/page.ocr.img_width*zoom()/100"><div class="page-image" [style.width.px]="baseWidth()" [style.height.px]="baseWidth()*page.ocr.img_height/page.ocr.img_width" [style.transform]="'scale(' + zoom()/100 + ')'" (touchstart)="touchStart($event)" (touchend)="touchEnd($event)">
         <img [src]="url()" [alt]="i18n.t('manga.page', {number:index()+1})" draggable="false" />
-        @if(!volume()?.catalogId||language()==='ja'){<app-manga-ocr [page]="page.ocr" [visible]="showOcr()" (wordClicked)="lookupWord($event)" />}
+        @if(!volume()?.catalogId||language()==='ja'){<app-manga-ocr [page]="page.ocr" [visible]="showOcr()" [locatedLine]="highlightedLine()" (wordClicked)="lookupWord($event)" />}
       </div></div>
     } @else if (!error()) { <p role="status">{{ i18n.t('common.loading') }}</p> }
     </div>
@@ -56,19 +63,30 @@ import { MangaReaderPreferences, MANGA_READER_PREFERENCES_KEY, readMangaReaderPr
         }
       </section>
     }
-    @if(popup();as point){<app-dictionary-popup [x]="point.x" [y]="point.y" [context]="point" [volumeTitle]="readerTitle()" [location]="{volumeId:volume()?.id ?? '',pageIndex:index(),blockIndex:point.blockIndex ?? 0}" [result]="lookupResult()" [loading]="lookupLoading()" [failed]="lookupFailed()" (closed)="closeDictionary()"/>}
+    @if(popup();as point){<app-dictionary-popup [x]="point.x" [y]="point.y" [context]="point" [volumeTitle]="readerTitle()" [location]="{volumeId:volume()?.id ?? '',pageIndex:index(),blockIndex:point.blockIndex ?? 0}" [result]="lookupResult()" [loading]="lookupLoading()" [failed]="lookupFailed()" (closed)="dismissDictionary()" (cardAdded)="cardAdded()"/>}
   </main>`,
 })
 export class MangaReaderPage implements OnDestroy {
+  readonly cardSaved=signal(false);
+  private readonly focusInjector=inject(Injector);
+  private focusReader():void{afterNextRender(()=>this.stage()?.nativeElement.focus(),{injector:this.focusInjector});}
+  dismissDictionary():void{this.closeDictionary();this.focusReader();}
+  cardAdded():void{this.closeDictionary();this.cardSaved.set(true);this.focusReader();}
   private readonly lookup=inject(JapaneseLookupService);
   readonly popup=signal<OcrLookupPoint|null>(null);readonly lookupResult=signal<DictionaryLookup>({query:'',terms:[],installed:false});readonly lookupLoading=signal(false);readonly lookupFailed=signal(false);private lookupGeneration=0;
   async lookupWord(point:OcrLookupPoint):Promise<void>{if(!this.preferences().dictionaryEnabled||(this.volume()?.catalogId&&this.language()!=='ja'))return;this.interact();this.panel.set(null);this.popup.set(point);this.tick();this.lookupLoading.set(true);this.lookupFailed.set(false);const generation=++this.lookupGeneration;
     try{const result=point.mode==='selection'?await this.lookup.lookupSelection(point.selectedText??point.text):await this.lookup.lookupAt(point.text,point.offset);if(generation===this.lookupGeneration)this.lookupResult.set(result);}catch{if(generation===this.lookupGeneration)this.lookupFailed.set(true);}finally{if(generation===this.lookupGeneration)this.lookupLoading.set(false);}
   }
-  closeDictionary():void{this.tick();++this.lookupGeneration;this.popup.set(null);this.interact();}
+  closeDictionary():void{this.cardSaved.set(false);this.tick();++this.lookupGeneration;this.popup.set(null);this.interact();}
   readonly i18n = inject(TranslationService); private readonly repository = inject(MangaRepository);private readonly source=inject(MangaSourceService);readonly language=signal<MangaLanguage>('ja');readonly rightToLeft=computed(()=>this.volume()?.readingDirection==='rtl'); private readonly workspaceService = inject(WorkspaceService);
-  private readonly router = inject(Router); private readonly id = inject(ActivatedRoute).snapshot.paramMap.get('volumeId')!;
+  private readonly router = inject(Router);private readonly route=inject(ActivatedRoute);private id=this.route.snapshot.paramMap.get('volumeId')!;
   private readonly workspace = this.workspaceService.active();
+  private readonly workspaceEpoch=this.workspaceService.activationRevision();
+  readonly customEnabled=inject(CUSTOM_DECKS_ENABLED);readonly assistedEnabled=inject(MANGA_DECK_ASSISTED_ENABLED);
+  readonly locationEnabled=computed(()=>this.customEnabled()&&this.assistedEnabled());
+  readonly occurrenceRequest=signal<unknown>(undefined);readonly location=signal<LocatedOcrLine|null>(null);
+  readonly highlightedLine=computed(()=>this.locationEnabled()&&this.occurrenceRequest()!==undefined&&this.location()?.page===this.current()?this.location():null);
+  get readerVolumeId():string{return this.id;}
   private readonly preferencesKey=this.workspaceService.storageKey(MANGA_READER_PREFERENCES_KEY,this.workspace);
   readonly preferences=signal(readMangaReaderPreferences(this.preferencesKey));
   readonly panel=signal<'settings'|'clock'|null>(null);readonly clockState=signal<'off'|'running'|'paused'>('off');readonly sessionSeconds=signal(0);
@@ -90,23 +108,49 @@ export class MangaReaderPage implements OnDestroy {
   constructor() {
     effect(onCleanup=>{const stage=this.stage()?.nativeElement;if(!stage)return;const measure=()=>this.measureStage();measure();if(typeof ResizeObserver==='function'){const observer=new ResizeObserver(measure);observer.observe(stage);onCleanup(()=>observer.disconnect());}});
     effect(()=>{this.panelClose()?.nativeElement.focus();});
-    effect(() => { if (this.workspaceService.active() !== this.workspace) untracked(()=>{this.closeDictionary();void this.router.navigateByUrl('/manga');}); });
+    effect(() => { if (this.workspaceService.active() !== this.workspace||this.workspaceService.activationRevision()!==this.workspaceEpoch) untracked(()=>{this.clearOccurrence();++this.generation;this.closeDictionary();void this.router.navigateByUrl('/manga');}); });
+    this.occurrenceRequest.set(this.navigationReference());
+    const subscription=this.router.events.subscribe(event=>{
+      if(event instanceof NavigationStart)this.clearOccurrence();
+      if(event instanceof NavigationEnd){
+        const id=this.route.snapshot.paramMap.get('volumeId'),page=this.route.snapshot.queryParamMap?.get('page')??null;
+        if(!id)return;
+        const reference=this.navigationReference(),requested=page&&/^\d+$/.test(page)?Number(page):0;
+        if(id!==this.id||page!==this.requestedPage||!this.loading()&&Number.isSafeInteger(requested)&&requested>=1&&requested<=(this.volume()?.pageCount??0)&&this.index()!==requested-1)
+          void this.restart(id,page,reference);
+        else this.occurrenceRequest.set(reference);
+      }
+    });
+    inject(DestroyRef).onDestroy(()=>subscription.unsubscribe());
     void this.start();
   }
-  private readonly requestedPage=inject(ActivatedRoute).snapshot.queryParamMap?.get('page');
+  private requestedPage=this.route.snapshot.queryParamMap?.get('page')??null;
+  private navigationReference():unknown{
+    const state=this.router.currentNavigation()?.extras.state??window.history.state;
+    return state&&typeof state==='object'?state['mangaOcrOccurrence']:undefined;
+  }
+  clearOccurrence(focus=false):void{this.occurrenceRequest.set(undefined);this.location.set(null);if(focus)this.stage()?.nativeElement.focus();}
+  private async restart(id:string,page:string|null,reference:unknown):Promise<void>{
+    this.clearOccurrence();this.closeDictionary();this.tick();void this.save();++this.generation;
+    for(const value of this.cache.values()){if(value.preview)value.preview.src='';URL.revokeObjectURL(value.url);}this.cache.clear();
+    this.id=id;this.requestedPage=page;this.seconds=0;this.completed=false;this.volume.set(undefined);this.current.set(undefined);this.url.set('');this.error.set('');this.loading.set(true);
+    this.occurrenceRequest.set(reference);await this.start();
+  }
   private async start(): Promise<void> {
+    const starting=++this.generation,id=this.id;
     try {
-      const [volume, saved] = await Promise.all([this.source.volume(this.id, this.workspace), this.repository.progress(this.id,this.workspace)]);
-      if (this.destroyed) return;
+      const [volume, saved] = await Promise.all([this.source.volume(id, this.workspace), this.repository.progress(id,this.workspace)]);
+      if (this.destroyed||starting!==this.generation||this.workspaceService.active()!==this.workspace||this.workspaceService.activationRevision()!==this.workspaceEpoch) return;
       if (!volume?.complete) throw new Error('missing');
       this.volume.set(volume); this.seconds = saved?.activeSeconds ?? 0; this.completed = saved?.completed ?? false;
       const requested=this.requestedPage && /^\d+$/.test(this.requestedPage)?Number(this.requestedPage):0;
       const index=Number.isSafeInteger(requested)&&requested>=1&&requested<=volume.pageCount?requested-1:Math.max(0,Math.min(saved?.pageIndex??0,volume.pageCount-1));
-      this.loading.set(false); await this.go(index);
-    } catch(error) { this.error.set(error instanceof MangaError?error.code:'interrupted'); this.loading.set(false); }
+      this.loading.set(false); await this.go(index,true);
+    } catch(error) { if(starting===this.generation&&!this.destroyed){this.error.set(error instanceof MangaError?error.code:'interrupted'); this.loading.set(false);} }
   }
-  async go(index: number): Promise<void> {
+  async go(index: number,keepOccurrence=false): Promise<void> {
     const volume = this.volume(); if (!volume || index < 0 || index >= volume.pageCount || this.loading() || this.destroyed || this.popup()) return;
+    this.location.set(null);if(!keepOccurrence)this.clearOccurrence();
     this.closePanel();this.interact();this.resetPan(); this.loading.set(true); const generation = ++this.generation;
     this.current.set(undefined);
     try {
@@ -116,7 +160,7 @@ export class MangaReaderPage implements OnDestroy {
       for (const key of [index, ...Array.from(keep).filter(i => i !== index)]) {
         if (!this.cache.has(key)) {
           const page = await this.source.page(this.id,key,this.workspace,this.language());
-          if (generation !== this.generation || this.destroyed) return;
+          if (generation !== this.generation || this.destroyed||this.workspaceService.active()!==this.workspace||this.workspaceService.activationRevision()!==this.workspaceEpoch) return;
           if (!page) throw new Error('missing');
           this.cache.set(key,{page,url:URL.createObjectURL(page.image)});
         }

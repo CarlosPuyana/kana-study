@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "chromium": "153.0.8010.12",
+  "prefix": "/kana-study/spike/",
+  "workload": {
+    "kind": "synthetic authored microcorpus replay, not real manga volumes",
+    "pages": 500,
+    "linesPerPage": 60,
+    "utf16PerPage": {
+      "min": 221,
+      "max": 264
+    }
+  },
+  "engines": {
+    "intl": {
+      "cold": {
+        "type": "ready",
+        "ms": 8.400000095367432,
+        "wasmBytes": null,
+        "heapBytes": null,
+        "endToEndMs": 35.700000047683716
+      },
+      "warm": {
+        "type": "ready",
+        "ms": 0.19999992847442627,
+        "wasmBytes": null,
+        "heapBytes": null,
+        "endToEndMs": 7.399999976158142
+      },
+      "hundred": {
+        "type": "done",
+        "jobId": "hundred",
+        "pages": 100,
+        "tokens": 12480,
+        "ms": 465.3000000715256,
+        "pageMs": {
+          "min": 0,
+          "median": 0.10000002384185791,
+          "p95": 0.20000004768371582,
+          "max": 1.3000000715255737
+        },
+        "wasmBytes": null,
+        "heapBytes": null
+      },
+      "fiveHundred": {
+        "type": "done",
+        "jobId": "fiveHundred",
+        "pages": 500,
+        "tokens": 62400,
+        "ms": 2467.600000023842,
+        "pageMs": {
+          "min": 0,
+          "median": 0.10000002384185791,
+          "p95": 0.20000004768371582,
+          "max": 0.6999999284744263
+        },
+        "wasmBytes": null,
+        "heapBytes": null
+      },
+      "repeat": {
+        "type": "done",
+        "jobId": "repeat",
+        "pages": 100,
+        "tokens": 12480,
+        "ms": 470.2000000476837,
+        "pageMs": {
+          "min": 0,
+          "median": 0.10000002384185791,
+          "p95": 0.20000004768371582,
+          "max": 0.5
+        },
+        "wasmBytes": null,
+        "heapBytes": null
+      },
+      "cancel": {
+        "type": "cancelled",
+        "jobId": "cancel",
+        "completedPages": 2,
+        "ms": 0.19999992847442627,
+        "observedLatencyMs": 0.09999990463256836
+      },
+      "mainThread": {
+        "timerTicks": 679,
+        "maxFiveMsTimerGap": 11.799999952316284
+      },
+      "uiClick": {
+        "automationRoundTripMs": 269.39469999999983,
+        "clicks": 1
+      },
+      "onlineAnalysisBytes": 6023,
+      "offline": {
+        "success": true,
+        "tokens": 6
+      },
+      "externalRequests": [],
+      "originResourceBytes": 6648,
+      "requestedResources": [
+        "/kana-study/spike/benchmark.html",
+        "/kana-study/spike/worker.js",
+        "/kana-study/spike/engines.mjs"
+      ]
+    },
+    "kuromoji": {
+      "cold": {
+        "type": "ready",
+        "ms": 1050.3999999761581,
+        "wasmBytes": null,
+        "heapBytes": null,
+        "endToEndMs": 1066.8999999761581
+      },
+      "warm": {
+        "type": "ready",
+        "ms": 736.3999999761581,
+        "wasmBytes": null,
+        "heapBytes": null,
+        "endToEndMs": 744.9000000953674
+      },
+      "hundred": {
+        "type": "done",
+        "jobId": "hundred",
+        "pages": 100,
+        "tokens": 10737,
+        "ms": 558.8999999761581,
+        "pageMs": {
+          "min": 0.7999999523162842,
+          "median": 1.100000023841858,
+          "p95": 1.600000023841858,
+          "max": 5.200000047683716
+        },
+        "wasmBytes": null,
+        "heapBytes": null
+      },
+      "fiveHundred": {
+        "type": "done",
+        "jobId": "fiveHundred",
+        "pages": 500,
+        "tokens": 53685,
+        "ms": 2808.7000000476837,
+        "pageMs": {
+          "min": 0.6999999284744263,
+          "median": 1.100000023841858,
+          "p95": 1.5,
+          "max": 2.9000000953674316
+        },
+        "wasmBytes": null,
+        "heapBytes": null
+      },
+      "repeat": {
+        "type": "done",
+        "jobId": "repeat",
+        "pages": 100,
+        "tokens": 10737,
+        "ms": 537.1999999284744,
+        "pageMs": {
+          "min": 0.6999999284744263,
+          "median": 1.100000023841858,
+          "p95": 1.4000000953674316,
+          "max": 1.600000023841858
+        },
+        "wasmBytes": null,
+        "heapBytes": null
+      },
+      "cancel": {
+        "type": "cancelled",
+        "jobId": "cancel",
+        "completedPages": 2,
+        "ms": 2.399999976158142,
+        "observedLatencyMs": 1.100000023841858
+      },
+      "mainThread": {
+        "timerTicks": 785,
+        "maxFiveMsTimerGap": 6
+      },
+      "uiClick": {
+        "automationRoundTripMs": 58.735499999999774,
+        "clicks": 1
+      },
+      "onlineAnalysisBytes": 18105946,
+      "offline": {
+        "success": true,
+        "tokens": 4
+      },
+      "externalRequests": [],
+      "originResourceBytes": 18106571,
+      "requestedResources": [
+        "/kana-study/spike/benchmark.html",
+        "/kana-study/spike/worker.js",
+        "/kana-study/spike/engines.mjs",
+        "/kana-study/spike/node_modules/kuromoji/build/kuromoji.js",
+        "/kana-study/spike/node_modules/kuromoji/dict/tid.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/tid_map.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/check.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/cc.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/base.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/tid_pos.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/unk_pos.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/unk.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/unk_compat.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/unk_char.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/unk_map.dat.gz",
+        "/kana-study/spike/node_modules/kuromoji/dict/unk_invoke.dat.gz"
+      ]
+    },
+    "lindera": {
+      "cold": {
+        "type": "ready",
+        "ms": 168.40000009536743,
+        "wasmBytes": 97124352,
+        "heapBytes": null,
+        "endToEndMs": 185.89999997615814
+      },
+      "warm": {
+        "type": "ready",
+        "ms": 131.09999990463257,
+        "wasmBytes": 97124352,
+        "heapBytes": null,
+        "endToEndMs": 138.5
+      },
+      "hundred": {
+        "type": "done",
+        "jobId": "hundred",
+        "pages": 100,
+        "tokens": 10620,
+        "ms": 568.5,
+        "pageMs": {
+          "min": 1,
+          "median": 1.2999999523162842,
+          "p95": 1.600000023841858,
+          "max": 5.100000023841858
+        },
+        "wasmBytes": 97124352,
+        "heapBytes": null
+      },
+      "fiveHundred": {
+        "type": "done",
+        "jobId": "fiveHundred",
+        "pages": 500,
+        "tokens": 53100,
+        "ms": 2907.899999976158,
+        "pageMs": {
+          "min": 0.8999999761581421,
+          "median": 1.1999999284744263,
+          "p95": 1.4000000953674316,
+          "max": 2.299999952316284
+        },
+        "wasmBytes": 97124352,
+        "heapBytes": null
+      },
+      "repeat": {
+        "type": "done",
+        "jobId": "repeat",
+        "pages": 100,
+        "tokens": 10620,
+        "ms": 557.5,
+        "pageMs": {
+          "min": 0.8999999761581421,
+          "median": 1.1999999284744263,
+          "p95": 1.4000000953674316,
+          "max": 1.7999999523162842
+        },
+        "wasmBytes": 97124352,
+        "heapBytes": null
+      },
+      "cancel": {
+        "type": "cancelled",
+        "jobId": "cancel",
+        "completedPages": 2,
+        "ms": 2.3000000715255737,
+        "observedLatencyMs": 1.0999999046325684
+      },
+      "mainThread": {
+        "timerTicks": 808,
+        "maxFiveMsTimerGap": 6
+      },
+      "uiClick": {
+        "automationRoundTripMs": 53.04490000000078,
+        "clicks": 1
+      },
+      "onlineAnalysisBytes": 82056431,
+      "offline": {
+        "success": true,
+        "tokens": 4
+      },
+      "externalRequests": [],
+      "originResourceBytes": 114731789,
+      "requestedResources": [
+        "/kana-study/spike/benchmark.html",
+        "/kana-study/spike/worker.js",
+        "/kana-study/spike/engines.mjs",
+        "/kana-study/spike/node_modules/lindera-wasm/lindera_wasm.js",
+        "/kana-study/spike/node_modules/lindera-wasm/lindera_wasm_bg.wasm",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/metadata.json",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/dict.valsidx",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/dict.wordsidx",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/dict.vals",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/dict.trie",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/matrix.mtx",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/char_def.bin",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/unk.bin",
+        "/kana-study/spike/resources/ipadic/lindera-ipadic/dict.words"
+      ]
+    }
+  }
+}

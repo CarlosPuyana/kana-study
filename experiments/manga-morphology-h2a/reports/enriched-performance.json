@@ -1,0 +1,72 @@
+{
+  "measuredAt": "2026-10-22T07:58:01.335Z",
+  "node": "v24.21.0",
+  "note": "One fresh Node process, forced GC at snapshots, OS cache not flushed; not browser/mobile. No old Spanish rows loaded. Tokenization excluded from lexical rounds.",
+  "beforeLexicon": {
+    "rss": 192012288,
+    "heapTotal": 36982784,
+    "heapUsed": 18544672,
+    "external": 119534024,
+    "arrayBuffers": 146571,
+    "peakWholeProcessRssKiB": 240808
+  },
+  "afterOpen": {
+    "rss": 193499136,
+    "heapTotal": 35479552,
+    "heapUsed": 15521592,
+    "external": 119594354,
+    "arrayBuffers": 146571,
+    "peakWholeProcessRssKiB": 260636
+  },
+  "afterFirst": {
+    "rss": 216059904,
+    "heapTotal": 57237504,
+    "heapUsed": 20978272,
+    "external": 129109918,
+    "arrayBuffers": 7170999,
+    "peakWholeProcessRssKiB": 260636
+  },
+  "afterRepeated": {
+    "rss": 280530944,
+    "heapTotal": 91054080,
+    "heapUsed": 21134216,
+    "external": 135634553,
+    "arrayBuffers": 13018313,
+    "peakWholeProcessRssKiB": 277272
+  },
+  "openMs": 229.58799999999997,
+  "first": {
+    "ms": 89.1336,
+    "verified": 0
+  },
+  "repeats": [
+    {
+      "ms": 69.55089999999996,
+      "verified": 0
+    },
+    {
+      "ms": 67.65070000000014,
+      "verified": 0
+    },
+    {
+      "ms": 66.58269999999993,
+      "verified": 0
+    },
+    {
+      "ms": 70.47890000000007,
+      "verified": 0
+    },
+    {
+      "ms": 64.15350000000012,
+      "verified": 0
+    }
+  ],
+  "wasmBytes": 97124352,
+  "cache": {
+    "limit": 128,
+    "hits": 529,
+    "misses": 959
+  },
+  "browserHeap": null,
+  "mobilePeak": null
+}

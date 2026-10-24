@@ -1,0 +1,10 @@
+{
+  "url": "https://www.edrdg.org/pub/Nihongo/JMdict.gz",
+  "sha256": "038a98ddefa4382fc49b98eb839506a776e7fec0c6f2c8b6cf36a711f098d63c",
+  "xmlSha256": "b289a5ee1e9fa787ccc427261b49cd7026ff2059aaf7c909753ea5eca73b300a",
+  "lastModified": "Thu, 22 Oct 2026 03:30:22 GMT",
+  "compressedBytes": 22204622,
+  "expandedBytes": 120578678,
+  "license": "https://www.edrdg.org/edrdg/licence.html",
+  "redistribution": "blocked-pending-Spanish-rights-review; local-experiment-only"
+}

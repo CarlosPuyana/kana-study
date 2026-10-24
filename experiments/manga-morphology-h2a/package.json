@@ -1,0 +1,25 @@
+{
+  "name": "kana-study-morphology-h2a",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "evaluate": "node evaluate.mjs",
+    "browser": "node browser-benchmark.mjs",
+    "setup-resources": "node acquire.mjs && node audit-dictionary.mjs && node measure-resources.mjs",
+    "audit": "node audit-dictionary.mjs && node audit-deinflection.mjs",
+    "benchmark:node": "node benchmark-node-processes.mjs",
+    "typecheck": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --noEmit",
+    "setup:enriched": "python build-enriched.py",
+    "evaluate:enriched": "node evaluate-enriched.mjs",
+    "benchmark:enriched": "node --expose-gc benchmark-enriched.mjs",
+    "test:enriched-parser": "python test/enriched_parser_test.py",
+    "evaluate:layered": "node evaluate-layered.mjs",
+    "audit:layered-resources": "python audit-layered-resources.py"
+  },
+  "dependencies": {
+    "kuromoji": "0.1.2",
+    "lindera-wasm": "6.2.0"
+  }
+}
