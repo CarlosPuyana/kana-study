@@ -25,10 +25,12 @@ import { GRAMMAR_V2_CONCEPTS } from '../../data/grammar/grammar-n5-v2.generated'
 import { GRAMMAR_LESSONS } from '../../features/grammar/data/grammar-catalog';
 import { grammarFocusedExercises } from '../../features/grammar/services/grammar-weakness';
 import { isStudyToday, nextSpainDayBoundary, planDailyStudy } from './daily-study-planner';
+import { GrammarAccessService } from './grammar-access.service';
 
 /** Page-scoped reader: no writes, no session initialization, no sync requests. */
 @Injectable()
 export class DailyStudyPlannerService {
+  private readonly grammarAccess=inject(GrammarAccessService);
   private readonly workspace=inject(WorkspaceService);
   private readonly storage=inject(StorageService);
   private readonly sync=inject(SyncService);
@@ -87,7 +89,12 @@ export class DailyStudyPlannerService {
       manga:{enabled:this.manga.enabled(),due:cards.filter(c=>c.card.state!==State.New&&c.card.due<=now).length,fresh:cards.filter(c=>c.card.state===State.New).length,nextDue:future.length?Math.min(...future):null,
         eventsToday:events.filter(e=>isStudyToday(e.reviewedAt,now,day)).length,completedSessionIds:[...new Set(events.map(e=>e.sessionId))]}};
   });
-  readonly plan=computed(()=>planDailyStudy(this.snapshot(),this.duration()));
+  readonly plan=computed(()=>{
+    const snapshot=this.snapshot(),plan=planDailyStudy(snapshot,this.duration());
+    if(this.grammarAccess.allowed())return plan;
+    const eligible=planDailyStudy({...snapshot,grammar:[],grammarContinuePath:null,weaknesses:snapshot.weaknesses.filter(w=>w.record.module!=='grammar')},this.duration());
+    return {...eligible,performed:plan.performed};
+  });
   constructor(){
     const destroy=inject(DestroyRef);
     const refresh=()=>{this.daily.refresh();this.now.set(Date.now());this.offline.set(!navigator.onLine);};

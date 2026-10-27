@@ -1,3 +1,4 @@
+import {grammarAccount,grammarStoragePrefix} from './grammar-access.fixture';
 import {test,expect,Page} from '@playwright/test';
 
 test.beforeEach(async({page})=>{
@@ -21,7 +22,7 @@ async function drawingThemes(page:Page,info:{outputPath:(name:string)=>string},p
   }
 }
 const protectedKeys=['kana-study.study-progress.v2','kana-study.review-events.v1','kana-study.kanji-progress.v1','kana-study.kanji-review-events.v1','kana-study.grammar-progress.v2','kana-study.completed-sessions.v1','kana-study.weaknesses.v1'];
-async function snapshot(page:Page){return page.evaluate(keys=>keys.map(key=>localStorage.getItem(key)),protectedKeys);}
+async function snapshot(page:Page){return page.evaluate(keys=>{const active=localStorage.getItem('kana-study.workspace.active.v1'),prefix=active?.startsWith('user:')?'kana-study.workspace.'+active.slice(5)+'.':'';return keys.map(key=>localStorage.getItem(prefix+key));},protectedKeys);}
 
 test('Kana quick drawing has no grading side effects, accessible skip keeps options and next question clears ink',async({page},info)=>{
   await page.goto('/#/');await page.locator('.learn-button').click();await page.locator('app-learning-start-panel .mode').first().click();
@@ -48,9 +49,9 @@ test('Kanji self assessment hides reference until reveal and preserves all three
 });
 
 test('Grammar vocabulary and offline dictionary fit all five themes and three languages without changing learning data',async({page},info)=>{
-  await page.goto('/#/grammar/n5/01/sentence-structure-context');
+  await grammarAccount(page);await page.goto('/#/grammar/n5/01/sentence-structure-context');
   for(const language of ['es','en','ca']){
-    await page.evaluate(language=>{const key='kana-study.settings.v1',settings=JSON.parse(localStorage.getItem(key)!);settings.language=language;localStorage.setItem(key,JSON.stringify(settings));},language);
+    await page.evaluate(({language,prefix})=>{const key=prefix+'kana-study.settings.v1',settings=JSON.parse(localStorage.getItem(key)??'{}');settings.language=language;localStorage.setItem(key,JSON.stringify(settings));},{language,prefix:grammarStoragePrefix});
     await page.reload();await page.locator('.vocabulary-note summary').click();await expect(page.locator('.vocabulary-list li')).toHaveCount(8);
     await page.locator('app-grammar-intended-vocabulary .toggle').click();await expect(page.locator('.vocabulary-list li')).toHaveCount(12);
     await page.locator('app-grammar-intended-vocabulary .toggle').click();await expect(page.locator('.vocabulary-list li')).toHaveCount(8);
@@ -87,7 +88,7 @@ test('RUSH modals have resolved ES EN CA labels; writing always names its script
 });
 
 test('installed offline dictionary stays read-only, retains unrelated imports and bounds long glosses',async({page})=>{
-  await page.goto('/#/grammar/n5/01/sentence-structure-context');await expect(page.locator('.lesson-heading-card')).toBeVisible();
+  await grammarAccount(page);await page.goto('/#/grammar/n5/01/sentence-structure-context');await expect(page.locator('.lesson-heading-card')).toBeVisible();
   await page.evaluate(async()=>{
     const db=await new Promise<IDBDatabase>((resolve,reject)=>{
       const request=indexedDB.open('kana-study-dictionary',1);

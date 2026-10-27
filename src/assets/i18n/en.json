@@ -12240,5 +12240,12 @@
   "localDeck.cancel": "Cancel and stay in Guest",
   "localDeck.badge": "Local only · no cloud",
   "localDeck.inspectionUnavailable": "Guest content could not be checked. You can sign in without copying it; it will remain in its local space. Sign out to return to Guest.",
-  "localDeck.guestOnly": "This version offers Manga × Decks in Guest only. Previous custom decks in this account are preserved unchanged, but are unavailable here. Sign out to return to your Guest decks. Japanese 1500 and your account’s existing features remain available."
+  "localDeck.guestOnly": "This version offers Manga × Decks in Guest only. Previous custom decks in this account are preserved unchanged, but are unavailable here. Sign out to return to your Guest decks. Japanese 1500 and your account’s existing features remain available.",
+  "grammarAccess.title": "Grammar · Private beta",
+  "grammarAccess.checking": "Checking private beta access…",
+  "grammarAccess.authorized": "Your account has access. You can enter again.",
+  "grammarAccess.denied": "Grammar is in private beta and requires the owner’s authorization. Signing in does not grant access.",
+  "grammarAccess.error": "Access could not be checked. Retry when connected.",
+  "grammarAccess.login": "Sign in",
+  "grammarAccess.retry": "Check access and enter"
 }

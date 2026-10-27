@@ -1,3 +1,4 @@
+import {GrammarAccessService} from '../core/services/grammar-access.service';
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -122,7 +123,7 @@ describe('Module navigation', () => {
   it('I: Home Kana links More with from=kana', async () => {
     await TestBed.configureTestingModule({
       imports: [HomePage],
-      providers: [
+      providers:[
         provideRouter([]),
         { provide: TranslationService, useValue: translate },
         { provide: ProgressService, useValue: { stats: signal(emptyStats) } },
@@ -195,6 +196,7 @@ async function createMoreFixture(from?: string): Promise<ComponentFixture<MorePa
   await TestBed.configureTestingModule({
     imports: [MorePage],
     providers: [
+      {provide:GrammarAccessService,useValue:{allowed:()=>true}},
       provideRouter([]),
       { provide: TranslationService, useValue: translate },
       {

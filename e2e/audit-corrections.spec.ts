@@ -1,3 +1,4 @@
+import {grammarAccount,grammarStoragePrefix} from './grammar-access.fixture';
 import {test,expect} from '@playwright/test';
 
 test.beforeEach(async({page},info)=>{
@@ -60,12 +61,12 @@ test('Kanji detail traps focus, restores its card and keeps the accessible title
 
 test('Grammar translations load before rendering in EN and CA',async({page})=>{
   test.skip(test.info().project.name!=='desktop-dark');
-  for(const language of ['en','ca']){
-    await page.goto('/#/more');await page.evaluate(language=>localStorage.setItem('kana-study.settings.v1',JSON.stringify({language,theme:'dark'})),language);
-    await page.goto('/#/grammar/n5/00/1');await page.reload();
+  await grammarAccount(page);for(const language of ['en','ca']){
+    await page.goto('/#/more');await page.evaluate(({language,prefix})=>localStorage.setItem(prefix+'kana-study.settings.v1',JSON.stringify({language,theme:'dark'})),{language,prefix:grammarStoragePrefix});
+    await page.goto('/#/grammar/n5/01/sentence-structure-context');await page.reload();
     await expect(page.locator('.lesson-heading-card')).toBeVisible();
     await expect(page.locator('main').first()).not.toContainText('grammar.content.');
-    await expect(page.locator('main').first()).not.toContainText('Los sistemas de escritura');
+    await expect(page.locator('.lesson-heading-card')).toContainText(language==='en'?'How a Japanese sentence works':'Com funciona una frase japonesa');
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
   }
 });

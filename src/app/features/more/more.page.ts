@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { APP_MODULES } from '../../data/app-modules';
 import { TranslationService } from '../../core/services/translation.service';
 import { ModuleCard } from '../../shared/components/module-card/module-card';
+import { GrammarAccessService } from '../../core/services/grammar-access.service';
 
 @Component({
   selector: 'app-more-page',
@@ -15,6 +16,7 @@ import { ModuleCard } from '../../shared/components/module-card/module-card';
 })
 export class MorePage {
   readonly i18n = inject(TranslationService);
+  readonly grammarAccess=inject(GrammarAccessService);
   private readonly route = inject(ActivatedRoute);
   private readonly queryParams = toSignal(this.route.queryParamMap, {
     initialValue: this.route.snapshot.queryParamMap,
@@ -22,10 +24,10 @@ export class MorePage {
 
   readonly currentModule = computed(() => {
     const requestedId = this.queryParams().get('from');
-    return APP_MODULES.find(module => module.available && module.id === requestedId);
+    return APP_MODULES.find(module => module.available && module.id === requestedId && (module.id!=='grammar'||this.grammarAccess.allowed()));
   });
   readonly modules = computed(() =>
-    APP_MODULES.filter(module => module.available && module.id !== this.currentModule()?.id),
+    APP_MODULES.filter(module => module.available && module.id !== this.currentModule()?.id && (module.id!=='grammar'||this.grammarAccess.allowed())),
   );
   readonly returnRoute = computed(() => this.currentModule()?.route ?? '/');
 }

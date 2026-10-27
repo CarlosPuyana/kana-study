@@ -1,6 +1,13 @@
 # Supabase setup
 
-Kana Study remains local-first. Without this configuration, every study module continues to work as Guest and writes only to the browser.
+Kana Study remains local-first. Without this configuration, public study modules work as Guest and write only to the browser. Grammar's closed beta requires an authenticated, explicitly authorized account and fails closed without configuration.
+
+Grammar beta access requires the separate additive migration
+`supabase/migrations/202610270001_grammar_beta_access.sql`. It authorizes nobody by default.
+Apply it administratively before deploying GRAMMAR-ACCESS-1; grant individual UUIDs only after
+verifying the closed frontend. See [Grammar access](docs/features/GRAMMAR_ACCESS.md) for exact
+grant/revoke/query commands, rollout order, lease policy, public-content exposure and test limits.
+Do not grant clients write privileges or use profile/user metadata as authorization.
 
 ## 1. Create the project
 

@@ -19,18 +19,34 @@ import { SettingsService } from './settings.service';
 import { DailyLearningService, getSpainDayKey } from './daily-learning.service';
 import { STUDY_DECKS } from '../../data/study-decks';
 import { GRAMMAR_V2_CONCEPTS } from '../../data/grammar/grammar-n5-v2.generated';
+import { GrammarAccessService } from './grammar-access.service';
 
 describe('daily planner reads existing contracts without writes',()=>{
   const enqueue=vi.fn(async()=>{}),lastSyncedAt=signal<string|null>(null);
+  const grammarAllowed=signal(true);
   beforeEach(()=>{
     TestBed.resetTestingModule();localStorage.clear();vi.stubGlobal('indexedDB',new IDBFactory());
     vi.stubGlobal('matchMedia',()=>({matches:false,addEventListener:()=>{},removeEventListener:()=>{}}));
-    enqueue.mockClear();lastSyncedAt.set(null);
+    enqueue.mockClear();lastSyncedAt.set(null);grammarAllowed.set(true);
     TestBed.configureTestingModule({providers:[DailyStudyPlannerService,provideRouter([]),{provide:SyncOutboxService,useValue:{enqueue}},
+      {provide:GrammarAccessService,useValue:{allowed:grammarAllowed}},
       {provide:SyncService,useValue:{lastSyncedAt}},{provide:MangaStudySavedRepository,useValue:{items:signal([]),loading:signal(false),failed:signal(false)}}]});
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
   async function ready(){const planner=TestBed.inject(DailyStudyPlannerService);TestBed.tick();await planner.refreshDecks();return planner;}
+  it('hides Grammar recommendations without deleting historical evidence or progress',async()=>{
+    const planner=await ready();
+    TestBed.inject(GrammarV2ProgressService).open('sentence-structure-context');
+    TestBed.inject(SessionHistoryService).record({module:'grammar',sessionId:'historical-grammar',completedAt:new Date(planner.now()).toISOString(),
+      mode:'quick-practice',exercisesCompleted:1,firstTrySuccesses:1,attempts:1,needsPracticeCount:0,durationSeconds:4});
+    const all=()=>[...planner.plan().recommended,...planner.plan().available];
+    expect(all().some(a=>a.module==='grammar')).toBe(true);
+    const snapshot=planner.snapshot(),performed=planner.plan().performed,stored=Object.fromEntries(Object.entries(localStorage));
+    grammarAllowed.set(false);expect(all().some(a=>a.module==='grammar')).toBe(false);
+    expect(planner.snapshot()).toEqual(snapshot);expect(Object.fromEntries(Object.entries(localStorage))).toEqual(stored);
+    expect(planner.plan().performed).toEqual(performed);
+    expect(performed.some(a=>a.module==='grammar')).toBe(true);
+  });
   it('reads real Anki snapshots without creating/modifying daily state, progress or events',async()=>{
     const planner=await ready(),database=TestBed.inject(DeckDatabaseService);
     const before=await database.getAllDailyStates(),writes=vi.spyOn(database,'writeDailyState'),reviews=vi.spyOn(database,'commitReview'),storage=vi.spyOn(TestBed.inject(StorageService),'set');enqueue.mockClear();

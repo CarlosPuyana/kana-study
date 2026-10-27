@@ -1,4 +1,5 @@
 import {PageHeader} from '../../shared/components/page-header/page-header';
+import {GrammarAccessService} from '../../core/services/grammar-access.service';
 import {ChangeDetectionStrategy, Component, computed, inject} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {LearningSessionService} from '../../core/services/learning-session.service';
@@ -19,6 +20,7 @@ import {KANJI_N5} from '../../data/kanji-n5.generated';
 @Component({selector:'app-weaknesses-page', imports:[PageHeader,RouterLink], templateUrl:'./weaknesses.page.html',
   styleUrl:'./weaknesses.page.scss', changeDetection:ChangeDetectionStrategy.OnPush})
 export class WeaknessesPage {
+  readonly grammarAccess=inject(GrammarAccessService);
   readonly i18n = inject(TranslationService);
   private readonly weaknesses = inject(WeaknessService);
   private readonly audio = inject(JapaneseAudioService);
@@ -38,7 +40,7 @@ export class WeaknessesPage {
   readonly vocabularyListening = computed(() => this.weaknesses.items('vocabulary',VOCABULARY_N5.filter(e=>e.enabled&&this.audio.hasAudio(e.id)),5,'listening'));
   readonly kanji = computed(() => this.weaknesses.items('kanji',KANJI_N5.filter(k=>k.enabled),5));
   readonly grammar=computed(()=>this.weaknesses.weak().filter(r=>r.module==='grammar'&&r.activity==='learn'&&grammarWeaknessTitleKey(r.itemId)));
-  readonly grammarAvailable=computed(()=>grammarFocusedExercises(this.grammar()).length>0);
+  readonly grammarAvailable=computed(()=>this.grammarAccess.allowed()&&grammarFocusedExercises(this.grammar()).length>0);
   grammarTitle(itemId:string):string{return this.i18n.t(grammarWeaknessTitleKey(itemId)??'grammar.title');}
   grammarType(type:string|undefined):string{return this.i18n.t(grammarQuestionLabelKey(type??''));}
   readonly empty = computed(() => !this.kana().length && !this.vocabulary().length && !this.vocabularyListening().length && !this.kanji().length

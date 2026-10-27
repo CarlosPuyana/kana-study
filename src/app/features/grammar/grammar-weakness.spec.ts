@@ -1,3 +1,4 @@
+import {GrammarAccessService} from '../../core/services/grammar-access.service';
 import {GRAMMAR_V2_CONCEPTS} from '../../data/grammar/grammar-n5-v2.generated';
 import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
@@ -80,7 +81,7 @@ describe('Grammar evaluation, focused practice and localized UI',()=>{
   beforeEach(()=>{
     vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
     localStorage.clear();language.set('es');vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
-    TestBed.configureTestingModule({providers:[provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),GrammarPracticeSession,
+    TestBed.configureTestingModule({providers:[{provide:GrammarAccessService,useValue:{allowed:()=>true}},provideRouter([{path:'grammar',children:GRAMMAR_ROUTES}]),GrammarPracticeSession,
       {provide:TranslationService,useValue:{language,t:(key:string,params?:Record<string,string|number>)=>Object.entries(params??{}).reduce((text,[k,v])=>text.replaceAll('{{'+k+'}}',String(v)),({es,en,ca}[language()] as Record<string,string>)[key]??key)}}]});
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();});

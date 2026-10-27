@@ -12240,5 +12240,12 @@
   "localDeck.cancel": "Cancelar y seguir en Invitado",
   "localDeck.badge": "Solo local · sin nube",
   "localDeck.inspectionUnavailable": "No se pudo comprobar el contenido Invitado. Puedes entrar sin copiarlo; permanecerá en su espacio local. Cierra sesión para volver a Invitado.",
-  "localDeck.guestOnly": "Esta versión permite usar Manga × Mazos solo en Invitado. Los mazos anteriores de esta cuenta se conservan sin modificaciones, pero no están disponibles aquí. Cierra sesión para volver a tus mazos Invitado. Japanese 1500 y las funciones habituales de tu cuenta siguen disponibles."
+  "localDeck.guestOnly": "Esta versión permite usar Manga × Mazos solo en Invitado. Los mazos anteriores de esta cuenta se conservan sin modificaciones, pero no están disponibles aquí. Cierra sesión para volver a tus mazos Invitado. Japanese 1500 y las funciones habituales de tu cuenta siguen disponibles.",
+  "grammarAccess.title": "Gramática · Beta privada",
+  "grammarAccess.checking": "Comprobando el acceso a la beta privada…",
+  "grammarAccess.authorized": "Tu cuenta tiene acceso. Puedes volver a entrar.",
+  "grammarAccess.denied": "Gramática está en beta privada y requiere autorización del propietario. Iniciar sesión no concede acceso.",
+  "grammarAccess.error": "No se ha podido comprobar el acceso. Reintenta cuando tengas conexión.",
+  "grammarAccess.login": "Iniciar sesión",
+  "grammarAccess.retry": "Comprobar acceso y entrar"
 }

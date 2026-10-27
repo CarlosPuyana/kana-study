@@ -74,7 +74,7 @@ test('actual distributed dictionary offers both readings and all senses, then on
   for(const gloss of realRows[1][5])await expect(more).toContainText(gloss);await expect(more).toContainText('だいじょぶ');
   await expect(dictionary.getByRole('link',{name:'JMdict Español',exact:true})).toHaveAttribute('href',/#\/manga$/);
   await dictionary.getByRole('button',{name:'Contexto',exact:true}).click();await expect(dictionary.locator('.ocr-context mark')).toHaveText('大丈夫');
-  await dictionary.getByRole('button',{name:'Gramática',exact:true}).click();await expect(panel(page)).toHaveCount(0);
+  await expect(dictionary.getByRole('button',{name:'Gramática',exact:true})).toHaveCount(0);await expect(panel(page)).toHaveCount(0);
   await dictionary.getByRole('button',{name:'Palabra',exact:true}).click();expect(await readonlyStores(page)).toEqual(before);expect(posts).toEqual([]);
   await page.screenshot({path:`.cache/dictionary-ux-informative-${info.project.name}.png`,fullPage:true});
   const open=dictionary.getByRole('button',{name:'＋ Añadir a Mazos',exact:true});await open.focus();await page.keyboard.press('Enter');

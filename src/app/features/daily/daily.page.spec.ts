@@ -1,3 +1,4 @@
+import {GrammarAccessService} from '../../core/services/grammar-access.service';
 import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -19,7 +20,7 @@ describe('Daily Study page',()=>{
   beforeEach(()=>{
     TestBed.resetTestingModule();localStorage.clear();enqueue.mockClear();syncNow.mockClear();vi.stubGlobal('indexedDB',new IDBFactory());
     vi.stubGlobal('matchMedia',()=>({matches:false,addEventListener:()=>{},removeEventListener:()=>{}}));
-    TestBed.configureTestingModule({providers:[provideRouter([]),{provide:AuthService,useValue:{authenticated:signal(false)}},
+    TestBed.configureTestingModule({providers:[{provide:GrammarAccessService,useValue:{allowed:()=>true}},provideRouter([]),{provide:AuthService,useValue:{authenticated:signal(false)}},
       {provide:SyncService,useValue:{lastSyncedAt:signal(null),status:signal('guest'),available:()=>true,syncNow}},
       {provide:SyncOutboxService,useValue:{enqueue}},{provide:MangaStudySavedRepository,useValue:{items:signal([]),loading:signal(false),failed:signal(false)}}]});
   });

@@ -9,7 +9,8 @@ cdb763a27c6c08580d0ea58f9b4ebc9dc9b79bb5 ([Actions #42](https://github.com/Carlo
 El workflow selecciona manga-candidate: custom/assisted activos, sync/upload apagados.
 La entrada normal sigue con los cuatro gates apagados. Supabase Auth real continúa sin
 validar, con riesgo aceptado; Safari y móviles físicos siguen pendientes.
-Los cambios UX-1 de aprendizaje tienen aceptación manual confirmada; siguen locales, sin publicar. Los informes de RELEASE conservan
+UX-1 tiene aceptación manual confirmada y está en el commit 597e9dee6ffbde8ece86060ec7756a8f8ffe6329.
+GRAMMAR-ACCESS-1 es un cambio local pendiente de publicación y aplicación SQL. Los informes de RELEASE conservan
 el estado de su propia fase, incluida la preparación previa a esa publicación.
 
 - Para decidir una promoción o retirada: [RELEASE-MANGA-3](../MANGA_DECKS_RELEASE_3.md),
@@ -20,6 +21,7 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
 - Para escribir documentación: [CONTRIBUTING-DOCS](CONTRIBUTING-DOCS.md).
 
 - Para Aprender, teclado y diálogos Kana/Kanji/Vocabulario: [guía de UX de aprendizaje](features/LEARNING_UX.md).
+- Para cerrar y administrar el acceso a Gramática: [beta privada](features/GRAMMAR_ACCESS.md).
 
 ## Arquitectura y módulos vigentes
 
@@ -32,7 +34,7 @@ y los informes posteriores complementan sus límites. No ejecutar planes antiguo
 | Persistencia y rutas | [Persistencia](architecture/PERSISTENCE.md), [Navegación](architecture/NAVIGATION_UX.md) | src/app/core/services y app.routes; hash routing intencional |
 | Manga, archivos y OCR | [Lector](features/manga/MANGA_READER.md), [archivos locales](features/manga/LOCAL_MANGA.md) | src/app/features/manga; pruebas reader/ocr/location |
 | Manga Saved y FSRS | [FSRS Manga](features/manga/MANGA_FSRS.md), [integración estudio](features/manga/MANGA_STUDY_INTEGRATION.md) | No confundir guardados Manga con mazos custom |
-| Manga y Grammar | [Integración](features/manga/MANGA_GRAMMAR.md) | Referencias contextuales, sin generación automática |
+| Manga y Grammar | [Acceso vigente](features/GRAMMAR_ACCESS.md), [integración V1](features/manga/MANGA_GRAMMAR.md) | Referencias del curso solo con permiso; V1 conserva el comportamiento anterior a la beta cerrada |
 | Mazos y FSRS | [Scheduler](features/decks/DECK_SCHEDULER.md), [DESIGN](../MANGA_DECKS_DESIGN.md) | Japanese 1500 independiente; historial custom y journal propios |
 | Grammar | [Temario](features/grammar/TEMARIO.md), [auditoría original](../GRAMMAR_AUDIT.md) | src/app/features/grammar, datos y scripts audit:i18n/audit:grammar |
 | Stats V2 | [Stats V2 / AttemptEvent](features/stats/STATS_V2.md) | Servicios attempt-*; no usar resúmenes de sesión como eventos nuevos |

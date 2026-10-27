@@ -10,7 +10,7 @@ async function publicRoutes(config:Routes,prefix=''):Promise<{path:string;titleK
   for(const route of config){
     if(route.redirectTo!==undefined)continue;
     const path=[prefix,route.path].filter(Boolean).join('/');
-    if(route.component||route.loadComponent)result.push({path,titleKey:route.data?.['titleKey']});
+    if((route.component||route.loadComponent)&&!route.children&&!route.loadChildren)result.push({path,titleKey:route.data?.['titleKey']});
     if(route.children)result.push(...await publicRoutes(route.children,path));
     if(route.loadChildren)result.push(...await publicRoutes(await (route.loadChildren as ()=>Promise<Routes>)(),path));
   }

@@ -12240,5 +12240,12 @@
   "localDeck.cancel": "Cancel·lar i seguir a Convidat",
   "localDeck.badge": "Només local · sense núvol",
   "localDeck.inspectionUnavailable": "No s’ha pogut comprovar el contingut Convidat. Pots entrar sense copiar-lo; es quedarà al seu espai local. Tanca la sessió per tornar a Convidat.",
-  "localDeck.guestOnly": "Aquesta versió permet utilitzar Manga × Baralles només a Convidat. Les baralles anteriors d’aquest compte es conserven sense modificacions, però no estan disponibles aquí. Tanca la sessió per tornar a les teves baralles de Convidat. Japanese 1500 i les funcions habituals del compte continuen disponibles."
+  "localDeck.guestOnly": "Aquesta versió permet utilitzar Manga × Baralles només a Convidat. Les baralles anteriors d’aquest compte es conserven sense modificacions, però no estan disponibles aquí. Tanca la sessió per tornar a les teves baralles de Convidat. Japanese 1500 i les funcions habituals del compte continuen disponibles.",
+  "grammarAccess.title": "Gramàtica · Beta privada",
+  "grammarAccess.checking": "Comprovant l’accés a la beta privada…",
+  "grammarAccess.authorized": "El teu compte té accés. Pots tornar a entrar.",
+  "grammarAccess.denied": "Gramàtica és en beta privada i requereix autorització del propietari. Iniciar sessió no concedeix accés.",
+  "grammarAccess.error": "No s’ha pogut comprovar l’accés. Torna-ho a provar quan tinguis connexió.",
+  "grammarAccess.login": "Iniciar sessió",
+  "grammarAccess.retry": "Comprovar l’accés i entrar"
 }

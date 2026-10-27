@@ -5,10 +5,11 @@ import { TranslationService } from '../../../core/services/translation.service';
 import { WorkspaceService } from '../../../core/services/workspace.service';
 import { mangaGrammarCatalog, mangaGrammarLinks, matchMangaGrammar, searchMangaGrammar } from '../../../core/services/manga-grammar-matcher';
 import * as grammarCopy from '../../../../assets/i18n/grammar.generated';
+import {GrammarAccessService} from '../../../core/services/grammar-access.service';
 import { safeReturnUrl } from '../../../core/services/return-navigation';
 
 @Component({selector:'app-manga-grammar-reference',imports:[RouterLink],styleUrl:'./manga-grammar-reference.scss',template:`
-    <h2>{{t('manga.grammar.title')}}</h2>
+    @if(access.allowed()){<h2>{{t('manga.grammar.title')}}</h2>
     <p class="original" lang="ja">{{original()}}</p>
     @if(lookup()?.baseForm){<small>{{t('manga.assist.base')}}: <span lang="ja">{{lookup()?.baseForm}}</span></small>}
     @if(analysis().state!=='ready'){<p role="status">{{t('manga.grammar.'+analysis().state)}}</p>}
@@ -40,8 +41,10 @@ import { safeReturnUrl } from '../../../core/services/return-navigation';
         </div>}
       </article>
     }
+    }
 `})
 export class MangaGrammarReference {
+  readonly access=inject(GrammarAccessService);
   readonly i18n=inject(TranslationService);
   private readonly workspace=inject(WorkspaceService);
   readonly point=input<OcrLookupPoint|null>(null);
@@ -62,8 +65,8 @@ export class MangaGrammarReference {
   readonly evidence=computed(()=>this.analysis().matches.find(match=>match.concept.id===this.selectedId()));
   readonly links=computed(()=>this.selectedId()?mangaGrammarLinks(this.selectedId()!):null);
   readonly returnUrl=computed(()=>safeReturnUrl(this.returnTo(),'/manga'));
-  constructor(){this.i18n.useBundledGrammar(grammarCopy);effect(()=>{this.point();this.lookup();this.returnTo();this.workspace.active();this.query.set('');this.selectedId.set(null);});}
+  constructor(){effect(()=>{if(this.access.allowed())this.i18n.useBundledGrammar(grammarCopy);this.point();this.lookup();this.returnTo();this.workspace.active();this.query.set('');this.selectedId.set(null);});}
   t(key:string):string{return this.i18n.t(key);}
-  choose(id:string):void{this.selectedId.set(id);}
+  choose(id:string):void{if(this.access.allowed())this.selectedId.set(id);}
   search(event:Event):void{this.query.set((event.target as HTMLInputElement).value);this.selectedId.set(null);}
 }

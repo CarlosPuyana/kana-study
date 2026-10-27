@@ -9,13 +9,16 @@ import { WorkspaceService } from '../../../core/services/workspace.service';
 import { MangaStudySavedRepository } from '../../../core/services/manga-study-saved.repository';
 import { SyncOutboxService } from '../../../core/services/sync-outbox.service';
 import { MangaContextService } from '../../../core/services/manga-context.service';
+import { GrammarAccessService } from '../../../core/services/grammar-access.service';
 
 describe('Manga grammar reference is read-only and integrated',()=>{
   const enqueue=vi.fn(async()=>{}),request=vi.fn();
+  const permitted=signal(true);
   beforeEach(()=>{
-    TestBed.resetTestingModule();localStorage.clear();enqueue.mockClear();request.mockClear();
+    TestBed.resetTestingModule();localStorage.clear();enqueue.mockClear();request.mockClear();permitted.set(true);
     vi.stubGlobal('matchMedia',()=>({matches:false,addEventListener:()=>{},removeEventListener:()=>{}}));
     TestBed.configureTestingModule({providers:[provideRouter([]),{provide:SyncOutboxService,useValue:{enqueue}},
+      {provide:GrammarAccessService,useValue:{allowed:permitted}},
       {provide:MangaContextService,useValue:{available:false,request}},
       {provide:MangaStudySavedRepository,useValue:{items:signal([]),loading:signal(false),failed:signal(false)}}]});
   });
@@ -26,6 +29,19 @@ describe('Manga grammar reference is read-only and integrated',()=>{
     fixture.componentRef.setInput('returnTo','/manga/read/original%20volume?page=7');
     fixture.detectChanges();await fixture.whenStable();fixture.detectChanges();return fixture;
   }
+  it('removes course references on revocation and keeps dictionary/context available',async()=>{
+    const fixture=TestBed.createComponent(DictionaryPopup);
+    fixture.componentRef.setInput('result',{installed:false,query:'見てください',terms:[]});fixture.detectChanges();
+    fixture.componentInstance.tab.set('grammar');fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('app-manga-grammar-reference')).not.toBeNull();
+    permitted.set(false);fixture.detectChanges();
+    expect(fixture.componentInstance.tab()).toBe('word');
+    expect(fixture.nativeElement.querySelector('app-manga-grammar-reference')).toBeNull();
+    expect(fixture.nativeElement.querySelectorAll('.tabs button')).toHaveLength(2);
+    fixture.componentInstance.tab.set('context');fixture.detectChanges();expect(fixture.nativeElement.querySelector('.context-actions')).not.toBeNull();
+    const standalone=await reference();standalone.componentInstance.choose('te-kudasai');standalone.detectChanges();
+    expect(standalone.nativeElement.querySelector('a,input')).toBeNull();
+  });
   it.each(['es','en','ca'] as const)('renders course references and valid links in %s without progress/events',async language=>{
     TestBed.inject(SettingsService).setLanguage(language);const fixture=await reference();
     const before=Object.fromEntries(Object.entries(localStorage));const writes=vi.spyOn(Storage.prototype,'setItem');

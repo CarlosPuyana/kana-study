@@ -1,3 +1,4 @@
+import {GrammarAccessService} from '../../core/services/grammar-access.service';
 import {Component, signal} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {provideRouter} from '@angular/router';
@@ -20,7 +21,7 @@ describe('local learning statistics page',()=>{
   const language=signal<AppLanguage>('es'),stats=signal(calculateLearningAnalytics([],[]));
   beforeEach(()=>{
     language.set('es');stats.set(calculateLearningAnalytics([],[]));
-    TestBed.configureTestingModule({providers:[provideRouter([]),
+    TestBed.configureTestingModule({providers:[{provide:GrammarAccessService,useValue:{allowed:()=>true}},provideRouter([]),
       {provide:SettingsService,useValue:{language}},
       {provide:LearningAnalyticsService,useValue:{stats,refresh:vi.fn()}},
     ]});

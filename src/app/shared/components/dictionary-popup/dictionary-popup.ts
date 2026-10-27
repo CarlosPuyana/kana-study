@@ -1,4 +1,5 @@
 import {CustomDeckAccess} from '../../../core/services/custom-deck-access';
+import {GrammarAccessService} from '../../../core/services/grammar-access.service';
 import {MangaStudySavedRepository} from '../../../core/services/manga-study-saved.repository';
 import { NgTemplateOutlet } from '@angular/common';
 import {WorkspaceService} from '../../../core/services/workspace.service';
@@ -24,7 +25,7 @@ import { CUSTOM_DECKS_ENABLED } from '../../../core/services/custom-deck.reposit
       <nav class="tabs" [attr.aria-label]="i18n.t('manga.assist.tabs')">
         <button [attr.aria-pressed]="tab()==='word'" (click)="tab.set('word')">{{i18n.t('manga.assist.word')}}</button>
         <button [attr.aria-pressed]="tab()==='context'" (click)="tab.set('context')">{{i18n.t('manga.assist.context')}}</button>
-        <button [attr.aria-pressed]="tab()==='grammar'" (click)="tab.set('grammar')">{{i18n.t('manga.grammar.title')}}</button>
+        @if(grammarAccess.allowed()){<button [attr.aria-pressed]="tab()==='grammar'" (click)="tab.set('grammar')">{{i18n.t('manga.grammar.title')}}</button>}
       </nav>
       @if(isSelection()){<small [hidden]="quickMode()">{{i18n.t('manga.assist.selectedText')}}</small><p class="ocr-context selected-text" [hidden]="quickMode()">{{selectedText()}}</p>}
       @if(quickMode() && context();as point){
@@ -108,12 +109,13 @@ import { CUSTOM_DECKS_ENABLED } from '../../../core/services/custom-deck.reposit
         @if(selectionLimitError()){<p role="alert">{{i18n.t('manga.assist.selectionLimit')}}</p>}
         @if(translation();as value){<p>{{value.natural}}</p>@if(value.literal){<p><strong>{{i18n.t('manga.assist.literal')}}:</strong> {{value.literal}}</p>}@for(note of value.notes;track $index){<p>{{note}}</p>}}
         @if(study();as value){<p>{{value.natural}}</p>@for(note of value.notes;track $index){<p class="study-note">{{note}}</p>}<h3>{{i18n.t('manga.assist.vocabulary')}}</h3><ul>@for(word of value.vocabulary;track $index){<li><strong>{{word.expression}}</strong> {{word.reading}} @if(word.baseForm){· {{word.baseForm}}} — {{word.meaning}}</li>}</ul><h3>{{i18n.t('manga.assist.grammar')}}</h3><ul>@for(item of value.grammar;track $index){<li><strong>{{item.expression}}</strong> — {{item.explanation}}</li>}</ul>}
-      } @else {
+      } @else if(grammarAccess.allowed()) {
         <app-manga-grammar-reference [point]="context()" [lookup]="loading()||failed()?null:result()" [returnTo]="studyReturn()" />
       }
     </section>`,
 })
 export class DictionaryPopup implements OnDestroy {
+  readonly grammarAccess=inject(GrammarAccessService);
   readonly access=inject(CustomDeckAccess);
   readonly cardAdded=output<void>();
   private addedCard=false;
@@ -148,6 +150,7 @@ export class DictionaryPopup implements OnDestroy {
   private controller:AbortController|null=null;private readonly previousFocus=document.activeElement;
   private readonly close=viewChild<ElementRef<HTMLButtonElement>>('close');private readonly dialog=viewChild<ElementRef<HTMLElement>>('dialog');
   constructor(){
+    effect(()=>{if(!this.grammarAccess.allowed()&&this.tab()==='grammar')this.tab.set('word');});
     effect(()=>{if(this.loading()||this.failed()||this.requestedCard()!==this.cardScope())this.requestedCard.set(null);});
     effect(()=>{this.savedCandidate();this.workspace.active();this.confirmRemove.set(false);this.saveError.set(false);});
     afterNextRender(()=>this.close()?.nativeElement.focus());

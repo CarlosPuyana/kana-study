@@ -1617,7 +1617,14 @@ export const es:Record<string,string> = {...shared,...{
   "manga.deck.choose": "Elige una lectura",
   "manga.deck.prepareError": "Revisa palabra, lectura e identidad antes de guardar.",
   "manga.deck.chooseMeaning": "Elige un significado",
-  "manga.deck.reuseHint": "Añade este contexto a la tarjeta; conserva sus repasos."
+  "manga.deck.reuseHint": "Añade este contexto a la tarjeta; conserva sus repasos.",
+  "grammarAccess.title": "Gramática · Beta privada",
+  "grammarAccess.checking": "Comprobando el acceso a la beta privada…",
+  "grammarAccess.authorized": "Tu cuenta tiene acceso. Puedes volver a entrar.",
+  "grammarAccess.denied": "Gramática está en beta privada y requiere autorización del propietario. Iniciar sesión no concede acceso.",
+  "grammarAccess.error": "No se ha podido comprobar el acceso. Reintenta cuando tengas conexión.",
+  "grammarAccess.login": "Iniciar sesión",
+  "grammarAccess.retry": "Comprobar acceso y entrar"
 }};
 export const en:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Objective answers",
@@ -3118,7 +3125,14 @@ export const en:Record<string,string> = {...shared,...{
   "manga.deck.choose": "Choose a reading",
   "manga.deck.prepareError": "Check the word, reading and identity before saving.",
   "manga.deck.chooseMeaning": "Choose a meaning",
-  "manga.deck.reuseHint": "Add this context to the card; keep its review history."
+  "manga.deck.reuseHint": "Add this context to the card; keep its review history.",
+  "grammarAccess.title": "Grammar · Private beta",
+  "grammarAccess.checking": "Checking private beta access…",
+  "grammarAccess.authorized": "Your account has access. You can enter again.",
+  "grammarAccess.denied": "Grammar is in private beta and requires the owner’s authorization. Signing in does not grant access.",
+  "grammarAccess.error": "Access could not be checked. Retry when connected.",
+  "grammarAccess.login": "Sign in",
+  "grammarAccess.retry": "Check access and enter"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Respostes objectives",
@@ -4619,5 +4633,12 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.deck.choose": "Tria una lectura",
   "manga.deck.prepareError": "Revisa paraula, lectura i identitat abans de desar.",
   "manga.deck.chooseMeaning": "Tria un significat",
-  "manga.deck.reuseHint": "Afegeix aquest context a la targeta; conserva els repassos."
+  "manga.deck.reuseHint": "Afegeix aquest context a la targeta; conserva els repassos.",
+  "grammarAccess.title": "Gramàtica · Beta privada",
+  "grammarAccess.checking": "Comprovant l’accés a la beta privada…",
+  "grammarAccess.authorized": "El teu compte té accés. Pots tornar a entrar.",
+  "grammarAccess.denied": "Gramàtica és en beta privada i requereix autorització del propietari. Iniciar sessió no concedeix accés.",
+  "grammarAccess.error": "No s’ha pogut comprovar l’accés. Torna-ho a provar quan tinguis connexió.",
+  "grammarAccess.login": "Iniciar sessió",
+  "grammarAccess.retry": "Comprovar l’accés i entrar"
 }};

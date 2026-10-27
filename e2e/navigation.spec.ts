@@ -1,3 +1,4 @@
+import {grammarAccount} from './grammar-access.fixture';
 import {test,expect,Page} from '@playwright/test';
 
 async function screen(page:Page,path:string){await expect(page).toHaveURL(new RegExp('#'+path.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:\\?|$)'));await expect(page).toHaveTitle(/ · Kana Study$/);}
@@ -24,15 +25,17 @@ test('Kanji catalog and Manga guide navigation',async({page})=>{
   await follow(page,'/manga');await follow(page,'/manga/guide');await follow(page,'/manga');await page.locator('.remote-entry summary').click();await expect(page.locator('input[name=cbz]')).toBeVisible();
 });
 test('Grammar roadmap, topic, lesson and lesson practice',async({page})=>{
-  await more(page);await follow(page,'/grammar');await follow(page,'/grammar/n5/00');await follow(page,'/grammar/n5/00/1');
-  await page.locator('a[href^="#/grammar/n5/00/practice"]:visible').first().click();await screen(page,'/grammar/n5/00/practice');await expect(page.locator('app-grammar-practice')).toBeVisible();await noOverflow(page);await back(page,'/grammar/n5/00');
+  await grammarAccount(page);await more(page);await follow(page,'/grammar');await follow(page,'/grammar/n5/01');await follow(page,'/grammar/n5/01/sentence-structure-context');
+  await expect(page.locator('app-grammar-exercise')).toBeVisible();
+  await page.goto('/#/grammar/n5/01/practice?lesson=sentence-structure-context');await screen(page,'/grammar/n5/01/practice');await expect(page.locator('app-grammar-practice')).toBeVisible();await noOverflow(page);await back(page,'/grammar/n5/01');
+  await page.goto('/#/grammar/n5/00/1');await screen(page,'/grammar/n5/00');
 });
 test('Global tools, settings and account access',async({page})=>{
   await more(page);await follow(page,'/weaknesses');await back(page,'/more');await follow(page,'/stats');await back(page,'/more');await page.locator('a[href^="#/settings?return="]').click();await screen(page,'/settings');await back(page,'/more');
   await more(page);const account=page.locator('app-account-control a');if(await account.count()){await account.click();await screen(page,'/auth');await page.getByRole('link',{name:/Cerrar|Volver/}).first().click();await screen(page,'/more');}else{await page.goto('/#/auth?return=/more');await screen(page,'/auth');await expect(page.locator('#auth-title')).toBeVisible();await page.getByRole('link',{name:'Cerrar',exact:true}).click();await screen(page,'/more');}
 });
 test('Priority screens have titles and no horizontal overflow',async({page})=>{
-  const audio:string[]=[];page.on('request',request=>{if(/\.mp3(?:\?|$)/.test(request.url()))audio.push(request.url());});
+  await grammarAccount(page);const audio:string[]=[];page.on('request',request=>{if(/\.mp3(?:\?|$)/.test(request.url()))audio.push(request.url());});
   for(const path of ['/','/more','/vocabulary','/kanji','/stats','/weaknesses','/grammar','/grammar/n5/00/practice','/manga']){await page.goto('/#'+path);await screen(page,path);await expect(page.locator('main').first()).toBeVisible();await noOverflow(page);}
   expect(audio).toEqual([]);
 });

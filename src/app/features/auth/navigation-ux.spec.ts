@@ -1,3 +1,4 @@
+import {GrammarAccessService} from '../../core/services/grammar-access.service';
 import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { ActivatedRoute, convertToParamMap, provideRouter, Router, RouterLink } from '@angular/router';
@@ -36,7 +37,7 @@ describe('confirmed navigation and UX corrections',()=>{
     signIn:vi.fn(async()=>({error:null})),signUp:vi.fn(async()=>({error:null,confirmationRequired:false})),chooseGuestImport:vi.fn(async()=>true),updatePassword:vi.fn(async()=>({error:null})),requestPasswordReset:vi.fn(async()=>({error:null}))};
   beforeEach(()=>{
     vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));localStorage.clear();authenticated.set(true);decision.set(false);
-    TestBed.configureTestingModule({providers:[provideRouter([]),{provide:AuthService,useValue:auth},{provide:SyncService,useValue:{status:signal('idle'),lastSyncedAt:signal(null),pendingCount:signal(0),schedule:vi.fn()}},
+    TestBed.configureTestingModule({providers:[{provide:GrammarAccessService,useValue:{allowed:()=>false}},provideRouter([]),{provide:AuthService,useValue:auth},{provide:SyncService,useValue:{status:signal('idle'),lastSyncedAt:signal(null),pendingCount:signal(0),schedule:vi.fn()}},
       {provide:ProfileStatsService,useValue:{load:async()=>null}},{provide:MangaRepository,useValue:{cleanup:async()=>false,volumes:async()=>[]}},{provide:DictionaryRepository,useValue:{cleanup:async()=>{},ready:async()=>{}}}]});
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();});

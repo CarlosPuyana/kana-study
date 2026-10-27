@@ -1,3 +1,4 @@
+import {GrammarAccessService} from './grammar-access.service';
 // @vitest-environment jsdom
 import '@angular/compiler';
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
@@ -89,7 +90,7 @@ describe('account sync reconciliation regressions', () => {
   }};
   function device(user='same-account', realDatabases=false) {
     TestBed.resetTestingModule(); localStorage.clear();queued=new Map();meta=null;
-    TestBed.configureTestingModule({providers:[{provide:MangaSavedSyncService,useValue:{prepare:async()=>{},push:async()=>{},pull:async()=>{}}},{provide:MangaStudySavedRepository,useValue:{pending:async()=>[],items:signal([]),loading:signal(false),failed:signal(false)}},
+    TestBed.configureTestingModule({providers:[{provide:GrammarAccessService,useValue:{allowed:()=>true}},{provide:MangaSavedSyncService,useValue:{prepare:async()=>{},push:async()=>{},pull:async()=>{}}},{provide:MangaStudySavedRepository,useValue:{pending:async()=>[],items:signal([]),loading:signal(false),failed:signal(false)}},
       {provide:SupabaseClientService,useValue:{config:{configured:true},getClient:async()=>client}},
       {provide:DeviceService,useValue:{id:'simulated-device'}},
       {provide:SyncOutboxService,useValue:{markLegacyGuestMapped:async()=>{},
