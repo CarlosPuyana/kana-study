@@ -53,6 +53,18 @@ describe('Custom deck deep links use their actual content and the shared study U
         fixture.destroy();
     });
     it('saves custom settings in the custom journal, not the legacy synced settings map', async () => { const fixture = TestBed.createComponent(AnkiSettingsPage); await fixture.componentInstance.resource.ready(); await fixture.whenStable(); fixture.componentInstance.setNewCards({ target: { value: '7' } } as unknown as Event); await fixture.componentInstance.save(); expect((await TestBed.inject(CustomDeckRepository).list())[0].settings.newCardsPerDay).toBe(7); expect(localStorage.getItem('kana-study.deck-settings.v1')).toBeNull(); fixture.destroy(); });
-    it('computes statistics for only the custom deck', async () => { const fixture = TestBed.createComponent(AnkiStatsPage); fixture.detectChanges(); await fixture.componentInstance.resource.ready(); await fixture.componentInstance.ngOnInit(); fixture.detectChanges(); expect(fixture.componentInstance.stats()?.total).toBe(1); expect(fixture.componentInstance.stats()?.unseen).toBe(1); fixture.destroy(); });
+    it('computes statistics for only the custom deck', async () => {
+        const fixture = TestBed.createComponent(AnkiStatsPage);
+        fixture.detectChanges();
+        await fixture.componentInstance.resource.ready();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        // Settle the resource effect before awaiting the statistics calculation.
+        await fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+        expect(fixture.componentInstance.stats()?.total).toBe(1);
+        expect(fixture.componentInstance.stats()?.unseen).toBe(1);
+        fixture.destroy();
+    });
     it('does not grade the previous owner after a workspace switch', async () => { const fixture = TestBed.createComponent(AnkiStudyPage); fixture.detectChanges(); await fixture.componentInstance.resource.ready(); await fixture.whenStable(); fixture.componentInstance.reveal(); TestBed.inject(WorkspaceService).activateUser('other'); await fixture.componentInstance.rate('good'); expect(await TestBed.inject(CustomDeckRepository).getDeckReviewEvents('md-試験', 'guest')).toEqual([]); fixture.destroy(); });
 });
