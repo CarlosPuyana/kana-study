@@ -1,3 +1,4 @@
+import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import { ChangeDetectionStrategy, Component, effect, inject, untracked, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DeckSettings, DesiredRetention, NewCardOrder } from '../../core/models/deck.model';
@@ -17,7 +18,7 @@ interface OrderOption {
 
 @Component({
   selector: 'app-anki-settings-page',
-  imports: [RouterLink],
+  imports: [LocalDeckNotice,RouterLink],
   templateUrl: './anki-settings.page.html',
   styleUrl: './anki-settings.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from '../../core/services/custom-deck-access';
 import { Component, computed, DestroyRef, effect, inject, input, signal, untracked } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslationService } from '../../core/services/translation.service';
@@ -11,6 +12,7 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
 @Component({selector:'app-manga-ocr-explorer',imports:[RouterLink],templateUrl:'./manga-ocr-explorer.html',
   styleUrl:'./manga-ocr-explorer.scss',host:{'(window:focus)':'markStale()'}})
 export class MangaOcrExplorer {
+  readonly access=inject(CustomDeckAccess);
   readonly volumeId=input.required<string>();readonly query=input.required<string>();
   readonly i18n=inject(TranslationService);
   private readonly workspace=inject(WorkspaceService);
@@ -24,13 +26,13 @@ export class MangaOcrExplorer {
   constructor(){
     inject(DestroyRef).onDestroy(()=>{this.alive=false;this.generation++;this.controller?.abort();});
     effect(onCleanup=>{
-      const id=this.volumeId(),query=this.query(),allowed=this.custom()&&this.assisted();this.workspace.active();this.workspace.activationRevision();
+      const id=this.volumeId(),query=this.query(),allowed=this.access.permitted()&&this.custom()&&this.assisted();this.workspace.active();this.workspace.activationRevision();
       onCleanup(()=>{this.controller?.abort();this.generation++;});
       untracked(()=>{this.result.set(null);this.busy.set(false);if(allowed&&id&&query&&this.workspace.active()===this.initialOwner&&this.workspace.activationRevision()===this.initialEpoch)void this.scan();});
     });
   }
   async scan(verify=false):Promise<void>{
-    if(!this.custom()||!this.assisted())return;
+    if(!this.access.permitted()||!this.custom()||!this.assisted())return;
     this.controller?.abort();const controller=new AbortController();this.controller=controller;
     const generation=++this.generation,owner=this.workspace.active(),epoch=this.workspace.activationRevision();
     const guard=()=>this.alive&&generation===this.generation&&owner===this.workspace.active()&&epoch===this.workspace.activationRevision();

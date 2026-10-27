@@ -1,0 +1,11 @@
+feat(manga): prepare Guest-only release with portable local backups
+
+Complete local Guest backup/restore, workspace clarity and Guest-only release guards.
+Keep custom cloud disabled and preserve account data and all legacy study behavior.
+Add an optimized candidate, strict bundle audit, acceptance checklist and rollback proof.
+Organize documentation and record the owner-reported desktop Chrome acceptance.
+Keep real Supabase Auth validation explicitly pending.
+
+The normal Pages workflow and main entry remain inactive for Manga x Decks.
+Promotion is a separate reviewed two-line workflow change after explicit approval.
+Do not include .cache, browser profiles, backup JSON, dist or node_modules.

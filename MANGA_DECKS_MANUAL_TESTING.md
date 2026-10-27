@@ -58,3 +58,92 @@ La primera pasada Playwright terminó 32/33: una aserción preexistente de H3B-A
 Archivos de esta preparación: `angular.json`, `package.json`, `tsconfig.manga-manual.json`, `src/main.manga-manual.ts`, `src/app/development/manga-manual.providers.ts`, su spec, el ajuste de aserción en `e2e/manga-decks-assisted.spec.ts` y este documento. Los gates y providers de producción permanecen intactos. Evidencia local ignorada: `.cache/manual-*.log` y smoke script.
 
 No se han probado Safari ni dispositivos físicos en esta preparación. La ejecución automática usa datos sintéticos efímeros; no sustituye tus pruebas de usabilidad con un manga local y tus decisiones manuales. No se desplegó SQL ni se hizo commit/push. No se inicia otro hito.
+# Copias de seguridad locales — RELEASE-MANGA-2A
+
+En el modo manual Guest, abrir **Mazos → Datos y progreso → Copias de seguridad de Mazos**.
+Exportar copia descarga un JSON validado con tarjetas, contextos, identidad, configuración,
+historial completo y journal. No incluye archivos Manga, imágenes, OCR completo,
+diccionario ni credenciales. El fichero puede contener texto privado; no está cifrado.
+
+Para recuperar, abrir un perfil de navegador limpio en el mismo origen/puerto local,
+sin crear tarjetas ni abrir borradores primero. Entrar en la misma pantalla, seleccionar
+el fichero, revisar la vista previa, marcar la confirmación y restaurar. Esperar el
+mensaje de commit confirmado. Las tarjetas pueden estudiarse aunque el perfil no tenga
+el Manga original. Recargar/cerrar/reabrir conserva los datos restaurados.
+
+V1 admite Guest local y destino vacío. Rechaza cuentas, coordinación cloud no portable,
+datos corruptos y destinos ocupados sin sobrescribir ni descartar evidencia. No ofrece
+merge ni limpieza destructiva. Conservar copias fuera del perfil: borrar datos del sitio
+o perder el dispositivo puede eliminar todo el progreso local.
+
+Los gates de producción continúan false y la publicación sigue bloqueada. Detalles,
+límites y resultados: MANGA_DECKS_RELEASE_2A.md. No usar cuentas privadas en las pruebas.
+
+# Espacios locales Guest y cuenta — RELEASE-MANGA-2B
+
+Mazos indica qué espacio estás utilizando. Las tarjetas personalizadas y su progreso
+se guardan solo en ese navegador: iniciar sesión no las sube a tu cuenta.
+
+Al entrar con mazos Invitado, lee el aviso y elige **Continuar sin copiar mazos** para
+usar el espacio local de la cuenta. Invitado se conserva. **Cancelar y seguir en Invitado**,
+la cruz o Escape cancelan la elección local; no se importan tarjetas. Si también hay
+progreso compatible, la fusión opcional se limita al alcance descrito en el diálogo:
+no incorpora los mazos personalizados. Tab y Mayús+Tab recorren sus controles.
+
+Cerrar sesión devuelve a Invitado; los mazos de la cuenta quedan en su propio espacio.
+El estado de sincronización de Perfil corresponde al sistema legacy compatible y excluye
+mazos custom. «Solo local · sin nube» no significa que haya una copia descargada.
+
+En Invitado: **Mazos → Datos y progreso** permite la copia compatible 2A. Guarda el JSON
+fuera del navegador; restaurar requiere un espacio Invitado vacío. En cuentas esa versión
+no cubre los mazos locales: los controles de copia están bloqueados y exportar Invitado
+no protege los datos de la cuenta. Borrar datos del sitio o perder el dispositivo puede
+hacer perder las tarjetas de cualquier espacio.
+
+El modo manual sigue siendo Guest local y no utiliza Supabase real. Para comprobar los
+flujos de cuenta se usan clientes sintéticos controlados en los tests de RELEASE-2B;
+no configurar cuentas privadas como atajo. La funcionalidad sigue oculta en producción.
+Ver MANGA_DECKS_RELEASE_2B.md para resultados y riesgos pendientes de lanzamiento.
+
+# Revisión del candidato optimizado — RELEASE-MANGA-2C
+
+Para revisar el candidato que podría publicarse, usar un perfil de navegador separado:
+
+```powershell
+npm run build:manga-candidate
+npm run preview:manga-candidate
+```
+
+Abrir `http://127.0.0.1:4402/kana-study/#/manga`. Este modo sirve archivos optimizados
+reales; es distinto de start:manga-manual. Su preview no conecta cuentas privadas:
+no tiene runtime Supabase configurado. Puedes importar Manga/diccionario, confirmar tarjetas
+Guest, estudiar/undo, consultar vocabulario/OCR y usar copias locales. No se generan tarjetas
+de muestra al iniciar. Para probar undo, dejar otra tarjeta pendiente antes de completar el día.
+
+Guardar la copia JSON fuera del navegador y restaurar solamente en otro perfil Guest vacío.
+Los archivos Manga no están incluidos: reimportarlos aparte para volver al contexto visual.
+Evitar modo privado para conservar el progreso; cuotas, expulsión de datos y pérdida del
+dispositivo pueden eliminarlo. El JSON puede incluir texto privado y no está cifrado.
+
+El alcance público propuesto permite custom solo en Guest. En cuentas, los mazos previos
+se conservan sin cambios y se explica su indisponibilidad; no hay custom cloud ni backup de
+cuenta. Japanese 1500, lector, diccionario y funciones legacy continúan disponibles. Cerrar
+sesión devuelve al Guest original. No se copian mazos automáticamente.
+
+`npm run test:manga-candidate` ejecuta la auditoría de producción con perfiles sintéticos y
+el SDK real frente a respuestas HTTP controladas. No es una validación de Supabase Auth
+real ni debe utilizarse su fixture como configuración pública. Ver MANGA_DECKS_RELEASE_2C.md.
+La entrada habitual desplegada sigue desactivada; publicar requiere aprobación expresa.
+
+# Aceptación humana y retirada segura — RELEASE-MANGA-3
+
+La lista firmable y las instrucciones exactas están en `release/manga-guest-acceptance.md`.
+`node scripts/create-manga-release-manual-fixture.mjs` crea únicamente el volumen sintético
+`.cache/release3-manual-volume.cbz`, sin crear tarjetas ni tocar el navegador. Instalar el
+diccionario por UI y crear las tarjetas manualmente en el preview optimizado, en perfil separado.
+
+MANGA_DECKS_RELEASE_3.md documenta la diferencia entre build normal apagado y candidato,
+la referencia pública verificada, los parches de promoción no aplicados y dos niveles de
+rollback mediante nuevos commits. Retirar temporalmente la función no debe borrar IndexedDB.
+Conservar copias fuera del navegador y no borrar datos del sitio para intentar recuperar mazos.
+La reversión local automatizada solo utiliza datos sintéticos y no sustituye el QA físico.

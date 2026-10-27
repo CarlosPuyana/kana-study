@@ -7,8 +7,8 @@ import {WorkspaceMigrationService} from './workspace-migration.service';
 
 describe('Account migration keeps custom completion separate from legacy commits',()=>{
  let auth:AuthService,workspace:WorkspaceService;
- let migration:{copyGuestToUser:ReturnType<typeof vi.fn>;hasCustomGuestData:()=>Promise<boolean>;customImportComplete:ReturnType<typeof vi.fn>};
- beforeEach(async()=>{localStorage.clear();migration={copyGuestToUser:vi.fn(async()=>{}),hasCustomGuestData:async()=>true,customImportComplete:vi.fn(async()=>false)};
+ let migration:{customImportAvailable:()=>boolean;copyGuestToUser:ReturnType<typeof vi.fn>;hasCustomGuestData:()=>Promise<boolean>;customImportComplete:ReturnType<typeof vi.fn>};
+ beforeEach(async()=>{localStorage.clear();migration={customImportAvailable:()=>true,copyGuestToUser:vi.fn(async()=>{}),hasCustomGuestData:async()=>true,customImportComplete:vi.fn(async()=>false)};
   TestBed.configureTestingModule({providers:[{provide:SupabaseClientService,useValue:{config:{configured:false},getClient:async()=>null}},{provide:WorkspaceMigrationService,useValue:migration}]});
   auth=TestBed.inject(AuthService);workspace=TestBed.inject(WorkspaceService);await Promise.resolve();(auth as unknown as {userState:ReturnType<typeof signal<{id:string}>>}).userState.set({id:'synthetic-a'});
  });

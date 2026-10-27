@@ -14,13 +14,13 @@ export function createDeckRouteResource(builtin?:DeckContentProvider){
  const state=signal<DeckLoadState<{deck:CatalogDeck;content:DeckContentProvider|null}>>(
   initial?.kind==='builtin'?{status:'ready',value:{deck:initial,content:builtin??null}}:{status:'loading'},
  );
- let owner=catalog.owner(),generation=0,revision=catalog.revision();
+ let owner=catalog.owner(),epoch=catalog.epoch(),generation=0,revision=catalog.revision();
  const load=async()=>{
   const current=++generation;
-  const capturedOwner=catalog.owner();
-  owner=capturedOwner;
+  const capturedOwner=catalog.owner(),capturedEpoch=catalog.epoch();
+  owner=capturedOwner;epoch=capturedEpoch;
   const value=await catalog.load(id);
-  if(current===generation&&capturedOwner===catalog.owner())state.set(value);
+  if(current===generation&&capturedOwner===catalog.owner()&&capturedEpoch===catalog.epoch())state.set(value);
  };
  let pending:Promise<void>=state().status==='loading'?load():Promise.resolve();
  const subscription=route.paramMap?.subscribe(params=>{
@@ -29,26 +29,27 @@ export function createDeckRouteResource(builtin?:DeckContentProvider){
  });
  inject(DestroyRef).onDestroy(()=>{generation++;subscription?.unsubscribe();});
  effect(()=>{
-  const nextOwner=catalog.owner(),nextRevision=catalog.revision();
-  if(owner!==nextOwner||(id?.startsWith('md-')&&revision!==nextRevision)){
+  const nextEpoch=catalog.epoch(),nextOwner=catalog.owner(),nextRevision=catalog.revision();
+  if(epoch!==nextEpoch||owner!==nextOwner||(id?.startsWith('md-')&&revision!==nextRevision)){
    state.set({status:'loading'});pending=load();
   }
   revision=nextRevision;
  });
  return {
   catalog,state,ready:()=>pending,
+  get restricted(){return !!id?.startsWith('md-')&&!catalog.access.permitted();},
   get deck(){
-   if(owner!==catalog.owner())return null;
+   if(owner!==catalog.owner()||id?.startsWith('md-')&&(!catalog.access.permitted()||epoch!==catalog.epoch()))return null;
    const current=state();
    return current.status==='ready'?current.value.deck:null;
   },
   get content(){
-   if(owner!==catalog.owner())return null;
+   if(owner!==catalog.owner()||id?.startsWith('md-')&&(!catalog.access.permitted()||epoch!==catalog.epoch()))return null;
    const current=state();
    return current.status==='ready'?current.value.content:null;
   },
   title:(i18n:TranslationService)=>{
-   if(owner!==catalog.owner())return '';
+   if(owner!==catalog.owner()||id?.startsWith('md-')&&(!catalog.access.permitted()||epoch!==catalog.epoch()))return '';
    const current=state();
    return current.status==='ready'?deckTitle(current.value.deck,i18n):'';
   },

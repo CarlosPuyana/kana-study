@@ -88,6 +88,7 @@ describe("AuthService local-first lifecycle", () => {
           provide: WorkspaceMigrationService,
           useValue: {
             hasGuestData: async () => false,
+            hasLegacyGuestData: async () => false,
             hasCustomGuestData: async () => false,
             copyGuestToUser: async () => undefined,
           },
@@ -101,10 +102,7 @@ describe("AuthService local-first lifecycle", () => {
 
     listener("SIGNED_IN", { user });
 
-    await Promise.resolve();
-    await Promise.resolve();
-
-    expect(TestBed.inject(WorkspaceService).active()).toBe("user:carlos");
+    await vi.waitFor(()=>expect(TestBed.inject(WorkspaceService).active()).toBe("user:carlos"));
 
     await auth.signOut();
 

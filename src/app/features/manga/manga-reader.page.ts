@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from '../../core/services/custom-deck-access';
 import {MangaSourceService} from '../../core/services/manga-source.service';
 import {MangaLanguage} from '../../core/models/local-manga.model';
 import {MangaError} from '../../core/services/mokuro-parser';
@@ -67,6 +68,7 @@ import { MangaOcrLocation, type LocatedOcrLine } from './manga-ocr-location';
   </main>`,
 })
 export class MangaReaderPage implements OnDestroy {
+  readonly access=inject(CustomDeckAccess);
   readonly cardSaved=signal(false);
   private readonly focusInjector=inject(Injector);
   private focusReader():void{afterNextRender(()=>this.stage()?.nativeElement.focus(),{injector:this.focusInjector});}
@@ -83,7 +85,7 @@ export class MangaReaderPage implements OnDestroy {
   private readonly workspace = this.workspaceService.active();
   private readonly workspaceEpoch=this.workspaceService.activationRevision();
   readonly customEnabled=inject(CUSTOM_DECKS_ENABLED);readonly assistedEnabled=inject(MANGA_DECK_ASSISTED_ENABLED);
-  readonly locationEnabled=computed(()=>this.customEnabled()&&this.assistedEnabled());
+  readonly locationEnabled=computed(()=>this.access.permitted()&&this.customEnabled()&&this.assistedEnabled());
   readonly occurrenceRequest=signal<unknown>(undefined);readonly location=signal<LocatedOcrLine|null>(null);
   readonly highlightedLine=computed(()=>this.locationEnabled()&&this.occurrenceRequest()!==undefined&&this.location()?.page===this.current()?this.location():null);
   get readerVolumeId():string{return this.id;}

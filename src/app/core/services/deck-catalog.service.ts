@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from './custom-deck-access';
 import { computed, inject, Injectable, Injector, signal } from '@angular/core';
 import { CatalogDeck, CustomDeck, DeckContentProvider, DeckLoadState, LoadedDeck } from '../models/deck-catalog.model';
 import { STUDY_DECKS } from '../../data/study-decks';
@@ -10,6 +11,7 @@ import { CustomDeckSyncAdapter } from './custom-deck-sync-adapter';
 export const builtinDecks: readonly CatalogDeck[] = STUDY_DECKS.map(d => ({ ...d, kind: 'builtin', displayName: { kind: 'i18n', key: d.nameKey } }));
 @Injectable({ providedIn: 'root' })
 export class DeckCatalogService {
+    readonly access=inject(CustomDeckAccess);
     readonly enabled = inject(CUSTOM_DECKS_ENABLED);
     readonly repository = inject(CustomDeckRepository);
     /** Internal, disabled by default. Merely constructing the catalog never starts network work. */
@@ -22,18 +24,21 @@ export class DeckCatalogService {
     }>({ owner: '', decks: [] });
     readonly error = signal<unknown>(null);
     readonly loading = signal(false);
-    readonly items = computed(() => [...builtinDecks, ...(this.enabled() && this.custom().owner === this.workspace.active() ? this.custom().decks : [])]);
+    readonly items = computed(() => [...builtinDecks, ...(this.enabled() && this.access.permitted() && this.custom().owner === this.workspace.active() ? this.custom().decks : [])]);
     readonly revision = this.repository.catalogRevision;
     private generation = 0;
     owner() { return this.workspace.active(); }
+    epoch() { return this.workspace.activationRevision(); }
     /** Internal read model, including archived decks. Does not expose or enable custom UI. */
     async knowledgeInventory(owner = this.workspace.active()) {
-        return { builtin: builtinDecks, custom: await this.repository.list(owner) };
+        return { builtin: builtinDecks, custom: this.access.permitted()?await this.repository.list(owner):[] };
     }
     async refresh(): Promise<void> {
-        const owner = this.owner(), generation = ++this.generation;
+        const owner = this.owner(), epoch=this.epoch(), generation = ++this.generation;
+        const current=()=>this.owner()===owner&&this.epoch()===epoch&&generation===this.generation;
         this.error.set(null);
-        if (!this.enabled()) {
+        if (!this.enabled()||!this.access.permitted()) {
+            this.loading.set(false);
             this.custom.set({ owner, decks: [] });
             return;
         }
@@ -41,43 +46,43 @@ export class DeckCatalogService {
         try {
             const rows = await this.repository.list(owner);
             const decks = await Promise.all(rows.filter(d => d.status === 'active').map(async (d) => this.metadata(d, (await this.repository.content(d.id, owner)).length)));
-            if (this.owner() === owner && this.enabled() && generation === this.generation && canonical(this.custom()) !== canonical({ owner, decks }))
+            if (current() && this.access.permitted() && this.enabled() && canonical(this.custom()) !== canonical({ owner, decks }))
                 this.custom.set({ owner, decks });
         }
         catch (e) {
-            if (this.owner() === owner && generation === this.generation) {
+            if (current()) {
                 this.custom.set({ owner, decks: [] });
                 this.error.set(e);
             }
         }
         finally {
-            if (this.owner() === owner && generation === this.generation)
+            if (current())
                 this.loading.set(false);
         }
     }
     get(id: string | null): CatalogDeck | null { return this.items().find(d => d.id === id) ?? null; }
     async index(deckId: string) {
         if (builtinDecks.some(d => d.id === deckId)) return JAPANESE_1500_INDEX;
-        if (!this.enabled()) return [];
+        if (!this.enabled()||!this.access.permitted()) return [];
         return (await this.repository.content(deckId)).map(c => ({id:c.id,order:c.order}));
     }
     async load(deckId: string | null): Promise<DeckLoadState<LoadedDeck>> {
         if (!deckId)
             return { status: 'missing' };
-        const owner = this.owner();
+        const owner = this.owner(),epoch=this.epoch();
         try {
             const builtin = builtinDecks.find(d => d.id === deckId);
             if (builtin) {
                 const { BUILTIN_DECK_CONTENT } = await import('./builtin-deck-content');
                 return { status: 'ready', value: { deck: builtin, content: BUILTIN_DECK_CONTENT } };
             }
-            if (!this.enabled())
+            if (!this.enabled()||!this.access.permitted())
                 return { status: 'missing' };
             const deck = (await this.repository.list(owner)).find(d => d.id === deckId && d.status === 'active');
             if (!deck)
                 return { status: 'missing' };
             const cards = await this.repository.content(deckId, owner);
-            if (this.owner() !== owner)
+            if (this.owner() !== owner||this.epoch()!==epoch)
                 return { status: 'missing' };
             const entries = cards.sort((a, b) => a.order - b.order).map(c => ({ kind: 'custom' as const, id: c.id, order: c.order, word: c.word, reading: c.reading, glosses: c.glosses, ...(c.context ? { context: c.context } : {}) }));
             const byId = new Map(entries.map(c => [c.id, c]));

@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from '../../../core/services/custom-deck-access';
 import {MangaStudySavedRepository} from '../../../core/services/manga-study-saved.repository';
 import { NgTemplateOutlet } from '@angular/common';
 import {WorkspaceService} from '../../../core/services/workspace.service';
@@ -113,10 +114,11 @@ import { CUSTOM_DECKS_ENABLED } from '../../../core/services/custom-deck.reposit
     </section>`,
 })
 export class DictionaryPopup implements OnDestroy {
+  readonly access=inject(CustomDeckAccess);
   readonly cardAdded=output<void>();
   private addedCard=false;
   completeCard():void{this.addedCard=true;this.cardAdded.emit();}
-  readonly canAdd=computed(()=>this.assistedEnabled()&&this.customEnabled()&&!this.loading()&&!this.failed()&&!!this.context());
+  readonly canAdd=computed(()=>this.access.permitted()&&this.assistedEnabled()&&this.customEnabled()&&!this.loading()&&!this.failed()&&!!this.context());
   private readonly requestedCard=signal<string|null>(null);
   private readonly cardScope=computed(()=>JSON.stringify([this.context(),this.location(),this.workspace.activationRevision()]));
   readonly quickMode=computed(()=>this.canAdd()&&this.requestedCard()===this.cardScope());

@@ -1,3 +1,4 @@
+@if(resource.restricted){<main class="page-shell"><app-local-deck-notice /><a routerLink="/anki">{{i18n.t('anki.title')}}</a></main>}@else{
 <p role="status" [attr.aria-busy]="true" [hidden]="resource.state().status !== 'loading'">{{ i18n.t('common.loading') }}</p>
 @if(resource.state().status === 'error'){<p role="alert">{{i18n.t('anki.storageError')}}</p>}
 <main class="page-shell">
@@ -74,4 +75,6 @@
       }
     </section>
   </div>
+}
+
 }

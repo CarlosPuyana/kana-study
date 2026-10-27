@@ -1,3 +1,4 @@
+import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, untracked, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { JapaneseWordDeckEntry } from '../../core/models/japanese-word-deck-entry.model';
@@ -11,7 +12,7 @@ import { DeckSentenceText } from './components/deck-sentence-text/deck-sentence-
 
 @Component({
   selector: 'app-anki-cards-page',
-  imports: [RouterLink, FuriganaText, DeckSentenceText],
+  imports: [LocalDeckNotice,RouterLink, FuriganaText, DeckSentenceText],
   templateUrl: './anki-cards.page.html',
   styleUrl: './anki-cards.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

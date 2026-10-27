@@ -1,3 +1,4 @@
+import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import { ChangeDetectionStrategy, Component, effect, inject, untracked, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DeckStudyStatistics } from '../../core/models/deck-study.model';
@@ -5,7 +6,7 @@ import { DeckStudyService } from '../../core/services/deck-study.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { createDeckRouteResource } from '../../core/services/deck-route-resource';
 
-@Component({ selector: 'app-anki-stats-page', imports: [RouterLink], templateUrl: './anki-stats.page.html', styleUrl: './anki-stats.page.scss', changeDetection: ChangeDetectionStrategy.OnPush })
+@Component({ selector: 'app-anki-stats-page', imports: [LocalDeckNotice,RouterLink], templateUrl: './anki-stats.page.html', styleUrl: './anki-stats.page.scss', changeDetection: ChangeDetectionStrategy.OnPush })
 export class AnkiStatsPage implements OnInit {
   private readonly study = inject(DeckStudyService);
   readonly i18n = inject(TranslationService);

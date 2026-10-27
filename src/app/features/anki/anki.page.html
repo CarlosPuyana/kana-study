@@ -1,5 +1,6 @@
 <main class="page-shell">
   <app-page-header titleKey="anki.title" backRoute="/more" [backQueryParams]="{from:'anki'}"/>
+  <app-local-deck-notice />
   <section class="review" aria-labelledby="anki-review-title">
     <div class="section-heading"><span>{{i18n.t('anki.eyebrow')}}</span><h2 id="anki-review-title">{{i18n.t('anki.review')}}</h2></div>
     @if(error()){<p class="storage-error" role="alert">{{i18n.t('anki.storageError')}}</p>}

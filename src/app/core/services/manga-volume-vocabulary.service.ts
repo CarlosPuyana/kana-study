@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from './custom-deck-access';
 import { inject, Injectable } from '@angular/core';
 import { CustomDeckRepository } from './custom-deck.repository';
 import { WorkspaceService } from './workspace.service';
@@ -10,10 +11,11 @@ import { VolumeVocabulary, VolumeVocabularyEntry } from './manga-volume-vocabula
 @Injectable({providedIn:'root'})
 export class MangaVolumeVocabularyService {
   private readonly repository=inject(CustomDeckRepository);
+  private readonly access=inject(CustomDeckAccess);
   private readonly workspace=inject(WorkspaceService);
   async load(volumeId:string):Promise<VolumeVocabulary> {
     const owner=this.workspace.active(),epoch=this.workspace.activationRevision();
-    const guard=()=>requireValid(owner===this.workspace.active()&&epoch===this.workspace.activationRevision());
+    const guard=()=>requireValid(this.access.permitted()&&owner===this.workspace.active()&&epoch===this.workspace.activationRevision());
     const inventory=await this.repository.confirmedVocabularyInventory(owner);guard();
     const entries:VolumeVocabularyEntry[]=[];
     let incomplete=false;

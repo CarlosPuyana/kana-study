@@ -1,3 +1,4 @@
+@if(resource.restricted){<main class="page-shell"><app-local-deck-notice /><a routerLink="/anki">{{i18n.t('anki.title')}}</a></main>}@else{
 <main class="page-shell">
   <header class="page-header"><a class="icon-button" routerLink="/anki" [attr.aria-label]="i18n.t('common.back')"><svg viewBox="0 0 24 24"><path d="m12 5-7 7 7 7M5 12h14" /></svg></a><h1>{{ i18n.t('anki.statistics.title') }}</h1><span></span></header>
   @if(resource.state().status === 'loading'){<p aria-busy="true">{{i18n.t('common.loading')}}</p>}
@@ -11,3 +12,5 @@
     } @else if(!error()){<p class="empty" aria-busy="true">{{i18n.t('common.loading')}}</p>}
   } @else if(resource.state().status === 'missing') { <p class="empty">{{ i18n.t('anki.deckNotFound') }}</p> }
 </main>
+
+}

@@ -1,0 +1,21 @@
+diff --git a/.github/workflows/deploy-pages.yml b/.github/workflows/deploy-pages.yml
+--- a/.github/workflows/deploy-pages.yml
++++ b/.github/workflows/deploy-pages.yml
+@@ -47,7 +47,7 @@ jobs:
+         run: npx tsc -p tsconfig.spec.json --noEmit
+ 
+       - name: Build for GitHub Pages
+-        run: npm run build:manga-candidate
++        run: npm run build -- --base-href /kana-study/
+ 
+       - name: Configure Pages
+         uses: actions/configure-pages@v6
+@@ -55,7 +55,7 @@ jobs:
+       - name: Upload artifact
+         uses: actions/upload-pages-artifact@v5
+         with:
+-          path: ./dist/kana-study-candidate/browser
++          path: ./dist/kana-study/browser
+ 
+   deploy:
+     environment:

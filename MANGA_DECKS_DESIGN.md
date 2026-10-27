@@ -868,3 +868,74 @@ secundaria explícita. Cancelar vuelve al diccionario con foco; guardar conserva
 retorno al lector existente. El mismo panel, servicio y contratos siguen vigentes.
 H2B-UX2 continúa bloqueado sin ampliar su alcance. Auditoría, regresiones reales de
 大丈夫, capturas y resultados: MANGA_DECKS_DICTIONARY_UX_FIX.md.
+
+## RELEASE-MANGA-2A — Backup integral Guest local (2026-10-25)
+
+Ruta lazy `anki/backups` y acceso Datos y progreso en Mazos, bajo el gate custom
+existente. Formato local versión 1, DB v3, inventario cerrado de once stores, conteos
+y SHA-256 canónico. Incluye snapshots, eventos anulados, recibos, identidad y journal
+originales; no ejecuta el scheduler ni transporta archivos Manga/diccionarios/credenciales.
+
+La restauración exige Guest compatible y vacío. Valida contenido/linaje y escribe,
+verifica y compromete los once stores en una transacción con owner/epoch/abort. No
+fusiona, reasigna identidades, sintetiza ACKs ni altera contratos V1/V2. Cuentas y
+evidencia de coordinación cloud no portable se bloquean expresamente. Se conserva
+la ausencia legítima de metadata namespace opcional en registros históricos verificados.
+
+Servicio, contrato y copias ES/EN/CA permanecen fuera del bundle inicial; TranslationService
+scoped consume el diccionario diferido. Contrato, límites, round-trip Chromium limpio,
+resultados y alcance de C1: MANGA_DECKS_RELEASE_2A.md. Publicación aún bloqueada por
+C2/C3; los cuatro gates de producción siguen false. No se inicia RELEASE-MANGA-2B.
+
+## RELEASE-MANGA-2B — Separación Guest/cuentas y claridad local (2026-10-25)
+
+La presencia custom Guest se detecta readonly sin depender de sync; no construye el
+repositorio ni ejecuta migraciones/registry. Se distingue presencia local, datos legacy,
+disponibilidad de importación custom y autorización cloud existente. La copia legacy
+se carga lazy solo ante consentimiento explícito; no incluye custom ni cambia su política.
+
+Login espera la decisión local real, ofrece continuar sin copiar y cancelación que conserva
+Guest. El perfil remoto no bloquea esa decisión. Catálogo y contadores respetan también
+activationRevision en A→B→A. Mazos/Perfil/backup explican el ámbito local y cada mazo custom
+se identifica como solo local. Las cuentas mantienen datos propios pero el backup 2A
+continúa exclusivamente Guest→Guest vacío: esa carencia de cuentas sigue siendo riesgo
+de lanzamiento. Ningún estado legacy implica protección cloud de mazos custom.
+
+Textos/componentes y copia legacy permanecen fuera del bundle inicial, sin nuevas
+dependencias. Detalle, capturas, resultados y límites: MANGA_DECKS_RELEASE_2B.md.
+Los gates de producción siguen false; C3/publicación y la revisión del backup de cuentas
+permanecen pendientes. Los cierres históricos de 2A anteriores no describen el estado
+posterior de 2B. No se activa cloud, despliega SQL ni inicia RELEASE-2C.
+
+## RELEASE-MANGA-2C — Candidato optimizado Guest-only (2026-10-26)
+
+Nueva entrada `main.manga-candidate.ts` y configuración `production,manga-candidate`,
+con appConfig/servicios reales y salida independiente. Habilita custom/assisted; cloud y
+aprobación remota permanecen false. La entrada habitual de Pages conserva los cuatro gates
+false. No se utiliza el provider manga-manual ni se expone un switch URL/storage.
+
+La política Guest-only se aplica en UI/rutas/recursos y en las transacciones de escritura
+custom, incluyendo guardas de activación asíncrona y denegación antes de abrir el registro
+para cuentas. Los datos custom previos de cuentas se conservan y se explican aunque queden
+fuera del catálogo público; Japanese 1500 y las funciones legacy siguen disponibles.
+El backup 2A continúa Guest compatible → Guest vacío, sin cambios de formato.
+
+El comando build:manga-candidate comprueba un límite estricto de 750000 bytes y lazy loading.
+El ensayo estático usa perfiles Chromium limpios, importación por UI, FSRS/undo, export/restore,
+reinicio y SDK real con HTTP sintético controlado; no valida Supabase Auth real.
+Arquitectura, capturas, resultados, limitaciones y decisión: MANGA_DECKS_RELEASE_2C.md.
+No se promueve a Pages, activa cloud, despliega SQL ni hace commit/push en este hito.
+
+## RELEASE-MANGA-3 — Preparación de promoción y rollback (2026-10-26)
+
+Se preserva el candidato Guest-only de 2C y la entrada normal apagada. La propuesta de
+promoción cambia solo el comando de build y la ruta de upload del workflow, en parches
+no aplicados. El guard de presupuesto exige ahora <750000 bytes y se prueba su borde.
+
+La referencia pública se verificó en Actions: run #40, commit
+09793158fbdfa52b7ecf20d135f1e7c3cc42a789. El ensayo local alterna candidato, normal preparado,
+reconstrucción de ese commit y candidato, con el mismo origen/perfil y comparación exacta
+de los once stores. No se ejecuta un rollback Git ni se borra almacenamiento.
+Checklist humana, propuesta de commits separados, notas para usuarios, pruebas y pasos
+aditivos de promoción/revert: MANGA_DECKS_RELEASE_3.md y release/manga-guest-*. La revisión
+no autoriza commit/push/despliegue; la promoción sigue pendiente del propietario.

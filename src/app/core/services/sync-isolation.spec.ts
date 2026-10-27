@@ -58,7 +58,7 @@ describe('outbox and account isolation regressions',()=>{
       from:()=>({select:()=>({eq:()=>({maybeSingle:()=>profile})})})};
     TestBed.configureTestingModule({providers:[
       {provide:SupabaseClientService,useValue:{config:{configured:true},getClient:async()=>client}},
-      {provide:WorkspaceMigrationService,useValue:{hasGuestData:async()=>false}},
+      {provide:WorkspaceMigrationService,useValue:{hasGuestData:async()=>false,hasCustomGuestData:async()=>false,hasLegacyGuestData:async()=>false}},
     ]});
     const auth=TestBed.inject(AuthService);await Promise.resolve();listener('SIGNED_IN',{user:{id:'alice'}});
     for(let i=0;i<5;i++)await Promise.resolve();listener('SIGNED_OUT',null);await Promise.resolve();

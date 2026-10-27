@@ -41,6 +41,7 @@ export const NAVIGATION_AUDIT:readonly RouteAuditEntry[]=[
   {route:'vocabulary/writing',entryPoint:'Vocabulary Writing / detail practice',type:'ui'},
   {route:'vocabulary/listening',entryPoint:'Vocabulary Listening / weaknesses focused practice',type:'ui'},
   {route:'anki',entryPoint:'More Decks',type:'ui'},
+  {route:'anki/backups',entryPoint:'Local deck data action (internal gate)',type:'ui'},
   {route:'anki/:deckId/cards',entryPoint:'Deck card browse action',type:'dynamic'},
   {route:'anki/:deckId/stats',entryPoint:'Deck card statistics action',type:'dynamic'},
   {route:'anki/:deckId/settings',entryPoint:'Deck card configuration action',type:'dynamic'},

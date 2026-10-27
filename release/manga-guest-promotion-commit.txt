@@ -1,0 +1,7 @@
+release(manga): promote the validated Guest-only candidate to Pages
+
+Build the optimized manga-candidate configuration and upload its separate artifact.
+Keep all test/TypeScript checks and the strict 750000-byte audit.
+Keep custom sync and remote upload approval false; custom writes remain Guest-only.
+
+Apply only after the owner's explicit approval and completion of release conditions.

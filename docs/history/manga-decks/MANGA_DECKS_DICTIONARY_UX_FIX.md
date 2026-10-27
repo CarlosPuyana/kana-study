@@ -90,12 +90,12 @@ una tarjeta, progreso y eventos FSRS idénticos después de esa segunda confirma
 
 Capturas locales de referencia y resultado, sin datos personales:
 
-- [Antes: captura local previa, formulario ocupando la consulta](.cache/ux11-before-actual.png).
-- [Después: diccionario informativo, escritorio oscuro](.cache/dictionary-ux-informative-desktop-dark.png).
-- [Después: diccionario informativo, móvil claro](.cache/dictionary-ux-informative-mobile-light.png).
-- [Después: diccionario informativo, estrecho oscuro](.cache/dictionary-ux-informative-narrow-dark.png).
-- [Panel abierto explícitamente y acepción revisada, escritorio](.cache/ux11-after-reviewed-desktop-dark.png).
-- [Panel abierto explícitamente y acepción revisada, móvil](.cache/ux11-after-reviewed-mobile-light.png).
+- [Antes: captura local previa, formulario ocupando la consulta](../../../.cache/ux11-before-actual.png).
+- [Después: diccionario informativo, escritorio oscuro](../../../.cache/dictionary-ux-informative-desktop-dark.png).
+- [Después: diccionario informativo, móvil claro](../../../.cache/dictionary-ux-informative-mobile-light.png).
+- [Después: diccionario informativo, estrecho oscuro](../../../.cache/dictionary-ux-informative-narrow-dark.png).
+- [Panel abierto explícitamente y acepción revisada, escritorio](../../../.cache/ux11-after-reviewed-desktop-dark.png).
+- [Panel abierto explícitamente y acepción revisada, móvil](../../../.cache/ux11-after-reviewed-mobile-light.png).
 
 La captura `ux11-before-actual.png` ya existía antes de esta corrección (18:52 del
 2026-10-24) y pertenece al diagnóstico anterior de UX1.1; muestra la regresión local,

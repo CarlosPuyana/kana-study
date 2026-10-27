@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from '../../core/services/custom-deck-access';
 import { Component, DestroyRef, effect, inject, input, output, signal, untracked } from '@angular/core';
 import { MangaPage } from '../../core/models/manga.model';
 import { MangaOcrSourceService } from '../../core/services/manga-ocr-source.service';
@@ -10,6 +11,7 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
 export interface LocatedOcrLine {readonly page:MangaPage;readonly blockIndex:number;readonly lineIndex:number;}
 @Component({selector:'app-manga-ocr-location',templateUrl:'./manga-ocr-location.html',styleUrl:'./manga-ocr-location.scss'})
 export class MangaOcrLocation {
+  readonly access=inject(CustomDeckAccess);
   readonly reference=input.required<unknown>();readonly volumeId=input.required<string>();readonly page=input<MangaPage>();
   readonly unavailable=input(false);
   readonly located=output<LocatedOcrLine|null>();readonly dismissed=output<void>();
@@ -21,7 +23,7 @@ export class MangaOcrLocation {
     let alive=true;inject(DestroyRef).onDestroy(()=>alive=false);
     effect(onCleanup=>{
       const value=this.reference(),id=this.volumeId(),page=this.page(),owner=this.workspace.active(),epoch=this.workspace.activationRevision();
-      const allowed=this.custom()&&this.assisted(),unavailable=this.unavailable(),controller=new AbortController();let current=true;
+      const allowed=this.access.permitted()&&this.custom()&&this.assisted(),unavailable=this.unavailable(),controller=new AbortController();let current=true;
       onCleanup(()=>{current=false;controller.abort();});
       const guard=()=>{if(!alive||!current||controller.signal.aborted||owner!==this.workspace.active()||epoch!==this.workspace.activationRevision())throw Error('obsolete-location');};
       untracked(()=>{this.result.set({status:'pending'});this.located.emit(null);});

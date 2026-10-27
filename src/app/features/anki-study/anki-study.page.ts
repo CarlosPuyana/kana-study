@@ -1,3 +1,4 @@
+import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import { createStudyClock } from '../../core/services/study-clock';
 import { StudyTimer } from '../../shared/components/study-timer/study-timer';
 import { ChangeDetectionStrategy, Component, effect, inject, untracked, OnDestroy, OnInit, PendingTasks, signal } from '@angular/core';
@@ -17,7 +18,7 @@ import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/de
 
 @Component({
   selector: 'app-anki-study-page',
-  imports: [StudyTimer, RouterLink, FuriganaText, DeckSentenceText],
+  imports: [LocalDeckNotice,StudyTimer, RouterLink, FuriganaText, DeckSentenceText],
   templateUrl: './anki-study.page.html',
   styleUrl: './anki-study.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

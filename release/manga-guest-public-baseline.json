@@ -1,0 +1,31 @@
+{
+  "checkedOn": "2026-10-26",
+  "repository": "CarlosPuyana/kana-study",
+  "latestRun": {
+    "id": 40119335388,
+    "number": 40,
+    "name": "Deploy to GitHub Pages",
+    "head_sha": "09793158fbdfa52b7ecf20d135f1e7c3cc42a789",
+    "head_branch": "main",
+    "conclusion": "success",
+    "updated_at": "2026-10-24T18:11:55Z",
+    "html_url": "https://github.com/CarlosPuyana/kana-study/actions/runs/40119335388"
+  },
+  "jobs": [
+    {
+      "id": 120947242030,
+      "name": "build",
+      "conclusion": "success",
+      "html_url": "https://github.com/CarlosPuyana/kana-study/actions/runs/40119335388/job/120947242030",
+      "completed_at": "2026-10-24T18:10:35Z"
+    },
+    {
+      "id": 120947716974,
+      "name": "deploy",
+      "conclusion": "success",
+      "html_url": "https://github.com/CarlosPuyana/kana-study/actions/runs/40119335388/job/120947716974",
+      "completed_at": "2026-10-24T18:11:54Z"
+    }
+  ],
+  "artifactAvailable": false
+}

@@ -1,3 +1,4 @@
+import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import {JsonPipe} from '@angular/common';
 import {SyncDiagnosticReport} from '../../core/services/sync-diagnostics.service';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
@@ -14,7 +15,7 @@ import {WorkspaceService} from '../../core/services/workspace.service';
 import {CustomCloudPanel} from './custom-cloud-panel';
 import {CUSTOM_DECK_SYNC_ENABLED} from '../../core/services/custom-deck-sync-transport';
 
-@Component({ selector:'app-profile-page', imports:[FormsModule,RouterLink,MedalBadge,JsonPipe,CustomCloudPanel], providers:[LeaderboardService], templateUrl:'./profile.page.html', styleUrl:'./profile.page.scss', changeDetection:ChangeDetectionStrategy.OnPush })
+@Component({ selector:'app-profile-page', imports:[FormsModule,RouterLink,MedalBadge,JsonPipe,CustomCloudPanel,LocalDeckNotice], providers:[LeaderboardService], templateUrl:'./profile.page.html', styleUrl:'./profile.page.scss', changeDetection:ChangeDetectionStrategy.OnPush })
 export class ProfilePage {
   private readonly workspace=inject(WorkspaceService);
   readonly customTools=inject(CUSTOM_DECK_SYNC_ENABLED);

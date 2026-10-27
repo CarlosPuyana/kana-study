@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from '../../core/services/custom-deck-access';
 import { Component, computed, effect, inject, signal, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -14,6 +15,7 @@ import { MangaOcrExplorer } from './manga-ocr-explorer';
 @Component({selector:'app-manga-volume-vocabulary',imports:[FormsModule,RouterLink,MangaOcrExplorer],
   templateUrl:'./manga-volume-vocabulary.page.html',styleUrl:'./manga-volume-vocabulary.page.scss'})
 export class MangaVolumeVocabularyPage {
+  readonly access=inject(CustomDeckAccess);
   readonly i18n=inject(TranslationService);
   readonly customEnabled=inject(CUSTOM_DECKS_ENABLED);
   readonly assistedEnabled=inject(MANGA_DECK_ASSISTED_ENABLED);
@@ -21,7 +23,7 @@ export class MangaVolumeVocabularyPage {
   private readonly repository=inject(CustomDeckRepository);
   private readonly service=inject(MangaVolumeVocabularyService);
   private readonly params=toSignal(inject(ActivatedRoute).paramMap);
-  readonly allowed=computed(()=>this.customEnabled()&&this.assistedEnabled());
+  readonly allowed=computed(()=>this.access.permitted()&&this.customEnabled()&&this.assistedEnabled());
   readonly result=signal<VolumeVocabulary|null>(null);
   readonly failed=signal(false);
   readonly search=signal('');

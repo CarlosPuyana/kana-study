@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from './custom-deck-access';
 import { inject, Injectable } from '@angular/core';
 import { DeckPersistence } from '../models/deck-catalog.model';
 import { DeckDatabaseService } from './deck-database.service';
@@ -7,13 +8,14 @@ import { WorkspaceService } from './workspace.service';
 export class DeckPersistenceRouter {
     private readonly builtin = inject(DeckDatabaseService);
     private readonly custom = inject(CustomDeckRepository);
+    private readonly access=inject(CustomDeckAccess);
     private readonly enabled = inject(CUSTOM_DECKS_ENABLED);
     private readonly workspace = inject(WorkspaceService);
     bind(deckId: string): DeckPersistence {
-        const owner = this.workspace.active(), custom = deckId.startsWith('md-');
-        if (custom && !this.enabled())
+        const owner = this.workspace.active(),epoch=this.workspace.activationRevision(), custom = deckId.startsWith('md-');
+        if (custom && (!this.enabled()||!this.access.permitted()))
             throw new Error('Custom decks are unavailable');
-        const assertOwner = () => { if (owner !== this.workspace.active())
+        const assertOwner = () => { if (owner !== this.workspace.active()||custom&&(epoch!==this.workspace.activationRevision()||!this.access.permitted()))
             throw new Error('Deck workspace changed'); };
         return { workspace:owner, assertOwner,
             getDeckProgress: async (id) => { assertOwner(); const v = await (custom ? this.custom.getDeckProgress(id, owner) : this.builtin.getDeckProgress(id)); assertOwner(); return v; },

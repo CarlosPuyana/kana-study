@@ -208,7 +208,7 @@ contains only 'again' or 'good'. Completed summaries add mangaSessionKind='fsrs'
 The workspace opt-in is stored through existing user_preferences under
 `kana-study.manga-fsrs-settings.v1`. Saved-word RPCs and tombstones are unchanged.
 
-See [MANGA_FSRS.md](MANGA_FSRS.md) for deterministic replay, parameters, clock
+See [MANGA_FSRS.md](docs/features/manga/MANGA_FSRS.md) for deterministic replay, parameters, clock
 skew, offline recovery and account isolation. The local PostgreSQL script
 `scripts/test-manga-review-sql.mjs` also checks both FSRS grades, preference
 payloads, idempotent retries and unchanged leaderboard time/RLS.

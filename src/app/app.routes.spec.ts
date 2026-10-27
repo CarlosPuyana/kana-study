@@ -61,7 +61,7 @@ describe('lazy feature routes', () => {
     expect(feature?.loadChildren).toBeTypeOf('function');
     const children = await (feature!.loadChildren as () => Promise<Routes>)();
     expect(children.map(route => route.path)).toEqual([
-      '', ':deckId/cards', ':deckId/stats', ':deckId/settings', ':deckId/study',
+      'backups', '', ':deckId/cards', ':deckId/stats', ':deckId/settings', ':deckId/study',
     ]);
     expect(children.every(route => route.loadComponent && !route.component)).toBe(true);
   });

@@ -33,7 +33,7 @@ describe('safe return navigation',()=>{
 describe('confirmed navigation and UX corrections',()=>{
   const authenticated=signal(true),decision=signal(false);
   const auth={configured:true,authenticated,needsGuestImportDecision:decision,profile:()=>null,initials:()=> 'T',user:()=>null,
-    signIn:vi.fn(async()=>({error:null})),signUp:vi.fn(async()=>({error:null,confirmationRequired:false})),chooseGuestImport:vi.fn(async()=>{}),updatePassword:vi.fn(async()=>({error:null})),requestPasswordReset:vi.fn(async()=>({error:null}))};
+    signIn:vi.fn(async()=>({error:null})),signUp:vi.fn(async()=>({error:null,confirmationRequired:false})),chooseGuestImport:vi.fn(async()=>true),updatePassword:vi.fn(async()=>({error:null})),requestPasswordReset:vi.fn(async()=>({error:null}))};
   beforeEach(()=>{
     vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));localStorage.clear();authenticated.set(true);decision.set(false);
     TestBed.configureTestingModule({providers:[provideRouter([]),{provide:AuthService,useValue:auth},{provide:SyncService,useValue:{status:signal('idle'),lastSyncedAt:signal(null),pendingCount:signal(0),schedule:vi.fn()}},

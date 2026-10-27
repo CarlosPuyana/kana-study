@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from './custom-deck-access';
 import { inject, Injectable } from '@angular/core';
 import { LocalWorkspaceId } from '../models/account.model';
 import { DictionaryLookup, OcrLookupPoint } from '../models/dictionary.model';
@@ -30,12 +31,13 @@ export interface MangaCardEdits {
 
 @Injectable({providedIn:'root'})
 export class MangaDeckAssistedService {
+  private readonly access=inject(CustomDeckAccess);
   private readonly workspace = inject(WorkspaceService);
   private readonly repository = inject(CustomDeckRepository);
   private readonly customEnabled = inject(CUSTOM_DECKS_ENABLED);
   readonly enabled = inject(MANGA_DECK_ASSISTED_ENABLED);
   private guard(owner: LocalWorkspaceId, epoch: number): void {
-    requireValid(this.enabled() && this.customEnabled() && this.workspace.active() === owner && this.workspace.activationRevision() === epoch);
+    requireValid(this.access.permitted()&&this.enabled() && this.customEnabled() && this.workspace.active() === owner && this.workspace.activationRevision() === epoch);
   }
   async open(volumeId: string, volumeTitle: string, pageNumber: number, point: OcrLookupPoint,
     result: DictionaryLookup, savedItemId?: string): Promise<MangaCardDraft> {

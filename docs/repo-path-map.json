@@ -1,0 +1,727 @@
+{
+  "version": 1,
+  "date": "2026-10-26",
+  "baseline": ".cache/hygiene1/inventory-before.json",
+  "moves": [
+    {
+      "from": "PERSISTENCE.md",
+      "to": "docs/architecture/PERSISTENCE.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 2016,
+      "sha256Before": "87511cd797c81e9afbd9fd9dfcbe30b019c337ce27b60916bc21143daa88c770",
+      "sha256After": "87511cd797c81e9afbd9fd9dfcbe30b019c337ce27b60916bc21143daa88c770",
+      "content": "byte-identical"
+    },
+    {
+      "from": "NAVIGATION_UX.md",
+      "to": "docs/architecture/NAVIGATION_UX.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 8151,
+      "sha256Before": "93e3a0a44175f3cd9f7c5a079924bedc8038ce50b5724f0ebe8e629dd13e3e75",
+      "sha256After": "93e3a0a44175f3cd9f7c5a079924bedc8038ce50b5724f0ebe8e629dd13e3e75",
+      "content": "byte-identical"
+    },
+    {
+      "from": "LOCAL_MANGA.md",
+      "to": "docs/features/manga/LOCAL_MANGA.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 5731,
+      "sha256Before": "0ff19e90c2a9a7044273b626ade8d022dbaf1c3373446a61e3d14178a86e4449",
+      "sha256After": "0ff19e90c2a9a7044273b626ade8d022dbaf1c3373446a61e3d14178a86e4449",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_READER.md",
+      "to": "docs/features/manga/MANGA_READER.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 21543,
+      "sha256Before": "40a69a2892182a44b75c0dbf2a4539c400aa183cd67a1770d70ecb4872ae46c8",
+      "sha256After": "40a69a2892182a44b75c0dbf2a4539c400aa183cd67a1770d70ecb4872ae46c8",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_FSRS.md",
+      "to": "docs/features/manga/MANGA_FSRS.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 4307,
+      "sha256Before": "125cf9f24fc5bd9bc7d3deae0c58a99cc2f3dc612e65eb8fed2e52450926e9b8",
+      "sha256After": "125cf9f24fc5bd9bc7d3deae0c58a99cc2f3dc612e65eb8fed2e52450926e9b8",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_GRAMMAR.md",
+      "to": "docs/features/manga/MANGA_GRAMMAR.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 4549,
+      "sha256Before": "b67776b666f04475fa955cbe0adc99e61152dbc22a5ef6abc10da999ecd49731",
+      "sha256After": "b67776b666f04475fa955cbe0adc99e61152dbc22a5ef6abc10da999ecd49731",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_STUDY_INTEGRATION.md",
+      "to": "docs/features/manga/MANGA_STUDY_INTEGRATION.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 5586,
+      "sha256Before": "4ab409875d308b76c6fa90fde4c2a28f0368086c51a7939e1c3950e41d731b11",
+      "sha256After": "4ab409875d308b76c6fa90fde4c2a28f0368086c51a7939e1c3950e41d731b11",
+      "content": "byte-identical"
+    },
+    {
+      "from": "DECK_SCHEDULER.md",
+      "to": "docs/features/decks/DECK_SCHEDULER.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 2877,
+      "sha256Before": "0e42591676ce6818aea5bf99d63299cce6ff8921548ec5bb4f58949dd3001814",
+      "sha256After": "0e42591676ce6818aea5bf99d63299cce6ff8921548ec5bb4f58949dd3001814",
+      "content": "byte-identical"
+    },
+    {
+      "from": "TEMARIO.md",
+      "to": "docs/features/grammar/TEMARIO.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 16982,
+      "sha256Before": "66d66a0d8c9aabe470f7673b5d1ab1a610171e4c9aafad01ad0df8fc0aa8d1c5",
+      "sha256After": "66d66a0d8c9aabe470f7673b5d1ab1a610171e4c9aafad01ad0df8fc0aa8d1c5",
+      "content": "byte-identical"
+    },
+    {
+      "from": "STATS_V2.md",
+      "to": "docs/features/stats/STATS_V2.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 15606,
+      "sha256Before": "b6b29a4f9191b2ceee0af2aac22be0454c8753a95107dedb84069f980157c322",
+      "sha256After": "b6b29a4f9191b2ceee0af2aac22be0454c8753a95107dedb84069f980157c322",
+      "content": "byte-identical"
+    },
+    {
+      "from": "DAILY_STUDY_V2.md",
+      "to": "docs/features/DAILY_STUDY_V2.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 7319,
+      "sha256Before": "3803d66e6e67f542e3afa7faee3b98c7cf974a1276c98be18d6366e5e972e1a7",
+      "sha256After": "3803d66e6e67f542e3afa7faee3b98c7cf974a1276c98be18d6366e5e972e1a7",
+      "content": "byte-identical"
+    },
+    {
+      "from": "RUSH.md",
+      "to": "docs/features/RUSH.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 1320,
+      "sha256Before": "4e1412197fbe483248ed13f0f7ebc88d391844b06467f467d5bdd0debd35ac52",
+      "sha256After": "4e1412197fbe483248ed13f0f7ebc88d391844b06467f467d5bdd0debd35ac52",
+      "content": "byte-identical"
+    },
+    {
+      "from": "UX_FEEDBACK_V1.md",
+      "to": "docs/features/UX_FEEDBACK_V1.md",
+      "kind": "reference",
+      "gitBefore": "tracked",
+      "bytes": 17182,
+      "sha256Before": "e8d9d78b8757d1e3867261673645ce0956f8b851c388e2b769d0a47035ecd79c",
+      "sha256After": "e8d9d78b8757d1e3867261673645ce0956f8b851c388e2b769d0a47035ecd79c",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_DICTIONARY_UX_FIX.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_DICTIONARY_UX_FIX.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 10410,
+      "sha256Before": "b5425bba59182f6185d45591229f8ea249fbecab03361193ae81275a47301aa7",
+      "sha256After": "dd607303f0f108876173cf0537580bcb18625ce573987d41a2c95dc7ed0737dd",
+      "content": "local Markdown link destinations only"
+    },
+    {
+      "from": "MANGA_DECKS_H1.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H1.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 23049,
+      "sha256Before": "ca7dbdda7126839b2ff74207dfbfa0c407c29e6033dbe8f25afc76e9f6457582",
+      "sha256After": "ca7dbdda7126839b2ff74207dfbfa0c407c29e6033dbe8f25afc76e9f6457582",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H2A.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H2A.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 26184,
+      "sha256Before": "7f482c10172a911eb52043e7a98311dd983b575ed067eb353687c935ab90c891",
+      "sha256After": "7f482c10172a911eb52043e7a98311dd983b575ed067eb353687c935ab90c891",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H2A1.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H2A1.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 24773,
+      "sha256Before": "b9f9ae325dba46bd6cffba938bda8e1ffc6121a91082881ecf045d4b90ec1bcf",
+      "sha256After": "b9f9ae325dba46bd6cffba938bda8e1ffc6121a91082881ecf045d4b90ec1bcf",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H2A2.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H2A2.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 26248,
+      "sha256Before": "a452bf4bc78611283266e258ed969088d666f09d9257ea4b7c39d8e08ab3b867",
+      "sha256After": "a452bf4bc78611283266e258ed969088d666f09d9257ea4b7c39d8e08ab3b867",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H2BA.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H2BA.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 14692,
+      "sha256Before": "d1e679c363f06b1f206d525e428db15797a3e3c4fb0519f7190d3b69bced7f8e",
+      "sha256After": "d1e679c363f06b1f206d525e428db15797a3e3c4fb0519f7190d3b69bced7f8e",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H2BUX1.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H2BUX1.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 15157,
+      "sha256Before": "11f831a69452760c8df266925b3f2153beddf2450599d0f6e2e4762d3b87b6a6",
+      "sha256After": "4b020772eefd0f759fba41770f627919ad2d6beaabeb5dcaf2e3c794c69aef67",
+      "content": "local Markdown link destinations only"
+    },
+    {
+      "from": "MANGA_DECKS_H2BUX11.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H2BUX11.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 15989,
+      "sha256Before": "224bd96420b9a6cce3c8ab69333a2c9dee053fbe64f5b99cdef1ed3101845385",
+      "sha256After": "b4060c9e74a36b3e70515101436f528a4206fb570090a784b45fcc50e4c8c763",
+      "content": "local Markdown link destinations only"
+    },
+    {
+      "from": "MANGA_DECKS_H2BUX2.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H2BUX2.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 15375,
+      "sha256Before": "b786c1e7ef432c12b369088263473ca889f93b833f1a65404b0783cd8fd995e6",
+      "sha256After": "b786c1e7ef432c12b369088263473ca889f93b833f1a65404b0783cd8fd995e6",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H3A.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H3A.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 16558,
+      "sha256Before": "3dcc95a6dc2a80974eebc12ffe667a88b8429183b9c853edf5531cb646fe9915",
+      "sha256After": "3dcc95a6dc2a80974eebc12ffe667a88b8429183b9c853edf5531cb646fe9915",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H3BA.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H3BA.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 14964,
+      "sha256Before": "b4b7d049511b2845af71731ae7b9ad7bb07e95b78cc9a69f25f812f2b4650fd6",
+      "sha256After": "b4b7d049511b2845af71731ae7b9ad7bb07e95b78cc9a69f25f812f2b4650fd6",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H3BB0.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H3BB0.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 17605,
+      "sha256Before": "49d8895cfce85eb4328c12cf4ac2640a3d94dc95d382cfd36ab0ac0b04ba8089",
+      "sha256After": "49d8895cfce85eb4328c12cf4ac2640a3d94dc95d382cfd36ab0ac0b04ba8089",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H3BB1.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H3BB1.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 9053,
+      "sha256Before": "ab4dfe7a71e614360ad6575866397fb143d4ac52b0139d6f527d05e815b8339e",
+      "sha256After": "ab4dfe7a71e614360ad6575866397fb143d4ac52b0139d6f527d05e815b8339e",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H4A.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H4A.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 13410,
+      "sha256Before": "e394926fe6f1d0090ac6435cc549a35af37a54d1db6ff88cf2d7b707dacc36dd",
+      "sha256After": "e394926fe6f1d0090ac6435cc549a35af37a54d1db6ff88cf2d7b707dacc36dd",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H4A1.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H4A1.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 10850,
+      "sha256Before": "fcf3719da0921104b30e7834b1e1b52b038b207ee51a4f6ccad5718ad61b92bd",
+      "sha256After": "fcf3719da0921104b30e7834b1e1b52b038b207ee51a4f6ccad5718ad61b92bd",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H4BA.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H4BA.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 16950,
+      "sha256Before": "10367ea4487b3978d8f278001cc65ed9ddcb849687b7605f670ccb4ab455a0ff",
+      "sha256After": "10367ea4487b3978d8f278001cc65ed9ddcb849687b7605f670ccb4ab455a0ff",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H4BB.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H4BB.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 18339,
+      "sha256Before": "aab20ede2b9fc4ec05bee65f1b0d79b26c0409c651ab0ccd809b113df5333f87",
+      "sha256After": "aab20ede2b9fc4ec05bee65f1b0d79b26c0409c651ab0ccd809b113df5333f87",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H4BC.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H4BC.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 25427,
+      "sha256Before": "845350781c64bfcda53e45a933e4e4697565659c77b4c38531af3fa8c4fca3e6",
+      "sha256After": "845350781c64bfcda53e45a933e4e4697565659c77b4c38531af3fa8c4fca3e6",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H4BD1.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H4BD1.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 21004,
+      "sha256Before": "c04127c011dfc094c148864f73a9099c76db55934eccb14c2eeb8ca08e5c064d",
+      "sha256After": "c04127c011dfc094c148864f73a9099c76db55934eccb14c2eeb8ca08e5c064d",
+      "content": "byte-identical"
+    },
+    {
+      "from": "MANGA_DECKS_H4BD2.md",
+      "to": "docs/history/manga-decks/MANGA_DECKS_H4BD2.md",
+      "kind": "historical",
+      "gitBefore": "tracked",
+      "bytes": 19232,
+      "sha256Before": "29935e89ced159b5390963bf9960007d31edeaf8ab298c848392dc2bba219193",
+      "sha256After": "29935e89ced159b5390963bf9960007d31edeaf8ab298c848392dc2bba219193",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-related-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-related-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 511,
+      "sha256Before": "e5b97a67f1ddfde8a623cf1d81cee526e8fd6d513dd2c13b67212961cae39303",
+      "sha256After": "e5b97a67f1ddfde8a623cf1d81cee526e8fd6d513dd2c13b67212961cae39303",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-roadmap-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-roadmap-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "ce7f802b859d83c40777894fed10c89d3b04e90ff455588028b3d6e51f9d5d4a",
+      "sha256After": "ce7f802b859d83c40777894fed10c89d3b04e90ff455588028b3d6e51f9d5d4a",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-roadmap-preview.log",
+      "to": ".cache/archive/repo-root-logs/grammar-roadmap-preview.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 3286,
+      "sha256Before": "4065aa82808fb643bcfbcb0ac8773bbc2b76cfec27b53900a02c0dd438998b45",
+      "sha256After": "4065aa82808fb643bcfbcb0ac8773bbc2b76cfec27b53900a02c0dd438998b45",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-roadmap-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-roadmap-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 456,
+      "sha256Before": "d4b0b34bb8a05e8e25b58d0fcde9184269035b79232a3e89bc7f158899688a73",
+      "sha256After": "d4b0b34bb8a05e8e25b58d0fcde9184269035b79232a3e89bc7f158899688a73",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic02-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic02-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "fce1d0b0f5b7f99e5bff12b5ba7f4331d356f6396a5113f45ef5ed5f6ba45906",
+      "sha256After": "fce1d0b0f5b7f99e5bff12b5ba7f4331d356f6396a5113f45ef5ed5f6ba45906",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic02-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic02-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 322,
+      "sha256Before": "6f59ce6fb48e80bb8a13b9ade12063be666ae4a13f5fb3f663604d6ee946c527",
+      "sha256After": "6f59ce6fb48e80bb8a13b9ade12063be666ae4a13f5fb3f663604d6ee946c527",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic02-validation.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic02-validation.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 511,
+      "sha256Before": "9c544b4fbae3343205f4a21c437ea4674da817022312b10aef387a308faa2ca9",
+      "sha256After": "9c544b4fbae3343205f4a21c437ea4674da817022312b10aef387a308faa2ca9",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic03-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic03-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "4272be563aba758414151feb13d02bad0394d3c289b40a6570b740ab132c93ac",
+      "sha256After": "4272be563aba758414151feb13d02bad0394d3c289b40a6570b740ab132c93ac",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic03-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic03-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 512,
+      "sha256Before": "f693149dddf90c327248d7b88ac90df96da4ebc2baa1dcf8cdf66706a8b8a5f4",
+      "sha256After": "f693149dddf90c327248d7b88ac90df96da4ebc2baa1dcf8cdf66706a8b8a5f4",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic04-before.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic04-before.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 2528692,
+      "sha256Before": "cca1e3d293181b53ad8281fdbb67e2bafd58d2b33b76485c34860038cb44099c",
+      "sha256After": "cca1e3d293181b53ad8281fdbb67e2bafd58d2b33b76485c34860038cb44099c",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic04-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic04-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "d31566226f5fe30df4ac085c1ea368546c7bf93afb2c9c8b9d930d77a2eff186",
+      "sha256After": "d31566226f5fe30df4ac085c1ea368546c7bf93afb2c9c8b9d930d77a2eff186",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic04-final-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic04-final-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 525,
+      "sha256Before": "15bb1d22ffb566dbc4a23ec355550af891faea7c1de78179349de4b8dd7db0b8",
+      "sha256After": "15bb1d22ffb566dbc4a23ec355550af891faea7c1de78179349de4b8dd7db0b8",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic04-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic04-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 512,
+      "sha256Before": "d8d8dd0d459889479cf7a54f9b56cc54c5ac55307c2c5c38dfa3759dfda6437e",
+      "sha256After": "d8d8dd0d459889479cf7a54f9b56cc54c5ac55307c2c5c38dfa3759dfda6437e",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic05-before.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic05-before.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 919948,
+      "sha256Before": "6c73fac6494e99605ecaa1412183406410d3aa2c32a8cfd121fd9c9f98e952dc",
+      "sha256After": "6c73fac6494e99605ecaa1412183406410d3aa2c32a8cfd121fd9c9f98e952dc",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic05-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic05-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "dd8c48500285f9debd11da70849fa6bf8bc11697a6e941fc3914a21a3068b0a8",
+      "sha256After": "dd8c48500285f9debd11da70849fa6bf8bc11697a6e941fc3914a21a3068b0a8",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic05-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic05-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 512,
+      "sha256Before": "14a29d0e53064fa20a86e0c1a57c90531937d1ecbece45b1edff87895f2ed346",
+      "sha256After": "14a29d0e53064fa20a86e0c1a57c90531937d1ecbece45b1edff87895f2ed346",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic05-weakness.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic05-weakness.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 465,
+      "sha256Before": "4da1f4fc254cded7893bf087cb2f7523b6691b6fcbcbda90bc1797ebe55f4c7e",
+      "sha256After": "4da1f4fc254cded7893bf087cb2f7523b6691b6fcbcbda90bc1797ebe55f4c7e",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic06-before.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic06-before.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 1137405,
+      "sha256Before": "0f356b14914e631458f009453a6e2d58e1f796e4fc0bf921f57b5cd3ed3f67f1",
+      "sha256After": "0f356b14914e631458f009453a6e2d58e1f796e4fc0bf921f57b5cd3ed3f67f1",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic06-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic06-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "698fd89622102845685ef4c91076de404967b1911f4237c928b9bf6293a3dcfc",
+      "sha256After": "698fd89622102845685ef4c91076de404967b1911f4237c928b9bf6293a3dcfc",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic06-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic06-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 512,
+      "sha256Before": "9e97b5fdc3ea9ef9e2a2918b9a4f147e532205b9054495c7ffc93a90023dd128",
+      "sha256After": "9e97b5fdc3ea9ef9e2a2918b9a4f147e532205b9054495c7ffc93a90023dd128",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic07-before.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic07-before.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 1281893,
+      "sha256Before": "18fb54183482af9fa628a3f7387dfebd52867d06dd6f51125c442a2507bf37cf",
+      "sha256After": "18fb54183482af9fa628a3f7387dfebd52867d06dd6f51125c442a2507bf37cf",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic07-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic07-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "0bcede9d95c386f3cd9d9262f1eff149712cf4011f2dfd055e3509b923d51efb",
+      "sha256After": "0bcede9d95c386f3cd9d9262f1eff149712cf4011f2dfd055e3509b923d51efb",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic07-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic07-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 512,
+      "sha256Before": "c7e987b8df8f2df15a52d67209ea3591d3acc2a4972ccd675cd19881efb286d7",
+      "sha256After": "c7e987b8df8f2df15a52d67209ea3591d3acc2a4972ccd675cd19881efb286d7",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic08-before.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic08-before.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 1493089,
+      "sha256Before": "19217cefebdecf70f5363169281f76dfaeae6c4826acaf6b569ac5bf51b03089",
+      "sha256After": "19217cefebdecf70f5363169281f76dfaeae6c4826acaf6b569ac5bf51b03089",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic08-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic08-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "15402027a7037ad20cf2045ac18d85b0d478ed0e8765df1f3b5813a072912c6d",
+      "sha256After": "15402027a7037ad20cf2045ac18d85b0d478ed0e8765df1f3b5813a072912c6d",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic08-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic08-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 514,
+      "sha256Before": "2b27485c9a6fd7f0044c92a41d1d509db3739651e9bd55376ef37f7f86368b73",
+      "sha256After": "2b27485c9a6fd7f0044c92a41d1d509db3739651e9bd55376ef37f7f86368b73",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic09-before.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic09-before.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 1665557,
+      "sha256Before": "4fefb10d2cd9957fb80a5bf5643ea1b59afde91d1540907711fdf91f9e752694",
+      "sha256After": "4fefb10d2cd9957fb80a5bf5643ea1b59afde91d1540907711fdf91f9e752694",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic09-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic09-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "c4933e82e7fe4e3528f893a606de6aae16167e23d084e0ad12eeefcef409a8da",
+      "sha256After": "c4933e82e7fe4e3528f893a606de6aae16167e23d084e0ad12eeefcef409a8da",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic09-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic09-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 513,
+      "sha256Before": "aaa7a659604a3336374be83d6067805fef3ba24e066a1b7f1bd55a8ea94b3710",
+      "sha256After": "aaa7a659604a3336374be83d6067805fef3ba24e066a1b7f1bd55a8ea94b3710",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic10-before.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic10-before.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 1879792,
+      "sha256Before": "362ca35ff47d19cc36570361917c85b99ac57ca67c274122357d0bdadc9de2ee",
+      "sha256After": "362ca35ff47d19cc36570361917c85b99ac57ca67c274122357d0bdadc9de2ee",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic10-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic10-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "6a7f4c11ade7f3f1132d4f019db602dfcfacf4cbe936c8425292051cf7f2d63b",
+      "sha256After": "6a7f4c11ade7f3f1132d4f019db602dfcfacf4cbe936c8425292051cf7f2d63b",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic10-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic10-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 513,
+      "sha256Before": "3c79a94f1875617f80cb59bb8e3d2f46539289fc35a927ddb821f05e23701887",
+      "sha256After": "3c79a94f1875617f80cb59bb8e3d2f46539289fc35a927ddb821f05e23701887",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic11-before.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic11-before.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 2072152,
+      "sha256Before": "9852b1990efadfdcecebdb98adeb787e291d2acc7082be1597021562ae6ddeb4",
+      "sha256After": "9852b1990efadfdcecebdb98adeb787e291d2acc7082be1597021562ae6ddeb4",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic11-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic11-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "de1ae1d7847687acfa1af993c26aa6cdf808ed1eab2e73470ff768f5c166b9b8",
+      "sha256After": "de1ae1d7847687acfa1af993c26aa6cdf808ed1eab2e73470ff768f5c166b9b8",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-topic11-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-topic11-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 513,
+      "sha256Before": "cf663097cd2165159a805b04fec7055bc9ad5ebf0abdc67544685cad98b86bc1",
+      "sha256After": "cf663097cd2165159a805b04fec7055bc9ad5ebf0abdc67544685cad98b86bc1",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-v2-build.log",
+      "to": ".cache/archive/repo-root-logs/grammar-v2-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "cc05d16096323eebc6cfd1ae32b33b5f58df9704ad52dcb90e25154584f4a6df",
+      "sha256After": "cc05d16096323eebc6cfd1ae32b33b5f58df9704ad52dcb90e25154584f4a6df",
+      "content": "byte-identical"
+    },
+    {
+      "from": "grammar-v2-tests.log",
+      "to": ".cache/archive/repo-root-logs/grammar-v2-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 459,
+      "sha256Before": "178a40aacc050c183ba41fbc7bb8aa4542f4efe3bb0648ad8ff438edb769d022",
+      "sha256After": "178a40aacc050c183ba41fbc7bb8aa4542f4efe3bb0648ad8ff438edb769d022",
+      "content": "byte-identical"
+    },
+    {
+      "from": "qa-two-fixes-build.log",
+      "to": ".cache/archive/repo-root-logs/qa-two-fixes-build.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 4305,
+      "sha256Before": "aa4a3386ea8d0dab42fcd6ac7dd3aa60da588c5e6b389dea46e9467b17150bd9",
+      "sha256After": "aa4a3386ea8d0dab42fcd6ac7dd3aa60da588c5e6b389dea46e9467b17150bd9",
+      "content": "byte-identical"
+    },
+    {
+      "from": "qa-two-fixes-tests.log",
+      "to": ".cache/archive/repo-root-logs/qa-two-fixes-tests.log",
+      "kind": "log",
+      "gitBefore": "ignored",
+      "bytes": 950,
+      "sha256Before": "49447cd1fb15f8ae6d84bd44c58726128992623e263258ef0b91a33d0433d1e6",
+      "sha256After": "49447cd1fb15f8ae6d84bd44c58726128992623e263258ef0b91a33d0433d1e6",
+      "content": "byte-identical"
+    }
+  ]
+}

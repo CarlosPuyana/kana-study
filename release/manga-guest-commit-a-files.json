@@ -1,0 +1,786 @@
+{
+  "schemaVersion": 1,
+  "baseSha": "09793158fbdfa52b7ecf20d135f1e7c3cc42a789",
+  "purpose": "Proposed Commit A only; no staging/commit/push performed",
+  "selfHashOmitted": "release/manga-guest-commit-a-files.json",
+  "workflowSha256": "f9c934f021dae7677b918b07e60d7574cffebebc5d90613493c61a2d8a56a49b",
+  "counts": {
+    "currentFiles": 141,
+    "modified": 52,
+    "renamed": 33,
+    "added": 56
+  },
+  "changes": [
+    {
+      "status": "M",
+      "path": "angular.json",
+      "sha256WorkingTree": "06ce8ed60cfaf6c7530b4c0b59a915f92e8bed95a10ab232b6a053d1de3b5713"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "NAVIGATION_UX.md",
+      "path": "docs/architecture/NAVIGATION_UX.md",
+      "sha256WorkingTree": "93e3a0a44175f3cd9f7c5a079924bedc8038ce50b5724f0ebe8e629dd13e3e75"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "PERSISTENCE.md",
+      "path": "docs/architecture/PERSISTENCE.md",
+      "sha256WorkingTree": "87511cd797c81e9afbd9fd9dfcbe30b019c337ce27b60916bc21143daa88c770"
+    },
+    {
+      "status": "A",
+      "path": "docs/CONTRIBUTING-DOCS.md",
+      "sha256WorkingTree": "b80bea23cecf2df4b0d01c81b185dd25ae917b5309af797875fbf0cd4682c246"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "DAILY_STUDY_V2.md",
+      "path": "docs/features/DAILY_STUDY_V2.md",
+      "sha256WorkingTree": "3803d66e6e67f542e3afa7faee3b98c7cf974a1276c98be18d6366e5e972e1a7"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "DECK_SCHEDULER.md",
+      "path": "docs/features/decks/DECK_SCHEDULER.md",
+      "sha256WorkingTree": "0e42591676ce6818aea5bf99d63299cce6ff8921548ec5bb4f58949dd3001814"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "TEMARIO.md",
+      "path": "docs/features/grammar/TEMARIO.md",
+      "sha256WorkingTree": "66d66a0d8c9aabe470f7673b5d1ab1a610171e4c9aafad01ad0df8fc0aa8d1c5"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "LOCAL_MANGA.md",
+      "path": "docs/features/manga/LOCAL_MANGA.md",
+      "sha256WorkingTree": "0ff19e90c2a9a7044273b626ade8d022dbaf1c3373446a61e3d14178a86e4449"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_FSRS.md",
+      "path": "docs/features/manga/MANGA_FSRS.md",
+      "sha256WorkingTree": "125cf9f24fc5bd9bc7d3deae0c58a99cc2f3dc612e65eb8fed2e52450926e9b8"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_GRAMMAR.md",
+      "path": "docs/features/manga/MANGA_GRAMMAR.md",
+      "sha256WorkingTree": "b67776b666f04475fa955cbe0adc99e61152dbc22a5ef6abc10da999ecd49731"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_READER.md",
+      "path": "docs/features/manga/MANGA_READER.md",
+      "sha256WorkingTree": "40a69a2892182a44b75c0dbf2a4539c400aa183cd67a1770d70ecb4872ae46c8"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_STUDY_INTEGRATION.md",
+      "path": "docs/features/manga/MANGA_STUDY_INTEGRATION.md",
+      "sha256WorkingTree": "4ab409875d308b76c6fa90fde4c2a28f0368086c51a7939e1c3950e41d731b11"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "RUSH.md",
+      "path": "docs/features/RUSH.md",
+      "sha256WorkingTree": "4e1412197fbe483248ed13f0f7ebc88d391844b06467f467d5bdd0debd35ac52"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "STATS_V2.md",
+      "path": "docs/features/stats/STATS_V2.md",
+      "sha256WorkingTree": "b6b29a4f9191b2ceee0af2aac22be0454c8753a95107dedb84069f980157c322"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "UX_FEEDBACK_V1.md",
+      "path": "docs/features/UX_FEEDBACK_V1.md",
+      "sha256WorkingTree": "e8d9d78b8757d1e3867261673645ce0956f8b851c388e2b769d0a47035ecd79c"
+    },
+    {
+      "status": "A",
+      "path": "docs/guides/DEVELOPMENT.md",
+      "sha256WorkingTree": "e62e8c9fd7c3d9aa6be2c683105e8eefaa94cd4a51f44fe50dc205cd4b9c1efe"
+    },
+    {
+      "status": "A",
+      "path": "docs/history/manga-decks/INDEX.md",
+      "sha256WorkingTree": "6e3cce9aa7b34774f57b71b30dde23feeef126a599bd44d5ee3a097f405f0ba6"
+    },
+    {
+      "status": "R",
+      "similarity": "095",
+      "oldPath": "MANGA_DECKS_DICTIONARY_UX_FIX.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_DICTIONARY_UX_FIX.md",
+      "sha256WorkingTree": "dd607303f0f108876173cf0537580bcb18625ce573987d41a2c95dc7ed0737dd"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H1.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H1.md",
+      "sha256WorkingTree": "ca7dbdda7126839b2ff74207dfbfa0c407c29e6033dbe8f25afc76e9f6457582"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H2A.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H2A.md",
+      "sha256WorkingTree": "7f482c10172a911eb52043e7a98311dd983b575ed067eb353687c935ab90c891"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H2A1.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H2A1.md",
+      "sha256WorkingTree": "b9f9ae325dba46bd6cffba938bda8e1ffc6121a91082881ecf045d4b90ec1bcf"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H2A2.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H2A2.md",
+      "sha256WorkingTree": "a452bf4bc78611283266e258ed969088d666f09d9257ea4b7c39d8e08ab3b867"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H2BA.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H2BA.md",
+      "sha256WorkingTree": "d1e679c363f06b1f206d525e428db15797a3e3c4fb0519f7190d3b69bced7f8e"
+    },
+    {
+      "status": "R",
+      "similarity": "097",
+      "oldPath": "MANGA_DECKS_H2BUX1.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H2BUX1.md",
+      "sha256WorkingTree": "4b020772eefd0f759fba41770f627919ad2d6beaabeb5dcaf2e3c794c69aef67"
+    },
+    {
+      "status": "R",
+      "similarity": "095",
+      "oldPath": "MANGA_DECKS_H2BUX11.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H2BUX11.md",
+      "sha256WorkingTree": "b4060c9e74a36b3e70515101436f528a4206fb570090a784b45fcc50e4c8c763"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H2BUX2.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H2BUX2.md",
+      "sha256WorkingTree": "b786c1e7ef432c12b369088263473ca889f93b833f1a65404b0783cd8fd995e6"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H3A.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H3A.md",
+      "sha256WorkingTree": "3dcc95a6dc2a80974eebc12ffe667a88b8429183b9c853edf5531cb646fe9915"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H3BA.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H3BA.md",
+      "sha256WorkingTree": "b4b7d049511b2845af71731ae7b9ad7bb07e95b78cc9a69f25f812f2b4650fd6"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H3BB0.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H3BB0.md",
+      "sha256WorkingTree": "49d8895cfce85eb4328c12cf4ac2640a3d94dc95d382cfd36ab0ac0b04ba8089"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H3BB1.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H3BB1.md",
+      "sha256WorkingTree": "ab4dfe7a71e614360ad6575866397fb143d4ac52b0139d6f527d05e815b8339e"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H4A.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H4A.md",
+      "sha256WorkingTree": "e394926fe6f1d0090ac6435cc549a35af37a54d1db6ff88cf2d7b707dacc36dd"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H4A1.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H4A1.md",
+      "sha256WorkingTree": "fcf3719da0921104b30e7834b1e1b52b038b207ee51a4f6ccad5718ad61b92bd"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H4BA.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H4BA.md",
+      "sha256WorkingTree": "10367ea4487b3978d8f278001cc65ed9ddcb849687b7605f670ccb4ab455a0ff"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H4BB.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H4BB.md",
+      "sha256WorkingTree": "aab20ede2b9fc4ec05bee65f1b0d79b26c0409c651ab0ccd809b113df5333f87"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H4BC.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H4BC.md",
+      "sha256WorkingTree": "845350781c64bfcda53e45a933e4e4697565659c77b4c38531af3fa8c4fca3e6"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H4BD1.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H4BD1.md",
+      "sha256WorkingTree": "c04127c011dfc094c148864f73a9099c76db55934eccb14c2eeb8ca08e5c064d"
+    },
+    {
+      "status": "R",
+      "similarity": "100",
+      "oldPath": "MANGA_DECKS_H4BD2.md",
+      "path": "docs/history/manga-decks/MANGA_DECKS_H4BD2.md",
+      "sha256WorkingTree": "29935e89ced159b5390963bf9960007d31edeaf8ab298c848392dc2bba219193"
+    },
+    {
+      "status": "A",
+      "path": "docs/history/releases/INDEX.md",
+      "sha256WorkingTree": "5cfa1275c1c4240ca5bed84f3b79ce6d26cfa79e74eafe5ce705bf9e2223e596"
+    },
+    {
+      "status": "A",
+      "path": "docs/INDEX.md",
+      "sha256WorkingTree": "8a1aa4fe43765a42869605f0327a76cc07acbb200aafcaf6dc11ba3101645587"
+    },
+    {
+      "status": "A",
+      "path": "docs/REPO_ORGANIZATION_REPORT.md",
+      "sha256WorkingTree": "62654159ffea517504fe7291bd2a16882612efca5b8f91552f29cd2ebc7c6821"
+    },
+    {
+      "status": "A",
+      "path": "docs/repo-path-map.json",
+      "sha256WorkingTree": "0f5fefb5b88f3b29f73bb4a5d20fdb7ea8b791621a161934c8d0e97b1ca9f787"
+    },
+    {
+      "status": "A",
+      "path": "e2e/deck-backup.spec.ts",
+      "sha256WorkingTree": "9ed9ddfc1aa22ec3f55c0977c871d207546e04aca9f2251b87b57b858a40b82a"
+    },
+    {
+      "status": "A",
+      "path": "e2e/local-decks-auth.spec.ts",
+      "sha256WorkingTree": "9956a3d5d1da8c498985e196ad565765f5e49863f23d926d0cd521ff70fbd814"
+    },
+    {
+      "status": "M",
+      "path": "e2e/manga-quick-add-ux11.spec.ts",
+      "sha256WorkingTree": "7141fa7072d66b641f0683e6ddb3b51a0cd14e3b91b5e4488165b382b7bf9f7c"
+    },
+    {
+      "status": "M",
+      "path": "experiments/manga-morphology-h2a/README.md",
+      "sha256WorkingTree": "9f76dadb74d87c7e6fa715dfd138f69e82ff169399b47f99057dd7aa537b8360"
+    },
+    {
+      "status": "M",
+      "path": "MANGA_DECKS_DESIGN.md",
+      "sha256WorkingTree": "03173fd7cf3832ef5c8df1ffc801bc1522a1d49a2ba133870fcd20f31d242dd0"
+    },
+    {
+      "status": "M",
+      "path": "MANGA_DECKS_MANUAL_TESTING.md",
+      "sha256WorkingTree": "4f37dab4a56fc2f0aa863748ea1361aa44c0b43dbbf7b769b703400939c55a51"
+    },
+    {
+      "status": "A",
+      "path": "MANGA_DECKS_RELEASE_2A.md",
+      "sha256WorkingTree": "f33a50fb618ad7635db89e07b65c24e4b79274bbc92b5622f69154841cafd93b"
+    },
+    {
+      "status": "A",
+      "path": "MANGA_DECKS_RELEASE_2B.md",
+      "sha256WorkingTree": "199ed87359c785c9e4500a66939b527220b7531b823aae9daeac80114ff7175b"
+    },
+    {
+      "status": "A",
+      "path": "MANGA_DECKS_RELEASE_2C.md",
+      "sha256WorkingTree": "021552a0835c48c47a7a2672244629ff3c2defe41d4902ac22908d625551b497"
+    },
+    {
+      "status": "A",
+      "path": "MANGA_DECKS_RELEASE_3.md",
+      "sha256WorkingTree": "a4d2b1452be46ba9c0ea1fa9477dcbbc3e96f47df178feff6b14e58637f72abe"
+    },
+    {
+      "status": "A",
+      "path": "MANGA_DECKS_RELEASE_AUDIT.md",
+      "sha256WorkingTree": "1320cb1afb1666f5cf302a62b5ae450f72c1af6c96a79b6af61b110436cd443a"
+    },
+    {
+      "status": "M",
+      "path": "package.json",
+      "sha256WorkingTree": "d7314725bec2b4a41f9d9a5a4c821b2896dffe192272c084705036871d05f2f5"
+    },
+    {
+      "status": "M",
+      "path": "README.md",
+      "sha256WorkingTree": "aaba3eca6f29967818c1d0f3b9f80cfa2f676e70f338bbb830e7c98641b0acab"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-acceptance.md",
+      "sha256WorkingTree": "7dd8335c4a6818a0d97676f5f6bd8e0f22c6539865cb00e134b305b5fdda42ad"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-accumulated-changes.json",
+      "sha256WorkingTree": "a7365efc03178ada6a8461568620b0825dc070109744382e0d2b4e32f39d6b0b"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-commit-a-files.json",
+      "sha256WorkingTree": null
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-commit-a-paths.txt",
+      "sha256WorkingTree": "3078d1a6e3801ae2a826db0bceb582169e07d29cbd046d6edb80ec256584dd5e"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-disable.patch",
+      "sha256WorkingTree": "805a13372a700f65926f1e593060522fa75fce9a1d56b1ef39fe6d119a707382"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-preparation-commit.txt",
+      "sha256WorkingTree": "3211971524ec1c1cfef5fa1a79303b672bd640579e6b0bf1820e1012bb0d9963"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-promote.patch",
+      "sha256WorkingTree": "e452ac900c8c644c15d5f7cb61fa93e903d41dfc942c255c9967879a7182835a"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-promotion-commit.txt",
+      "sha256WorkingTree": "2522b4e836330a65e725fc678f9f8a5d7bbcae4ef504be199c656e54c2176099"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-public-baseline.json",
+      "sha256WorkingTree": "5350a9e50db4f606307eba942b850bebed84826795fedb3369057af8912c89a3"
+    },
+    {
+      "status": "A",
+      "path": "release/manga-guest-release-notes.md",
+      "sha256WorkingTree": "0828e3a80bb5af69ab5bae77f426f6102f94de6718a5ad966cccbdc25ec850e3"
+    },
+    {
+      "status": "A",
+      "path": "scripts/audit-local-deck-boundaries.mjs",
+      "sha256WorkingTree": "ce57e2e269adc9ed5de9974b56ec3ed518d42386d12622243ff0a22bdf126bb4"
+    },
+    {
+      "status": "A",
+      "path": "scripts/audit-manga-candidate-bundle.mjs",
+      "sha256WorkingTree": "22f1d522c0220f49aba7c117bcc627087125324d2aa439d42b2a3687d506640d"
+    },
+    {
+      "status": "A",
+      "path": "scripts/audit-manga-candidate.mjs",
+      "sha256WorkingTree": "f1dc3f57ed067b401668a9857e31f0a85b77de19f9fdd17e196d6b4e23ef9ede"
+    },
+    {
+      "status": "A",
+      "path": "scripts/audit-manga-local-restart.cjs",
+      "sha256WorkingTree": "e48fd1e74ec83331a36fb49e81ce8af1352c20b907cc1d79a6839fb15e39ca76"
+    },
+    {
+      "status": "A",
+      "path": "scripts/audit-manga-public-build.mjs",
+      "sha256WorkingTree": "0ab3f267ce842d275695217a199457954700a45bffc717c70ecf238ac16b5235"
+    },
+    {
+      "status": "A",
+      "path": "scripts/audit-manga-release-rollback.mjs",
+      "sha256WorkingTree": "1a7d72800af6738b526245ac75712d578600871495a128114bfb5cffbdad1b89"
+    },
+    {
+      "status": "A",
+      "path": "scripts/audit-repo-docs.mjs",
+      "sha256WorkingTree": "26cd6232833a61e552962a0facf7de6c668fb95fb98187dc1254802ca8716728"
+    },
+    {
+      "status": "A",
+      "path": "scripts/check-manga-promotion-proposal.mjs",
+      "sha256WorkingTree": "dfee67f92c3c7281bdd8b46b99df5a96f07dee738fb5de7c30a1de279e361005"
+    },
+    {
+      "status": "A",
+      "path": "scripts/check-manga-release-budget-boundary.mjs",
+      "sha256WorkingTree": "bed4d6ae375280e1066a052554b7236a0d0ba90ba055748d2b8fc81238224f52"
+    },
+    {
+      "status": "M",
+      "path": "scripts/compile-i18n.mjs",
+      "sha256WorkingTree": "9bd7327c3d8e4add411248fa7c737c28428f80e7322df292d7f2d7540a8e17f7"
+    },
+    {
+      "status": "A",
+      "path": "scripts/create-manga-release-manual-fixture.mjs",
+      "sha256WorkingTree": "3bcea38d3934462300aeaad85347f6a923e1b56a61c361bdbf8cfb7e526948ad"
+    },
+    {
+      "status": "A",
+      "path": "scripts/prepare-manga-rollback-baseline.mjs",
+      "sha256WorkingTree": "4cde27162b50ccec2554af7350c666d7aabe41096ff333578526f20ec35c52a3"
+    },
+    {
+      "status": "A",
+      "path": "scripts/serve-manga-candidate.mjs",
+      "sha256WorkingTree": "d73d2abf1c19811a2c7ac8ace5697de97521156892003ca43c39b1857a905e67"
+    },
+    {
+      "status": "M",
+      "path": "src/app/app.routes.spec.ts",
+      "sha256WorkingTree": "e0b9bacc25fbe559e8dcce4ce210501d8a6d83c931e7d3c3a0bbeca91f80f747"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/auth.service.spec.ts",
+      "sha256WorkingTree": "26ff71641621ae9cbfc286130d740f1bde3b0ebc0508d12fedcbd8621d09c655"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/auth.service.ts",
+      "sha256WorkingTree": "f013aa9bdf838160fa6f9630523d127d10917f34d875469ddd544a8eeccba373"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/custom-deck-access.ts",
+      "sha256WorkingTree": "e7591ca5c1332750465b6317825f7f2f560d2e7dc213c2f27667745f7769fa6f"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/custom-deck-route.guard.ts",
+      "sha256WorkingTree": "b23f2364efaf9f8244e2025461a8287734d5940eb67b31ce818b306cb15cbfdb"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/custom-deck.repository.ts",
+      "sha256WorkingTree": "881059230eb876834f021063efcb1a700e4414e476f91bc7298f460300773d04"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/custom-guest-auth.spec.ts",
+      "sha256WorkingTree": "40d6089d74e22b62b3e345dc28d21eccef4aa57d340d8889ce2590124d1f3847"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/custom-local-auth.spec.ts",
+      "sha256WorkingTree": "dac56414f06369fb68cd362d4a77fe3dd09686b96f67e9c19d9f5a0f22b8091c"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/custom-local-presence.ts",
+      "sha256WorkingTree": "574b46820d0d317928f6cd7ed51490509dd5feb75522bda410ad2dc8e3c4d9a8"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/deck-backup-contract.ts",
+      "sha256WorkingTree": "43067f1b4c5f5e24b8f2a2f09176e242b01ff3312067514777a25d90d56b8e9d"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/deck-backup.service.ts",
+      "sha256WorkingTree": "f4345817327b351f8c7e9dc7c135a206d2c9dfcf1606241b1fc090b10f72fc21"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/deck-backup.spec.ts",
+      "sha256WorkingTree": "f738385217f22b5fc04f5bd501e20ff33133603f8431b7345cc79389479c274c"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/deck-catalog.service.ts",
+      "sha256WorkingTree": "3aec908b6fefca34c4e26d0e2185235607a80babb9d4b4c5e9e6b68ea6910ce4"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/deck-persistence-router.ts",
+      "sha256WorkingTree": "e359026b39db00cc5d74a3f0ed6cfd16e04d4b14ecbb134e3fe23f5c238f0e1f"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/deck-route-resource.ts",
+      "sha256WorkingTree": "4eec707acb3af71ab80c1715099107b50bbf6a5582d11c25c83a1e5dcc87a68c"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/manga-deck-assisted.service.ts",
+      "sha256WorkingTree": "84a6d3026d72998cc516f9abbb15870bda9fce2e88c9045260d40cf82883787e"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/manga-local-release-audit.spec.ts",
+      "sha256WorkingTree": "60d91af558ea5015160e0c343bce04ebc2f8161e939fe77e696f8e919453e262"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/manga-volume-vocabulary.service.ts",
+      "sha256WorkingTree": "a7eb4417559a63db911752de886d7523ffefddee3d60b175163a68469c00aa37"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/sync-isolation.spec.ts",
+      "sha256WorkingTree": "cb08147687793aeff48279887090ad7805caffe240b421eb4f8bc453bccbeeec"
+    },
+    {
+      "status": "A",
+      "path": "src/app/core/services/workspace-legacy-copy.ts",
+      "sha256WorkingTree": "754ae5269cc2c6dbf7496f59912d8779f95b9b3ddb582078700359852fc5444e"
+    },
+    {
+      "status": "M",
+      "path": "src/app/core/services/workspace-migration.service.ts",
+      "sha256WorkingTree": "36b93cde2c3bb9f724286089ab0e59800c428731768bc7a275b76a2f69d6e642"
+    },
+    {
+      "status": "A",
+      "path": "src/app/features/anki-backup/anki-backup.page.scss",
+      "sha256WorkingTree": "df58af107635252f6b40ec27ef3f51b16481de626c19d172505a5e34e2ee47a9"
+    },
+    {
+      "status": "A",
+      "path": "src/app/features/anki-backup/anki-backup.page.spec.ts",
+      "sha256WorkingTree": "b42a68423345c53873a0cc2d41455cae6c668456a57ca06b0dc69655b5bf2f9d"
+    },
+    {
+      "status": "A",
+      "path": "src/app/features/anki-backup/anki-backup.page.ts",
+      "sha256WorkingTree": "9aaf662aa13953a873d4792720966497683ae4f40b99e24177a20c95eec7d454"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki-cards/anki-cards.page.html",
+      "sha256WorkingTree": "e2ffa9379d120db4df533c3285a8ce9acda5fc995219f220d8b6eac66964ecbe"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki-cards/anki-cards.page.ts",
+      "sha256WorkingTree": "f53878181549e0ec544095d385436b1cf88837223f136bc6831bcd2752e6f77a"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki-settings/anki-settings.page.html",
+      "sha256WorkingTree": "c59a23539513f2857c7b22512e5a65d50646a47d56b043ba3e2eabd801b06cb0"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki-settings/anki-settings.page.ts",
+      "sha256WorkingTree": "5e35b61c59450be5f74836f942023fe72d19541deb733cdb84f8e0a37fd990a8"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki-stats/anki-stats.page.html",
+      "sha256WorkingTree": "3f51cab8cdc2c47c67062c903bfc1a674a04e5275a9511d13effabf9d535d0b2"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki-stats/anki-stats.page.ts",
+      "sha256WorkingTree": "21d54eda9aaab9718fb321bf8cee4108f060c94ea80b7465a637a1815d352bb8"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki-study/anki-study.page.html",
+      "sha256WorkingTree": "410d23260c5a98f22b276e9b511883f0e433d6f571a26f26b3f8187ff81d3f92"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki-study/anki-study.page.ts",
+      "sha256WorkingTree": "79473deeadee9aa4e749e9b7bf3e3eb101c4fff86ce8b501d6e299d37df319c7"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki/anki.page.html",
+      "sha256WorkingTree": "9a01092303bb5aeee471085d244141bdbbdb6e1215b06b3c1ba1d19effb84ce4"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki/anki.page.ts",
+      "sha256WorkingTree": "67f4e1c0b850bc80bd5f39b322e64de52a3c05ab2ff50f608c8bac502d12195b"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki/anki.routes.ts",
+      "sha256WorkingTree": "fab47e69a879d6a9b924a9a02ba73141968fd83f4af3abbb593f434f191b382c"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki/components/deck-card/deck-card.html",
+      "sha256WorkingTree": "fb94ae85e5e9451b2e14e3b4ea20fa2a0c4d32df6518714bbed28c8b70813d78"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/anki/components/deck-card/deck-card.ts",
+      "sha256WorkingTree": "e759d269d48e930c4700ff22b97d9fbbd9a3e44f4d9b0de281ff688597551c11"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/auth/auth.page.html",
+      "sha256WorkingTree": "1ee54d2b68e24526d4a8e6af3f1e5f59a616b6189abd96f4ead971e4a8b7d04e"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/auth/auth.page.scss",
+      "sha256WorkingTree": "3bc56a5f7024f4dc835341619ba01b8d126df8ff0bda51e772a92764c2eb4b68"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/auth/auth.page.ts",
+      "sha256WorkingTree": "c34247cb716aa01aedfc02b7731706585940d6399e0d64a084975fa7813fc67b"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/auth/navigation-ux.spec.ts",
+      "sha256WorkingTree": "e9c202e2e96806059edd085ab5393ac6d7e95ad2555d2c13e7f68d8f641011a8"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/manga/manga-ocr-explorer.ts",
+      "sha256WorkingTree": "02d5d699b620d9a3e5b98c3141f0a979929a9d41ae9ae3d8fd033f296f6b3410"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/manga/manga-ocr-location.ts",
+      "sha256WorkingTree": "f4c0f7ba9b759c1bd1f70b1cedbd76fa470f3befa4461f823299fbfc9b033c54"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/manga/manga-reader.page.ts",
+      "sha256WorkingTree": "a3d22b379f5a1b77cf9e509fc9fc9fd4d33724d6db8f68110d487b3f8144c2bb"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/manga/manga-volume-vocabulary.page.ts",
+      "sha256WorkingTree": "ad03c0afd2723e4b589e87cd19b28eee0314a425d309993110996c76dfb333e4"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/manga/manga.page.ts",
+      "sha256WorkingTree": "2f3b34f1c9fb5c2fe690b8323df0cdfb5339e1e8466063fa804eeebb45f475df"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/manga/manga.routes.ts",
+      "sha256WorkingTree": "02df3ee343b33fc8049a35bb86ae5ef526ed88e9ca887a54ffde9a9e49ae4048"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/profile/profile.page.html",
+      "sha256WorkingTree": "9b084d5bb3e9237ed4322f51e6c587bb7a14a80089a89e23eb5d0a480814db6d"
+    },
+    {
+      "status": "M",
+      "path": "src/app/features/profile/profile.page.ts",
+      "sha256WorkingTree": "4d802d0207364549057420a000a8b402801a6769ae586c39de2108722130c704"
+    },
+    {
+      "status": "M",
+      "path": "src/app/navigation-audit.ts",
+      "sha256WorkingTree": "c6506174cafae289c9e712a2b6eee0f15b9fdef9dd90079b1a54a4801bd33461"
+    },
+    {
+      "status": "A",
+      "path": "src/app/release/manga-candidate.providers.ts",
+      "sha256WorkingTree": "363133d3db29b35a8104a563faad877208f5420c69e9f26f5c6ecb52174bc762"
+    },
+    {
+      "status": "A",
+      "path": "src/app/release/manga-candidate.spec.ts",
+      "sha256WorkingTree": "1150081a80cc021cf64f2472919ec9112550e797009600cba2b58ea1348e7f24"
+    },
+    {
+      "status": "M",
+      "path": "src/app/shared/components/dictionary-popup/dictionary-popup.ts",
+      "sha256WorkingTree": "ad3cd31782e77aa0db04cb6c1845fbc550e61185bc38b9c84f04b01a70a8fab9"
+    },
+    {
+      "status": "A",
+      "path": "src/app/shared/components/local-deck-notice/local-deck-notice.spec.ts",
+      "sha256WorkingTree": "76182e0103d48a1991833894d238834984729062024d8e29760a5e3efe91eece"
+    },
+    {
+      "status": "A",
+      "path": "src/app/shared/components/local-deck-notice/local-deck-notice.ts",
+      "sha256WorkingTree": "da4418c5d1d349d723f72db68f73e285c5e73c62073eeb100a6e4744b8a96bdc"
+    },
+    {
+      "status": "M",
+      "path": "src/assets/i18n/ca.json",
+      "sha256WorkingTree": "042695bec8cd0ff93e709389fe896cc9edc5d0b715494da76520f374b370a04c"
+    },
+    {
+      "status": "A",
+      "path": "src/assets/i18n/deck-backup.generated.ts",
+      "sha256WorkingTree": "2ea646d80507b7df5cb8fb2923853a64e413ec4f05fe2ad3355dcf26b36b7e22"
+    },
+    {
+      "status": "M",
+      "path": "src/assets/i18n/dictionaries.generated.ts",
+      "sha256WorkingTree": "5fe981f611d8df7dfeaa31b6492a2f053d51381e69d8f919a6d5607f4cf98e97"
+    },
+    {
+      "status": "M",
+      "path": "src/assets/i18n/en.json",
+      "sha256WorkingTree": "0b967ecd04fb69e64c8558d46672e3911fc4e1aa11a741e14aa5819adc2eea97"
+    },
+    {
+      "status": "M",
+      "path": "src/assets/i18n/es.json",
+      "sha256WorkingTree": "9dedf70b1a26993bf0fefb05d7833d8251110aa0fdde389999e09b7cf9e8acd3"
+    },
+    {
+      "status": "A",
+      "path": "src/assets/i18n/local-decks.generated.ts",
+      "sha256WorkingTree": "ec830e8bd3040cccf827797be6f532c986fab0d11c53accd20a912637b242bc5"
+    },
+    {
+      "status": "A",
+      "path": "src/main.manga-candidate.ts",
+      "sha256WorkingTree": "e2abd5920759842ebc158c2480863f4fd1358d6b032c3d205bd80dace1ae9f6b"
+    },
+    {
+      "status": "M",
+      "path": "SUPABASE_SETUP.md",
+      "sha256WorkingTree": "7e18af9a061f0e1936d921cc8fabfe99765c29a3893736c29ba14076bd71ed3d"
+    },
+    {
+      "status": "A",
+      "path": "tsconfig.manga-candidate.json",
+      "sha256WorkingTree": "e60943ebbebd870e49be016855da3ab49cde55dd3e4a06eac3fe4f249bc4099d"
+    }
+  ]
+}

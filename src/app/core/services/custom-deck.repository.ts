@@ -11,6 +11,7 @@ import { MANGA_DECK_ASSISTED_ENABLED } from './manga-deck-gate';
 import { CustomPublication, CustomReconciliationState, emptyCustomReconciliation } from '../models/custom-deck-reconciliation.model';
 import { CustomGuestInventory } from '../models/custom-guest-import.model';
 import {CUSTOM_DECKS_ENABLED} from './custom-deck-gates';
+import {CustomDeckAccess} from './custom-deck-access';
 export {CUSTOM_DECKS_ENABLED} from './custom-deck-gates';
 export const CUSTOM_DECK_IDB = new InjectionToken<IDBFactory>('custom deck IDB', { providedIn: 'root', factory: () => globalThis.indexedDB });
 export const CUSTOM_DECK_DATABASE = 'kana-study-custom-decks-v1';
@@ -50,6 +51,11 @@ export class CustomDeckRepository {
     private readonly workspace = inject(WorkspaceService);
     private readonly customEnabled = inject(CUSTOM_DECKS_ENABLED);
     private readonly mangaAssistedEnabled = inject(MANGA_DECK_ASSISTED_ENABLED);
+    private readonly access=inject(CustomDeckAccess);
+    private writeGuard(owner:LocalWorkspaceId):()=>void {
+        const epoch=this.workspace.activationRevision();
+        const guard=()=>this.access.assertWrite(owner,epoch);guard();return guard;
+    }
     readonly catalogRevision = signal(0);
     readonly progressRevision = signal(0);
     readonly journalRevision = signal(0);
@@ -85,8 +91,10 @@ export class CustomDeckRepository {
     }
     private async transaction<T>(owner: LocalWorkspaceId, write: boolean, run: (rows: Rows) => T): Promise<T> {
         requireValid(owner === 'guest' || owner.startsWith('user:'));
+        const guard=write?this.writeGuard(owner):()=>{};
         const db = await this.open();
         try {
+            guard();
             return await new Promise<T>((resolve, reject) => {
                 const tx = db.transaction([...stores], write ? 'readwrite' : 'readonly');
                 let result: T;
@@ -97,15 +105,17 @@ export class CustomDeckRepository {
                 tx.onabort = () => reject(failure ?? tx.error ?? new CustomDeckError('Custom deck transaction aborted'));
                 tx.onerror = () => { };
                 void Promise.all(stores.map(async (s) => [s, await request(tx.objectStore(s).index('workspace').getAll(owner))] as const)).then(all => {
+                    guard();
                     const rows = Object.fromEntries(all.map(([s, items]) => [s, new Map(items.map((r: Row) => [r.key, r]))])) as Rows;
                     if(write)for (const store of stores) for (const row of rows[store].values()) original.set(row,canonical(row));
                     if(write)for(const store of stores)originalKeys.set(store,[...rows[store].keys()]);
                     result = run(rows);
-                    if(write)for(const store of stores)for(const k of originalKeys.get(store)??[])if(!rows[store].has(k))tx.objectStore(store).delete([owner,k]);
+                    const checkWrite=()=>{try{guard();}catch(e){failure=e;tx.abort();}};
+                    if(write)for(const store of stores)for(const k of originalKeys.get(store)??[])if(!rows[store].has(k))tx.objectStore(store).delete([owner,k]).onsuccess=checkWrite;
                     if (write)
                         for (const s of stores)
                             for (const row of rows[s].values())
-                                if(original.get(row)!==canonical(row))tx.objectStore(s).put(row);
+                                if(original.get(row)!==canonical(row))tx.objectStore(s).put(row).onsuccess=checkWrite;
                 }).catch(e => { failure = e; tx.abort(); });
             });
         }
@@ -143,9 +153,11 @@ export class CustomDeckRepository {
         this.channel?.postMessage({workspace:owner});
     }
     async create(opId: string, input: CustomDeck, inputs: readonly CustomDeckCard[], owner = this.owner()): Promise<void> {
+        const guard=this.writeGuard(owner);
         const deck = validateDeck(input);
         requireValid(Array.isArray(inputs) && inputs.length <= 1000);
         const cards = await Promise.all(inputs.map(validateCard));
+        guard();
         requireValid(cards.every(c => c.deckId === deck.id) && new Set(cards.map(c => c.id)).size === cards.length && new Set(cards.map(c => c.lexicalIdentity.key + '|' + c.direction)).size === cards.length);
         return this.mutate(opId, 'create', deck.id, { deck, cards }, owner, r => {
             const previous = r.decks.get(deck.id);
@@ -161,7 +173,9 @@ export class CustomDeckRepository {
         });
     }
     async editCard(opId: string, input: CustomDeckCard, expectedVersion: number, owner = this.owner()): Promise<void> {
+        const guard=this.writeGuard(owner);
         const card = await validateCard(input);
+        guard();
         return this.mutate(opId, 'edit-card', card.deckId, { card, expectedVersion }, owner, r => {
             const old = r.cards.get(key(card.deckId, card.id))?.value as CustomDeckCard | undefined;
             requireValid(old && old.contentVersion === expectedVersion && card.contentVersion === expectedVersion + 1);
@@ -172,6 +186,7 @@ export class CustomDeckRepository {
     }
     /** Additive workspace backfill. A failed/stale migration never deletes the original journal. */
     async migratePermanentRegistry(owner = this.owner()): Promise<void> {
+        const guard=this.writeGuard(owner);
         if(await this.transaction(owner,false,r=>r['registry-meta'].get('v1')?.value.complete===true))return;
         const history=(await this.journal(owner)).filter(o=>o.kind==='manga-confirmation');
         for(const op of history){
@@ -181,6 +196,7 @@ export class CustomDeckRepository {
                 Number.isSafeInteger(op.localRevision)&&op.localRevision>0&&op.request===canonical({kind:op.kind,entityId:op.entityId,payload:p}));
         }
         const fingerprint=(ops:readonly CustomCatalogOperation[])=>canonical(ops.map(o=>[o.id,o.request]).sort((a,b)=>a[0].localeCompare(b[0])));
+        guard();
         await this.transaction(owner,true,r=>{
             requireValid(fingerprint([...r.journal.values()].map(o=>o.value).filter(o=>o.kind==='manga-confirmation'))===fingerprint(history));
             for(const op of history)this.registerConfirmation(r,op.payload as MangaConfirmedCardOperation,owner,op.localRevision);
@@ -230,7 +246,7 @@ export class CustomDeckRepository {
         // Snapshot once: callers cannot mutate the reviewed request during its asynchronous validation.
         const p = structuredClone(input);
         const epoch=this.workspace.activationRevision();
-        const allowed = () => {current();requireValid(this.customEnabled() && this.mangaAssistedEnabled() && this.owner() === owner && this.workspace.activationRevision()===epoch);};
+        const allowed = () => {current();this.access.assertWrite(owner,epoch);requireValid(this.customEnabled() && this.mangaAssistedEnabled() && this.owner() === owner && this.workspace.activationRevision()===epoch);};
         allowed(); await this.migratePermanentRegistry(owner); allowed(); await validateMangaConfirmedOperation(p); allowed();
         requireValid(p.confirmation.workspace === owner);
         return this.mutate(p.confirmation.id, 'manga-confirmation', p.deck.id, p, owner, r => {
@@ -281,8 +297,9 @@ export class CustomDeckRepository {
     }
     /** Internal lifecycle API; no public control or cloud activation is introduced. */
     async lifecycle(opId:string,action:'delete'|'restore'|'archive',kind:'card'|'deck',entityId:string,deckId:string,owner=this.owner()):Promise<void>{
+        const guard=this.writeGuard(owner);
         const payload=await this.transaction(owner,false,r=>kind==='card'?r.cards.get(key(deckId,entityId))?.value:r.decks.get(entityId)?.value);
-        requireValid(payload);await this.mutate(opId,action,deckId,{kind,id:entityId,payload},owner,()=>{});
+        guard();requireValid(payload);await this.mutate(opId,action,deckId,{kind,id:entityId,payload},owner,()=>{});
     }
     async syncSnapshot(owner:LocalWorkspaceId){return this.transaction(owner,false,r=>({journal:[...r.journal.values()].map(x=>x.value).sort((a,b)=>a.localRevision-b.localRevision),
         state:r.reconciliation.get('v1')?.value??emptyCustomReconciliation()}));}
@@ -372,8 +389,9 @@ export class CustomDeckRepository {
         });
     }
     async undoReview(event: DeckReviewEvent, daily: DeckDailyState, owner = this.owner()): Promise<void> {
+        const guard=this.writeGuard(owner);
         requireValid(eventValid(event) && dailyValid(daily));
-        const undoId=await digest('undo-',event.id);
+        const undoId=await digest('undo-',event.id);guard();
         return this.mutate(undoId, 'undo', event.deckId, { event, daily }, owner, r => {
             const row = r.events.get(event.id), p = r.progress.get(key(event.deckId, event.entryId));
             requireValid(row && !row.voidedBy && p?.head === event.id && canonical(row.value) === canonical(event));

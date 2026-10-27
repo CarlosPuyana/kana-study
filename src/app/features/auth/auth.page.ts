@@ -1,6 +1,7 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, signal, ViewChild } from '@angular/core';
+import {LocalDeckTranslations} from '../../shared/components/local-deck-notice/local-deck-notice';
+import { afterRenderEffect, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { safeReturnUrl } from '../../core/services/return-navigation';
 import { AuthMode, AuthService, validUsername } from '../../core/services/auth.service';
 import { SyncService } from '../../core/services/sync.service';
@@ -9,22 +10,33 @@ import {CustomCloudPanel} from '../profile/custom-cloud-panel';
 import {CUSTOM_DECK_SYNC_ENABLED} from '../../core/services/custom-deck-sync-transport';
 
 @Component({
-  selector: 'app-auth-page', imports: [FormsModule, RouterLink,CustomCloudPanel], templateUrl: './auth.page.html', styleUrl: './auth.page.scss',
+  selector: 'app-auth-page', providers:[{provide:TranslationService,useClass:LocalDeckTranslations}], imports: [FormsModule,CustomCloudPanel], templateUrl: './auth.page.html', styleUrl: './auth.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthPage implements AfterViewInit {
+  private readonly host:ElementRef<HTMLElement>=inject(ElementRef);
+  @HostListener('keydown',['$event']) trapTab(raw:Event):void {
+    const event=raw as KeyboardEvent;
+    if(event.key!=='Tab')return;
+    const controls=Array.from(this.host.nativeElement.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],input:not([disabled]),textarea:not([disabled])')).filter(el=>el.getClientRects().length);
+    const first=controls[0],last=controls.at(-1);if(!first||!last)return;
+    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+  }
   readonly customTools=inject(CUSTOM_DECK_SYNC_ENABLED);
   readonly auth = inject(AuthService); readonly i18n = inject(TranslationService);
   private readonly route = inject(ActivatedRoute); private readonly router = inject(Router); private readonly sync = inject(SyncService);
   readonly returnUrl=safeReturnUrl(this.route.snapshot.queryParamMap.get('return'),this.route.snapshot.queryParamMap.has('return')?'/':'/profile');
   readonly closeUrl=safeReturnUrl(this.route.snapshot.queryParamMap.get('return'));
+  @ViewChild('decisionAction') decisionAction?:ElementRef<HTMLButtonElement>;
+  private decisionFocused=false;
+  constructor(){afterRenderEffect(()=>{if(!this.auth.needsGuestImportDecision()){this.decisionFocused=false;return;}if(!this.loading()&&!this.decisionFocused&&this.decisionAction){this.decisionAction.nativeElement.focus();this.decisionFocused=true;}});}
   @ViewChild('firstField') firstField?: ElementRef<HTMLInputElement>;
   readonly mode = signal<AuthMode>(normalizeMode(this.route.snapshot.queryParamMap.get('mode')));
   readonly loading = signal(false); readonly message = signal<string | null>(null); readonly error = signal<string | null>(null);
   displayName = ''; username = ''; email = ''; password = ''; confirmation = ''; newPassword = '';
 
   ngAfterViewInit(): void { queueMicrotask(() => this.firstField?.nativeElement.focus()); }
-  @HostListener('document:keydown.escape') close(): void { void this.router.navigateByUrl(this.closeUrl); }
+  @HostListener('document:keydown.escape') async close():Promise<void> {if(this.auth.needsGuestImportDecision()&&!this.customTools())await this.auth.signOut();await this.router.navigateByUrl(this.closeUrl);}
   switchMode(mode: AuthMode): void { this.mode.set(mode); this.error.set(null); this.message.set(null); void this.router.navigate([], { queryParams: { mode }, queryParamsHandling:'merge', replaceUrl: true }); }
 
   async submit(): Promise<void> {
@@ -58,13 +70,12 @@ export class AuthPage implements AfterViewInit {
 
   async chooseImport(decision: 'merge' | 'account'): Promise<void> {
     this.loading.set(true);
-    try { await this.auth.chooseGuestImport(decision); this.sync.schedule(0); this.reload(this.returnUrl); }
+    try { if(await this.auth.chooseGuestImport(decision)){this.sync.schedule(0);this.reload(this.returnUrl);} }
     finally { this.loading.set(false); }
   }
   finishConfirmation(): void { if(this.auth.authenticated())this.reload(this.returnUrl);else this.switchMode('login'); }
 
   private async afterSignIn(): Promise<void> {
-    await new Promise(resolve => setTimeout(resolve, 0));
     if (!this.auth.needsGuestImportDecision()) { this.sync.schedule(0); this.reload(this.returnUrl); }
   }
   private reload(route: string): void { window.location.href = `${window.location.pathname}#${route}`; window.location.reload(); }

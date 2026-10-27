@@ -83,11 +83,11 @@ No se repiten SQL/PostgREST porque no cambia ningún contrato remoto. No se util
 
 Evidencia local ignorada por Git: `.cache/h2bux1-{directed,suite,browser,build}-serial.log`, `.cache/h2bux1-scope.json` y capturas siguientes, inspeccionadas visualmente. El panel usa variables semánticas, controles táctiles y scrolling vertical acotado, sin desbordamiento horizontal a 320/390/1280 px:
 
-- [Añadir rápido, escritorio oscuro](.cache/h2bux1-quick-desktop-dark.png).
-- [Añadir rápido, móvil claro 390 px](.cache/h2bux1-quick-mobile-light.png).
-- [Añadir rápido, móvil oscuro 320 px](.cache/h2bux1-quick-narrow-dark.png).
-- [Edición compacta, móvil claro](.cache/h2bux1-edit-mobile-light.png).
-- [Edición compacta, escritorio oscuro](.cache/h2bux1-edit-desktop-dark.png).
+- [Añadir rápido, escritorio oscuro](../../../.cache/h2bux1-quick-desktop-dark.png).
+- [Añadir rápido, móvil claro 390 px](../../../.cache/h2bux1-quick-mobile-light.png).
+- [Añadir rápido, móvil oscuro 320 px](../../../.cache/h2bux1-quick-narrow-dark.png).
+- [Edición compacta, móvil claro](../../../.cache/h2bux1-edit-mobile-light.png).
+- [Edición compacta, escritorio oscuro](../../../.cache/h2bux1-edit-desktop-dark.png).
 
 ## Archivos y preservación
 

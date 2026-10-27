@@ -1,7 +1,7 @@
 # Manga × Mazos H2A — experimento local
 
 Este directorio no se importa desde Angular, no publica recursos y no crea tarjetas.
-Los resultados **no autorizan selección automática**. Ver [informe](../../MANGA_DECKS_H2A.md).
+Los resultados **no autorizan selección automática**. Ver [informe](../../docs/history/manga-decks/MANGA_DECKS_H2A.md).
 
 ## Reproducir
 
@@ -80,7 +80,7 @@ certificado ni integra los motores en el bundle Angular.
 
 ## H2A.1 — léxico enriquecido local
 
-Ver [MANGA_DECKS_H2A1.md](../../MANGA_DECKS_H2A1.md). Se mantiene el corpus original
+Ver [MANGA_DECKS_H2A1.md](../../docs/history/manga-decks/MANGA_DECKS_H2A1.md). Se mantiene el corpus original
 byte a byte y los informes H2A originales. No se necesita repetir la comparativa de
 motores ni el benchmark browser H2A para ejecutar esta extensión.
 
@@ -128,7 +128,7 @@ se comprueban como contratos; no se afirma que TypeScript haya auditado todo el 
 
 ## H2A.2 — reconocimiento, entrada, sentido y tarjeta
 
-Ver [MANGA_DECKS_H2A2.md](../../MANGA_DECKS_H2A2.md). Reutiliza exactamente los recursos
+Ver [MANGA_DECKS_H2A2.md](../../docs/history/manga-decks/MANGA_DECKS_H2A2.md). Reutiliza exactamente los recursos
 y el corpus H2A.1 sin sobrescribir sus informes ni su validador:
 
 ```sh

@@ -1,0 +1,5 @@
+{
+ "extends":"./tsconfig.app.json",
+ "compilerOptions":{"outDir":"./out-tsc/manga-candidate"},
+ "files":["src/main.manga-candidate.ts"]
+}

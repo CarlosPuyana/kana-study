@@ -37,6 +37,7 @@ async function prepare(page:Page,mode:'actual'|'absent'|'single'='absent',openCa
   await trackPanel(page);
 }
 async function trackPanel(page:Page){
+  await expect(panel(page)).toBeVisible();
   await page.evaluate(()=>{const c=(window as any).ng.getComponent(document.querySelector('app-manga-deck-review'));(window as any).ux11={repo:c.service.repository,preview:0,confirm:0};
     for(const name of ['preview','confirm']){const original=c.service[name].bind(c.service);c.service[name]=(...args:any[])=>{(window as any).ux11[name]++;return original(...args);};}});
 }

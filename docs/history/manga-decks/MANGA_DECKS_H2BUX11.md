@@ -75,14 +75,14 @@ No se presenta una reducción artificial de acciones frente a H2B-UX1 para datos
 
 Capturas completas de Chromium en contextos de prueba, con el mismo OCR y títulos sintéticos; no son imágenes del manga del usuario. Los artefactos locales se conservan en `.cache/` y no se versionan:
 
-- [Anterior: sin propuesta, después de enviar vacío, 320×560](.cache/ux11-before-absent-attempt.png).
-- [Anterior: dos propuestas auténticas, antes de enviar](.cache/ux11-before-actual.png).
-- [Nuevo: diccionario auténtico, escritorio oscuro](.cache/ux11-after-actual-desktop-dark.png).
-- [Nuevo: diccionario auténtico, móvil claro](.cache/ux11-after-actual-mobile-light.png).
-- [Nuevo: lectura y significado elegidos del diccionario auténtico](.cache/ux11-after-reviewed-narrow-dark.png).
-- [Nuevo: sin propuesta/errores y pie accesible, 320×480 oscuro](.cache/ux11-after-absent-narrow-dark.png).
-- [Nuevo: sin propuesta/errores, claro](.cache/ux11-after-absent-mobile-light.png).
-- [Nuevo: propuesta completa, móvil estrecho oscuro](.cache/ux11-after-complete-narrow-dark.png).
+- [Anterior: sin propuesta, después de enviar vacío, 320×560](../../../.cache/ux11-before-absent-attempt.png).
+- [Anterior: dos propuestas auténticas, antes de enviar](../../../.cache/ux11-before-actual.png).
+- [Nuevo: diccionario auténtico, escritorio oscuro](../../../.cache/ux11-after-actual-desktop-dark.png).
+- [Nuevo: diccionario auténtico, móvil claro](../../../.cache/ux11-after-actual-mobile-light.png).
+- [Nuevo: lectura y significado elegidos del diccionario auténtico](../../../.cache/ux11-after-reviewed-narrow-dark.png).
+- [Nuevo: sin propuesta/errores y pie accesible, 320×480 oscuro](../../../.cache/ux11-after-absent-narrow-dark.png).
+- [Nuevo: sin propuesta/errores, claro](../../../.cache/ux11-after-absent-mobile-light.png).
+- [Nuevo: propuesta completa, móvil estrecho oscuro](../../../.cache/ux11-after-complete-narrow-dark.png).
 
 El antes se capturó antes de editar producción; no se reconstruyó con un reset. Los escenarios anteriores tenían una página y los nuevos usan dos para verificar origen, contexto adicional y retorno: no se comparan alturas como una métrica cuantitativa entre esas capturas. Evidencia del diagnóstico: `.cache/ux11-before.json`, `.cache/ux11-real-terms.json`, `.cache/ux11-before.cjs` y `.cache/ux11-dictionary.mjs`.
 

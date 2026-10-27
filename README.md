@@ -2,6 +2,10 @@
 
 Aplicación web para estudiar japonés desde el navegador. Incluye contenido y modos de estudio para kana, kanji y vocabulario, con progreso guardado localmente en el dispositivo.
 
+## Documentación
+
+**[Índice central de documentación](docs/INDEX.md)** — arquitectura, módulos, hitos, lanzamiento y evidencias locales.
+
 ## Módulos
 
 - Kana

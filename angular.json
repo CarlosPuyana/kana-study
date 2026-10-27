@@ -73,6 +73,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "manga-candidate": {
+              "browser": "src/main.manga-candidate.ts",
+              "tsConfig": "tsconfig.manga-candidate.json",
+              "outputPath": {
+                "base": "dist/kana-study-candidate",
+                "browser": "browser"
+              },
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true
             }
           },
           "defaultConfiguration": "production"

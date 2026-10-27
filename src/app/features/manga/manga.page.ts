@@ -1,3 +1,4 @@
+import {CustomDeckAccess} from '../../core/services/custom-deck-access';
 import {MangaBuiltinService} from '../../core/services/manga-builtin.service';
 import {MangaStudySavedRepository} from '../../core/services/manga-study-saved.repository';
 import {LocalManga} from '../../core/models/local-manga.model';
@@ -104,7 +105,7 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
             <a [routerLink]="['/manga/read', volume.id]">{{
               i18n.t(progress()[volume.id] ? "manga.continue" : "manga.read")
             }}</a
-            >@if(customEnabled()&&assistedEnabled()){<a [routerLink]="['/manga/vocabulary',volume.id]">{{i18n.t('mangaVocab.title')}}</a>}<details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
+            >@if(access.permitted()&&customEnabled()&&assistedEnabled()){<a [routerLink]="['/manga/vocabulary',volume.id]">{{i18n.t('mangaVocab.title')}}</a>}<details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
           </div>
         </article>
       }
@@ -127,6 +128,7 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
   </main>`,
 })
 export class MangaPage implements OnDestroy {
+  readonly access=inject(CustomDeckAccess);
   readonly saved=inject(MangaStudySavedRepository);
   private readonly router=inject(Router);
   remoteCbz='';remoteManifest='';remoteCover='';readonly remoteInvalid=signal(false);

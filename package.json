@@ -14,7 +14,10 @@
     "generate:japanese-1500": "node scripts/generate-japanese-1500.mjs",
     "test": "ng test --watch=false",
     "watch": "ng build --watch --configuration development",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "build:manga-candidate": "npm run build -- --configuration production,manga-candidate --base-href /kana-study/ --stats-json && node scripts/audit-manga-candidate-bundle.mjs",
+    "preview:manga-candidate": "node scripts/serve-manga-candidate.mjs",
+    "test:manga-candidate": "node scripts/audit-manga-candidate.mjs"
   },
   "dependencies": {
     "@angular/common": "^22.0.0",

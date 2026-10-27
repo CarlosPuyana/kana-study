@@ -22,6 +22,9 @@ export class AuthService {
   private readonly readyState = signal(false);
   private readonly importState = signal(false);
   private authGeneration = 0;
+  private handling:Promise<void>=Promise.resolve();
+  readonly guestDecks=signal<boolean|null>(false);
+  readonly legacyGuest=signal(true);
 
   readonly configured = this.supabase.config.configured;
   readonly user = this.userState.asReadonly();
@@ -37,8 +40,11 @@ export class AuthService {
 
   private async initialize(): Promise<void> {
     const client = await this.supabase.getClient();
-    if (!client) { this.workspace.activateGuest(); this.readyState.set(true); return; }
-    const { data } = client.auth.onAuthStateChange((event, session) => queueMicrotask(() => void this.handleAuthEvent(event, session)));
+    if (!client) { this.guestDecks.set(false);this.legacyGuest.set(false);this.workspace.activateGuest(); this.readyState.set(true); return; }
+    const { data } = client.auth.onAuthStateChange((event, session) => {
+      // Assign synchronously; SDK callbacks return immediately to avoid auth-lock deadlocks.
+      this.handling=new Promise<void>(resolve=>queueMicrotask(()=>{void this.handleAuthEvent(event,session).then(resolve,resolve);}));
+    });
     this.destroyRef.onDestroy(() => data.subscription.unsubscribe());
   }
 
@@ -46,6 +52,7 @@ export class AuthService {
     const client = await this.supabase.getClient();
     if (!client) return { error: 'not-configured' };
     const { error } = await client.auth.signInWithPassword({ email: email.trim(), password });
+    if(!error)await this.handling;
     return { error: safeAuthError(error) };
   }
 
@@ -60,6 +67,7 @@ export class AuthService {
         data: { display_name: input.displayName.trim(), username, avatar_seed: username },
       },
     });
+    if(!error&&data.session)await this.handling;
     return { error: safeAuthError(error), confirmationRequired: Boolean(data.user && !data.session) };
   }
 
@@ -103,7 +111,7 @@ export class AuthService {
     if (decision === 'merge') await this.migration.copyGuestToUser(user.id);
     if (!current()) return false;
     // Legacy commits remain valid. Custom transfer is a separate, explicitly confirmed workflow.
-    if(decision==='merge'&&await this.migration.hasCustomGuestData()){
+    if(decision==='merge'&&this.migration.customImportAvailable()&&await this.migration.hasCustomGuestData()){
       if(!current())return false;this.workspace.activateUser(user.id);this.importState.set(true);return true;
     }
     this.workspace.markImportDecision(user.id, decision);
@@ -131,20 +139,27 @@ export class AuthService {
     if (this.userState()?.id !== session.user.id) this.profileState.set(null);
     this.userState.set(session.user);
     const decision = this.workspace.importDecision(session.user.id);
-    const needsDecision = decision === null && this.workspace.active() === 'guest' && await this.migration.hasGuestData();
+    const epoch=this.workspace.activationRevision();let needsDecision=false;
+    if(decision===null&&this.workspace.active()==='guest'){
+      let custom:boolean|null=null,legacy:boolean|null=null;
+      try{custom=await this.migration.hasCustomGuestData();}catch{/* An unknown inventory must not bypass the separation notice. */}
+      try{legacy=await this.migration.hasLegacyGuestData();}catch{/* Do not offer a legacy copy without confirmed legacy data. */}
+      if(generation!==this.authGeneration||epoch!==this.workspace.activationRevision())return;
+      this.guestDecks.set(custom);this.legacyGuest.set(legacy===true);needsDecision=custom!==false||legacy!==false;
+    }
     if (generation !== this.authGeneration) return;
     this.importState.set(needsDecision);
     if (!needsDecision) this.workspace.activateUser(session.user.id);
-    await this.loadProfile(session.user.id);
-    if (generation !== this.authGeneration) return;
     this.readyState.set(true);
+    // Local workspace choice must not wait for a remote profile request (offline/slow network).
+    void this.loadProfile(session.user.id,generation).catch(()=>undefined);
   }
 
-  private async loadProfile(userId: string): Promise<void> {
+  private async loadProfile(userId: string,generation:number): Promise<void> {
     const client = await this.supabase.getClient();
     if (!client) return;
     const { data } = await client.from('profiles').select('*').eq('id', userId).maybeSingle();
-    if (data && this.userState()?.id === userId) this.profileState.set(profileFromRow(data));
+    if (data && generation===this.authGeneration && this.userState()?.id === userId) this.profileState.set(profileFromRow(data));
   }
 }
 
