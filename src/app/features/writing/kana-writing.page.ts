@@ -1,3 +1,4 @@
+import {runStudyShortcut} from '../../shared/keyboard/study-shortcuts';
 import {AttemptRecordingService,AttemptRecordingSession} from '../../core/services/attempt-recording.service';
 import { ChangeDetectionStrategy, Component, computed, inject, signal, viewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -8,8 +9,12 @@ import { KanaWritingSession, writingPool } from '../../core/services/kana-writin
 import { ALL_KANA } from '../../data/kana';
 import { KanaWritingCanvas } from '../../shared/components/kana-writing-canvas/kana-writing-canvas';
 
-@Component({selector:'app-kana-writing-page',imports:[RouterLink,KanaWritingCanvas],templateUrl:'./kana-writing.page.html',styleUrl:'./kana-writing.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-kana-writing-page',imports:[RouterLink,KanaWritingCanvas],templateUrl:'./kana-writing.page.html',styleUrl:'./kana-writing.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'handleKey($event)'}})
 export class KanaWritingPage {
+  handleKey(event:KeyboardEvent):void {
+    if(!this.session() || !this.current() || this.canvas()?.isDrawing || this.canvas()?.loading())return;
+    runStudyShortcut(event,this.revealed()?null:()=>this.revealed.set(true),this.revealed()?[()=>this.answer(false),()=>this.answer(true)]:[]);
+  }
   readonly i18n=inject(TranslationService);
   private readonly attempts=inject(AttemptRecordingService);private attemptSession?:AttemptRecordingSession;
   private readonly weaknesses=inject(WeaknessService);

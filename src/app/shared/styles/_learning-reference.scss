@@ -1,0 +1,14 @@
+@mixin frame {
+.detail-backdrop { position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:1rem; background:color-mix(in srgb,var(--background) 78%,transparent); backdrop-filter:blur(5px); }
+dialog::backdrop { background:color-mix(in srgb,var(--background) 78%,transparent); backdrop-filter:blur(5px); }
+[data-learning-reference] { position:relative; box-sizing:border-box; width:min(100%,40rem); max-height:calc(100dvh - 2rem); overflow:auto; overscroll-behavior:contain; padding:1.5rem; border:1px solid var(--border); border-radius:1.25rem; background:var(--surface); color:var(--text-primary); box-shadow:var(--shadow); }
+dialog[data-learning-reference] { width:min(calc(100% - 2rem),40rem); }
+[data-learning-reference] .close { position:absolute; top:1rem; right:1rem; display:grid; place-items:center; width:2.75rem; height:2.75rem; padding:0; border:1px solid var(--border); border-radius:.75rem; background:var(--surface-raised); color:var(--text-primary); font-size:1.5rem; cursor:pointer; }
+.detail-character { display:block; margin:.25rem 3rem 1rem; text-align:center; overflow-wrap:anywhere; }
+[data-learning-reference] h2 { margin:.75rem 0; font-size:1.35rem; line-height:1.4; overflow-wrap:anywhere; }
+[data-learning-reference] .reading { display:grid; justify-items:center; gap:.3rem; margin:.75rem 0; }
+[data-learning-reference] h3 { margin:1.25rem 0 .65rem; color:var(--text-secondary); font-size:.9rem; }
+[data-learning-reference] .writing-action { min-height:3rem; margin-top:1.25rem; border-radius:.85rem; background:var(--primary-soft); color:var(--text-primary); font-weight:750; }
+[data-learning-reference] button:focus-visible,[data-learning-reference] a:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+@media(max-width:560px) { .detail-backdrop { padding:.5rem; } [data-learning-reference] { padding:1rem; max-height:calc(100dvh - 1rem); } dialog[data-learning-reference] { width:calc(100% - 1rem); margin:auto; } [data-learning-reference] .close { top:.65rem; right:.65rem; } }
+}

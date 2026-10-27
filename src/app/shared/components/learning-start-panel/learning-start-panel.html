@@ -1,5 +1,5 @@
 <div class="backdrop" (click)="closed.emit()">
-  <section class="panel" role="dialog" aria-modal="true" [attr.aria-labelledby]="'learning-panel-title'" (click)="$event.stopPropagation()">
+  <section class="panel" appModalFocus (modalClosed)="closed.emit()" role="dialog" aria-modal="true" [attr.aria-labelledby]="'learning-panel-title'" (click)="$event.stopPropagation()">
     <div class="panel-heading">
       <h2 id="learning-panel-title">{{ i18n.t('learn.selectionTitle') }}</h2>
       <a routerLink="/selection">{{ i18n.t('learn.edit') }}</a>

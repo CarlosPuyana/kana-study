@@ -1,3 +1,4 @@
+import {ModalFocusDirective} from '../../../../shared/directives/modal-focus.directive';
 import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LearningMode } from '../../../../core/models/learning-session.model';
@@ -6,5 +7,5 @@ import { KanjiSessionService } from '../../../../core/services/kanji-session.ser
 import { TranslationService } from '../../../../core/services/translation.service';
 import { DailyLearningService } from '../../../../core/services/daily-learning.service';
 import { SyncService } from '../../../../core/services/sync.service';
-@Component({selector:'app-kanji-start-panel',imports:[RouterLink],templateUrl:'./kanji-start-panel.html',styleUrl:'./kanji-start-panel.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-kanji-start-panel',imports:[RouterLink,ModalFocusDirective],templateUrl:'./kanji-start-panel.html',styleUrl:'./kanji-start-panel.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class KanjiStartPanel { readonly daily=inject(DailyLearningService);readonly progress=inject(KanjiProgressService);readonly i18n=inject(TranslationService);readonly closed=output<void>();private readonly session=inject(KanjiSessionService);private readonly router=inject(Router);private readonly sync=inject(SyncService);async start(mode:LearningMode){if(this.sync.available())await this.sync.syncNow();if(this.session.start(mode))void this.router.navigateByUrl('/kanji/play');} }

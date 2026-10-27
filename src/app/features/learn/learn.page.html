@@ -1,4 +1,4 @@
-<main class="learn-shell">
+<main class="learn-shell" [attr.inert]="showExitConfirmation() || learning.newlyUnlockedMedals().length ? '' : null">
   @if (!learning.session()) {
     <section class="missing-session">
       <h1>{{ i18n.t(daily.isCompletedToday('kana') ? 'daily.completedTitle' : 'learn.noActiveSession') }}</h1>
@@ -11,7 +11,7 @@
       <button class="icon-button sound" type="button" disabled [attr.aria-label]="i18n.t('learn.interfaceSounds')">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h3l4 3V7L8 10H5Z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>
       </button>
-      <div class="progress-track" role="progressbar" [attr.aria-valuenow]="learning.resolvedCount()" [attr.aria-valuemin]="0" [attr.aria-valuemax]="learning.session()!.sessionSize">
+      <div class="progress-track" role="progressbar" [attr.aria-label]="i18n.t('home.progress')" [attr.aria-valuenow]="learning.resolvedCount()" [attr.aria-valuemin]="0" [attr.aria-valuemax]="learning.session()!.sessionSize">
         <span [style.width.%]="learning.progressPercent()"></span>
       </div>
       <button class="icon-button" type="button" (click)="requestExit()" [attr.aria-label]="i18n.t('learn.exit')">
@@ -57,13 +57,13 @@
 @if(learning.currentUnit()!.questionType==='romaji-to-kana'){<app-learning-writing-prompt [character]="kana.character" [occurrence]="writingKey()" [revealed]="learning.revealed() || !!learning.feedback()" [quick]="learning.session()!.mode==='quick-practice'" [optionsVisible]="writingOptionsVisible()" (continued)="drawingOptionsKey.set(writingKey())"/>}
         @if (learning.session()!.mode === 'quick-practice') {
           @if(writingOptionsVisible()){<div class="options">
-            @for (option of learning.options(); track option) {
+            @for (option of learning.options(); track option; let index = $index) {
               <button type="button" [disabled]="learning.feedback()"
                 [attr.lang]="learning.currentUnit()!.questionType === 'romaji-to-kana' ? 'ja' : null"
                 [class.kana-option]="learning.currentUnit()!.questionType === 'romaji-to-kana'"
                 [class.correct]="learning.feedback() && option === learning.feedback()!.answer"
                 [class.incorrect]="learning.feedback() && option === learning.feedback()!.selected && !learning.feedback()!.correct"
-                (click)="learning.answerQuick(option)">{{ option }}</button>
+                [attr.aria-keyshortcuts]="index + 1" (click)="learning.answerQuick(option)"><span class="option-label">{{ option }}</span><kbd class="shortcut" aria-hidden="true">{{index + 1}}</kbd></button>
             }
           </div>
           }
@@ -75,10 +75,10 @@
             <button class="primary-button" type="button" (click)="learning.continueQuick()">{{ i18n.t('learn.continue') }}</button>
           }
         } @else {
-          @if (!learning.revealed()) {
-            <button class="primary-button reveal" type="button" (click)="learning.reveal()">{{ i18n.t('learn.showAnswer') }}</button>
+          <section class="assessment-stage">@if (!learning.revealed()) {
+            <button class="primary-button reveal" type="button" aria-keyshortcuts="Space" (click)="learning.reveal()">{{ i18n.t('learn.showAnswer') }}<kbd class="shortcut" aria-hidden="true">{{i18n.t('vocabulary.shortcuts.space')}}</kbd></button>
           } @else {
-            <div class="revealed-answer" role="status">
+            <div class="answer-details"><div class="revealed-answer" role="status">
               <span>{{ i18n.t('learn.answer') }}</span>
               <strong [class.kana-answer]="learning.currentUnit()!.questionType === 'romaji-to-kana'"
                 [attr.lang]="learning.currentUnit()!.questionType === 'romaji-to-kana' ? 'ja' : null">
@@ -94,12 +94,12 @@
               </div>
             }
             <p class="rating-prompt">{{ i18n.t('learn.howDidItGo') }}</p>
-            <div class="ratings">
-              <button type="button" class="again" (click)="rate('again')">{{ i18n.t('learn.again') }}</button>
-              <button type="button" class="hard" (click)="rate('hard')">{{ i18n.t('learn.hard') }}</button>
-              <button type="button" class="good" (click)="rate('good')">{{ i18n.t('learn.good') }}</button>
+            </div><div class="ratings">
+              <button type="button" class="again" aria-keyshortcuts="1" (click)="rate('again')"><kbd class="shortcut" aria-hidden="true">1</kbd>{{ i18n.t('learn.again') }}</button>
+              <button type="button" class="hard" aria-keyshortcuts="2" (click)="rate('hard')"><kbd class="shortcut" aria-hidden="true">2</kbd>{{ i18n.t('learn.hard') }}</button>
+              <button type="button" class="good" aria-keyshortcuts="3" (click)="rate('good')"><kbd class="shortcut" aria-hidden="true">3</kbd>{{ i18n.t('learn.good') }}</button>
             </div>
-          }
+          }</section>
         }
       </section>
     }
@@ -108,7 +108,7 @@
 
 @if (showExitConfirmation()) {
   <div class="exit-backdrop" (click)="showExitConfirmation.set(false)">
-    <section class="exit-dialog" role="dialog" aria-modal="true" aria-labelledby="exit-dialog-title" (click)="$event.stopPropagation()">
+    <section class="exit-dialog" appModalFocus (modalClosed)="showExitConfirmation.set(false)" role="dialog" aria-modal="true" aria-labelledby="exit-dialog-title" (click)="$event.stopPropagation()">
       <h2 id="exit-dialog-title">{{ i18n.t('learn.exitTitle') }}</h2>
       <p>{{ i18n.t('learn.exitWarning') }}</p>
       <div class="exit-actions">
@@ -121,7 +121,7 @@
 
 @if (learning.newlyUnlockedMedals()[0]; as medal) {
   <div class="medal-unlock-backdrop">
-    <section class="medal-unlock-dialog" role="dialog" aria-modal="true" aria-labelledby="medal-unlock-title">
+    <section class="medal-unlock-dialog" appModalFocus (modalClosed)="learning.dismissNextMedal()" role="dialog" aria-modal="true" aria-labelledby="medal-unlock-title">
       <app-medal-badge [icon]="medal.definition.icon" />
       <span class="unlock-eyebrow">{{ i18n.t('medals.newUnlocked') }}</span>
       <h2 id="medal-unlock-title">{{ i18n.t(medal.definition.titleKey) }}</h2>

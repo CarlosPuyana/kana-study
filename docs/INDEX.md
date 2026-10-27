@@ -1,15 +1,16 @@
 # Documentación de Kana Study
 
-Entrada principal desde [README](../README.md). Estado documental: 26/10/2026.
+Entrada principal desde [README](../README.md). Estado documental: 27/10/2026.
 
 ## Qué consultar primero
 
-El árbol local contiene el candidato Manga × Mazos **Guest-only**, todavía sin publicar.
-RELEASE-MANGA-3 dio GO de preparación técnica, no autorización de despliegue. La entrada
-normal mantiene los cuatro gates apagados; el candidato habilita custom/assisted y mantiene
-sync/upload apagados. El propietario comunicó siete comprobaciones funcionales superadas
-en Chrome de escritorio el 26/10/2026. Siguen pendientes dispositivos móviles/Safari físicos,
-Supabase Auth real y autorización de publicación. No confundir un informe histórico con el comportamiento público actual.
+La beta Manga × Mazos Guest-only quedó publicada y verificada en el commit
+cdb763a27c6c08580d0ea58f9b4ebc9dc9b79bb5 ([Actions #42](https://github.com/CarlosPuyana/kana-study/actions/runs/40490658798)).
+El workflow selecciona manga-candidate: custom/assisted activos, sync/upload apagados.
+La entrada normal sigue con los cuatro gates apagados. Supabase Auth real continúa sin
+validar, con riesgo aceptado; Safari y móviles físicos siguen pendientes.
+Los cambios UX-1 de aprendizaje tienen aceptación manual confirmada; siguen locales, sin publicar. Los informes de RELEASE conservan
+el estado de su propia fase, incluida la preparación previa a esa publicación.
 
 - Para decidir una promoción o retirada: [RELEASE-MANGA-3](../MANGA_DECKS_RELEASE_3.md),
   [checklist humana](../release/manga-guest-acceptance.md) y [historia de lanzamiento](history/releases/INDEX.md).
@@ -17,6 +18,8 @@ Supabase Auth real y autorización de publicación. No confundir un informe hist
   reciente aplicable; [historial por hito](history/manga-decks/INDEX.md) y [guía manual](../MANGA_DECKS_MANUAL_TESTING.md).
 - Para desarrollar/verificar: [guía de herramientas y evidencias](guides/DEVELOPMENT.md).
 - Para escribir documentación: [CONTRIBUTING-DOCS](CONTRIBUTING-DOCS.md).
+
+- Para Aprender, teclado y diálogos Kana/Kanji/Vocabulario: [guía de UX de aprendizaje](features/LEARNING_UX.md).
 
 ## Arquitectura y módulos vigentes
 

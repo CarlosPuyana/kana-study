@@ -1,0 +1,39 @@
+@mixin hints {
+.shortcut { display:none; font:inherit; font-size:.75rem; line-height:1.2; padding:.2rem .4rem; border:1px solid var(--border); border-radius:.35rem; background:var(--surface); color:var(--text-secondary); white-space:nowrap; }
+@media(hover:hover) and (pointer:fine) and (min-width:700px) { .shortcut { display:inline-block; } }
+}
+@mixin session($kana:false) {
+$shell: '.play-shell'; $header: '.play-header'; $close: '.play-header .close';
+$primary: '.primary'; $secondary: '.secondary'; $answer: '.answer'; $again: '.no'; $good: '.yes';
+$backdrop: '.dialog-backdrop'; $dialog: '.dialog,.medal-dialog';
+@if $kana {
+  $shell: '.learn-shell'; $header: '.session-header'; $close: '.icon-button';
+  $primary: '.primary-button'; $secondary: '.secondary-button'; $answer: '.revealed-answer'; $again: '.again'; $good: '.good';
+  $backdrop: '.exit-backdrop,.medal-unlock-backdrop'; $dialog: '.exit-dialog,.medal-unlock-dialog';
+}
+@include hints;
+#{$shell} { width:min(100% - 2rem,42rem); padding:1rem 0 3rem; }
+#{$header} { display:grid; grid-template-columns:2.75rem minmax(0,1fr) 2.75rem; align-items:center; gap:.8rem; min-height:5rem; }
+#{$header} app-study-timer { grid-column:1/-1; }
+@if not $kana { .session-symbol { display:grid; place-items:center; width:2.75rem; height:2.75rem; border:1px solid var(--border); border-radius:.8rem; background:var(--surface); color:var(--accent); font-size:1.2rem; } }
+#{$close} { width:2.75rem; height:2.75rem; border:1px solid var(--border); border-radius:.8rem; background:var(--surface); color:var(--text-primary); }
+.progress-track { height:.55rem; background:var(--surface-raised); border-radius:999px; overflow:hidden; } .progress-track span { background:var(--primary); }
+.exercise { padding-top:clamp(1.5rem,5vh,3rem); } .prompt { max-width:35rem; font-size:clamp(1rem,4vw,1.35rem); text-align:center; line-height:1.45; font-weight:700; color:var(--text-secondary); }
+.assessment-stage { display:grid; grid-template-rows:1fr auto; justify-items:center; align-items:start; gap:1rem; width:100%; min-height:18rem; margin-top:1rem; }
+.assessment-stage>.reveal,.assessment-stage>.ratings { grid-row:2; margin:0; } @if $kana { .answer-details { display:grid; justify-items:center; width:100%; gap:.6rem; } }
+#{$answer} { width:min(100%,34rem); border:1px solid var(--border); border-radius:1rem; padding:1.25rem; background:var(--surface); }
+#{$primary},#{$secondary},.reveal { width:min(100%,34rem); min-height:3.5rem; padding:.7rem 1rem; border:1px solid var(--accent); border-radius:.9rem; background:var(--primary-soft); color:var(--text-primary); font-weight:800; cursor:pointer; }
+#{$secondary} { background:var(--surface); border-color:var(--border); }
+.reveal { display:flex; align-items:center; justify-content:center; gap:.75rem; }
+.ratings { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.65rem; width:min(100%,34rem); padding:.4rem 0; }
+.ratings button { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:.4rem; min-height:3.5rem; padding:.65rem .35rem; border:1px solid var(--border); border-radius:.85rem; background:var(--surface); color:var(--text-primary); font:inherit; font-weight:750; cursor:pointer; }
+.ratings #{$again} { border-color:var(--warning); background:color-mix(in srgb,var(--warning) 12%,var(--surface)); color:var(--text-primary); }
+.ratings #{$good} { border-color:var(--success); background:color-mix(in srgb,var(--success) 12%,var(--surface)); color:var(--text-primary); }
+.ratings .hard { background:var(--surface-raised); }
+.options .shortcut { margin-left:.4rem; }
+#{$backdrop} { position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:1rem; background:color-mix(in srgb,var(--background) 78%,transparent); backdrop-filter:blur(5px); }
+#{$dialog} { width:min(100%,28rem); max-height:calc(100dvh - 2rem); overflow:auto; overscroll-behavior:contain; padding:1.5rem; border:1px solid var(--border); border-radius:1.1rem; background:var(--surface); box-shadow:var(--shadow); }
+button:focus-visible,a:focus-visible { outline:3px solid var(--accent); outline-offset:3px; } button:disabled { cursor:not-allowed; opacity:.55; }
+@media(max-width:560px) { #{$shell} { width:calc(100% - 1.25rem); } .assessment-stage { min-height:9rem; } .ratings { gap:.4rem; } .ratings button { font-size:.85rem; } #{$answer} { padding:1rem; } }
+@media(prefers-reduced-motion:reduce) { .progress-track span { transition:none; } }
+}

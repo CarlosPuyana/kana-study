@@ -1,3 +1,4 @@
+import {ModalFocusDirective} from '../../../shared/directives/modal-focus.directive';
 import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LearningMode } from '../../../core/models/learning-session.model';
@@ -9,11 +10,11 @@ import { SyncService } from '../../../core/services/sync.service';
 
 @Component({
   selector: 'app-learning-start-panel',
-  imports: [RouterLink],
+  imports: [RouterLink,ModalFocusDirective],
   templateUrl: './learning-start-panel.html',
   styleUrl: './learning-start-panel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '(document:keydown.escape)': 'closed.emit()' },
+
 })
 export class LearningStartPanel {
   readonly closed = output<void>();

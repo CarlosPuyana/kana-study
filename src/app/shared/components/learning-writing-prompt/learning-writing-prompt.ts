@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, DestroyRef, effect, inject, input, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, DestroyRef, effect, inject, input, output, signal, viewChild} from '@angular/core';
 import {KanaStrokeGlyph} from '../../../core/models/kana-writing.model';
 import {JapaneseGlyphService} from '../../../core/services/japanese-glyph.service';
 import {TranslationService} from '../../../core/services/translation.service';
@@ -20,6 +20,8 @@ import {KanaWritingCanvas} from '../kana-writing-canvas/kana-writing-canvas';
     button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}`,
   changeDetection:ChangeDetectionStrategy.OnPush})
 export class LearningWritingPrompt {
+  readonly canvas=viewChild(KanaWritingCanvas);
+  keyboardBusy():boolean {const canvas=this.canvas();return !!canvas && (canvas.isDrawing || canvas.loading());}
   readonly instructionsKey=input('learningWriting.instructions');
   readonly character=input.required<string>(); readonly occurrence=input.required<string>();
   readonly kanji=input(false); readonly revealed=input(false); readonly quick=input(false); readonly optionsVisible=input(false);

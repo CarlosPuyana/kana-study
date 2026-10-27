@@ -29,6 +29,7 @@ export class KanaWritingCanvas {
   readonly animation = signal(false);
   private pointerId: number | null = null;
   private active: WritingPoint[] = [];
+  get isDrawing(): boolean { return this.pointerId !== null; }
   private generation = 0;
   private timer?: ReturnType<typeof setTimeout>;
   readonly drawnPaths = computed(() => this.strokes().map(stroke => stroke.map(p => `${p.x * 1024},${p.y * 1024}`).join(' ')));

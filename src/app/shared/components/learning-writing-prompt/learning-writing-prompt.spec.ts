@@ -66,11 +66,11 @@ for(const module of ['kana','kanji'] as const)describe(`${module} drawing inside
     expect(learning.session()!.attempts).toBe(0);draw(canvas,f.nativeElement.querySelector('svg.writing-surface'));
     const answer=module==='kana'?kana.character:kanji.character;
     const buttons=Array.from(f.nativeElement.querySelectorAll('.options button')) as HTMLButtonElement[];
-    const wrong=buttons.find(button=>button.textContent?.trim()!==answer)!;wrong.click();await f.whenStable();f.detectChanges();
+    const wrong=buttons.find(button=>(button.querySelector('.option-label')?.textContent??button.textContent)?.trim()!==answer)!;wrong.click();await f.whenStable();f.detectChanges();
     expect(learning.session()!.attempts).toBe(1);expect(progress.recordReview).toHaveBeenCalledOnce();
     learning.continueQuick();await f.whenStable();f.detectChanges();expect(f.nativeElement.querySelector('.options')).toBeNull();expect(canvas.strokes()).toHaveLength(0);
     f.nativeElement.querySelector('app-learning-writing-prompt .actions button').click();f.detectChanges();
-    const correct=(Array.from(f.nativeElement.querySelectorAll('.options button')) as HTMLButtonElement[]).find(button=>button.textContent?.trim()===answer)!;correct.click();
+    const correct=(Array.from(f.nativeElement.querySelectorAll('.options button')) as HTMLButtonElement[]).find(button=>(button.querySelector('.option-label')?.textContent??button.textContent)?.trim()===answer)!;correct.click();
     expect(progress.recordReview).toHaveBeenCalledOnce();expect(progress.recordPracticeAttempt).toHaveBeenCalledOnce();
     learning.clear();learning.start('quick-practice');await f.whenStable();f.detectChanges();expect(f.nativeElement.querySelector('.options')).toBeNull();expect(canvas.strokes()).toHaveLength(0);
   });

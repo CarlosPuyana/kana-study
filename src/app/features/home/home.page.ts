@@ -26,6 +26,7 @@ import { DailyLearningService } from '../../core/services/daily-learning.service
   ],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
+  host: {'(document:keydown.escape)':'cancelLearningLoad($event)'},
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
@@ -38,5 +39,9 @@ export class HomePage {
   private readonly route = inject(ActivatedRoute);
 
   constructor() { if (this.route.snapshot.queryParamMap.get('rush') === '1') queueMicrotask(() => this.openRush()); }
+  cancelLearningLoad(event:Event):void {
+    if(event.defaultPrevented || !this.showLearningPanel() || document.querySelector('dialog[open],[role="dialog"][aria-modal="true"]'))return;
+    event.preventDefault();this.showLearningPanel.set(false);
+  }
   openRush(): void { this.showRushPanel.set(true); }
 }

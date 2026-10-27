@@ -53,11 +53,11 @@ describe('Kanji Daily keyboard shortcuts', () => {
     return event;
   }
 
-  it('Space reveals via the document listener and never scrolls', () => {
+  it('Space reveals once and is left native when no reveal remains', () => {
     render();
     expect(press(' ').defaultPrevented).toBe(true);
     expect(learning.reveal).toHaveBeenCalledOnce();
-    expect(press(' ').defaultPrevented).toBe(true);
+    expect(press(' ').defaultPrevented).toBe(false);
     expect(learning.reveal).toHaveBeenCalledOnce();
   });
   it.each([['1', 'again'], ['2', 'hard'], ['3', 'good']])('only rates %s after reveal', (key, rating) => {

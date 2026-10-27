@@ -1,6 +1,8 @@
+import {runStudyShortcut} from '../../shared/keyboard/study-shortcuts';
+import {ModalFocusDirective} from '../../shared/directives/modal-focus.directive';
 import {LearningWritingPrompt} from '../../shared/components/learning-writing-prompt/learning-writing-prompt';
 import { StudyTimer } from '../../shared/components/study-timer/study-timer';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudyRating } from '../../core/models/progress.model';
 import { LearningSessionService } from '../../core/services/learning-session.service';
@@ -10,12 +12,24 @@ import { DailyLearningService } from '../../core/services/daily-learning.service
 
 @Component({
   selector: 'app-learn-page',
-  imports: [StudyTimer, MedalBadge, LearningWritingPrompt],
+  imports: [StudyTimer, MedalBadge, LearningWritingPrompt, ModalFocusDirective],
   templateUrl: './learn.page.html',
   styleUrl: './learn.page.scss',
+  host: {'(document:keydown)':'handleKey($event)'},
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LearnPage {
+  private readonly writingPrompt=viewChild(LearningWritingPrompt);
+  handleKey(event:KeyboardEvent):void {
+    if(!this.learning.session() || this.learning.completed() || !this.learning.currentKana() ||
+      this.showExitConfirmation() || this.learning.newlyUnlockedMedals().length || this.writingPrompt()?.keyboardBusy())return;
+    if(this.learning.session()!.mode==='self-assessment') {
+      runStudyShortcut(event,this.learning.revealed()?null:()=>this.learning.reveal(),
+        this.learning.revealed()?(['again','hard','good'] as const).map(rating=>()=>this.rate(rating)):[]);
+    } else if(this.writingOptionsVisible() && !this.learning.feedback()) {
+      runStudyShortcut(event,null,this.learning.options().map(option=>()=>this.learning.answerQuick(option)));
+    }
+  }
   readonly drawingOptionsKey=signal('');
   writingKey():string {return `${this.learning.session()?.id}:${this.learning.currentUnit()?.key}:${this.learning.currentItem()?.appearances}`;}
   writingOptionsVisible():boolean {return this.learning.currentUnit()?.questionType!=='romaji-to-kana' || this.drawingOptionsKey()===this.writingKey();}

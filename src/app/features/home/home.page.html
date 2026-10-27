@@ -99,7 +99,5 @@
   </section>
 </main>
 
-@if (showLearningPanel() && !daily.isCompletedToday('kana')) {
-  <app-learning-start-panel (closed)="showLearningPanel.set(false)" />
-}
+@defer (when showLearningPanel()) { @if (showLearningPanel() && !daily.isCompletedToday('kana')) { <app-learning-start-panel (closed)="showLearningPanel.set(false)" /> } } @loading { @if(showLearningPanel()){<p role="status">{{i18n.t('common.loading')}}</p>} }
 @defer (when showRushPanel()) { @if (showRushPanel()) { <app-kana-rush-launcher (closed)="showRushPanel.set(false)" /> } }

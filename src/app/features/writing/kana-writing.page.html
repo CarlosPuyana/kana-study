@@ -12,8 +12,8 @@
     @if(current();as kana){
       <section class="practice"><h2>{{kana.romaji}}<small class="script-label"> · {{i18n.t('content.'+kana.type)}}</small></h2><p>{{i18n.t('writing.prompt')}}</p>
         <app-kana-writing-canvas [character]="kana.character" [guide]="withGuide()||revealed()" [helpAvailable]="withGuide()||revealed()"/>
-        @if(!revealed()){<button class="primary" type="button" (click)="revealed.set(true)">{{i18n.t('writing.answer')}}</button>}
-        @else{<div class="answer" aria-live="polite"><strong lang="ja">{{kana.character}}</strong><div class="choices"><button type="button" (click)="answer(false)">{{i18n.t('writing.repeat')}}</button><button class="primary" type="button" (click)="answer(true)">{{i18n.t('writing.correct')}}</button></div></div>}
+        @if(!revealed()){<button class="primary" type="button" aria-keyshortcuts="Space" (click)="revealed.set(true)">{{i18n.t('writing.answer')}}<kbd class="shortcut" aria-hidden="true">{{i18n.t('vocabulary.shortcuts.space')}}</kbd></button>}
+        @else{<div class="answer" aria-live="polite"><strong lang="ja">{{kana.character}}</strong><div class="choices"><button type="button" aria-keyshortcuts="1" (click)="answer(false)"><kbd class="shortcut" aria-hidden="true">1</kbd>{{i18n.t('writing.repeat')}}</button><button class="primary" type="button" aria-keyshortcuts="2" (click)="answer(true)"><kbd class="shortcut" aria-hidden="true">2</kbd>{{i18n.t('writing.correct')}}</button></div></div>}
       </section>
     }@else{<section class="finished" role="status"><h2>{{i18n.t('writing.finished')}}</h2><button class="primary" type="button" (click)="configure()">{{i18n.t('writing.configure')}}</button></section>}
   }
