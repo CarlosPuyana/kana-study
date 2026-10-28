@@ -1,0 +1,27 @@
+@if(content();as list){
+  <section class="studied-session" [attr.aria-labelledby]="'studied-session-'+list.kind">
+    <h2 [id]="'studied-session-'+list.kind">{{i18n.t('sessionList.'+list.kind+'.title')}}</h2>
+    <p class="unique-count">{{i18n.t('sessionList.'+list.kind+(list.entries.length===1?'.one':'.many'),{count:list.entries.length})}}</p>
+    <ol>
+      @if(list.kind==='kanji'){
+        @for(entry of list.entries;track entry.id){
+          <li [attr.data-entry-id]="entry.id">
+            <div class="entry-main"><strong class="written" lang="ja">{{entry.character}}</strong><p>{{meaning(entry,i18n.language())}}</p></div>
+            <dl>
+              @if(entry.onyomi.length){<div><dt>{{i18n.t('kanji.onyomi')}}</dt><dd lang="ja">{{entry.onyomi.join(' · ')}}</dd></div>}
+              @if(entry.kunyomi.length){<div><dt>{{i18n.t('kanji.kunyomi')}}</dt><dd lang="ja">{{entry.kunyomi.join(' · ')}}</dd></div>}
+            </dl>
+          </li>
+        }
+      }@else{
+        @for(entry of list.entries;track entry.id){
+          <li [attr.data-entry-id]="entry.id">
+            <app-furigana-text class="written" lang="ja" [segments]="entry.furigana" />
+            <p class="reading" lang="ja">{{entry.primaryReading}}</p>
+            <p>{{entry.quizMeaning[i18n.language()]}}</p>
+          </li>
+        }
+      }
+    </ol>
+  </section>
+}

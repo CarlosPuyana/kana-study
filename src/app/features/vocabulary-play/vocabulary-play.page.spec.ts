@@ -14,7 +14,7 @@ describe('Vocabulary additional-practice results',()=>{
   for(const practice of [true,false])it(`keeps daily completion UI exclusive to normal sessions: ${practice}`,()=>{
     const entry=VOCABULARY_N5[0];
     TestBed.configureTestingModule({providers:[
-      {provide:VocabularySessionService,useValue:{isPractice:signal(practice),completed:signal(true),clear:vi.fn(),session:signal({sessionSize:1,attempts:1,items:[],startedAt:new Date().toISOString(),completedAt:new Date().toISOString()}),firstTryPercentage:signal(100),resolvedCount:signal(1),progressPercent:signal(100),newlyUnlockedMedals:signal([])}},
+      {provide:VocabularySessionService,useValue:{isPractice:signal(practice),completed:signal(true),clear:vi.fn(),session:signal({sessionSize:1,attempts:1,units:[{key:"vocab:"+entry.id+":japanese-to-meaning",entryId:entry.id,questionType:"japanese-to-meaning"}],items:[{studyKey:"vocab:"+entry.id+":japanese-to-meaning",appearances:1,attempts:1,initialRating:"good",resolved:true,needsPractice:false}],startedAt:new Date().toISOString(),completedAt:new Date().toISOString()}),firstTryPercentage:signal(100),resolvedCount:signal(1),progressPercent:signal(100),newlyUnlockedMedals:signal([])}},
       {provide:VocabularyProgressService,useValue:{roundSummary:signal({roundDue:0,roundNew:1})}},
       {provide:TranslationService,useValue:{t:(key:string)=>key,language:signal('es')}},
       {provide:Router,useValue:{navigateByUrl:vi.fn()}},

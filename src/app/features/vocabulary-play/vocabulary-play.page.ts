@@ -1,9 +1,13 @@
 import {runStudyShortcut} from '../../shared/keyboard/study-shortcuts';
+import { computed } from '@angular/core';
+import { LearningSessionList, StudiedSessionContent } from '../../shared/components/learning-session-list/learning-session-list';
+import { studiedSessionEntries } from '../../shared/components/learning-session-list/studied-session-entries';
 import {ModalFocusDirective} from '../../shared/directives/modal-focus.directive';
 import { StudyTimer } from '../../shared/components/study-timer/study-timer';
 import {vocabularyRomaji} from '../../core/services/vocabulary-romaji';
 import { ChangeDetectionStrategy,Component,DestroyRef,inject,signal } from '@angular/core';import { Router } from '@angular/router';import { VocabularyEntry,VocabularyQuestionType } from '../../core/models/vocabulary.model';import { VOCABULARY_N5 } from '../../data/vocabulary-n5.generated';import { TranslationService } from '../../core/services/translation.service';import { DailyLearningService } from '../../core/services/daily-learning.service';import { VocabularyProgressService } from '../../core/services/vocabulary-progress.service';import { VocabularySessionService } from '../../core/services/vocabulary-session.service';import { MedalBadge } from '../../shared/components/medal-badge/medal-badge';import { FuriganaText } from '../../shared/components/furigana-text/furigana-text';import { showFuriganaInOption,showFuriganaInPrompt } from '../../core/services/vocabulary-furigana-visibility';
-@Component({selector:'app-vocabulary-play-page',imports:[StudyTimer,MedalBadge,FuriganaText,ModalFocusDirective],templateUrl:'./vocabulary-play.page.html',styleUrl:'./vocabulary-play.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'handleKey($event)' }})export class VocabularyPlayPage{
+@Component({selector:'app-vocabulary-play-page',imports:[StudyTimer,MedalBadge,FuriganaText,ModalFocusDirective,LearningSessionList],templateUrl:'./vocabulary-play.page.html',styleUrl:'./vocabulary-play.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'handleKey($event)' }})export class VocabularyPlayPage{
+  readonly studiedContent=computed<StudiedSessionContent>(()=>({kind:'vocabulary',entries:studiedSessionEntries(this.learning.session(),VOCABULARY_N5,unit=>unit.entryId)}));
   constructor(){inject(DestroyRef).onDestroy(()=>this.learning.clear());}
 
 readonly romaji=vocabularyRomaji;

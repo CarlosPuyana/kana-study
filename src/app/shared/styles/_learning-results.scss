@@ -1,0 +1,9 @@
+// Included only by Kanji/Vocabulary Learn. Active sessions retain the UX-1 width.
+@mixin session-list {
+  .results-layout { display:grid; gap:1.5rem; align-items:start; padding-top:2rem; }
+  .results-layout>.results { min-width:0; padding-top:0; }
+  @media(min-width:1000px) {
+    .play-shell.results-shell { width:min(100% - 2rem,76rem); }
+    .results-layout { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:2rem; }
+  }
+}

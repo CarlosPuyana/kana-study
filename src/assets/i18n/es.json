@@ -12247,5 +12247,11 @@
   "grammarAccess.denied": "Gramática está en beta privada y requiere autorización del propietario. Iniciar sesión no concede acceso.",
   "grammarAccess.error": "No se ha podido comprobar el acceso. Reintenta cuando tengas conexión.",
   "grammarAccess.login": "Iniciar sesión",
-  "grammarAccess.retry": "Comprobar acceso y entrar"
+  "grammarAccess.retry": "Comprobar acceso y entrar",
+  "sessionList.kanji.title": "Kanji estudiados en esta sesión",
+  "sessionList.kanji.one": "{{count}} kanji único",
+  "sessionList.kanji.many": "{{count}} kanji únicos",
+  "sessionList.vocabulary.title": "Palabras estudiadas en esta sesión",
+  "sessionList.vocabulary.one": "{{count}} palabra única",
+  "sessionList.vocabulary.many": "{{count}} palabras únicas"
 }

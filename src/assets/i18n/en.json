@@ -12247,5 +12247,11 @@
   "grammarAccess.denied": "Grammar is in private beta and requires the owner’s authorization. Signing in does not grant access.",
   "grammarAccess.error": "Access could not be checked. Retry when connected.",
   "grammarAccess.login": "Sign in",
-  "grammarAccess.retry": "Check access and enter"
+  "grammarAccess.retry": "Check access and enter",
+  "sessionList.kanji.title": "Kanji studied in this session",
+  "sessionList.kanji.one": "{{count}} unique kanji",
+  "sessionList.kanji.many": "{{count}} unique kanji",
+  "sessionList.vocabulary.title": "Words studied in this session",
+  "sessionList.vocabulary.one": "{{count}} unique word",
+  "sessionList.vocabulary.many": "{{count}} unique words"
 }

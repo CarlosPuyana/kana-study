@@ -1624,7 +1624,13 @@ export const es:Record<string,string> = {...shared,...{
   "grammarAccess.denied": "Gramática está en beta privada y requiere autorización del propietario. Iniciar sesión no concede acceso.",
   "grammarAccess.error": "No se ha podido comprobar el acceso. Reintenta cuando tengas conexión.",
   "grammarAccess.login": "Iniciar sesión",
-  "grammarAccess.retry": "Comprobar acceso y entrar"
+  "grammarAccess.retry": "Comprobar acceso y entrar",
+  "sessionList.kanji.title": "Kanji estudiados en esta sesión",
+  "sessionList.kanji.one": "{{count}} kanji único",
+  "sessionList.kanji.many": "{{count}} kanji únicos",
+  "sessionList.vocabulary.title": "Palabras estudiadas en esta sesión",
+  "sessionList.vocabulary.one": "{{count}} palabra única",
+  "sessionList.vocabulary.many": "{{count}} palabras únicas"
 }};
 export const en:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Objective answers",
@@ -3132,7 +3138,13 @@ export const en:Record<string,string> = {...shared,...{
   "grammarAccess.denied": "Grammar is in private beta and requires the owner’s authorization. Signing in does not grant access.",
   "grammarAccess.error": "Access could not be checked. Retry when connected.",
   "grammarAccess.login": "Sign in",
-  "grammarAccess.retry": "Check access and enter"
+  "grammarAccess.retry": "Check access and enter",
+  "sessionList.kanji.title": "Kanji studied in this session",
+  "sessionList.kanji.one": "{{count}} unique kanji",
+  "sessionList.kanji.many": "{{count}} unique kanji",
+  "sessionList.vocabulary.title": "Words studied in this session",
+  "sessionList.vocabulary.one": "{{count}} unique word",
+  "sessionList.vocabulary.many": "{{count}} unique words"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Respostes objectives",
@@ -4640,5 +4652,11 @@ export const ca:Record<string,string> = {...shared,...{
   "grammarAccess.denied": "Gramàtica és en beta privada i requereix autorització del propietari. Iniciar sessió no concedeix accés.",
   "grammarAccess.error": "No s’ha pogut comprovar l’accés. Torna-ho a provar quan tinguis connexió.",
   "grammarAccess.login": "Iniciar sessió",
-  "grammarAccess.retry": "Comprovar l’accés i entrar"
+  "grammarAccess.retry": "Comprovar l’accés i entrar",
+  "sessionList.kanji.title": "Kanji estudiats en aquesta sessió",
+  "sessionList.kanji.one": "{{count}} kanji únic",
+  "sessionList.kanji.many": "{{count}} kanji únics",
+  "sessionList.vocabulary.title": "Paraules estudiades en aquesta sessió",
+  "sessionList.vocabulary.one": "{{count}} paraula única",
+  "sessionList.vocabulary.many": "{{count}} paraules úniques"
 }};

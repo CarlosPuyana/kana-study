@@ -1,0 +1,16 @@
+:host { display:block; min-width:0; }
+.studied-session { padding:1.25rem; border:1px solid var(--border); border-radius:1rem; background:var(--surface); color:var(--text-primary); }
+h2 { margin:0; font-size:1.2rem; line-height:1.4; overflow-wrap:anywhere; }
+.unique-count { margin:.5rem 0 1rem; color:var(--text-secondary); font-size:.9rem; }
+ol { display:grid; gap:1rem; margin:0; padding:0; list-style:none; }
+li { min-width:0; padding-top:1rem; border-top:1px solid var(--border); overflow-wrap:anywhere; }
+.entry-main { display:flex; align-items:center; gap:1rem; }
+.written { font-size:2rem; line-height:1.5; }
+p { margin:.35rem 0 0; line-height:1.5; }
+.entry-main p { margin:0; }
+.reading { color:var(--text-secondary); }
+dl { display:flex; flex-wrap:wrap; gap:.5rem 1.5rem; margin:.5rem 0 0; }
+dl div { min-width:0; }
+dt { color:var(--text-secondary); font-size:.8rem; }
+dd { margin:.15rem 0 0; line-height:1.5; }
+@media(max-width:400px) { .studied-session { padding:1rem; } }

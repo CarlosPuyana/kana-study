@@ -24,10 +24,13 @@ test('Kana completes a full compatible session with keyboard and records exactly
     await page.keyboard.down('3');await page.keyboard.down('3');await page.keyboard.up('3');
     await expect.poll(()=>events(page)).toBe(count);
     await expect(page.locator('.ratings button')).toHaveCount(0);
-    while(await page.locator('.medal-unlock-dialog').count()) {
+    const medals=()=>page.evaluate(()=>(window as any).ng.getComponent(document.querySelector('app-learn-page')).learning.newlyUnlockedMedals().length);
+    while(await medals()) {
+      const remaining=await medals();await expect(page.locator('.medal-unlock-dialog button')).toBeFocused();
       const title=await page.locator('.medal-unlock-dialog h2').textContent();
       await page.keyboard.press('Escape');
-      await expect.poll(async()=>await page.locator('.medal-unlock-dialog').count()?page.locator('.medal-unlock-dialog h2').textContent():null).not.toBe(title);
+      await expect.poll(medals).toBe(remaining-1);
+      await expect.poll(()=>page.locator('.medal-unlock-dialog h2').evaluateAll(nodes=>nodes[0]?.textContent??null)).not.toBe(title);
     }
   }
   await expect(page.locator('.results')).toBeVisible();await page.keyboard.press('Space');await page.keyboard.press('3');expect(await events(page)).toBe(10);
