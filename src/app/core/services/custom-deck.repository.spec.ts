@@ -107,7 +107,8 @@ describe('Custom decks H1: atomic local catalog and the existing FSRS engine', (
         await catalog.refresh();
         const stats = await TestBed.inject(ProfileStatsService).load(NOW);
         expect(stats.deckUnseen).toBe(1500);
-        expect(stats.deckReview).toBe(1);
+        expect(stats.deckReview).toBe(0);
+        expect(stats.deckLearning).toBe(1);
         expect(stats.reviews).toBe(1);
         expect(stats.studySeconds).toBe(1);
         const plan = planDailyStudy({ workspace: 'guest', now: NOW.getTime(), day: '2026-10-21', normal: [], grammar: [], grammarContinuePath: null, weaknesses: [], decks: [{ id: 'md-試験', titleKey: 'anki.title', literalTitle: customDeck().title, due: 0, fresh: 1, completedToday: false, reviewsToday: 1, nextDue: null }], sessions: [], manga: { enabled: false, due: 0, fresh: 0, nextDue: null, eventsToday: 0, completedSessionIds: [] } }, 15);
@@ -171,6 +172,27 @@ describe('Custom decks H1: atomic local catalog and the existing FSRS engine', (
         expect((await repo.getDailyState(deck.id,'2026-10-21'))?.introducedEntryIds).toEqual(['card-猫']);
         expect(await repo.getDailyState(deck.id,'2026-10-22')).toBeNull();
         expect(await repo.getDeckReviewEvents(deck.id)).toHaveLength(1);
+    });
+
+    it('resumes short steps despite historical completion, replays receipts and undoes a completed day',async()=>{
+        const {deck,content}=await seed();
+        const first=await grade();
+        await repo.writeDailyState({deckId:deck.id,localDate:'2026-10-21',introducedEntryIds:['card-猫'],newLimitOverride:null,completedAt:NOW.getTime()});
+        const pending=await study.snapshot(deck,content.index,NOW);
+        expect(pending.completedToday).toBe(false);expect(pending.learningPending).toBe(1);expect(pending.newAvailable).toBe(0);
+        // Retry of the first introduction still resolves its existing receipt.
+        expect(await study.rate(deck,first.choice,first.preview,'good',9000,NOW)).toEqual(first.event);
+        const choice=study.chooseNext(pending,deck,{debt:0}).choice!;
+        expect(choice.advanced).toBe(true);
+        const preview=study.preview(deck,choice,NOW),event=await study.rate(deck,choice,preview,'good',1000,NOW);
+        expect(event.stateAfter).toBe(2);expect((await study.snapshot(deck,content.index,NOW)).completedToday).toBe(true);
+        expect(await repo.getDeckReviewEvents(deck.id)).toHaveLength(2);
+        await study.undo(event);await study.undo(event);
+        expect((await repo.getDailyState(deck.id,'2026-10-21'))?.completedAt).toBeNull();
+        expect((await study.snapshot(deck,content.index,NOW)).learningPending).toBe(1);
+        expect(await repo.getDeckReviewEvents(deck.id)).toHaveLength(1);
+        await study.adjustTodayNewLimit(deck,5,NOW);
+        expect((await study.snapshot(deck,content.index,NOW)).effectiveNewLimit).toBe(15);
     });
 
 });

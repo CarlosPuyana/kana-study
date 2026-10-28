@@ -73,6 +73,10 @@ export interface DeckEntryIndexItem {
 }
 
 export interface DeckStudyCounts {
+  readonly nextRefreshAt?: number | null;
+  /** Future short steps due later today, separate from due steps and unseen cards. */
+  readonly learningPending?: number;
+  readonly learningAhead?: number;
   readonly completedToday?: boolean;
   readonly nextDue?: number | null;
   readonly newAvailable: number;
@@ -84,6 +88,7 @@ export interface DeckStudyCounts {
 }
 
 export interface DeckQueueSnapshot extends DeckStudyCounts {
+  readonly advanceEntries?: readonly DeckCardProgress[];
   readonly progress: readonly DeckCardProgress[];
   readonly newEntries: readonly DeckEntryIndexItem[];
   readonly learningEntries: readonly DeckCardProgress[];
@@ -93,6 +98,7 @@ export interface DeckQueueSnapshot extends DeckStudyCounts {
 }
 
 export interface DeckQueueChoice {
+  readonly advanced?: boolean;
   readonly entryId: string;
   readonly kind: 'new' | 'learning' | 'review';
   readonly progress: DeckCardProgress | null;
@@ -108,6 +114,8 @@ export interface DeckQueueDecision {
 }
 
 export interface DeckStudyStatistics {
+  readonly learningPending?: number;
+  readonly nextRefreshAt?: number;
   readonly total: number;
   readonly unseen: number;
   readonly learning: number;

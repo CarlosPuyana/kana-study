@@ -1,6 +1,29 @@
 import { getSpainDayKey } from './daily-learning.service';
+import type { SerializedFsrsCard } from '../models/deck-study.model';
 
 export const getLocalStudyDayKey = getSpainDayKey;
+export const DECK_LEARNING_AHEAD_MS = 20 * 60_000;
+
+/** Existing Review by Madrid day; Learning/Relearning by minutes, optionally early today. */
+export function deckCardEligible(card: SerializedFsrsCard, now: Date, allowAhead = false): boolean {
+  const day = getLocalStudyDayKey(now), dueDay = getLocalStudyDayKey(new Date(card.due));
+  if (card.state === 2) return dueDay <= day;
+  return [1, 3].includes(card.state) && (card.due <= now.getTime()
+    || allowAhead && dueDay === day && card.due <= now.getTime() + DECK_LEARNING_AHEAD_MS);
+}
+
+/** Madrid calendar boundary (23/24/25-hour days), independent of the host timezone. */
+export function nextLocalStudyDayStart(now:Date):number {
+  const day=getLocalStudyDayKey(now);let low=now.getTime(),high=low+27*3_600_000;
+  while(high-low>1){const middle=Math.floor((low+high)/2);if(getLocalStudyDayKey(new Date(middle))===day)low=middle;else high=middle;}
+  return high;
+}
+
+export function localStudyDayStart(date:Date):number {
+  const day=getLocalStudyDayKey(date);let low=date.getTime()-27*3_600_000,high=date.getTime();
+  while(high-low>1){const middle=Math.floor((low+high)/2);if(getLocalStudyDayKey(new Date(middle))<day)low=middle;else high=middle;}
+  return high;
+}
 
 export type IntervalUnit = 'underMinute' | 'minute' | 'minutes' | 'hour' | 'hours' | 'day' | 'days' | 'month' | 'months' | 'year' | 'years';
 export interface FormattedStudyInterval { readonly value: number | null; readonly unit: IntervalUnit }

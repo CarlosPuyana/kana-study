@@ -56,6 +56,11 @@ test('fixture catalog, plain content, Again/Good, reload gate and local history'
     await noOverflow(page);
     await page.screenshot({path:`test-results/h1-study-${testInfo.project.name}.png`,fullPage:true});
     await page.locator('.good').click();
+    await expect(page.locator('.front h1')).toHaveText('猫');
+    await expect(page.locator('.advance-note')).toBeVisible();
+    await page.getByRole('button', { name: /mostrar respuesta/i }).click();
+    await expect(page.locator('.good')).toContainText('Mañana');
+    await page.locator('.good').click();
     await expect(page.locator('.end-state')).toBeVisible();
     await hash(page, '/anki/md-e2e/stats');
     await expect(page.locator('app-anki-stats-page')).toContainText('1');

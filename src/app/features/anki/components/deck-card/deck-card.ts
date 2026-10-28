@@ -14,7 +14,7 @@ export class DeckCard {
   custom():boolean {const d=this.deck();return 'kind' in d&&d.kind==='custom';}
   title(): string { const deck=this.deck(); return 'displayName' in deck ? deckTitle(deck,this.i18n) : this.i18n.t(deck.nameKey); }
   readonly available = computed(() => !this.stats().completedToday &&
-    this.stats().newAvailable + this.stats().learningDue + this.stats().reviewDue > 0);
+    this.stats().newAvailable + this.stats().learningDue + this.stats().reviewDue + (this.stats().learningPending??0) > 0);
   readonly statusKey = computed(() => this.stats().completedToday ? 'anki.daily.completedNotice' : 'anki.daily.unavailable');
   readonly newTodayAdjustment = output<number>();
   readonly i18n = inject(TranslationService);

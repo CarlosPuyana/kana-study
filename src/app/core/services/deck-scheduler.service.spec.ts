@@ -1,129 +1,106 @@
 import { TestBed } from '@angular/core/testing';
 import { fsrs, generatorParameters, Rating, State } from 'ts-fsrs';
-import { DeckCardProgress } from '../models/deck-study.model';
-import { DECK_SCHEDULER_ENABLE_FUZZ, DeckSchedulerService } from './deck-scheduler.service';
+import { DeckCardProgress, SerializedFsrsCard } from '../models/deck-study.model';
+import { DECK_SCHEDULER_ENABLE_FUZZ, DeckSchedulerService, DECK_LEARNING_STEPS, DECK_RELEARNING_STEPS } from './deck-scheduler.service';
 import { deserializeDeckCard, deserializeDeckReviewLog, serializeDeckCard, serializeDeckReviewLog } from './deck-study-serialization';
+import { nextLocalStudyDayStart } from './deck-study-time';
 
-describe('DeckSchedulerService', () => {
-  let scheduler: DeckSchedulerService;
-  const now = new Date('2026-09-30T10:00:00.000Z');
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [
-      DeckSchedulerService,
-      { provide: DECK_SCHEDULER_ENABLE_FUZZ, useValue: false },
-    ] });
-    scheduler = TestBed.inject(DeckSchedulerService);
-  });
-
-  afterEach(() => TestBed.resetTestingModule());
-
-  it('schedules new cards directly into long-term Review without short-term steps', () => {
-    const preview = scheduler.preview(null, 0.9, now);
-    expect(preview.cardBefore.state).toBe(State.New);
-    expect(preview.again.card.due - now.getTime()).toBeGreaterThanOrEqual(86_400_000);
-    expect(preview.good.card.due - now.getTime()).toBe(86_400_000);
-    expect(preview.good.card.scheduledDays).toBe(1);
-    expect(preview.good.log.scheduledDays).toBe(preview.cardBefore.scheduledDays);
-    expect(preview.good.card.state).toBe(State.Review);
-  });
-
-  it('maps the two public ratings only to FSRS Again and Good', () => {
-    const preview = scheduler.preview(null, 0.9, now);
-    expect(scheduler.branch(preview, 'again').log.rating).toBe(Rating.Again);
-    expect(scheduler.branch(preview, 'good').log.rating).toBe(Rating.Good);
-    expect([preview.again.log.rating, preview.good.log.rating]).not.toContain(Rating.Hard);
-    expect([preview.again.log.rating, preview.good.log.rating]).not.toContain(Rating.Easy);
-  });
-
-  it('persists the exact branch shown by the preview', () => {
-    const preview = scheduler.preview(null, 0.9, now);
-    expect(scheduler.branch(preview, 'again').card).toBe(preview.again.card);
-    expect(scheduler.branch(preview, 'good').card).toBe(preview.good.card);
-  });
-
-  it('calculates retrievability before a non-New review', () => {
-    const first = scheduler.preview(null, 0.9, now).good.card;
-    const progress = asProgress(first);
-    const next = scheduler.preview(progress, 0.9, new Date(first.due));
-    expect(next.retrievabilityBefore).not.toBeNull();
-    expect(next.retrievabilityBefore!).toBeGreaterThan(0);
-  });
-
-  it('schedules lapses in long-term Review without a 10 minute relearning step', () => {
-    const learning = scheduler.preview(null, 0.9, now).good.card;
-    const review = scheduler.preview(asProgress(learning), 0.9, new Date(learning.due)).good.card;
-    expect(review.state).toBe(State.Review);
-    const lapseAt = new Date(review.due);
-    const lapse = scheduler.preview(asProgress(review), 0.9, lapseAt).again.card;
-    expect(lapse.state).toBe(State.Review);
-    expect(lapse.due - lapseAt.getTime()).toBeGreaterThanOrEqual(86_400_000);
-  });
-
-  it('round-trips FSRS cards and review logs with Date conversion centralized', () => {
-    const preview = scheduler.preview(null, 0.9, now);
-    const card = deserializeDeckCard(preview.good.card);
-    const log = deserializeDeckReviewLog(preview.good.log);
-    expect(card.due).toBeInstanceOf(Date);
-    expect(log.review).toBeInstanceOf(Date);
-    expect(serializeDeckCard(card as never)).toEqual(preview.good.card);
-    expect(serializeDeckReviewLog(log as never)).toEqual(preview.good.log);
-  });
-
-  it('rolls a reviewed card back to its previous FSRS state', () => {
-    const preview = scheduler.preview(null, 0.9, now);
-    const rolledBack = scheduler.rollback(preview.good.card, preview.good.log, 0.9);
-    expect(rolledBack).toEqual(preview.cardBefore);
-  });
-
-  it('uses desired retention for subsequent Review intervals', () => {
-    const initial = scheduler.preview(null, 0.9, now).good.card;
-    const second = scheduler.preview(asProgress(initial), 0.9, new Date(initial.due)).good.card;
-    const review = asProgress(second);
-    const reviewAt = new Date(second.due);
-    const lowRetention = scheduler.preview(review, 0.8, reviewAt).good.card.due;
-    const highRetention = scheduler.preview(review, 0.97, reviewAt).good.card.due;
-    expect(highRetention).toBeLessThanOrEqual(lowRetention);
-  });
-
-  it('keeps subsequent Review and Relearning scheduling identical to official FSRS', () => {
-    const first = scheduler.preview(null, 0.9, now).good.card;
-    for (const state of [State.Review, State.Relearning]) {
-      const progress = asProgress({ ...first, state });
-      const reviewAt = new Date(first.due);
-      const expected = fsrs(generatorParameters({ request_retention: 0.9, enable_short_term: false, enable_fuzz: false, maximum_interval: 36_500 })).repeat(deserializeDeckCard(progress.card), reviewAt);
-      const preview = scheduler.preview(progress, 0.9, reviewAt);
-      expect(preview.good.card).toEqual(serializeDeckCard(expected[Rating.Good].card));
-      expect(preview.again.card).toEqual(serializeDeckCard(expected[Rating.Again].card));
-    }
-  });
-
-  it('graduates legacy Learning cards with Good in one day without resetting memory', () => {
-    const first = scheduler.preview(null, 0.9, now).good.card;
-    const progress = asProgress({ ...first, state: State.Learning });
-    const at = new Date(first.due);
-    const before = structuredClone(progress);
-    const expected = fsrs(generatorParameters({ request_retention: 0.9, enable_short_term: false, enable_fuzz: false })).repeat(deserializeDeckCard(progress.card), at)[Rating.Good].card;
-    const next = scheduler.preview(progress, 0.9, at).good;
-    expect(next.card.state).toBe(State.Review);
-    expect(next.card.due).toBe(at.getTime() + 86_400_000);
-    expect(next.card.stability).toBe(expected.stability);
-    expect(next.card.difficulty).toBe(expected.difficulty);
-    expect(next.card.reps).toBe(first.reps + 1);
-    expect(progress).toEqual(before);
-  });
-
-  it('keeps initial Good at exactly one day with fuzz enabled and any deck retention', () => {
-    TestBed.resetTestingModule();
-    scheduler = TestBed.inject(DeckSchedulerService);
-    for (const retention of [0.8, 0.85, 0.9, 0.95, 0.97]) {
-      const next = scheduler.preview(null, retention, now).good;
-      expect(next.card.due - now.getTime()).toBe(86_400_000);
-      expect(next.log.scheduledDays).toBe(0);
-    }
-  });
+const NOW=new Date('2026-10-28T10:00:00Z');
+const progress=(card:SerializedFsrsCard):DeckCardProgress=>({deckId:'japanese-1500',entryId:'e1',due:card.due,state:card.state,card});
+describe('Deck scheduler: short steps plus FSRS memory',()=>{
+ let scheduler:DeckSchedulerService;
+ beforeEach(()=>{TestBed.configureTestingModule({providers:[{provide:DECK_SCHEDULER_ENABLE_FUZZ,useValue:false}]});scheduler=TestBed.inject(DeckSchedulerService);});
+ afterEach(()=>TestBed.resetTestingModule());
+ const advance=(date:Date,minutes:number)=>new Date(date.getTime()+minutes*60_000);
+ it('New Again is Learning step 0 at 1m; New Good is step 1 at 10m',()=>{
+  const p=scheduler.preview(null,.9,NOW);
+  expect(p.again.card).toMatchObject({state:State.Learning,learningSteps:0,due:advance(NOW,1).getTime(),reps:1});
+  expect(p.good.card).toMatchObject({state:State.Learning,learningSteps:1,due:advance(NOW,10).getTime(),reps:1});
+ });
+ it('initial-step Good advances to 10m, and either Learning failure restarts 1m',()=>{
+  const first=scheduler.preview(null,.9,NOW).again.card,at=advance(NOW,1);
+  const p=scheduler.preview(progress(first),.9,at);
+  expect(p.again.card).toMatchObject({state:State.Learning,learningSteps:0,due:advance(at,1).getTime()});
+  expect(p.good.card).toMatchObject({state:State.Learning,learningSteps:1,due:advance(at,10).getTime()});
+  const last=scheduler.preview(progress(p.good.card),.9,advance(at,10));
+  expect(last.again.card).toMatchObject({state:State.Learning,learningSteps:0,due:advance(at,11).getTime()});
+  expect(last.good.card).toMatchObject({state:State.Review,scheduledDays:1,due:nextLocalStudyDayStart(advance(at,10))});
+ });
+ it('Review Again is Relearning 10m; repeated failure stays 10m and Good recovers tomorrow',()=>{
+  const initial=scheduler.preview(null,.9,NOW).good.card;
+  const review=scheduler.preview(progress(initial),.9,advance(NOW,10)).good.card;
+  const at=new Date(review.due),p=scheduler.preview(progress(review),.9,at);
+  expect(p.again.card).toMatchObject({state:State.Relearning,learningSteps:0,due:advance(at,10).getTime(),lapses:review.lapses+1});
+  const recovery=scheduler.preview(progress(p.again.card),.9,advance(at,10));
+  expect(recovery.again.card).toMatchObject({state:State.Relearning,due:advance(at,20).getTime(),lapses:p.again.card.lapses});
+  expect(recovery.good.card).toMatchObject({state:State.Review,scheduledDays:1,due:nextLocalStudyDayStart(advance(at,10))});
+ });
+ it('normal Review Good and its memory remain identical to official FSRS, not forced to one day',()=>{
+  const learned=scheduler.preview(null,.9,NOW).good.card;
+  const card={...learned,state:State.Review,learningSteps:0,stability:45,difficulty:5,scheduledDays:30,reps:30,lapses:2,lastReview:NOW.getTime()-30*86_400_000};
+  const expected=fsrs(generatorParameters({request_retention:.9,enable_short_term:true,learning_steps:DECK_LEARNING_STEPS,relearning_steps:DECK_RELEARNING_STEPS,enable_fuzz:false,maximum_interval:36500})).repeat(deserializeDeckCard(card),NOW);
+  const actual=scheduler.preview(progress(card),.9,NOW);
+  expect(actual.good.card).toEqual(serializeDeckCard(expected[Rating.Good].card));
+  expect(actual.again.card).toEqual(serializeDeckCard(expected[Rating.Again].card));
+  expect(actual.good.card.scheduledDays).toBeGreaterThan(1);
+  expect(actual.retrievabilityBefore).toBeGreaterThan(0);
+ });
+ it('graduation/recovery preserve the library memory, reps and lapses, overriding only the calendar policy',()=>{
+  const first=scheduler.preview(null,.9,NOW).good.card;
+  for(const state of [State.Learning,State.Relearning]){
+   const before={...first,state,learningSteps:state===State.Learning?1:0,reps:12,lapses:2};
+   const original=structuredClone(before),at=advance(NOW,10);
+   const expected=fsrs(generatorParameters({enable_short_term:true,enable_fuzz:false})).repeat(deserializeDeckCard(before),at)[Rating.Good].card;
+   const result=scheduler.preview(progress(before),.9,at).good.card;
+   expect(result.stability).toBe(expected.stability);expect(result.difficulty).toBe(expected.difficulty);
+   expect(result.reps).toBe(expected.reps);expect(result.lapses).toBe(expected.lapses);expect(before).toEqual(original);
+  }
+ });
+ it.each([
+  ['2026-03-28T23:00:00Z','2026-03-29T22:00:00Z',23],
+  ['2026-10-24T22:00:00Z','2026-10-25T23:00:00Z',25],
+ ])('graduates by Madrid calendar across DST %s', (now,tomorrow,hours)=>{
+  const at=new Date(now);expect(nextLocalStudyDayStart(at)).toBe(Date.parse(tomorrow));
+  expect((nextLocalStudyDayStart(at)-at.getTime())/3_600_000).toBe(hours);
+  const step=scheduler.preview(null,.9,at).good.card;
+  expect(scheduler.preview(progress(step),.9,at).good.card.due).toBe(Date.parse(tomorrow));
+ });
+ it('early answers use the real answer clock and keep one immutable FSRS/fuzz preview',()=>{
+  const first=scheduler.preview(null,.9,NOW).good.card;
+  const at=advance(NOW,1),p=scheduler.preview(progress(first),.9,at),saved=structuredClone(p);
+  const actual=advance(at,1),branch=scheduler.branch(p,'good',actual);
+  expect(branch.card.due).toBe(nextLocalStudyDayStart(actual));expect(branch.card.lastReview).toBe(actual.getTime());
+  expect(branch.log.review).toBe(actual.getTime());expect(p).toEqual(saved);
+  const next=scheduler.branch(scheduler.preview(null,.9,at),'again',actual);
+  expect(next.card.due).toBe(actual.getTime()+60_000);
+ });
+ it('keeps tomorrow after a reveal/answer crosses Madrid midnight',()=>{
+  const at=new Date('2026-10-28T22:59:59Z'),step=scheduler.preview(null,.9,at).good.card;
+  const p=scheduler.preview(progress(step),.9,at),answer=new Date('2026-10-28T23:00:01Z');
+  expect(scheduler.isTomorrow(p,'good')).toBe(true);
+  expect(scheduler.branch(p,'good',answer).card.due).toBe(Date.parse('2026-10-29T23:00:00Z'));
+ });
+ it('maps only Again/Good and reuses the displayed branch when the anchor is unchanged',()=>{
+  const p=scheduler.preview(null,.9,NOW);
+  expect(scheduler.branch(p,'again')).toBe(p.again);expect(scheduler.branch(p,'good',NOW)).toBe(p.good);
+  expect([p.again.log.rating,p.good.log.rating]).toEqual([Rating.Again,Rating.Good]);
+ });
+ it('round-trips cards/logs and rolls back short steps and graduation to the exact prior state',()=>{
+  const first=scheduler.preview(null,.9,NOW),second=scheduler.preview(progress(first.good.card),.9,advance(NOW,10));
+  for(const p of [first,second])for(const branch of [p.again,p.good]){
+   expect(serializeDeckCard(deserializeDeckCard(branch.card) as never)).toEqual(branch.card);
+   expect(serializeDeckReviewLog(deserializeDeckReviewLog(branch.log) as never)).toEqual(branch.log);
+   expect(scheduler.rollback(branch.card,branch.log,.9)).toEqual(p.cardBefore);
+  }
+ });
+ it('respects retention on normal Review and keeps short steps/graduation fixed even with fuzz',()=>{
+  TestBed.resetTestingModule();scheduler=TestBed.inject(DeckSchedulerService);
+  for(const retention of [.8,.85,.9,.95,.97]){
+   const step=scheduler.preview(null,retention,NOW).good.card;
+   expect(step.due-NOW.getTime()).toBe(600_000);
+   expect(scheduler.preview(progress(step),retention,advance(NOW,10)).good.card.due).toBe(nextLocalStudyDayStart(NOW));
+  }
+  const card={...scheduler.preview(null,.9,NOW).good.card,state:State.Review,stability:45,learningSteps:0};
+  expect(scheduler.preview(progress(card),.97,NOW).good.card.scheduledDays).toBeLessThanOrEqual(scheduler.preview(progress(card),.8,NOW).good.card.scheduledDays);
+ });
 });
-
-function asProgress(card: DeckCardProgress['card']): DeckCardProgress {
-  return { deckId: 'japanese-1500', entryId: 'entry-1', due: card.due, state: card.state, card };
-}

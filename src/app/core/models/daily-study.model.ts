@@ -14,6 +14,7 @@ export interface DailyGrammarSnapshot {
   readonly completed:boolean; readonly completedAt?:string; readonly answersToday:number; readonly difficult:boolean; readonly optional?:boolean;
 }
 export interface DailyDeckSnapshot {
+  readonly learningPending?:number; readonly ahead?:number; readonly nextRefreshAt?:number|null;
   readonly id:string; readonly titleKey:string; readonly literalTitle?:string; readonly due:number; readonly fresh:number;
   readonly completedToday:boolean; readonly reviewsToday:number; readonly nextDue:number|null;
 }

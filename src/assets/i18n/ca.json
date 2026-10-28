@@ -12253,5 +12253,16 @@
   "sessionList.kanji.many": "{{count}} kanji únics",
   "sessionList.vocabulary.title": "Paraules estudiades en aquesta sessió",
   "sessionList.vocabulary.one": "{{count}} paraula única",
-  "sessionList.vocabulary.many": "{{count}} paraules úniques"
+  "sessionList.vocabulary.many": "{{count}} paraules úniques",
+  "anki.scheduler.title": "Com es programen les targetes",
+  "anki.scheduler.learning": "Aprenentatge: 1 min → 10 min → demà.",
+  "anki.scheduler.relearning": "Reaprenentatge: 10 min → demà.",
+  "anki.scheduler.ahead": "Quan no queda feina preparada, es poden avançar passos d’aprenentatge d’avui fins a 20 minuts. No s’afegeixen targetes noves per sobre del límit.",
+  "anki.scheduler.reviewDay": "Els repassos normals estan disponibles des de l’inici del seu dia a Europe/Madrid, inclosos els endarrerits.",
+  "anki.scheduler.tomorrow": "Demà",
+  "anki.scheduler.advanced": "Pas d’aprenentatge avançat (fins a 20 min). La resposta es registra ara.",
+  "anki.scheduler.pending": "Passos d’aprenentatge pendents per a més tard avui: {{count}}.",
+  "anki.scheduler.waiting": "Aprenentatge pendent per a més tard",
+  "anki.scheduler.nextDueAt": "Proper venciment: {{date}} (Europe/Madrid).",
+  "anki.scheduler.readyLearning": "Aprenentatge preparat"
 }

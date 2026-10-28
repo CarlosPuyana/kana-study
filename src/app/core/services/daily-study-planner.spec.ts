@@ -54,6 +54,15 @@ describe('pure daily study planning',()=>{
     const plan=planDailyStudy({...snapshot(),decks:[deck]},5);expect(plan.recommended[0].path).toBe('/anki/deck/study');expect(plan.performed[0].completed).toBe(false);
     expect(planDailyStudy({...snapshot(),decks:[{...deck,completedToday:true,due:0,fresh:0}]},5).recommended).toEqual([]);
   });
+  it('separates pending learning from ready work and counts advanceable cards only once',()=>{
+    const deck={id:'deck',titleKey:'deck',due:0,fresh:0,learningPending:2,ahead:0,completedToday:false,reviewsToday:1,nextDue:now+40*60_000};
+    const waiting=planDailyStudy({...snapshot(),decks:[deck]},5);
+    expect(waiting.recommended).toEqual([]);
+    expect(waiting.pending[0]).toMatchObject({state:'pending',pendingCount:2,reasonKey:'anki.scheduler.waiting'});
+    const ready=planDailyStudy({...snapshot(),decks:[{...deck,ahead:1}]},5);
+    expect(ready.recommended[0]).toMatchObject({state:'available',pendingCount:2,path:'/anki/deck/study'});
+    expect(ready.performed[0].completed).toBe(false);
+  });
   it('continues real Grammar integration before optional bridge lessons and revisits completed difficulties',()=>{
     const g={id:'bridge',titleKey:'bridge',path:'/grammar/n5/01/bridge',completed:false,answersToday:0,difficult:false,optional:true};
     expect(planDailyStudy({...snapshot(),grammar:[g],grammarContinuePath:'/grammar/n5/11/01'},5).recommended[0].path).toBe('/grammar/n5/11/01');

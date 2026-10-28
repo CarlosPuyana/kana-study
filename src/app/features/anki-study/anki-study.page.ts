@@ -33,6 +33,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   private destroyed = false;
   private timerId: ReturnType<typeof setInterval> | null = null;
   private day = getLocalStudyDayKey(new Date());
+  private availabilityGeneration=0;
 
   readonly i18n = inject(TranslationService);
   readonly resource = createDeckRouteResource(BUILTIN_DECK_CONTENT);
@@ -70,21 +71,35 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.timerId = setInterval(() => {
-      if (getLocalStudyDayKey(new Date()) !== this.day) this.refreshAvailability();
+      const now=new Date(),refreshAt=this.snapshot()?.nextRefreshAt;
+      if (!this.error()&&(getLocalStudyDayKey(now) !== this.day || refreshAt!=null&&refreshAt<=now.getTime())) this.refreshAvailability();
     }, 1000);
     void this.tasks.run(() => this.loadNext());
   }
 
   ngOnDestroy(): void {
-    this.destroyed = true; this.clock.detach();
+    this.destroyed = true; ++this.availabilityGeneration; this.clock.detach();
     if (this.timerId) clearInterval(this.timerId);
   }
 
   refreshAvailability(): void {
+    if(document.hidden){this.clock.pause();return;}
     if (this.saving() || this.loading() || document.hidden) return;
-    this.clock.pause();
     this.day = getLocalStudyDayKey(new Date());
+    // A foreground/day refresh may update counts, never replace a card or its
+    // frozen preview while the user is answering it.
+    if(this.choice()){
+      this.clock.resume();void this.refreshCounts();return;
+    }
     void this.loadNext(true);
+  }
+
+  private async refreshCounts():Promise<void>{
+    if(!this.deck||!this.resource.content)return;
+    const resource=this.resource.state(),generation=++this.availabilityGeneration;
+    try{const snapshot=await this.study.snapshot(this.deck,this.resource.content.index);
+      if(!this.destroyed&&resource===this.resource.state()&&generation===this.availabilityGeneration){this.snapshot.set(snapshot);this.error.set(false);}
+    }catch{if(!this.destroyed&&generation===this.availabilityGeneration)this.error.set(true);}
   }
 
   reveal(): void {
@@ -97,7 +112,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   async rate(rating: DeckRating): Promise<void> {
     if (this.choiceState!==this.resource.state() || !this.deck || !this.choice() || !this.preview() || !this.revealed() || this.saving() || this.loading()) return;
     const resourceState=this.resource.state(),owner=this.resource.catalog.owner();
-    this.saving.set(true); this.error.set(false); this.clock.pause();
+    ++this.availabilityGeneration;this.saving.set(true); this.error.set(false); this.clock.pause();
     try {
       const event = await this.study.rate(
         this.deck, this.choice()!, this.preview()!, rating, this.clock.appearanceMilliseconds(),
@@ -112,7 +127,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
 
   async undo(): Promise<void> {
     const event = this.lastEvent();
-    if (!event || !this.deck || event.deckId!==this.deck.id || this.lastEventOwner!==this.resource.catalog.owner() || this.saving() || this.snapshot()?.completedToday) return;
+    if (!event || !this.deck || event.deckId!==this.deck.id || this.lastEventOwner!==this.resource.catalog.owner() || this.saving()) return;
     const resourceState=this.resource.state(),owner=this.resource.catalog.owner();
     this.saving.set(true); this.error.set(false); this.clock.pause();
     try {
@@ -125,6 +140,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
       const progress = snapshot.progress.find(item => item.entryId === event.entryId) ?? null;
       this.setCurrent({
         entryId: event.entryId,
+        advanced:!!progress&&[1,3].includes(progress.card.state)&&progress.due>Date.now(),
         kind: progress ? (progress.card.state === 2 ? 'review' : 'learning') : 'new',
         progress,
       });
@@ -136,8 +152,9 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   intervalLabel(rating: DeckRating): string {
     const preview = this.preview();
     if (!preview) return '';
+    if(rating==='good'&&[1,3].includes(preview.cardBefore.state)&&preview.good.card.state===2)return this.i18n.t('anki.scheduler.tomorrow');
     const branch = rating === 'again' ? preview.again : preview.good;
-    const formatted = formatStudyInterval(Math.max(0, branch.card.due - preview.generatedAt));
+    const formatted = formatStudyInterval(branch.card.state===2&&branch.card.scheduledDays>0?branch.card.scheduledDays*86_400_000:Math.max(0, branch.card.due - preview.generatedAt));
     return this.i18n.t(`anki.interval.${formatted.unit}`, formatted.value === null ? undefined : { count: formatted.value });
   }
 
@@ -160,10 +177,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
 
   nextDueLabel(snapshot: DeckQueueSnapshot): string | null {
     if (!snapshot.nextDue) return null;
-    const formatted = formatStudyInterval(Math.max(0, snapshot.nextDue - Date.now()));
-    return this.i18n.t('anki.studyPage.nextIn', {
-      interval: this.i18n.t(`anki.interval.${formatted.unit}`, formatted.value === null ? undefined : { count: formatted.value }),
-    });
+    return this.i18n.t('anki.scheduler.nextDueAt',{date:new Intl.DateTimeFormat(this.i18n.language(),{timeZone:'Europe/Madrid',dateStyle:'short',timeStyle:'short'}).format(new Date(snapshot.nextDue))});
   }
 
   handleKey(event: KeyboardEvent): void {
@@ -174,6 +188,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   }
 
   private async loadNext(preserveAppearance = false): Promise<void> {
+    const generation=++this.availabilityGeneration;
     this.clock.pause();this.loading.set(true);
     if(this.resource.state().status==='loading') await this.resource.ready();
     if (!this.deck) { this.error.set(this.resource.state().status === 'error'); this.loading.set(false); return; }
@@ -181,14 +196,14 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     try {
       const loaded=this.resource.state();
       let snapshot = await this.study.snapshot(this.deck, this.resource.content!.index);
-      if(this.resource.state()!==loaded)return;
+      if(this.resource.state()!==loaded||generation!==this.availabilityGeneration)return;
       const decision = snapshot.completedToday ? { choice: null, cursor: this.cursor } : this.study.chooseNext(snapshot, this.deck, this.cursor);
       const event = this.lastEvent();
       if (!decision.choice && !snapshot.completedToday && event && getLocalStudyDayKey(new Date(event.reviewedAt)) === getLocalStudyDayKey(new Date())) {
         await this.study.completeSession(this.deck, this.resource.content!.index);
         snapshot = await this.study.snapshot(this.deck, this.resource.content!.index);
       }
-      if (this.destroyed || this.resource.state()!==loaded) return;
+      if (this.destroyed || this.resource.state()!==loaded||generation!==this.availabilityGeneration) return;
       this.cursor = decision.cursor;
       this.snapshot.set(snapshot);
       if (preserveAppearance && decision.choice?.entryId === this.choice()?.entryId && this.choice()) this.clock.resume();

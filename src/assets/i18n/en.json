@@ -12253,5 +12253,16 @@
   "sessionList.kanji.many": "{{count}} unique kanji",
   "sessionList.vocabulary.title": "Words studied in this session",
   "sessionList.vocabulary.one": "{{count}} unique word",
-  "sessionList.vocabulary.many": "{{count}} unique words"
+  "sessionList.vocabulary.many": "{{count}} unique words",
+  "anki.scheduler.title": "How cards are scheduled",
+  "anki.scheduler.learning": "Learning: 1 min → 10 min → tomorrow.",
+  "anki.scheduler.relearning": "Relearning: 10 min → tomorrow.",
+  "anki.scheduler.ahead": "When no work is ready, today’s learning steps may be shown up to 20 minutes early. No new cards are added above the limit.",
+  "anki.scheduler.reviewDay": "Regular reviews are available from the start of their Europe/Madrid study day, including overdue reviews.",
+  "anki.scheduler.tomorrow": "Tomorrow",
+  "anki.scheduler.advanced": "Learning step shown early (up to 20 min). Your response is recorded now.",
+  "anki.scheduler.pending": "Learning steps pending for later today: {{count}}.",
+  "anki.scheduler.waiting": "Learning pending for later",
+  "anki.scheduler.nextDueAt": "Next due: {{date}} (Europe/Madrid).",
+  "anki.scheduler.readyLearning": "Learning ready"
 }

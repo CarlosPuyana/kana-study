@@ -16,7 +16,7 @@ describe('DeckCard availability', () => {
     fixture.detectChanges();
     return fixture;
   }
-  it.each(['newAvailable', 'learningDue', 'reviewDue'] as const)('enables study when %s is available', key => {
+  it.each(['newAvailable', 'learningDue', 'reviewDue', 'learningPending'] as const)('enables study when %s is available', key => {
     const fixture = render({ [key]: 1 });
     expect(fixture.nativeElement.querySelector('a.study')?.getAttribute('href')).toContain('/anki/japanese-1500/study');
     expect(fixture.nativeElement.querySelector('.study-status')).toBeNull();

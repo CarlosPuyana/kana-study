@@ -2,6 +2,7 @@ import { inject, Injectable, InjectionToken } from '@angular/core';
 import { Card, createEmptyCard, fsrs, generatorParameters, Rating, State } from 'ts-fsrs';
 import { DeckCardProgress, DeckRating, SerializedFsrsCard, SerializedFsrsReviewLog } from '../models/deck-study.model';
 import { deserializeDeckCard, deserializeDeckReviewLog, serializeDeckCard, serializeDeckReviewLog } from './deck-study-serialization';
+import { nextLocalStudyDayStart } from './deck-study-time';
 
 export const DECK_SCHEDULER_ENABLE_FUZZ = new InjectionToken<boolean>('DECK_SCHEDULER_ENABLE_FUZZ', {
   providedIn: 'root', factory: () => true,
@@ -34,9 +35,9 @@ export class DeckSchedulerService {
     const card = progress ? deserializeDeckCard(progress.card) : createEmptyCard(now);
     const result = scheduler.repeat(card, now);
     const good = result[Rating.Good];
-    // Only the initial graduation uses a one-day interval; FSRS retains its memory parameters.
-    if ((card.state === State.New || card.state === State.Learning) && good.card.state === State.Review) {
-      good.card = { ...good.card, due: new Date(now.getTime() + 86_400_000), scheduled_days: 1 };
+    // Application policy only on graduation/recovery; normal Review Good remains FSRS.
+    if ((card.state === State.Learning || card.state === State.Relearning) && good.card.state === State.Review) {
+      good.card = { ...good.card, due: new Date(nextLocalStudyDayStart(now)), scheduled_days: 1 };
     }
     return {
       generatedAt: now.getTime(),
@@ -50,8 +51,18 @@ export class DeckSchedulerService {
     };
   }
 
-  branch(preview: DeckSchedulePreview, rating: DeckRating): DeckScheduleBranch {
-    return rating === 'again' ? preview.again : preview.good;
+  branch(preview: DeckSchedulePreview, rating: DeckRating, reviewedAt?:Date): DeckScheduleBranch {
+    const branch=rating === 'again' ? preview.again : preview.good;
+    if(!reviewedAt||reviewedAt.getTime()===preview.generatedAt)return branch;
+    // One FSRS/fuzz computation per reveal. Anchor its displayed interval to the real
+    // response, including early steps; never pretend that the scheduled due time elapsed.
+    const at=reviewedAt.getTime();
+    const due=this.isTomorrow(preview,rating)?nextLocalStudyDayStart(reviewedAt):at+(branch.card.due-preview.generatedAt);
+    return {card:{...branch.card,due,lastReview:at},log:{...branch.log,review:at}};
+  }
+
+  isTomorrow(preview:DeckSchedulePreview,rating:DeckRating):boolean {
+    return rating==='good' && [State.Learning,State.Relearning].includes(preview.cardBefore.state) && preview.good.card.state===State.Review;
   }
 
   rollback(after: SerializedFsrsCard, log: SerializedFsrsReviewLog, desiredRetention: number): SerializedFsrsCard {
@@ -70,7 +81,7 @@ export class DeckSchedulerService {
   private scheduler(desiredRetention: number) {
     return fsrs(generatorParameters({
       request_retention: desiredRetention,
-      enable_short_term: false,
+      enable_short_term: true,
       learning_steps: DECK_LEARNING_STEPS,
       relearning_steps: DECK_RELEARNING_STEPS,
       maximum_interval: DECK_MAXIMUM_INTERVAL,

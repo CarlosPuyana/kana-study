@@ -8,9 +8,10 @@ import {
 import { DeckPersistenceRouter } from './deck-persistence-router';
 import { DeckSchedulePreview, DeckSchedulerService } from './deck-scheduler.service';
 import { DeckSettingsService } from './deck-settings.service';
-import { getLocalStudyDayKey } from './deck-study-time';
+import { DECK_LEARNING_AHEAD_MS, deckCardEligible, getLocalStudyDayKey, localStudyDayStart, nextLocalStudyDayStart } from './deck-study-time';
 
 export const DECK_NEW_LIMIT_STEP = 5;
+export { DECK_LEARNING_AHEAD_MS } from './deck-study-time';
 
 @Injectable({ providedIn: 'root' })
 export class DeckStudyService {
@@ -28,24 +29,30 @@ export class DeckStudyService {
       database.getDailyState(deck.id, localDate),
     ]);
     const daily = storedDaily ?? emptyDailyState(deck.id, localDate);
-    const completedToday = daily.completedAt != null;
     const settings = this.settings.settingsFor(deck);
     const byEntry = new Map(progress.map(item => [item.entryId, item]));
     const unseen = index.filter(item => !byEntry.has(item.id)).sort((a, b) => a.order - b.order);
     const effectiveNewLimit = daily.newLimitOverride ?? settings.newCardsPerDay;
-    const newAvailable = completedToday ? 0 : Math.min(unseen.length, Math.max(0, effectiveNewLimit - daily.introducedEntryIds.length));
+    // Historical completion closes new introductions, but must never hide valid
+    // Learning/Relearning or daily reviews arriving from old state or sync.
+    const newAvailable = daily.completedAt != null ? 0 : Math.min(unseen.length, Math.max(0, effectiveNewLimit - new Set(daily.introducedEntryIds).size));
     const learning = progress
-      .filter(item => !completedToday && isLearning(item) && item.due <= now.getTime())
-      .sort((a, b) => a.due - b.due);
+      .filter(item => isLearning(item) && item.due <= now.getTime())
+      .sort(dueOrder);
     const reviews = progress
-      .filter(item => !completedToday && item.card.state === State.Review && item.due <= now.getTime())
+      .filter(item => item.card.state === State.Review && getLocalStudyDayKey(new Date(item.due)) <= localDate)
       .sort((a, b) => {
         const risk = this.scheduler.retrievability(a, now, settings.desiredRetention)
           - this.scheduler.retrievability(b, now, settings.desiredRetention);
-        return risk || a.due - b.due;
+        return risk || dueOrder(a,b);
       });
-    const future = progress.filter(item => item.due > now.getTime());
-    const futureLearning = future.filter(isLearning);
+    const futureLearning = progress.filter(item=>isLearning(item)&&item.due>now.getTime()).sort(dueOrder);
+    const pendingToday=futureLearning.filter(item=>getLocalStudyDayKey(new Date(item.due))===localDate);
+    const advanceEntries=pendingToday.filter(item=>item.due<=now.getTime()+DECK_LEARNING_AHEAD_MS);
+    const futureReviews=progress.filter(item=>item.card.state===State.Review&&getLocalStudyDayKey(new Date(item.due))>localDate);
+    const nextDue=Math.min(...futureLearning.map(item=>item.due),...futureReviews.map(item=>localStudyDayStart(new Date(item.due))));
+    const completedToday=daily.completedAt!=null&&!learning.length&&!reviews.length&&!pendingToday.length;
+    const nextRefreshAt=Math.min(nextLocalStudyDayStart(now),...pendingToday.map(item=>item.due>now.getTime()+DECK_LEARNING_AHEAD_MS?item.due-DECK_LEARNING_AHEAD_MS:item.due));
     return {
       completedToday,
       progress,
@@ -54,11 +61,15 @@ export class DeckStudyService {
       reviewEntries: reviews,
       newAvailable,
       learningDue: learning.length,
+      learningPending:pendingToday.length,
+      learningAhead:advanceEntries.length,
+      advanceEntries,
+      nextRefreshAt,
       reviewDue: reviews.length,
-      introducedToday: daily.introducedEntryIds.length,
+      introducedToday: new Set(daily.introducedEntryIds).size,
       effectiveNewLimit,
       nextLearningDue: minimumDue(futureLearning),
-      nextDue: minimumDue(future),
+      nextDue: Number.isFinite(nextDue)?nextDue:null,
       remainingUnseen: unseen.length,
     };
   }
@@ -66,10 +77,14 @@ export class DeckStudyService {
   chooseNext(snapshot: DeckQueueSnapshot, deck: DeckDefinition, cursor: DeckMixedCursor): DeckQueueDecision {
     if (snapshot.completedToday) return { choice: null, cursor };
     const learning = snapshot.learningEntries[0];
+    if(learning)return {choice:choiceFromProgress(learning,'learning'),cursor};
     const nextNew = snapshot.newEntries[0];
-    const review = learning ?? snapshot.reviewEntries[0];
-    const reviewChoice = review ? choiceFromProgress(review, learning ? 'learning' : 'review') : null;
-    if (!nextNew && !review) return { choice: null, cursor };
+    const review = snapshot.reviewEntries[0];
+    const reviewChoice = review ? choiceFromProgress(review,'review') : null;
+    if (!nextNew && !review) {
+      const ahead=snapshot.advanceEntries?.[0];
+      return { choice:ahead?{...choiceFromProgress(ahead,'learning'),advanced:true}:null,cursor };
+    }
     const order = this.settings.settingsFor(deck).newCardOrder;
     if (order === 'before-reviews') {
       return { choice: nextNew ? choiceFromNew(nextNew) : reviewChoice, cursor };
@@ -99,13 +114,19 @@ export class DeckStudyService {
     reviewedAt = new Date(),
   ): Promise<DeckReviewEvent> {
     const database = this.database.bind(deck.id);
-    const branch = this.scheduler.branch(preview, rating);
     const retryKey=JSON.stringify([database.workspace,deck.id,choice.entryId,rating]);
     const cached = deck.id.startsWith('md-') ? this.retries.get(preview)?.get(retryKey) : undefined;
+    const branch = this.scheduler.branch(preview, rating, cached?new Date(cached.reviewedAt):reviewedAt);
     const localDate = getLocalStudyDayKey(cached ? new Date(cached.reviewedAt) : reviewedAt);
     const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
-    if (daily.completedAt != null) throw new Error('Daily deck session is completed.');
+    const answerAt=cached?new Date(cached.reviewedAt):reviewedAt;
+    const validPending=choice.progress&&deckCardEligible(choice.progress.card,answerAt,true);
+    if (daily.completedAt != null && !validPending && !cached) throw new Error('Daily deck session is completed.');
     const firstIntroduction = choice.progress === null;
+    if (!cached && firstIntroduction && !daily.introducedEntryIds.includes(choice.entryId)
+      && new Set(daily.introducedEntryIds).size >= (daily.newLimitOverride ?? this.settings.settingsFor(deck).newCardsPerDay)) {
+      throw new Error('Daily new-card limit reached.');
+    }
     const introducedEntryIds = firstIntroduction && !daily.introducedEntryIds.includes(choice.entryId)
       ? [...daily.introducedEntryIds, choice.entryId]
       : [...daily.introducedEntryIds];
@@ -142,7 +163,7 @@ export class DeckStudyService {
     const introducedEntryIds = event.cardBefore === null
       ? daily.introducedEntryIds.filter(entryId => entryId !== event.entryId)
       : [...daily.introducedEntryIds];
-    await database.undoReview(event, { ...daily, introducedEntryIds });
+    await database.undoReview(event, { ...daily, completedAt:null, introducedEntryIds });
   }
 
   async adjustTodayNewLimit(deck: DeckDefinition, delta: number, now = new Date()): Promise<DeckDailyState> {
@@ -150,7 +171,7 @@ export class DeckStudyService {
     const localDate = getLocalStudyDayKey(now);
     const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
     const current = daily.newLimitOverride ?? this.settings.settingsFor(deck).newCardsPerDay;
-    const next = { ...daily, newLimitOverride: Math.max(0, current + delta) };
+    const next = { ...daily, ...(delta>0&&daily.completedAt!=null?{completedAt:null}:{}), newLimitOverride: Math.max(0, current + delta) };
     await database.writeDailyState(next);
     return next;
   }
@@ -158,7 +179,7 @@ export class DeckStudyService {
   async completeSession(deck: DeckDefinition, index: readonly DeckEntryIndexItem[], now = new Date()): Promise<void> {
     const database = this.database.bind(deck.id);
     const snapshot = await this.snapshot(deck, index, now);
-    if (snapshot.completedToday || snapshot.newAvailable || snapshot.learningDue || snapshot.reviewDue) return;
+    if (snapshot.completedToday || snapshot.newAvailable || snapshot.learningDue || snapshot.reviewDue || snapshot.learningPending) return;
     database.assertOwner();
     const localDate = getLocalStudyDayKey(now);
     const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
@@ -172,13 +193,16 @@ export class DeckStudyService {
     ]);
     const learning = progress.filter(isLearning).length;
     const review = progress.filter(item => item.card.state === State.Review).length;
-    const dueNow = progress.filter(item => item.due <= now.getTime()).length;
+    const dueNow = progress.filter(item => eligibleExisting(item,now)).length;
+    const futureLearning=progress.filter(item=>isLearning(item)&&item.due>now.getTime());
     const again = events.filter(event => event.rating === 'again').length;
     const good = events.length - again;
     const firstPerCardDay = firstReviewPerCardAndLocalDay(events);
     const trueGood = firstPerCardDay.filter(event => event.rating === 'good').length;
     return {
       total, unseen: Math.max(0, total - progress.length), learning, review, dueNow,
+      learningPending:futureLearning.filter(item=>getLocalStudyDayKey(new Date(item.due))===getLocalStudyDayKey(now)).length,
+      nextRefreshAt:Math.min(nextLocalStudyDayStart(now),...futureLearning.map(item=>item.due)),
       totalReviews: events.length, again, good,
       observedRetention: events.length ? good / events.length : null,
       trueRetention: firstPerCardDay.length ? trueGood / firstPerCardDay.length : null,
@@ -202,6 +226,11 @@ export function firstReviewPerCardAndLocalDay(events: readonly DeckReviewEvent[]
 function isLearning(progress: DeckCardProgress): boolean {
   return progress.card.state === State.Learning || progress.card.state === State.Relearning;
 }
+
+function eligibleExisting(progress:DeckCardProgress,now:Date):boolean {
+  return deckCardEligible(progress.card,now);
+}
+function dueOrder(a:DeckCardProgress,b:DeckCardProgress):number {return a.due-b.due||a.entryId.localeCompare(b.entryId);}
 
 function minimumDue(progress: readonly DeckCardProgress[]): number | null {
   return progress.length ? Math.min(...progress.map(item => item.due)) : null;

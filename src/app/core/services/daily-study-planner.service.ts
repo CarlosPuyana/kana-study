@@ -106,7 +106,7 @@ export class DailyStudyPlannerService {
     effect(()=>{this.workspace.active();this.workspace.dataRevision();this.storage.cloudRevision();this.sync.lastSyncedAt();this.deckSettings.all();this.now();this.catalog.items();this.catalog.revision();this.catalog.repository.progressRevision();untracked(()=>{void this.refreshDecks();});});
     effect(onCleanup=>{
       const snapshot=this.snapshot();
-      const dates=[...snapshot.normal.flatMap(n=>n.units.flatMap(u=>u.due!==null&&u.due>snapshot.now?[u.due]:[])),...snapshot.decks.flatMap(d=>d.nextDue!==null&&d.nextDue>snapshot.now?[d.nextDue]:[]),...(snapshot.manga.nextDue!==null?[snapshot.manga.nextDue]:[])];
+      const dates=[...snapshot.normal.flatMap(n=>n.units.flatMap(u=>u.due!==null&&u.due>snapshot.now?[u.due]:[])),...snapshot.decks.flatMap(d=>{const due=d.nextRefreshAt??d.nextDue;return due!==null&&due>snapshot.now?[due]:[];}),...(snapshot.manga.nextDue!==null?[snapshot.manga.nextDue]:[])];
       const next=Math.min(nextSpainDayBoundary(snapshot.now),...dates);
       const timer=window.setTimeout(refresh,Math.max(1,next-Date.now()));onCleanup(()=>window.clearTimeout(timer));
     });
@@ -119,7 +119,7 @@ export class DailyStudyPlannerService {
       if(this.catalog.error())throw this.catalog.error();
       const rows=await Promise.all(this.catalog.items().map(async deck=>{
         const [queue,events]=await Promise.all([this.deckStudy.snapshot(deck,await this.catalog.index(deck.id),now),this.deckPorts.bind(deck.id).getDeckReviewEvents(deck.id)]);
-        return {id:deck.id,titleKey:deck.displayName.kind==='i18n'?deck.displayName.key:'anki.title',...(deck.displayName.kind==='literal'?{literalTitle:deck.displayName.text}:{}),due:queue.learningDue+queue.reviewDue,fresh:queue.newAvailable,completedToday:queue.completedToday===true,nextDue:queue.nextDue,reviewsToday:events.filter(e=>Number.isFinite(e.reviewedAt)&&e.reviewedAt<=now.getTime()&&getSpainDayKey(new Date(e.reviewedAt))===getSpainDayKey(now)).length};
+        return {id:deck.id,titleKey:deck.displayName.kind==='i18n'?deck.displayName.key:'anki.title',...(deck.displayName.kind==='literal'?{literalTitle:deck.displayName.text}:{}),due:queue.learningDue+queue.reviewDue,fresh:queue.newAvailable,learningPending:queue.learningPending??0,ahead:queue.learningAhead??0,nextRefreshAt:queue.nextRefreshAt,completedToday:queue.completedToday===true,nextDue:queue.nextDue,reviewsToday:events.filter(e=>Number.isFinite(e.reviewedAt)&&e.reviewedAt<=now.getTime()&&getSpainDayKey(new Date(e.reviewedAt))===getSpainDayKey(now)).length};
       }));
       if(this.workspace.active()===owner&&generation===this.generation)this.deckState.set({owner,rows,loading:false,error:false});
     }catch{if(this.workspace.active()===owner&&generation===this.generation)this.deckState.set({owner,rows:[],loading:false,error:true});}

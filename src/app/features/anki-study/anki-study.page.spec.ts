@@ -32,7 +32,7 @@ describe('AnkiStudyPage', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => { fixture.destroy(); TestBed.resetTestingModule(); });
+  afterEach(() => { fixture.destroy(); TestBed.resetTestingModule(); vi.useRealTimers(); vi.restoreAllMocks(); });
 
   it('front contains word and context but no answer content in the DOM', () => {
     const front = fixture.nativeElement.querySelector('.front') as HTMLElement;
@@ -88,7 +88,7 @@ describe('AnkiStudyPage', () => {
 
   it('blocks the direct study route when today is completed', async () => {
     Object.assign(study.snapshotValue,{completedToday:true,newEntries:[],newAvailable:0});
-    fixture.componentInstance.refreshAvailability();await fixture.whenStable();fixture.detectChanges();
+    fixture.destroy();fixture=TestBed.createComponent(AnkiStudyPage);fixture.detectChanges();await fixture.whenStable();fixture.detectChanges();
     expect(fixture.componentInstance.choice()).toBeNull();
     expect(fixture.nativeElement.textContent).toContain('anki.daily.completed');
     expect(fixture.nativeElement.textContent).toContain('anki.daily.tomorrow');
@@ -108,13 +108,15 @@ describe('AnkiStudyPage', () => {
     expect(study.completed).toBe(0);
   });
 
-  it('refreshes availability when focus or visibility returns', async () => {
+  it('refreshes counts on foreground without replacing the active card or frozen preview', async () => {
+    fixture.componentInstance.reveal();const choice=fixture.componentInstance.choice(),preview=fixture.componentInstance.preview();
     Object.assign(study.snapshotValue,{completedToday:true});
     window.dispatchEvent(new Event('focus'));await fixture.whenStable();
-    expect(fixture.componentInstance.choice()).toBeNull();
+    expect(fixture.componentInstance.choice()).toBe(choice);expect(fixture.componentInstance.preview()).toBe(preview);expect(fixture.componentInstance.revealed()).toBe(true);
+    expect(fixture.componentInstance.snapshot()?.completedToday).toBe(true);
     Object.assign(study.snapshotValue,{completedToday:false});
     document.dispatchEvent(new Event('visibilitychange'));await fixture.whenStable();
-    expect(fixture.componentInstance.choice()).not.toBeNull();
+    expect(fixture.componentInstance.choice()).toBe(choice);expect(fixture.componentInstance.snapshot()?.completedToday).toBe(false);
   });
   it('shows the capped credited total, keeps focus on the same allowance and subtracts undo once',async()=>{
     const page=fixture.componentInstance;page.clock.attach();monotonic=4000;
@@ -152,6 +154,29 @@ describe('AnkiStudyPage', () => {
     await page.rate('good');expect(page.error()).toBe(true);expect(page.choice()).toBeNull();
     page.reveal();await page.rate('good');expect(study.times).toEqual([4000]);
     expect(page.clock.committedSeconds).toBe(4);
+  });
+
+  it('refreshes a waiting queue at its boundary without crediting wait, then cleans its timer',async()=>{
+    const now=new Date('2026-10-28T10:00:00Z');
+    fixture.destroy();vi.useFakeTimers({toFake:['Date','setInterval','clearInterval']});vi.setSystemTime(now);
+    Object.assign(study.snapshotValue,{nextRefreshAt:now.getTime()+1000,learningPending:1});
+    Object.assign(study.snapshotValue,{nextDue:now.getTime()+21*60_000});
+    const choose=vi.spyOn(study,'chooseNext').mockReturnValueOnce({choice:null,cursor:{debt:0}});
+    fixture=TestBed.createComponent(AnkiStudyPage);fixture.detectChanges();await fixture.whenStable();fixture.detectChanges();
+    const page=fixture.componentInstance,read=vi.spyOn(study,'snapshot');
+    expect(page.choice()).toBeNull();expect(study.completed).toBe(0);
+    expect(fixture.nativeElement.textContent).toContain('anki.scheduler.nextDueAt');
+    monotonic+=60000;
+    await vi.advanceTimersByTimeAsync(1000);await fixture.whenStable();fixture.detectChanges();
+    Object.assign(study.snapshotValue,{nextRefreshAt:Date.now()+100000});
+    expect(read).toHaveBeenCalled();expect(page.choice()).not.toBeNull();expect(page.clock.committedSeconds).toBe(0);
+    expect(choose).toHaveBeenCalledTimes(2);
+    page.reveal();const choice=page.choice(),preview=page.preview();read.mockClear();
+    Object.assign(study.snapshotValue,{nextRefreshAt:Date.now()+1000});
+    await vi.advanceTimersByTimeAsync(1000);await fixture.whenStable();
+    expect(page.choice()).toBe(choice);expect(page.preview()).toBe(preview);expect(page.revealed()).toBe(true);
+    fixture.destroy();const calls=read.mock.calls.length;await vi.advanceTimersByTimeAsync(3000);
+    expect(read).toHaveBeenCalledTimes(calls);
   });
 
 });

@@ -1630,7 +1630,18 @@ export const es:Record<string,string> = {...shared,...{
   "sessionList.kanji.many": "{{count}} kanji únicos",
   "sessionList.vocabulary.title": "Palabras estudiadas en esta sesión",
   "sessionList.vocabulary.one": "{{count}} palabra única",
-  "sessionList.vocabulary.many": "{{count}} palabras únicas"
+  "sessionList.vocabulary.many": "{{count}} palabras únicas",
+  "anki.scheduler.title": "Cómo se programan las tarjetas",
+  "anki.scheduler.learning": "Aprendizaje: 1 min → 10 min → mañana.",
+  "anki.scheduler.relearning": "Reaprendizaje: 10 min → mañana.",
+  "anki.scheduler.ahead": "Si no queda trabajo listo, se pueden adelantar pasos de aprendizaje de hoy hasta 20 minutos. No se añaden nuevas por encima del límite.",
+  "anki.scheduler.reviewDay": "Los repasos normales están disponibles desde el inicio de su día en Europe/Madrid, incluidos los atrasados.",
+  "anki.scheduler.tomorrow": "Mañana",
+  "anki.scheduler.advanced": "Paso de aprendizaje adelantado (hasta 20 min). Tu respuesta se registra ahora.",
+  "anki.scheduler.pending": "Pasos de aprendizaje pendientes para más tarde hoy: {{count}}.",
+  "anki.scheduler.waiting": "Aprendizaje pendiente para más tarde",
+  "anki.scheduler.nextDueAt": "Próximo vencimiento: {{date}} (Europe/Madrid).",
+  "anki.scheduler.readyLearning": "Aprendizaje listo"
 }};
 export const en:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Objective answers",
@@ -3144,7 +3155,18 @@ export const en:Record<string,string> = {...shared,...{
   "sessionList.kanji.many": "{{count}} unique kanji",
   "sessionList.vocabulary.title": "Words studied in this session",
   "sessionList.vocabulary.one": "{{count}} unique word",
-  "sessionList.vocabulary.many": "{{count}} unique words"
+  "sessionList.vocabulary.many": "{{count}} unique words",
+  "anki.scheduler.title": "How cards are scheduled",
+  "anki.scheduler.learning": "Learning: 1 min → 10 min → tomorrow.",
+  "anki.scheduler.relearning": "Relearning: 10 min → tomorrow.",
+  "anki.scheduler.ahead": "When no work is ready, today’s learning steps may be shown up to 20 minutes early. No new cards are added above the limit.",
+  "anki.scheduler.reviewDay": "Regular reviews are available from the start of their Europe/Madrid study day, including overdue reviews.",
+  "anki.scheduler.tomorrow": "Tomorrow",
+  "anki.scheduler.advanced": "Learning step shown early (up to 20 min). Your response is recorded now.",
+  "anki.scheduler.pending": "Learning steps pending for later today: {{count}}.",
+  "anki.scheduler.waiting": "Learning pending for later",
+  "anki.scheduler.nextDueAt": "Next due: {{date}} (Europe/Madrid).",
+  "anki.scheduler.readyLearning": "Learning ready"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Respostes objectives",
@@ -4658,5 +4680,16 @@ export const ca:Record<string,string> = {...shared,...{
   "sessionList.kanji.many": "{{count}} kanji únics",
   "sessionList.vocabulary.title": "Paraules estudiades en aquesta sessió",
   "sessionList.vocabulary.one": "{{count}} paraula única",
-  "sessionList.vocabulary.many": "{{count}} paraules úniques"
+  "sessionList.vocabulary.many": "{{count}} paraules úniques",
+  "anki.scheduler.title": "Com es programen les targetes",
+  "anki.scheduler.learning": "Aprenentatge: 1 min → 10 min → demà.",
+  "anki.scheduler.relearning": "Reaprenentatge: 10 min → demà.",
+  "anki.scheduler.ahead": "Quan no queda feina preparada, es poden avançar passos d’aprenentatge d’avui fins a 20 minuts. No s’afegeixen targetes noves per sobre del límit.",
+  "anki.scheduler.reviewDay": "Els repassos normals estan disponibles des de l’inici del seu dia a Europe/Madrid, inclosos els endarrerits.",
+  "anki.scheduler.tomorrow": "Demà",
+  "anki.scheduler.advanced": "Pas d’aprenentatge avançat (fins a 20 min). La resposta es registra ara.",
+  "anki.scheduler.pending": "Passos d’aprenentatge pendents per a més tard avui: {{count}}.",
+  "anki.scheduler.waiting": "Aprenentatge pendent per a més tard",
+  "anki.scheduler.nextDueAt": "Proper venciment: {{date}} (Europe/Madrid).",
+  "anki.scheduler.readyLearning": "Aprenentatge preparat"
 }};

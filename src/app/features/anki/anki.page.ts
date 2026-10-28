@@ -30,7 +30,7 @@ export class AnkiPage implements OnInit, OnDestroy {
     void this.refresh();
     this.timer = setInterval(() => {
       const day = getLocalStudyDayKey(new Date());
-      if (day !== this.day) { this.day = day; void this.refresh(); }
+      if (!document.hidden && !this.loading() && !this.error() && (day !== this.day || Object.values(this.counts()).some(c=>c.nextRefreshAt!=null&&c.nextRefreshAt<=Date.now()))) { this.day = day; void this.refresh(); }
     }, 1000);
   }
   ngOnDestroy(): void { if (this.timer) clearInterval(this.timer); }

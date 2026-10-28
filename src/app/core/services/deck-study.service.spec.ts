@@ -66,11 +66,11 @@ describe('DeckStudyService', () => {
     expect(database.progress).toHaveLength(7);
   });
 
-  it('includes old Learning cards in the configured new/review ordering', () => {
+  it('prioritizes expired Learning ahead of all configured new/review orders', () => {
     for (const order of ['mixed', 'before-reviews', 'after-reviews'] as const) {
       settings.current = { ...settings.current, newCardOrder: order };
       const snapshot = queueSnapshot({ learning: [progress('learning', State.Learning, 1)], reviews: [progress('review', State.Review, 1)], newEntries: [{ id: 'new', order: 1 }] });
-      expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe(order === 'before-reviews' ? 'new' : 'learning');
+      expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe('learning');
     }
   });
 
@@ -100,13 +100,14 @@ describe('DeckStudyService', () => {
     expect((await service.snapshot(deck, INDEX, NOW)).reviewEntries.map(item => item.entryId)).toEqual(['lower-r', 'higher-r']);
   });
 
-  it('never includes future Review or Learning cards and reports the next due', async () => {
+  it('includes today Review before its old hour, but retains future Learning minutes', async () => {
     const future = NOW.getTime() + 8 * 60_000;
     database.progress = [progress('review', State.Review, future), progress('learning', State.Learning, future + 1)];
     const snapshot = await service.snapshot(deck, INDEX, NOW);
-    expect(snapshot.reviewDue).toBe(0);
+    expect(snapshot.reviewDue).toBe(1);
     expect(snapshot.learningDue).toBe(0);
-    expect(snapshot.nextDue).toBe(future);
+    expect(snapshot.nextDue).toBe(future+1);
+    expect(snapshot.learningPending).toBe(1);expect(snapshot.learningAhead).toBe(1);
   });
 
   it.each(['again', 'good'] as const)('atomically persists and undoes a first New → %s rating', async rating => {
@@ -203,8 +204,12 @@ describe('DeckStudyService', () => {
     const saved=JSON.stringify(database.progress);
     await service.completeSession(deck,INDEX,NOW);
     const snapshot=await service.snapshot(deck,INDEX,NOW);
-    expect(snapshot.completedToday).toBe(true);expect(snapshot.newAvailable).toBe(0);expect(snapshot.introducedToday).toBe(1);expect(snapshot.nextDue).toBeGreaterThan(NOW.getTime());
+    expect(snapshot.completedToday).toBe(false);expect(snapshot.learningPending).toBe(1);expect(snapshot.newAvailable).toBe(0);expect(snapshot.introducedToday).toBe(1);expect(snapshot.nextDue).toBeGreaterThan(NOW.getTime());
     expect(JSON.stringify(database.progress)).toBe(saved);
+    const graduation={...scheduler.previewValue,good:{...scheduler.previewValue.good,card:{...scheduler.previewValue.good.card,state:State.Review,due:NOW.getTime()+86_400_000}}};
+    await service.rate(deck,{entryId:'e1',kind:'learning',progress:database.progress[0]},graduation,'good',100,NOW);
+    const graduated=JSON.stringify(database.progress);await service.completeSession(deck,INDEX,NOW);
+    expect((await service.snapshot(deck,INDEX,NOW)).completedToday).toBe(true);expect(JSON.stringify(database.progress)).toBe(graduated);
   });
 
   it('rejects rating a completed deck through a stale direct session', async () => {
