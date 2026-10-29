@@ -45,7 +45,7 @@ describe('free intensive practice presentation',()=>{
   expect(f.nativeElement.querySelector('.practice-reading')).toBeNull();
  });
  it('Space acts once, and respects native controls, modifiers, IME and held keys',()=>{
-  const f=render(),p=f.componentInstance;
+  const f=render(),p=f.componentInstance;(document.activeElement as HTMLElement)?.blur?.();
   p.handleKey(new KeyboardEvent('keydown',{code:'Space',repeat:true}));expect(p.revealed()).toBe(false);
   for(const init of [{isComposing:true},{ctrlKey:true},{altKey:true},{metaKey:true},{shiftKey:true}]){p.handleKey(new KeyboardEvent('keydown',{code:'Space',...init}));expect(p.revealed()).toBe(false);}
   for(const tag of ['button','a','input','textarea','select','summary','div']){

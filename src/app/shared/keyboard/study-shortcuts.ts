@@ -18,3 +18,22 @@ export function runStudyShortcut(event: KeyboardEvent, reveal: (() => void) | nu
   event.preventDefault();
   action();
 }
+
+// Additional ownership for sequential reveal/Next flows. The older quiz helper
+// above retains its existing policy and numeric-answer behaviour.
+const sequentialControls = 'a,.writing-surface,canvas,' + ['button','link','textbox','checkbox','radio','radiogroup','switch','tab','tablist','menu','menubar','menuitem','menuitemcheckbox','menuitemradio','option','listbox','tree','treegrid','treeitem','grid','gridcell','slider','spinbutton','combobox','searchbox','scrollbar'].map(role=>`[role~="${role}"]`).join(',');
+export function studyModalOpen(): boolean {
+  return !!document.querySelector('dialog[open],[role="dialog"]:not([hidden]):not([aria-hidden="true"]),[role="alertdialog"]:not([hidden]):not([aria-hidden="true"])');
+}
+export function runRevealNextShortcut(event: KeyboardEvent, action: (() => void) | null, enter = false): void {
+  if (!action || !(event.code === 'Space' || event.key === ' ' || enter && event.key === 'Enter') || !studyKeyboardAvailable(event)) return;
+  const owns = (target: EventTarget | null) => target instanceof Element && !!target.closest(sequentialControls);
+  if (studyModalOpen() || event.composedPath().some(owns) || owns(event.target) || owns(document.activeElement)) return;
+  event.preventDefault();action();
+}
+
+/** Prevent native button auto-repeat as well as the document handler. */
+export function guardStudyPrimaryKey(event: KeyboardEvent, blocked: boolean): void {
+  if (!(event.code === 'Space' || event.key === ' ' || event.key === 'Enter')) return;
+  if (blocked || studyModalOpen() || event.repeat || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) event.preventDefault();
+}

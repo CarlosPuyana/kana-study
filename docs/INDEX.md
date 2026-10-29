@@ -39,7 +39,7 @@ y los informes posteriores complementan sus límites. No ejecutar planes antiguo
 | Mazos y FSRS | [Práctica intensiva libre](features/decks/DECK_FREE_PRACTICE.md), [Roadmap UX de estudio](features/decks/MAZOS_UX_ROADMAP.md), [Kaishi automático](features/decks/KAISHI_MEDIA_AUTO.md), [activación r2](features/decks/KAISHI_MEDIA_AUTO_ACTIVATION.md), [importación local anterior](features/decks/KAISHI_MEDIA_1.md), [Scheduler vigente](features/decks/SCHEDULER_1.md), [referencia histórica](features/decks/DECK_SCHEDULER.md), [DESIGN](../MANGA_DECKS_DESIGN.md) | Japanese 1500 independiente; historial custom y journal propios |
 | Grammar | [Temario](features/grammar/TEMARIO.md), [auditoría original](../GRAMMAR_AUDIT.md) | src/app/features/grammar, datos y scripts audit:i18n/audit:grammar |
 | Stats V2 | [Stats V2 / AttemptEvent](features/stats/STATS_V2.md) | Servicios attempt-*; no usar resúmenes de sesión como eventos nuevos |
-| Daily, RUSH y feedback | [Daily](features/DAILY_STUDY_V2.md), [RUSH](features/RUSH.md), [feedback UX](features/UX_FEEDBACK_V1.md) | Consultar el sistema concreto antes de tocar tiempos/progresión |
+| Daily, RUSH y feedback | [Daily](features/DAILY_STUDY_V2.md), [RUSH](features/RUSH.md), [atajos unificados](features/RUSH_SHORTCUTS.md), [feedback UX](features/UX_FEEDBACK_V1.md) | Consultar el sistema concreto antes de tocar tiempos/progresión |
 | Cuentas y sincronización | [Supabase y contratos](../SUPABASE_SETUP.md), [historia H4](history/manga-decks/INDEX.md) | SQL/transportes experimentales no autorizan despliegue ni activación |
 
 ## Historia y estado de lanzamiento

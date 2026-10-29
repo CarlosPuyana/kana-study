@@ -27,7 +27,7 @@
    }
   </article>
   }
-  <footer class="practice-actions"><button #primary class="practice-primary" type="button" (click)="advance()">{{i18n.t(revealed()?'anki.rush.next':'anki.studyPage.reveal')}}</button></footer>
+  <footer class="practice-actions"><button #primary class="practice-primary" type="button" studyPrimaryAction aria-keyshortcuts="Space" [studyPrimaryBlocked]="!current()" (click)="advance()">{{i18n.t(revealed()?'anki.rush.next':'anki.studyPage.reveal')}}<kbd class="shortcut" aria-hidden="true">{{i18n.t('vocabulary.shortcuts.space')}}</kbd></button></footer>
  }@else{
   <p class="practice-empty" role="status">{{i18n.t('anki.rush.empty')}}</p>
  }

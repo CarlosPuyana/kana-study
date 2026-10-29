@@ -90,10 +90,12 @@ test('Kana writing uses the existing two ratings and hides keyboard hints on nar
   await page.keyboard.press('2');await expect(page.locator('.answer')).toHaveCount(0);await expect(page.locator('.progress')).toContainText('1 /');
 });
 
-test('Kana RUSH Space only reveals and existing Enter advances without inventing grades',async({page})=>{
+test('Kana RUSH Space reveals and advances and Enter remains available without grades',async({page})=>{
   await configure(page);await page.goto('/#/rush');await expect(page.locator('.rush-shell')).toBeVisible();await page.keyboard.press('Space');await expect(page.locator('.answer')).toBeVisible();
-  await page.keyboard.press('Space');await page.keyboard.press('1');await expect(page.locator('.counter')).toContainText('0');
-  await page.keyboard.press('Enter');await expect(page.locator('.counter')).toContainText('1');await expect(page.locator('.answer')).toHaveCount(0);
+  await page.keyboard.press('Space');await expect(page.locator('.counter')).toContainText('1');await expect(page.locator('.answer')).toHaveCount(0);
+  await expect(page.locator('.rush-shell .action')).toBeEnabled();const toast=page.locator('.medal-toast');while(await toast.count()){const old=await toast.textContent();await toast.locator('button').click();await expect.poll(()=>toast.evaluateAll(nodes=>nodes[0]?.textContent??null)).not.toBe(old);}
+  await page.locator('.prompt-label').click();await page.keyboard.press('1');await expect(page.locator('.answer')).toHaveCount(0);
+  await page.keyboard.press('Enter');await expect(page.locator('.answer')).toBeVisible();await page.keyboard.press('Enter');await expect(page.locator('.counter')).toContainText('2');await expect(page.locator('.answer')).toHaveCount(0);
 });
 
 for(const module of ['kana','kanji','vocabulary']) test(`${module} reference keeps its specific content and returns focus on Escape`,async({page})=>{

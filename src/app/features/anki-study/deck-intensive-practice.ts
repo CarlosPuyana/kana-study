@@ -1,3 +1,5 @@
+import {StudyPrimaryAction} from '../../shared/keyboard/study-primary-action';
+import {runRevealNextShortcut} from '../../shared/keyboard/study-shortcuts';
 import { ChangeDetectionStrategy, Component, ElementRef, afterRenderEffect, computed, inject, input, output, signal, viewChild } from '@angular/core';
 import { DeckStudyEntryView, isCustomEntry } from '../../core/models/deck-catalog.model';
 import { DeckIntensiveSession } from '../../core/services/deck-intensive-session';
@@ -8,7 +10,7 @@ import * as copy from '../../../assets/i18n/deck-study.generated';
 import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/deck-sentence-text';
 import { KaishiCardMedia } from '../../shared/components/kaishi-card-media/kaishi-card-media';
 
-@Component({selector:'app-deck-intensive-practice',imports:[DeckSentenceText,KaishiCardMedia],
+@Component({selector:'app-deck-intensive-practice',imports:[StudyPrimaryAction,DeckSentenceText,KaishiCardMedia],
  templateUrl:'./deck-intensive-practice.html',styleUrl:'./deck-intensive-practice.scss',
  host:{'(document:keydown)':'handleKey($event)'},changeDetection:ChangeDetectionStrategy.OnPush})
 export class DeckIntensivePractice {
@@ -43,10 +45,5 @@ export class DeckIntensivePractice {
   this.cardMedia()?.cancelAutomatic();this.revealed.set(false);this.session().next();this.appearance.set({});this.revision.update(n=>n+1);this.focusRequest.update(n=>n+1);
  }
  exit():void{this.cardMedia()?.cancelAutomatic();this.closed.emit();}
- handleKey(event:KeyboardEvent):void {
-  if(event.code!=='Space'||event.isComposing||event.ctrlKey||event.altKey||event.metaKey||event.shiftKey)return;
-  if(event.composedPath().some(node=>node instanceof Element&&node.matches('button,a,input,textarea,select,summary,[contenteditable]:not([contenteditable=false]),[role=button],[role=slider],[role=checkbox]')))return;
-  if(!this.current())return;
-  event.preventDefault();if(!event.repeat)this.advance();
- }
+ handleKey(event:KeyboardEvent):void{runRevealNextShortcut(event,this.current()?()=>this.advance():null);}
 }

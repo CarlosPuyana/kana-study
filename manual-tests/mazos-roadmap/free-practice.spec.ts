@@ -47,7 +47,11 @@ test('multiple words loop in ranking order for three passes, with native Space a
  await page.locator('.practice-word').click();await page.keyboard.down('Space');await page.keyboard.down('Space');await page.keyboard.up('Space');await expect(page.locator('.practice-meaning')).toBeVisible();await expect(page.locator('.practice-position')).toHaveText(/^2 (de|of) 2$/);
  await page.locator('.practice-primary').click();await expect(page.locator('.practice-word')).toHaveText(words[0]);await expect(page.locator('.practice-position')).toHaveText(/^1 (de|of) 2$/);await expect(page.locator('app-kaishi-card-media,.practice-end,.practice-restart,.practice-close')).toHaveCount(0);await expect(page.locator('.practice-primary')).toBeFocused();
  for(let pass=0;pass<2;pass++)for(let i=0;i<2;i++){await expect(page.locator('.practice-word')).toHaveText(words[i]);await expect(page.locator('.practice-position')).toHaveText(new RegExp('^'+(i+1)+' (de|of) 2$'));await page.locator('.practice-primary').click();await page.locator('.practice-primary').click();}
- expect(await state(page)).toEqual(before);await page.locator('.practice-exit').click();await expect(page.locator('.practice-start')).toBeFocused();await expect(page.locator('.difficulties li')).toHaveCount(2);expect(await state(page)).toEqual(before);
+ await page.locator('.practice-primary').focus();await page.keyboard.down('Enter');await page.keyboard.down('Enter');await page.keyboard.up('Enter');await expect(page.locator('.practice-meaning')).toBeVisible();await expect(page.locator('.practice-position')).toHaveText(/^1 (de|of) 2$/);
+ await page.locator('.practice-primary').focus();await page.keyboard.down('Enter');await page.keyboard.down('Enter');await page.keyboard.up('Enter');await expect(page.locator('.practice-word')).toHaveText(words[1]);await expect(page.locator('.practice-meaning')).toHaveCount(0);
+ await expect(page.locator('.practice-primary')).toHaveAttribute('aria-keyshortcuts','Space');await expect(page.locator('.practice-primary kbd')).toBeVisible();
+ await page.locator('.practice-word').click();await page.keyboard.press('Enter');await expect(page.locator('.practice-meaning')).toHaveCount(0);
+ expect(await state(page)).toEqual(before);await page.locator('.practice-exit').focus();await page.keyboard.down('Space');await expect(page.locator('.practice-meaning')).toHaveCount(0);await page.keyboard.up('Space');await expect(page.locator('.practice-start')).toBeFocused();await expect(page.locator('.difficulties li')).toHaveCount(2);expect(await state(page)).toEqual(before);
  await page.reload();await expect(page.locator('app-deck-intensive-practice')).toHaveCount(0);await expect(page.locator('.difficulties li')).toHaveCount(2);expect(await state(page)).toEqual(before);
 });
 test('one word starts fresh autoaudio on each appearance, remains silent on the front and exits safely',async({page})=>{
@@ -55,7 +59,7 @@ test('one word starts fresh autoaudio on each appearance, remains silent on the 
  await page.locator('.practice-start').click();await page.locator('.practice-primary').click();
  await expect.poll(()=>page.evaluate(()=>(window as any).clips.filter((x:string)=>x==='ended').length)).toBe(2);
  expect(await page.evaluate(()=>(window as any).clips.filter((x:string)=>x==='play'||x==='ended'))).toEqual(['play','ended','play','ended']);
- await page.locator('.practice-primary').click();await expect(page.locator('app-kaishi-card-media')).toHaveCount(0);await expect(page.locator('.practice-position')).toHaveText(/^1 (de|of) 1$/);expect(await page.evaluate(()=>(window as any).clips.filter((x:string)=>x==='play').length)).toBe(2);
+ await page.locator('.practice-primary').focus();await page.keyboard.down('Enter');await page.keyboard.down('Enter');await page.keyboard.up('Enter');await expect(page.locator('app-kaishi-card-media')).toHaveCount(0);await expect(page.locator('.practice-position')).toHaveText(/^1 (de|of) 1$/);expect(await page.evaluate(()=>(window as any).clips.filter((x:string)=>x==='play').length)).toBe(2);
  await page.locator('.practice-primary').click();await expect.poll(()=>page.evaluate(()=>(window as any).clips.filter((x:string)=>x==='ended').length)).toBe(4);
  await page.locator('.practice-primary').click();await expect(page.locator('app-kaishi-card-media')).toHaveCount(0);await page.locator('.practice-primary').click();await expect.poll(()=>page.evaluate(()=>(window as any).clips.filter((x:string)=>x==='play').length)).toBe(5);
  await page.locator('.practice-exit').click();await expect(page.locator('.difficulties')).toBeVisible();await expect(page.locator('.practice-start')).toBeFocused();expect(await state(page)).toEqual(before);await expect.poll(()=>page.evaluate(()=>(window as any).clips.filter((x:string)=>x==='pause').length)).toBeGreaterThan(0);
@@ -64,7 +68,7 @@ test('advancing aborts an audio download, cancels its queued sentence and anothe
  await prepare(page);await page.goto('./#/anki/japanese-1500/settings');await page.locator('.auto-audio-option input').check();await page.goto('./#/anki/japanese-1500/study');const before=await state(page);
  let held:any,aborted=false;const requests:string[]=[];page.on('request',r=>requests.push(r.url()));page.on('requestfailed',r=>{if(r.url().endsWith(first.resources.wordAudio.path))aborted=true;});
  await page.route('**/'+first.resources.wordAudio.path,r=>{held=r;});await page.locator('.practice-start').click();await page.locator('.practice-primary').click();await expect.poll(()=>!!held).toBe(true);
- await page.locator('.practice-primary').click();await expect(page.locator('app-kaishi-card-media')).toHaveCount(0);await expect(page.locator('.practice-position')).toHaveText(/^1 (de|of) 1$/);await expect.poll(()=>aborted).toBe(true);await held.continue().catch(()=>{});
+ await page.locator('.practice-primary').focus();await page.keyboard.down('Enter');await page.keyboard.down('Enter');await page.keyboard.up('Enter');await expect(page.locator('app-kaishi-card-media')).toHaveCount(0);await expect(page.locator('.practice-position')).toHaveText(/^1 (de|of) 1$/);await expect.poll(()=>aborted).toBe(true);await held.continue().catch(()=>{});
  expect(requests.some(u=>u.endsWith(first.resources.sentenceAudio.path))).toBe(false);expect(await state(page)).toEqual(before);
  await page.unroute('**/'+first.resources.wordAudio.path);await expect(page.locator('app-kaishi-card-media')).toHaveCount(0);await page.locator('.practice-primary').click();await expect.poll(()=>page.evaluate(()=>(window as any).clips.filter((x:string)=>x==='ended').length)).toBe(2);expect(await state(page)).toEqual(before);
 });
@@ -76,5 +80,24 @@ test('practice layout, open translation and zoom retain readable content and acc
  await page.locator('.practice-translation summary').click();
  // Explicit layout-only stress fixture; the catalog and persisted data are untouched.
  await page.locator('.practice-translation p').evaluate(el=>el.append(' Texto extenso de prueba de maquetación. '.repeat(12)));await page.evaluate(()=>document.documentElement.style.zoom='2');await accessible(page);await page.locator('.practice-translation p').scrollIntoViewIfNeeded();await accessible(page);
- await page.screenshot({path:'.cache/deck-continuous/zoom-'+info.project.name+'.png',fullPage:true});
+ await page.screenshot({path:'.cache/rush-shortcuts/mazos/zoom-'+info.project.name+'.png',fullPage:true});
+});
+
+test('continuous practice respects IME, modifiers, prevented events, roles and dialogs',async({page})=>{
+ await prepare(page);const before=await state(page);await page.locator('.practice-start').click();await page.locator('.practice-word').click();
+ for(const modifier of ['Control','Alt','Meta','Shift'])await page.keyboard.press(modifier+'+Space');
+ await page.evaluate(()=>{
+  const target=document.querySelector('.practice-word')!;
+  target.dispatchEvent(new KeyboardEvent('keydown',{key:' ',code:'Space',isComposing:true,bubbles:true,cancelable:true}));
+  const e=new KeyboardEvent('keydown',{key:' ',code:'Space',bubbles:true,cancelable:true});e.preventDefault();target.dispatchEvent(e);
+ });
+ await expect(page.locator('.practice-meaning')).toHaveCount(0);
+ await page.evaluate(()=>{const el=document.createElement('div');el.id='role-control';el.setAttribute('role','checkbox');el.tabIndex=0;el.textContent='Fixture control';document.querySelector('.practice-card')!.append(el);el.focus();});
+ await page.keyboard.press('Space');await expect(page.locator('.practice-meaning')).toHaveCount(0);await page.locator('#role-control').evaluate(el=>el.remove());
+ for(const native of [true,false]){
+  await page.evaluate(native=>{const d=document.createElement(native?'dialog':'section');d.id='fixture-modal';d.textContent='Modal';if(native){document.body.append(d);(d as HTMLDialogElement).showModal();}else{d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');document.body.append(d);}},native);
+  await page.keyboard.press('Space');await expect(page.locator('.practice-meaning')).toHaveCount(0);
+  await page.locator('#fixture-modal').evaluate(el=>{if(el instanceof HTMLDialogElement)el.close();el.remove();});
+ }
+ await page.locator('.practice-exit').click();expect(await state(page)).toEqual(before);await expect(page.locator('.practice-start')).toBeFocused();
 });

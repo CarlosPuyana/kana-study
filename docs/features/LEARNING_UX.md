@@ -20,7 +20,7 @@ no se modifican. No se inventa una calificación ni se convierte una práctica e
 | Aprender, opción múltiple | 1…N eligen la opción visible correspondiente. No califican durante feedback ni antes de abrir las opciones de escritura; Continuar sigue siendo un botón accesible con Tab/Enter |
 | Aprender, romaji→kana | El lienzo sigue disponible. Durante un trazo o carga no actúan los atajos; al terminar puede revelarse con Espacio, sin exigir haber dibujado |
 | Escritura independiente | Espacio revela; 1=Repetir y 2=Correcto, las dos acciones que ya existían |
-| Kana RUSH | Espacio solo revela. Enter conserva su acción anterior de revelar/siguiente. No hay calificaciones numéricas; Espacio sobre un botón enfocado conserva su acción nativa |
+| Kana RUSH | Espacio y Enter revelan o avanzan, con pista Espacio visible en ambos estados. Sin calificaciones numéricas. Contrato vigente y protecciones en [atajos unificados](RUSH_SHORTCUTS.md) |
 | Diálogos compatibles | Escape cancela inicio/salida, reconoce el aviso de medalla o cierra una ficha. Tab/Mayús+Tab permanecen dentro del diálogo y se restaura el foco al cerrar |
 
 No existe actualmente una pregunta de romaji con campo de texto libre dentro de Aprender
@@ -33,7 +33,7 @@ con la misma protección de foco. No se les añaden opciones rápidas ni nuevas 
 El guard compartido ignora repetición, composición IME, modificadores, controles que poseen
 la tecla y cualquier modal activo. La página comprueba además sesión, finalización, feedback,
 carga y trazo activo. Solo llama a preventDefault si ejecuta una acción real: Espacio deja
-de consumirse globalmente tras revelar. Los botones conservan Tab, Enter y Espacio nativos.
+de consumirse globalmente tras revelar en los modos de autoevaluación; RUSH utiliza el adaptador secuencial de revelar/siguiente. Los botones conservan Tab, Enter y Espacio nativos.
 Los kbd decorativos no se leen como parte de la respuesta y se ocultan en pantallas estrechas
 y punteros táctiles. Todos los textos reutilizan traducciones ES/EN/CA existentes.
 

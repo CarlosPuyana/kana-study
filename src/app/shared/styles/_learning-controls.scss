@@ -2,6 +2,13 @@
 .shortcut { display:none; font:inherit; font-size:.75rem; line-height:1.2; padding:.2rem .4rem; border:1px solid var(--border); border-radius:.35rem; background:var(--surface); color:var(--text-secondary); white-space:nowrap; }
 @media(hover:hover) and (pointer:fine) and (min-width:700px) { .shortcut { display:inline-block; } }
 }
+// Explicitly visible on touch/mobile in the four sequential reveal/Next flows.
+// Existing quiz/session hints keep their previous responsive behaviour.
+@mixin reveal-next-hints {
+ @include hints;
+ .shortcut{display:inline-block;margin-inline-start:.6rem;letter-spacing:normal;font-weight:500;vertical-align:middle}
+ button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+}
 @mixin session($kana:false) {
 $shell: '.play-shell'; $header: '.play-header'; $close: '.play-header .close';
 $primary: '.primary'; $secondary: '.secondary'; $answer: '.answer'; $again: '.no'; $good: '.yes';
