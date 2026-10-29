@@ -36,6 +36,14 @@ describe('AnkiStudyPage', () => {
 
   afterEach(() => { fixture.destroy(); TestBed.resetTestingModule(); vi.useRealTimers(); vi.restoreAllMocks(); });
 
+  it('rejects an empty practice and preserves the ranking order of selected unique words',()=>{
+    const p=fixture.componentInstance;p.startPractice();expect(p.practiceEntries()).toBeNull();
+    const [a,b]=JAPANESE_1500_ENTRIES,now=Date.now();
+    p.dayEvents.set([{id:'a',entryId:a.id,deckId:'japanese-1500',reviewedAt:now,rating:'again'}, {id:'b',entryId:b.id,deckId:'japanese-1500',reviewedAt:now-1,rating:'again'}] as DeckReviewEvent[]);
+    p.selected.set([b.id,a.id,b.id]);p.startPractice();expect(p.practiceEntries()?.map(e=>e.id)).toEqual([a.id,b.id]);
+    fixture.detectChanges();expect(fixture.nativeElement.querySelector('.study-header')).toBeNull();expect(fixture.nativeElement.querySelector('.practice-header')).not.toBeNull();
+  });
+
   it('front contains word and context but no answer content in the DOM', () => {
     const front = fixture.nativeElement.querySelector('.front') as HTMLElement;
     expect(front.textContent).toContain('私');

@@ -1,3 +1,4 @@
+import type {Request} from '@playwright/test';
 import {test,expect,Page} from '@playwright/test';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
@@ -32,17 +33,21 @@ async function geometry(page:Page,fit=false){
  if(fit)expect(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight+1)).toBe(true);
 }
 test('default automatic word then sentence, compact original back, manual controls and persisted opt-out',async({page},info)=>{
- const requests:string[]=[];page.on('request',r=>{if(r.url().includes('/assets/kaishi/'))requests.push(r.url());});
+ const requests:string[]=[],cardRequests:Request[]=[];page.on('request',r=>{if(r.url().includes('/assets/kaishi/')){requests.push(r.url());if(r.url().includes('/cards/'))cardRequests.push(r);}});
  await page.goto('./#/anki/japanese-1500/study');await expect(page.locator('.front h1')).toHaveText('私');expect(requests).toEqual([]);await counts(page,10,0,0);const before=await records(page);
  // Keyboard reveal exercises the browser gesture path as well as the click cases below.
  await page.locator('body').click({position:{x:2,y:2}});await page.keyboard.press('Space');await expect(page.locator('.back-content')).toBeVisible();
  await expect.poll(()=>page.evaluate(()=>(window as any).clips.filter((x:any)=>x.type==='ended').length)).toBe(2);
  const clips=await page.evaluate(()=>(window as any).clips.filter((x:any)=>['play','ended'].includes(x.type)));
  expect(clips.map((x:any)=>x.type)).toEqual(['play','ended','play','ended']);expect(await page.evaluate(()=>(window as any).players)).toBe(1);
- expect(requests.filter(p=>p.includes('/cards/'))).toHaveLength(1);expect(requests.filter(p=>p.endsWith('.mp3'))).toHaveLength(2);expect(await records(page)).toEqual(before);
+ // Initial local-installation recovery can abort and replace a descriptor fetch.
+ const cards=await Promise.all(cardRequests.map(async r=>({url:r.url(),error:r.failure()?.errorText,status:(await r.response())?.status()})));
+ expect(new Set(cards.map(r=>r.url)).size).toBe(1);expect(cards.filter(r=>!r.error&&r.status===200)).toHaveLength(1);
+ for(const r of cards){if(r.error)expect(r.error).toContain('ERR_ABORTED');else expect(r.status).toBe(200);}
+expect(requests.filter(p=>p.endsWith('.mp3'))).toHaveLength(2);expect(await records(page)).toEqual(before);
  await expect(page.locator('app-kaishi-card-media img')).toBeVisible();await expect(page.locator('.notes')).not.toHaveAttribute('open','');
  await geometry(page,info.project.name.startsWith('laptop')||info.project.name.startsWith('mobile'));
- await page.screenshot({path:'.cache/mazos-roadmap/back-'+info.project.name+'.png',fullPage:true});
+ await page.screenshot({path:'.cache/deck-continuous/normal-back-'+info.project.name+'.png',fullPage:true});
  const audio=page.locator('.audio-button').first();const box=await audio.boundingBox();expect(box!.width).toBeGreaterThanOrEqual(44);await audio.click();await expect.poll(()=>page.evaluate(()=>(window as any).clips.filter((x:any)=>x.type==='play').length)).toBe(3);
  await page.goto('./#/anki/japanese-1500/settings');await expect(page.locator('.auto-audio-option input')).toBeChecked();await page.locator('.auto-audio-option input').uncheck();
  await page.reload();await expect(page.locator('.auto-audio-option input')).not.toBeChecked();await expect(page.locator('.pitch-option input')).toBeChecked();
@@ -53,20 +58,33 @@ test('future repeats survive reload and Space on Undo retains native behaviour',
  await expect(page.locator('.front h1')).toHaveText('あなた');await page.locator('.undo').focus();await page.keyboard.press('Space');await expect(page.locator('.front h1')).toHaveText('私');await counts(page,10,0,0);await expect(page.locator('.back-content')).toHaveCount(0);
  await page.locator('.reveal').click();await page.locator('.good').click();await counts(page,9,1,0);await page.reload();await counts(page,9,1,0);
 });
-test('daily ranking, adjustable selection and intensive blocks leave every normal store unchanged',async({page},info)=>{
+test('daily ranking, selection and continuous practice leave every normal store unchanged',async({page},info)=>{
  await page.goto('./#/anki/japanese-1500/settings');await page.locator('.auto-audio-option input').uncheck();await page.locator('input[type=number]').fill('1');await page.locator('.save-button').click();await expect(page.locator('.save-row [role=status]')).toBeVisible();
  await page.goto('./#/anki/japanese-1500/study');
  for(const rating of ['again','again','good','good']){await page.locator('.reveal').click();await page.locator('.'+rating).click();}
  await expect(page.locator('.difficulties li')).toHaveCount(1);await expect(page.locator('.difficulties li')).toContainText('2');await counts(page,0,0,0);
  await page.reload();await expect(page.locator('.difficulties li')).toHaveCount(1);
- await page.screenshot({path:'.cache/mazos-roadmap/results-'+info.project.name+'.png',fullPage:true});
+ await page.screenshot({path:'.cache/deck-continuous/normal-results-'+info.project.name+'.png',fullPage:true});
  const selection=page.locator('.practice-selection input');await selection.uncheck();await expect(page.locator('.practice-start')).toBeDisabled();await selection.check();
  const before=await records(page);await page.locator('.practice-start').click();
- for(let i=0;i<20;i++){await page.locator('.practice-reveal').click();await page.locator('.practice-again').click();}
- await expect(page.locator('.practice-continue')).toBeVisible();expect(await records(page)).toEqual(before);await page.locator('.practice-continue').click();
- for(let i=0;i<2;i++){await page.locator('.practice-reveal').click();await page.locator('.practice-good').click();}
- await expect(page.locator('.practice-close')).toBeVisible();await expect(page.locator('.practice-continue')).toHaveCount(0);expect(await records(page)).toEqual(before);
- await page.screenshot({path:'.cache/mazos-roadmap/practice-'+info.project.name+'.png',fullPage:true});await page.locator('.practice-close').click();await expect(page.locator('.difficulties li')).toHaveCount(1);expect(await records(page)).toEqual(before);
+ await expect(page.locator('.study-header,[role=timer]')).toHaveCount(0);
+ await expect(page.locator('.practice-position')).toHaveText(/^1 (de|of) 1$/);
+ await expect(page.locator('.practice-card .practice-word')).toHaveText('私');
+ await expect(page.locator('.practice-card rt,.practice-reading,.practice-meaning,.practice-example,app-kaishi-card-media')).toHaveCount(0);
+ await page.screenshot({path:'.cache/deck-continuous/front-'+info.project.name+'.png',fullPage:true});
+ await page.locator('.practice-primary').click();await expect(page.locator('app-kaishi-card-media img')).toBeVisible();
+ await expect(page.locator('.practice-card .pitch h2')).toBeVisible();
+ expect(await page.evaluate(()=>(window as any).clips.filter((x:any)=>x.type==='play').length)).toBe(0);
+ await page.screenshot({path:'.cache/deck-continuous/back-'+info.project.name+'.png',fullPage:true});
+ for(let pass=0;pass<3;pass++){
+  await page.locator('.practice-primary').click();await expect(page.locator('.practice-primary')).toBeFocused();
+  await expect(page.locator('.practice-position')).toHaveText(/^1 (de|of) 1$/);await expect(page.locator('app-kaishi-card-media,.practice-end,.practice-restart,.practice-close')).toHaveCount(0);
+  expect(await records(page)).toEqual(before);
+  if(pass<2)await page.locator('.practice-primary').click();
+ }
+ await page.screenshot({path:'.cache/deck-continuous/wrap-'+info.project.name+'.png',fullPage:true});
+ await page.locator('.practice-exit').click();await expect(page.locator('.practice-start')).toBeFocused();await expect(page.locator('.difficulties li')).toHaveCount(1);expect(await records(page)).toEqual(before);
+ await page.locator('.practice-start').click();await page.locator('.practice-primary').click();await page.locator('.practice-exit').click();await expect(page.locator('.practice-start')).toBeFocused();expect(await records(page)).toEqual(before);
 });
 test('image failure cannot delay autoaudio; browser denial has manual recovery and no automatic retry',async({page})=>{
  await page.route('**/'+first.resources.picture.path,r=>r.fulfill({status:503,body:'image unavailable'}));
@@ -79,7 +97,7 @@ test('long content and CSS zoom 200 percent retain document scrolling and reacha
  await page.goto('./#/anki/japanese-1500/study');await page.locator('.reveal').click();await expect(page.locator('app-kaishi-card-media img')).toBeVisible();
  await page.locator('.notes summary').click();await page.locator('.translation-toggle').click();await page.evaluate(()=>{document.documentElement.style.zoom='2';});
  await geometry(page);await page.locator('.notes p').scrollIntoViewIfNeeded();await geometry(page);await expect(page.locator('.notes p')).toBeVisible();
- await page.screenshot({path:'.cache/mazos-roadmap/zoom-'+info.project.name+'.png',fullPage:true});
+ await page.screenshot({path:'.cache/deck-continuous/normal-zoom-'+info.project.name+'.png',fullPage:true});
 });
 
 test('answering aborts slow audio and hiding cancels a queued sentence without restarting on return',async({page})=>{

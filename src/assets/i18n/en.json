@@ -12313,16 +12313,11 @@
   "anki.results.failures": "Mistakes: {{count}}",
   "anki.results.audio": "Audio and image",
   "anki.rush.title": "Intensive practice",
-  "anki.rush.independent": "Free practice: your schedule and daily mistakes stay unchanged.",
-  "anki.rush.repeat": "Repeat",
-  "anki.rush.correct": "Correct",
-  "anki.rush.finish": "End block",
-  "anki.rush.block": "Answers in this block: {{count}} / 20",
-  "anki.rush.results": "Practice results",
-  "anki.rush.correctCount": "Correct: {{count}} / 2",
-  "anki.rush.continue": "Continue another block",
-  "anki.rush.close": "Back to summary",
   "anki.rush.select": "Select {{word}}",
-  "anki.rush.selectionHelp": "Select words (up to 10 initially). Two correct answers per word; at most 20 answers per block.",
-  "anki.rush.start": "Practice selection ({{count}})"
+  "anki.rush.selectionHelp": "Select the words to practise. Review repeats until you exit.",
+  "anki.rush.start": "Practice selection ({{count}})",
+  "anki.rush.position": "{{position}} of {{total}}",
+  "anki.rush.next": "Next word",
+  "anki.rush.exit": "Exit",
+  "anki.rush.empty": "No words selected"
 }

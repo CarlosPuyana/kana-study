@@ -102,4 +102,10 @@ describe('Kaishi back media lifecycle',()=>{
   const f=await render();await vi.waitFor(()=>expect(f.componentInstance.playing()).toBe('wordAudio'));expect(f.componentInstance.failed()).toBe(true);expect(remote.resource).not.toHaveBeenCalled();
  });
 
+ it('opts into the practice layout without changing the default study layout or playback policy',async()=>{
+  const f=await render();expect(f.nativeElement.classList.contains('practice-media')).toBe(false);
+  media.pitch.set(true);f.componentRef.setInput('layout','practice');f.detectChanges();expect(f.nativeElement.classList.contains('practice-media')).toBe(true);
+  expect(f.nativeElement.querySelector('.pitch h2').textContent).toBe('kaishi.pitchTitle');expect(audios).toHaveLength(0);
+ });
+
 });

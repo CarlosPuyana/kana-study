@@ -9,9 +9,9 @@ import {WorkspaceService} from '../../../core/services/workspace.service';
 import {TranslationService} from '../../../core/services/translation.service';
 import {kaishiPitch} from '../../../core/services/kaishi-pitch';
 type Source={blob?:Blob;remote?:KaishiStaticResource};
-@Component({selector:'app-kaishi-card-media',templateUrl:'./kaishi-card-media.html',styleUrl:'./kaishi-card-media.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(window:pagehide)':'cancelAutomatic()', '(document:visibilitychange)':'visibilityChanged()'}})
+@Component({selector:'app-kaishi-card-media',templateUrl:'./kaishi-card-media.html',styleUrl:'./kaishi-card-media.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'[class.practice-media]':"layout()==='practice'",'(window:pagehide)':'cancelAutomatic()', '(document:visibilitychange)':'visibilityChanged()'}})
 export class KaishiCardMedia {
- readonly entry=input.required<JapaneseWordDeckEntry>();readonly active=input(true);readonly automatic=input(true);readonly media=inject(KaishiMediaService);readonly i18n=inject(TranslationService);
+ readonly layout=input<'study'|'practice'>('study');readonly entry=input.required<JapaneseWordDeckEntry>();readonly active=input(true);readonly automatic=input(true);readonly media=inject(KaishiMediaService);readonly i18n=inject(TranslationService);
  private readonly remote=inject(KaishiStaticMediaService);private readonly workspace=inject(WorkspaceService);
  readonly urls=signal<Partial<Record<KaishiMediaKind,string>>>({});readonly sources=signal<Partial<Record<KaishiMediaKind,Source>>>({});
  readonly playing=signal<KaishiMediaKind|null>(null);readonly preparing=signal<KaishiMediaKind|null>(null);readonly audioError=signal<'blocked'|'failed'|null>(null);readonly failed=signal(false);readonly loading=signal(true);readonly testResources=signal(false);readonly blocked=signal(false);

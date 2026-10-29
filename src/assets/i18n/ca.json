@@ -12313,16 +12313,11 @@
   "anki.results.failures": "Errors: {{count}}",
   "anki.results.audio": "Àudio i imatge",
   "anki.rush.title": "Pràctica intensiva",
-  "anki.rush.independent": "Pràctica lliure: no canvia la programació ni els errors del dia.",
-  "anki.rush.repeat": "Repetir",
-  "anki.rush.correct": "Correcte",
-  "anki.rush.finish": "Acabar bloc",
-  "anki.rush.block": "Respostes del bloc: {{count}} / 20",
-  "anki.rush.results": "Resultat de la pràctica",
-  "anki.rush.correctCount": "Encerts: {{count}} / 2",
-  "anki.rush.continue": "Continuar un altre bloc",
-  "anki.rush.close": "Tornar al resum",
   "anki.rush.select": "Seleccionar {{word}}",
-  "anki.rush.selectionHelp": "Selecciona paraules (fins a 10 inicialment). Dos encerts per paraula; màxim 20 respostes per bloc.",
-  "anki.rush.start": "Practicar selecció ({{count}})"
+  "anki.rush.selectionHelp": "Selecciona les paraules per practicar. El repàs es repeteix fins que surtis.",
+  "anki.rush.start": "Practicar selecció ({{count}})",
+  "anki.rush.position": "{{position}} de {{total}}",
+  "anki.rush.next": "Paraula següent",
+  "anki.rush.exit": "Sortir",
+  "anki.rush.empty": "No hi ha paraules seleccionades"
 }

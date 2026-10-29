@@ -1,13 +1,18 @@
 import { DeckIntensiveSession } from './deck-intensive-session';
-describe('memory-only intensive deck practice',()=>{
- it('deduplicates selection, interleaves repetitions and requires two cumulative correct answers',()=>{
-  const s=new DeckIntensiveSession(['a','b','a']);expect(s.current).toBe('a');s.answer(false);expect(s.current).toBe('b');s.answer(true);s.answer(true);s.answer(true);
-  expect(s.current).toBe('a');s.answer(true);expect(s.current).toBeNull();expect(s.failures.get('a')).toBe(1);expect(s.answers).toBe(5);
+describe('temporary circular intensive practice', () => {
+ it('deduplicates ranking order and visits each word over three complete passes', () => {
+  const s=new DeckIntensiveSession(['b','a','b','c']);expect(s.ids).toEqual(['b','a','c']);
+  for(let pass=0;pass<3;pass++)for(const [i,id] of s.ids.entries()){
+   expect(s.current).toBe(id);expect(s.position).toBe(i+1);s.next();
+  }
+  expect(s.current).toBe('b');expect(s.position).toBe(1);expect(s.total).toBe(3);
  });
- it('bounds each block at twenty, allows an early finish and an explicit continuation',()=>{
-  const s=new DeckIntensiveSession(['a']);for(let i=0;i<30;i++)s.answer(false);
-  expect(s.answers).toBe(20);expect(s.current).toBeNull();expect(s.remaining).toBe(1);s.continueBlock();expect(s.answers).toBe(0);expect(s.current).toBe('a');
-  s.answer(true);s.finish();expect(s.current).toBeNull();s.continueBlock();s.answer(true);expect(s.remaining).toBe(0);s.continueBlock();expect(s.current).toBeNull();
+ it('retains a single word through multiple appearances without a terminal state', () => {
+  const s=new DeckIntensiveSession(['a']);
+  for(let i=0;i<5;i++){expect(s.current).toBe('a');expect(s.position).toBe(1);s.next();}
+  expect(s.total).toBe(1);
  });
- it('handles an empty selection without fabricated cards or results',()=>{const s=new DeckIntensiveSession([]);s.answer(true);expect(s.answers).toBe(0);expect(s.current).toBeNull();});
+ it('keeps empty selections coherent without modulo zero or invalid positions', () => {
+  const s=new DeckIntensiveSession([]);for(let i=0;i<5;i++)s.next();expect(s.current).toBeNull();expect(s.total).toBe(0);expect(s.position).toBe(0);
+ });
 });

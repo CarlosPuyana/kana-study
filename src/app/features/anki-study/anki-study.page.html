@@ -1,5 +1,6 @@
 @if(resource.restricted){<main class="page-shell"><app-local-deck-notice /><a routerLink="/anki">{{i18n.t('anki.title')}}</a></main>}@else{
-<main class="study-shell">
+<main class="study-shell" [class.is-practicing]="!!practiceEntries()">
+  @if(!practiceEntries()){
   <header class="study-header">
     <a routerLink="/anki" class="back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg><span>{{ i18n.t('anki.title') }}</span></a>
     @if (!loading()) { <app-study-timer [clock]="clock" [result]="!choice()"/> }
@@ -10,8 +11,9 @@
     </div> }
     <button type="button" class="undo" [disabled]="!lastEvent() || saving() || !!practiceEntries()" (click)="undo()">{{ i18n.t('anki.studyPage.undo') }}</button>
   </header>
+  }
 
-  @if(practiceEntries();as practice){<app-deck-intensive-practice [entries]="practice" [builtinMedia]="deck?.id==='japanese-1500'" (closed)="practiceEntries.set(null)" />}@else{
+  @if(practiceEntries();as practice){<app-deck-intensive-practice [entries]="practice" [builtinMedia]="deck?.id==='japanese-1500'" (closed)="closePractice()" />}@else{
   @if (error()) { <p class="storage-error" role="alert">{{ i18n.t('anki.storageError') }}</p> }
   @if(snapshot()?.learningPending){<p class="learning-pending" role="status">{{i18n.t('anki.scheduler.pending',{count:snapshot()!.learningPending!})}}</p>}
   @if (loading()) { <p class="loading" aria-busy="true">{{ i18n.t('common.loading') }}</p> } @else if (!deck && resource.state().status === 'missing') {
@@ -72,7 +74,7 @@
         @if(deck?.id==='japanese-1500'&&!isCustom(item)){<button type="button" [attr.aria-expanded]="summaryAudio()===item.id" (click)="summaryAudio.set(summaryAudio()===item.id?null:item.id)">{{i18n.t('anki.results.audio')}}</button>@if(summaryAudio()===item.id){<app-kaishi-card-media [entry]="item" [automatic]="false" />}}
         </li>
       }}</ol>
-      @if(difficulties().length){<p>{{i18n.t('anki.rush.selectionHelp')}}</p><button class="practice-start" type="button" [disabled]="!selected().length" (click)="startPractice()">{{i18n.t('anki.rush.start',{count:selected().length})}}</button>}
+      @if(difficulties().length){<p>{{i18n.t('anki.rush.selectionHelp')}}</p><button #practiceStart class="practice-start" type="button" [disabled]="!selected().length" (click)="startPractice()">{{i18n.t('anki.rush.start',{count:selected().length})}}</button>}
       </aside>
     }
     </div>

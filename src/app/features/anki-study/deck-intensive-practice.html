@@ -1,0 +1,34 @@
+<section class="practice" aria-labelledby="practice-title">
+ <header class="practice-header">
+  <h1 id="practice-title">{{i18n.t('anki.rush.title')}}</h1>
+  <span class="practice-position" role="status">{{i18n.t('anki.rush.position',{position:session().position,total:session().total})}}</span>
+  <button class="practice-exit" type="button" (click)="exit()">{{i18n.t('anki.rush.exit')}}</button>
+ </header>
+ @if(current();as card){
+  @for(key of [appearance()]; track key){
+  <article class="practice-card" [class.is-revealed]="revealed()">
+   <h2 class="practice-word" lang="ja">{{card.word}}</h2>
+   @if(revealed()){
+    @if(isCustom(card)){
+     @if(showReading(card)){<p class="practice-reading" lang="ja">{{card.reading}}</p>}
+     <p class="practice-meaning">{{meaning(card)}}</p>
+     @if(card.context){<section class="practice-example"><p lang="ja">{{card.context.text}}</p></section>}
+    }@else if(builtinMedia()){
+     <app-kaishi-card-media [entry]="card" layout="practice">
+      @if(showReading(card)){<p kaishi-reading class="practice-reading"><span>{{i18n.t('anki.cards.reading')}}</span> <span lang="ja">{{card.reading}}</span></p>}
+      <p kaishi-meaning class="practice-meaning">{{meaning(card)}}</p>
+      <section kaishi-sentence class="practice-example"><app-deck-sentence-text [segments]="card.sentenceSegments" /><details class="practice-translation"><summary>{{i18n.t('anki.studyPage.translation')}}</summary><p>{{sentenceMeaning(card)}}</p></details></section>
+     </app-kaishi-card-media>
+    }@else{
+     @if(showReading(card)){<p class="practice-reading" lang="ja">{{card.reading}}</p>}
+     <p class="practice-meaning">{{meaning(card)}}</p>
+     <section class="practice-example"><app-deck-sentence-text [segments]="card.sentenceSegments" /><details class="practice-translation"><summary>{{i18n.t('anki.studyPage.translation')}}</summary><p>{{sentenceMeaning(card)}}</p></details></section>
+    }
+   }
+  </article>
+  }
+  <footer class="practice-actions"><button #primary class="practice-primary" type="button" (click)="advance()">{{i18n.t(revealed()?'anki.rush.next':'anki.studyPage.reveal')}}</button></footer>
+ }@else{
+  <p class="practice-empty" role="status">{{i18n.t('anki.rush.empty')}}</p>
+ }
+</section>

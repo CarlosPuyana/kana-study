@@ -14,18 +14,13 @@ export const es:Record<string,string> = {...shared,...{
   "anki.results.failures": "Fallos: {{count}}",
   "anki.results.audio": "Audio e imagen",
   "anki.rush.title": "Práctica intensiva",
-  "anki.rush.independent": "Práctica libre: no cambia tu programación ni tus fallos del día.",
-  "anki.rush.repeat": "Repetir",
-  "anki.rush.correct": "Correcto",
-  "anki.rush.finish": "Terminar bloque",
-  "anki.rush.block": "Respuestas del bloque: {{count}} / 20",
-  "anki.rush.results": "Resultado de la práctica",
-  "anki.rush.correctCount": "Aciertos: {{count}} / 2",
-  "anki.rush.continue": "Continuar otro bloque",
-  "anki.rush.close": "Volver al resumen",
   "anki.rush.select": "Seleccionar {{word}}",
-  "anki.rush.selectionHelp": "Selecciona palabras (hasta 10 inicialmente). Dos aciertos por palabra; máximo 20 respuestas por bloque.",
-  "anki.rush.start": "Practicar selección ({{count}})"
+  "anki.rush.selectionHelp": "Selecciona las palabras para practicar. El repaso se repite hasta que salgas.",
+  "anki.rush.start": "Practicar selección ({{count}})",
+  "anki.rush.position": "{{position}} de {{total}}",
+  "anki.rush.next": "Siguiente palabra",
+  "anki.rush.exit": "Salir",
+  "anki.rush.empty": "No hay palabras seleccionadas"
 }};
 export const en:Record<string,string> = {...shared,...{
   "kaishi.audioFailed": "Audio could not be played. You can try its button again.",
@@ -41,18 +36,13 @@ export const en:Record<string,string> = {...shared,...{
   "anki.results.failures": "Mistakes: {{count}}",
   "anki.results.audio": "Audio and image",
   "anki.rush.title": "Intensive practice",
-  "anki.rush.independent": "Free practice: your schedule and daily mistakes stay unchanged.",
-  "anki.rush.repeat": "Repeat",
-  "anki.rush.correct": "Correct",
-  "anki.rush.finish": "End block",
-  "anki.rush.block": "Answers in this block: {{count}} / 20",
-  "anki.rush.results": "Practice results",
-  "anki.rush.correctCount": "Correct: {{count}} / 2",
-  "anki.rush.continue": "Continue another block",
-  "anki.rush.close": "Back to summary",
   "anki.rush.select": "Select {{word}}",
-  "anki.rush.selectionHelp": "Select words (up to 10 initially). Two correct answers per word; at most 20 answers per block.",
-  "anki.rush.start": "Practice selection ({{count}})"
+  "anki.rush.selectionHelp": "Select the words to practise. Review repeats until you exit.",
+  "anki.rush.start": "Practice selection ({{count}})",
+  "anki.rush.position": "{{position}} of {{total}}",
+  "anki.rush.next": "Next word",
+  "anki.rush.exit": "Exit",
+  "anki.rush.empty": "No words selected"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "kaishi.audioFailed": "No s’ha pogut reproduir l’àudio. Pots tornar-ho a provar amb el seu botó.",
@@ -68,16 +58,11 @@ export const ca:Record<string,string> = {...shared,...{
   "anki.results.failures": "Errors: {{count}}",
   "anki.results.audio": "Àudio i imatge",
   "anki.rush.title": "Pràctica intensiva",
-  "anki.rush.independent": "Pràctica lliure: no canvia la programació ni els errors del dia.",
-  "anki.rush.repeat": "Repetir",
-  "anki.rush.correct": "Correcte",
-  "anki.rush.finish": "Acabar bloc",
-  "anki.rush.block": "Respostes del bloc: {{count}} / 20",
-  "anki.rush.results": "Resultat de la pràctica",
-  "anki.rush.correctCount": "Encerts: {{count}} / 2",
-  "anki.rush.continue": "Continuar un altre bloc",
-  "anki.rush.close": "Tornar al resum",
   "anki.rush.select": "Seleccionar {{word}}",
-  "anki.rush.selectionHelp": "Selecciona paraules (fins a 10 inicialment). Dos encerts per paraula; màxim 20 respostes per bloc.",
-  "anki.rush.start": "Practicar selecció ({{count}})"
+  "anki.rush.selectionHelp": "Selecciona les paraules per practicar. El repàs es repeteix fins que surtis.",
+  "anki.rush.start": "Practicar selecció ({{count}})",
+  "anki.rush.position": "{{position}} de {{total}}",
+  "anki.rush.next": "Paraula següent",
+  "anki.rush.exit": "Sortir",
+  "anki.rush.empty": "No hi ha paraules seleccionades"
 }};
