@@ -1,3 +1,4 @@
+import {deckDayCounts,deckDayDifficulties} from './deck-day-presentation';
 import { TestBed } from '@angular/core/testing';
 import { IDBFactory } from 'fake-indexeddb';
 import { State } from 'ts-fsrs';
@@ -26,6 +27,25 @@ describe('SCHEDULER-1 real persistence and queue policy',()=>{
  beforeEach(()=>{TestBed.resetTestingModule();localStorage.clear();vi.stubGlobal('indexedDB',new IDBFactory());settings={...deck.settings};enqueue.mockClear();configure();});
  afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();});
  async function seed(rows:DeckCardProgress[],at=NOW,completed=false){await db.mergeFromCloud({progress:rows,events:[],daily:completed?[{...emptyDailyState(deck.id,getLocalStudyDayKey(at)),introducedEntryIds:['historic-introduction'],completedAt:at.getTime()-1000}]:[]});}
+ it('rebuilds daily presentation from persisted effective events across reload and undo',async()=>{
+  let snapshot=await study.snapshot(deck,index,NOW);
+  expect(deckDayCounts(snapshot,[],deck.id,NOW)).toEqual({new:10,repeat:0,review:0});
+  let choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;
+  const first=await study.rate(deck,choice,study.preview(deck,choice,NOW),'again',500,NOW);
+  snapshot=await study.snapshot(deck,index,NOW);
+  let events=await db.getDeckReviewEvents(deck.id);
+  expect(deckDayCounts(snapshot,events,deck.id,NOW)).toEqual({new:9,repeat:1,review:0});
+  TestBed.resetTestingModule();configure();snapshot=await study.snapshot(deck,index,NOW);events=await db.getDeckReviewEvents(deck.id);
+  expect(deckDayCounts(snapshot,events,deck.id,NOW).repeat).toBe(1);
+  expect(deckDayDifficulties(events,deck.id,NOW).map(r=>r.failures)).toEqual([1]);
+  await study.undo(first);snapshot=await study.snapshot(deck,index,NOW);events=await db.getDeckReviewEvents(deck.id);
+  expect(deckDayCounts(snapshot,events,deck.id,NOW)).toEqual({new:10,repeat:0,review:0});expect(deckDayDifficulties(events,deck.id,NOW)).toEqual([]);
+  choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;await study.rate(deck,choice,study.preview(deck,choice,NOW),'good',500,NOW);
+  snapshot=await study.snapshot(deck,index,NOW);events=await db.getDeckReviewEvents(deck.id);
+  expect(deckDayCounts(snapshot,events,deck.id,NOW)).toEqual({new:9,repeat:1,review:0});
+  TestBed.inject(WorkspaceService).activateUser('presentation-other');
+  expect(deckDayCounts(await study.snapshot(deck,index,NOW),await db.getDeckReviewEvents(deck.id),deck.id,NOW)).toEqual({new:10,repeat:0,review:0});
+ });
  it('introduces ten distinct new cards with twenty daily reviews, repetitions and only two public ratings',async()=>{
   const reviews=Array.from({length:20},(_,i)=>card('r'+i,State.Review,NOW.getTime()+7*3_600_000));await seed(reviews);
   const all=[...index,...reviews.map((r,i)=>({id:r.entryId,order:100+i}))];

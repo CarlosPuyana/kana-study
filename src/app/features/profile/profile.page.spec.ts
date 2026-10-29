@@ -12,6 +12,7 @@ describe('Profile V2',()=>{
     medals:profileMedals(MEDAL_DEFINITIONS.slice(0,5).map(d=>({medalId:d.id,unlockedAt:'2026-10-01T00:00:00Z'})),[])};
   let rpc:ReturnType<typeof vi.fn>,syncNow:ReturnType<typeof vi.fn>,load:ReturnType<typeof vi.fn>;
   beforeEach(()=>{
+    localStorage.clear();
     vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
     rpc=vi.fn(async()=>({data:[{position:1,username:'tester',display_name:'Tester',study_seconds:8299,medal_count:5,is_current_user:true}],error:null}));
     syncNow=vi.fn(async()=>true);load=vi.fn(async()=>stats);
@@ -21,7 +22,7 @@ describe('Profile V2',()=>{
       {provide:ProfileStatsService,useValue:{load}}, {provide:SupabaseClientService,useValue:{getClient:async()=>({rpc})}},
     ]});
   });
-  afterEach(()=>vi.unstubAllGlobals());
+  afterEach(()=>{TestBed.resetTestingModule();localStorage.clear();vi.unstubAllGlobals();});
   it('defaults to summary, renders all owned badges and does not load ranking',async()=>{
     const f=TestBed.createComponent(ProfilePage);await f.whenStable();f.detectChanges();
     expect(rpc).not.toHaveBeenCalled();expect(f.nativeElement.querySelectorAll('app-medal-badge')).toHaveLength(5);

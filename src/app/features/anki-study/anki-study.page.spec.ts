@@ -1,3 +1,5 @@
+import {DeckDayPresentation} from '../../core/services/deck-day-presentation';
+import {KaishiStaticMediaService} from '../../core/services/kaishi-static-media.service';
 import {STUDY_MONOTONIC_NOW} from '../../core/services/study-clock';
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -19,7 +21,7 @@ describe('AnkiStudyPage', () => {
     monotonic=0;study = new StudyStub();
     await TestBed.configureTestingModule({
       imports: [AnkiStudyPage],
-      providers: [{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},
+      providers: [{provide:DeckDayPresentation,useValue:{events:async()=>[]}},{provide:KaishiStaticMediaService,useValue:{publication:()=> 'blocked',catalog:async()=>({publication:'blocked'}),card:async()=>({catalog:{publication:'blocked'},card:null})}},{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},
         provideRouter([]),
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ deckId: 'japanese-1500' }) } } },
         { provide: DeckStudyService, useValue: study },
@@ -73,6 +75,18 @@ describe('AnkiStudyPage', () => {
     fixture.componentInstance.handleKey(new KeyboardEvent('keydown', { key: '2', code: 'Digit2' }));
     await fixture.whenStable();
     expect(study.ratings).toEqual(['good']);
+  });
+
+  it('preserves native controls, modifiers and IME rather than stealing shortcuts', () => {
+    const page=fixture.componentInstance;
+    for(const tag of ['button','a','input','textarea','select','summary']){
+      const el=document.createElement(tag);fixture.nativeElement.append(el);
+      el.dispatchEvent(new KeyboardEvent('keydown',{code:'Space',key:' ',bubbles:true,cancelable:true}));
+      expect(page.revealed()).toBe(false);el.remove();
+    }
+    for(const init of [{isComposing:true},{ctrlKey:true},{altKey:true},{metaKey:true},{shiftKey:true}]){
+      page.handleKey(new KeyboardEvent('keydown',{code:'Space',...init}));expect(page.revealed()).toBe(false);
+    }
   });
 
   it('blocks duplicate ratings while persistence is pending', async () => {

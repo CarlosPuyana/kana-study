@@ -1,7 +1,11 @@
+import * as studyCopy from '../../../assets/i18n/deck-study.generated';
+import {DeckIntensivePractice} from './deck-intensive-practice';
+import {DeckDayPresentation, deckDayCounts, deckDayDifficulties} from '../../core/services/deck-day-presentation';
+import {KaishiCardMedia} from '../../shared/components/kaishi-card-media/kaishi-card-media';
 import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import { createStudyClock } from '../../core/services/study-clock';
 import { StudyTimer } from '../../shared/components/study-timer/study-timer';
-import { ChangeDetectionStrategy, Component, effect, inject, untracked, OnDestroy, OnInit, PendingTasks, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, untracked, OnDestroy, OnInit, PendingTasks, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DeckMixedCursor, DeckQueueChoice, DeckQueueSnapshot, DeckRating, DeckReviewEvent } from '../../core/models/deck-study.model';
 import { DeckSchedulePreview } from '../../core/services/deck-scheduler.service';
@@ -18,7 +22,7 @@ import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/de
 
 @Component({
   selector: 'app-anki-study-page',
-  imports: [LocalDeckNotice,StudyTimer, RouterLink, FuriganaText, DeckSentenceText],
+  imports: [DeckIntensivePractice,KaishiCardMedia,LocalDeckNotice,StudyTimer, RouterLink, FuriganaText, DeckSentenceText],
   templateUrl: './anki-study.page.html',
   styleUrl: './anki-study.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +31,18 @@ import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/de
 export class AnkiStudyPage implements OnInit, OnDestroy {
   private readonly tasks = inject(PendingTasks);
   private readonly study = inject(DeckStudyService);
+  private readonly dayPresentation = inject(DeckDayPresentation);
+  readonly dayEvents = signal<readonly DeckReviewEvent[]>([]);
+  readonly presentationNow = signal(new Date());
+  readonly difficulties = computed(() => deckDayDifficulties(this.dayEvents(),this.deck?.id??'',this.presentationNow()));
+  readonly summaryAudio = signal<string|null>(null);
+  readonly selected = signal<readonly string[]>([]);
+  readonly practiceEntries = signal<readonly DeckStudyEntryView[]|null>(null);
+  toggleSelected(id:string):void{this.selected.update(ids=>ids.includes(id)?ids.filter(x=>x!==id):[...ids,id]);}
+  startPractice():void{const entries=this.selected().map(id=>this.summaryEntry(id)).filter((e):e is DeckStudyEntryView=>e!==null);if(!entries.length)return;this.summaryAudio.set(null);this.clock.pause();this.practiceEntries.set(entries);}
+
+  summaryEntry(id:string):DeckStudyEntryView|null{return this.resource.content?.entry(id)??null;}
+  readonly dayCounts = computed(() => this.snapshot() ? deckDayCounts(this.snapshot()!, this.dayEvents(), this.deck?.id ?? '', this.presentationNow(), this.choice()) : {new:0,repeat:0,review:0});
 
   private cursor: DeckMixedCursor = { debt: 0 };
   readonly clock = createStudyClock();
@@ -57,12 +73,14 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   private choiceState: unknown;
   private lastEventOwner: string | null = null;
   constructor() {
+    this.i18n.useStudyCopy?.(studyCopy);
+    effect(()=>{const rows=this.difficulties();untracked(()=>this.selected.set(rows.slice(0,10).map(row=>row.entryId)));});
     effect(() => {
       const state=this.resource.state();
       const key=this.resource.catalog.owner()+':'+(this.deck?.id??'');
       if(this.routeKey!==null&&this.routeKey!==key) untracked(() => {
         this.lastEvent.set(null);this.choice.set(null);this.entry.set(null);this.snapshot.set(null);
-        this.cursor={debt:0};this.clock.discardAppearance();this.clock.pause();
+        this.practiceEntries.set(null);this.dayEvents.set([]);this.summaryAudio.set(null);this.cursor={debt:0};this.clock.discardAppearance();this.clock.pause();
         if(state.status==='ready')void this.tasks.run(()=>this.loadNext());
       });
       this.routeKey=key;
@@ -84,6 +102,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
 
   refreshAvailability(): void {
     if(document.hidden){this.clock.pause();return;}
+    if(this.practiceEntries())return;
     if (this.saving() || this.loading() || document.hidden) return;
     this.day = getLocalStudyDayKey(new Date());
     // A foreground/day refresh may update counts, never replace a card or its
@@ -98,7 +117,8 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     if(!this.deck||!this.resource.content)return;
     const resource=this.resource.state(),generation=++this.availabilityGeneration;
     try{const snapshot=await this.study.snapshot(this.deck,this.resource.content.index);
-      if(!this.destroyed&&resource===this.resource.state()&&generation===this.availabilityGeneration){this.snapshot.set(snapshot);this.error.set(false);}
+      const events=await this.dayPresentation.events(this.deck);
+      if(!this.destroyed&&resource===this.resource.state()&&generation===this.availabilityGeneration){this.snapshot.set(snapshot);this.dayEvents.set(events);this.presentationNow.set(new Date());this.error.set(false);}
     }catch{if(!this.destroyed&&generation===this.availabilityGeneration)this.error.set(true);}
   }
 
@@ -136,7 +156,9 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
       this.clock.discardAppearance(); this.clock.undo(event.elapsedAnswerMs); this.lastEvent.set(null);
       this.choice.set(null);
       const snapshot = await this.study.snapshot(this.deck, this.resource.content!.index);
-      this.snapshot.set(snapshot);
+      const events=await this.dayPresentation.events(this.deck);
+      if(this.destroyed||resourceState!==this.resource.state()||owner!==this.resource.catalog.owner())return;
+      this.snapshot.set(snapshot);this.dayEvents.set(events);this.presentationNow.set(new Date());
       const progress = snapshot.progress.find(item => item.entryId === event.entryId) ?? null;
       this.setCurrent({
         entryId: event.entryId,
@@ -181,7 +203,9 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   }
 
   handleKey(event: KeyboardEvent): void {
-    if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.repeat) return;
+    if (this.practiceEntries())return;
+    if (event.repeat || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
+    if (event.composedPath().some(node => node instanceof Element && node.matches('button,a,input,textarea,select,summary,[contenteditable]:not([contenteditable=false]),[role=button],[role=slider],[role=checkbox]'))) return;
     if (event.code === 'Space' && !this.revealed() && this.choice()) { event.preventDefault(); this.reveal(); }
     else if (this.revealed() && event.key === '1') { event.preventDefault(); void this.rate('again'); }
     else if (this.revealed() && event.key === '2') { event.preventDefault(); void this.rate('good'); }
@@ -203,9 +227,10 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
         await this.study.completeSession(this.deck, this.resource.content!.index);
         snapshot = await this.study.snapshot(this.deck, this.resource.content!.index);
       }
+      const events=await this.dayPresentation.events(this.deck);
       if (this.destroyed || this.resource.state()!==loaded||generation!==this.availabilityGeneration) return;
       this.cursor = decision.cursor;
-      this.snapshot.set(snapshot);
+      this.snapshot.set(snapshot);this.dayEvents.set(events);this.presentationNow.set(new Date());
       if (preserveAppearance && decision.choice?.entryId === this.choice()?.entryId && this.choice()) this.clock.resume();
       else this.setCurrent(decision.choice);
     } catch { this.error.set(true); }

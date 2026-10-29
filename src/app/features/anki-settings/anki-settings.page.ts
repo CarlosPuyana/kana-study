@@ -1,3 +1,4 @@
+import {KaishiMediaSettings} from '../../shared/components/kaishi-media-settings/kaishi-media-settings';
 import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import { ChangeDetectionStrategy, Component, effect, inject, untracked, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -18,7 +19,7 @@ interface OrderOption {
 
 @Component({
   selector: 'app-anki-settings-page',
-  imports: [LocalDeckNotice,RouterLink],
+  imports: [LocalDeckNotice,RouterLink,KaishiMediaSettings],
   templateUrl: './anki-settings.page.html',
   styleUrl: './anki-settings.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

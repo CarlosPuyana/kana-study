@@ -1,3 +1,4 @@
+import {KaishiStaticMediaService} from '../../core/services/kaishi-static-media.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
 import { DeckSettingsService } from '../../core/services/deck-settings.service';
@@ -12,7 +13,7 @@ describe('AnkiSettingsPage', () => {
     localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [AnkiSettingsPage],
-      providers: [
+      providers: [{provide:KaishiStaticMediaService,useValue:{publication:()=> 'blocked',catalog:async()=>({publication:'blocked'}),card:async()=>({catalog:{publication:'blocked'},card:null})}},
         provideRouter([]),
         DeckSettingsService,
         StorageService,

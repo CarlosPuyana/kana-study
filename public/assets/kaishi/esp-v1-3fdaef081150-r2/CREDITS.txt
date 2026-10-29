@@ -1,0 +1,8 @@
+Kaishi 1.5k — Donkuri and contributors
+https://github.com/donkuri/kaishi
+Spanish adaptation: Dogi5 / Kaishi-ESP
+https://github.com/Dogi5/Kaishi-ESP
+Original sources and contributors: https://github.com/donkuri/kaishi#credits
+Media reproduced from the compatible Spanish APKG without modifying recordings or pictures.
+Permission from Donkuri reported by the kana-study owner on 2026-10-29.
+This notice does not assert a new license or ownership over third-party material.

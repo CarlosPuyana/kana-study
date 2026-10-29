@@ -1,0 +1,19 @@
+@if(loading()){<p class="media-status" role="status">{{i18n.t('kaishi.auto.loading')}}</p>}
+@if(testResources()){<p class="media-status fixture">{{i18n.t('kaishi.auto.test')}}</p>}
+@if(blocked()&&!sources().picture&&!sources().wordAudio&&!sources().sentenceAudio){<p class="media-status">{{i18n.t('kaishi.auto.pending')}}</p>}
+<div class="reading-row"><ng-content select="[kaishi-reading]" />
+@if(parts().length){<section class="pitch"><h2>{{i18n.t('kaishi.pitchTitle')}}</h2><p lang="ja">@for(part of parts();track $index){<span [class.high]="part.high" [class.drop]="part.drop" [attr.aria-label]="i18n.t(part.high?'kaishi.pitchHigh':'kaishi.pitchLow',{text:part.text})">{{part.text}}</span>}</p></section>}
+
+@if(sources().wordAudio){<button class="audio-button" type="button" (click)="play('wordAudio')" [attr.aria-label]="i18n.t('kaishi.wordAudio')" [attr.aria-pressed]="playing()==='wordAudio'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4 5 9H2v6h3l6 5V4Zm4 4q5 4 0 8m3-11q8 7 0 14" /></svg></button>}
+</div>
+<ng-content select="[kaishi-meaning]" />
+<div class="sentence-row"><ng-content select="[kaishi-sentence]" />
+@if(sources().sentenceAudio){<button class="audio-button" type="button" (click)="play('sentenceAudio')" [attr.aria-label]="i18n.t('kaishi.sentenceAudio')" [attr.aria-pressed]="playing()==='sentenceAudio'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4 5 9H2v6h3l6 5V4Zm4 4q5 4 0 8m3-11q8 7 0 14" /></svg></button>}
+</div>
+@if(preparing()||playing()){<button class="stop-audio" type="button" (click)="stop()">{{i18n.t('kaishi.stop')}}</button>}
+@if(failed()){<p role="status">{{i18n.t('kaishi.auto.failed')}} <button type="button" (click)="retry()">{{i18n.t('kaishi.auto.retry')}}</button></p>}
+@if(urls().picture;as url){<figure><img [src]="url" [alt]="i18n.t('kaishi.imageAlt',{word:entry().word})" (error)="imageFailed(url)" /></figure>}
+
+@if(preparing()){<p class="media-status" role="status">{{i18n.t('kaishi.preparing')}}</p>}
+@if(playing()){<p class="media-status" role="status">{{i18n.t('kaishi.playing')}}</p>}
+@if(audioError();as error){<p class="media-status" role="status">{{i18n.t(error==='blocked'?'kaishi.autoplayBlocked':'kaishi.audioFailed')}}</p>}

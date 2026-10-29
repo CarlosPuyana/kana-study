@@ -10,6 +10,8 @@ const DICTIONARIES: Record<AppLanguage, Dictionary> = { es, en, ca };
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
   private readonly pending=inject(PendingTasks);
+  private readonly studyCopy=signal<Record<AppLanguage,Dictionary>|null>(null);
+  useStudyCopy(dictionary:Record<AppLanguage,Dictionary>):void{if(!this.studyCopy())this.studyCopy.set(dictionary);}
   private readonly grammar=signal<Record<AppLanguage,Dictionary>|null>(null);
   private grammarLoading:Promise<void>|null=null;
   /** Reader bundles these existing course translations for first-use offline reference. */
@@ -35,7 +37,7 @@ export class TranslationService {
 
   t(key: string, replacements?: Record<string, string | number>): string {
     const grammar=this.grammar();
-    let value = this.dictionary()[key] ?? grammar?.[this.language()][key] ?? grammar?.es[key] ?? DICTIONARIES.es[key] ?? key;
+    let value = this.dictionary()[key] ?? this.studyCopy()?.[this.language()][key] ?? grammar?.[this.language()][key] ?? grammar?.es[key] ?? DICTIONARIES.es[key] ?? key;
 
     if (replacements) {
       for (const [name, replacement] of Object.entries(replacements)) {

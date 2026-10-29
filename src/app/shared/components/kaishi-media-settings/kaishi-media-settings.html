@@ -1,0 +1,17 @@
+<section aria-labelledby="kaishi-media-title" class="media-settings">
+<h2 id="kaishi-media-title">{{i18n.t('kaishi.auto.title')}}</h2><p>{{i18n.t('kaishi.auto.description')}}</p>
+<p class="kaishi-credits"><a href="https://github.com/donkuri/kaishi" target="_blank" rel="noopener noreferrer">Kaishi · Donkuri</a> · <a href="https://github.com/Dogi5/Kaishi-ESP" target="_blank" rel="noopener noreferrer">Kaishi-ESP · Dogi5</a></p>
+<label class="pitch-option"><input type="checkbox" [checked]="media.pitch()" (change)="media.setPitch($any($event.target).checked)" />{{i18n.t('kaishi.pitchOption')}}</label>
+<label class="auto-audio-option"><input type="checkbox" [checked]="media.autoAudio()" (change)="media.setAutoAudio($any($event.target).checked)" />{{i18n.t('kaishi.autoAudio')}}</label>
+@if(media.preferenceError()){<p role="alert">{{i18n.t('kaishi.error.storage')}}</p>}
+@if(remote.publication()==='blocked'){<p>{{i18n.t('kaishi.auto.pending')}}</p>}
+<details class="local-package"><summary>{{i18n.t('kaishi.auto.localOption')}}</summary><p>{{i18n.t('kaishi.local')}}</p>
+<p><a [href]="source" target="_blank" rel="noopener noreferrer">{{i18n.t('kaishi.download')}}</a></p>
+<label class="file-label">{{i18n.t('kaishi.select')}}<input type="file" accept=".apkg" [disabled]="media.busy()" (change)="select($event)" /></label>
+@if(media.busy()) {<p role="status">{{i18n.t('kaishi.'+media.phase())}}</p><progress [value]="media.count()" [max]="total" [attr.aria-label]="i18n.t('kaishi.progress')"></progress><p>{{media.count()}} / {{total}}</p><button type="button" (click)="media.cancel()">{{i18n.t('kaishi.cancel')}}</button>}
+@if(media.installation()){<p class="installed" role="status">{{i18n.t('kaishi.installed')}}</p><button type="button" [disabled]="media.busy()" (click)="media.remove()">{{i18n.t('kaishi.remove')}}</button>}
+@if(media.phase()==='cancelled'){<p role="status">{{i18n.t('kaishi.cancelled')}}</p>}
+@if(media.error();as code){<p role="alert">{{i18n.t('kaishi.error.'+code)}}</p>}
+<p>{{i18n.t('kaishi.scope')}}</p><p>{{i18n.t('kaishi.exceptions')}}</p>
+</details>
+</section>

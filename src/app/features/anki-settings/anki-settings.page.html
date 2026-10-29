@@ -10,6 +10,7 @@
   @if (deck) {
     <section class="deck-summary"><h2>{{ title() }}</h2><p>{{ i18n.t('anki.wordCount', { count: deck.cardCount }) }}</p></section>
     <section class="scheduler-policy"><h2>{{i18n.t('anki.scheduler.title')}}</h2><ul><li>{{i18n.t('anki.scheduler.learning')}}</li><li>{{i18n.t('anki.scheduler.relearning')}}</li><li>{{i18n.t('anki.scheduler.ahead')}}</li><li>{{i18n.t('anki.scheduler.reviewDay')}}</li></ul></section>
+    @if(deck.id==='japanese-1500'){<app-kaishi-media-settings />}
     <form (submit)="$event.preventDefault(); save()">
       <fieldset>
         <legend>{{ i18n.t('anki.settings.retentionTitle') }}</legend>

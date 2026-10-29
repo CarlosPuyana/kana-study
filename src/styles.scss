@@ -234,3 +234,10 @@ a {
 }
 
 app-page-header .icon-button{display:grid;place-items:center;min-width:44px;min-height:44px;padding:0;border:1px solid var(--border);border-radius:.8rem;background:var(--surface);color:var(--text-primary);text-decoration:none}app-page-header .icon-button svg{width:1.3rem;height:1.3rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}app-page-header .icon-button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* Study categories keep their blue/orange/green meaning in every theme. */
+:root { --deck-new: #60a5fa; --deck-repeat: #fb923c; --deck-review: #34d399; }
+:root[data-theme="light"], :root[data-theme="nora"], :root[data-theme="anime"] { --deck-new: #1d4ed8; --deck-repeat: #9a3412; --deck-review: #047857; }
+
+/* This study surface supports zoom below 320 CSS px without forcing a wider document. */
+html:has(app-anki-study-page), body:has(app-anki-study-page) { min-width: 0; }
