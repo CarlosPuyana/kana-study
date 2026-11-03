@@ -20,6 +20,7 @@
       <section kaishi-sentence class="practice-example"><app-deck-sentence-text [segments]="card.sentenceSegments" /><details class="practice-translation"><summary>{{i18n.t('anki.studyPage.translation')}}</summary><p>{{sentenceMeaning(card)}}</p></details></section>
      </app-kaishi-card-media>
     }@else{
+     <app-public-deck-image [url]="card.publicImageUrl" [word]="card.word" />
      @if(showReading(card)){<p class="practice-reading" lang="ja">{{card.reading}}</p>}
      <p class="practice-meaning">{{meaning(card)}}</p>
      <section class="practice-example"><app-deck-sentence-text [segments]="card.sentenceSegments" /><details class="practice-translation"><summary>{{i18n.t('anki.studyPage.translation')}}</summary><p>{{sentenceMeaning(card)}}</p></details></section>

@@ -1,3 +1,4 @@
+import {PublicDeckImage} from '../../shared/components/public-deck-image/public-deck-image';
 import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, untracked, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -12,7 +13,7 @@ import { DeckSentenceText } from './components/deck-sentence-text/deck-sentence-
 
 @Component({
   selector: 'app-anki-cards-page',
-  imports: [LocalDeckNotice,RouterLink, FuriganaText, DeckSentenceText],
+  imports: [PublicDeckImage,LocalDeckNotice,RouterLink, FuriganaText, DeckSentenceText],
   templateUrl: './anki-cards.page.html',
   styleUrl: './anki-cards.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

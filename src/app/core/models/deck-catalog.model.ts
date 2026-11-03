@@ -11,7 +11,7 @@ export type DeckDisplayName = {
 /** Scheduling metadata contains neither editorial content nor an FSRS snapshot. */
 export type DeckDefinition = Pick<StudyDeck, 'id' | 'cardCount' | 'contentType' | 'settings'>;
 export interface CatalogDeck extends DeckDefinition {
-    readonly kind: 'builtin' | 'custom';
+    readonly kind: 'builtin' | 'custom' | 'public';
     readonly displayName: DeckDisplayName;
 }
 export interface LexicalAnchor {
@@ -77,7 +77,7 @@ export interface CustomDeckEntryView {
 export type DeckStudyEntryView = JapaneseWordDeckEntry | CustomDeckEntryView;
 export function isCustomEntry(entry: DeckStudyEntryView): entry is CustomDeckEntryView { return 'kind' in entry && entry.kind === 'custom'; }
 export interface DeckContentProvider {
-    readonly kind: 'builtin' | 'custom';
+    readonly kind: 'builtin' | 'custom' | 'public';
     readonly deckId: string;
     readonly index: readonly DeckEntryIndexItem[];
     entries(): readonly DeckStudyEntryView[];

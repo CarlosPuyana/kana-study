@@ -6,6 +6,7 @@ import { DeckSettings, DesiredRetention, NewCardOrder } from '../../core/models/
 import { DeckSettingsService } from '../../core/services/deck-settings.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { createDeckRouteResource } from '../../core/services/deck-route-resource';
+import { PuyiAdmin } from '../puyi/puyi-admin';
 
 interface RetentionOption {
   readonly value: DesiredRetention;
@@ -19,7 +20,7 @@ interface OrderOption {
 
 @Component({
   selector: 'app-anki-settings-page',
-  imports: [LocalDeckNotice,RouterLink,KaishiMediaSettings],
+  imports: [PuyiAdmin,LocalDeckNotice,RouterLink,KaishiMediaSettings],
   templateUrl: './anki-settings.page.html',
   styleUrl: './anki-settings.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

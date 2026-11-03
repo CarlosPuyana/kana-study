@@ -14,7 +14,7 @@ export function createDeckRouteResource(builtin?:DeckContentProvider){
  const state=signal<DeckLoadState<{deck:CatalogDeck;content:DeckContentProvider|null}>>(
   initial?.kind==='builtin'?{status:'ready',value:{deck:initial,content:builtin??null}}:{status:'loading'},
  );
- let owner=catalog.owner(),epoch=catalog.epoch(),generation=0,revision=catalog.revision();
+ let owner=catalog.owner(),epoch=catalog.epoch(),generation=0,revision=catalog.revision(),publicRevision=catalog.publicRevision();
  const load=async()=>{
   const current=++generation;
   const capturedOwner=catalog.owner(),capturedEpoch=catalog.epoch();
@@ -29,11 +29,12 @@ export function createDeckRouteResource(builtin?:DeckContentProvider){
  });
  inject(DestroyRef).onDestroy(()=>{generation++;subscription?.unsubscribe();});
  effect(()=>{
-  const nextEpoch=catalog.epoch(),nextOwner=catalog.owner(),nextRevision=catalog.revision();
-  if(epoch!==nextEpoch||owner!==nextOwner||(id?.startsWith('md-')&&revision!==nextRevision)){
+  const nextEpoch=catalog.epoch(),nextOwner=catalog.owner(),nextRevision=catalog.revision(),nextPublicRevision=catalog.publicRevision();
+  if(epoch!==nextEpoch||owner!==nextOwner||(id?.startsWith('md-')&&revision!==nextRevision)||(id==='mazo-puyi'&&publicRevision!==nextPublicRevision)){
    state.set({status:'loading'});pending=load();
   }
   revision=nextRevision;
+  publicRevision=nextPublicRevision;
  });
  return {
   catalog,state,ready:()=>pending,

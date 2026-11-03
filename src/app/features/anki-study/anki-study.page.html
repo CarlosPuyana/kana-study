@@ -37,7 +37,7 @@
             @if(card.context; as context){<section class="example"><h2>{{i18n.t('anki.cards.example')}}</h2><p class="custom-ocr-context" lang="ja">{{context.text}}</p>@if(context.sourceTitle){<p>{{context.sourceTitle}}</p>}@if(context.pageNumber){<p>{{i18n.t('manga.page',{number:context.pageNumber})}}</p>}</section>}
           } @else {
           <app-furigana-text class="answer-word" [segments]="card.wordSegments" />
-          <span class="frequency">{{ i18n.t('anki.cards.frequency', { rank: card.frequencyRank }) }}</span>
+          @if(deck?.id!=='mazo-puyi'){<span class="frequency">{{ i18n.t('anki.cards.frequency', { rank: card.frequencyRank }) }}</span>}
           @if(deck?.id==='japanese-1500'){
             <app-kaishi-card-media [entry]="card" [active]="!saving()">
               <span kaishi-reading class="reading" lang="ja">{{card.reading}}</span>
@@ -45,7 +45,7 @@
               <section kaishi-sentence class="example"><app-deck-sentence-text [segments]="card.sentenceSegments" /><button type="button" class="translation-toggle" [attr.aria-expanded]="translationOpen()" (click)="translationOpen.set(!translationOpen())">{{ translationOpen() ? '▼' : '▶' }} {{ i18n.t('anki.studyPage.translation') }}</button>@if(translationOpen()){<p>{{ sentenceMeaning(card) }}</p>}</section>
             </app-kaishi-card-media>
           }@else{
-            <p class="reading" lang="ja">{{card.reading}}</p><p class="meaning">{{meaning(card)}}</p>
+            <app-public-deck-image [url]="card.publicImageUrl" [word]="card.word" /><p class="reading" lang="ja">{{card.reading}}</p><p class="meaning">{{meaning(card)}}</p>
             <section class="example"><app-deck-sentence-text [segments]="card.sentenceSegments" /><button type="button" class="translation-toggle" [attr.aria-expanded]="translationOpen()" (click)="translationOpen.set(!translationOpen())">{{i18n.t('anki.studyPage.translation')}}</button>@if(translationOpen()){<p>{{sentenceMeaning(card)}}</p>}</section>
           }
           @if(note(card);as noteText){<details class="notes"><summary>{{i18n.t('anki.cards.notes')}}</summary><p>{{noteText}}</p></details>}

@@ -8,6 +8,7 @@ import { WorkspaceService } from './workspace.service';
 import { canonical } from './custom-deck-validation';
 import { TranslationService } from './translation.service';
 import { CustomDeckSyncAdapter } from './custom-deck-sync-adapter';
+import { PUYI_DECK, PUYI_DECK_ID, puyiEntry } from '../models/puyi.model';
 export const builtinDecks: readonly CatalogDeck[] = STUDY_DECKS.map(d => ({ ...d, kind: 'builtin', displayName: { kind: 'i18n', key: d.nameKey } }));
 @Injectable({ providedIn: 'root' })
 export class DeckCatalogService {
@@ -24,8 +25,30 @@ export class DeckCatalogService {
     }>({ owner: '', decks: [] });
     readonly error = signal<unknown>(null);
     readonly loading = signal(false);
-    readonly items = computed(() => [...builtinDecks, ...(this.enabled() && this.access.permitted() && this.custom().owner === this.workspace.active() ? this.custom().decks : [])]);
+    private readonly publicDeck=signal<LoadedDeck|null>(null);
+    readonly publicRevision=signal(0);
+    readonly publicError=signal(false);
+    readonly items = computed(() => [...builtinDecks, this.publicDeck()?.deck??PUYI_DECK, ...(this.enabled() && this.access.permitted() && this.custom().owner === this.workspace.active() ? this.custom().decks : [])]);
     readonly revision = this.repository.catalogRevision;
+    private publicPending:Promise<void>|null=null;
+    async refreshPublic():Promise<void>{
+        if(this.publicPending)return this.publicPending;
+        this.publicPending=(async()=>{
+            try {
+                const {PuyiService}=await import('./puyi.service');
+                const service=this.injector.get(PuyiService),cards=await service.list();
+                const entries=cards.map(c=>puyiEntry(c,service.imageUrl(c.image_path)));
+                const byId=new Map(entries.map(e=>[e.id,e]));
+                this.publicError.set(false);
+                const value:LoadedDeck={deck:{...PUYI_DECK,cardCount:entries.length},content:{kind:'public',deckId:PUYI_DECK_ID,index:entries.map(e=>({id:e.id,order:e.order})),entries:()=>entries,entry:id=>byId.get(id)??null}};
+                if(canonical(this.publicDeck()?.content.entries())!==canonical(entries)||!this.publicDeck()){
+                    this.publicDeck.set(value);this.publicRevision.update(n=>n+1);
+                }
+            }catch{this.publicError.set(true);}finally{this.publicPending=null;}
+        })();
+        return this.publicPending;
+    }
+    publicEntryIds():ReadonlySet<string>|null{return this.publicDeck()?new Set(this.publicDeck()!.content.index.map(e=>e.id)):null;}
     private generation = 0;
     owner() { return this.workspace.active(); }
     epoch() { return this.workspace.activationRevision(); }
@@ -34,6 +57,8 @@ export class DeckCatalogService {
         return { builtin: builtinDecks, custom: this.access.permitted()?await this.repository.list(owner):[] };
     }
     async refresh(): Promise<void> {
+        // Public network availability must never delay the existing local decks.
+        void this.refreshPublic();
         const owner = this.owner(), epoch=this.epoch(), generation = ++this.generation;
         const current=()=>this.owner()===owner&&this.epoch()===epoch&&generation===this.generation;
         this.error.set(null);
@@ -62,6 +87,7 @@ export class DeckCatalogService {
     }
     get(id: string | null): CatalogDeck | null { return this.items().find(d => d.id === id) ?? null; }
     async index(deckId: string) {
+        if(deckId===PUYI_DECK_ID)return this.publicDeck()?.content.index??[];
         if (builtinDecks.some(d => d.id === deckId)) return JAPANESE_1500_INDEX;
         if (!this.enabled()||!this.access.permitted()) return [];
         return (await this.repository.content(deckId)).map(c => ({id:c.id,order:c.order}));
@@ -71,6 +97,7 @@ export class DeckCatalogService {
             return { status: 'missing' };
         const owner = this.owner(),epoch=this.epoch();
         try {
+            if(deckId===PUYI_DECK_ID){await this.refreshPublic();return this.publicError()?{status:'error',error:new Error('Puyi unavailable')}:{status:'ready',value:this.publicDeck()!};}
             const builtin = builtinDecks.find(d => d.id === deckId);
             if (builtin) {
                 const { BUILTIN_DECK_CONTENT } = await import('./builtin-deck-content');

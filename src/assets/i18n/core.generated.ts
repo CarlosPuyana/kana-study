@@ -1676,7 +1676,9 @@ export const es:Record<string,string> = {...shared,...{
   "kaishi.auto.loading": "Cargando multimedia…",
   "kaishi.auto.failed": "No se ha podido cargar un recurso. Puedes seguir estudiando el texto.",
   "kaishi.auto.retry": "Reintentar multimedia",
-  "kaishi.auto.test": "Recursos de prueba: imagen y tonos de demostración, no grabaciones Kaishi."
+  "kaishi.auto.test": "Recursos de prueba: imagen y tonos de demostración, no grabaciones Kaishi.",
+  "anki.publicUnavailable": "No se pudo actualizar Mazo Puyi. Los demás mazos siguen disponibles.",
+  "common.retry": "Reintentar"
 }};
 export const en:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Objective answers",
@@ -3236,7 +3238,9 @@ export const en:Record<string,string> = {...shared,...{
   "kaishi.auto.loading": "Loading media…",
   "kaishi.auto.failed": "A resource could not be loaded. You can continue studying the text.",
   "kaishi.auto.retry": "Retry media",
-  "kaishi.auto.test": "Test resources: demonstration image and tones, not Kaishi recordings."
+  "kaishi.auto.test": "Test resources: demonstration image and tones, not Kaishi recordings.",
+  "anki.publicUnavailable": "Could not refresh Mazo Puyi. Other decks remain available.",
+  "common.retry": "Retry"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Respostes objectives",
@@ -4796,5 +4800,7 @@ export const ca:Record<string,string> = {...shared,...{
   "kaishi.auto.loading": "Carregant multimèdia…",
   "kaishi.auto.failed": "No s’ha pogut carregar un recurs. Pots continuar estudiant el text.",
   "kaishi.auto.retry": "Torna a provar el multimèdia",
-  "kaishi.auto.test": "Recursos de prova: imatge i tons de demostració, no gravacions Kaishi."
+  "kaishi.auto.test": "Recursos de prova: imatge i tons de demostració, no gravacions Kaishi.",
+  "anki.publicUnavailable": "No s’ha pogut actualitzar Mazo Puyi. Els altres malls continuen disponibles.",
+  "common.retry": "Torna-ho a provar"
 }};

@@ -1,0 +1,29 @@
+<section class="puyi" aria-labelledby="puyi-about">
+ <h2 id="puyi-about">Mazo Puyi</h2><p>{{i18n.t('puyi.about')}}</p>
+ @if(!service.configured){<p role="status">{{i18n.t('puyi.unconfigured')}}</p>}
+ @if(message()){<p role="status">{{i18n.t(message())}}</p>}
+ @if(error()&&!dialog()?.nativeElement?.open){<p role="alert">{{i18n.t(error())}}</p>}
+ @if(service.admin()){
+  <h3>{{i18n.t('puyi.admin')}}</h3><button type="button" (click)="open()" [disabled]="busy()">{{i18n.t('puyi.add')}}</button>
+  @if(service.cleanupPending()){<p role="status">{{i18n.t('puyi.cleanupPending')}}</p><button type="button" (click)="service.cleanup()">{{i18n.t('puyi.retryCleanup')}}</button>}
+  <label>{{i18n.t('puyi.search')}}<input type="search" [value]="query()" (input)="query.set($any($event.target).value)" /></label>
+  @if(loading()){<p role="status">{{i18n.t('common.loading')}}</p>}
+  <ul>@for(card of rows();track card.id){<li><div><strong lang="ja">{{card.word}}</strong> <span lang="ja">{{card.kana}}</span><p>{{card.meaning}}</p></div><div class="actions"><button type="button" (click)="open(card)" [disabled]="busy()">{{i18n.t('puyi.edit')}}</button><button type="button" (click)="remove(card)" [disabled]="busy()">{{i18n.t('puyi.delete')}}</button></div></li>}@empty{<li>{{i18n.t('puyi.empty')}}</li>}</ul>
+ }
+</section>
+<dialog #editor aria-labelledby="puyi-editor-title" (cancel)="$event.preventDefault();close()">
+ <form (submit)="$event.preventDefault();save()" [attr.aria-busy]="busy()||photoBusy()">
+  <header><h2 id="puyi-editor-title">{{i18n.t(editing()?'puyi.edit':'puyi.add')}}</h2><button type="button" (click)="close()" [disabled]="busy()||photoBusy()">{{i18n.t('puyi.close')}}</button></header>
+  <div class="form-body">
+  @if(error()){<p role="alert">{{i18n.t(error())}}</p>}
+  <fieldset [disabled]="busy()||photoBusy()">
+   @for(field of fields;track field){<label>{{i18n.t('puyi.field.'+field)}}<textarea [attr.lang]="field==='word'||field==='kana'||field==='exampleSentence'?'ja':'es'" [attr.name]="field" [attr.autofocus]="field==='word'?'':null" required [value]="draft()[field]" (input)="update(field,$event)" [attr.aria-invalid]="!draft()[field].trim()" rows="2"></textarea><small>{{draft()[field].length}} / {{limits[field]}}</small></label>}
+   <label>{{i18n.t('puyi.photo')}}<input type="file" accept="image/jpeg,image/png,image/webp" (change)="selectImage($event)" /></label><p>{{i18n.t('puyi.photoHelp')}}</p>
+   @if(image()){<button type="button" (click)="clearImage()">{{i18n.t('puyi.removePhoto')}}</button>}
+   @if(duplicate()||error()==='puyi.duplicate'){<p>{{i18n.t('puyi.duplicate')}}</p><label class="inline"><input type="checkbox" [checked]="allowDuplicate()" (change)="allowDuplicate.set($any($event.target).checked)" />{{i18n.t('puyi.allowDuplicate')}}</label>}
+  </fieldset>
+  <section class="preview" aria-labelledby="puyi-preview-title"><h3 id="puyi-preview-title">{{i18n.t('puyi.preview')}}</h3><strong lang="ja">{{draft().word}}</strong><p lang="ja">{{draft().kana}}</p><p>{{draft().meaning}}</p><p lang="ja">{{draft().exampleSentence}}</p><p>{{draft().exampleTranslation}}</p>@if(image();as url){<img [src]="url" [alt]="draft().word" />}</section>
+  </div>
+  <footer><button type="submit" [disabled]="busy()||photoBusy()">{{i18n.t(busy()?'puyi.saving':'puyi.save')}}</button></footer>
+ </form>
+</dialog>

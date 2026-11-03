@@ -1,4 +1,5 @@
 import * as studyCopy from '../../../assets/i18n/deck-study.generated';
+import {PublicDeckImage} from '../../shared/components/public-deck-image/public-deck-image';
 import {DeckIntensivePractice} from './deck-intensive-practice';
 import {DeckDayPresentation, deckDayCounts, deckDayDifficulties} from '../../core/services/deck-day-presentation';
 import {KaishiCardMedia} from '../../shared/components/kaishi-card-media/kaishi-card-media';
@@ -22,7 +23,7 @@ import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/de
 
 @Component({
   selector: 'app-anki-study-page',
-  imports: [DeckIntensivePractice,KaishiCardMedia,LocalDeckNotice,StudyTimer, RouterLink, FuriganaText, DeckSentenceText],
+  imports: [PublicDeckImage,DeckIntensivePractice,KaishiCardMedia,LocalDeckNotice,StudyTimer, RouterLink, FuriganaText, DeckSentenceText],
   templateUrl: './anki-study.page.html',
   styleUrl: './anki-study.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

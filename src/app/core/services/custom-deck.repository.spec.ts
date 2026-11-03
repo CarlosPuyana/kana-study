@@ -55,7 +55,7 @@ describe('Custom decks H1: atomic local catalog and the existing FSRS engine', (
         expect(study.preview(loaded.value.deck, choice, NOW)).toEqual(TestBed.inject(DeckSchedulerService).preview(null, .9, NOW));
     });
     it('loads real custom entries, a literal title and only its own index', async () => { const { deck, content } = await seed(); expect(deck.displayName).toEqual({ kind: 'literal', text: customDeck().title }); expect(deck.cardCount).toBe(1); expect(content.entries()).toHaveLength(1); expect(content.entry('card-猫')?.word).toBe('猫'); expect(content.entry(JAPANESE_1500_INDEX[0].id)).toBeNull(); expect(content.index).toEqual([{ id: 'card-猫', order: 1 }]); expect(await repo.getDeckProgress(deck.id)).toEqual([]); await catalog.refresh(); expect(catalog.get(deck.id)?.cardCount).toBe(1); });
-    it('hides custom metadata and deep links behind the default gate', async () => { await seed(); enabled.set(false); await catalog.refresh(); expect(catalog.items().map(d => d.id)).toEqual(['japanese-1500']); expect(await catalog.load('md-試験')).toEqual({ status: 'missing' }); expect(() => TestBed.inject(DeckPersistenceRouter).bind('md-試験')).toThrow(); });
+    it('hides custom metadata and deep links behind the default gate', async () => { await seed(); enabled.set(false); await catalog.refresh(); expect(catalog.items().map(d => d.id)).toEqual(['japanese-1500', 'mazo-puyi']); expect(await catalog.load('md-試験')).toEqual({ status: 'missing' }); expect(() => TestBed.inject(DeckPersistenceRouter).bind('md-試験')).toThrow(); });
     it.each(['again', 'good'] as const)('uses the exact existing %s branch and undoes without an extra effective event', async (rating) => {
         await seed();
         const { event, preview } = await grade('md-試験', rating);

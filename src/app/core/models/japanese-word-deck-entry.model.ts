@@ -9,6 +9,8 @@ export interface JapaneseSentenceSegment extends JapaneseDeckFuriganaSegment {
 }
 
 export interface JapaneseWordDeckEntry {
+  /** Public editorial image, constructed by the Puyi adapter from a validated Storage path. */
+  readonly publicImageUrl?: string;
   readonly id: string;
   readonly guid: string;
   readonly order: number;

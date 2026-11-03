@@ -1,3 +1,4 @@
+import {PublicDeckImage} from '../../shared/components/public-deck-image/public-deck-image';
 import {StudyPrimaryAction} from '../../shared/keyboard/study-primary-action';
 import {runRevealNextShortcut} from '../../shared/keyboard/study-shortcuts';
 import { ChangeDetectionStrategy, Component, ElementRef, afterRenderEffect, computed, inject, input, output, signal, viewChild } from '@angular/core';
@@ -10,7 +11,7 @@ import * as copy from '../../../assets/i18n/deck-study.generated';
 import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/deck-sentence-text';
 import { KaishiCardMedia } from '../../shared/components/kaishi-card-media/kaishi-card-media';
 
-@Component({selector:'app-deck-intensive-practice',imports:[StudyPrimaryAction,DeckSentenceText,KaishiCardMedia],
+@Component({selector:'app-deck-intensive-practice',imports: [PublicDeckImage,StudyPrimaryAction,DeckSentenceText,KaishiCardMedia],
  templateUrl:'./deck-intensive-practice.html',styleUrl:'./deck-intensive-practice.scss',
  host:{'(document:keydown)':'handleKey($event)'},changeDetection:ChangeDetectionStrategy.OnPush})
 export class DeckIntensivePractice {

@@ -33,7 +33,7 @@
     <section class="card-grid" [attr.aria-label]="i18n.t('anki.cards.listLabel')">
       @for (entry of visibleCards(); track entry.id) {
         <button class="entry-card" type="button" (click)="selected.set(entry)">
-          <span class="meta"><span>#{{ entry.order }}</span>@if(!isCustom(entry)){<span>{{ i18n.t('anki.cards.frequency', { rank: entry.frequencyRank }) }}</span>}</span>
+          <span class="meta"><span>#{{ entry.order }}</span>@if(!isCustom(entry)&&deck.id!=='mazo-puyi'){<span>{{ i18n.t('anki.cards.frequency', { rank: entry.frequencyRank }) }}</span>}</span>
           @if(isCustom(entry)){<span class="word" lang="ja">{{entry.word}}</span>}@else{<app-furigana-text class="word" [segments]="entry.wordSegments" size="small" />}
           <span class="meaning">{{ meaning(entry) }}</span>
         </button>
@@ -54,7 +54,7 @@
     <section class="detail" role="dialog" aria-modal="true" aria-labelledby="deck-entry-title" (click)="$event.stopPropagation()">
       <button class="close" type="button" (click)="closeOverlay()" [attr.aria-label]="i18n.t('anki.cards.close')">×</button>
       @if(isCustom(entry)){<h2 id="deck-entry-title" lang="ja">{{entry.word}}</h2>}@else{
-      <div class="detail-meta"><span>#{{ entry.order }}</span><span>{{ i18n.t('anki.cards.frequency', { rank: entry.frequencyRank }) }}</span></div>
+      <div class="detail-meta"><span>#{{ entry.order }}</span>@if(deck?.id!=='mazo-puyi'){<span>{{ i18n.t('anki.cards.frequency', { rank: entry.frequencyRank }) }}</span>}</div>
       <app-furigana-text id="deck-entry-title" class="detail-word" [segments]="entry.wordSegments" size="large" />
       }
       <dl class="definition">
@@ -64,7 +64,7 @@
       @if(isCustom(entry)){
         @if(entry.context;as context){<section class="detail-section"><h2>{{i18n.t('anki.cards.example')}}</h2><p lang="ja">{{context.text}}</p>@if(context.sourceTitle){<p>{{context.sourceTitle}}</p>}</section>}
       }@else{
-      <section class="detail-section">
+      <app-public-deck-image [url]="entry.publicImageUrl" [word]="entry.word" /><section class="detail-section">
         <h2>{{ i18n.t('anki.cards.example') }}</h2>
         <app-deck-sentence-text [segments]="entry.sentenceSegments" />
         <p>{{ sentenceMeaning(entry) }}</p>

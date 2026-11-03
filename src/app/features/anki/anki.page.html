@@ -4,6 +4,7 @@
   <section class="review" aria-labelledby="anki-review-title">
     <div class="section-heading"><span>{{i18n.t('anki.eyebrow')}}</span><h2 id="anki-review-title">{{i18n.t('anki.review')}}</h2></div>
     @if(error()){<p class="storage-error" role="alert">{{i18n.t('anki.storageError')}}</p>}
+    @if(catalog.publicError()){<p role="alert">{{i18n.t('anki.publicUnavailable')}}</p><button type="button" (click)="refresh()">{{i18n.t('common.retry')}}</button>}
     <div class="deck-list">@for(deck of decks;track deck.id){@if(counts()[deck.id];as deckCounts){<app-deck-card [deck]="deck" [stats]="deckCounts" (newTodayAdjustment)="adjustNewToday(deck.id,$event)"/>} @else if(loading()){<div class="loading-card" aria-busy="true">{{i18n.t('common.loading')}}</div>}}</div>
   </section>
 </main>

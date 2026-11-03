@@ -80,7 +80,7 @@ describe('Production candidate: enforced local Guest-only custom decks',()=>{
   await expect(repo.syncCommit('user:a',0,null,emptyCustomReconciliation(),()=>{})).rejects.toThrow('Guest-only');expect(await inventory()).toEqual(before);
  });
  it('catalog hides preserved account custom data with explicit scope UI while Japanese 1500 still loads',async()=>{
-  const {deck}=await seedAccount(),before=await inventory(),catalog=TestBed.inject(DeckCatalogService);workspace.activateUser('a');await catalog.refresh();expect(catalog.items().map(d=>d.id)).toEqual(['japanese-1500']);expect((await catalog.load(deck.id)).status).toBe('missing');
+  const {deck}=await seedAccount(),before=await inventory(),catalog=TestBed.inject(DeckCatalogService);workspace.activateUser('a');await catalog.refresh();expect(catalog.items().map(d=>d.id)).toEqual(['japanese-1500', 'mazo-puyi']);expect((await catalog.load(deck.id)).status).toBe('missing');
   expect((await catalog.load('japanese-1500')).status).toBe('ready');expect(TestBed.inject(DeckPersistenceRouter).bind('japanese-1500').workspace).toBe('user:a');expect(await inventory()).toEqual(before);
  });
  it('deep guards redirect custom account routes to scope information without blocking Japanese 1500',()=>{
@@ -100,7 +100,7 @@ describe('Production candidate: enforced local Guest-only custom decks',()=>{
  });
  it('an account activation clears a pending custom catalog read without retaining its loading state',async()=>{
   const catalog=TestBed.inject(DeckCatalogService);let release!:(value:[])=>void;vi.spyOn(repo,'list').mockImplementation(()=>new Promise(r=>release=r));
-  const pending=catalog.refresh();expect(catalog.loading()).toBe(true);workspace.activateUser('a');await catalog.refresh();expect(catalog.loading()).toBe(false);release([]);await pending;expect(catalog.items().map(d=>d.id)).toEqual(['japanese-1500']);expect(catalog.loading()).toBe(false);
+  const pending=catalog.refresh();expect(catalog.loading()).toBe(true);workspace.activateUser('a');await catalog.refresh();expect(catalog.loading()).toBe(false);release([]);await pending;expect(catalog.items().map(d=>d.id)).toEqual(['japanese-1500', 'mazo-puyi']);expect(catalog.loading()).toBe(false);
  });
  it('account backup is rejected and explicit sync/import cannot call any custom transport',async()=>{
   await seedAccount();workspace.activateUser('a');await expect(TestBed.inject(DeckBackupService).export(new AbortController().signal)).rejects.toMatchObject({code:'owner'});

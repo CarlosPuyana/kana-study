@@ -1,5 +1,9 @@
 # Supabase setup
 
+## Mazo Puyi (shared public editorial content)
+
+The additive migration `supabase/migrations/202611030001_puyi_public_deck.sql` requires Supabase Storage and grants nobody administration by default. It exposes active words publicly while retaining private legacy FSRS histories. Apply only through authorized administration; obtain the owner's verified `auth.users.id` from Authentication → Users and provision the single administrator as described in [Mazo Puyi](docs/features/decks/PUYI.md). That guide also documents Storage limits, RLS, durable image cleanup, rollout and the real Auth/Storage checks still pending. No frontend secret or change to custom cloud/upload gates is required. This migration has not been deployed by Codex.
+
 Kana Study remains local-first. Without this configuration, public study modules work as Guest and write only to the browser. Grammar's closed beta requires an authenticated, explicitly authorized account and fails closed without configuration.
 
 Grammar beta access requires the separate additive migration

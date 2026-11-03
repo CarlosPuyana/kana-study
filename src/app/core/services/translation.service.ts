@@ -11,7 +11,11 @@ const DICTIONARIES: Record<AppLanguage, Dictionary> = { es, en, ca };
 export class TranslationService {
   private readonly pending=inject(PendingTasks);
   private readonly studyCopy=signal<Record<AppLanguage,Dictionary>|null>(null);
-  useStudyCopy(dictionary:Record<AppLanguage,Dictionary>):void{if(!this.studyCopy())this.studyCopy.set(dictionary);}
+  useStudyCopy(dictionary:Record<AppLanguage,Dictionary>):void{
+    const current=this.studyCopy();
+    if(current===dictionary)return;
+    this.studyCopy.set(current?{es:{...current.es,...dictionary.es},en:{...current.en,...dictionary.en},ca:{...current.ca,...dictionary.ca}}:dictionary);
+  }
   private readonly grammar=signal<Record<AppLanguage,Dictionary>|null>(null);
   private grammarLoading:Promise<void>|null=null;
   /** Reader bundles these existing course translations for first-use offline reference. */
