@@ -20,20 +20,49 @@ import { DailyLearningService, getSpainDayKey } from './daily-learning.service';
 import { STUDY_DECKS } from '../../data/study-decks';
 import { GRAMMAR_V2_CONCEPTS } from '../../data/grammar/grammar-n5-v2.generated';
 import { GrammarAccessService } from './grammar-access.service';
+import { DeckCatalogService } from './deck-catalog.service';
+import { PuyiService } from './puyi.service';
+import { PuyiCard } from '../models/puyi.model';
 
 describe('daily planner reads existing contracts without writes',()=>{
   const enqueue=vi.fn(async()=>{}),lastSyncedAt=signal<string|null>(null);
   const grammarAllowed=signal(true);
+  const publicCards=vi.fn(async():Promise<readonly PuyiCard[]>=>[]);
   beforeEach(()=>{
     TestBed.resetTestingModule();localStorage.clear();vi.stubGlobal('indexedDB',new IDBFactory());
     vi.stubGlobal('matchMedia',()=>({matches:false,addEventListener:()=>{},removeEventListener:()=>{}}));
     enqueue.mockClear();lastSyncedAt.set(null);grammarAllowed.set(true);
+    publicCards.mockReset().mockResolvedValue([]);
     TestBed.configureTestingModule({providers:[DailyStudyPlannerService,provideRouter([]),{provide:SyncOutboxService,useValue:{enqueue}},
       {provide:GrammarAccessService,useValue:{allowed:grammarAllowed}},
+      {provide:PuyiService,useValue:{list:publicCards,imageUrl:()=>undefined}},
       {provide:SyncService,useValue:{lastSyncedAt}},{provide:MangaStudySavedRepository,useValue:{items:signal([]),loading:signal(false),failed:signal(false)}}]});
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
-  async function ready(){const planner=TestBed.inject(DailyStudyPlannerService);TestBed.tick();await planner.refreshDecks();return planner;}
+  async function ready(){
+    const planner=TestBed.inject(DailyStudyPlannerService);
+    // Puyi publishes its initial catalog asynchronously and schedules another
+    // planner read. Settle that publication before awaiting the final read.
+    await TestBed.inject(DeckCatalogService).refreshPublic();
+    TestBed.tick();await planner.refreshDecks();return planner;
+  }
+  it('settles initial public catalog before fixture assertions while local planning stays available',async()=>{
+    let release!:(cards:readonly PuyiCard[])=>void,entered!:()=>void,settled=false;
+    const started=new Promise<void>(resolve=>entered=resolve);
+    publicCards.mockImplementationOnce(()=>new Promise(resolve=>{release=resolve;entered();}));
+    const initializing=ready().then(planner=>{settled=true;return planner;});
+    await started;
+    TestBed.tick();
+    const planner=TestBed.inject(DailyStudyPlannerService);
+    try{
+      // Real IndexedDB/FSRS reads may finish while the public catalog is pending.
+      await planner.refreshDecks();
+      expect(planner.snapshot().decks.find(d=>d.id==='japanese-1500')?.fresh).toBe(STUDY_DECKS[0].settings.newCardsPerDay);
+      expect(settled).toBe(false);
+    }finally{release([]);await initializing;}
+    TestBed.tick();await planner.refreshDecks();
+    expect(planner.snapshot().decks.find(d=>d.id==='mazo-puyi')?.fresh).toBe(0);
+  });
   it('hides Grammar recommendations without deleting historical evidence or progress',async()=>{
     const planner=await ready();
     TestBed.inject(GrammarV2ProgressService).open('sentence-structure-context');
