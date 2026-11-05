@@ -54,6 +54,24 @@ describe('AnkiStudyPage', () => {
     expect(fixture.nativeElement.querySelector('.back-content')).toBeNull();
   });
 
+  it('renders unique cards, all effective ratings, an accessible forecast and reinforcement without summary media', async () => {
+    const p=fixture.componentInstance; study.exhaustAfterRating=true; p.reveal(); await p.rate('good');
+    const entry=JAPANESE_1500_ENTRIES[0],now=p.presentationNow().getTime();
+    p.dayEvents.set([{id:'a',entryId:entry.id,deckId:'japanese-1500',reviewedAt:now,rating:'again'},
+      {id:'b',entryId:entry.id,deckId:'japanese-1500',reviewedAt:now,rating:'again'},
+      {id:'c',entryId:entry.id,deckId:'japanese-1500',reviewedAt:now,rating:'good'}] as DeckReviewEvent[]);
+    fixture.detectChanges();
+    expect(p.summary()).toMatchObject({unique:1,attempts:3,accuracy:33});
+    expect(p.reinforcement().map(r=>r.failures)).toEqual([2]);
+    const host=fixture.nativeElement;
+    expect([...host.querySelectorAll('.metrics strong')].map((e:any)=>e.textContent)).toEqual(['1','33%','1']);
+    expect(host.querySelectorAll('.forecast table tbody tr')).toHaveLength(7);
+    expect(host.querySelector('.difficulties app-kaishi-card-media')).toBeNull();
+    expect(host.querySelector('.difficulties app-public-deck-image')).toBeNull();
+    expect(host.querySelector('.difficulties').textContent).not.toContain('anki.results.audio');
+    expect(host.querySelector('.practice-start')).not.toBeNull();
+  });
+
   it('reveals furigana and exactly Again/Good with scheduler-derived intervals', () => {
     fixture.componentInstance.reveal(); fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('rt')?.textContent).toContain('わたし');

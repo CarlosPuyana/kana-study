@@ -1,0 +1,58 @@
+<details class="history"><summary>{{i18n.t('anki.results.history.title')}}</summary>
+  @if(progress();as p){
+    <p class="state">{{state(p.card.state)}}</p>
+    <p class="hint">{{i18n.t('anki.results.history.help.'+p.card.state)}}</p>
+    @if(p.card.state!==0){
+      <dl class="current"><div><dt>{{i18n.t('anki.results.time.exact')}}</dt><dd>{{date(p.card.due)}}</dd></div>
+      <div><dt>{{i18n.t('anki.results.time.remaining')}}</dt><dd>{{remaining()}}</dd></div>
+      @if(p.card.scheduledDays===0&&!last()&&p.card.lastReview!==null&&p.card.due>=p.card.lastReview){<div><dt>{{i18n.t('anki.results.history.wait')}}</dt><dd>{{duration(p.card.due-p.card.lastReview)}}</dd></div>}
+      @if(last();as last){<div><dt>{{i18n.t('anki.results.time.rating')}}</dt><dd>{{i18n.t(last.rating==='good'?'anki.studyPage.good':'anki.studyPage.again')}}</dd></div>
+      <div><dt>{{i18n.t('anki.results.history.wait')}}</dt><dd>{{duration(last.dueAfter-last.reviewedAt)}}</dd></div>}
+      @if(p.card.scheduledDays>0){<div><dt>{{i18n.t('anki.results.history.nominal')}}</dt><dd>{{duration(p.card.scheduledDays*86400000)}}</dd></div>}
+      </dl>
+    }
+  }@else{<p class="state">{{state(0)}}</p>}
+  @if(history().incomplete){<p class="history-note" role="note">{{i18n.t('anki.results.history.incomplete')}}</p>}
+  @if(history().rows.length){
+    <p class="hint">{{i18n.t('anki.results.history.waitHelp')}}</p>
+    @if(hasIntervals()){
+    <figure><figcaption>{{i18n.t('anki.results.history.chart')}}</figcaption><p class="hint">{{i18n.t('anki.results.history.scale')}}</p>
+      <div class="plot"><div class="y-axis" aria-hidden="true"><span>{{duration(maxWait())}}</span><span>0 min</span></div><div class="chart-scroll" tabindex="0" role="region" [attr.aria-label]="i18n.t('anki.results.history.chart')"><div class="history-bars" aria-hidden="true" [style.grid-template-columns]="'repeat('+chart().length+',minmax(1.75rem,1fr))'">
+        @for(row of chart();track row.event.id){<div class="column" [class.again]="row.event.rating==='again'"><div class="track">@if(row.waitMs!==null){<span [style.height.%]="height(row.waitMs)"></span>}</div><b>#{{row.ordinal}}</b></div>}
+      </div></div></div><p class="hint">{{i18n.t('anki.results.history.axis')}}</p>
+    </figure>
+    }
+    <ol class="timeline">
+      @for(row of page();track row.event.id){<li [class.again]="row.event.rating==='again'">
+        <header><b>#{{row.ordinal}} · {{i18n.t(row.event.rating==='good'?'anki.studyPage.good':'anki.studyPage.again')}}</b><time>{{date(row.event.reviewedAt)}}</time></header>
+        @if(row.event.stateBefore===0){<span class="badge">{{i18n.t('anki.results.history.first')}}</span>}
+        @if(row.event.stateAfter===3){<span class="badge">{{state(3)}}</span>}
+        <dl><div><dt>{{i18n.t('anki.results.history.wait')}}</dt><dd>{{duration(row.waitMs)}}</dd></div>
+        @if(row.waitMs!==null){<div><dt>{{i18n.t('anki.results.time.exact')}}</dt><dd>{{date(row.event.dueAfter)}}</dd></div>}
+        @if(row.complete){<div><dt>{{i18n.t('anki.results.history.resultState')}}</dt><dd>{{state(row.event.stateAfter)}}</dd></div>}
+        </dl>
+        <details class="event-details"><summary>{{i18n.t('anki.results.history.eventDetails')}}</summary>
+          @if(row.waitMs!==null){<p>{{i18n.t('anki.results.history.wait')}}: {{row.waitMs}} ms</p>}
+          @if(finite(row.event.stabilityBefore)&&finite(row.event.stabilityAfter)){<p>S: {{row.event.stabilityBefore}} → {{row.event.stabilityAfter}}</p>}
+          @if(finite(row.event.difficultyBefore)&&finite(row.event.difficultyAfter)){<p>D: {{row.event.difficultyBefore}} → {{row.event.difficultyAfter}}</p>}
+          @if(finite(row.event.desiredRetention)){<p>{{i18n.t('anki.results.history.retention')}}: {{row.event.desiredRetention*100}}%</p>}
+          @if(finite(row.event.retrievabilityBefore)){<p>{{i18n.t('anki.results.history.historicalR')}}: {{row.event.retrievabilityBefore!*100}}% · {{date(row.event.reviewedAt)}}</p><p class="hint">{{i18n.t('anki.results.history.rWarning')}}</p>}
+        </details>
+      </li>}
+    </ol>
+    <nav class="pagination" [attr.aria-label]="i18n.t('anki.results.history.pagination')">
+      <button type="button" [disabled]="pageOffset()===0" (click)="offset.set(pageOffset()-20)">{{i18n.t('anki.results.history.newer')}}</button>
+      <button type="button" [disabled]="pageOffset()+20>=history().rows.length" (click)="offset.set(pageOffset()+20)">{{i18n.t('anki.results.history.older')}}</button>
+    </nav>
+  }@else{<p class="empty-history">{{i18n.t('anki.results.history.empty')}}</p>}
+  @if(progress();as p){<details class="advanced" (toggle)="advanced.set($any($event.target).open)"><summary>{{i18n.t('anki.results.history.advanced')}}</summary>
+    @if(advanced()){
+      <p class="hint">{{i18n.t('anki.results.history.advancedHelp')}}</p>
+      <dl><div><dt>{{i18n.t('anki.results.history.stability')}}</dt><dd>{{p.card.stability}}</dd></div><div><dt>{{i18n.t('anki.results.history.difficulty')}}</dt><dd>{{p.card.difficulty}}</dd></div>
+      <div><dt>{{i18n.t('anki.results.history.reps')}}</dt><dd>{{p.card.reps}}</dd></div><div><dt>{{i18n.t('anki.results.history.lapses')}}</dt><dd>{{p.card.lapses}}</dd></div>
+      <div><dt>{{i18n.t('anki.results.history.retention')}}</dt><dd>{{retention()===null?'—':retention()!*100+'%'}}</dd></div>
+      @if(retrievability();as r){<div><dt>{{i18n.t('anki.results.history.currentR')}}</dt><dd>{{(r*100).toFixed(2)}}% · {{date(now().getTime())}}</dd></div>}
+      </dl><p class="hint">{{i18n.t('anki.results.history.rHelp')}}</p><p class="hint">{{i18n.t(fuzz?'anki.results.history.fuzz':'anki.results.history.noFuzz')}}</p>
+    }
+  </details>}
+</details>

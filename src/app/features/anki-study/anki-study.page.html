@@ -65,13 +65,14 @@
     </footer>
   } @else if (snapshot(); as currentSnapshot) {
     <div class="results-layout">
-    <section class="end-state"><app-study-timer [clock]="clock" [result]="true"/><div class="end-mark">{{currentSnapshot.learningPending?'◷':'✓'}}</div><h1>{{ i18n.t(endTitleKey(currentSnapshot)) }}</h1>@if(currentSnapshot.completedToday){<p>{{i18n.t('anki.daily.tomorrow')}}</p>}@if(nextDueLabel(currentSnapshot);as next){<p>{{next}}</p>}<a routerLink="/anki">{{i18n.t('anki.studyPage.backToDecks')}}</a></section>
+    <section class="end-state result-hero"><app-study-timer [clock]="clock" [result]="true"/><div class="end-mark" aria-hidden="true">{{currentSnapshot.learningPending?'◷':'✓'}}</div><p class="result-deck">{{title()}}</p><h1>{{ i18n.t(endTitleKey(currentSnapshot)) }}</h1><p>{{i18n.t('anki.results.summary.intro')}}</p>@if(currentSnapshot.completedToday){<p>{{i18n.t('anki.daily.tomorrow')}}</p>}@if(nextDueLabel(currentSnapshot);as next){<p>{{next}}</p>}<a routerLink="/anki">{{i18n.t('anki.studyPage.backToDecks')}}</a></section>
+    <app-deck-learning-summary [data]="summary()" [reinforceCount]="reinforcement().length" />
     @if(currentSnapshot.completedToday){
       <aside class="difficulties" aria-labelledby="difficulties-title"><h2 id="difficulties-title">{{i18n.t('anki.results.title')}}</h2>
       @if(!difficulties().length){<p>{{i18n.t('anki.results.empty')}}</p>}
-      <ol>@for(row of difficulties();track row.entryId){@if(summaryEntry(row.entryId);as item){
-        <li><label class="practice-selection"><input type="checkbox" [checked]="selected().includes(item.id)" (change)="toggleSelected(item.id)" [attr.aria-label]="i18n.t('anki.rush.select',{word:item.word})" /><strong lang="ja">{{item.word}}</strong></label> <span lang="ja">{{item.reading}}</span><p>{{meaning(item)}}</p><span>{{i18n.t('anki.results.failures',{count:row.failures})}}</span>
-        @if(deck?.id==='japanese-1500'&&!isCustom(item)){<button type="button" [attr.aria-expanded]="summaryAudio()===item.id" (click)="summaryAudio.set(summaryAudio()===item.id?null:item.id)">{{i18n.t('anki.results.audio')}}</button>@if(summaryAudio()===item.id){<app-kaishi-card-media [entry]="item" [automatic]="false" />}}
+      <ol>@for(row of reinforcement();track row.entryId){@if(summaryEntry(row.entryId);as item){
+        <li><label class="practice-selection"><input type="checkbox" [checked]="selected().includes(item.id)" (change)="toggleSelected(item.id)" [attr.aria-label]="i18n.t('anki.rush.select',{word:item.word})" /><strong lang="ja">{{item.word}}</strong></label> <span lang="ja">{{item.reading}}</span><p>{{meaningForReinforcement(item)}}</p><span>{{i18n.t('anki.results.failures',{count:row.failures})}}</span>
+
         </li>
       }}</ol>
       @if(difficulties().length){<p>{{i18n.t('anki.rush.selectionHelp')}}</p><button #practiceStart class="practice-start" type="button" [disabled]="!selected().length" (click)="startPractice()">{{i18n.t('anki.rush.start',{count:selected().length})}}</button>}

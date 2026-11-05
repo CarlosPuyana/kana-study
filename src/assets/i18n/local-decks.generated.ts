@@ -16,7 +16,9 @@ export const es:Record<string,string> = {...shared,...{
   "localDeck.cancel": "Cancelar y seguir en Invitado",
   "localDeck.badge": "Solo local · sin nube",
   "localDeck.inspectionUnavailable": "No se pudo comprobar el contenido Invitado. Puedes entrar sin copiarlo; permanecerá en su espacio local. Cierra sesión para volver a Invitado.",
-  "localDeck.guestOnly": "Esta versión permite usar Manga × Mazos solo en Invitado. Los mazos anteriores de esta cuenta se conservan sin modificaciones, pero no están disponibles aquí. Cierra sesión para volver a tus mazos Invitado. Japanese 1500 y las funciones habituales de tu cuenta siguen disponibles."
+  "localDeck.guestOnly": "Esta versión permite usar Manga × Mazos solo en Invitado. Los mazos anteriores de esta cuenta se conservan sin modificaciones, pero no están disponibles aquí. Cierra sesión para volver a tus mazos Invitado. Japanese 1500 y las funciones habituales de tu cuenta siguen disponibles.",
+  "localDeck.storageLink": "Personalizados: almacenamiento local · Información",
+  "localDeck.storageTitle": "Almacenamiento y copias de Mazos"
 }};
 export const en:Record<string,string> = {...shared,...{
   "localDeck.title": "Separate local spaces",
@@ -34,7 +36,9 @@ export const en:Record<string,string> = {...shared,...{
   "localDeck.cancel": "Cancel and stay in Guest",
   "localDeck.badge": "Local only · no cloud",
   "localDeck.inspectionUnavailable": "Guest content could not be checked. You can sign in without copying it; it will remain in its local space. Sign out to return to Guest.",
-  "localDeck.guestOnly": "This version offers Manga × Decks in Guest only. Previous custom decks in this account are preserved unchanged, but are unavailable here. Sign out to return to your Guest decks. Japanese 1500 and your account’s existing features remain available."
+  "localDeck.guestOnly": "This version offers Manga × Decks in Guest only. Previous custom decks in this account are preserved unchanged, but are unavailable here. Sign out to return to your Guest decks. Japanese 1500 and your account’s existing features remain available.",
+  "localDeck.storageLink": "Custom decks: local storage · Information",
+  "localDeck.storageTitle": "Deck storage and backups"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "localDeck.title": "Espais locals separats",
@@ -52,5 +56,7 @@ export const ca:Record<string,string> = {...shared,...{
   "localDeck.cancel": "Cancel·lar i seguir a Convidat",
   "localDeck.badge": "Només local · sense núvol",
   "localDeck.inspectionUnavailable": "No s’ha pogut comprovar el contingut Convidat. Pots entrar sense copiar-lo; es quedarà al seu espai local. Tanca la sessió per tornar a Convidat.",
-  "localDeck.guestOnly": "Aquesta versió permet utilitzar Manga × Baralles només a Convidat. Les baralles anteriors d’aquest compte es conserven sense modificacions, però no estan disponibles aquí. Tanca la sessió per tornar a les teves baralles de Convidat. Japanese 1500 i les funcions habituals del compte continuen disponibles."
+  "localDeck.guestOnly": "Aquesta versió permet utilitzar Manga × Baralles només a Convidat. Les baralles anteriors d’aquest compte es conserven sense modificacions, però no estan disponibles aquí. Tanca la sessió per tornar a les teves baralles de Convidat. Japanese 1500 i les funcions habituals del compte continuen disponibles.",
+  "localDeck.storageLink": "Malls personalitzats: emmagatzematge local · Informació",
+  "localDeck.storageTitle": "Emmagatzematge i còpies dels malls"
 }};

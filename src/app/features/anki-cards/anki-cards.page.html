@@ -16,6 +16,11 @@
       <p>{{ i18n.t('anki.wordCount', { count: deck.cardCount }) }}</p>
     </section>
 
+    <div class="view-selector" role="group" [attr.aria-label]="i18n.t('cards.view')">
+      <button type="button" [attr.aria-pressed]="mode() === 'all'" (click)="mode.set('all')">{{ i18n.t('cards.all') }}</button>
+      <button type="button" [attr.aria-pressed]="mode() === 'time'" (click)="mode.set('time')">{{ i18n.t('anki.results.time.title') }}</button>
+    </div>
+
     <label class="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></svg>
       <span class="visually-hidden">{{ i18n.t('anki.cards.searchLabel') }}</span>
@@ -30,6 +35,7 @@
     @if (query().trim()) {
       <p class="results" role="status">{{ i18n.t('anki.cards.results', { count: cards().length }) }}</p>
     }
+    @if(mode() === 'all'){
     <section class="card-grid" [attr.aria-label]="i18n.t('anki.cards.listLabel')">
       @for (entry of visibleCards(); track entry.id) {
         <button class="entry-card" type="button" (click)="selected.set(entry)">
@@ -40,9 +46,39 @@
       } @empty {
         <p class="empty">{{ i18n.t('anki.cards.empty') }}</p>
       }
+
     </section>
     @if (hasMore()) {
       <button class="load-more" type="button" (click)="showMore()">{{ i18n.t('anki.cards.loadMore') }}</button>
+    }
+    }@else{
+      <p class="time-help">{{i18n.t('anki.results.time.help')}}</p>
+      @if(scheduleLoading()){<p role="status">{{i18n.t('common.loading')}}</p>}
+      @else if(scheduleError()){<p role="alert">{{i18n.t('anki.storageError')}}</p><button type="button" class="load-more" (click)="refreshSchedule()">{{i18n.t('anki.results.time.retry')}}</button>}
+      @else{
+        @for(group of groups();track group.key){
+          <section class="time-group">
+            <h2><button type="button" class="time-heading" [attr.aria-expanded]="expanded().has(group.key)" [attr.aria-controls]="'time-'+group.key" (click)="toggleGroup(group.key)">
+              <span class="time-dot" [class.is-due]="group.key==='due'" aria-hidden="true"></span>
+              <span>{{i18n.t('anki.results.time.'+group.key)}}</span><b>{{group.ids.length}}</b><span aria-hidden="true">{{expanded().has(group.key)?'−':'+'}}</span>
+            </button></h2>
+              <div [id]="'time-'+group.key" [hidden]="!expanded().has(group.key)">
+            @if(expanded().has(group.key)){
+                <div class="card-grid">
+                  @for(entry of groupEntries(group.ids,group.key);track entry.id){
+                    <button class="entry-card" type="button" (click)="selected.set(entry)">
+                      <span class="meta">#{{entry.order}}</span>
+                      @if(isCustom(entry)){<span class="word" lang="ja">{{entry.word}}</span>}@else{<app-furigana-text class="word" [segments]="entry.wordSegments" size="small" />}
+                      <span lang="ja">{{entry.reading}}</span><span class="meaning">{{meaning(entry)}}</span>
+                    </button>
+                  }
+                </div>
+                @if(group.ids.length>(groupLimits()[group.key]??60)){<button class="load-more" type="button" (click)="moreInGroup(group.key)">{{i18n.t('anki.cards.loadMore')}}</button>}
+            }
+              </div>
+          </section>
+        }@empty{<p class="empty" role="status">{{i18n.t('anki.cards.empty')}}</p>}
+      }
     }
   } @else if(resource.state().status === 'missing') {
     <p class="empty">{{ i18n.t('anki.deckNotFound') }}</p>
@@ -51,7 +87,7 @@
 
 @if (selected(); as entry) {
   <div class="detail-backdrop" (click)="closeOverlay()">
-    <section class="detail" role="dialog" aria-modal="true" aria-labelledby="deck-entry-title" (click)="$event.stopPropagation()">
+    <section class="detail" appModalFocus (modalClosed)="closeOverlay()" role="dialog" aria-modal="true" aria-labelledby="deck-entry-title" (click)="$event.stopPropagation()">
       <button class="close" type="button" (click)="closeOverlay()" [attr.aria-label]="i18n.t('anki.cards.close')">×</button>
       @if(isCustom(entry)){<h2 id="deck-entry-title" lang="ja">{{entry.word}}</h2>}@else{
       <div class="detail-meta"><span>#{{ entry.order }}</span>@if(deck?.id!=='mazo-puyi'){<span>{{ i18n.t('anki.cards.frequency', { rank: entry.frequencyRank }) }}</span>}</div>
@@ -61,6 +97,21 @@
         <div><dt>{{ i18n.t('anki.cards.reading') }}</dt><dd lang="ja">{{ entry.reading }}</dd></div>
         <div><dt>{{ i18n.t('anki.cards.meaning') }}</dt><dd>{{ meaning(entry) }}</dd></div>
       </dl>
+      @if(mode()==='time'){
+        <section class="detail-section schedule-detail" aria-labelledby="schedule-title"><h2 id="schedule-title">{{i18n.t('anki.results.time.schedule')}}</h2>
+          @if(scheduleLoading()){<p role="status">{{i18n.t('common.loading')}}</p>}
+          @else if(scheduleError()){<p role="alert">{{i18n.t('anki.storageError')}}</p>}
+          @else if(selectedProgress();as p){
+            @if(validDue(p)){
+              <dl><div><dt>{{i18n.t('anki.results.time.exact')}}</dt><dd><time [attr.datetime]="isoDate(p.card.due)">{{exactDate(p.card.due)}}</time></dd></div>
+              <div><dt>{{i18n.t('anki.results.time.remaining')}}</dt><dd>{{remaining(p.card.due)}}</dd></div>
+              @if(interval(p);as intervalText){<div><dt>{{i18n.t('anki.results.time.interval')}}</dt><dd>{{intervalText}}</dd></div>}
+              @if(selectedRating();as rating){<div><dt>{{i18n.t('anki.results.time.rating')}}</dt><dd>{{i18n.t(rating.rating==='good'?'anki.studyPage.good':'anki.studyPage.again')}}</dd></div>}
+              </dl>
+            }@else{<p>{{i18n.t(p.card.state===0?'anki.results.time.new':'anki.results.time.unknown')}}</p>}
+          }@else{<p>{{i18n.t('anki.results.time.new')}}</p>}
+        </section>
+      }
       @if(isCustom(entry)){
         @if(entry.context;as context){<section class="detail-section"><h2>{{i18n.t('anki.cards.example')}}</h2><p lang="ja">{{context.text}}</p>@if(context.sourceTitle){<p>{{context.sourceTitle}}</p>}</section>}
       }@else{
@@ -73,6 +124,9 @@
         <section class="detail-section notes"><h2>{{ i18n.t('anki.cards.notes') }}</h2><p>{{ noteText }}</p></section>
       }
       }
+      @if(scheduleLoading()){<p role="status">{{i18n.t('common.loading')}}</p>}
+      @else if(scheduleError()){<p role="alert">{{i18n.t('anki.storageError')}}</p><button type="button" class="load-more" (click)="refreshSchedule()">{{i18n.t('common.retry')}}</button>}
+      @else if(deck){<app-deck-card-history [deckId]="deck!.id" [entryId]="entry.id" [progress]="selectedProgress()" [events]="events()" [now]="now()" [retention]="deckSettings.settingsFor(deck!).desiredRetention" />}
     </section>
   </div>
 }

@@ -4,8 +4,18 @@ import {ModalFocusDirective} from './modal-focus.directive';
 
 @Component({imports:[ModalFocusDirective],template:`<button id="opener" (click)="open.set(true)">Open</button>@if(open()){<section appModalFocus (modalClosed)="open.set(false)" role="dialog" aria-modal="true" aria-labelledby="title"><h2 id="title">Title</h2><button id="first">Close</button><a id="last" href="#">Action</a></section>}`})
 class ModalHost {readonly open=signal(false);}
+@Component({imports:[ModalFocusDirective],template:`<button id="outside">Outside</button><section appModalFocus [modalFocusEnabled]="false" (modalClosed)="closed=true"><button id="inside">Inside</button></section>`})
+class DisabledModalHost {closed=false;}
 describe('audited modal focus boundary',()=>{
   afterEach(()=>{TestBed.resetTestingModule();});
+  it('does not change focus or keyboard behavior when explicitly disabled for the existing All view',async()=>{
+    const fixture=TestBed.createComponent(DisabledModalHost);fixture.detectChanges();document.body.appendChild(fixture.nativeElement);await fixture.whenStable();
+    const outside=fixture.nativeElement.querySelector('#outside') as HTMLButtonElement;outside.focus();
+    document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));
+    expect(fixture.componentInstance.closed).toBe(false);expect(document.activeElement).toBe(outside);
+    const event=new KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true});document.dispatchEvent(event);expect(event.defaultPrevented).toBe(false);
+    fixture.nativeElement.remove();
+  });
   it('focuses the dialog, cycles Tab/Shift+Tab, closes on Escape and restores the opener',async()=>{
     const fixture=TestBed.createComponent(ModalHost);fixture.detectChanges();document.body.appendChild(fixture.nativeElement);
     const opener=fixture.nativeElement.querySelector('#opener') as HTMLButtonElement;opener.focus();opener.click();fixture.detectChanges();await fixture.whenStable();

@@ -22,6 +22,11 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
 
 - Para Aprender, teclado y diálogos Kana/Kanji/Vocabulario: [guía de UX de aprendizaje](features/LEARNING_UX.md).
 - Para las listas finales de Kanji/Vocabulario: [contenido de la sesión terminada](features/LEARNING_SESSION_LIST.md).
+- Para Tarjetas de Mazos y su finalización: [Por Tiempo y resumen del aprendizaje](features/decks/DECK_TIME_AND_LEARNING_SUMMARY.md).
+- Para evolución por tarjeta y avisos de almacenamiento: [historial individual](features/decks/DECK_CARD_HISTORY.md).
+- Para comprender FSRS de Vocabulario y Mazos: [auditoría de arquitectura](features/srs/01-ARQUITECTURA-FSRS.md),
+  [comparación](features/srs/02-VOCABULARIO-VS-MAZOS.md), [simulaciones](features/srs/03-INTERVALOS-Y-SIMULACIONES.md),
+  [hallazgos](features/srs/04-AUDITORIA-Y-MEJORAS.md) y [guía para estudiar](features/srs/05-GUIA-PARA-EL-USUARIO.md).
 - Para cerrar y administrar el acceso a Gramática: [beta privada](features/GRAMMAR_ACCESS.md).
 
 ## Arquitectura y módulos vigentes

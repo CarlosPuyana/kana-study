@@ -7,10 +7,11 @@ import { ProgressService } from '../../core/services/progress.service';
 import { SettingsService } from '../../core/services/settings.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { AccountControl } from '../../shared/components/account-control/account-control';
+import { LocalDeckNotice } from '../../shared/components/local-deck-notice/local-deck-notice';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [RouterLink, AccountControl],
+  imports: [RouterLink, AccountControl, LocalDeckNotice],
   templateUrl: './settings.page.html',
   styleUrl: './settings.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

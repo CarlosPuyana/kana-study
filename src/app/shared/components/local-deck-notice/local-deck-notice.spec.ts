@@ -25,6 +25,13 @@ describe('Local deck protection copy',()=>{
  it('custom card badge never advertises Synced or backup',()=>{
   const f=TestBed.createComponent(LocalDeckNotice);f.componentRef.setInput('compact',true);f.detectChanges();expect(f.nativeElement.textContent).toBe(copy.es['localDeck.badge']);expect(f.nativeElement.querySelector('a')).toBeNull();
  });
+ it('replaces the main notice with a scoped storage link without losing contextual warnings',()=>{
+  const f=TestBed.createComponent(LocalDeckNotice);f.componentRef.setInput('linkOnly',true);f.detectChanges();
+  expect(f.nativeElement.querySelector('aside')).toBeNull();expect(f.nativeElement.textContent).not.toContain(copy.es['localDeck.loss']);
+  expect(f.nativeElement.querySelector('a').getAttribute('href')).toBe('/settings?return=%2Fanki#deck-storage');
+  f.componentRef.setInput('linkOnly',false);f.componentRef.setInput('disclosure',true);f.detectChanges();
+  expect(f.nativeElement.querySelector('#deck-storage')).not.toBeNull();expect(f.nativeElement.textContent).toContain(copy.es['localDeck.loss']);
+ });
  it('production gate leaves local notices hidden without changing sync state',()=>{
   TestBed.overrideProvider(CUSTOM_DECKS_ENABLED,{useValue:signal(false)});const f=TestBed.createComponent(LocalDeckNotice);f.detectChanges();expect(f.nativeElement.textContent).toBe('');
  });

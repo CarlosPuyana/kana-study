@@ -1,0 +1,28 @@
+<section class="metrics" [attr.aria-label]="i18n.t('anki.results.summary.metrics')">
+  <div><strong>{{data().unique}}</strong><span>{{i18n.t('anki.results.summary.studied')}}</span></div>
+  <div><strong>{{data().accuracy===null?'—':data().accuracy+'%'}}</strong><span>{{i18n.t('anki.results.summary.accuracy')}}</span></div>
+  <div><strong>{{reinforceCount()}}</strong><span>{{i18n.t('anki.results.summary.reinforce')}}</span></div>
+</section>
+<p class="metric-help">{{i18n.t('anki.results.summary.attempts',{count:data().attempts})}} {{i18n.t('anki.results.summary.definition')}}</p>
+<figure class="forecast">
+  <figcaption>{{i18n.t('anki.results.summary.forecast')}}</figcaption>
+  <p class="hint">{{i18n.t('anki.results.summary.forecastHelp')}}</p>
+  <div class="bars" aria-hidden="true">
+    @for(day of data().future;track day.day){
+      <div class="column"><strong>{{day.count}}</strong><div class="track"><span [style.height.%]="day.count/maximum()*100"></span></div><span>{{i18n.t(day.day===1?'anki.results.summary.tomorrow':'anki.results.summary.inDays',{count:day.day})}}</span></div>
+    }
+  </div>
+  <table class="sr-only"><caption>{{i18n.t('anki.results.summary.forecast')}}</caption><thead><tr><th>{{i18n.t('anki.results.summary.day')}}</th><th>{{i18n.t('anki.results.summary.cards')}}</th></tr></thead><tbody>
+    @for(day of data().future;track day.day){<tr><th>{{i18n.t(day.day===1?'anki.results.summary.tomorrow':'anki.results.summary.inDays',{count:day.day})}}</th><td>{{day.count}}</td></tr>}
+  </tbody></table>
+  <p class="forecast-extra">{{i18n.t('anki.results.summary.outside',{due:data().overdue,today:data().laterToday,new:data().new,beyond:data().beyond})}}</p>
+  @if(data().unknown){<p>{{i18n.t('anki.results.summary.unknown',{count:data().unknown})}}</p>}
+</figure>
+<section class="progress" [attr.aria-label]="i18n.t('anki.results.summary.progress')">
+  <h2>{{i18n.t('anki.results.summary.progress')}}</h2>
+  @if(total()){
+    <div class="segments" aria-hidden="true"><span class="new" [style.width.%]="percent(data().new)"></span><span class="learning" [style.width.%]="percent(data().learning)"></span><span class="review" [style.width.%]="percent(data().review)"></span></div>
+  }
+  <ul class="legend"><li class="new">{{i18n.t('anki.results.summary.new')}} <b>{{data().new}}</b></li><li class="learning">{{i18n.t('anki.results.summary.learning')}} <b>{{data().learning}}</b></li><li class="review">{{i18n.t('anki.results.summary.review')}} <b>{{data().review}}</b></li></ul>
+  <p class="hint">{{i18n.t('anki.results.summary.progressHelp')}}</p>
+</section>
