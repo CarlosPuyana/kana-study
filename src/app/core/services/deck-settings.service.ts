@@ -28,11 +28,13 @@ export class DeckSettingsService {
     ) {
       return false;
     }
-    this.state.update(current => ({
-      ...current,
+    const next = {
+      ...this.state(),
       [deckId]: { ...settings, newCardsPerDay: Math.floor(settings.newCardsPerDay) },
-    }));
-    this.storage.set(STORAGE_KEY, this.state());
+    };
+    try { this.storage.set(STORAGE_KEY, next, { strict: true }); }
+    catch { return false; }
+    this.state.set(next);
     return true;
   }
 }

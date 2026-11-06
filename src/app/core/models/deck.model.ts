@@ -1,4 +1,5 @@
 export type DesiredRetention = number;
+export const CUSTOM_DECK_NEW_CARDS_MAX = 10_000;
 export type NewCardOrder = 'mixed' | 'after-reviews' | 'before-reviews';
 export type StudyDeckContentType = 'japanese-word';
 
@@ -16,5 +17,4 @@ export interface StudyDeck {
   readonly settings: DeckSettings;
 }
 
-// `newCardsPerDay` is persistent configuration. A future `todayNewCardOverride`
-// will be a date-scoped scheduling concern and is intentionally not modelled yet.
+// `newCardsPerDay` is the usual limit. Date-scoped overrides live in DeckDailyState.

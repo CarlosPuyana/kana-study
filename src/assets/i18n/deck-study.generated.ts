@@ -105,7 +105,20 @@ export const es:Record<string,string> = {...shared,...{
   "anki.results.history.help.1": "La tarjeta está pasando por pasos de aprendizaje cortos.",
   "anki.results.history.help.2": "Tiene repasos espaciados. Este estado no significa dominio perfecto.",
   "anki.results.history.help.3": "Tras un olvido, vuelve a pasos cortos antes de retomar los repasos.",
-  "anki.day.queueHelp": "Las tarjetas pendientes de hoy pueden aparecer antes de su hora. Tras cada respuesta se muestran hasta dos tarjetas distintas antes de repetir, si están disponibles."
+  "anki.day.queueHelp": "Las tarjetas pendientes de hoy pueden aparecer antes de su hora. Tras cada respuesta se muestran hasta dos tarjetas distintas antes de repetir, si están disponibles.",
+  "anki.day.settings.today": "Nuevas de hoy",
+  "anki.day.settings.effective": "Límite de hoy",
+  "anki.day.settings.introduced": "Introducidas",
+  "anki.day.settings.remaining": "Disponibles aún",
+  "anki.day.settings.override": "Hoy hay una excepción de {{count}} nuevas. El límite habitual se aplicará a partir de mañana.",
+  "anki.day.settings.closed": "Las nuevas de hoy están cerradas. Cambiar el límite habitual se aplica mañana; para ampliar hoy, utiliza los controles de Mazos.",
+  "anki.day.settings.appliesNow": "Al guardar, el límite habitual se aplica hoy. Las ya introducidas conservan su progreso.",
+  "anki.day.settings.dailyError": "No se pudo consultar el cupo de hoy. Puedes guardar el límite habitual y volver a consultar al regresar.",
+  "anki.day.settings.customLimitError": "Introduce un entero entre 0 y {{max}}.",
+  "anki.day.settings.saveError": "No se pudieron guardar los ajustes. Tus cambios siguen en el formulario; vuelve a intentarlo.",
+  "anki.day.settings.saving": "Guardando…",
+  "anki.day.settings.afterAnswer": "Cada respuesta actualiza FSRS. Antes de repetir se muestran hasta dos tarjetas distintas, si están disponibles.",
+  "anki.day.settings.retentionHelp": "La retención se aplica a los próximos cálculos, sin cambiar fechas guardadas. Una respuesta ya revelada conserva su cálculo anterior."
 }};
 export const en:Record<string,string> = {...shared,...{
   "kaishi.audioFailed": "Audio could not be played. You can try its button again.",
@@ -212,7 +225,20 @@ export const en:Record<string,string> = {...shared,...{
   "anki.results.history.help.1": "The card is going through short learning steps.",
   "anki.results.history.help.2": "It has spaced reviews. This state does not mean perfect mastery.",
   "anki.results.history.help.3": "After forgetting, it returns to short steps before resuming reviews.",
-  "anki.day.queueHelp": "Cards scheduled for today can appear before their due time. After each answer, up to two different cards appear before repeating, when available."
+  "anki.day.queueHelp": "Cards scheduled for today can appear before their due time. After each answer, up to two different cards appear before repeating, when available.",
+  "anki.day.settings.today": "Today's new cards",
+  "anki.day.settings.effective": "Today's limit",
+  "anki.day.settings.introduced": "Introduced",
+  "anki.day.settings.remaining": "Still available",
+  "anki.day.settings.override": "Today has an override of {{count}} new cards. The usual limit will apply from tomorrow.",
+  "anki.day.settings.closed": "New introductions are closed for today. Changing the usual limit applies tomorrow; use the Decks controls to add more today.",
+  "anki.day.settings.appliesNow": "When saved, the usual limit applies today. Cards already introduced keep their progress.",
+  "anki.day.settings.dailyError": "Today's allowance could not be loaded. You can save the usual limit and check again when returning.",
+  "anki.day.settings.customLimitError": "Enter a whole number between 0 and {{max}}.",
+  "anki.day.settings.saveError": "Settings could not be saved. Your changes remain in the form; please try again.",
+  "anki.day.settings.saving": "Saving…",
+  "anki.day.settings.afterAnswer": "Each answer updates FSRS. Up to two different cards appear before repeating, when available.",
+  "anki.day.settings.retentionHelp": "Retention applies to future calculations without changing saved dates. An already revealed answer keeps its previous calculation."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "kaishi.audioFailed": "No s’ha pogut reproduir l’àudio. Pots tornar-ho a provar amb el seu botó.",
@@ -319,5 +345,18 @@ export const ca:Record<string,string> = {...shared,...{
   "anki.results.history.help.1": "La targeta passa per passos curts d’aprenentatge.",
   "anki.results.history.help.2": "Té repassos espaiats. Aquest estat no significa domini perfecte.",
   "anki.results.history.help.3": "Després d’un oblit, torna a passos curts abans de reprendre els repassos.",
-  "anki.day.queueHelp": "Les targetes pendents d’avui poden aparèixer abans de la seva hora. Després de cada resposta es mostren fins a dues targetes diferents abans de repetir, si estan disponibles."
+  "anki.day.queueHelp": "Les targetes pendents d’avui poden aparèixer abans de la seva hora. Després de cada resposta es mostren fins a dues targetes diferents abans de repetir, si estan disponibles.",
+  "anki.day.settings.today": "Noves d’avui",
+  "anki.day.settings.effective": "Límit d’avui",
+  "anki.day.settings.introduced": "Introduïdes",
+  "anki.day.settings.remaining": "Encara disponibles",
+  "anki.day.settings.override": "Avui hi ha una excepció de {{count}} noves. El límit habitual s’aplicarà a partir de demà.",
+  "anki.day.settings.closed": "Les noves d’avui estan tancades. Canviar el límit habitual s’aplica demà; per ampliar avui, utilitza els controls de la llista de baralles.",
+  "anki.day.settings.appliesNow": "En desar, el límit habitual s’aplica avui. Les ja introduïdes conserven el progrés.",
+  "anki.day.settings.dailyError": "No s’ha pogut consultar el límit d’avui. Pots desar el límit habitual i tornar-lo a consultar en tornar.",
+  "anki.day.settings.customLimitError": "Introdueix un enter entre 0 i {{max}}.",
+  "anki.day.settings.saveError": "No s’han pogut desar els ajustos. Els canvis continuen al formulari; torna-ho a provar.",
+  "anki.day.settings.saving": "Desant…",
+  "anki.day.settings.afterAnswer": "Cada resposta actualitza FSRS. Abans de repetir es mostren fins a dues targetes diferents, si estan disponibles.",
+  "anki.day.settings.retentionHelp": "La retenció s’aplica als càlculs següents sense canviar dates desades. Una resposta ja revelada conserva el càlcul anterior."
 }};

@@ -1,5 +1,5 @@
 import { CustomDeck, CustomDeckCard, LexicalAnchor, LexicalIdentity } from '../models/deck-catalog.model';
-import { DeckSettings } from '../models/deck.model';
+import { CUSTOM_DECK_NEW_CARDS_MAX, DeckSettings } from '../models/deck.model';
 import { DeckCardProgress, DeckDailyState, DeckReviewEvent, SerializedFsrsCard } from '../models/deck-study.model';
 export class CustomDeckError extends Error {
 }
@@ -10,7 +10,7 @@ export function canonical(value: unknown): string { if (Array.isArray(value))
 export async function digest(prefix: string, value: unknown): Promise<string> { const bytes = await crypto.subtle.digest('SHA-256', utf8.encode(canonical(value))); return prefix + Array.from(new Uint8Array(bytes), n => n.toString(16).padStart(2, '0')).join(''); }
 export function text(value: unknown, maxBytes: number): value is string { return typeof value === 'string' && !!value.trim() && utf8.encode(value).length <= maxBytes && !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/u.test(value) && !/[\uD800-\uDFFF]/u.test(value); }
 export function id(value: unknown): value is string { return text(value, 256); }
-export function settingsValid(s: DeckSettings): boolean { return !!s && Number.isFinite(s.desiredRetention) && s.desiredRetention > 0 && s.desiredRetention < 1 && Number.isSafeInteger(s.newCardsPerDay) && s.newCardsPerDay >= 0 && s.newCardsPerDay <= 10000 && ['mixed', 'before-reviews', 'after-reviews'].includes(s.newCardOrder); }
+export function settingsValid(s: DeckSettings): boolean { return !!s && Number.isFinite(s.desiredRetention) && s.desiredRetention > 0 && s.desiredRetention < 1 && Number.isSafeInteger(s.newCardsPerDay) && s.newCardsPerDay >= 0 && s.newCardsPerDay <= CUSTOM_DECK_NEW_CARDS_MAX && ['mixed', 'before-reviews', 'after-reviews'].includes(s.newCardOrder); }
 const date = (s: unknown) => typeof s === 'string' && Number.isFinite(Date.parse(s)) && new Date(s).toISOString() === s;
 function need(value: unknown): asserts value { if (!value)
     throw new CustomDeckError('Invalid custom deck data'); }

@@ -1,8 +1,12 @@
+import * as studyCopy from '../../../assets/i18n/deck-study.generated';
+import { DeckStudyCounts } from '../../core/models/deck-study.model';
+import { DeckStudyService } from '../../core/services/deck-study.service';
+import { DailyLearningService } from '../../core/services/daily-learning.service';
 import {KaishiMediaSettings} from '../../shared/components/kaishi-media-settings/kaishi-media-settings';
 import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
-import { ChangeDetectionStrategy, Component, effect, inject, untracked, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, afterRenderEffect, effect, inject, untracked, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DeckSettings, DesiredRetention, NewCardOrder } from '../../core/models/deck.model';
+import { CUSTOM_DECK_NEW_CARDS_MAX, DeckSettings, DesiredRetention, NewCardOrder } from '../../core/models/deck.model';
 import { DeckSettingsService } from '../../core/services/deck-settings.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { createDeckRouteResource } from '../../core/services/deck-route-resource';
@@ -24,9 +28,22 @@ interface OrderOption {
   templateUrl: './anki-settings.page.html',
   styleUrl: './anki-settings.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '(window:focus)': 'refreshDaily()' },
 })
 export class AnkiSettingsPage {
   private readonly settingsService = inject(DeckSettingsService);
+  private readonly study = inject(DeckStudyService);
+  private readonly calendar = inject(DailyLearningService);
+  readonly daily = signal<DeckStudyCounts | null>(null);
+  readonly dailyError = signal(false);
+  readonly saving = signal(false);
+  readonly error = signal(false);
+  private scope = '';
+  private generation = 0;
+  private readonly saveAction = viewChild<ElementRef<HTMLButtonElement>>('saveAction');
+  private readonly restoreSaveFocus = signal(false);
+  get newCardsMax(): number { return this.deck?.kind === 'custom' ? CUSTOM_DECK_NEW_CARDS_MAX : Number.MAX_SAFE_INTEGER; }
+
   readonly i18n = inject(TranslationService);
   readonly resource = createDeckRouteResource();
   get deck() { return this.resource.deck; }
@@ -54,13 +71,44 @@ export class AnkiSettingsPage {
   readonly saved = signal(false);
 
   constructor() {
-    void this.resource.ready().then(() => { if(this.deck) this.draft.set({...this.settingsService.settingsFor(this.deck)}); });
+    this.i18n.useStudyCopy?.(studyCopy);
+    inject(DestroyRef).onDestroy(() => { ++this.generation; });
+    afterRenderEffect(() => {
+      const button = this.saveAction();
+      if (this.restoreSaveFocus() && !this.saving() && button) {
+        this.restoreSaveFocus.set(false); button.nativeElement.focus({ preventScroll: true });
+      }
+    });
     effect(() => {
-      const state=this.resource.state();this.resource.catalog.owner();
-      untracked(() => {this.saved.set(false);if(state.status==='ready'&&this.deck)this.draft.set({...this.settingsService.settingsFor(this.deck)});});
+      const state = this.resource.state(), owner = this.resource.catalog.owner(), epoch = this.resource.catalog.epoch();
+      this.calendar.spainDay();
+      untracked(() => {
+        if (state.status !== 'ready' || !this.deck) { this.daily.set(null); ++this.generation; return; }
+        const scope = JSON.stringify([owner, epoch, this.deck.id]);
+        if (scope !== this.scope) {
+          this.scope = scope; this.draft.set({ ...this.settingsService.settingsFor(this.deck) });
+          this.newCardsValid.set(true); this.saved.set(false); this.error.set(false); this.saving.set(false); this.restoreSaveFocus.set(false);
+        }
+        void this.refreshDaily();
+      });
     });
   }
-  readonly error = signal(false);
+
+  async refreshDaily(): Promise<void> {
+    const deck = this.deck, state = this.resource.state(), owner = this.resource.catalog.owner();
+    if (!deck) return;
+    const generation = ++this.generation;
+    try {
+      const index = await this.resource.catalog.index(deck.id);
+      if (generation !== this.generation || state !== this.resource.state() || owner !== this.resource.catalog.owner()) return;
+      const value = await this.study.snapshot(deck, index);
+      if (generation === this.generation && state === this.resource.state() && owner === this.resource.catalog.owner()) {
+        this.daily.set(value); this.dailyError.set(false);
+      }
+    } catch {
+      if (generation === this.generation && state === this.resource.state()) { this.daily.set(null); this.dailyError.set(true); }
+    }
+  }
 
   setRetention(value: DesiredRetention): void {
     this.update({ desiredRetention: value });
@@ -73,19 +121,36 @@ export class AnkiSettingsPage {
   setNewCards(event: Event): void {
     const rawValue = (event.target as HTMLInputElement).value;
     const value = Number(rawValue);
-    const valid = rawValue !== '' && Number.isFinite(value) && value >= 0;
+    const valid = rawValue.trim() !== '' && Number.isSafeInteger(value) && value >= 0 && value <= this.newCardsMax;
     this.newCardsValid.set(valid);
-    this.saved.set(false);
+    this.saved.set(false); this.error.set(false);
     if (valid) this.update({ newCardsPerDay: value });
   }
 
   async save(): Promise<void> {
-    if (!this.deck || !this.newCardsValid()) return;
-    if(this.deck.kind === 'custom') { const owner=this.resource.catalog.owner(),deckId=this.deck.id; try { await this.resource.catalog.repository.saveSettings(crypto.randomUUID(),deckId,this.draft(),owner); if(owner===this.resource.catalog.owner())this.saved.set(true); } catch { if(owner===this.resource.catalog.owner())this.error.set(true); } }
-    else this.saved.set(this.settingsService.save(this.deck.id, this.draft()));
+    const deck = this.deck;
+    if (!deck || !this.newCardsValid() || this.saving()) return;
+    const owner = this.resource.catalog.owner(), scope = this.scope, epoch = this.resource.catalog.epoch();
+    const draft = { ...this.draft() };
+    const restoreFocus = document.activeElement === this.saveAction()?.nativeElement;
+    this.saving.set(true); this.saved.set(false); this.error.set(false);
+    try {
+      if (deck.kind === 'custom') await this.resource.catalog.repository.saveSettings(crypto.randomUUID(), deck.id, draft, owner);
+      else if (!this.settingsService.save(deck.id, draft)) throw new Error('Settings write failed');
+      if (scope === this.scope && owner === this.resource.catalog.owner() && epoch === this.resource.catalog.epoch()) {
+        this.saved.set(true); this.error.set(false); await this.refreshDaily();
+      }
+    } catch {
+      if (scope === this.scope && owner === this.resource.catalog.owner() && epoch === this.resource.catalog.epoch()) this.error.set(true);
+    } finally {
+      if (scope === this.scope && owner === this.resource.catalog.owner() && epoch === this.resource.catalog.epoch()) {
+        this.saving.set(false); this.restoreSaveFocus.set(restoreFocus);
+      }
+    }
   }
 
   private update(patch: Partial<DeckSettings>): void {
+    this.error.set(false);
     this.draft.update(current => ({ ...current, ...patch }));
     this.saved.set(false);
   }

@@ -1,5 +1,8 @@
 # Mazos: cola diaria dinámica de Aprender
 
+Ampliación posterior: [Ajustes y persistencia local de mixed](DECK_SETTINGS_IMPROVEMENTS.md)
+conserva la fórmula de mezcla y elimina el reinicio de fase al recargar cuando el checkpoint coincide.
+
 Entrega local 06/11/2026 sobre `7cba37d67ec1b935ff7a1eb389d391a0fa6b89c2`.
 Se conserva la investigación local de Vocabulario, cuya política NO se aplica a Mazos.
 Sin commit, push, despliegue, migraciones ni acceso a datos reales.

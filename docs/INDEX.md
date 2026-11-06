@@ -24,6 +24,8 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
 - Para las listas finales de Kanji/Vocabulario: [contenido de la sesión terminada](features/LEARNING_SESSION_LIST.md).
 - Para Tarjetas de Mazos y su finalización: [Por Tiempo y resumen del aprendizaje](features/decks/DECK_TIME_AND_LEARNING_SUMMARY.md).
 - Para evolución por tarjeta y avisos de almacenamiento: [historial individual](features/decks/DECK_CARD_HISTORY.md).
+- Para verificar los controles y diseño de Ajustes de Mazos: [auditoría de Ajustes](features/decks/DECK_SETTINGS_AUDIT.md).
+- Para sus correcciones y el mixed persistido: [mejoras de Ajustes](features/decks/DECK_SETTINGS_IMPROVEMENTS.md).
 - Para comprender FSRS de Vocabulario y Mazos: [auditoría de arquitectura](features/srs/01-ARQUITECTURA-FSRS.md),
   [comparación](features/srs/02-VOCABULARIO-VS-MAZOS.md), [simulaciones](features/srs/03-INTERVALOS-Y-SIMULACIONES.md),
   [hallazgos](features/srs/04-AUDITORIA-Y-MEJORAS.md) y [guía para estudiar](features/srs/05-GUIA-PARA-EL-USUARIO.md).
