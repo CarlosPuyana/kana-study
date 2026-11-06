@@ -12257,10 +12257,10 @@
   "anki.scheduler.title": "How cards are scheduled",
   "anki.scheduler.learning": "Learning: 1 min → 10 min → tomorrow.",
   "anki.scheduler.relearning": "Relearning: 10 min → tomorrow.",
-  "anki.scheduler.ahead": "When no work is ready, today’s learning steps may be shown up to 20 minutes early. No new cards are added above the limit.",
+  "anki.scheduler.ahead": "The Europe/Madrid date decides which cards belong to today; the time only determines their order. Cards can appear before their due time.",
   "anki.scheduler.reviewDay": "Regular reviews are available from the start of their Europe/Madrid study day, including overdue reviews.",
   "anki.scheduler.tomorrow": "Tomorrow",
-  "anki.scheduler.advanced": "Learning step shown early (up to 20 min). Your response is recorded now.",
+  "anki.scheduler.advanced": "Card scheduled for today. Your answer is recorded now.",
   "anki.scheduler.pending": "Learning steps pending for later today: {{count}}.",
   "anki.scheduler.waiting": "Learning pending for later",
   "anki.scheduler.nextDueAt": "Next due: {{date}} (Europe/Madrid).",
@@ -12441,5 +12441,6 @@
   "anki.results.history.help.2": "It has spaced reviews. This state does not mean perfect mastery.",
   "anki.results.history.help.3": "After forgetting, it returns to short steps before resuming reviews.",
   "localDeck.storageLink": "Custom decks: local storage · Information",
-  "localDeck.storageTitle": "Deck storage and backups"
+  "localDeck.storageTitle": "Deck storage and backups",
+  "anki.day.queueHelp": "Cards scheduled for today can appear before their due time. After each answer, up to two different cards appear before repeating, when available."
 }

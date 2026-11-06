@@ -21,7 +21,7 @@
   } @else if (loading()) {
     <p class="loading" aria-busy="true">{{ i18n.t('common.loading') }}</p>
   } @else if (entry(); as card) {
-    @if(choice()?.advanced){<p class="advance-note" role="status">{{i18n.t('anki.scheduler.advanced')}}</p>}
+    <p class="advance-note">{{i18n.t('anki.day.queueHelp')}}</p>
     <article class="study-card" [class.is-revealed]="revealed()">
       @if (!revealed()) {
         <section class="front">

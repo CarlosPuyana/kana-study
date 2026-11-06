@@ -73,8 +73,10 @@ export interface DeckEntryIndexItem {
 }
 
 export interface DeckStudyCounts {
+  readonly newLimitOverride?: number | null;
+  readonly introductionsClosed?: boolean;
   readonly nextRefreshAt?: number | null;
-  /** Future short steps due later today, separate from due steps and unseen cards. */
+  /** Legacy presentation field: today's short steps are now included in learningDue. */
   readonly learningPending?: number;
   readonly learningAhead?: number;
   readonly completedToday?: boolean;
@@ -88,6 +90,8 @@ export interface DeckStudyCounts {
 }
 
 export interface DeckQueueSnapshot extends DeckStudyCounts {
+  readonly mixedCursor?: DeckMixedCursor;
+  readonly separation?: readonly { readonly entryId: string; readonly seen: readonly string[] }[];
   readonly advanceEntries?: readonly DeckCardProgress[];
   readonly progress: readonly DeckCardProgress[];
   readonly newEntries: readonly DeckEntryIndexItem[];

@@ -110,8 +110,8 @@ describe('SRS audit: independently checked equations and persistence', () => {
     expect(fresh.good.card.elapsedDays).toBe(32);
   });
 
-  it('distinguishes nominal due time from Madrid-day availability for an existing Review', () => {
+  it('uses Madrid-day availability for Review and Learning independently of the due hour', () => {
     expect(deckCardEligible({ ...card, due: Date.parse('2026-11-04T20:00:00Z') }, NOW)).toBe(true);
-    expect(deckCardEligible({ ...card, state: State.Learning, due: Date.parse('2026-11-04T20:00:00Z') }, NOW)).toBe(false);
+    expect(deckCardEligible({ ...card, state: State.Learning, due: Date.parse('2026-11-04T20:00:00Z') }, NOW)).toBe(true);
   });
 });

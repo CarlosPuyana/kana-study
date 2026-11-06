@@ -4,6 +4,9 @@ Auditoría de lectura y simulación: 04/11/2026, base Git `0a61adff148abb6573fb0
 No se modifican producción, pesos, retención, datos, SQL ni fechas de usuarios.
 Continuar con [comparación](02-VOCABULARIO-VS-MAZOS.md), [simulaciones](03-INTERVALOS-Y-SIMULACIONES.md),
 [hallazgos y validación](04-AUDITORIA-Y-MEJORAS.md) y [guía sencilla](05-GUIA-PARA-EL-USUARIO.md).
+Cambio posterior autorizado en Mazos: [cola diaria dinámica](../decks/DECK_DYNAMIC_DAILY_QUEUE.md).
+Las descripciones históricas de elegibilidad/adelanto de Mazos de esta auditoría quedan sustituidas
+por esa política; el motor y sus parámetros se conservan.
 
 ## Motor y configuración comprobados
 

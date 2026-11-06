@@ -12257,10 +12257,10 @@
   "anki.scheduler.title": "Com es programen les targetes",
   "anki.scheduler.learning": "Aprenentatge: 1 min → 10 min → demà.",
   "anki.scheduler.relearning": "Reaprenentatge: 10 min → demà.",
-  "anki.scheduler.ahead": "Quan no queda feina preparada, es poden avançar passos d’aprenentatge d’avui fins a 20 minuts. No s’afegeixen targetes noves per sobre del límit.",
+  "anki.scheduler.ahead": "La data de Europe/Madrid decideix quines targetes corresponen a avui; l’hora només en determina l’ordre. Poden aparèixer abans de la seva hora.",
   "anki.scheduler.reviewDay": "Els repassos normals estan disponibles des de l’inici del seu dia a Europe/Madrid, inclosos els endarrerits.",
   "anki.scheduler.tomorrow": "Demà",
-  "anki.scheduler.advanced": "Pas d’aprenentatge avançat (fins a 20 min). La resposta es registra ara.",
+  "anki.scheduler.advanced": "Targeta programada per a avui. La resposta es registra ara.",
   "anki.scheduler.pending": "Passos d’aprenentatge pendents per a més tard avui: {{count}}.",
   "anki.scheduler.waiting": "Aprenentatge pendent per a més tard",
   "anki.scheduler.nextDueAt": "Proper venciment: {{date}} (Europe/Madrid).",
@@ -12441,5 +12441,6 @@
   "anki.results.history.help.2": "Té repassos espaiats. Aquest estat no significa domini perfecte.",
   "anki.results.history.help.3": "Després d’un oblit, torna a passos curts abans de reprendre els repassos.",
   "localDeck.storageLink": "Malls personalitzats: emmagatzematge local · Informació",
-  "localDeck.storageTitle": "Emmagatzematge i còpies dels malls"
+  "localDeck.storageTitle": "Emmagatzematge i còpies dels malls",
+  "anki.day.queueHelp": "Les targetes pendents d’avui poden aparèixer abans de la seva hora. Després de cada resposta es mostren fins a dues targetes diferents abans de repetir, si estan disponibles."
 }

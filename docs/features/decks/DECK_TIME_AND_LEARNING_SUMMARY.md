@@ -1,5 +1,8 @@
 # Mazos: Por Tiempo y resumen del aprendizaje
 
+Política posterior de Aprender: [cola diaria dinámica](DECK_DYNAMIC_DAILY_QUEUE.md).
+Por Tiempo conserva sus fechas y agrupaciones; las tarjetas de hoy más tarde también son elegibles.
+
 Implementado localmente el 05/11/2026 sobre `0a61adff148abb6573fb0a2ba769bccd91cf2eb5`.
 Se preserva el trabajo local previo de la [auditoría FSRS](../srs/01-ARQUITECTURA-FSRS.md).
 Ampliación posterior del mismo día: [Historial por tarjeta](DECK_CARD_HISTORY.md) añade lectura al abrir

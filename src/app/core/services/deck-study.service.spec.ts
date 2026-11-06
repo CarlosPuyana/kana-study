@@ -36,7 +36,7 @@ describe('DeckStudyService', () => {
   });
 
   it('offers 10 new cards on a fresh day and keeps strict entry order', async () => {
-    const snapshot = await service.snapshot(deck, INDEX, NOW);
+    const snapshot = await service.snapshot(deck, activeIndex(), NOW);
     expect(snapshot.newAvailable).toBe(10);
     expect(snapshot.newEntries.map(item => item.order)).toEqual([1,2,3,4,5,6,7,8,9,10]);
     expect(snapshot.learningDue).toBe(0);
@@ -46,14 +46,14 @@ describe('DeckStudyService', () => {
   it.each([[0,10],[4,6],[10,0]])('with %i introduced cards exposes %i new cards', async (introduced, expected) => {
     database.daily = { deckId: deck.id, localDate: TODAY, introducedEntryIds: INDEX.slice(0, introduced).map(item => item.id), newLimitOverride: null };
     database.progress = INDEX.slice(0, introduced).map(item => progress(item.id, State.Learning, NOW.getTime() + 60_000));
-    expect((await service.snapshot(deck, INDEX, NOW)).newAvailable).toBe(expected);
+    expect((await service.snapshot(deck, activeIndex(), NOW)).newAvailable).toBe(expected);
   });
 
   it('adds five cards only for today and resets to the base limit tomorrow', async () => {
     database.daily = { deckId: deck.id, localDate: TODAY, introducedEntryIds: INDEX.slice(0, 10).map(item => item.id), newLimitOverride: null };
     database.progress = INDEX.slice(0, 10).map(item => progress(item.id, State.Learning, NOW.getTime() + 60_000));
     await service.adjustTodayNewLimit(deck, 5, NOW);
-    expect((await service.snapshot(deck, INDEX, NOW)).newAvailable).toBe(5);
+    expect((await service.snapshot(deck, activeIndex(), NOW)).newAvailable).toBe(5);
     database.daily = null;
     expect((await service.snapshot(deck, INDEX, new Date(2026, 9, 1, 12))).newAvailable).toBe(10);
   });
@@ -61,17 +61,19 @@ describe('DeckStudyService', () => {
   it('does not revert introduced cards when today limit is reduced below their count', async () => {
     database.daily = { deckId: deck.id, localDate: TODAY, introducedEntryIds: INDEX.slice(0, 7).map(item => item.id), newLimitOverride: 5 };
     database.progress = INDEX.slice(0, 7).map(item => progress(item.id, State.Learning, NOW.getTime() + 60_000));
-    const snapshot = await service.snapshot(deck, INDEX, NOW);
+    const snapshot = await service.snapshot(deck, activeIndex(), NOW);
     expect(snapshot.newAvailable).toBe(0);
     expect(database.progress).toHaveLength(7);
   });
 
-  it('prioritizes expired Learning ahead of all configured new/review orders', () => {
-    for (const order of ['mixed', 'before-reviews', 'after-reviews'] as const) {
+  it('orders scheduled states chronologically while respecting new-order preferences', () => {
+    const snapshot = queueSnapshot({ learning: [progress('learning', State.Learning, 2)], reviews: [progress('review', State.Review, 1)], newEntries: [{ id: 'new', order: 1 }] });
+    for (const order of ['mixed', 'after-reviews'] as const) {
       settings.current = { ...settings.current, newCardOrder: order };
-      const snapshot = queueSnapshot({ learning: [progress('learning', State.Learning, 1)], reviews: [progress('review', State.Review, 1)], newEntries: [{ id: 'new', order: 1 }] });
-      expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe('learning');
+      expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe('review');
     }
+    settings.current = { ...settings.current, newCardOrder: 'before-reviews' };
+    expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe('new');
   });
 
   it('applies before-reviews and after-reviews ordering', () => {
@@ -95,19 +97,19 @@ describe('DeckStudyService', () => {
     expect(kinds).toEqual(['review', 'review', 'review', 'review', 'new', 'review', 'review', 'review']);
   });
 
-  it('orders overdue reviews by lowest retrievability', async () => {
+  it('orders overdue reviews chronologically, independently of retrievability', async () => {
     database.progress = [progress('higher-r', State.Review, 1, 0.8), progress('lower-r', State.Review, 2, 0.3)];
-    expect((await service.snapshot(deck, INDEX, NOW)).reviewEntries.map(item => item.entryId)).toEqual(['lower-r', 'higher-r']);
+    expect((await service.snapshot(deck, activeIndex(), NOW)).reviewEntries.map(item => item.entryId)).toEqual(['higher-r', 'lower-r']);
   });
 
-  it('includes today Review before its old hour, but retains future Learning minutes', async () => {
+  it('includes both Review and Learning later today without waiting', async () => {
     const future = NOW.getTime() + 8 * 60_000;
     database.progress = [progress('review', State.Review, future), progress('learning', State.Learning, future + 1)];
-    const snapshot = await service.snapshot(deck, INDEX, NOW);
+    const snapshot = await service.snapshot(deck, activeIndex(), NOW);
     expect(snapshot.reviewDue).toBe(1);
-    expect(snapshot.learningDue).toBe(0);
-    expect(snapshot.nextDue).toBe(future+1);
-    expect(snapshot.learningPending).toBe(1);expect(snapshot.learningAhead).toBe(1);
+    expect(snapshot.learningDue).toBe(1);
+    expect(snapshot.nextDue).toBeNull();
+    expect(snapshot.learningPending).toBe(0);expect(snapshot.learningAhead).toBe(0);
   });
 
   it.each(['again', 'good'] as const)('atomically persists and undoes a first New → %s rating', async rating => {
@@ -135,7 +137,7 @@ describe('DeckStudyService', () => {
   it('survives service recreation because persisted progress is repository-owned', async () => {
     await service.rate(deck, { entryId: 'e1', kind: 'new', progress: null }, scheduler.previewValue, 'good', 100, NOW);
     TestBed.resetTestingModule(); configure();
-    const restored = await service.snapshot(deck, INDEX, NOW);
+    const restored = await service.snapshot(deck, activeIndex(), NOW);
     expect(restored.progress).toHaveLength(1);
     expect(restored.introducedToday).toBe(1);
   });
@@ -161,14 +163,14 @@ describe('DeckStudyService', () => {
 
   it.each([4, 17])('adds all %i due reviews to the ten new cards', async reviews => {
     database.progress = Array.from({length:reviews},(_,i)=>progress('r'+i,State.Review,NOW.getTime()-1));
-    const snapshot = await service.snapshot(deck, INDEX, NOW);
+    const snapshot = await service.snapshot(deck, activeIndex(), NOW);
     expect(snapshot.newEntries.length + snapshot.reviewEntries.length).toBe(10+reviews);
   });
 
   it.each(['mixed','before-reviews','after-reviews'] as const)('consumes every card once with %s order', async order => {
     settings.current = {...settings.current,newCardOrder:order};
     database.progress = Array.from({length:4},(_,i)=>progress('r'+i,State.Review,NOW.getTime()-1));
-    let snapshot = await service.snapshot(deck, INDEX, NOW);
+    let snapshot = { ...await service.snapshot(deck, activeIndex(), NOW), mixedCursor: undefined };
     let cursor = {debt:0}; const choices = [];
     while(true){const decision=service.chooseNext(snapshot,deck,cursor);if(!decision.choice)break;cursor=decision.cursor;choices.push(decision.choice);
       snapshot={...snapshot,newEntries:snapshot.newEntries.filter(item=>item.id!==decision.choice!.entryId),reviewEntries:snapshot.reviewEntries.filter(item=>item.entryId!==decision.choice!.entryId)};
@@ -204,7 +206,7 @@ describe('DeckStudyService', () => {
     const saved=JSON.stringify(database.progress);
     await service.completeSession(deck,INDEX,NOW);
     const snapshot=await service.snapshot(deck,INDEX,NOW);
-    expect(snapshot.completedToday).toBe(false);expect(snapshot.learningPending).toBe(1);expect(snapshot.newAvailable).toBe(0);expect(snapshot.introducedToday).toBe(1);expect(snapshot.nextDue).toBeGreaterThan(NOW.getTime());
+    expect(snapshot.completedToday).toBe(false);expect(snapshot.learningDue).toBe(1);expect(snapshot.newAvailable).toBe(0);expect(snapshot.introducedToday).toBe(1);expect(snapshot.nextDue).toBeNull();
     expect(JSON.stringify(database.progress)).toBe(saved);
     const graduation={...scheduler.previewValue,good:{...scheduler.previewValue.good,card:{...scheduler.previewValue.good.card,state:State.Review,due:NOW.getTime()+86_400_000}}};
     await service.rate(deck,{entryId:'e1',kind:'learning',progress:database.progress[0]},graduation,'good',100,NOW);
@@ -217,6 +219,10 @@ describe('DeckStudyService', () => {
     await expect(service.rate(deck,{entryId:'e1',kind:'new',progress:null},scheduler.previewValue,'good',100,NOW)).rejects.toThrow('completed');
     expect(database.events).toHaveLength(0);
   });
+
+  function activeIndex(): DeckEntryIndexItem[] {
+    return [...INDEX, ...database.progress.filter(p => !INDEX.some(e => e.id === p.entryId)).map(p => ({id:p.entryId,order:100}))];
+  }
 
   function configure(): void {
     TestBed.configureTestingModule({ providers: [

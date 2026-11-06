@@ -19,7 +19,8 @@ for(const root of ['dist/kana-study','dist/kana-study-candidate']){
  report.push({root,initialBytes:bytes,workerFile:worker[0],workerBytes:worker[1].bytes,kaishiInitial:false,mediaPayloadBundled:false});
 }
 const files=execFileSync('git',['ls-files','-c','--others','--exclude-standard','-z'],{encoding:'utf8'}).split('\0');assert(!files.some(f=>/\.apkg$/i.test(f)),'APKG in repository');
-execFileSync('git',['diff','--exit-code','HEAD','--','src/app/data/japanese-1500.generated.ts','src/app/core/services/deck-scheduler.service.ts','src/app/core/services/deck-study.service.ts','src/app/core/services/custom-deck-gates.ts','src/app/core/services/manga-deck-gate.ts','src/app/core/services/custom-deck-access.ts','src/app/release/manga-candidate.providers.ts','.github','supabase'],{encoding:'utf8'});
+// Daily deck queue changes are authorized separately; preserve both actual FSRS engines and Vocabulario.
+execFileSync('git',['diff','--exit-code','HEAD','--','src/app/data/japanese-1500.generated.ts','src/app/core/services/deck-scheduler.service.ts','src/app/core/services/spaced-repetition.service.ts','src/app/core/services/custom-deck-gates.ts','src/app/core/services/manga-deck-gate.ts','src/app/core/services/custom-deck-access.ts','src/app/release/manga-candidate.providers.ts','.github','supabase'],{encoding:'utf8'});
 
 const rights=JSON.parse(fs.readFileSync('release/kaishi-media-rights.json','utf8'));
 function filesBelow(root){return fs.readdirSync(root,{withFileTypes:true}).flatMap(e=>{const file=path.join(root,e.name);return e.isDirectory()?filesBelow(file):[file];});}

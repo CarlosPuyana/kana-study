@@ -169,12 +169,11 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
       if(this.destroyed||resourceState!==this.resource.state()||owner!==this.resource.catalog.owner())return;
       this.snapshot.set(snapshot);this.dayEvents.set(events);this.presentationNow.set(new Date());
       const progress = snapshot.progress.find(item => item.entryId === event.entryId) ?? null;
-      this.setCurrent({
+      this.setCurrent(this.study.restoreAfterUndo(snapshot, this.deck, {
         entryId: event.entryId,
-        advanced:!!progress&&[1,3].includes(progress.card.state)&&progress.due>Date.now(),
         kind: progress ? (progress.card.state === 2 ? 'review' : 'learning') : 'new',
         progress,
-      });
+      }));
       this.lastEvent.set(null);
     } catch { this.error.set(true); }
     finally { this.saving.set(false); if (!this.destroyed && this.choice()) this.clock.resume(); }

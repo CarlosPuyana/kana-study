@@ -12257,10 +12257,10 @@
   "anki.scheduler.title": "Cómo se programan las tarjetas",
   "anki.scheduler.learning": "Aprendizaje: 1 min → 10 min → mañana.",
   "anki.scheduler.relearning": "Reaprendizaje: 10 min → mañana.",
-  "anki.scheduler.ahead": "Si no queda trabajo listo, se pueden adelantar pasos de aprendizaje de hoy hasta 20 minutos. No se añaden nuevas por encima del límite.",
+  "anki.scheduler.ahead": "La fecha de Europe/Madrid decide qué tarjetas corresponden a hoy; la hora solo determina su orden. Pueden aparecer antes de su hora.",
   "anki.scheduler.reviewDay": "Los repasos normales están disponibles desde el inicio de su día en Europe/Madrid, incluidos los atrasados.",
   "anki.scheduler.tomorrow": "Mañana",
-  "anki.scheduler.advanced": "Paso de aprendizaje adelantado (hasta 20 min). Tu respuesta se registra ahora.",
+  "anki.scheduler.advanced": "Tarjeta programada para hoy. La respuesta se registra ahora.",
   "anki.scheduler.pending": "Pasos de aprendizaje pendientes para más tarde hoy: {{count}}.",
   "anki.scheduler.waiting": "Aprendizaje pendiente para más tarde",
   "anki.scheduler.nextDueAt": "Próximo vencimiento: {{date}} (Europe/Madrid).",
@@ -12441,5 +12441,6 @@
   "anki.results.history.help.2": "Tiene repasos espaciados. Este estado no significa dominio perfecto.",
   "anki.results.history.help.3": "Tras un olvido, vuelve a pasos cortos antes de retomar los repasos.",
   "localDeck.storageLink": "Personalizados: almacenamiento local · Información",
-  "localDeck.storageTitle": "Almacenamiento y copias de Mazos"
+  "localDeck.storageTitle": "Almacenamiento y copias de Mazos",
+  "anki.day.queueHelp": "Las tarjetas pendientes de hoy pueden aparecer antes de su hora. Tras cada respuesta se muestran hasta dos tarjetas distintas antes de repetir, si están disponibles."
 }

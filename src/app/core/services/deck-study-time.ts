@@ -4,12 +4,10 @@ import type { SerializedFsrsCard } from '../models/deck-study.model';
 export const getLocalStudyDayKey = getSpainDayKey;
 export const DECK_LEARNING_AHEAD_MS = 20 * 60_000;
 
-/** Existing Review by Madrid day; Learning/Relearning by minutes, optionally early today. */
-export function deckCardEligible(card: SerializedFsrsCard, now: Date, allowAhead = false): boolean {
+/** The full Madrid date decides eligibility for every scheduled FSRS state. */
+export function deckCardEligible(card: SerializedFsrsCard, now: Date, _allowAhead = false): boolean {
   const day = getLocalStudyDayKey(now), dueDay = getLocalStudyDayKey(new Date(card.due));
-  if (card.state === 2) return dueDay <= day;
-  return [1, 3].includes(card.state) && (card.due <= now.getTime()
-    || allowAhead && dueDay === day && card.due <= now.getTime() + DECK_LEARNING_AHEAD_MS);
+  return [1, 2, 3].includes(card.state) && dueDay <= day;
 }
 
 /** Madrid calendar boundary (23/24/25-hour days), independent of the host timezone. */

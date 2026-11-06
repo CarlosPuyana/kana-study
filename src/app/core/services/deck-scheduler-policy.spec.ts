@@ -19,32 +19,34 @@ const index:DeckEntryIndexItem[]=Array.from({length:30},(_,i)=>({id:'n'+i,order:
 const card=(entryId:string,state:State,due:number):DeckCardProgress=>({deckId:deck.id,entryId,due,state,card:{due,state,stability:30,difficulty:5,reps:20,lapses:1,learningSteps:state===State.Learning?1:0,scheduledDays:30,elapsedDays:30,lastReview:NOW.getTime()-30*86_400_000}});
 describe('SCHEDULER-1 real persistence and queue policy',()=>{
  let study:DeckStudyService,db:DeckDatabaseService;
+ let seeded:DeckEntryIndexItem[]=[];
+ const activeIndex=()=>[...index,...seeded];
  let settings={...deck.settings};const enqueue=vi.fn(async()=>{});
  function configure(){TestBed.configureTestingModule({providers:[{provide:DECK_SCHEDULER_ENABLE_FUZZ,useValue:false},
   {provide:DeckSettingsService,useValue:{settingsFor:()=>settings}},
   {provide:CustomDeckAccess,useValue:{permitted:()=>true}},
   {provide:SyncOutboxService,useValue:{enqueue}}]});study=TestBed.inject(DeckStudyService);db=TestBed.inject(DeckDatabaseService);}
- beforeEach(()=>{TestBed.resetTestingModule();localStorage.clear();vi.stubGlobal('indexedDB',new IDBFactory());settings={...deck.settings};enqueue.mockClear();configure();});
+ beforeEach(()=>{TestBed.resetTestingModule();localStorage.clear();vi.stubGlobal('indexedDB',new IDBFactory());settings={...deck.settings};seeded=[];enqueue.mockClear();configure();});
  afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();});
- async function seed(rows:DeckCardProgress[],at=NOW,completed=false){await db.mergeFromCloud({progress:rows,events:[],daily:completed?[{...emptyDailyState(deck.id,getLocalStudyDayKey(at)),introducedEntryIds:['historic-introduction'],completedAt:at.getTime()-1000}]:[]});}
+ async function seed(rows:DeckCardProgress[],at=NOW,completed=false){seeded.push(...rows.map((r,i)=>({id:r.entryId,order:100+i})));await db.mergeFromCloud({progress:rows,events:[],daily:completed?[{...emptyDailyState(deck.id,getLocalStudyDayKey(at)),introducedEntryIds:['historic-introduction'],completedAt:at.getTime()-1000}]:[]});}
  it('rebuilds daily presentation from persisted effective events across reload and undo',async()=>{
-  let snapshot=await study.snapshot(deck,index,NOW);
+  let snapshot=await study.snapshot(deck,activeIndex(),NOW);
   expect(deckDayCounts(snapshot,[],deck.id,NOW)).toEqual({new:10,repeat:0,review:0});
   let choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;
   const first=await study.rate(deck,choice,study.preview(deck,choice,NOW),'again',500,NOW);
-  snapshot=await study.snapshot(deck,index,NOW);
+  snapshot=await study.snapshot(deck,activeIndex(),NOW);
   let events=await db.getDeckReviewEvents(deck.id);
   expect(deckDayCounts(snapshot,events,deck.id,NOW)).toEqual({new:9,repeat:1,review:0});
-  TestBed.resetTestingModule();configure();snapshot=await study.snapshot(deck,index,NOW);events=await db.getDeckReviewEvents(deck.id);
+  TestBed.resetTestingModule();configure();snapshot=await study.snapshot(deck,activeIndex(),NOW);events=await db.getDeckReviewEvents(deck.id);
   expect(deckDayCounts(snapshot,events,deck.id,NOW).repeat).toBe(1);
   expect(deckDayDifficulties(events,deck.id,NOW).map(r=>r.failures)).toEqual([1]);
-  await study.undo(first);snapshot=await study.snapshot(deck,index,NOW);events=await db.getDeckReviewEvents(deck.id);
+  await study.undo(first);snapshot=await study.snapshot(deck,activeIndex(),NOW);events=await db.getDeckReviewEvents(deck.id);
   expect(deckDayCounts(snapshot,events,deck.id,NOW)).toEqual({new:10,repeat:0,review:0});expect(deckDayDifficulties(events,deck.id,NOW)).toEqual([]);
   choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;await study.rate(deck,choice,study.preview(deck,choice,NOW),'good',500,NOW);
-  snapshot=await study.snapshot(deck,index,NOW);events=await db.getDeckReviewEvents(deck.id);
+  snapshot=await study.snapshot(deck,activeIndex(),NOW);events=await db.getDeckReviewEvents(deck.id);
   expect(deckDayCounts(snapshot,events,deck.id,NOW)).toEqual({new:9,repeat:1,review:0});
   TestBed.inject(WorkspaceService).activateUser('presentation-other');
-  expect(deckDayCounts(await study.snapshot(deck,index,NOW),await db.getDeckReviewEvents(deck.id),deck.id,NOW)).toEqual({new:10,repeat:0,review:0});
+  expect(deckDayCounts(await study.snapshot(deck,activeIndex(),NOW),await db.getDeckReviewEvents(deck.id),deck.id,NOW)).toEqual({new:10,repeat:0,review:0});
  });
  it('introduces ten distinct new cards with twenty daily reviews, repetitions and only two public ratings',async()=>{
   const reviews=Array.from({length:20},(_,i)=>card('r'+i,State.Review,NOW.getTime()+7*3_600_000));await seed(reviews);
@@ -65,31 +67,31 @@ describe('SCHEDULER-1 real persistence and queue policy',()=>{
   await study.completeSession(deck,all,NOW);expect((await study.snapshot(deck,all,NOW)).completedToday).toBe(true);
   const events=await db.getDeckReviewEvents(deck.id);expect(events).toHaveLength(42);expect(events.every(e=>e.reviewedAt===NOW.getTime()&&e.fsrsLog.review===NOW.getTime())).toBe(true);
  });
- it('advances only after ready work is exhausted; earliest due wins and exactly 20m is inclusive',async()=>{
+ it('offers every short step today chronologically, without a 20-minute boundary',async()=>{
   settings={...settings,newCardsPerDay:0};
   await seed([card('late',State.Learning,NOW.getTime()+20*60_000+1),card('edge',State.Relearning,NOW.getTime()+20*60_000),card('early',State.Learning,NOW.getTime()+3*60_000)]);
-  let snapshot=await study.snapshot(deck,index,NOW);
-  expect(snapshot.advanceEntries?.map(c=>c.entryId)).toEqual(['early','edge']);expect(snapshot.learningPending).toBe(3);
-  expect(study.chooseNext(snapshot,deck,{debt:0}).choice).toMatchObject({entryId:'early',advanced:true});
+  let snapshot=await study.snapshot(deck,activeIndex(),NOW);
+  expect(snapshot.learningEntries.map(c=>c.entryId)).toEqual(['early','edge','late']);expect(snapshot.learningDue).toBe(3);
+  expect(study.chooseNext(snapshot,deck,{debt:0}).choice).toMatchObject({entryId:'early',kind:'learning'});
   await seed([card('ready',State.Review,NOW.getTime()+8*3_600_000)]);
-  snapshot=await study.snapshot(deck,index,NOW);expect(study.chooseNext(snapshot,deck,{debt:0}).choice?.entryId).toBe('ready');
+  snapshot=await study.snapshot(deck,activeIndex(),NOW);expect(study.chooseNext(snapshot,deck,{debt:0}).choice?.entryId).toBe('early');
   settings={...settings,newCardsPerDay:1,newCardOrder:'before-reviews'};
-  expect(study.chooseNext(await study.snapshot(deck,index,NOW),deck,{debt:0}).choice?.kind).toBe('new');
+  expect(study.chooseNext(await study.snapshot(deck,activeIndex(),NOW),deck,{debt:0}).choice?.kind).toBe('new');
  });
- it('keeps a real wait outside 20m, schedules the advance boundary and never closes pending learning today',async()=>{
+ it('never waits for a later-today step and never closes pending learning today',async()=>{
   settings={...settings,newCardsPerDay:0};const due=NOW.getTime()+40*60_000;await seed([card('wait',State.Learning,due)]);
-  const snapshot=await study.snapshot(deck,index,NOW);
-  expect(study.chooseNext(snapshot,deck,{debt:0}).choice).toBeNull();expect(snapshot.learningPending).toBe(1);
-  expect(snapshot.nextLearningDue).toBe(due);expect(snapshot.nextRefreshAt).toBe(due-20*60_000);
-  await study.completeSession(deck,index,NOW);expect((await db.getDailyState(deck.id,getLocalStudyDayKey(NOW)))?.completedAt).toBeUndefined();
-  const later=await study.snapshot(deck,index,new Date(due-20*60_000));expect(study.chooseNext(later,deck,{debt:0}).choice?.advanced).toBe(true);
+  const snapshot=await study.snapshot(deck,activeIndex(),NOW);
+  expect(study.chooseNext(snapshot,deck,{debt:0}).choice?.entryId).toBe('wait');expect(snapshot.learningDue).toBe(1);
+  expect(snapshot.nextLearningDue).toBeNull();expect(snapshot.nextRefreshAt).toBe(nextLocalStudyDayStart(NOW));
+  await study.completeSession(deck,activeIndex(),NOW);expect((await db.getDailyState(deck.id,getLocalStudyDayKey(NOW)))?.completedAt).toBeUndefined();
+  const later=await study.snapshot(deck,activeIndex(),new Date(due-20*60_000));expect(study.chooseNext(later,deck,{debt:0}).choice?.kind).toBe('learning');
  });
  it('resumes one persisted early step after reload, then graduates tomorrow without another introduction',async()=>{
   const only=index.slice(0,1);let snapshot=await study.snapshot(deck,only,NOW);let choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;
   const preview=study.preview(deck,choice,NOW);const first=await study.rate(deck,choice,preview,'good',400,NOW);
   expect(first.stateAfter).toBe(State.Learning);expect(first.dueAfter).toBe(NOW.getTime()+600_000);
   TestBed.resetTestingModule();configure();snapshot=await study.snapshot(deck,only,NOW);choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;
-  expect(choice).toMatchObject({entryId:only[0].id,advanced:true});expect(choice.progress?.card.learningSteps).toBe(1);
+  expect(choice).toMatchObject({entryId:only[0].id,kind:'learning'});expect(choice.progress?.card.learningSteps).toBe(1);
   const responseAt=new Date(NOW.getTime()+1000),p=study.preview(deck,choice,responseAt);
   const event=await study.rate(deck,choice,p,'good',700,responseAt);
   expect(event.reviewedAt).toBe(responseAt.getTime());expect(event.fsrsLog.review).toBe(responseAt.getTime());expect(event.dueAfter).toBe(nextLocalStudyDayStart(responseAt));
@@ -100,16 +102,16 @@ describe('SCHEDULER-1 real persistence and queue policy',()=>{
  });
  it('preserves old completion records while reopening actual pending work and preserving prior introductions',async()=>{
   const pending=card('old',State.Learning,NOW.getTime()+10*60_000);await seed([pending],NOW,true);
-  const before=await db.getDailyState(deck.id,getLocalStudyDayKey(NOW)),snapshot=await study.snapshot(deck,index,NOW);
+  const before=await db.getDailyState(deck.id,getLocalStudyDayKey(NOW)),snapshot=await study.snapshot(deck,activeIndex(),NOW);
   expect(snapshot.completedToday).toBe(false);expect(snapshot.newAvailable).toBe(0);expect(snapshot.introducedToday).toBe(1);
   expect(await db.getDailyState(deck.id,getLocalStudyDayKey(NOW))).toEqual(before);expect(await db.getProgress(deck.id,'old')).toEqual(pending);
   const choice=study.chooseNext(snapshot,deck,{debt:0}).choice!,preview=study.preview(deck,choice,NOW);
-  await study.rate(deck,choice,preview,'good',100,NOW);expect((await study.snapshot(deck,index,NOW)).completedToday).toBe(true);
+  await study.rate(deck,choice,preview,'good',100,NOW);expect((await study.snapshot(deck,activeIndex(),NOW)).completedToday).toBe(true);
   expect((await db.getDailyState(deck.id,getLocalStudyDayKey(NOW)))!.completedAt).toBe(before!.completedAt);
  });
  it('old completion cannot hide a review scheduled later today, but tomorrow Review stays excluded',async()=>{
   await seed([card('today',State.Review,NOW.getTime()+10*3_600_000),card('tomorrow',State.Review,nextLocalStudyDayStart(NOW)+1000)],NOW,true);
-  const snapshot=await study.snapshot(deck,index,NOW);expect(snapshot.completedToday).toBe(false);expect(snapshot.reviewEntries.map(c=>c.entryId)).toEqual(['today']);
+  const snapshot=await study.snapshot(deck,activeIndex(),NOW);expect(snapshot.completedToday).toBe(false);expect(snapshot.reviewEntries.map(c=>c.entryId)).toEqual(['today']);
   expect(snapshot.nextDue).toBe(nextLocalStudyDayStart(NOW));
   expect((await study.statistics(deck,50,NOW)).dueNow).toBe(1);
  });
@@ -121,16 +123,16 @@ describe('SCHEDULER-1 real persistence and queue policy',()=>{
   expect(study.chooseNext(before,deck,{debt:0}).choice).toBeNull();await study.completeSession(deck,only,late);
   expect((await study.snapshot(deck,only,late)).completedToday).toBe(true);
   const midnight=new Date('2026-10-28T23:00:00Z'),after=await study.snapshot(deck,only,midnight);
-  expect(after.completedToday).toBe(false);expect(after.introducedToday).toBe(0);expect(study.chooseNext(after,deck,{debt:0}).choice?.advanced).toBe(true);
+  expect(after.completedToday).toBe(false);expect(after.introducedToday).toBe(0);expect(study.chooseNext(after,deck,{debt:0}).choice?.kind).toBe('learning');
  });
  it.each(['2026-03-28T23:00:00Z','2026-10-24T22:00:00Z'])('review day eligibility and future steps respect the DST calendar at %s',async value=>{
   const now=new Date(value),tomorrow=nextLocalStudyDayStart(now);settings={...settings,newCardsPerDay:0};
   await seed([card('today',State.Review,tomorrow-1),card('next',State.Review,tomorrow),card('step',State.Learning,tomorrow+60_000)],now);
-  const snapshot=await study.snapshot(deck,index,now);expect(snapshot.reviewEntries.map(c=>c.entryId)).toEqual(['today']);expect(snapshot.advanceEntries).toEqual([]);
-  expect(snapshot.nextRefreshAt).toBe(tomorrow);expect((await study.snapshot(deck,index,new Date(tomorrow))).reviewDue).toBe(2);
+  const snapshot=await study.snapshot(deck,activeIndex(),now);expect(snapshot.reviewEntries.map(c=>c.entryId)).toEqual(['today']);expect(snapshot.advanceEntries).toEqual([]);
+  expect(snapshot.nextRefreshAt).toBe(tomorrow);expect((await study.snapshot(deck,activeIndex(),new Date(tomorrow))).reviewDue).toBe(2);
  });
  it('a failed atomic write leaves no introduced card/event; retry commits once, with the displayed transition',async()=>{
-  const choice=study.chooseNext(await study.snapshot(deck,index,NOW),deck,{debt:0}).choice!,p=study.preview(deck,choice,NOW);
+  const choice=study.chooseNext(await study.snapshot(deck,activeIndex(),NOW),deck,{debt:0}).choice!,p=study.preview(deck,choice,NOW);
   const before=structuredClone(p);vi.spyOn(db,'commitReview').mockRejectedValueOnce(new Error('controlled write failure'));
   await expect(study.rate(deck,choice,p,'again',500,NOW)).rejects.toThrow('controlled');
   expect(await db.getDeckProgress(deck.id)).toEqual([]);expect(await db.getDeckReviewEvents(deck.id)).toEqual([]);
@@ -141,7 +143,7 @@ describe('SCHEDULER-1 real persistence and queue policy',()=>{
  });
  it('rejects a stale first introduction after the unique daily allowance is consumed',async()=>{
   settings={...settings,newCardsPerDay:1};
-  const choice=study.chooseNext(await study.snapshot(deck,index,NOW),deck,{debt:0}).choice!,preview=study.preview(deck,choice,NOW);
+  const choice=study.chooseNext(await study.snapshot(deck,activeIndex(),NOW),deck,{debt:0}).choice!,preview=study.preview(deck,choice,NOW);
   await db.writeDailyState({...emptyDailyState(deck.id,getLocalStudyDayKey(NOW)),introducedEntryIds:['another-card']});
   await expect(study.rate(deck,choice,preview,'good',500,NOW)).rejects.toThrow('limit');
   expect(await db.getDeckProgress(deck.id)).toEqual([]);expect(await db.getDeckReviewEvents(deck.id)).toEqual([]);
@@ -149,12 +151,12 @@ describe('SCHEDULER-1 real persistence and queue policy',()=>{
  it('isolates workspaces, rejects a response after account activation changes and preserves legacy memory',async()=>{
   const workspace=TestBed.inject(WorkspaceService);workspace.activateUser('A');
   const old=card('legacy',State.Review,NOW.getTime()-1);await seed([old]);
-  const before=await db.getProgress(deck.id,'legacy');expect((await study.snapshot(deck,index,NOW)).progress[0]).toEqual(before);
-  const choice=study.chooseNext(await study.snapshot(deck,index,NOW),deck,{debt:0}).choice!,p=study.preview(deck,choice,NOW);
+  const before=await db.getProgress(deck.id,'legacy');expect((await study.snapshot(deck,activeIndex(),NOW)).progress[0]).toEqual(before);
+  const choice=study.chooseNext(await study.snapshot(deck,activeIndex(),NOW),deck,{debt:0}).choice!,p=study.preview(deck,choice,NOW);
   let release!:()=>void;const held=new Promise<void>(r=>release=r),original=db.getDailyState.bind(db);
   vi.spyOn(db,'getDailyState').mockImplementationOnce(async(...args)=>{const value=await original(...args);await held;return value;});
   const saving=study.rate(deck,choice,p,'again',100,NOW);workspace.activateUser('B');release();await expect(saving).rejects.toThrow('workspace');
-  expect((await study.snapshot(deck,index,NOW)).progress).toEqual([]);workspace.activateUser('A');
+  expect((await study.snapshot(deck,activeIndex(),NOW)).progress).toEqual([]);workspace.activateUser('A');
   expect(await db.getProgress(deck.id,'legacy')).toEqual(before);expect(await db.getDeckReviewEvents(deck.id)).toEqual([]);
  });
 });

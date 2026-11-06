@@ -104,7 +104,8 @@ export const es:Record<string,string> = {...shared,...{
   "anki.results.history.help.0": "Aún no hay una programación de estudio.",
   "anki.results.history.help.1": "La tarjeta está pasando por pasos de aprendizaje cortos.",
   "anki.results.history.help.2": "Tiene repasos espaciados. Este estado no significa dominio perfecto.",
-  "anki.results.history.help.3": "Tras un olvido, vuelve a pasos cortos antes de retomar los repasos."
+  "anki.results.history.help.3": "Tras un olvido, vuelve a pasos cortos antes de retomar los repasos.",
+  "anki.day.queueHelp": "Las tarjetas pendientes de hoy pueden aparecer antes de su hora. Tras cada respuesta se muestran hasta dos tarjetas distintas antes de repetir, si están disponibles."
 }};
 export const en:Record<string,string> = {...shared,...{
   "kaishi.audioFailed": "Audio could not be played. You can try its button again.",
@@ -210,7 +211,8 @@ export const en:Record<string,string> = {...shared,...{
   "anki.results.history.help.0": "No study schedule yet.",
   "anki.results.history.help.1": "The card is going through short learning steps.",
   "anki.results.history.help.2": "It has spaced reviews. This state does not mean perfect mastery.",
-  "anki.results.history.help.3": "After forgetting, it returns to short steps before resuming reviews."
+  "anki.results.history.help.3": "After forgetting, it returns to short steps before resuming reviews.",
+  "anki.day.queueHelp": "Cards scheduled for today can appear before their due time. After each answer, up to two different cards appear before repeating, when available."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "kaishi.audioFailed": "No s’ha pogut reproduir l’àudio. Pots tornar-ho a provar amb el seu botó.",
@@ -316,5 +318,6 @@ export const ca:Record<string,string> = {...shared,...{
   "anki.results.history.help.0": "Encara no hi ha una programació d’estudi.",
   "anki.results.history.help.1": "La targeta passa per passos curts d’aprenentatge.",
   "anki.results.history.help.2": "Té repassos espaiats. Aquest estat no significa domini perfecte.",
-  "anki.results.history.help.3": "Després d’un oblit, torna a passos curts abans de reprendre els repassos."
+  "anki.results.history.help.3": "Després d’un oblit, torna a passos curts abans de reprendre els repassos.",
+  "anki.day.queueHelp": "Les targetes pendents d’avui poden aparèixer abans de la seva hora. Després de cada resposta es mostren fins a dues targetes diferents abans de repetir, si estan disponibles."
 }};
