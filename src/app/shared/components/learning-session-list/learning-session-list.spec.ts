@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { Router,provideRouter } from '@angular/router';
 import { SettingsService } from '../../../core/services/settings.service';
 import { TranslationService } from '../../../core/services/translation.service';
 import { KanjiSessionService } from '../../../core/services/kanji-session.service';
@@ -46,13 +46,14 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
       {provide:AttemptRecordingService,useValue:{begin:()=>({record})}},
       {provide:WeaknessService,useValue:{recordLearn:()=>{}}},
       {provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:()=>{}}},
-      {provide:Router,useValue:{navigateByUrl:navigate}},
+      provideRouter([]),
     ]});
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();});
   for(const module of ['kanji','vocabulary'] as const)for(const mode of ['self-assessment','quick-practice'] as const)for(const extra of [false,true]){
     it(`${module}, ${mode}, ${extra?'additional practice':'daily Learn'}: repeated targets, order, unique count and unchanged totals`,()=>{
       const k=module==='kanji',engine=k?TestBed.inject(KanjiSessionService):TestBed.inject(VocabularySessionService);
+      vi.spyOn(TestBed.inject(Router),'navigateByUrl').mockImplementation(url=>{navigate(url);return Promise.resolve(true);});
       const fixture=k?TestBed.createComponent(KanjiPlayPage):TestBed.createComponent(VocabularyPlayPage);
       if(extra){if(k)TestBed.inject(KanjiSessionService).startPractice(kanjiRound(),mode);else TestBed.inject(VocabularySessionService).startPractice(wordRound(),mode);}else engine.start(mode);
       fixture.detectChanges();expect(fixture.nativeElement.querySelector('app-learning-session-list')).toBeNull();
@@ -70,7 +71,7 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
       const root=fixture.nativeElement as HTMLElement,list=root.querySelector('app-learning-session-list')!;
       expect([...list.querySelectorAll('li')].map(li=>li.getAttribute('data-entry-id'))).toEqual(k?[kanji[1].id,kanji[0].id]:[words[1].id,words[0].id]);
       expect(list.querySelector('.unique-count')?.textContent).toBe(k?'2 kanji únicos':'2 palabras únicas');
-      expect(root.querySelector('.round-stats div strong')?.textContent).toBe(k||extra?'4':'5');
+      expect(root.querySelector(k||extra?'.round-stats div strong':'.lesson-analytics .metric:nth-child(2) strong')?.textContent).toBe(k||extra?'4':'5');
       expect(root.querySelector('.results>p')?.textContent).toContain(k||extra?'3':'2');
       expect(list.querySelector('button,a,input,[tabindex]')).toBeNull();
       expect(list.querySelector('[lang=ja]')).not.toBeNull();

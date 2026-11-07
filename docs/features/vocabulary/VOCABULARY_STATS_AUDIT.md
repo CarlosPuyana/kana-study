@@ -1,5 +1,19 @@
 # Vocabulario: auditoría y propuesta de estadísticas
 
+## Conclusiones actualizadas — 07/11/2026
+
+La implementación definitiva conserva 10/15 palabras distintas, una dirección por palabra y dos aciertos consecutivos. Solo la primera respuesta por dirección en la lección actualiza FSRS; las posteriores generan intentos Stats V2, sin valoraciones adicionales. La selección, rachas, contadores, cola y recibos se guardan con contrato V2 y journal recuperable. V1 se conserva/transiciona según la guía de consolidación, sin inventar aciertos.
+
+Se ha implementado la [estadística avanzada](VOCABULARY_ADVANCED_STATS.md): resumen, estado actual, previsión Madrid de siete días, evolución 7/30/90 y cronología por dirección. Todo es lectura sobre los datos existentes. La eficiencia solo se calcula para V2 comparable; NO/CASI/SÍ no se mezclan con precisión objetiva, RUSH no se incluye en AttemptEvent y las repeticiones solo se identifican como internas cuando existe evidencia V2. Los contadores antiguos no se convierten en eventos ni en respuestas.
+
+La durabilidad de Aprender ya utiliza el journal y la cola Stats descritos en la consolidación; las estadísticas no los aplican ni cambian su contrato. La evolución muestra registros confirmados y avisa de pendientes/historia parcial. Las consultas se invalidan por workspace y época de activación. No se añade persistencia, SQL, sincronización ni cambios matemáticos.
+
+El cierre anterior quedó en el commit local `80e385c` (64 archivos), sin push, con árbol limpio y 2451/2451 tests antes de esta nueva implementación. La nueva etapa de estadísticas queda sin commit para revisión.
+
+## Referencia histórica de la auditoría inicial (06/11/2026)
+
+El texto siguiente conserva el diagnóstico y la propuesta anteriores. Sus referencias a una sola respuesta, cola no persistida o roadmap pendiente no describen la implementación actual; consultar las conclusiones y guía enlazadas arriba.
+
 > Actualización local 06/11/2026: la política diaria de Vocabulario queda sustituida por [lecciones cortas de 10/15 palabras](VOCABULARY_SHORT_DAILY_LESSONS.md). El contenido siguiente conserva el diagnóstico y los resultados de su fase; no describe la cola normal vigente.
 
 Actualización posterior autorizada: [FSRS diario y RUSH de sesión](VOCABULARY_FSRS_RUSH_REDESIGN.md). Este informe conserva la auditoría anterior; Aprender normal ya sustituye el refuerzo sin FSRS y la ronda cerrada. El roadmap visual sigue pendiente.

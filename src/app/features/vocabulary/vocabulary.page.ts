@@ -1,3 +1,4 @@
+import {VocabularyStatistics} from './components/vocabulary-statistics';
 import * as studyCopy from '../../../assets/i18n/deck-study.generated';
 import {PageHeader} from '../../shared/components/page-header/page-header';
 import { ChangeDetectionStrategy,Component,inject,signal } from '@angular/core';
@@ -18,9 +19,9 @@ import { ProgressCircle } from '../../shared/components/progress-circle/progress
 import { RushConfigDialog,RushConfigOption } from '../../shared/components/rush-config-dialog/rush-config-dialog';
 import { SelectionCard } from '../../shared/components/selection-card/selection-card';
 import { VocabularyStartPanel } from './components/vocabulary-start-panel/vocabulary-start-panel';
-@Component({selector:'app-vocabulary-page',imports:[PageHeader,RouterLink,VocabularyStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./vocabulary.page.html',styleUrl:'./vocabulary.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-vocabulary-page',imports:[VocabularyStatistics,PageHeader,RouterLink,VocabularyStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./vocabulary.page.html',styleUrl:'./vocabulary.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class VocabularyPage{
-  readonly daily=inject(DailyLearningService);readonly progress=inject(VocabularyProgressService);readonly medals=inject(VocabularyMedalService);readonly i18n=inject(TranslationService);readonly showStartPanel=signal(false);readonly showRushPanel=signal(false);readonly rushConfig=signal<RushConfiguration|null>(null);
+  readonly daily=inject(DailyLearningService);readonly progress=inject(VocabularyProgressService);readonly medals=inject(VocabularyMedalService);readonly i18n=inject(TranslationService);readonly showStatistics=signal(false);readonly showStartPanel=signal(false);readonly showRushPanel=signal(false);readonly rushConfig=signal<RushConfiguration|null>(null);
   readonly rushContent:readonly RushConfigOption[]=VOCABULARY_CATEGORIES.map(id=>({id,labelKey:`vocabulary.category.${id}`}));
   readonly rushTypes:readonly RushConfigOption[]=['japanese-to-meaning','meaning-to-japanese','japanese-to-reading','reading-to-japanese'].map(id=>({id,labelKey:`vocabulary.questionType.${id}`}));
   readonly countRushUnits=(config:RushConfiguration)=>buildVocabularyRushUnits(VOCABULARY_N5,config).length;
