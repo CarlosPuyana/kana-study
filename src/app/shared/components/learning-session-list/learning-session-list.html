@@ -19,6 +19,7 @@
             <app-furigana-text class="written" lang="ja" [segments]="entry.furigana" />
             <p class="reading" lang="ja">{{entry.primaryReading}}</p>
             <p>{{entry.quizMeaning[i18n.language()]}}</p>
+            @if(list.notes?.[entry.id];as note){<p class="session-word-note">{{note}}</p>}
           </li>
         }
       }

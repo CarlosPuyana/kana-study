@@ -21,7 +21,7 @@ import { LearningSessionList } from './learning-session-list';
 import type { AppLanguage } from '../../../core/models/settings.model';
 
 describe('Learn result lists use actual engines and catalog targets',()=>{
-  const language=signal<AppLanguage>('es'),history=vi.fn(),review=vi.fn(),practice=vi.fn(),record=vi.fn(),navigate=vi.fn();
+  const language=signal<AppLanguage>('es'),history=vi.fn(),review=vi.fn(),practice=vi.fn(),internal=vi.fn(),record=vi.fn(),navigate=vi.fn();
   const kanji=KANJI_N5.filter(k=>k.enabled).slice(0,3),words=VOCABULARY_N5.filter(w=>w.enabled).slice(0,3);
   let kanjiRound=()=>[
     {key:`kanji:${kanji[1].id}:kanji-to-meaning`,kanjiId:kanji[1].id,questionType:'kanji-to-meaning' as const},
@@ -34,8 +34,8 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
     {key:`vocab:${words[1].id}:reading-to-japanese`,entryId:words[1].id,questionType:'reading-to-japanese' as const},
   ];
   beforeEach(()=>{
-    vi.clearAllMocks();language.set('es');
-    const progress=(buildRound:()=>unknown)=>({buildRound,recordReview:review,recordPracticeAttempt:practice,get:()=>null,roundSummary:()=>({roundDue:0,roundNew:10})});
+    localStorage.clear();vi.clearAllMocks();language.set('es');
+    const progress=(buildRound:()=>readonly {key:string}[])=>({buildRound:()=>buildRound===wordRound?buildRound().filter(u=>!review.mock.calls.some(c=>c[0].key===u.key&&c[1]==='good')):buildRound(),recordReview:review,recordInternalAttempt:internal,recordPracticeAttempt:practice,completedToday:()=>false,get:()=>null,roundSummary:()=>({roundDue:0,roundNew:10})});
     TestBed.configureTestingModule({providers:[
       {provide:SettingsService,useValue:{language}},
       {provide:KanjiProgressService,useValue:progress(kanjiRound)},
@@ -61,23 +61,24 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
       while(!engine.completed()&&turns<10){
         const target=k?TestBed.inject(KanjiSessionService).currentKanji()!.id:TestBed.inject(VocabularySessionService).currentEntry()!.id;
         if(mode==='self-assessment'){engine.reveal();engine.rate(turns===0?'again':'good');}
-        else {const wrong=engine.options('es').find(o=>o.id!==target)!;engine.answerQuick(turns===0?wrong.id:target);engine.continueQuick();}
+        else {const wrong=engine.options('es').find(o=>o.id!==target);expect(wrong||turns>0).toBeTruthy();engine.answerQuick(turns===0?wrong!.id:target);engine.continueQuick();}
         turns++;
       }
-      expect(engine.completed()).toBe(true);expect(turns).toBe(4);
-      const before=structuredClone(engine.session()),writes=[review.mock.calls.length,practice.mock.calls.length,record.mock.calls.length,history.mock.calls.length];
+      expect(engine.completed()).toBe(true);expect(turns).toBe(k||extra?4:5);
+      const before=structuredClone(engine.session()),writes=[review.mock.calls.length,practice.mock.calls.length,record.mock.calls.length,internal.mock.calls.length,history.mock.calls.length];
       fixture.detectChanges();
       const root=fixture.nativeElement as HTMLElement,list=root.querySelector('app-learning-session-list')!;
       expect([...list.querySelectorAll('li')].map(li=>li.getAttribute('data-entry-id'))).toEqual(k?[kanji[1].id,kanji[0].id]:[words[1].id,words[0].id]);
       expect(list.querySelector('.unique-count')?.textContent).toBe(k?'2 kanji únicos':'2 palabras únicas');
-      expect(root.querySelector('.round-stats div strong')?.textContent).toBe('4');
-      expect(root.querySelector('.results>p')?.textContent).toContain('3');
+      expect(root.querySelector('.round-stats div strong')?.textContent).toBe(k||extra?'4':'5');
+      expect(root.querySelector('.results>p')?.textContent).toContain(k||extra?'3':'2');
       expect(list.querySelector('button,a,input,[tabindex]')).toBeNull();
       expect(list.querySelector('[lang=ja]')).not.toBeNull();
       expect(engine.session()).toEqual(before);
-      expect([review.mock.calls.length,practice.mock.calls.length,record.mock.calls.length,history.mock.calls.length]).toEqual(writes);
-      expect(review).toHaveBeenCalledTimes(extra?0:3);expect(practice).toHaveBeenCalledTimes(extra?0:1);expect(history).toHaveBeenCalledTimes(extra?0:1);
-      if(!extra)expect(history).toHaveBeenCalledWith(expect.objectContaining({module,exercisesCompleted:3,attempts:4,needsPracticeCount:1}));
+      expect([review.mock.calls.length,practice.mock.calls.length,record.mock.calls.length,internal.mock.calls.length,history.mock.calls.length]).toEqual(writes);
+      expect(review).toHaveBeenCalledTimes(extra?0:k?3:2);expect(practice).toHaveBeenCalledTimes(extra?0:k?1:0);expect(history).toHaveBeenCalledTimes(extra?0:1);
+      if(!k&&!extra){expect(internal).toHaveBeenCalledTimes(3);expect(list.querySelectorAll('.session-word-note')).toHaveLength(2);expect(list.textContent).toContain('Primera respuesta: NO');}
+      if(!extra){const summary=expect.objectContaining({module,exercisesCompleted:k?3:2,attempts:k?4:5,needsPracticeCount:1});if(k)expect(history).toHaveBeenCalledWith(summary);else expect(history).toHaveBeenCalledWith(summary,{strict:true});}
       expect(root.querySelector<HTMLButtonElement>('.results .secondary')?.disabled).toBe(false);
       if(extra){
         fixture.componentInstance.anotherRound();fixture.detectChanges();expect(root.querySelector('app-learning-session-list')).toBeNull();expect(engine.session()?.attempts).toBe(0);

@@ -9,6 +9,8 @@ export class AttemptRecordingService {
   private readonly repository=inject(AttemptEventRepository);private readonly workspace=inject(WorkspaceService);
   private readonly pending=new Set<Promise<void>>();
   private readonly failed=new Map<string,{event:AttemptEvent;workspace:LocalWorkspaceId}>();
+  private readonly durableRetries=new Set<()=>Promise<boolean>>();
+  registerDurableRetry(retry:()=>Promise<boolean>):void{this.durableRetries.add(retry);}
   begin(module:AttemptModule,activity:AttemptActivity,sessionId:string=crypto.randomUUID()):AttemptRecordingSession{
     const workspace=this.workspace.active(),seen=new Set<string>();let ordinal=0;
     return {record:(itemId,result,questionType,firstAttempt)=>{
@@ -24,5 +26,5 @@ export class AttemptRecordingService {
     }).catch(()=>{if(this.failed.size<100)this.failed.set(key,{event,workspace});}).finally(()=>this.pending.delete(p));this.pending.add(p);
   }
   async settle():Promise<void>{await Promise.all([...this.pending]);}
-  async retry():Promise<void>{for(const {event,workspace} of this.failed.values())this.write(event,workspace);await this.settle();if(!this.failed.size)this.repository.writeError.set(false);}
+  async retry():Promise<void>{for(const {event,workspace} of this.failed.values())this.write(event,workspace);await this.settle();const durable=await Promise.all([...this.durableRetries].map(retry=>retry()));if(!this.failed.size&&durable.every(Boolean))this.repository.writeError.set(false);}
 }

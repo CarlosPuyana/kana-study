@@ -1,9 +1,14 @@
 # Arquitectura real de FSRS
 
+> Actualización local 06/11/2026: la política diaria de Vocabulario queda sustituida por [lecciones cortas de 10/15 palabras](../vocabulary/VOCABULARY_SHORT_DAILY_LESSONS.md). El contenido siguiente conserva el diagnóstico y los resultados de su fase; no describe la cola normal vigente.
+
+Cambio posterior autorizado de Vocabulario: [FSRS diario y RUSH de sesión](../vocabulary/VOCABULARY_FSRS_RUSH_REDESIGN.md). La política de primera respuesta/refuerzo y cierre de ronda de este informe es histórica; el motor se conserva.
+
 Auditoría de lectura y simulación: 04/11/2026, base Git `0a61adff148abb6573fb0a2ba769bccd91cf2eb5`.
 No se modifican producción, pesos, retención, datos, SQL ni fechas de usuarios.
 Continuar con [comparación](02-VOCABULARIO-VS-MAZOS.md), [simulaciones](03-INTERVALOS-Y-SIMULACIONES.md),
 [hallazgos y validación](04-AUDITORIA-Y-MEJORAS.md) y [guía sencilla](05-GUIA-PARA-EL-USUARIO.md).
+Investigación posterior: [cola y repeticiones tempranas de Vocabulario](VOCABULARY_REVIEW_QUEUE_AUDIT.md).
 Cambio posterior autorizado en Mazos: [cola diaria dinámica](../decks/DECK_DYNAMIC_DAILY_QUEUE.md).
 Las descripciones históricas de elegibilidad/adelanto de Mazos de esta auditoría quedan sustituidas
 por esa política; el motor y sus parámetros se conservan.

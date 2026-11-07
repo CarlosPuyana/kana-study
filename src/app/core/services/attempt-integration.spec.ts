@@ -34,9 +34,9 @@ import {KanaStrokesService} from './kana-strokes.service';
 describe('AttemptEvent integration at real grading boundaries',()=>{
   const history={record:vi.fn()},daily={isCompletedToday:()=>false,refresh:vi.fn()};
   const progress={buildRound:vi.fn(),recordReview:vi.fn(),recordPracticeAttempt:vi.fn(),roundSummary:()=>({roundNew:0,roundDue:0})};
-  const audioState=signal('ready');
+  const audioState=signal('ready');let vocabularyWrites:Promise<unknown>[]=[];
   beforeEach(()=>{
-    TestBed.resetTestingModule();localStorage.clear();vi.clearAllMocks();audioState.set('ready');
+    TestBed.resetTestingModule();localStorage.clear();vi.clearAllMocks();audioState.set('ready');vocabularyWrites=[];progress.recordReview.mockImplementation((...args:unknown[])=>{const attempt=args[5] as AttemptEvent|undefined;if(attempt)vocabularyWrites.push(TestBed.inject(AttemptEventRepository).insert(attempt));});
     vi.stubGlobal('indexedDB',new IDBFactory());vi.stubGlobal('IDBKeyRange',IDBKeyRange);
     vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
     TestBed.configureTestingModule({providers:[provideRouter([]),GrammarPracticeSession,
@@ -48,19 +48,19 @@ describe('AttemptEvent integration at real grading boundaries',()=>{
     ]});
   });
   afterEach(async()=>{await TestBed.inject(AttemptRecordingService).settle();TestBed.resetTestingModule();vi.unstubAllGlobals();vi.restoreAllMocks();vi.useRealTimers();});
-  async function events(){await TestBed.inject(AttemptRecordingService).settle();const values:AttemptEvent[]=[];await TestBed.inject(AttemptEventRepository).scan({from:'0000',to:'9999'},e=>{values.push(e);});return values;}
+  async function events(){await Promise.all(vocabularyWrites);await TestBed.inject(AttemptRecordingService).settle();const values:AttemptEvent[]=[];await TestBed.inject(AttemptEventRepository).scan({from:'0000',to:'9999'},e=>{values.push(e);});return values;}
   for(const module of ['kana','kanji','vocabulary'] as const){
     function learning(){
-      const unit=module==='kana'?{key:'a',kanaId:ALL_KANA[0].id,questionType:'romaji-to-kana'}:module==='kanji'?{key:'a',kanjiId:KANJI_N5[0].id,questionType:'meaning-to-kanji'}:{key:'a',entryId:VOCABULARY_N5[0].id,questionType:'meaning-to-japanese'};
-      progress.buildRound.mockReturnValue([unit]);
+      const unit=module==='kana'?{key:'a',kanaId:ALL_KANA[0].id,questionType:'romaji-to-kana'}:module==='kanji'?{key:'a',kanjiId:KANJI_N5[0].id,questionType:'meaning-to-kanji'}:{key:`vocab:${VOCABULARY_N5[0].id}:meaning-to-japanese`,entryId:VOCABULARY_N5[0].id,questionType:'meaning-to-japanese'};
+      progress.buildRound.mockReturnValue(module==='vocabulary'?VOCABULARY_N5.slice(0,3).map(e=>({key:`vocab:${e.id}:meaning-to-japanese`,entryId:e.id,questionType:'meaning-to-japanese'})):[unit]);
       return module==='kana'?TestBed.inject(LearningSessionService):module==='kanji'?TestBed.inject(KanjiSessionService):TestBed.inject(VocabularySessionService);
     }
-    it(`${module}: keeps Again/Hard/Good separate, logs repetitions once and leaves FSRS review counts unchanged`,async()=>{
+    it(`${module}: keeps Again/Hard/Good separate, logs repetitions once and respects each module’s FSRS review contract`,async()=>{
       const service=learning();service.start('self-assessment');expect(await events()).toEqual([]);
       for(const rating of ['again','hard','good'] as const){service.reveal();expect((await events()).length).toBe(service.session()!.attempts);service.rate(rating);}
       const recorded=await events();expect(recorded.map(e=>e.result)).toEqual([{source:'self',rating:'again'},{source:'self',rating:'hard'},{source:'self',rating:'good'}]);
-      expect(recorded.map(e=>e.firstAttempt)).toEqual([true,false,false]);expect(new Set(recorded.map(e=>e.id)).size).toBe(3);
-      expect(progress.recordReview).toHaveBeenCalledTimes(1);expect(progress.recordPracticeAttempt).toHaveBeenCalledTimes(2);expect(service.session()!.attempts).toBe(3);
+      expect(recorded.map(e=>e.firstAttempt)).toEqual(module==='vocabulary'?[true,true,true]:[true,false,false]);expect(new Set(recorded.map(e=>e.id)).size).toBe(3);
+      expect(progress.recordReview).toHaveBeenCalledTimes(module==='vocabulary'?3:1);expect(progress.recordPracticeAttempt).toHaveBeenCalledTimes(module==='vocabulary'?0:2);expect(service.session()!.attempts).toBe(3);
     });
     it(`${module}: objective quick answers and compatible practice record exactly once without FSRS changes`,async()=>{
       const service=learning();service.start('quick-practice');

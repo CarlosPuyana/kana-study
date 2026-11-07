@@ -12,6 +12,12 @@ export interface SessionItem {
   initialRating: StudyRating | null;
   resolved: boolean;
   needsPractice: boolean;
+  /** Present on new Vocabulary sessions; historical sessions keep their original data. */
+  readonly againCount?: number;
+  readonly hardCount?: number;
+  readonly goodCount?: number;
+  /** Vocabulary consolidation V2 only; omitted on historical/other modules' items. */
+  readonly consecutiveCorrect?: number;
 }
 
 export interface LearningSession {

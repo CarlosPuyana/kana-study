@@ -1,3 +1,4 @@
+import * as studyCopy from '../../../assets/i18n/deck-study.generated';
 import {PageHeader} from '../../shared/components/page-header/page-header';
 import { ChangeDetectionStrategy,Component,inject,signal } from '@angular/core';
 import { ActivatedRoute,Router,RouterLink } from '@angular/router';
@@ -24,7 +25,7 @@ export class VocabularyPage{
   readonly rushTypes:readonly RushConfigOption[]=['japanese-to-meaning','meaning-to-japanese','japanese-to-reading','reading-to-japanese'].map(id=>({id,labelKey:`vocabulary.questionType.${id}`}));
   readonly countRushUnits=(config:RushConfiguration)=>buildVocabularyRushUnits(VOCABULARY_N5,config).length;
   private readonly rushSettings=inject(RushSettingsService);private readonly settings=inject(VocabularySettingsService);private readonly router=inject(Router);private readonly route=inject(ActivatedRoute);
-  constructor(){if(this.route.snapshot.queryParamMap.get('rush')==='1')queueMicrotask(()=>this.openRush())}
+  constructor(){this.i18n.useStudyCopy?.(studyCopy);if(this.route.snapshot.queryParamMap.get('rush')==='1')queueMicrotask(()=>this.openRush())}
   openRush(){this.rushConfig.set(this.rushSettings.getOrInitialize('vocabulary',vocabularyRushConfiguration(this.settings.selection())));this.showRushPanel.set(true)}
   startRush(config:RushConfiguration){this.rushSettings.save('vocabulary',config);this.showRushPanel.set(false);void this.router.navigateByUrl('/vocabulary/rush')}
 }

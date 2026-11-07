@@ -64,6 +64,7 @@ export class DailyStudyPlannerService {
     const kana=units(this.kana.activeUnits(),this.kana.allProgress(),u=>u.kanaId);
     const kanji=units(this.kanji.activeUnits(),this.kanji.allProgress(),u=>u.kanjiId);
     const vocabulary=units(this.vocabulary.activeUnits(),this.vocabulary.allProgress(),u=>u.entryId);
+    const vocabularyEligible=this.vocabulary.buildRound(new Date(now)).map(u=>u.key);
     const active={kana,kanji,vocabulary},weak:DailyWeaknessSnapshot[]=[];
     for(const record of this.weaknesses.records()){
       if(record.module==='grammar'){
@@ -83,7 +84,7 @@ export class DailyStudyPlannerService {
     });
     const cards=this.manga.cards(),events=this.mangaHistory.events().filter(isMangaFsrsEvent);
     const future=cards.filter(c=>c.card.state!==State.New&&c.card.due>now).map(c=>c.card.due);
-    return {workspace,now,day,normal:[{module:'kana',units:kana,completedToday:this.daily.isCompletedToday('kana')},{module:'kanji',units:kanji,completedToday:this.daily.isCompletedToday('kanji')},{module:'vocabulary',units:vocabulary,completedToday:this.daily.isCompletedToday('vocabulary')}],
+    return {workspace,now,day,normal:[{module:'kana',units:kana,completedToday:this.daily.isCompletedToday('kana')},{module:'kanji',units:kanji,completedToday:this.daily.isCompletedToday('kanji')},{module:'vocabulary',units:vocabulary,eligibleKeys:vocabularyEligible,resumeAvailable:!!this.vocabulary.activeLesson(),completedToday:this.vocabulary.completedToday(new Date(now))}],
       grammar,grammarContinuePath:this.grammar.continuePath(),weaknesses:weak,
       decks:this.deckState()?.owner===workspace?this.deckState()!.rows:[],sessions:this.history.sessions(),
       manga:{enabled:this.manga.enabled(),due:cards.filter(c=>c.card.state!==State.New&&c.card.due<=now).length,fresh:cards.filter(c=>c.card.state===State.New).length,nextDue:future.length?Math.min(...future):null,

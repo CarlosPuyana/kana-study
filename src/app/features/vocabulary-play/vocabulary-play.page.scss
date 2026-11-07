@@ -12,3 +12,9 @@
 
 @include learning-controls.session;
 @include learning-results.session-list;
+
+.session-rush{margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);display:grid;gap:.75rem}.session-rush h2{font-size:1.1rem;margin:0}.session-rush p{font-size:.875rem;line-height:1.5;color:var(--text-secondary)}.session-rush button{min-height:48px;white-space:normal}.save-error{padding:1rem;border:1px solid var(--error);border-radius:1rem;color:var(--text-primary)}
+
+.lesson-progress{font-variant-numeric:tabular-nums;white-space:nowrap}.lesson-ratings{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin:.75rem 0;color:var(--text-secondary)}.lesson-ratings strong{color:var(--text-primary)}
+
+.play-header{grid-template-columns:2.75rem auto minmax(0,1fr) 2.75rem}

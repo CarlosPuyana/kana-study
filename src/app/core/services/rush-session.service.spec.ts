@@ -32,5 +32,7 @@ describe('RushSessionService',()=>{let monotonic=0;let service:RushSessionServic
  expect(service.session()!.cardsCompleted).toBe(0);expect(service.clock.committedSeconds).toBe(0);expect(service.clock.appearanceMilliseconds()).toBe(4000);
  repo.saveProgress=save;monotonic+=3000;await service.next();expect(service.session()!.activeSeconds).toBe(7);expect(service.session()!.cardsCompleted).toBe(1);
  });
+it('rejects an expired session pool after asynchronous interruption lookup before creating any session',async()=>{let release!:()=>void;let valid=true;repo.markOpenSessionsInterrupted=()=>new Promise<void>(resolve=>release=resolve);const started=service.start('vocabulary',[{key:'v',module:'vocabulary',contentId:'entry',questionType:'japanese-to-meaning'}],new Date(),()=>valid);valid=false;release();expect(await started).toBe(false);expect(repo.sessions.size).toBe(0);expect(service.currentUnit()).toBeNull();});
+it('does not republish an old pending Next after its context is cleared',async()=>{let release!:()=>void;repo.saveProgress=()=>new Promise<void>(resolve=>release=resolve);await service.start('vocabulary',[{key:'v',module:'vocabulary',contentId:'entry',questionType:'japanese-to-meaning'}]);service.reveal();const pending=service.next();service.clear();release();await pending;expect(service.session()).toBeNull();expect(service.currentUnit()).toBeNull();expect(service.saving()).toBe(false);});
 });
 

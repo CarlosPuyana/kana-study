@@ -26,6 +26,10 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
 - Para evolución por tarjeta y avisos de almacenamiento: [historial individual](features/decks/DECK_CARD_HISTORY.md).
 - Para verificar los controles y diseño de Ajustes de Mazos: [auditoría de Ajustes](features/decks/DECK_SETTINGS_AUDIT.md).
 - Para sus correcciones y el mixed persistido: [mejoras de Ajustes](features/decks/DECK_SETTINGS_IMPROVEMENTS.md).
+- Para consolidar Vocabulario con dos aciertos y una valoración inicial: [consolidación de la lección](features/vocabulary/VOCABULARY_TWO_SUCCESS_CONSOLIDATION.md).
+- Para la selección diaria vigente: [lecciones cortas de 10/15 palabras](features/vocabulary/VOCABULARY_SHORT_DAILY_LESSONS.md).
+- Para el historial de la implementación FSRS y los dos RUSH del resultado: [FSRS diario y RUSH de sesión](features/vocabulary/VOCABULARY_FSRS_RUSH_REDESIGN.md).
+- Para decidir las próximas estadísticas de Vocabulario: [auditoría y propuesta](features/vocabulary/VOCABULARY_STATS_AUDIT.md), sin implementación todavía.
 - Para comprender FSRS de Vocabulario y Mazos: [auditoría de arquitectura](features/srs/01-ARQUITECTURA-FSRS.md),
   [comparación](features/srs/02-VOCABULARIO-VS-MAZOS.md), [simulaciones](features/srs/03-INTERVALOS-Y-SIMULACIONES.md),
   [hallazgos](features/srs/04-AUDITORIA-Y-MEJORAS.md) y [guía para estudiar](features/srs/05-GUIA-PARA-EL-USUARIO.md).

@@ -6,7 +6,7 @@ import { kanjiMeaning } from '../../../core/services/kanji-options';
 import { FuriganaText } from '../furigana-text/furigana-text';
 
 export type StudiedSessionContent = {readonly kind:'kanji';readonly entries:readonly Kanji[]} |
-  {readonly kind:'vocabulary';readonly entries:readonly VocabularyEntry[]};
+  {readonly kind:'vocabulary';readonly entries:readonly VocabularyEntry[];readonly notes?:Readonly<Record<string,string>>};
 
 /** Read-only reference for the two Learn result screens; no catalog or session services. */
 @Component({selector:'app-learning-session-list',imports:[FuriganaText],templateUrl:'./learning-session-list.html',

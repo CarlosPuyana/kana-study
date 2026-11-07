@@ -7,6 +7,8 @@ export type DailyStudyDuration = 5|15|30;
 export interface DailyUnitSnapshot { readonly key:string; readonly itemId:string; readonly questionType:string; readonly due:number|null }
 export interface DailyNormalSnapshot {
   readonly module:'kana'|'kanji'|'vocabulary'; readonly units:readonly DailyUnitSnapshot[];
+  readonly eligibleKeys?:readonly string[];
+  readonly resumeAvailable?:boolean;
   readonly completedToday:boolean;
 }
 export interface DailyGrammarSnapshot {

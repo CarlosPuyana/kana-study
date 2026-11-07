@@ -29,6 +29,7 @@ export class StudyClock {
   attach(): void { if (this.mounted) return; this.mounted = true; this.resume(); }
   detach(): void { this.mounted = false; this.pause(); }
   reset(): void { this.engine.reset(); this.refresh(); }
+  restoreCommitted(seconds:number):void{this.engine.restoreCommitted(seconds);this.refresh();}
   startAppearance(): void { this.engine.startAppearance(); if (this.mounted) this.engine.resume(); this.refresh(); }
   pause(): void { this.engine.pause(); this.refresh(); }
   resume(): void { if (this.mounted) this.engine.resume(); this.refresh(); }

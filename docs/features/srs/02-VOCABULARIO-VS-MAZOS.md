@@ -1,5 +1,9 @@
 # Vocabulario frente a Mazos
 
+> Actualización local 06/11/2026: la política diaria de Vocabulario queda sustituida por [lecciones cortas de 10/15 palabras](../vocabulary/VOCABULARY_SHORT_DAILY_LESSONS.md). El contenido siguiente conserva el diagnóstico y los resultados de su fase; no describe la cola normal vigente.
+
+Comparación histórica: consultar la [cola vigente de Mazos](../decks/DECK_DYNAMIC_DAILY_QUEUE.md) y [Vocabulario FSRS diario/RUSH](../vocabulary/VOCABULARY_FSRS_RUSH_REDESIGN.md) para elegibilidad, repetición y cierre actuales. Las fórmulas del motor no cambian.
+
 Base, fuentes y fórmulas: [arquitectura](01-ARQUITECTURA-FSRS.md).
 Resultados numéricos: [simulaciones](03-INTERVALOS-Y-SIMULACIONES.md).
 

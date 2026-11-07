@@ -58,12 +58,12 @@ describe('credited time in the actual study pages', () => {
     {name:'kanji',page:KanjiPlayPage,service:KanjiSessionService,progress:KanjiProgressService,medal:KanjiMedalService,
       unit:{key:'kanji',kanjiId:KANJI_N5[0].id,questionType:'kanji-to-meaning'}},
     {name:'vocabulary',page:VocabularyPlayPage,service:VocabularySessionService,progress:VocabularyProgressService,medal:VocabularyMedalService,
-      unit:{key:'vocabulary',entryId:VOCABULARY_N5[0].id,questionType:'japanese-to-meaning'}},
+      unit:{key:`vocab:${VOCABULARY_N5[0].id}:japanese-to-meaning`,entryId:VOCABULARY_N5[0].id,questionType:'japanese-to-meaning'}},
   ];
   for (const c of normalCases) it(`${c.name}: visible counter and final time match history, route destruction clears the clock`, () => {
-    TestBed.configureTestingModule({imports:[c.page],providers:[provideRouter([]),
+    const review=vi.fn();TestBed.configureTestingModule({imports:[c.page],providers:[provideRouter([]),
       {provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
-      {provide:c.progress,useValue:{buildRound:()=>[c.unit],get:()=>null,recordReview:vi.fn(),recordPracticeAttempt:vi.fn(),roundSummary:signal({roundDue:0,roundNew:1})}},
+      {provide:c.progress,useValue:{buildRound:()=>c.name==='vocabulary'&&review.mock.calls.length?[]:[c.unit],get:()=>null,recordReview:review,recordInternalAttempt:vi.fn(),recordPracticeAttempt:vi.fn(),roundSummary:signal({roundDue:0,roundNew:1})}},
       {provide:c.medal,useValue:{evaluateUnlocks:()=>[]}},
       {provide:SessionHistoryService,useValue:history},
       {provide:WeaknessService,useValue:{recordLearn:vi.fn()}},
@@ -77,10 +77,10 @@ describe('credited time in the actual study pages', () => {
     now+=4000; service.clock.pause(); service.clock.resume(); fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:04');
     if(service instanceof FlagSessionService){service.answer('jp');service.continue();}
-    else {service.reveal();service.rate('good');}
+    else {service.reveal();service.rate('good');if(c.name==='vocabulary'){expect(service.completed()).toBe(false);service.reveal();service.rate('good');}}
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.results app-study-timer').textContent).toContain('00:04');
-    expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}));
+    if(c.name==='vocabulary')expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}),{strict:true});else expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}));
     now+=60000;service.clock.pause();expect(service.clock.label()).toBe('00:04');
     fixture.destroy();expect(service.clock.seconds()).toBe(0);
   });

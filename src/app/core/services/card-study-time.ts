@@ -10,6 +10,7 @@ export class CardStudyTimer {
   constructor(private readonly now: () => number = () => performance.now()) {}
 
   reset(): void { this.creditedMs = 0; this.appearanceMs = null; this.anchor = null; }
+  restoreCommitted(seconds:number):void{this.reset();this.creditedMs=Number.isFinite(seconds)?Math.max(0,Math.floor(seconds))*1000:0;}
   startAppearance(): void { this.appearanceMs = 0; this.anchor = this.running && this.visible ? this.now() : null; }
   resume(): void { if (this.running) return; this.running = true; if (this.visible && this.appearanceMs !== null) this.anchor = this.now(); }
   pause(): void { this.tick(); this.running = false; this.anchor = null; }

@@ -27,7 +27,7 @@ for(const module of ['kana','vocabulary','kanji'] as const){
       const vocabularyUnits:VocabularyStudyUnit[]=VOCABULARY_N5.slice(0,2).map(e=>({key:`vocab:${e.id}:japanese-to-meaning`,entryId:e.id,questionType:'japanese-to-meaning'}));
       const kanjiUnits:KanjiStudyUnit[]=KANJI_N5.slice(0,2).map(k=>({key:`kanji:${k.id}:kanji-to-meaning`,kanjiId:k.id,questionType:'kanji-to-meaning'}));
       const units=module==='kana'?kanaUnits:module==='vocabulary'?vocabularyUnits:kanjiUnits;
-      const progress={buildRound:vi.fn(()=>units.slice(0,1)),recordReview:vi.fn(),recordPracticeAttempt:vi.fn()};
+      const graduated=new Set<string>();const progress={buildRound:vi.fn(()=>units.slice(0,1).filter(u=>module!=='vocabulary'||!graduated.has(u.key))),recordReview:vi.fn((unit:{key:string},rating:string)=>{if(module==='vocabulary'&&rating==='good')graduated.add(unit.key);}),recordInternalAttempt:vi.fn(),recordPracticeAttempt:vi.fn()};
       const history={record:vi.fn()},daily={isCompletedToday:vi.fn(()=>false),refresh:vi.fn()},medals={evaluateUnlocks:vi.fn(()=>[])};
       const stored=new Map<string,unknown>();
       TestBed.configureTestingModule({providers:[
@@ -49,17 +49,17 @@ for(const module of ['kana','vocabulary','kanji'] as const){
       expect(s.weakness.records()[0]).toEqual(expect.objectContaining({module,activity:'learn',attempts:1,score:0,failures:0,consecutiveCorrect:1,questionType:s.units[0].questionType}));
       expect(s.progress.recordReview).toHaveBeenCalledTimes(1);
     });
-    it('records quick Again and later Good as separate evaluations with only one FSRS review',()=>{
-      const s=setup();s.service.start('quick-practice');s.service.answerQuick('wrong');s.service.continueQuick();
+    it('records quick Again and later Good as separate evaluations with the module-specific FSRS contract',()=>{
+      const s=setup();if(module==='vocabulary')s.focus('quick-practice');else s.service.start('quick-practice');s.service.answerQuick('wrong');s.service.continueQuick();
       expect(s.weakness.records()[0].score).toBe(2);s.service.answerQuick(s.answer());s.service.continueQuick();
       expect(s.weakness.records()[0]).toEqual(expect.objectContaining({score:1,attempts:2,failures:1,consecutiveCorrect:1}));
-      expect(s.progress.recordReview).toHaveBeenCalledTimes(1);expect(s.progress.recordPracticeAttempt).toHaveBeenCalledTimes(1);
+      expect(s.progress.recordReview).toHaveBeenCalledTimes(module==='vocabulary'?0:1);expect(s.progress.recordPracticeAttempt).toHaveBeenCalledTimes(module==='vocabulary'?0:1);
     });
-    it('records self-assessment Again, Hard and Good and preserves FSRS first-review semantics',()=>{
-      const s=setup();s.service.start('self-assessment');
+    it('records self-assessment Again, Hard and Good and preserves the module-specific FSRS contract',()=>{
+      const s=setup();if(module==='vocabulary')s.focus('self-assessment');else s.service.start('self-assessment');
       for(const rating of ['again','hard','good'] as const){s.service.reveal();s.service.rate(rating);}
       expect(s.weakness.records()[0]).toEqual(expect.objectContaining({score:2,attempts:3,failures:1,consecutiveCorrect:1}));
-      expect(s.progress.recordReview).toHaveBeenCalledTimes(1);expect(s.progress.recordPracticeAttempt).toHaveBeenCalledTimes(2);
+      expect(s.progress.recordReview).toHaveBeenCalledTimes(module==='vocabulary'?0:1);expect(s.progress.recordPracticeAttempt).toHaveBeenCalledTimes(module==='vocabulary'?0:2);
     });
     it('focuses only supplied unique units even after Daily Learning is completed',()=>{
       const s=setup();s.daily.isCompletedToday.mockReturnValue(true);expect(s.focus()).toBe(true);
@@ -74,7 +74,7 @@ for(const module of ['kana','vocabulary','kanji'] as const){
       expect(s.history.record).not.toHaveBeenCalled();expect(s.daily.refresh).not.toHaveBeenCalled();expect(s.medals.evaluateUnlocks).not.toHaveBeenCalled();
     });
     it('normal sessions still update FSRS, daily history and medals',()=>{
-      const s=setup();s.service.start('quick-practice');s.service.answerQuick(s.answer());s.service.continueQuick();
+      const s=setup();s.service.start('quick-practice');s.service.answerQuick(s.answer());s.service.continueQuick();if(module==='vocabulary'){expect(s.service.completed()).toBe(false);s.service.answerQuick(s.answer());s.service.continueQuick();expect(s.progress.recordInternalAttempt).toHaveBeenCalledTimes(1);}
       expect(s.progress.recordReview).toHaveBeenCalledTimes(1);expect(s.history.record).toHaveBeenCalledTimes(1);
       expect(s.daily.refresh).toHaveBeenCalledTimes(1);expect(s.medals.evaluateUnlocks).toHaveBeenCalledTimes(1);
     });

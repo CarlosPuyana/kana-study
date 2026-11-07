@@ -1,55 +1,18 @@
-import { VocabularyStudyUnit } from '../models/vocabulary.model';
-import { VocabularyStudyProgress } from '../models/vocabulary-study.model';
-import { buildVocabularyRound } from './vocabulary-round-builder';
-
-const now = new Date('2026-01-10T12:00:00Z');
-function unit(id: string, type: VocabularyStudyUnit['questionType'] = 'japanese-to-meaning'): VocabularyStudyUnit {
-  return { key: `vocab:${id}:${type}`, entryId: id, questionType: type };
-}
-function stored(value: VocabularyStudyUnit, due: string): VocabularyStudyProgress {
-  return { ...value, fsrs: { due, stability: 1, difficulty: 5, elapsedDays: 0,
-    scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 'learning',
-    lastReview: null }, firstSeenAt: due, lastSeenAt: due, totalAttempts: 1,
-    totalFirstTrySuccesses: 0, totalFailures: 1, lastRating: 'again' };
-}
-function build(
-  units: VocabularyStudyUnit[],
-  items: VocabularyStudyProgress[] = [],
-  limit = 10,
-  random: () => number = () => 0.999,
-) {
-  return buildVocabularyRound({ units,
-    progress: Object.fromEntries(items.map(item => [item.key, item])), now, limit, random });
-}
-
-describe('Vocabulary round builder', () => {
-  it('puts the most overdue reviews before new units', () => {
-    const a = unit('a'), b = unit('b'), fresh = unit('c');
-    expect(build([fresh, b, a], [stored(a, '2026-01-01T00:00:00Z'),
-      stored(b, '2026-01-05T00:00:00Z')]).slice(0, 2)).toEqual([a, b]);
-  });
-  it('does not use future reviews as filler', () => {
-    const future = unit('a');
-    expect(build([future, unit('b')], [stored(future, '2027-01-01T00:00:00Z')]))
-      .toEqual([unit('b')]);
-  });
-  it('caps randomized rounds at ten unique eligible units', () => {
-    const source = Array.from({ length: 20 }, (_, index) => unit(String(index)));
-    const result = build(source, [], 10, () => 0);
-    expect(result).toHaveLength(10);
-    expect(new Set(result.map(item => item.key)).size).toBe(10);
-    expect(result.every(item => source.includes(item))).toBe(true);
-    expect(result.map(item => item.key)).not.toEqual(source.slice(0, 10).map(item => item.key));
-  });
-  it('avoids the same entry when enough distinct entries exist', () => {
-    const values = [unit('a'), unit('a', 'meaning-to-japanese'),
-      ...Array.from({ length: 9 }, (_, index) => unit(String(index)))];
-    expect(new Set(build(values).map(item => item.entryId)).size).toBe(10);
-  });
-  it('falls back to a second direction for a small selection', () => {
-    expect(build([unit('a'), unit('a', 'meaning-to-japanese')])).toHaveLength(2);
-  });
-  it('keeps question types as independent units', () => {
-    expect(unit('a').key).not.toBe(unit('a', 'meaning-to-japanese').key);
-  });
+import {buildVocabularyLesson,buildVocabularyRound} from './vocabulary-round-builder';
+import {VocabularyStudyUnit} from '../models/vocabulary.model';
+import {VocabularyStudyProgress} from '../models/vocabulary-study.model';
+const NOW=new Date('2026-11-06T11:00:00Z');
+const unit=(id:string,type:VocabularyStudyUnit['questionType']='japanese-to-meaning'):VocabularyStudyUnit=>({key:`vocab:${id}:${type}`,entryId:id,questionType:type});
+const stored=(u:VocabularyStudyUnit,due='2026-11-06T18:00:00Z'):VocabularyStudyProgress=>({...u,fsrs:{due,state:'review',stability:30,difficulty:5,reps:10,lapses:0,scheduledDays:30,elapsedDays:30,learningSteps:0,lastReview:'2026-10-07T11:00:00Z'},firstSeenAt:'2026-10-07T11:00:00Z',lastSeenAt:'2026-10-07T11:00:00Z',totalAttempts:10,totalFailures:0,totalFirstTrySuccesses:10,lastRating:'good'});
+function plan(reviews:number,fresh:number,size=10){const review=Array.from({length:reviews},(_,i)=>unit('r'+String(i).padStart(3,'0'))),newUnits=Array.from({length:fresh},(_,i)=>unit('n'+String(i).padStart(3,'0')));return buildVocabularyLesson({units:[...newUnits,...review],progress:Object.fromEntries(review.map(u=>[u.key,stored(u)])),now:NOW,limit:size});}
+describe('Vocabulary short daily lesson selection',()=>{
+ it.each([[30,100,10,7,3],[30,100,15,10,5],[4,100,10,4,6],[20,0,10,10,0],[0,100,10,0,10],[2,3,10,2,3],[2,3,15,2,3]])('balances %i reviews/%i new with size %i',(reviews,fresh,size,r,n)=>{const result=plan(reviews,fresh,size);expect(Object.values(result.kinds).filter(k=>k==='review')).toHaveLength(r);expect(Object.values(result.kinds).filter(k=>k==='new')).toHaveLength(n);expect(result.units).toHaveLength(r+n);expect(new Set(result.units.map(u=>u.entryId)).size).toBe(r+n);});
+ it('is deterministic, interleaves new words and preserves review chronology',()=>{const first=plan(30,100);expect(plan(30,100)).toEqual(first);expect(first.units.map(u=>first.kinds[u.key])).toEqual(['review','review','review','new','review','review','new','review','review','new']);expect(first.units.filter(u=>first.kinds[u.key]==='review').map(u=>u.entryId)).toEqual(Array.from({length:7},(_,i)=>'r00'+i));});
+ it('deduplicates words across directions and chooses the oldest eligible direction',()=>{const a=unit('a'),b=unit('a','meaning-to-japanese'),future=unit('b');const result=buildVocabularyRound({units:[a,b,future],progress:{[a.key]:stored(a,'2026-11-06T18:00:00Z'),[b.key]:stored(b,'2026-11-05T12:00:00Z'),[future.key]:stored(future,'2026-11-07T00:00:00Z')},now:NOW,limit:10});expect(result).toEqual([b]);});
+ it('never calls a known word new because another direction has no memory',()=>{const a=unit('a'),b=unit('a','meaning-to-japanese'),fresh=unit('b');const result=buildVocabularyLesson({units:[b,fresh],progress:{[a.key]:stored(a,'2026-12-01T00:00:00Z')},now:NOW,limit:10});expect(result.kinds[fresh.key]).toBe('new');expect(result.kinds[b.key]).toBe('direction');});
+ it('does not displace truly new slots with unstarted directions and bounds their introduction',()=>{const a=unit('a'),b=unit('a','meaning-to-japanese'),reviews=Array.from({length:20},(_,i)=>unit('r'+i)),fresh=Array.from({length:20},(_,i)=>unit('n'+i));const progress=Object.fromEntries([stored(a,'2026-12-01T00:00:00Z'),...reviews.map(u=>stored(u))].map(p=>[p.key,p]));const normal=buildVocabularyLesson({units:[b,...reviews,...fresh],progress,now:NOW,limit:10});expect(Object.values(normal.kinds).filter(k=>k==='new')).toHaveLength(3);expect(normal.units).not.toContainEqual(b);const exhausted=buildVocabularyLesson({units:[b,...reviews],progress,now:NOW,limit:10});expect(exhausted.units).toHaveLength(10);expect(exhausted.kinds[b.key]).toBe('direction');});
+ it('recognizes a studied word outside active directions or with only an event',()=>{const a=unit('a','reading-to-japanese');const result=buildVocabularyLesson({units:[a],progress:{},knownEntryIds:new Set(['a']),now:NOW,limit:10});expect(result.kinds[a.key]).toBe('direction');});
+ it.each([['2026-03-28T23:30:00Z','2026-03-29T21:59:59.999Z','2026-03-29T22:00:00Z'],['2026-10-24T22:30:00Z','2026-10-25T22:59:59.999Z','2026-10-25T23:00:00Z']])('uses Madrid calendar across DST %s',(now,last,next)=>{const a=unit('a'),b=unit('b');expect(buildVocabularyRound({units:[a,b],progress:{[a.key]:stored(a,last),[b.key]:stored(b,next)},now:new Date(now),limit:10})).toEqual([a]);});
+ it('uses stable key tie-breaking for the same due timestamp',()=>{const a=unit('a'),b=unit('a','meaning-to-japanese');const options={units:[b,a],progress:{[a.key]:stored(a),[b.key]:stored(b)},now:NOW,limit:10};expect(buildVocabularyRound(options)[0].key).toBe([a.key,b.key].sort()[0]);});
+it('keeps the earliest direction in chronological place when another word lies between its directions',()=>{const a=unit('a'),second=unit('a','meaning-to-japanese'),b=unit('b');const options={units:[a,b,second],progress:{[a.key]:stored(a,'2026-11-06T10:00:00Z'),[b.key]:stored(b,'2026-11-06T11:00:00Z'),[second.key]:stored(second,'2026-11-06T12:00:00Z')},now:NOW,limit:10};expect(buildVocabularyRound(options)).toEqual([a,b]);});
 });

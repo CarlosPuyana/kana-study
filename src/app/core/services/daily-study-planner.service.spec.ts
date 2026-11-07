@@ -1,3 +1,4 @@
+import { VocabularyProgressService } from './vocabulary-progress.service';
 import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -146,4 +147,5 @@ describe('daily planner reads existing contracts without writes',()=>{
     const read=vi.spyOn(planner,'refreshDecks');await vi.advanceTimersByTimeAsync(10_000);TestBed.tick();expect(read).not.toHaveBeenCalled();
     vi.useRealTimers();await planner.refreshDecks();
   });
+it('keeps a completed short Vocabulary lesson closed while preserving its pending due',async()=>{const planner=await ready();planner.now.set(Date.parse('2026-11-06T11:00:00Z'));const at=new Date(planner.now()),progress=TestBed.inject(VocabularyProgressService),unit=progress.activeUnits()[0];TestBed.inject(SessionHistoryService).record({module:'vocabulary',sessionId:'legacy-close',completedAt:at.toISOString(),mode:'self-assessment',exercisesCompleted:1,firstTrySuccesses:1,attempts:1,needsPracticeCount:0,durationSeconds:1});progress.recordReview(unit,'again',false,'real-pending',at);expect(planner.snapshot().normal.find(n=>n.module==='vocabulary')?.completedToday).toBe(true);expect(progress.get(unit.key)!.fsrs.state).toBe('learning');const row=[...planner.plan().recommended,...planner.plan().available].find(a=>a.id==='normal:vocabulary');expect(row).toBeUndefined();expect(planner.plan().performed.some(p=>p.module==='vocabulary'&&p.completed)).toBe(true);});
 });

@@ -23,11 +23,12 @@ export function planDailyStudy(snapshot:DailyStudySnapshot,duration:DailyStudyDu
     performed.push({id:`session:${module}:${session.sessionId}`,module,titleKey:module==='manga'?'manga.fsrs.title':`daily.module.${module}`,count:session.exercisesCompleted,completed:true});
   }
   for(const normal of snapshot.normal){
-    if(!normal.units.length)continue;
-    const due=normal.units.filter(u=>u.due!==null&&Number.isFinite(u.due)&&u.due<=snapshot.now).length;
-    const fresh=normal.units.filter(u=>u.due===null).length;
+    if(!normal.units.length&&!normal.resumeAvailable)continue;
+    const eligible=normal.eligibleKeys?normal.units.filter(u=>normal.eligibleKeys!.includes(u.key)):normal.units;
+    const due=eligible.filter(u=>u.due!==null&&Number.isFinite(u.due)&&(normal.module==='vocabulary'?getSpainDayKey(new Date(u.due))<=snapshot.day:u.due<=snapshot.now)).length;
+    const fresh=eligible.filter(u=>u.due===null).length;
     candidates.push({id:`normal:${normal.module}`,module:normal.module,titleKey:`daily.module.${normal.module}`,reasonKey:normal.completedToday?'daily.reason.locked':due?'daily.reason.due':fresh?'daily.reason.new':'daily.reason.future',priority:due?0:3,
-      pendingCount:due+fresh,state:normal.completedToday?'completed':due+fresh?'available':'pending',...(!normal.completedToday&&due+fresh?{panel:normal.module}:{})});
+      pendingCount:due+fresh,state:normal.completedToday?'completed':due+fresh||normal.resumeAvailable?'available':'pending',...(!normal.completedToday&&(due+fresh||normal.resumeAvailable)?{panel:normal.module}:{})});
     // Existing voluntary practice remains accessible independently of the daily learning lock.
     if(normal.completedToday)candidates.push({id:`practice:${normal.module}`,module:normal.module,titleKey:`daily.module.${normal.module}`,reasonKey:'daily.reason.voluntary',priority:4,state:'available',pendingCount:0,path:normal.module==='kana'?'/writing':`/${normal.module}/writing`});
   }
