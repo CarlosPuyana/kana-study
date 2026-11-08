@@ -78,7 +78,7 @@ test('RUSH modals have resolved ES EN CA labels; writing always names its script
     await page.reload();
     for(const route of ['/','/kanji','/vocabulary']){
       await page.goto('/#'+route);await expect(page.locator((route==='/'?'app-home-page':route==='/kanji'?'app-kanji-page':'app-vocabulary-page')+' main')).toBeVisible();
-      await page.locator('button.rush-button').click();const dialog=page.locator('app-rush-config-dialog [role="dialog"]');await expect(dialog).toBeVisible();
+      await page.getByRole('button',{name:'⚡ RUSH',exact:true}).click();const dialog=page.locator('app-rush-config-dialog [role="dialog"]');await expect(dialog).toBeVisible();
       await expect(dialog).not.toContainText(/(?:kanji|rush|content|vocabulary|learn)\.[\w.-]+/);
       if(route==='/kanji')await expect(dialog).toContainText(n5);await noOverflow(page);
       await page.screenshot({path:info.outputPath(`rush-${language}-${route.replaceAll('/','')||'kana'}.png`),fullPage:true});await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);

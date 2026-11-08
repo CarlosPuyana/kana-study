@@ -1,4 +1,4 @@
-<main class="learn-shell" [attr.inert]="showExitConfirmation() || learning.newlyUnlockedMedals().length ? '' : null">
+<main class="learn-shell" [class.writing-session]="!learning.completed() && learning.currentUnit()?.questionType === 'romaji-to-kana'" [attr.inert]="showExitConfirmation() || learning.newlyUnlockedMedals().length ? '' : null">
   @if (!learning.session()) {
     <section class="missing-session">
       <h1>{{ i18n.t(daily.isCompletedToday('kana') ? 'daily.completedTitle' : 'learn.noActiveSession') }}</h1>
@@ -40,7 +40,8 @@
         <button class="secondary-button" type="button" (click)="confirmExit()">{{ i18n.t('common.returnHome') }}</button>
       </section>
     } @else if (learning.currentKana(); as kana) {
-      <section class="exercise" [attr.aria-labelledby]="'question-label'">
+      <section class="exercise" [class.writing-exercise]="learning.currentUnit()!.questionType === 'romaji-to-kana'" [attr.aria-labelledby]="'question-label'">
+        <div class="question-stage">
         <p id="question-label" class="prompt">
           @if (learning.currentUnit()!.questionType === 'romaji-to-kana') {
             {{ i18n.t(kana.type === 'hiragana' ? 'learn.romajiToHiraganaPrompt' : 'learn.romajiToKatakanaPrompt') }}
@@ -55,6 +56,8 @@
         </div>
 
 @if(learning.currentUnit()!.questionType==='romaji-to-kana'){<app-learning-writing-prompt [character]="kana.character" [occurrence]="writingKey()" [revealed]="learning.revealed() || !!learning.feedback()" [quick]="learning.session()!.mode==='quick-practice'" [optionsVisible]="writingOptionsVisible()" (continued)="drawingOptionsKey.set(writingKey())"/>}
+        </div>
+        <div class="response-stage">
         @if (learning.session()!.mode === 'quick-practice') {
           @if(writingOptionsVisible()){<div class="options">
             @for (option of learning.options(); track option; let index = $index) {
@@ -101,6 +104,7 @@
             </div>
           }</section>
         }
+        </div>
       </section>
     }
   }

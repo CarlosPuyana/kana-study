@@ -15,6 +15,7 @@ import {KanaWritingCanvas} from '../kana-writing-canvas/kana-writing-canvas';
       <button type="button" (click)="continued.emit()">{{i18n.t('learningWriting.skip')}}</button></div>
     }`,
   styles:`:host{display:block;width:min(100%,25rem);min-width:0;margin:1rem auto;text-align:center;color:var(--text-secondary)}
+    p{margin:var(--learning-writing-instructions-margin,1em 0)}
     .actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0;justify-content:center}
     button{min-height:44px;max-width:100%;padding:.6rem 1rem;border:1px solid var(--border);border-radius:.6rem;background:var(--surface);color:var(--text-primary);font:inherit;cursor:pointer}
     button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}`,

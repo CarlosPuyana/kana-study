@@ -21,6 +21,7 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
 - Para escribir documentación: [CONTRIBUTING-DOCS](CONTRIBUTING-DOCS.md).
 
 - Para Aprender, teclado y diálogos Kana/Kanji/Vocabulario: [guía de UX de aprendizaje](features/LEARNING_UX.md).
+- Para el layout local de Escritura Kana: [rediseño responsive](features/kana/KANA_WRITING_RESPONSIVE_REDESIGN.md).
 - Para las listas finales de Kanji/Vocabulario: [contenido de la sesión terminada](features/LEARNING_SESSION_LIST.md).
 - Para Tarjetas de Mazos y su finalización: [Por Tiempo y resumen del aprendizaje](features/decks/DECK_TIME_AND_LEARNING_SUMMARY.md).
 - Para evolución por tarjeta y avisos de almacenamiento: [historial individual](features/decks/DECK_CARD_HISTORY.md).

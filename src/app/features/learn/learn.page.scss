@@ -52,3 +52,49 @@
 @media (max-width: 460px) { .exit-actions { grid-template-columns: 1fr; } .exit-button { order: 2; } }
 
 @include learning-controls.session($kana:true);
+
+// Only the writing direction uses this layout; reading and results keep their frame.
+.question-stage, .response-stage { display: contents; }
+.writing-session {
+  width: min(100% - 1.5rem, 68rem);
+  padding-bottom: 1.25rem;
+}
+.writing-exercise {
+  width: 100%;
+  gap: 1rem;
+  padding-top: 1rem;
+  align-items: start;
+  .question-stage, .response-stage { display: grid; justify-items: center; gap: .65rem; width: 100%; min-width: 0; }
+  .romaji { margin: 0; font-size: clamp(2.5rem, 5vw, 3.5rem); }
+  app-learning-writing-prompt { width: 100%; max-width: 25rem; margin: 0; --learning-writing-instructions-margin: .35rem 0 .65rem; }
+  .assessment-stage { min-height: 0; margin: 0; gap: .75rem; }
+  .answer-details { gap: .5rem; }
+  .revealed-answer { min-width: 0; padding: .8rem; }
+  .example-block { margin-top: .25rem; }
+  .rating-prompt { margin: .5rem 0 0; }
+  .ratings { padding: 0; }
+}
+@media (min-width: 900px) {
+  .writing-exercise {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    .question-stage { gap: .4rem; }
+    app-learning-writing-prompt { --writing-surface-max: clamp(18rem, calc(100dvh - 25rem), 25rem); }
+    .response-stage { align-self: center; }
+    .assessment-stage { min-height: 24rem; align-content: center; grid-template-rows: 1fr auto; }
+    .revealed-answer strong.kana-answer { font-size: 3.5rem; }
+    .options { width: 100%; }
+  }
+}
+@media (min-width: 900px) and (max-height: 650px) {
+  .writing-session {
+    padding-top: .5rem;
+    .session-header { grid-template-columns: auto 2.75rem minmax(0, 1fr) 2.75rem; min-height: 2.75rem; }
+    .session-header app-study-timer { grid-column: auto; }
+    .writing-exercise { padding-top: .65rem; }
+    .prompt { font-size: 1rem; }
+    .romaji { font-size: 2.5rem; }
+    app-learning-writing-prompt { --learning-writing-instructions-margin: .15rem 0 .25rem; }
+    .assessment-stage { min-height: 21rem; }
+  }
+}

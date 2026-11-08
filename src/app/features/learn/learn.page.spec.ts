@@ -48,6 +48,17 @@ describe('Kana page keyboard and modal boundary', () => {
     canvas.pointerDown({pointerId:1,button:0,currentTarget:svg,clientX:0,clientY:0,timeStamp:1,pressure:1,preventDefault:()=>{}} as unknown as PointerEvent);
     press(' ');expect(learning.reveal).not.toHaveBeenCalled();canvas.clear();press(' ');expect(learning.reveal).toHaveBeenCalledOnce();
   });
+  it('groups only the writing direction and never exposes answer or example before reveal',async()=>{
+    type.set('romaji-to-kana');await render();
+    expect(fixture.nativeElement.querySelector('.writing-session .question-stage app-learning-writing-prompt')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.response-stage .reveal')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.revealed-answer,.example-block')).toBeNull();
+    revealed.set(true);await fixture.whenStable();fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.response-stage .ratings').children.length).toBe(3);
+    expect(fixture.nativeElement.querySelector('.example-block')).toBeNull();
+    type.set('kana-to-romaji');await fixture.whenStable();fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.writing-session,.writing-exercise')).toBeNull();
+  });
   it('Escape closes exit confirmation with focus restored and no grade behind it',async()=>{
     await render();const close=fixture.nativeElement.querySelector('.session-header button:last-child') as HTMLButtonElement;
     close.focus();close.click();await fixture.whenStable();fixture.detectChanges();expect(fixture.nativeElement.querySelector('main').hasAttribute('inert')).toBe(true);

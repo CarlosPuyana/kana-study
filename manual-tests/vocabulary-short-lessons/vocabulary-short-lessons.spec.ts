@@ -10,7 +10,14 @@ async function setup(page:Page,name:string,reviews=30,fresh=100){
 }
 async function start(page:Page){await page.locator('.play-button').click();await page.locator('.secondary-start').click();await expect(page.locator('.exercise')).toBeVisible();}
 async function rate(page:Page,rating:'again'|'hard'|'good'='again'){await page.locator('.reveal').click();await page.locator('.ratings .'+({again:'no',hard:'hard',good:'yes'}[rating])).click();}
-async function medals(page:Page){for(let n=0;n<30&&await page.locator('.medal-dialog').count();n++)await page.locator('.medal-dialog .primary').click();}
+async function medals(page:Page){
+ const dialog=page.locator('.medal-dialog');
+ for(let n=0;n<30&&await dialog.count();n++){
+  const previous=await dialog.textContent();await dialog.locator('.primary').click();
+  await expect.poll(()=>dialog.evaluateAll(nodes=>nodes[0]?.textContent??null)).not.toBe(previous);
+ }
+ await expect(dialog).toHaveCount(0);
+}
 async function snapshot(page:Page){return page.evaluate(()=>JSON.parse(localStorage.getItem('kana-study.vocabulary-daily-lessons.v1')??'{}')['2026-11-06']);}
 async function finishGood(page:Page){for(let n=0;n<80&&await page.locator('.exercise').count();n++)await rate(page,'good');await medals(page);await expect(page.locator('.session-rush')).toBeVisible();}
 const overflow=(page:Page)=>page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1);
