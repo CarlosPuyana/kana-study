@@ -1,0 +1,1254 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "project": "EDRDG JMdict, transformed by scriptin/jmdict-simplified",
+    "version": "3.6.2",
+    "release": "3.6.2+20261102210542",
+    "dictionaryDate": "2026-11-02",
+    "retrieved": "2026-11-07",
+    "reviewCompleted": "2026-11-08",
+    "archiveSha256": "0f22ce9e807edf98c8711fc41006a3330abbccd506e9302d63b2b874b41b9224",
+    "dictionarySha256": "3c81cf090fd99f219194dac74d89c54bb73ad067d4c7fa5c83ff60bcbc81a1f4",
+    "releaseUrl": "https://github.com/scriptin/jmdict-simplified/releases/tag/3.6.2%2B20261102210542",
+    "projectUrl": "https://www.edrdg.org/wiki/JMdict-EDICT_Dictionary_Project.html",
+    "licenseUrl": "https://www.edrdg.org/edrdg/licence.html",
+    "licenseNote": "JA/ENG under CC BY-SA 4.0. Non-English gloss rights are separate. No reference gloss corpus redistributed; Spanish editorial formulations written by the reviewing agent."
+  },
+  "patches": [
+    {
+      "id": "n5-1ylen1j",
+      "written": "あの",
+      "reading": "あの",
+      "originalMeanings": [
+        "eso de allá"
+      ],
+      "originalQuizMeaning": "eso de allá",
+      "final": "aquel / aquella (ante un sustantivo)",
+      "dictionaryId": "1000420",
+      "senses": [
+        1
+      ],
+      "reason": "あの es determinante; «eso» es pronombre y no representa su función ante un sustantivo."
+    },
+    {
+      "id": "n5-1662skt",
+      "written": "ある",
+      "reading": "ある",
+      "originalMeanings": [
+        "ser"
+      ],
+      "originalQuizMeaning": "ser",
+      "final": "haber / existir (cosas)",
+      "dictionaryId": "1296400",
+      "senses": [
+        1,
+        2
+      ],
+      "reason": "El objetivo verbal inanimado es existencia/posesión; «ser» confunde con la cópula."
+    },
+    {
+      "id": "n5-14itofj",
+      "written": "いつ",
+      "reading": "いつ",
+      "originalMeanings": [
+        "cuando"
+      ],
+      "originalQuizMeaning": "cuando",
+      "final": "cuándo",
+      "dictionaryId": "1188760",
+      "senses": [
+        1
+      ],
+      "reason": "いつ es interrogativo temporal, con tilde en español; no la conjunción relativa «cuando»."
+    },
+    {
+      "id": "n5-1hs727p",
+      "written": "おまわりさん",
+      "reading": "おまわりさん",
+      "originalMeanings": [
+        "término amigable para policía"
+      ],
+      "originalQuizMeaning": "término amigable para policía",
+      "final": "policía",
+      "dictionaryId": "1002120",
+      "senses": [
+        1
+      ],
+      "reason": "Se sustituye la descripción metalingüística «término amigable» por el significado léxico, manteniendo el matiz cercano en este registro de auditoría."
+    },
+    {
+      "id": "n5-17ee8ee",
+      "written": "お兄さん",
+      "reading": "おにいさん",
+      "originalMeanings": [
+        "(honorable) hermano mayor"
+      ],
+      "originalQuizMeaning": "(honorable) hermano mayor",
+      "final": "hermano mayor (trato respetuoso)",
+      "dictionaryId": "1001830",
+      "senses": [
+        1
+      ],
+      "reason": "«Honorable» introduce un juicio moral en español; el matiz japonés es tratamiento respetuoso."
+    },
+    {
+      "id": "n5-f48b7u",
+      "written": "お皿",
+      "reading": "おさら",
+      "originalMeanings": [
+        "lámina"
+      ],
+      "originalQuizMeaning": "lámina",
+      "final": "plato",
+      "dictionaryId": "1299685",
+      "senses": [
+        1
+      ],
+      "reason": "お皿 es vajilla; «lámina» proviene de otra acepción de plate."
+    },
+    {
+      "id": "n5-qz2g0b",
+      "written": "お姉さん",
+      "reading": "おねえさん",
+      "originalMeanings": [
+        "(honorable) hermana mayor"
+      ],
+      "originalQuizMeaning": "(honorable) hermana mayor",
+      "final": "hermana mayor (trato respetuoso)",
+      "dictionaryId": "1001990",
+      "senses": [
+        1
+      ],
+      "reason": "Se conserva el parentesco y se expresa el tratamiento, no un juicio moral."
+    },
+    {
+      "id": "n5-9v6dvh",
+      "written": "お父さん",
+      "reading": "おとうさん",
+      "originalMeanings": [
+        "(honorable) padre"
+      ],
+      "originalQuizMeaning": "(honorable) padre",
+      "final": "padre (trato respetuoso)",
+      "dictionaryId": "1002590",
+      "senses": [
+        1
+      ],
+      "reason": "Se corrige el calco honorable conservando el registro frente a 父."
+    },
+    {
+      "id": "n5-se5a9n",
+      "written": "お母さん",
+      "reading": "おかあさん",
+      "originalMeanings": [
+        "(honorable) madre"
+      ],
+      "originalQuizMeaning": "(honorable) madre",
+      "final": "madre (trato respetuoso)",
+      "dictionaryId": "1002650",
+      "senses": [
+        1
+      ],
+      "reason": "Se corrige el calco honorable conservando el registro frente a 母."
+    },
+    {
+      "id": "n5-iwmss7",
+      "written": "かかる",
+      "reading": "かかる",
+      "originalMeanings": [
+        "toma tiempo o dinero"
+      ],
+      "originalQuizMeaning": "toma tiempo o dinero",
+      "final": "llevar (tiempo) / costar (dinero)",
+      "dictionaryId": "1207590",
+      "senses": [
+        1
+      ],
+      "reason": "El sentido enseñado está explicitado por el contexto original tiempo/dinero; se expresa en infinitivo y sin el calco conjugado «toma»."
+    },
+    {
+      "id": "n5-oz67on",
+      "written": "かける",
+      "reading": "かける",
+      "originalMeanings": [
+        "llamar por telefono"
+      ],
+      "originalQuizMeaning": "llamar por telefono",
+      "final": "llamar por teléfono",
+      "dictionaryId": "1207610",
+      "senses": [
+        4
+      ],
+      "reason": "Se conserva el sentido de llamada, añadiendo la tilde obligatoria de teléfono."
+    },
+    {
+      "id": "n5-15cm267",
+      "written": "さ来年",
+      "reading": "さらいねん",
+      "originalMeanings": [
+        "año tras año"
+      ],
+      "originalQuizMeaning": "año tras año",
+      "final": "dentro de dos años",
+      "dictionaryId": "1293660",
+      "senses": [
+        1
+      ],
+      "reason": "Indica el año posterior al próximo; año tras año expresa repetición."
+    },
+    {
+      "id": "n5-cvxba5",
+      "written": "スリッパ",
+      "reading": "スリッパ",
+      "originalMeanings": [
+        "zapatillas"
+      ],
+      "originalQuizMeaning": "zapatillas",
+      "final": "zapatillas de casa",
+      "dictionaryId": "1073900",
+      "senses": [
+        1
+      ],
+      "reason": "Se precisa calzado de interior frente al deportivo."
+    },
+    {
+      "id": "n5-ep254d",
+      "written": "その",
+      "reading": "その",
+      "originalMeanings": [
+        "eso"
+      ],
+      "originalQuizMeaning": "eso",
+      "final": "ese / esa (ante un sustantivo)",
+      "dictionaryId": "1006830",
+      "senses": [
+        1
+      ],
+      "reason": "その es determinante; eso es pronombre."
+    },
+    {
+      "id": "n5-13yyz93",
+      "written": "どうして",
+      "reading": "どうして",
+      "originalMeanings": [
+        "por que razon"
+      ],
+      "originalQuizMeaning": "por que razon",
+      "final": "por qué razón",
+      "dictionaryId": "1466940",
+      "senses": [
+        2
+      ],
+      "reason": "Interrogación causal con tildes obligatorias."
+    },
+    {
+      "id": "n5-nrzccn",
+      "written": "どちら",
+      "reading": "どちら",
+      "originalMeanings": [
+        "cual de dos"
+      ],
+      "originalQuizMeaning": "cual de dos",
+      "final": "cuál de los dos",
+      "dictionaryId": "1189360",
+      "senses": [
+        2
+      ],
+      "reason": "Pronombre interrogativo con tilde; formulación natural."
+    },
+    {
+      "id": "n5-a8ms87",
+      "written": "どっち",
+      "reading": "どっち",
+      "originalMeanings": [
+        "cual"
+      ],
+      "originalQuizMeaning": "cual",
+      "final": "cuál",
+      "dictionaryId": "1189360",
+      "senses": [
+        2
+      ],
+      "reason": "Pronombre interrogativo, no relativo."
+    },
+    {
+      "id": "n5-176zm6f",
+      "written": "どなた",
+      "reading": "どなた",
+      "originalMeanings": [
+        "OMS"
+      ],
+      "originalQuizMeaning": "OMS",
+      "final": "quién (trato respetuoso)",
+      "dictionaryId": "1189370",
+      "senses": [
+        1
+      ],
+      "reason": "OMS corresponde al acrónimo inglés WHO, no al interrogativo japonés de persona."
+    },
+    {
+      "id": "n5-rtllmt",
+      "written": "どの",
+      "reading": "どの",
+      "originalMeanings": [
+        "cual"
+      ],
+      "originalQuizMeaning": "cual",
+      "final": "qué / cuál (ante un sustantivo)",
+      "dictionaryId": "1920240",
+      "senses": [
+        1
+      ],
+      "reason": "どの es determinante interrogativo; tilde y función explícitas. Categoría suffix del homófono 殿 queda pendiente."
+    },
+    {
+      "id": "n5-1fi09kl",
+      "written": "ネクタイ",
+      "reading": "ネクタイ",
+      "originalMeanings": [
+        "atar"
+      ],
+      "originalQuizMeaning": "atar",
+      "final": "corbata",
+      "dictionaryId": "1092820",
+      "senses": [
+        1
+      ],
+      "reason": "Tie es sustantivo, no el verbo atar."
+    },
+    {
+      "id": "n5-cmjbnb",
+      "written": "ノート",
+      "reading": "ノート",
+      "originalMeanings": [
+        "computadora portátil"
+      ],
+      "originalQuizMeaning": "computadora portátil",
+      "final": "cuaderno",
+      "dictionaryId": "1093450",
+      "senses": [
+        1
+      ],
+      "reason": "El inglés explicita exercise book: sentido de papel, no portátil informático de otra acepción."
+    },
+    {
+      "id": "n5-1ln4klp",
+      "written": "フィルム",
+      "reading": "フィルム",
+      "originalMeanings": [
+        "rodaje de una película"
+      ],
+      "originalQuizMeaning": "rodaje de una película",
+      "final": "carrete de película fotográfica",
+      "dictionaryId": "1109380",
+      "senses": [
+        1
+      ],
+      "reason": "Roll of film es soporte fotográfico; rodaje es proceso de filmación."
+    },
+    {
+      "id": "n5-1y1a55j",
+      "written": "ワイシャツ",
+      "reading": "ワイシャツ",
+      "originalMeanings": [
+        "camisa de negocios"
+      ],
+      "originalQuizMeaning": "camisa de negocios",
+      "final": "camisa de vestir",
+      "dictionaryId": "1148640",
+      "senses": [
+        1
+      ],
+      "reason": "Business shirt describe camisa formal, no una camisa que tenga negocios."
+    },
+    {
+      "id": "n5-1e8135n",
+      "written": "医者",
+      "reading": "いしゃ",
+      "originalMeanings": [
+        "medico"
+      ],
+      "originalQuizMeaning": "medico",
+      "final": "médico",
+      "dictionaryId": "1159980",
+      "senses": [
+        1
+      ],
+      "reason": "Sustantivo de profesión con tilde obligatoria."
+    },
+    {
+      "id": "n5-12wetoe",
+      "written": "英語",
+      "reading": "えいご",
+      "originalMeanings": [
+        "idioma en Inglés"
+      ],
+      "originalQuizMeaning": "idioma en Inglés",
+      "final": "idioma inglés",
+      "dictionaryId": "1174420",
+      "senses": [
+        1
+      ],
+      "reason": "No significa un idioma expresado en inglés; nombre de idioma en minúscula."
+    },
+    {
+      "id": "n5-ugo8b3",
+      "written": "駅",
+      "reading": "えき",
+      "originalMeanings": [
+        "estación"
+      ],
+      "originalQuizMeaning": "estación",
+      "final": "estación de tren",
+      "dictionaryId": "1175140",
+      "senses": [
+        1
+      ],
+      "reason": "駅 designa la estación ferroviaria, no cualquier estación o temporada."
+    },
+    {
+      "id": "n5-1w0bxkf",
+      "written": "奥さん",
+      "reading": "おくさん",
+      "originalMeanings": [
+        "(honorable) esposa"
+      ],
+      "originalQuizMeaning": "(honorable) esposa",
+      "final": "esposa (trato respetuoso)",
+      "dictionaryId": "1179330",
+      "senses": [
+        1
+      ],
+      "reason": "Honorable es calco de tratamiento, no juicio moral de la persona."
+    },
+    {
+      "id": "n5-5qaqkf",
+      "written": "家庭",
+      "reading": "かてい",
+      "originalMeanings": [
+        "familiar"
+      ],
+      "originalQuizMeaning": "familiar",
+      "final": "hogar / familia",
+      "dictionaryId": "1192280",
+      "senses": [
+        1
+      ],
+      "reason": "家庭 es sustantivo de ámbito doméstico; familiar como adjetivo no traduce household en este objetivo."
+    },
+    {
+      "id": "n5-1yjjy6u",
+      "written": "開く",
+      "reading": "あく",
+      "originalMeanings": [
+        "abierto"
+      ],
+      "originalQuizMeaning": "abierto",
+      "final": "abrirse",
+      "dictionaryId": "1586270",
+      "senses": [
+        1
+      ],
+      "reason": "あく es verbo intransitivo; abierto es participio/adjetivo y oculta contraste con あける."
+    },
+    {
+      "id": "n5-1g8izlc",
+      "written": "開ける",
+      "reading": "あける",
+      "originalMeanings": [
+        "abierto"
+      ],
+      "originalQuizMeaning": "abierto",
+      "final": "abrir",
+      "dictionaryId": "1202450",
+      "senses": [
+        1
+      ],
+      "reason": "あける es verbo transitivo; no el adjetivo abierto."
+    },
+    {
+      "id": "n5-5uozy7",
+      "written": "覚える",
+      "reading": "おぼえる",
+      "originalMeanings": [
+        "recordar"
+      ],
+      "originalQuizMeaning": "recordar",
+      "final": "memorizar / aprender",
+      "dictionaryId": "1206050",
+      "senses": [
+        1
+      ],
+      "reason": "覚える expresa adquirir y guardar en memoria; recordar puede confundir con recuperar un recuerdo (思い出す)."
+    },
+    {
+      "id": "n5-zxjrix",
+      "written": "休み",
+      "reading": "やすみ",
+      "originalMeanings": [
+        "descansar"
+      ],
+      "originalQuizMeaning": "descansar",
+      "final": "descanso",
+      "dictionaryId": "1227500",
+      "senses": [
+        1
+      ],
+      "reason": "休み es sustantivo; descansar corresponde al verbo 休む."
+    },
+    {
+      "id": "n5-1issbii",
+      "written": "居る",
+      "reading": "いる",
+      "originalMeanings": [
+        "ser"
+      ],
+      "originalQuizMeaning": "ser",
+      "final": "haber / estar (personas y animales)",
+      "dictionaryId": "1577980",
+      "senses": [
+        1
+      ],
+      "reason": "居る expresa existencia o presencia animada, no la cópula ser."
+    },
+    {
+      "id": "n5-1egzx0k",
+      "written": "九日",
+      "reading": "ここのか",
+      "originalMeanings": [
+        "nueve dias"
+      ],
+      "originalQuizMeaning": "nueve dias",
+      "final": "nueve días",
+      "dictionaryId": "1243850",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria de días; se mantiene sentido de duración sin añadir fecha como alternativa."
+    },
+    {
+      "id": "n5-ggz3xq",
+      "written": "兄",
+      "reading": "あに",
+      "originalMeanings": [
+        "(humilde) hermano mayor"
+      ],
+      "originalQuizMeaning": "(humilde) hermano mayor",
+      "final": "hermano mayor (propio)",
+      "dictionaryId": "1249900",
+      "senses": [
+        1
+      ],
+      "reason": "Humilde describe actitud en español; el original marca referencia a la propia familia."
+    },
+    {
+      "id": "n5-f7l6oa",
+      "written": "兄弟",
+      "reading": "きょうだい",
+      "originalMeanings": [
+        "(humildes) hermanos"
+      ],
+      "originalQuizMeaning": "(humildes) hermanos",
+      "final": "hermanos (de la propia familia)",
+      "dictionaryId": "1249960",
+      "senses": [
+        1
+      ],
+      "reason": "Se expresa el ámbito familiar en lugar de atribuir humildad de carácter."
+    },
+    {
+      "id": "n5-bwnayy",
+      "written": "軽い",
+      "reading": "かるい",
+      "originalMeanings": [
+        "luz"
+      ],
+      "originalQuizMeaning": "luz",
+      "final": "ligero",
+      "dictionaryId": "1252560",
+      "senses": [
+        1
+      ],
+      "reason": "軽い expresa poco peso, no luz; confusión inglesa light."
+    },
+    {
+      "id": "n5-fh026r",
+      "written": "見せる",
+      "reading": "みせる",
+      "originalMeanings": [
+        "espectáculo"
+      ],
+      "originalQuizMeaning": "espectáculo",
+      "final": "mostrar",
+      "dictionaryId": "1259210",
+      "senses": [
+        1
+      ],
+      "reason": "見せる es verbo transitivo, no el sustantivo espectáculo."
+    },
+    {
+      "id": "n5-n7ts77",
+      "written": "呼ぶ",
+      "reading": "よぶ",
+      "originalMeanings": [
+        "gritar"
+      ],
+      "originalQuizMeaning": "gritar",
+      "final": "llamar (a alguien)",
+      "dictionaryId": "1266440",
+      "senses": [
+        1
+      ],
+      "reason": "呼ぶ es llamar o convocar a alguien; gritar solo expresa elevar la voz."
+    },
+    {
+      "id": "n5-14p32dj",
+      "written": "五日",
+      "reading": "いつか",
+      "originalMeanings": [
+        "cinco dias"
+      ],
+      "originalQuizMeaning": "cinco dias",
+      "final": "cinco días",
+      "dictionaryId": "1268570",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria de días."
+    },
+    {
+      "id": "n5-1yls73d",
+      "written": "交番",
+      "reading": "こうばん",
+      "originalMeanings": [
+        "cabina de policia"
+      ],
+      "originalQuizMeaning": "cabina de policia",
+      "final": "pequeña comisaría de barrio",
+      "dictionaryId": "1272500",
+      "senses": [
+        1
+      ],
+      "reason": "交番 es puesto policial de barrio; cabina de policía sugiere cabina telefónica y omite el carácter de comisaría."
+    },
+    {
+      "id": "n5-s0umyr",
+      "written": "好き",
+      "reading": "すき",
+      "originalMeanings": [
+        "simpático"
+      ],
+      "originalQuizMeaning": "simpático",
+      "final": "gustar",
+      "dictionaryId": "1277450",
+      "senses": [
+        1
+      ],
+      "reason": "好き expresa agrado por algo; simpático atribuye una cualidad al objeto y no representa la relación de gusto."
+    },
+    {
+      "id": "n5-1au7c1v",
+      "written": "降る",
+      "reading": "ふる",
+      "originalMeanings": [
+        "caer"
+      ],
+      "originalQuizMeaning": "caer",
+      "final": "caer (lluvia o nieve)",
+      "dictionaryId": "1282790",
+      "senses": [
+        1
+      ],
+      "reason": "Se precisa precipitación; no caer una persona u objeto."
+    },
+    {
+      "id": "n5-1szygsm",
+      "written": "咲く",
+      "reading": "さく",
+      "originalMeanings": [
+        "floración"
+      ],
+      "originalQuizMeaning": "floración",
+      "final": "florecer",
+      "dictionaryId": "1297210",
+      "senses": [
+        1
+      ],
+      "reason": "咲く es verbo; floración es sustantivo."
+    },
+    {
+      "id": "n5-11szxu0",
+      "written": "三日",
+      "reading": "みっか",
+      "originalMeanings": [
+        "tres dias"
+      ],
+      "originalQuizMeaning": "tres dias",
+      "final": "tres días",
+      "dictionaryId": "1301330",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria."
+    },
+    {
+      "id": "n5-1p0i7o3",
+      "written": "四日",
+      "reading": "よっか",
+      "originalMeanings": [
+        "cuatro dias"
+      ],
+      "originalQuizMeaning": "cuatro dias",
+      "final": "cuatro días",
+      "dictionaryId": "1307320",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria."
+    },
+    {
+      "id": "n5-p1l66d",
+      "written": "姉",
+      "reading": "あね",
+      "originalMeanings": [
+        "(humilde) hermana mayor"
+      ],
+      "originalQuizMeaning": "(humilde) hermana mayor",
+      "final": "hermana mayor (propia)",
+      "dictionaryId": "1307630",
+      "senses": [
+        1
+      ],
+      "reason": "Humilde es calco del tratamiento de la propia familia, no rasgo personal."
+    },
+    {
+      "id": "n5-jqsdtk",
+      "written": "私",
+      "reading": "わたくし",
+      "originalMeanings": [
+        "(humilde) yo"
+      ],
+      "originalQuizMeaning": "(humilde) yo",
+      "final": "yo (formal)",
+      "dictionaryId": "2842390",
+      "senses": [
+        1
+      ],
+      "reason": "わたくし es pronombre formal; humilde puede entenderse como característica personal."
+    },
+    {
+      "id": "n5-4la82a",
+      "written": "時計",
+      "reading": "とけい",
+      "originalMeanings": [
+        "mirar"
+      ],
+      "originalQuizMeaning": "mirar",
+      "final": "reloj",
+      "dictionaryId": "1316140",
+      "senses": [
+        1
+      ],
+      "reason": "時計 es objeto; mirar es verbo, confusión de watch."
+    },
+    {
+      "id": "n5-8wnq0o",
+      "written": "七日",
+      "reading": "なのか",
+      "originalMeanings": [
+        "siete dias"
+      ],
+      "originalQuizMeaning": "siete dias",
+      "final": "siete días",
+      "dictionaryId": "1579630",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria."
+    },
+    {
+      "id": "n5-qmnxq0",
+      "written": "十日",
+      "reading": "とおか",
+      "originalMeanings": [
+        "diez dias"
+      ],
+      "originalQuizMeaning": "diez dias",
+      "final": "diez días",
+      "dictionaryId": "1335000",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria."
+    },
+    {
+      "id": "n5-eyxeov",
+      "written": "出す",
+      "reading": "だす",
+      "originalMeanings": [
+        "apagar"
+      ],
+      "originalQuizMeaning": "apagar",
+      "final": "sacar",
+      "dictionaryId": "1338180",
+      "senses": [
+        1,
+        2
+      ],
+      "reason": "出す es sacar o exteriorizar; apagar corresponde a otro sentido inglés de put out, no a este verbo."
+    },
+    {
+      "id": "n5-16x8wa6",
+      "written": "暑い",
+      "reading": "あつい",
+      "originalMeanings": [
+        "caliente"
+      ],
+      "originalQuizMeaning": "caliente",
+      "final": "caluroso (tiempo)",
+      "dictionaryId": "1343460",
+      "senses": [
+        1
+      ],
+      "reason": "暑い describe calor ambiental; no la temperatura al tacto de un objeto."
+    },
+    {
+      "id": "n5-13tnn4g",
+      "written": "少し",
+      "reading": "すこし",
+      "originalMeanings": [
+        "pocos"
+      ],
+      "originalQuizMeaning": "pocos",
+      "final": "un poco",
+      "dictionaryId": "1348870",
+      "senses": [
+        1
+      ],
+      "reason": "少し es expresión adverbial de cantidad pequeña; pocos no representa por sí solo esa función."
+    },
+    {
+      "id": "n5-45j89c",
+      "written": "少ない",
+      "reading": "すくない",
+      "originalMeanings": [
+        "algunos"
+      ],
+      "originalQuizMeaning": "algunos",
+      "final": "poco / escaso",
+      "dictionaryId": "1348910",
+      "senses": [
+        1
+      ],
+      "reason": "少ない expresa escasez o cantidad reducida; algunos no implica poca cantidad."
+    },
+    {
+      "id": "n5-ryp01z",
+      "written": "吹く",
+      "reading": "ふく",
+      "originalMeanings": [
+        "explotar"
+      ],
+      "originalQuizMeaning": "explotar",
+      "final": "soplar",
+      "dictionaryId": "1370760",
+      "senses": [
+        1,
+        2
+      ],
+      "reason": "吹く no es explotar; confusión de acepciones inglesas de blow."
+    },
+    {
+      "id": "n5-1tltg6a",
+      "written": "大好き",
+      "reading": "だいすき",
+      "originalMeanings": [
+        "ser muy simpático"
+      ],
+      "originalQuizMeaning": "ser muy simpático",
+      "final": "gustar mucho / encantar",
+      "dictionaryId": "1413660",
+      "senses": [
+        1
+      ],
+      "reason": "大好き indica agrado intenso; ser simpático atribuye cualidad personal y cambia la relación."
+    },
+    {
+      "id": "n5-dc6ib5",
+      "written": "誰",
+      "reading": "だれ",
+      "originalMeanings": [
+        "OMS"
+      ],
+      "originalQuizMeaning": "OMS",
+      "final": "quién",
+      "dictionaryId": "1416830",
+      "senses": [
+        1
+      ],
+      "reason": "OMS es acrónimo de otra acepción inglesa de WHO, no interrogativo."
+    },
+    {
+      "id": "n5-krbqj5",
+      "written": "弾く",
+      "reading": "ひく",
+      "originalMeanings": [
+        "tocar un instrumento con cuerdas"
+      ],
+      "originalQuizMeaning": "tocar un instrumento con cuerdas",
+      "final": "tocar un instrumento de cuerda o teclado",
+      "dictionaryId": "1419370",
+      "senses": [
+        1
+      ],
+      "reason": "弾く incluye teclado como el piano; se conserva la distinción frente a instrumentos de viento."
+    },
+    {
+      "id": "n5-vxn95c",
+      "written": "着る",
+      "reading": "きる",
+      "originalMeanings": [
+        "ponte desde los hombros hacia abajo"
+      ],
+      "originalQuizMeaning": "ponte desde los hombros hacia abajo",
+      "final": "ponerse / llevar ropa (desde los hombros hacia abajo)",
+      "dictionaryId": "1423000",
+      "senses": [
+        1
+      ],
+      "reason": "Se pasa del imperativo ponte al infinitivo y se conserva la delimitación de prenda indicada por el origen."
+    },
+    {
+      "id": "n5-bilik6",
+      "written": "低い",
+      "reading": "ひくい",
+      "originalMeanings": [
+        "corto"
+      ],
+      "originalQuizMeaning": "corto",
+      "final": "bajo (altura)",
+      "dictionaryId": "1434180",
+      "senses": [
+        2,
+        3
+      ],
+      "reason": "低い describe altura o nivel bajo; corto corresponde a longitud o duración, no ese eje."
+    },
+    {
+      "id": "n5-at9wdu",
+      "written": "貼る",
+      "reading": "はる",
+      "originalMeanings": [
+        "palo"
+      ],
+      "originalQuizMeaning": "palo",
+      "final": "pegar / adherir",
+      "dictionaryId": "1427900",
+      "senses": [
+        1
+      ],
+      "reason": "貼る es verbo de fijación; palo proviene del sustantivo inglés stick."
+    },
+    {
+      "id": "n5-g8jwxg",
+      "written": "電車",
+      "reading": "でんしゃ",
+      "originalMeanings": [
+        "tren electrico"
+      ],
+      "originalQuizMeaning": "tren electrico",
+      "final": "tren eléctrico",
+      "dictionaryId": "1443530",
+      "senses": [
+        1
+      ],
+      "reason": "Tilde obligatoria de eléctrico."
+    },
+    {
+      "id": "n5-kq8pnp",
+      "written": "答える",
+      "reading": "こたえる",
+      "originalMeanings": [
+        "respuesta"
+      ],
+      "originalQuizMeaning": "respuesta",
+      "final": "responder",
+      "dictionaryId": "1449540",
+      "senses": [
+        1
+      ],
+      "reason": "答える es verbo; respuesta es sustantivo."
+    },
+    {
+      "id": "n5-1117k71",
+      "written": "曇る",
+      "reading": "くもる",
+      "originalMeanings": [
+        "volverse nublado"
+      ],
+      "originalQuizMeaning": "volverse nublado",
+      "final": "nublarse",
+      "dictionaryId": "1457560",
+      "senses": [
+        1
+      ],
+      "reason": "Se sustituye el calco volverse nublado por el verbo español natural, conservando el cambio de estado."
+    },
+    {
+      "id": "n5-1f7zukh",
+      "written": "二十日",
+      "reading": "はつか",
+      "originalMeanings": [
+        "veinte dias"
+      ],
+      "originalQuizMeaning": "veinte dias",
+      "final": "veinte días",
+      "dictionaryId": "1600850",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria."
+    },
+    {
+      "id": "n5-lq9cks",
+      "written": "二日",
+      "reading": "ふつか",
+      "originalMeanings": [
+        "dos dias"
+      ],
+      "originalQuizMeaning": "dos dias",
+      "final": "dos días",
+      "dictionaryId": "1462900",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria."
+    },
+    {
+      "id": "n5-yyg04e",
+      "written": "八日",
+      "reading": "ようか",
+      "originalMeanings": [
+        "ocho dias"
+      ],
+      "originalQuizMeaning": "ocho dias",
+      "final": "ocho días",
+      "dictionaryId": "1476920",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria."
+    },
+    {
+      "id": "n5-152f5hq",
+      "written": "半分",
+      "reading": "はんぶん",
+      "originalMeanings": [
+        "medio minuto"
+      ],
+      "originalQuizMeaning": "medio minuto",
+      "final": "mitad",
+      "dictionaryId": "1479890",
+      "senses": [
+        1
+      ],
+      "reason": "半分 es mitad, sin unidad temporal. Medio minuto añade información ausente; el inglés de origen también es erróneo pero queda intacto."
+    },
+    {
+      "id": "n5-lx3cro",
+      "written": "並ぶ",
+      "reading": "ならぶ",
+      "originalMeanings": [
+        "póngase en fila"
+      ],
+      "originalQuizMeaning": "póngase en fila",
+      "final": "ponerse en fila",
+      "dictionaryId": "1508380",
+      "senses": [
+        1
+      ],
+      "reason": "Se conserva el verbo intransitivo en infinitivo, no una orden de cortesía."
+    },
+    {
+      "id": "n5-13xu4r6",
+      "written": "並べる",
+      "reading": "ならべる",
+      "originalMeanings": [
+        "póngase en fila"
+      ],
+      "originalQuizMeaning": "póngase en fila",
+      "final": "poner en fila / ordenar",
+      "dictionaryId": "1508390",
+      "senses": [
+        1
+      ],
+      "reason": "並べる es transitivo: ordenar cosas o personas; póngase expresa alinearse uno mismo."
+    },
+    {
+      "id": "n5-1du1dtt",
+      "written": "閉まる",
+      "reading": "しまる",
+      "originalMeanings": [
+        "cerca"
+      ],
+      "originalQuizMeaning": "cerca",
+      "final": "cerrarse",
+      "dictionaryId": "1436560",
+      "senses": [
+        1
+      ],
+      "reason": "閉まる es intransitivo de cerrar; cerca corresponde a proximidad y confunde close."
+    },
+    {
+      "id": "n5-1vzrsqo",
+      "written": "妹",
+      "reading": "いもうと",
+      "originalMeanings": [
+        "(humilde) hermana menor"
+      ],
+      "originalQuizMeaning": "(humilde) hermana menor",
+      "final": "hermana menor (propia)",
+      "dictionaryId": "1524590",
+      "senses": [
+        1
+      ],
+      "reason": "Humilde no es rasgo de carácter: se refiere a la propia familia."
+    },
+    {
+      "id": "n5-m191b",
+      "written": "毎晩",
+      "reading": "まいばん",
+      "originalMeanings": [
+        "cada tarde"
+      ],
+      "originalQuizMeaning": "cada tarde",
+      "final": "cada noche",
+      "dictionaryId": "1524730",
+      "senses": [
+        1
+      ],
+      "reason": "毎晩 en esta expresión corresponde a every night, no cada tarde."
+    },
+    {
+      "id": "n5-52k4yv",
+      "written": "鳴く",
+      "reading": "なく",
+      "originalMeanings": [
+        "ruido de animales. chirriar"
+      ],
+      "originalQuizMeaning": "ruido de animales. chirriar",
+      "final": "emitir sonidos (un animal)",
+      "dictionaryId": "1532870",
+      "senses": [
+        1
+      ],
+      "reason": "鳴く es verbo de vocalización animal; chirriar no cubre rugir o croar y la glosa original mezcla fragmentos."
+    },
+    {
+      "id": "n5-cy7di8",
+      "written": "夕方",
+      "reading": "ゆうがた",
+      "originalMeanings": [
+        "noche"
+      ],
+      "originalQuizMeaning": "noche",
+      "final": "al atardecer / a última hora de la tarde",
+      "dictionaryId": "1542790",
+      "senses": [
+        1
+      ],
+      "reason": "夕方 es franja previa a la noche, no la noche completa; se distingue de 夜 y 晩."
+    },
+    {
+      "id": "n5-1c3q0u6",
+      "written": "要る",
+      "reading": "いる",
+      "originalMeanings": [
+        "necesidad"
+      ],
+      "originalQuizMeaning": "necesidad",
+      "final": "ser necesario",
+      "dictionaryId": "1546640",
+      "senses": [
+        1
+      ],
+      "reason": "要る es verbo de necesidad; necesidad es sustantivo."
+    },
+    {
+      "id": "n5-15r9su5",
+      "written": "来年",
+      "reading": "らいねん",
+      "originalMeanings": [
+        "al año que viene"
+      ],
+      "originalQuizMeaning": "al año que viene",
+      "final": "el año que viene",
+      "dictionaryId": "1548220",
+      "senses": [
+        1
+      ],
+      "reason": "Se elimina la preposición impropia para la referencia temporal aislada."
+    },
+    {
+      "id": "n5-1deye2i",
+      "written": "頼む",
+      "reading": "たのむ",
+      "originalMeanings": [
+        "preguntar"
+      ],
+      "originalQuizMeaning": "preguntar",
+      "final": "pedir / solicitar",
+      "dictionaryId": "1548370",
+      "senses": [
+        1
+      ],
+      "reason": "頼む es pedir algo o un favor; preguntar busca información y confunde ask."
+    },
+    {
+      "id": "n5-xl65hf",
+      "written": "冷たい",
+      "reading": "つめたい",
+      "originalMeanings": [
+        "frio al tacto"
+      ],
+      "originalQuizMeaning": "frio al tacto",
+      "final": "frío al tacto",
+      "dictionaryId": "1556730",
+      "senses": [
+        1
+      ],
+      "reason": "Tilde obligatoria de frío."
+    },
+    {
+      "id": "n5-1jzwsri",
+      "written": "六日",
+      "reading": "むいか",
+      "originalMeanings": [
+        "seis dias"
+      ],
+      "originalQuizMeaning": "seis dias",
+      "final": "seis días",
+      "dictionaryId": "1561470",
+      "senses": [
+        2
+      ],
+      "reason": "Tilde obligatoria."
+    },
+    {
+      "id": "n5-suqpo2",
+      "written": "話",
+      "reading": "はなし",
+      "originalMeanings": [
+        "hablar"
+      ],
+      "originalQuizMeaning": "hablar",
+      "final": "conversación / charla",
+      "dictionaryId": "1600900",
+      "senses": [
+        1
+      ],
+      "reason": "話 es sustantivo; hablar es verbo y coincide indebidamente con 話す."
+    }
+  ],
+  "editorialLicense": "CC-BY-SA-4.0"
+}

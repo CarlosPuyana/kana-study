@@ -1,3 +1,4 @@
+import {vocabularyFormAllowsReading,vocabularyReadingForForm,vocabularyFormForReading} from './vocabulary-form-readings';
 import {AppLanguage} from '../models/settings.model';
 import {VocabularyEntry} from '../models/vocabulary.model';
 import {VOCABULARY_N5} from '../../data/vocabulary-n5.generated';
@@ -25,9 +26,9 @@ export function parseVocabularyWord(raw:string):{expression:string;reading:strin
 /** Exact form and, when supplied, reading. Ambiguous catalogue matches stay unresolved. */
 export function localVocabularyWord(raw:string,catalog:readonly VocabularyEntry[]=VOCABULARY_N5):LocalVocabularyWord {
   const parsed=parseVocabularyWord(raw);
-  const matches=catalog.filter(entry=>entry.writtenForms.includes(parsed.expression) && (!parsed.reading || entry.readings.includes(parsed.reading)));
+  const matches=catalog.filter(entry=>entry.writtenForms.includes(parsed.expression) && (!parsed.reading || vocabularyFormAllowsReading(entry,parsed.expression,parsed.reading)));
   const entry=matches.length===1?matches[0]:null;
-  return {raw:raw.trim(),...parsed,reading:parsed.reading || entry?.primaryReading || '',entry};
+  return {raw:raw.trim(),...parsed,reading:parsed.reading || (entry?vocabularyReadingForForm(entry,parsed.expression):''),entry};
 }
 export function vocabularyMeanings(word:LocalVocabularyWord,language:AppLanguage):readonly string[] {
   const correction=LOCAL_VOCABULARY_GLOSS_CORRECTIONS.find(entry=>entry.expression===word.expression && entry.reading===word.reading);
@@ -41,7 +42,7 @@ export function localVocabularyLookup(query:string,catalog:readonly VocabularyEn
   if(word.entry || parseVocabularyWord(query).reading)return word;
   const matches=catalog.filter(entry=>entry.readings.includes(word.expression));
   if(matches.length!==1)return word;
-  const entry=matches[0];return {...word,expression:entry.primaryWrittenForm,reading:query.trim(),entry};
+  const entry=matches[0];return {...word,expression:vocabularyFormForReading(entry,query.trim()),reading:query.trim(),entry};
 }
 export function intendedVocabularyWords(raw:readonly string[]):LocalVocabularyWord[] {
   return [...new Set(raw.map(value=>value.trim()))].map(value=>localVocabularyWord(value));

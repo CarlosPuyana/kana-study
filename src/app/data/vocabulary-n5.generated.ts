@@ -239,7 +239,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "eso de allá"
+        "aquel / aquella (ante un sustantivo)"
       ],
       "en": [
         "that over there"
@@ -249,7 +249,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "eso de allá",
+      "es": "aquel / aquella (ante un sustantivo)",
       "en": "that over there",
       "ca": "que allà"
     },
@@ -409,7 +409,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "ser"
+        "haber / existir (cosas)"
       ],
       "en": [
         "to be",
@@ -420,7 +420,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "ser",
+      "es": "haber / existir (cosas)",
       "en": "be",
       "ca": "ser"
     },
@@ -479,22 +479,25 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-16rp5xj",
-    "primaryWrittenForm": "いい/よい",
+    "primaryWrittenForm": "いい",
     "writtenForms": [
-      "いい/よい"
+      "いい",
+      "よい",
+      "良い"
     ],
-    "primaryReading": "いい/よい",
+    "primaryReading": "いい",
     "furigana": [
       {
-        "text": "いい/よい"
+        "text": "いい"
       }
     ],
     "readings": [
-      "いい/よい"
+      "いい",
+      "よい"
     ],
     "meanings": {
       "es": [
-        "bien"
+        "bueno"
       ],
       "en": [
         "good"
@@ -504,18 +507,30 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "bien",
+      "es": "bueno",
       "en": "good",
       "ca": "bo"
     },
     "partOfSpeech": [
-      "other"
+      "i-adjective"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "adjectives",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "いい": [
+        "いい"
+      ],
+      "よい": [
+        "よい"
+      ],
+      "良い": [
+        "いい",
+        "よい"
+      ]
+    }
   },
   {
     "id": "n5-4qbbyf",
@@ -655,8 +670,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       }
     ],
     "readings": [
-      "いくら",
-      "イクラ"
+      "いくら"
     ],
     "meanings": {
       "es": [
@@ -788,7 +802,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cuando"
+        "cuándo"
       ],
       "en": [
         "when"
@@ -798,7 +812,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cuando",
+      "es": "cuándo",
       "en": "when",
       "ca": "quan"
     },
@@ -1136,7 +1150,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "término amigable para policía"
+        "policía"
       ],
       "en": [
         "friendly term for policeman"
@@ -1146,7 +1160,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "término amigable para policía",
+      "es": "policía",
       "en": "friendly term for policeman",
       "ca": "terme amistós per a policia"
     },
@@ -1321,7 +1335,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(honorable) hermano mayor"
+        "hermano mayor (trato respetuoso)"
       ],
       "en": [
         "(honorable) older brother"
@@ -1331,7 +1345,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(honorable) hermano mayor",
+      "es": "hermano mayor (trato respetuoso)",
       "en": "(honorable) older brother",
       "ca": "(honorable) germà gran"
     },
@@ -1367,7 +1381,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "lámina"
+        "plato"
       ],
       "en": [
         "plate",
@@ -1378,7 +1392,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "lámina",
+      "es": "plato",
       "en": "plate",
       "ca": "placa"
     },
@@ -1421,7 +1435,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(honorable) hermana mayor"
+        "hermana mayor (trato respetuoso)"
       ],
       "en": [
         "(honorable) older sister"
@@ -1431,7 +1445,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(honorable) hermana mayor",
+      "es": "hermana mayor (trato respetuoso)",
       "en": "(honorable) older sister",
       "ca": "(honorable) germana gran"
     },
@@ -1620,7 +1634,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(honorable) padre"
+        "padre (trato respetuoso)"
       ],
       "en": [
         "(honorable) father"
@@ -1630,7 +1644,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(honorable) padre",
+      "es": "padre (trato respetuoso)",
       "en": "(honorable) father",
       "ca": "(honorable) pare"
     },
@@ -1768,7 +1782,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(honorable) madre"
+        "madre (trato respetuoso)"
       ],
       "en": [
         "(honorable) mother"
@@ -1778,7 +1792,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(honorable) madre",
+      "es": "madre (trato respetuoso)",
       "en": "(honorable) mother",
       "ca": "(honorable) mare"
     },
@@ -1799,7 +1813,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "かかる",
     "writtenForms": [
       "かかる",
-      "架かる"
+      "掛かる"
     ],
     "primaryReading": "かかる",
     "furigana": [
@@ -1812,7 +1826,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "toma tiempo o dinero"
+        "llevar (tiempo) / costar (dinero)"
       ],
       "en": [
         "to take time or money"
@@ -1822,7 +1836,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "toma tiempo o dinero",
+      "es": "llevar (tiempo) / costar (dinero)",
       "en": "take time or money",
       "ca": "prendre temps o diners"
     },
@@ -1897,7 +1911,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "llamar por telefono"
+        "llamar por teléfono"
       ],
       "en": [
         "to call by phone"
@@ -1907,7 +1921,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "llamar por telefono",
+      "es": "llamar por teléfono",
       "en": "call by phone",
       "ca": "trucar per telèfon"
     },
@@ -1966,7 +1980,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "かばん",
     "writtenForms": [
       "かばん",
-      "下番"
+      "鞄"
     ],
     "primaryReading": "かばん",
     "furigana": [
@@ -1995,10 +2009,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "bossa"
     },
     "partOfSpeech": [
-      "irregular-verb",
       "noun"
     ],
-    "studyCategory": "verbs",
+    "studyCategory": "nouns",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
@@ -2264,18 +2277,20 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-11fsr3z",
-    "primaryWrittenForm": "キロ/キログラム",
+    "primaryWrittenForm": "キログラム",
     "writtenForms": [
-      "キロ/キログラム"
+      "キログラム",
+      "キロ"
     ],
-    "primaryReading": "キロ/キログラム",
+    "primaryReading": "キログラム",
     "furigana": [
       {
-        "text": "キロ/キログラム"
+        "text": "キログラム"
       }
     ],
     "readings": [
-      "キロ/キログラム"
+      "キログラム",
+      "キロ"
     ],
     "meanings": {
       "es": [
@@ -2294,28 +2309,38 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "quilogram"
     },
     "partOfSpeech": [
-      "other"
+      "noun"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "nouns",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "キログラム": [
+        "キログラム"
+      ],
+      "キロ": [
+        "キロ"
+      ]
+    }
   },
   {
     "id": "n5-1g1750v",
-    "primaryWrittenForm": "キロ/キロメートル",
+    "primaryWrittenForm": "キロメートル",
     "writtenForms": [
-      "キロ/キロメートル"
+      "キロメートル",
+      "キロ"
     ],
-    "primaryReading": "キロ/キロメートル",
+    "primaryReading": "キロメートル",
     "furigana": [
       {
-        "text": "キロ/キロメートル"
+        "text": "キロメートル"
       }
     ],
     "readings": [
-      "キロ/キロメートル"
+      "キロメートル",
+      "キロ"
     ],
     "meanings": {
       "es": [
@@ -2334,13 +2359,21 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "quilòmetre"
     },
     "partOfSpeech": [
-      "other"
+      "noun"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "nouns",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "キロメートル": [
+        "キロメートル"
+      ],
+      "キロ": [
+        "キロ"
+      ]
+    }
   },
   {
     "id": "n5-1p4iwa7",
@@ -2611,7 +2644,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "esta persona o manera"
+        "esta persona / por aquí"
       ],
       "en": [
         "this person or way"
@@ -2621,7 +2654,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "esta persona o manera",
+      "es": "esta persona / por aquí",
       "en": "this person or way",
       "ca": "aquesta persona o manera"
     },
@@ -2654,7 +2687,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "esta persona o manera"
+        "por aquí (informal)"
       ],
       "en": [
         "this person or way"
@@ -2664,7 +2697,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "esta persona o manera",
+      "es": "por aquí (informal)",
       "en": "this person or way",
       "ca": "aquesta persona o manera"
     },
@@ -2725,10 +2758,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-qqq055",
     "primaryWrittenForm": "この",
     "writtenForms": [
-      "この",
-      "九",
-      "９",
-      "玖"
+      "この"
     ],
     "primaryReading": "この",
     "furigana": [
@@ -2737,11 +2767,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       }
     ],
     "readings": [
-      "この",
-      "きゅう",
-      "く",
-      "ここの",
-      "ここ"
+      "この"
     ],
     "meanings": {
       "es": [
@@ -2760,9 +2786,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "això"
     },
     "partOfSpeech": [
-      "number"
+      "determiner"
     ],
-    "studyCategory": "numbers-counters",
+    "studyCategory": "pronouns-demonstratives",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
@@ -2800,7 +2826,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "còpia"
     },
     "partOfSpeech": [
-      "godan-verb"
+      "irregular-verb"
     ],
     "studyCategory": "verbs",
     "jlptApproxLevel": "N5",
@@ -2961,7 +2987,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "año tras año"
+        "dentro de dos años"
       ],
       "en": [
         "year after next"
@@ -2971,7 +2997,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "año tras año",
+      "es": "dentro de dos años",
       "en": "year after next",
       "ca": "l'any següent"
     },
@@ -3033,18 +3059,20 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-o1lvv5",
-    "primaryWrittenForm": "じゃ/じゃあ",
+    "primaryWrittenForm": "じゃ",
     "writtenForms": [
-      "じゃ/じゃあ"
+      "じゃ",
+      "じゃあ"
     ],
-    "primaryReading": "じゃ/じゃあ",
+    "primaryReading": "じゃ",
     "furigana": [
       {
-        "text": "じゃ/じゃあ"
+        "text": "じゃ"
       }
     ],
     "readings": [
-      "じゃ/じゃあ"
+      "じゃ",
+      "じゃあ"
     ],
     "meanings": {
       "es": [
@@ -3063,13 +3091,21 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "bé doncs..."
     },
     "partOfSpeech": [
-      "other"
+      "conjunction"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "function-words",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "じゃ": [
+        "じゃ"
+      ],
+      "じゃあ": [
+        "じゃあ"
+      ]
+    }
   },
   {
     "id": "n5-1m5gnez",
@@ -3459,7 +3495,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "zapatillas"
+        "zapatillas de casa"
       ],
       "en": [
         "slippers"
@@ -3469,7 +3505,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "zapatillas",
+      "es": "zapatillas de casa",
       "en": "slippers",
       "ca": "sabatilles"
     },
@@ -3655,18 +3691,20 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-cmt7v9",
-    "primaryWrittenForm": "そうして/そして",
+    "primaryWrittenForm": "そうして",
     "writtenForms": [
-      "そうして/そして"
+      "そうして",
+      "そして"
     ],
-    "primaryReading": "そうして/そして",
+    "primaryReading": "そうして",
     "furigana": [
       {
-        "text": "そうして/そして"
+        "text": "そうして"
       }
     ],
     "readings": [
-      "そうして/そして"
+      "そうして",
+      "そして"
     ],
     "meanings": {
       "es": [
@@ -3685,13 +3723,21 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "i"
     },
     "partOfSpeech": [
-      "other"
+      "conjunction"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "function-words",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "そうして": [
+        "そうして"
+      ],
+      "そして": [
+        "そして"
+      ]
+    }
   },
   {
     "id": "n5-ob6guz",
@@ -3838,7 +3884,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "eso"
+        "ese / esa (ante un sustantivo)"
       ],
       "en": [
         "that"
@@ -3848,7 +3894,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "eso",
+      "es": "ese / esa (ante un sustantivo)",
       "en": "that",
       "ca": "això"
     },
@@ -3867,7 +3913,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "そば",
     "writtenForms": [
       "そば",
-      "蕎麦"
+      "側",
+      "傍"
     ],
     "primaryReading": "そば",
     "furigana": [
@@ -3876,10 +3923,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       }
     ],
     "readings": [
-      "そば",
-      "そばむぎ",
-      "そまむぎ",
-      "ソバ"
+      "そば"
     ],
     "meanings": {
       "es": [
@@ -4171,7 +4215,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "たて",
     "writtenForms": [
       "たて",
-      "殺陣"
+      "縦"
     ],
     "primaryReading": "たて",
     "furigana": [
@@ -4180,8 +4224,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       }
     ],
     "readings": [
-      "たて",
-      "さつじん"
+      "たて"
     ],
     "meanings": {
       "es": [
@@ -4259,7 +4302,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "たぶん",
     "writtenForms": [
       "たぶん",
-      "他聞"
+      "多分"
     ],
     "primaryReading": "たぶん",
     "furigana": [
@@ -4287,9 +4330,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "probablement"
     },
     "partOfSpeech": [
-      "noun"
+      "adverb"
     ],
-    "studyCategory": "nouns",
+    "studyCategory": "adverbs",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
@@ -4476,8 +4519,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "つける",
     "writtenForms": [
       "つける",
-      "就ける",
-      "即ける"
+      "点ける"
     ],
     "primaryReading": "つける",
     "furigana": [
@@ -4684,7 +4726,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "できる",
     "writtenForms": [
       "できる",
-      "出切る"
+      "出来る"
     ],
     "primaryReading": "できる",
     "furigana": [
@@ -4712,7 +4754,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "poder"
     },
     "partOfSpeech": [
-      "godan-verb"
+      "ichidan-verb"
     ],
     "studyCategory": "verbs",
     "jlptApproxLevel": "N5",
@@ -4778,7 +4820,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "con eso..."
+        "entonces / pues bien"
       ],
       "en": [
         "with that..."
@@ -4788,7 +4830,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "con eso...",
+      "es": "entonces / pues bien",
       "en": "with that...",
       "ca": "amb això..."
     },
@@ -5010,8 +5052,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-10vobp",
     "primaryWrittenForm": "どう",
     "writtenForms": [
-      "どう",
-      "仝"
+      "どう"
     ],
     "primaryReading": "どう",
     "furigana": [
@@ -5040,9 +5081,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "com"
     },
     "partOfSpeech": [
-      "other"
+      "adverb"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "adverbs",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
@@ -5067,7 +5108,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "por que razon"
+        "por qué razón"
       ],
       "en": [
         "for what reason"
@@ -5077,7 +5118,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "por que razon",
+      "es": "por qué razón",
       "en": "for what reason",
       "ca": "per quin motiu"
     },
@@ -5239,7 +5280,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cual de dos"
+        "cuál de los dos"
       ],
       "en": [
         "which of two"
@@ -5249,7 +5290,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cual de dos",
+      "es": "cuál de los dos",
       "en": "which of two",
       "ca": "quin de dos"
     },
@@ -5281,7 +5322,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cual"
+        "cuál"
       ],
       "en": [
         "which"
@@ -5291,7 +5332,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cual",
+      "es": "cuál",
       "en": "which",
       "ca": "que"
     },
@@ -5364,7 +5405,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "OMS"
+        "quién (trato respetuoso)"
       ],
       "en": [
         "who"
@@ -5374,7 +5415,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "OMS",
+      "es": "quién (trato respetuoso)",
       "en": "who",
       "ca": "OMS"
     },
@@ -5391,8 +5432,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-rtllmt",
     "primaryWrittenForm": "どの",
     "writtenForms": [
-      "どの",
-      "殿"
+      "どの"
     ],
     "primaryReading": "どの",
     "furigana": [
@@ -5405,7 +5445,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cual"
+        "qué / cuál (ante un sustantivo)"
       ],
       "en": [
         "which"
@@ -5415,14 +5455,14 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cual",
+      "es": "qué / cuál (ante un sustantivo)",
       "en": "which",
       "ca": "que"
     },
     "partOfSpeech": [
-      "suffix"
+      "determiner"
     ],
-    "studyCategory": "function-words",
+    "studyCategory": "pronouns-demonstratives",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
@@ -5476,7 +5516,20 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "肉"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "とり肉": [
+        "とりにく"
+      ],
+      "鶏肉": [
+        "とりにく",
+        "けいにく"
+      ],
+      "鳥肉": [
+        "とりにく",
+        "ちょうにく"
+      ]
+    }
   },
   {
     "id": "n5-huwjhp",
@@ -5743,7 +5796,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "atar"
+        "corbata"
       ],
       "en": [
         "tie",
@@ -5754,7 +5807,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "atar",
+      "es": "corbata",
       "en": "tie",
       "ca": "corbata"
     },
@@ -5784,7 +5837,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "computadora portátil"
+        "cuaderno"
       ],
       "en": [
         "notebook",
@@ -5795,7 +5848,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "computadora portátil",
+      "es": "cuaderno",
       "en": "notebook",
       "ca": "llibreta"
     },
@@ -5899,7 +5952,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "はく",
     "writtenForms": [
       "はく",
-      "掃く"
+      "履く",
+      "穿く"
     ],
     "primaryReading": "はく",
     "furigana": [
@@ -5941,7 +5995,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "はし",
     "writtenForms": [
       "はし",
-      "橋"
+      "箸"
     ],
     "primaryReading": "はし",
     "furigana": [
@@ -6157,7 +6211,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "rodaje de una película"
+        "carrete de película fotográfica"
       ],
       "en": [
         "roll of film"
@@ -6167,7 +6221,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "rodaje de una película",
+      "es": "carrete de película fotográfica",
       "en": "roll of film",
       "ca": "rotllo de pel·lícula"
     },
@@ -6719,7 +6773,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "ほんとう",
     "writtenForms": [
       "ほんとう",
-      "本島"
+      "本当"
     ],
     "primaryReading": "ほんとう",
     "furigana": [
@@ -6804,10 +6858,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "また",
     "writtenForms": [
       "また",
-      "股",
-      "叉",
-      "胯",
-      "俣"
+      "又"
     ],
     "primaryReading": "また",
     "furigana": [
@@ -6836,9 +6887,10 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "de nou"
     },
     "partOfSpeech": [
-      "noun"
+      "adverb",
+      "conjunction"
     ],
-    "studyCategory": "nouns",
+    "studyCategory": "adverbs",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
@@ -7245,7 +7297,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-11vyy2r",
     "primaryWrittenForm": "ゆっくりと",
     "writtenForms": [
-      "ゆっくりと"
+      "ゆっくりと",
+      "ゆっくり"
     ],
     "primaryReading": "ゆっくりと",
     "furigana": [
@@ -7254,7 +7307,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       }
     ],
     "readings": [
-      "ゆっくりと"
+      "ゆっくりと",
+      "ゆっくり"
     ],
     "meanings": {
       "es": [
@@ -7273,21 +7327,28 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "lentament"
     },
     "partOfSpeech": [
-      "other"
+      "adverb"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "adverbs",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "ゆっくりと": [
+        "ゆっくりと"
+      ],
+      "ゆっくり": [
+        "ゆっくり"
+      ]
+    }
   },
   {
     "id": "n5-8d06fh",
     "primaryWrittenForm": "よく",
     "writtenForms": [
       "よく",
-      "欲",
-      "慾"
+      "良く"
     ],
     "primaryReading": "よく",
     "furigana": [
@@ -7316,9 +7377,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "sovint"
     },
     "partOfSpeech": [
-      "noun"
+      "adverb"
     ],
-    "studyCategory": "nouns",
+    "studyCategory": "adverbs",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
@@ -7407,22 +7468,24 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-1rc8hqv",
-    "primaryWrittenForm": "ラジカセ / ラジオカセット",
+    "primaryWrittenForm": "ラジカセ",
     "writtenForms": [
-      "ラジカセ / ラジオカセット"
+      "ラジカセ",
+      "ラジオカセット"
     ],
-    "primaryReading": "ラジカセ / ラジオカセット",
+    "primaryReading": "ラジカセ",
     "furigana": [
       {
-        "text": "ラジカセ / ラジオカセット"
+        "text": "ラジカセ"
       }
     ],
     "readings": [
-      "ラジカセ / ラジオカセット"
+      "ラジカセ",
+      "ラジオカセット"
     ],
     "meanings": {
       "es": [
-        "reproductor de casetes de radio"
+        "radiocasete"
       ],
       "en": [
         "radio cassette player"
@@ -7432,18 +7495,26 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "reproductor de casetes de radio",
+      "es": "radiocasete",
       "en": "radio cassette player",
       "ca": "reproductor de cassets de ràdio"
     },
     "partOfSpeech": [
-      "other"
+      "noun"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "nouns",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "ラジカセ": [
+        "ラジカセ"
+      ],
+      "ラジオカセット": [
+        "ラジオカセット"
+      ]
+    }
   },
   {
     "id": "n5-1ko2azv",
@@ -7584,7 +7655,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "camisa de negocios"
+        "camisa de vestir"
       ],
       "en": [
         "business shirt"
@@ -7594,7 +7665,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "camisa de negocios",
+      "es": "camisa de vestir",
       "en": "business shirt",
       "ca": "samarreta de negocis"
     },
@@ -7952,7 +8023,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "medico"
+        "médico"
       ],
       "en": [
         "medical doctor"
@@ -7962,7 +8033,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "medico",
+      "es": "médico",
       "en": "medical doctor",
       "ca": "metge"
     },
@@ -8753,7 +8824,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "idioma en Inglés"
+        "idioma inglés"
       ],
       "en": [
         "English language"
@@ -8763,7 +8834,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "idioma en Inglés",
+      "es": "idioma inglés",
       "en": "English language",
       "ca": "llengua anglesa"
     },
@@ -8798,7 +8869,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "estación"
+        "estación de tren"
       ],
       "en": [
         "station"
@@ -8808,7 +8879,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "estación",
+      "es": "estación de tren",
       "en": "station",
       "ca": "estació"
     },
@@ -9027,7 +9098,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(honorable) esposa"
+        "esposa (trato respetuoso)"
       ],
       "en": [
         "(honorable) wife"
@@ -9037,7 +9108,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(honorable) esposa",
+      "es": "esposa (trato respetuoso)",
       "en": "(honorable) wife",
       "ca": "(honorable) esposa"
     },
@@ -9105,7 +9176,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-12n8bt6",
     "primaryWrittenForm": "横",
     "writtenForms": [
-      "横"
+      "横",
+      "ヨコ"
     ],
     "primaryReading": "よこ",
     "furigana": [
@@ -9145,7 +9217,15 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "横"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "横": [
+        "よこ"
+      ],
+      "ヨコ": [
+        "ヨコ"
+      ]
+    }
   },
   {
     "id": "n5-1e6a4un",
@@ -9382,7 +9462,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-pi0as4",
     "primaryWrittenForm": "下手",
     "writtenForms": [
-      "下手"
+      "下手",
+      "ヘタ"
     ],
     "primaryReading": "へた",
     "furigana": [
@@ -9422,7 +9503,15 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "手"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "下手": [
+        "へた"
+      ],
+      "ヘタ": [
+        "ヘタ"
+      ]
+    }
   },
   {
     "id": "n5-p57dwn",
@@ -9430,15 +9519,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "writtenForms": [
       "何"
     ],
-    "primaryReading": "なん/なに",
+    "primaryReading": "なん",
     "furigana": [
       {
         "text": "何",
-        "reading": "なん/なに"
+        "reading": "なん"
       }
     ],
     "readings": [
-      "なん/なに"
+      "なん",
+      "なに"
     ],
     "meanings": {
       "es": [
@@ -9457,9 +9547,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "què"
     },
     "partOfSpeech": [
-      "other"
+      "pronoun"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "pronouns-demonstratives",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [
       "何"
@@ -9663,7 +9753,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "familiar"
+        "hogar / familia"
       ],
       "en": [
         "household"
@@ -9673,7 +9763,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "familiar",
+      "es": "hogar / familia",
       "en": "household",
       "ca": "llar"
     },
@@ -9694,7 +9784,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "暇",
     "writtenForms": [
       "暇",
-      "閑"
+      "閑",
+      "ヒマ"
     ],
     "primaryReading": "ひま",
     "furigana": [
@@ -9734,7 +9825,18 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "暇"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "暇": [
+        "ひま"
+      ],
+      "閑": [
+        "ひま"
+      ],
+      "ヒマ": [
+        "ヒマ"
+      ]
+    }
   },
   {
     "id": "n5-17lnxnl",
@@ -10330,7 +10432,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "絵"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "絵": [
+        "え"
+      ],
+      "画": [
+        "え",
+        "が"
+      ]
+    }
   },
   {
     "id": "n5-1yjjy6u",
@@ -10355,7 +10466,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "abierto"
+        "abrirse"
       ],
       "en": [
         "to open",
@@ -10366,7 +10477,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "abierto",
+      "es": "abrirse",
       "en": "open",
       "ca": "obert"
     },
@@ -10404,7 +10515,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "abierto"
+        "abrir"
       ],
       "en": [
         "to open"
@@ -10414,7 +10525,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "abierto",
+      "es": "abrir",
       "en": "open",
       "ca": "obert"
     },
@@ -10629,7 +10740,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "recordar"
+        "memorizar / aprender"
       ],
       "en": [
         "to remember"
@@ -10639,7 +10750,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "recordar",
+      "es": "memorizar / aprender",
       "en": "remember",
       "ca": "recorda"
     },
@@ -11026,7 +11137,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-f2jfha",
     "primaryWrittenForm": "眼鏡",
     "writtenForms": [
-      "眼鏡"
+      "眼鏡",
+      "メガネ"
     ],
     "primaryReading": "めがね",
     "furigana": [
@@ -11065,7 +11177,15 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "鏡"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "眼鏡": [
+        "めがね"
+      ],
+      "メガネ": [
+        "メガネ"
+      ]
+    }
   },
   {
     "id": "n5-ydj8w8",
@@ -11278,7 +11398,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "salón de café"
+        "cafetería"
       ],
       "en": [
         "coffee lounge"
@@ -11288,7 +11408,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "salón de café",
+      "es": "cafetería",
       "en": "coffee lounge",
       "ca": "sala de cafè"
     },
@@ -11326,7 +11446,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "descansar"
+        "descanso"
       ],
       "en": [
         "rest",
@@ -11337,7 +11457,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "descansar",
+      "es": "descanso",
       "en": "rest",
       "ca": "descansar"
     },
@@ -11601,7 +11721,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "ser"
+        "haber / estar (personas y animales)"
       ],
       "en": [
         "to be",
@@ -11612,7 +11732,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "ser",
+      "es": "haber / estar (personas y animales)",
       "en": "be",
       "ca": "ser"
     },
@@ -12184,15 +12304,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "writtenForms": [
       "九"
     ],
-    "primaryReading": "きゅう / く",
+    "primaryReading": "きゅう",
     "furigana": [
       {
         "text": "九",
-        "reading": "きゅう / く"
+        "reading": "きゅう"
       }
     ],
     "readings": [
-      "きゅう / く"
+      "きゅう",
+      "く"
     ],
     "meanings": {
       "es": [
@@ -12211,9 +12332,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "nou"
     },
     "partOfSpeech": [
-      "other"
+      "number"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "numbers-counters",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [
       "九"
@@ -12289,7 +12410,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "nueve dias"
+        "nueve días"
       ],
       "en": [
         "nine days",
@@ -12300,7 +12421,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "nueve dias",
+      "es": "nueve días",
       "en": "nine days",
       "ca": "nou dies"
     },
@@ -12470,7 +12591,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(humilde) hermano mayor"
+        "hermano mayor (propio)"
       ],
       "en": [
         "(humble) older brother"
@@ -12480,7 +12601,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(humilde) hermano mayor",
+      "es": "hermano mayor (propio)",
       "en": "(humble) older brother",
       "ca": "(humil) germà gran"
     },
@@ -12513,7 +12634,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(humildes) hermanos"
+        "hermanos (de la propia familia)"
       ],
       "en": [
         "(humble) siblings"
@@ -12523,7 +12644,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(humildes) hermanos",
+      "es": "hermanos (de la propia familia)",
       "en": "(humble) siblings",
       "ca": "germans (humils)."
     },
@@ -12605,7 +12726,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "luz"
+        "ligero"
       ],
       "en": [
         "light"
@@ -12615,7 +12736,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "luz",
+      "es": "ligero",
       "en": "light",
       "ca": "llum"
     },
@@ -12773,7 +12894,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "嫌",
     "writtenForms": [
       "嫌",
-      "厭"
+      "厭",
+      "イヤ"
     ],
     "primaryReading": "いや",
     "furigana": [
@@ -12813,7 +12935,20 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "嫌"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "嫌": [
+        "いや",
+        "や"
+      ],
+      "厭": [
+        "いや",
+        "や"
+      ],
+      "イヤ": [
+        "イヤ"
+      ]
+    }
   },
   {
     "id": "n5-1jt5w3n",
@@ -12914,7 +13049,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "犬",
     "writtenForms": [
       "犬",
-      "狗"
+      "狗",
+      "イヌ"
     ],
     "primaryReading": "いぬ",
     "furigana": [
@@ -12952,7 +13088,18 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "犬"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "犬": [
+        "いぬ"
+      ],
+      "狗": [
+        "いぬ"
+      ],
+      "イヌ": [
+        "イヌ"
+      ]
+    }
   },
   {
     "id": "n5-fh026r",
@@ -12976,7 +13123,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "espectáculo"
+        "mostrar"
       ],
       "en": [
         "to show"
@@ -12986,7 +13133,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "espectáculo",
+      "es": "mostrar",
       "en": "show",
       "ca": "espectacle"
     },
@@ -13310,7 +13457,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "gritar"
+        "llamar (a alguien)"
       ],
       "en": [
         "to call out",
@@ -13321,7 +13468,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "gritar",
+      "es": "llamar (a alguien)",
       "en": "call out",
       "ca": "crida"
     },
@@ -13496,7 +13643,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cinco dias"
+        "cinco días"
       ],
       "en": [
         "five days",
@@ -13507,7 +13654,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cinco dias",
+      "es": "cinco días",
       "en": "five days",
       "ca": "cinc dies"
     },
@@ -13815,7 +13962,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cabina de policia"
+        "pequeña comisaría de barrio"
       ],
       "en": [
         "police box"
@@ -13825,7 +13972,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cabina de policia",
+      "es": "pequeña comisaría de barrio",
       "en": "police box",
       "ca": "caixa de policia"
     },
@@ -14050,7 +14197,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "simpático"
+        "gustar"
       ],
       "en": [
         "likeable"
@@ -14060,7 +14207,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "simpático",
+      "es": "gustar",
       "en": "likeable",
       "ca": "simpàtic"
     },
@@ -14288,7 +14435,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "caer"
+        "caer (lluvia o nieve)"
       ],
       "en": [
         "to fall",
@@ -14299,7 +14446,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "caer",
+      "es": "caer (lluvia o nieve)",
       "en": "fall",
       "ca": "tardor"
     },
@@ -15162,7 +15309,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "floración"
+        "florecer"
       ],
       "en": [
         "to bloom"
@@ -15172,7 +15319,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "floración",
+      "es": "florecer",
       "en": "bloom",
       "ca": "florir"
     },
@@ -15582,7 +15729,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "tres dias"
+        "tres días"
       ],
       "en": [
         "three days",
@@ -15593,7 +15740,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "tres dias",
+      "es": "tres días",
       "en": "three days",
       "ca": "tres dies"
     },
@@ -15699,15 +15846,18 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-h5wg12",
-    "primaryWrittenForm": "散歩",
+    "primaryWrittenForm": "散歩する",
     "writtenForms": [
-      "散歩"
+      "散歩する"
     ],
     "primaryReading": "さんぽする",
     "furigana": [
       {
         "text": "散歩",
-        "reading": "さんぽする"
+        "reading": "さんぽ"
+      },
+      {
+        "text": "する"
       }
     ],
     "readings": [
@@ -15715,7 +15865,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "paseo"
+        "pasear"
       ],
       "en": [
         "to stroll"
@@ -15725,12 +15875,12 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "paseo",
+      "es": "pasear",
       "en": "stroll",
       "ca": "passeig"
     },
     "partOfSpeech": [
-      "godan-verb"
+      "irregular-verb"
     ],
     "studyCategory": "verbs",
     "jlptApproxLevel": "N5",
@@ -15839,15 +15989,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "writtenForms": [
       "四"
     ],
-    "primaryReading": "し / よん",
+    "primaryReading": "し",
     "furigana": [
       {
         "text": "四",
-        "reading": "し / よん"
+        "reading": "し"
       }
     ],
     "readings": [
-      "し / よん"
+      "し",
+      "よん"
     ],
     "meanings": {
       "es": [
@@ -15866,9 +16017,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "quatre"
     },
     "partOfSpeech": [
-      "other"
+      "number"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "numbers-counters",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [
       "四"
@@ -15944,7 +16095,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cuatro dias"
+        "cuatro días"
       ],
       "en": [
         "four days",
@@ -15955,7 +16106,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cuatro dias",
+      "es": "cuatro días",
       "en": "four days",
       "ca": "quatre dies"
     },
@@ -16037,7 +16188,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(humilde) hermana mayor"
+        "hermana mayor (propia)"
       ],
       "en": [
         "(humble) older sister"
@@ -16047,7 +16198,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(humilde) hermana mayor",
+      "es": "hermana mayor (propia)",
       "en": "(humble) older sister",
       "ca": "(humil) germana gran"
     },
@@ -16226,7 +16377,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(humilde) yo"
+        "yo (formal)"
       ],
       "en": [
         "(humble) I",
@@ -16237,7 +16388,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(humilde) yo",
+      "es": "yo (formal)",
       "en": "(humble) I",
       "ca": "(humil) jo"
     },
@@ -16542,7 +16693,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "mirar"
+        "reloj"
       ],
       "en": [
         "watch",
@@ -16553,7 +16704,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "mirar",
+      "es": "reloj",
       "en": "watch",
       "ca": "mirar"
     },
@@ -16841,15 +16992,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "writtenForms": [
       "七"
     ],
-    "primaryReading": "しち / なな",
+    "primaryReading": "しち",
     "furigana": [
       {
         "text": "七",
-        "reading": "しち / なな"
+        "reading": "しち"
       }
     ],
     "readings": [
-      "しち / なな"
+      "しち",
+      "なな"
     ],
     "meanings": {
       "es": [
@@ -16868,9 +17020,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "set"
     },
     "partOfSpeech": [
-      "other"
+      "number"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "numbers-counters",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [
       "七"
@@ -16946,7 +17098,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "siete dias"
+        "siete días"
       ],
       "en": [
         "seven days",
@@ -16957,7 +17109,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "siete dias",
+      "es": "siete días",
       "en": "seven days",
       "ca": "set dies"
     },
@@ -17069,7 +17221,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-t0kc5x",
     "primaryWrittenForm": "車",
     "writtenForms": [
-      "車"
+      "車",
+      "クルマ"
     ],
     "primaryReading": "くるま",
     "furigana": [
@@ -17108,7 +17261,15 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "車"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "車": [
+        "くるま"
+      ],
+      "クルマ": [
+        "クルマ"
+      ]
+    }
   },
   {
     "id": "n5-1fk9tqj",
@@ -17623,15 +17784,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "writtenForms": [
       "十"
     ],
-    "primaryReading": "じゅう とお",
+    "primaryReading": "じゅう",
     "furigana": [
       {
         "text": "十",
-        "reading": "じゅう とお"
+        "reading": "じゅう"
       }
     ],
     "readings": [
-      "じゅう とお"
+      "じゅう",
+      "とお"
     ],
     "meanings": {
       "es": [
@@ -17650,9 +17812,9 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "deu"
     },
     "partOfSpeech": [
-      "other"
+      "number"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "numbers-counters",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [
       "十"
@@ -17680,7 +17842,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "diez dias"
+        "diez días"
       ],
       "en": [
         "ten days",
@@ -17691,7 +17853,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "diez dias",
+      "es": "diez días",
       "en": "ten days",
       "ca": "deu dies"
     },
@@ -17865,7 +18027,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "apagar"
+        "sacar"
       ],
       "en": [
         "to put out"
@@ -17875,7 +18037,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "apagar",
+      "es": "sacar",
       "en": "put out",
       "ca": "apagar"
     },
@@ -18199,7 +18361,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "caliente"
+        "caluroso (tiempo)"
       ],
       "en": [
         "hot"
@@ -18209,7 +18371,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "caliente",
+      "es": "caluroso (tiempo)",
       "en": "hot",
       "ca": "calent"
     },
@@ -18483,7 +18645,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "pocos"
+        "un poco"
       ],
       "en": [
         "few"
@@ -18493,7 +18655,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "pocos",
+      "es": "un poco",
       "en": "few",
       "ca": "pocs"
     },
@@ -18534,7 +18696,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "algunos"
+        "poco / escaso"
       ],
       "en": [
         "a few"
@@ -18544,7 +18706,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "algunos",
+      "es": "poco / escaso",
       "en": "a few",
       "ca": "uns quants"
     },
@@ -18837,7 +18999,19 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "着"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "上着": [
+        "うわぎ"
+      ],
+      "上衣": [
+        "うわぎ",
+        "じょうい"
+      ],
+      "表着": [
+        "うわぎ"
+      ]
+    }
   },
   {
     "id": "n5-ctf3fd",
@@ -18889,7 +19063,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "乗る",
     "writtenForms": [
       "乗る",
-      "乘る"
+      "乘る",
+      "ノる"
     ],
     "primaryReading": "のる",
     "furigana": [
@@ -18931,7 +19106,18 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "乗"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "乗る": [
+        "のる"
+      ],
+      "乘る": [
+        "のる"
+      ],
+      "ノる": [
+        "ノる"
+      ]
+    }
   },
   {
     "id": "n5-8m6glw",
@@ -19093,7 +19279,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "refectorio"
+        "comedor"
       ],
       "en": [
         "dining hall"
@@ -19103,7 +19289,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "refectorio",
+      "es": "comedor",
       "en": "dining hall",
       "ca": "menjador"
     },
@@ -19308,7 +19494,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-omwat1",
     "primaryWrittenForm": "人",
     "writtenForms": [
-      "人"
+      "人",
+      "ヒト"
     ],
     "primaryReading": "ひと",
     "furigana": [
@@ -19346,7 +19533,15 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "人"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "人": [
+        "ひと"
+      ],
+      "ヒト": [
+        "ヒト"
+      ]
+    }
   },
   {
     "id": "n5-1clzdna",
@@ -19415,7 +19610,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "explotar"
+        "soplar"
       ],
       "en": [
         "to blow"
@@ -19425,7 +19620,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "explotar",
+      "es": "soplar",
       "en": "blow",
       "ca": "cop"
     },
@@ -20451,15 +20646,15 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-1kntmso",
-    "primaryWrittenForm": "川/河",
+    "primaryWrittenForm": "川",
     "writtenForms": [
-      "川/河",
-      "佳話"
+      "川",
+      "河"
     ],
     "primaryReading": "かわ",
     "furigana": [
       {
-        "text": "川/河",
+        "text": "川",
         "reading": "かわ"
       }
     ],
@@ -20488,8 +20683,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "studyCategory": "nouns",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [
-      "川",
-      "河"
+      "川"
     ],
     "examples": [],
     "enabled": true
@@ -20679,15 +20873,18 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-10ujywz",
-    "primaryWrittenForm": "掃除",
+    "primaryWrittenForm": "掃除する",
     "writtenForms": [
-      "掃除"
+      "掃除する"
     ],
     "primaryReading": "そうじする",
     "furigana": [
       {
         "text": "掃除",
-        "reading": "そうじする"
+        "reading": "そうじ"
+      },
+      {
+        "text": "する"
       }
     ],
     "readings": [
@@ -20695,7 +20892,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "limpio"
+        "limpiar"
       ],
       "en": [
         "to clean",
@@ -20706,12 +20903,12 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "limpio",
+      "es": "limpiar",
       "en": "clean",
       "ca": "net"
     },
     "partOfSpeech": [
-      "godan-verb"
+      "irregular-verb"
     ],
     "studyCategory": "verbs",
     "jlptApproxLevel": "N5",
@@ -21455,7 +21652,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "ser muy simpático"
+        "gustar mucho / encantar"
       ],
       "en": [
         "to be very likeable"
@@ -21465,7 +21662,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "ser muy simpático",
+      "es": "gustar mucho / encantar",
       "en": "be very likeable",
       "ca": "ser molt simpàtic"
     },
@@ -21779,7 +21976,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "OMS"
+        "quién"
       ],
       "en": [
         "who"
@@ -21789,7 +21986,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "OMS",
+      "es": "quién",
       "en": "who",
       "ca": "OMS"
     },
@@ -21918,7 +22115,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "tocar un instrumento con cuerdas"
+        "tocar un instrumento de cuerda o teclado"
       ],
       "en": [
         "to play an instrument with strings",
@@ -21929,7 +22126,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "tocar un instrumento con cuerdas",
+      "es": "tocar un instrumento de cuerda o teclado",
       "en": "play an instrument with strings",
       "ca": "tocar un instrument amb cordes"
     },
@@ -22487,7 +22684,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "ponte desde los hombros hacia abajo"
+        "ponerse / llevar ropa (desde los hombros hacia abajo)"
       ],
       "en": [
         "to put on from the shoulders down"
@@ -22497,7 +22694,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "ponte desde los hombros hacia abajo",
+      "es": "ponerse / llevar ropa (desde los hombros hacia abajo)",
       "en": "put on from the shoulders down",
       "ca": "posar-se des de les espatlles cap avall"
     },
@@ -22842,7 +23039,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "writtenForms": [
       "鳥",
       "鶏",
-      "禽"
+      "禽",
+      "トリ"
     ],
     "primaryReading": "とり",
     "furigana": [
@@ -22880,7 +23078,21 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "鳥"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "鳥": [
+        "とり"
+      ],
+      "鶏": [
+        "とり"
+      ],
+      "禽": [
+        "とり"
+      ],
+      "トリ": [
+        "トリ"
+      ]
+    }
   },
   {
     "id": "n5-vylbp",
@@ -22953,7 +23165,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "corto"
+        "bajo (altura)"
       ],
       "en": [
         "short",
@@ -22964,7 +23176,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "corto",
+      "es": "bajo (altura)",
       "en": "short",
       "ca": "curt"
     },
@@ -23223,7 +23435,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "palo"
+        "pegar / adherir"
       ],
       "en": [
         "to stick"
@@ -23233,7 +23445,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "palo",
+      "es": "pegar / adherir",
       "en": "stick",
       "ca": "pal"
     },
@@ -23312,7 +23524,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "tren electrico"
+        "tren eléctrico"
       ],
       "en": [
         "electric train"
@@ -23322,7 +23534,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "tren electrico",
+      "es": "tren eléctrico",
       "en": "electric train",
       "ca": "tren elèctric"
     },
@@ -23683,7 +23895,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "respuesta"
+        "responder"
       ],
       "en": [
         "to answer"
@@ -23693,7 +23905,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "respuesta",
+      "es": "responder",
       "en": "answer",
       "ca": "resposta"
     },
@@ -24101,7 +24313,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "volverse nublado"
+        "nublarse"
       ],
       "en": [
         "to become cloudy",
@@ -24112,7 +24324,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "volverse nublado",
+      "es": "nublarse",
       "en": "become cloudy",
       "ca": "tornar-se ennuvolat"
     },
@@ -24394,7 +24606,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "veinte dias"
+        "veinte días"
       ],
       "en": [
         "twenty days",
@@ -24405,7 +24617,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "veinte dias",
+      "es": "veinte días",
       "en": "twenty days",
       "ca": "vint dies"
     },
@@ -24487,7 +24699,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "dos dias"
+        "dos días"
       ],
       "en": [
         "two days",
@@ -24498,7 +24710,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "dos dias",
+      "es": "dos días",
       "en": "two days",
       "ca": "dos dies"
     },
@@ -24798,7 +25010,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-1t2etri",
     "primaryWrittenForm": "猫",
     "writtenForms": [
-      "猫"
+      "猫",
+      "ネコ"
     ],
     "primaryReading": "ねこ",
     "furigana": [
@@ -24836,7 +25049,15 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "猫"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "猫": [
+        "ねこ"
+      ],
+      "ネコ": [
+        "ネコ"
+      ]
+    }
   },
   {
     "id": "n5-1t2n1am",
@@ -24979,7 +25200,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "primaryWrittenForm": "背広",
     "writtenForms": [
       "背広",
-      "脊広"
+      "脊広",
+      "セビロ"
     ],
     "primaryReading": "せびろ",
     "furigana": [
@@ -25018,7 +25240,18 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "広"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "背広": [
+        "せびろ"
+      ],
+      "脊広": [
+        "せびろ"
+      ],
+      "セビロ": [
+        "セビロ"
+      ]
+    }
   },
   {
     "id": "n5-e5dlpk",
@@ -25411,7 +25644,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "匣",
       "筥",
       "筐",
-      "凾"
+      "凾",
+      "ハコ"
     ],
     "primaryReading": "はこ",
     "furigana": [
@@ -25451,7 +25685,30 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "箱"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "箱": [
+        "はこ"
+      ],
+      "函": [
+        "はこ"
+      ],
+      "匣": [
+        "はこ"
+      ],
+      "筥": [
+        "はこ"
+      ],
+      "筐": [
+        "はこ"
+      ],
+      "凾": [
+        "はこ"
+      ],
+      "ハコ": [
+        "ハコ"
+      ]
+    }
   },
   {
     "id": "n5-1lmnoiu",
@@ -25567,7 +25824,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "ocho dias"
+        "ocho días"
       ],
       "en": [
         "eight days",
@@ -25578,7 +25835,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "ocho dias",
+      "es": "ocho días",
       "en": "eight days",
       "ca": "vuit dies"
     },
@@ -25700,7 +25957,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "medio minuto"
+        "mitad"
       ],
       "en": [
         "half minute"
@@ -25710,7 +25967,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "medio minuto",
+      "es": "mitad",
       "en": "half minute",
       "ca": "mig minut"
     },
@@ -26144,7 +26401,26 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "百"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "百": [
+        "ひゃく"
+      ],
+      "１００": [
+        "ひゃく"
+      ],
+      "陌": [
+        "ひゃく",
+        "はく"
+      ],
+      "佰": [
+        "ひゃく",
+        "はく"
+      ],
+      "一〇〇": [
+        "ひゃく"
+      ]
+    }
   },
   {
     "id": "n5-pup1nb",
@@ -26460,7 +26736,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-1h4sk18",
     "primaryWrittenForm": "物",
     "writtenForms": [
-      "物"
+      "物",
+      "モノ"
     ],
     "primaryReading": "もの",
     "furigana": [
@@ -26500,7 +26777,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "物"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "物": [
+        "もの",
+        "もん"
+      ],
+      "モノ": [
+        "モノ"
+      ]
+    }
   },
   {
     "id": "n5-jbf3jg",
@@ -26527,7 +26813,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "entenderse"
+        "entender / comprender"
       ],
       "en": [
         "to be understood"
@@ -26537,7 +26823,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "entenderse",
+      "es": "entender / comprender",
       "en": "be understood",
       "ca": "ser entès"
     },
@@ -26672,7 +26958,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "póngase en fila"
+        "ponerse en fila"
       ],
       "en": [
         "to line up",
@@ -26683,7 +26969,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "póngase en fila",
+      "es": "ponerse en fila",
       "en": "line up",
       "ca": "alinear-se"
     },
@@ -26720,7 +27006,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "póngase en fila"
+        "poner en fila / ordenar"
       ],
       "en": [
         "to line up",
@@ -26731,7 +27017,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "póngase en fila",
+      "es": "poner en fila / ordenar",
       "en": "line up",
       "ca": "alinear-se"
     },
@@ -26769,7 +27055,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cerca"
+        "cerrarse"
       ],
       "en": [
         "to close",
@@ -26780,7 +27066,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cerca",
+      "es": "cerrarse",
       "en": "close",
       "ca": "tancar"
     },
@@ -26979,15 +27265,18 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-rhke1n",
-    "primaryWrittenForm": "勉強",
+    "primaryWrittenForm": "勉強する",
     "writtenForms": [
-      "勉強"
+      "勉強する"
     ],
     "primaryReading": "べんきょうする",
     "furigana": [
       {
         "text": "勉強",
-        "reading": "べんきょうする"
+        "reading": "べんきょう"
+      },
+      {
+        "text": "する"
       }
     ],
     "readings": [
@@ -27010,7 +27299,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "estudiar"
     },
     "partOfSpeech": [
-      "godan-verb"
+      "irregular-verb"
     ],
     "studyCategory": "verbs",
     "jlptApproxLevel": "N5",
@@ -27451,7 +27740,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "(humilde) hermana menor"
+        "hermana menor (propia)"
       ],
       "en": [
         "(humble) younger sister"
@@ -27461,7 +27750,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "(humilde) hermana menor",
+      "es": "hermana menor (propia)",
       "en": "(humble) younger sister",
       "ca": "(humil) germana petita"
     },
@@ -27482,15 +27771,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "writtenForms": [
       "毎月"
     ],
-    "primaryReading": "まいげつ/まいつき",
+    "primaryReading": "まいげつ",
     "furigana": [
       {
         "text": "毎月",
-        "reading": "まいげつ/まいつき"
+        "reading": "まいげつ"
       }
     ],
     "readings": [
-      "まいげつ/まいつき"
+      "まいげつ",
+      "まいつき"
     ],
     "meanings": {
       "es": [
@@ -27509,9 +27799,10 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "cada mes"
     },
     "partOfSpeech": [
-      "other"
+      "noun",
+      "adverb"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "adverbs",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [
       "毎",
@@ -27662,15 +27953,16 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "writtenForms": [
       "毎年"
     ],
-    "primaryReading": "まいねん/まいとし",
+    "primaryReading": "まいねん",
     "furigana": [
       {
         "text": "毎年",
-        "reading": "まいねん/まいとし"
+        "reading": "まいねん"
       }
     ],
     "readings": [
-      "まいねん/まいとし"
+      "まいねん",
+      "まいとし"
     ],
     "meanings": {
       "es": [
@@ -27689,9 +27981,10 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "ca": "cada any"
     },
     "partOfSpeech": [
-      "other"
+      "noun",
+      "adverb"
     ],
-    "studyCategory": "expressions-other",
+    "studyCategory": "adverbs",
     "jlptApproxLevel": "N5",
     "kanjiCharacters": [
       "毎",
@@ -27718,7 +28011,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "cada tarde"
+        "cada noche"
       ],
       "en": [
         "every night"
@@ -27728,7 +28021,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "cada tarde",
+      "es": "cada noche",
       "en": "every night",
       "ca": "cada nit"
     },
@@ -28047,7 +28340,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "ruido de animales. chirriar"
+        "emitir sonidos (un animal)"
       ],
       "en": [
         "animal noise. to chirp",
@@ -28058,7 +28351,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "ruido de animales. chirriar",
+      "es": "emitir sonidos (un animal)",
       "en": "animal noise. to chirp",
       "ca": "soroll animal. xiular"
     },
@@ -28391,7 +28684,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     "id": "n5-1b1vbah",
     "primaryWrittenForm": "薬",
     "writtenForms": [
-      "薬"
+      "薬",
+      "クスリ"
     ],
     "primaryReading": "くすり",
     "furigana": [
@@ -28429,7 +28723,15 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "薬"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "薬": [
+        "くすり"
+      ],
+      "クスリ": [
+        "クスリ"
+      ]
+    }
   },
   {
     "id": "n5-k2fpoj",
@@ -28680,7 +28982,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "noche"
+        "al atardecer / a última hora de la tarde"
       ],
       "en": [
         "evening"
@@ -28690,7 +28992,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "noche",
+      "es": "al atardecer / a última hora de la tarde",
       "en": "evening",
       "ca": "vespre"
     },
@@ -28759,7 +29061,8 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "葉書き",
       "端書",
       "端書き",
-      "羽書"
+      "羽書",
+      "ハガキ"
     ],
     "primaryReading": "はがき",
     "furigana": [
@@ -28798,7 +29101,27 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       "書"
     ],
     "examples": [],
-    "enabled": true
+    "enabled": true,
+    "formReadings": {
+      "葉書": [
+        "はがき"
+      ],
+      "葉書き": [
+        "はがき"
+      ],
+      "端書": [
+        "はがき"
+      ],
+      "端書き": [
+        "はがき"
+      ],
+      "羽書": [
+        "はがき"
+      ],
+      "ハガキ": [
+        "ハガキ"
+      ]
+    }
   },
   {
     "id": "n5-1c3q0u6",
@@ -28821,7 +29144,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "necesidad"
+        "ser necesario"
       ],
       "en": [
         "to need"
@@ -28831,7 +29154,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "necesidad",
+      "es": "ser necesario",
       "en": "need",
       "ca": "necessitat"
     },
@@ -29050,7 +29373,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "al año que viene"
+        "el año que viene"
       ],
       "en": [
         "next year"
@@ -29060,7 +29383,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "al año que viene",
+      "es": "el año que viene",
       "en": "next year",
       "ca": "l'any vinent"
     },
@@ -29100,7 +29423,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "preguntar"
+        "pedir / solicitar"
       ],
       "en": [
         "to ask"
@@ -29110,7 +29433,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "preguntar",
+      "es": "pedir / solicitar",
       "en": "ask",
       "ca": "preguntar"
     },
@@ -29555,7 +29878,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "frio al tacto"
+        "frío al tacto"
       ],
       "en": [
         "cold to the touch"
@@ -29565,7 +29888,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "frio al tacto",
+      "es": "frío al tacto",
       "en": "cold to the touch",
       "ca": "fred al tacte"
     },
@@ -29673,15 +29996,18 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
   },
   {
     "id": "n5-ufmxaa",
-    "primaryWrittenForm": "練習",
+    "primaryWrittenForm": "練習する",
     "writtenForms": [
-      "練習"
+      "練習する"
     ],
     "primaryReading": "れんしゅうする",
     "furigana": [
       {
         "text": "練習",
-        "reading": "れんしゅうする"
+        "reading": "れんしゅう"
+      },
+      {
+        "text": "する"
       }
     ],
     "readings": [
@@ -29689,7 +30015,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "práctica"
+        "practicar"
       ],
       "en": [
         "to practice"
@@ -29699,12 +30025,12 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "práctica",
+      "es": "practicar",
       "en": "practice",
       "ca": "pràctica"
     },
     "partOfSpeech": [
-      "godan-verb"
+      "irregular-verb"
     ],
     "studyCategory": "verbs",
     "jlptApproxLevel": "N5",
@@ -29876,7 +30202,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "seis dias"
+        "seis días"
       ],
       "en": [
         "six days",
@@ -29887,7 +30213,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "seis dias",
+      "es": "seis días",
       "en": "six days",
       "ca": "sis dies"
     },
@@ -29924,7 +30250,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
     ],
     "meanings": {
       "es": [
-        "hablar"
+        "conversación / charla"
       ],
       "en": [
         "talk",
@@ -29935,7 +30261,7 @@ export const VOCABULARY_N5:readonly VocabularyEntry[]=[
       ]
     },
     "quizMeaning": {
-      "es": "hablar",
+      "es": "conversación / charla",
       "en": "talk",
       "ca": "parlar"
     },

@@ -17,8 +17,10 @@ describe('Reviewed supplemental Grammar vocabulary',()=>{
   });
   it('accounts for all unique editorial entries without dropping uncovered words',()=>{
     const words=intendedVocabularyWords(GRAMMAR_LESSONS.flatMap(lesson=>lesson.prerequisites.intendedVocabulary));
-    expect(words).toHaveLength(134);expect(words.filter(word=>word.entry)).toHaveLength(112);
+    expect(words).toHaveLength(134);expect(words.filter(word=>word.entry)).toHaveLength(113);
+    // The normalized Vocabulary verb now matches this existing prerequisite exactly.
+    expect(words.find(word=>word.raw==='勉強する（べんきょうする）')?.entry?.id).toBe('n5-rhke1n');
     expect(words.filter(word=>!word.entry && grammarReferenceMeaning(word,'es'))).toHaveLength(7);
-    expect(words.filter(word=>!word.entry && !grammarReferenceMeaning(word,'es'))).toHaveLength(15);
+    expect(words.filter(word=>!word.entry && !grammarReferenceMeaning(word,'es'))).toHaveLength(14);
   });
 });

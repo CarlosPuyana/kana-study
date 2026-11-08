@@ -1,0 +1,4981 @@
+{
+  "schemaVersion": 1,
+  "reviewedDate": "2026-11-08",
+  "scope": "155 unique Vocabulary IDs: pending cases/metadata plus diagnostic preservation of all 82 previous Spanish corrections. No EN/CA edits or semantic reassignment.",
+  "dictionaryRelease": "3.6.2+20261102210542",
+  "dictionarySha256": "3c81cf090fd99f219194dac74d89c54bb73ad067d4c7fa5c83ff60bcbc81a1f4",
+  "openJlptCommit": "c42fd9fa3777bfc1775446f7c418d549dfd6e4cf",
+  "openJlptSha256": "3e606fc15fd5d177fa7c3928c17f28b0d34ac84ec6bdbfe0947b339d9d815a6d",
+  "editorialLicense": "CC-BY-SA-4.0",
+  "patches": [
+    {
+      "id": "n5-16rp5xj",
+      "before": {
+        "primaryWrittenForm": "いい/よい",
+        "primaryReading": "いい/よい",
+        "writtenForms": [
+          "いい/よい"
+        ],
+        "readings": [
+          "いい/よい"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other",
+        "spanish": "bien",
+        "formReadings": null
+      },
+      "after": {
+        "primaryWrittenForm": "いい",
+        "primaryReading": "いい",
+        "writtenForms": [
+          "いい",
+          "よい",
+          "良い"
+        ],
+        "readings": [
+          "いい",
+          "よい"
+        ],
+        "partOfSpeech": [
+          "i-adjective"
+        ],
+        "studyCategory": "adjectives",
+        "spanish": "bueno",
+        "formReadings": {
+          "いい": [
+            "いい"
+          ],
+          "よい": [
+            "よい"
+          ],
+          "良い": [
+            "いい",
+            "よい"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1dit5af",
+      "before": {
+        "readings": [
+          "いくら",
+          "イクラ"
+        ]
+      },
+      "after": {
+        "readings": [
+          "いくら"
+        ]
+      }
+    },
+    {
+      "id": "n5-iwmss7",
+      "before": {
+        "writtenForms": [
+          "かかる",
+          "架かる"
+        ]
+      },
+      "after": {
+        "writtenForms": [
+          "かかる",
+          "掛かる"
+        ]
+      }
+    },
+    {
+      "id": "n5-lmt5xj",
+      "before": {
+        "writtenForms": [
+          "かばん",
+          "下番"
+        ],
+        "partOfSpeech": [
+          "irregular-verb",
+          "noun"
+        ],
+        "studyCategory": "verbs"
+      },
+      "after": {
+        "writtenForms": [
+          "かばん",
+          "鞄"
+        ],
+        "partOfSpeech": [
+          "noun"
+        ],
+        "studyCategory": "nouns"
+      }
+    },
+    {
+      "id": "n5-11fsr3z",
+      "before": {
+        "primaryWrittenForm": "キロ/キログラム",
+        "primaryReading": "キロ/キログラム",
+        "writtenForms": [
+          "キロ/キログラム"
+        ],
+        "readings": [
+          "キロ/キログラム"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other",
+        "formReadings": null
+      },
+      "after": {
+        "primaryWrittenForm": "キログラム",
+        "primaryReading": "キログラム",
+        "writtenForms": [
+          "キログラム",
+          "キロ"
+        ],
+        "readings": [
+          "キログラム",
+          "キロ"
+        ],
+        "partOfSpeech": [
+          "noun"
+        ],
+        "studyCategory": "nouns",
+        "formReadings": {
+          "キログラム": [
+            "キログラム"
+          ],
+          "キロ": [
+            "キロ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1g1750v",
+      "before": {
+        "primaryWrittenForm": "キロ/キロメートル",
+        "primaryReading": "キロ/キロメートル",
+        "writtenForms": [
+          "キロ/キロメートル"
+        ],
+        "readings": [
+          "キロ/キロメートル"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other",
+        "formReadings": null
+      },
+      "after": {
+        "primaryWrittenForm": "キロメートル",
+        "primaryReading": "キロメートル",
+        "writtenForms": [
+          "キロメートル",
+          "キロ"
+        ],
+        "readings": [
+          "キロメートル",
+          "キロ"
+        ],
+        "partOfSpeech": [
+          "noun"
+        ],
+        "studyCategory": "nouns",
+        "formReadings": {
+          "キロメートル": [
+            "キロメートル"
+          ],
+          "キロ": [
+            "キロ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-3djqur",
+      "before": {
+        "spanish": "esta persona o manera"
+      },
+      "after": {
+        "spanish": "esta persona / por aquí"
+      }
+    },
+    {
+      "id": "n5-ok476b",
+      "before": {
+        "spanish": "esta persona o manera"
+      },
+      "after": {
+        "spanish": "por aquí (informal)"
+      }
+    },
+    {
+      "id": "n5-qqq055",
+      "before": {
+        "writtenForms": [
+          "この",
+          "九",
+          "９",
+          "玖"
+        ],
+        "readings": [
+          "この",
+          "きゅう",
+          "く",
+          "ここの",
+          "ここ"
+        ],
+        "partOfSpeech": [
+          "number"
+        ],
+        "studyCategory": "numbers-counters"
+      },
+      "after": {
+        "writtenForms": [
+          "この"
+        ],
+        "readings": [
+          "この"
+        ],
+        "partOfSpeech": [
+          "determiner"
+        ],
+        "studyCategory": "pronouns-demonstratives"
+      }
+    },
+    {
+      "id": "n5-dst5fr",
+      "before": {
+        "partOfSpeech": [
+          "godan-verb"
+        ]
+      },
+      "after": {
+        "partOfSpeech": [
+          "irregular-verb"
+        ]
+      }
+    },
+    {
+      "id": "n5-o1lvv5",
+      "before": {
+        "primaryWrittenForm": "じゃ/じゃあ",
+        "primaryReading": "じゃ/じゃあ",
+        "writtenForms": [
+          "じゃ/じゃあ"
+        ],
+        "readings": [
+          "じゃ/じゃあ"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other",
+        "formReadings": null
+      },
+      "after": {
+        "primaryWrittenForm": "じゃ",
+        "primaryReading": "じゃ",
+        "writtenForms": [
+          "じゃ",
+          "じゃあ"
+        ],
+        "readings": [
+          "じゃ",
+          "じゃあ"
+        ],
+        "partOfSpeech": [
+          "conjunction"
+        ],
+        "studyCategory": "function-words",
+        "formReadings": {
+          "じゃ": [
+            "じゃ"
+          ],
+          "じゃあ": [
+            "じゃあ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-cmt7v9",
+      "before": {
+        "primaryWrittenForm": "そうして/そして",
+        "primaryReading": "そうして/そして",
+        "writtenForms": [
+          "そうして/そして"
+        ],
+        "readings": [
+          "そうして/そして"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other",
+        "formReadings": null
+      },
+      "after": {
+        "primaryWrittenForm": "そうして",
+        "primaryReading": "そうして",
+        "writtenForms": [
+          "そうして",
+          "そして"
+        ],
+        "readings": [
+          "そうして",
+          "そして"
+        ],
+        "partOfSpeech": [
+          "conjunction"
+        ],
+        "studyCategory": "function-words",
+        "formReadings": {
+          "そうして": [
+            "そうして"
+          ],
+          "そして": [
+            "そして"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1xbona5",
+      "before": {
+        "writtenForms": [
+          "そば",
+          "蕎麦"
+        ],
+        "readings": [
+          "そば",
+          "そばむぎ",
+          "そまむぎ",
+          "ソバ"
+        ]
+      },
+      "after": {
+        "writtenForms": [
+          "そば",
+          "側",
+          "傍"
+        ],
+        "readings": [
+          "そば"
+        ]
+      }
+    },
+    {
+      "id": "n5-rg5twp",
+      "before": {
+        "writtenForms": [
+          "たて",
+          "殺陣"
+        ],
+        "readings": [
+          "たて",
+          "さつじん"
+        ]
+      },
+      "after": {
+        "writtenForms": [
+          "たて",
+          "縦"
+        ],
+        "readings": [
+          "たて"
+        ]
+      }
+    },
+    {
+      "id": "n5-1ea5llr",
+      "before": {
+        "writtenForms": [
+          "たぶん",
+          "他聞"
+        ],
+        "partOfSpeech": [
+          "noun"
+        ],
+        "studyCategory": "nouns"
+      },
+      "after": {
+        "writtenForms": [
+          "たぶん",
+          "多分"
+        ],
+        "partOfSpeech": [
+          "adverb"
+        ],
+        "studyCategory": "adverbs"
+      }
+    },
+    {
+      "id": "n5-13590lj",
+      "before": {
+        "writtenForms": [
+          "つける",
+          "就ける",
+          "即ける"
+        ]
+      },
+      "after": {
+        "writtenForms": [
+          "つける",
+          "点ける"
+        ]
+      }
+    },
+    {
+      "id": "n5-kp6c0v",
+      "before": {
+        "writtenForms": [
+          "できる",
+          "出切る"
+        ],
+        "partOfSpeech": [
+          "godan-verb"
+        ]
+      },
+      "after": {
+        "writtenForms": [
+          "できる",
+          "出来る"
+        ],
+        "partOfSpeech": [
+          "ichidan-verb"
+        ]
+      }
+    },
+    {
+      "id": "n5-11k8rb",
+      "before": {
+        "spanish": "con eso..."
+      },
+      "after": {
+        "spanish": "entonces / pues bien"
+      }
+    },
+    {
+      "id": "n5-10vobp",
+      "before": {
+        "writtenForms": [
+          "どう",
+          "仝"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other"
+      },
+      "after": {
+        "writtenForms": [
+          "どう"
+        ],
+        "partOfSpeech": [
+          "adverb"
+        ],
+        "studyCategory": "adverbs"
+      }
+    },
+    {
+      "id": "n5-rtllmt",
+      "before": {
+        "writtenForms": [
+          "どの",
+          "殿"
+        ],
+        "partOfSpeech": [
+          "suffix"
+        ],
+        "studyCategory": "function-words"
+      },
+      "after": {
+        "writtenForms": [
+          "どの"
+        ],
+        "partOfSpeech": [
+          "determiner"
+        ],
+        "studyCategory": "pronouns-demonstratives"
+      }
+    },
+    {
+      "id": "n5-ovfmgi",
+      "before": {
+        "formReadings": null
+      },
+      "after": {
+        "formReadings": {
+          "とり肉": [
+            "とりにく"
+          ],
+          "鶏肉": [
+            "とりにく",
+            "けいにく"
+          ],
+          "鳥肉": [
+            "とりにく",
+            "ちょうにく"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-120imaf",
+      "before": {
+        "writtenForms": [
+          "はく",
+          "掃く"
+        ]
+      },
+      "after": {
+        "writtenForms": [
+          "はく",
+          "履く",
+          "穿く"
+        ]
+      }
+    },
+    {
+      "id": "n5-d4yemv",
+      "before": {
+        "writtenForms": [
+          "はし",
+          "橋"
+        ]
+      },
+      "after": {
+        "writtenForms": [
+          "はし",
+          "箸"
+        ]
+      }
+    },
+    {
+      "id": "n5-1ks144z",
+      "before": {
+        "writtenForms": [
+          "ほんとう",
+          "本島"
+        ]
+      },
+      "after": {
+        "writtenForms": [
+          "ほんとう",
+          "本当"
+        ]
+      }
+    },
+    {
+      "id": "n5-nou75p",
+      "before": {
+        "writtenForms": [
+          "また",
+          "股",
+          "叉",
+          "胯",
+          "俣"
+        ],
+        "partOfSpeech": [
+          "noun"
+        ],
+        "studyCategory": "nouns"
+      },
+      "after": {
+        "writtenForms": [
+          "また",
+          "又"
+        ],
+        "partOfSpeech": [
+          "adverb",
+          "conjunction"
+        ],
+        "studyCategory": "adverbs"
+      }
+    },
+    {
+      "id": "n5-11vyy2r",
+      "before": {
+        "writtenForms": [
+          "ゆっくりと"
+        ],
+        "readings": [
+          "ゆっくりと"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other",
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "ゆっくりと",
+          "ゆっくり"
+        ],
+        "readings": [
+          "ゆっくりと",
+          "ゆっくり"
+        ],
+        "partOfSpeech": [
+          "adverb"
+        ],
+        "studyCategory": "adverbs",
+        "formReadings": {
+          "ゆっくりと": [
+            "ゆっくりと"
+          ],
+          "ゆっくり": [
+            "ゆっくり"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-8d06fh",
+      "before": {
+        "writtenForms": [
+          "よく",
+          "欲",
+          "慾"
+        ],
+        "partOfSpeech": [
+          "noun"
+        ],
+        "studyCategory": "nouns"
+      },
+      "after": {
+        "writtenForms": [
+          "よく",
+          "良く"
+        ],
+        "partOfSpeech": [
+          "adverb"
+        ],
+        "studyCategory": "adverbs"
+      }
+    },
+    {
+      "id": "n5-1rc8hqv",
+      "before": {
+        "primaryWrittenForm": "ラジカセ / ラジオカセット",
+        "primaryReading": "ラジカセ / ラジオカセット",
+        "writtenForms": [
+          "ラジカセ / ラジオカセット"
+        ],
+        "readings": [
+          "ラジカセ / ラジオカセット"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other",
+        "formReadings": null,
+        "spanish": "reproductor de casetes de radio"
+      },
+      "after": {
+        "primaryWrittenForm": "ラジカセ",
+        "primaryReading": "ラジカセ",
+        "writtenForms": [
+          "ラジカセ",
+          "ラジオカセット"
+        ],
+        "readings": [
+          "ラジカセ",
+          "ラジオカセット"
+        ],
+        "partOfSpeech": [
+          "noun"
+        ],
+        "studyCategory": "nouns",
+        "formReadings": {
+          "ラジカセ": [
+            "ラジカセ"
+          ],
+          "ラジオカセット": [
+            "ラジオカセット"
+          ]
+        },
+        "spanish": "radiocasete"
+      }
+    },
+    {
+      "id": "n5-12n8bt6",
+      "before": {
+        "writtenForms": [
+          "横"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "横",
+          "ヨコ"
+        ],
+        "formReadings": {
+          "横": [
+            "よこ"
+          ],
+          "ヨコ": [
+            "ヨコ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-pi0as4",
+      "before": {
+        "writtenForms": [
+          "下手"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "下手",
+          "ヘタ"
+        ],
+        "formReadings": {
+          "下手": [
+            "へた"
+          ],
+          "ヘタ": [
+            "ヘタ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-p57dwn",
+      "before": {
+        "primaryReading": "なん/なに",
+        "readings": [
+          "なん/なに"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other"
+      },
+      "after": {
+        "primaryReading": "なん",
+        "readings": [
+          "なん",
+          "なに"
+        ],
+        "partOfSpeech": [
+          "pronoun"
+        ],
+        "studyCategory": "pronouns-demonstratives"
+      }
+    },
+    {
+      "id": "n5-1l6q2uy",
+      "before": {
+        "writtenForms": [
+          "暇",
+          "閑"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "暇",
+          "閑",
+          "ヒマ"
+        ],
+        "formReadings": {
+          "暇": [
+            "ひま"
+          ],
+          "閑": [
+            "ひま"
+          ],
+          "ヒマ": [
+            "ヒマ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1kbl7mw",
+      "before": {
+        "formReadings": null
+      },
+      "after": {
+        "formReadings": {
+          "絵": [
+            "え"
+          ],
+          "画": [
+            "え",
+            "が"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-f2jfha",
+      "before": {
+        "writtenForms": [
+          "眼鏡"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "眼鏡",
+          "メガネ"
+        ],
+        "formReadings": {
+          "眼鏡": [
+            "めがね"
+          ],
+          "メガネ": [
+            "メガネ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-119te1p",
+      "before": {
+        "spanish": "salón de café"
+      },
+      "after": {
+        "spanish": "cafetería"
+      }
+    },
+    {
+      "id": "n5-1o3ndsw",
+      "before": {
+        "primaryReading": "きゅう / く",
+        "readings": [
+          "きゅう / く"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other"
+      },
+      "after": {
+        "primaryReading": "きゅう",
+        "readings": [
+          "きゅう",
+          "く"
+        ],
+        "partOfSpeech": [
+          "number"
+        ],
+        "studyCategory": "numbers-counters"
+      }
+    },
+    {
+      "id": "n5-7d4cs1",
+      "before": {
+        "writtenForms": [
+          "嫌",
+          "厭"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "嫌",
+          "厭",
+          "イヤ"
+        ],
+        "formReadings": {
+          "嫌": [
+            "いや",
+            "や"
+          ],
+          "厭": [
+            "いや",
+            "や"
+          ],
+          "イヤ": [
+            "イヤ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-86ld3t",
+      "before": {
+        "writtenForms": [
+          "犬",
+          "狗"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "犬",
+          "狗",
+          "イヌ"
+        ],
+        "formReadings": {
+          "犬": [
+            "いぬ"
+          ],
+          "狗": [
+            "いぬ"
+          ],
+          "イヌ": [
+            "イヌ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-h5wg12",
+      "before": {
+        "primaryWrittenForm": "散歩",
+        "writtenForms": [
+          "散歩"
+        ],
+        "partOfSpeech": [
+          "godan-verb"
+        ],
+        "spanish": "paseo"
+      },
+      "after": {
+        "primaryWrittenForm": "散歩する",
+        "writtenForms": [
+          "散歩する"
+        ],
+        "partOfSpeech": [
+          "irregular-verb"
+        ],
+        "spanish": "pasear"
+      }
+    },
+    {
+      "id": "n5-1rmwkyr",
+      "before": {
+        "primaryReading": "し / よん",
+        "readings": [
+          "し / よん"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other"
+      },
+      "after": {
+        "primaryReading": "し",
+        "readings": [
+          "し",
+          "よん"
+        ],
+        "partOfSpeech": [
+          "number"
+        ],
+        "studyCategory": "numbers-counters"
+      }
+    },
+    {
+      "id": "n5-n27ydh",
+      "before": {
+        "primaryReading": "しち / なな",
+        "readings": [
+          "しち / なな"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other"
+      },
+      "after": {
+        "primaryReading": "しち",
+        "readings": [
+          "しち",
+          "なな"
+        ],
+        "partOfSpeech": [
+          "number"
+        ],
+        "studyCategory": "numbers-counters"
+      }
+    },
+    {
+      "id": "n5-t0kc5x",
+      "before": {
+        "writtenForms": [
+          "車"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "車",
+          "クルマ"
+        ],
+        "formReadings": {
+          "車": [
+            "くるま"
+          ],
+          "クルマ": [
+            "クルマ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-cm95rj",
+      "before": {
+        "primaryReading": "じゅう とお",
+        "readings": [
+          "じゅう とお"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other"
+      },
+      "after": {
+        "primaryReading": "じゅう",
+        "readings": [
+          "じゅう",
+          "とお"
+        ],
+        "partOfSpeech": [
+          "number"
+        ],
+        "studyCategory": "numbers-counters"
+      }
+    },
+    {
+      "id": "n5-ysai2s",
+      "before": {
+        "formReadings": null
+      },
+      "after": {
+        "formReadings": {
+          "上着": [
+            "うわぎ"
+          ],
+          "上衣": [
+            "うわぎ",
+            "じょうい"
+          ],
+          "表着": [
+            "うわぎ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1e41kku",
+      "before": {
+        "writtenForms": [
+          "乗る",
+          "乘る"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "乗る",
+          "乘る",
+          "ノる"
+        ],
+        "formReadings": {
+          "乗る": [
+            "のる"
+          ],
+          "乘る": [
+            "のる"
+          ],
+          "ノる": [
+            "ノる"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1q1sakk",
+      "before": {
+        "spanish": "refectorio"
+      },
+      "after": {
+        "spanish": "comedor"
+      }
+    },
+    {
+      "id": "n5-omwat1",
+      "before": {
+        "writtenForms": [
+          "人"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "人",
+          "ヒト"
+        ],
+        "formReadings": {
+          "人": [
+            "ひと"
+          ],
+          "ヒト": [
+            "ヒト"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1kntmso",
+      "before": {
+        "primaryWrittenForm": "川/河",
+        "writtenForms": [
+          "川/河",
+          "佳話"
+        ]
+      },
+      "after": {
+        "primaryWrittenForm": "川",
+        "writtenForms": [
+          "川",
+          "河"
+        ]
+      }
+    },
+    {
+      "id": "n5-10ujywz",
+      "before": {
+        "primaryWrittenForm": "掃除",
+        "writtenForms": [
+          "掃除"
+        ],
+        "partOfSpeech": [
+          "godan-verb"
+        ],
+        "spanish": "limpio"
+      },
+      "after": {
+        "primaryWrittenForm": "掃除する",
+        "writtenForms": [
+          "掃除する"
+        ],
+        "partOfSpeech": [
+          "irregular-verb"
+        ],
+        "spanish": "limpiar"
+      }
+    },
+    {
+      "id": "n5-17a05ue",
+      "before": {
+        "writtenForms": [
+          "鳥",
+          "鶏",
+          "禽"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "鳥",
+          "鶏",
+          "禽",
+          "トリ"
+        ],
+        "formReadings": {
+          "鳥": [
+            "とり"
+          ],
+          "鶏": [
+            "とり"
+          ],
+          "禽": [
+            "とり"
+          ],
+          "トリ": [
+            "トリ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1t2etri",
+      "before": {
+        "writtenForms": [
+          "猫"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "猫",
+          "ネコ"
+        ],
+        "formReadings": {
+          "猫": [
+            "ねこ"
+          ],
+          "ネコ": [
+            "ネコ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-6tjkhl",
+      "before": {
+        "writtenForms": [
+          "背広",
+          "脊広"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "背広",
+          "脊広",
+          "セビロ"
+        ],
+        "formReadings": {
+          "背広": [
+            "せびろ"
+          ],
+          "脊広": [
+            "せびろ"
+          ],
+          "セビロ": [
+            "セビロ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-180eg6u",
+      "before": {
+        "writtenForms": [
+          "箱",
+          "函",
+          "匣",
+          "筥",
+          "筐",
+          "凾"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "箱",
+          "函",
+          "匣",
+          "筥",
+          "筐",
+          "凾",
+          "ハコ"
+        ],
+        "formReadings": {
+          "箱": [
+            "はこ"
+          ],
+          "函": [
+            "はこ"
+          ],
+          "匣": [
+            "はこ"
+          ],
+          "筥": [
+            "はこ"
+          ],
+          "筐": [
+            "はこ"
+          ],
+          "凾": [
+            "はこ"
+          ],
+          "ハコ": [
+            "ハコ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1polhv1",
+      "before": {
+        "formReadings": null
+      },
+      "after": {
+        "formReadings": {
+          "百": [
+            "ひゃく"
+          ],
+          "１００": [
+            "ひゃく"
+          ],
+          "陌": [
+            "ひゃく",
+            "はく"
+          ],
+          "佰": [
+            "ひゃく",
+            "はく"
+          ],
+          "一〇〇": [
+            "ひゃく"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-1h4sk18",
+      "before": {
+        "writtenForms": [
+          "物"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "物",
+          "モノ"
+        ],
+        "formReadings": {
+          "物": [
+            "もの",
+            "もん"
+          ],
+          "モノ": [
+            "モノ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-jbf3jg",
+      "before": {
+        "spanish": "entenderse"
+      },
+      "after": {
+        "spanish": "entender / comprender"
+      }
+    },
+    {
+      "id": "n5-rhke1n",
+      "before": {
+        "primaryWrittenForm": "勉強",
+        "writtenForms": [
+          "勉強"
+        ],
+        "partOfSpeech": [
+          "godan-verb"
+        ]
+      },
+      "after": {
+        "primaryWrittenForm": "勉強する",
+        "writtenForms": [
+          "勉強する"
+        ],
+        "partOfSpeech": [
+          "irregular-verb"
+        ]
+      }
+    },
+    {
+      "id": "n5-13duv93",
+      "before": {
+        "primaryReading": "まいげつ/まいつき",
+        "readings": [
+          "まいげつ/まいつき"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other"
+      },
+      "after": {
+        "primaryReading": "まいげつ",
+        "readings": [
+          "まいげつ",
+          "まいつき"
+        ],
+        "partOfSpeech": [
+          "noun",
+          "adverb"
+        ],
+        "studyCategory": "adverbs"
+      }
+    },
+    {
+      "id": "n5-10kck3v",
+      "before": {
+        "primaryReading": "まいねん/まいとし",
+        "readings": [
+          "まいねん/まいとし"
+        ],
+        "partOfSpeech": [
+          "other"
+        ],
+        "studyCategory": "expressions-other"
+      },
+      "after": {
+        "primaryReading": "まいねん",
+        "readings": [
+          "まいねん",
+          "まいとし"
+        ],
+        "partOfSpeech": [
+          "noun",
+          "adverb"
+        ],
+        "studyCategory": "adverbs"
+      }
+    },
+    {
+      "id": "n5-1b1vbah",
+      "before": {
+        "writtenForms": [
+          "薬"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "薬",
+          "クスリ"
+        ],
+        "formReadings": {
+          "薬": [
+            "くすり"
+          ],
+          "クスリ": [
+            "クスリ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-17ze54m",
+      "before": {
+        "writtenForms": [
+          "葉書",
+          "葉書き",
+          "端書",
+          "端書き",
+          "羽書"
+        ],
+        "formReadings": null
+      },
+      "after": {
+        "writtenForms": [
+          "葉書",
+          "葉書き",
+          "端書",
+          "端書き",
+          "羽書",
+          "ハガキ"
+        ],
+        "formReadings": {
+          "葉書": [
+            "はがき"
+          ],
+          "葉書き": [
+            "はがき"
+          ],
+          "端書": [
+            "はがき"
+          ],
+          "端書き": [
+            "はがき"
+          ],
+          "羽書": [
+            "はがき"
+          ],
+          "ハガキ": [
+            "ハガキ"
+          ]
+        }
+      }
+    },
+    {
+      "id": "n5-ufmxaa",
+      "before": {
+        "primaryWrittenForm": "練習",
+        "writtenForms": [
+          "練習"
+        ],
+        "partOfSpeech": [
+          "godan-verb"
+        ],
+        "spanish": "práctica"
+      },
+      "after": {
+        "primaryWrittenForm": "練習する",
+        "writtenForms": [
+          "練習する"
+        ],
+        "partOfSpeech": [
+          "irregular-verb"
+        ],
+        "spanish": "practicar"
+      }
+    }
+  ],
+  "reviews": [
+    {
+      "index": 6,
+      "id": "n5-1ylen1j",
+      "originalWritten": "あの",
+      "originalReading": "あの",
+      "originalSpanish": "aquel / aquella (ante un sustantivo)",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA que allà no representa inequívocamente el determinante"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1000420",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva la corrección de あの como determinante, no pronombre. La glosa catalana requiere revisión separada.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 10,
+      "id": "n5-1662skt",
+      "originalWritten": "ある",
+      "originalReading": "ある",
+      "originalSpanish": "haber / existir (cosas)",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA ser no especifica la existencia inanimada"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1296400",
+          "senses": [
+            1,
+            2
+          ]
+        }
+      ],
+      "reason": "ある expresa existencia inanimada, no cópula. Se conserva la corrección española y la categoría godan; no se modifica el planificador.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 11,
+      "id": "n5-1v0s7of",
+      "originalWritten": "あれ",
+      "originalReading": "あれ",
+      "originalSpanish": "eso",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1000580",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Eso es equivalente español válido según contexto deíctico; no imponer aquello sin una convención curricular nueva.",
+      "historyPolicy": "unchanged",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 12,
+      "id": "n5-16rp5xj",
+      "originalWritten": "いい/よい",
+      "originalReading": "いい/よい",
+      "originalSpanish": "bien",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "2820690",
+          "senses": [
+            1
+          ]
+        },
+        {
+          "dictionaryId": "1605820",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "JMdict 2820690 (いい, adj-ix) y 1605820 (よい, adj-i) documentan el mismo objetivo bueno. Se separan las variantes, conservando ID y ambas formas; 良い admite ambas lecturas según la nota expresa de 2820690.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 16,
+      "id": "n5-1dit5af",
+      "originalWritten": "いくら",
+      "originalReading": "いくら",
+      "originalSpanish": "¿cuánto cuesta?",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1219980",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se elimina イクラ: en esta edición no es lectura del interrogativo 幾ら; no se confunde con huevas de salmón.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 18,
+      "id": "n5-jyxz33",
+      "originalWritten": "いちばん",
+      "originalReading": "いちばん",
+      "originalSpanish": "mejor",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1165970",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Mejor corresponde al superlativo documentado, y los ejemplos de origen también usan ese sentido. No añadir indiscriminadamente primero u otros usos.",
+      "historyPolicy": "unchanged",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 19,
+      "id": "n5-14itofj",
+      "originalWritten": "いつ",
+      "originalReading": "いつ",
+      "originalSpanish": "cuándo",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1188760",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: いつ es interrogativo temporal, con tilde en español; no la conjunción relativa «cuando».",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 27,
+      "id": "n5-1hs727p",
+      "originalWritten": "おまわりさん",
+      "originalReading": "おまわりさん",
+      "originalSpanish": "policía",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1002120",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se sustituye la descripción metalingüística «término amigable» por el significado léxico, manteniendo el matiz cercano en este registro de auditoría.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 31,
+      "id": "n5-17ee8ee",
+      "originalWritten": "お兄さん",
+      "originalReading": "おにいさん",
+      "originalSpanish": "hermano mayor (trato respetuoso)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1001830",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: «Honorable» introduce un juicio moral en español; el matiz japonés es tratamiento respetuoso.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 32,
+      "id": "n5-f48b7u",
+      "originalWritten": "お皿",
+      "originalReading": "おさら",
+      "originalSpanish": "plato",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA placa no identifica el plato de vajilla"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1299685",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: お皿 es vajilla; «lámina» proviene de otra acepción de plate. El diagnóstico entre campos detecta: CA placa no identifica el plato de vajilla. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 33,
+      "id": "n5-qz2g0b",
+      "originalWritten": "お姉さん",
+      "originalReading": "おねえさん",
+      "originalSpanish": "hermana mayor (trato respetuoso)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1001990",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se conserva el parentesco y se expresa el tratamiento, no un juicio moral.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 37,
+      "id": "n5-9v6dvh",
+      "originalWritten": "お父さん",
+      "originalReading": "おとうさん",
+      "originalSpanish": "padre (trato respetuoso)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1002590",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se corrige el calco honorable conservando el registro frente a 父.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 39,
+      "id": "n5-15ye6hh",
+      "originalWritten": "お弁当",
+      "originalReading": "おべんとう",
+      "originalSpanish": "almuerzo en caja",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1513065",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Almuerzo en caja es comprensible y expresa boxed lunch; los ejemplos de origen confirman comida preparada. Bento es una alternativa, no una corrección obligatoria.",
+      "historyPolicy": "unchanged",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 40,
+      "id": "n5-se5a9n",
+      "originalWritten": "お母さん",
+      "originalReading": "おかあさん",
+      "originalSpanish": "madre (trato respetuoso)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1002650",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se corrige el calco honorable conservando el registro frente a 母.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 41,
+      "id": "n5-iwmss7",
+      "originalWritten": "かかる",
+      "originalReading": "かかる",
+      "originalSpanish": "llevar (tiempo) / costar (dinero)",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1207590",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "掛かる es el verbo de consumo de tiempo o dinero; 架かる pertenece a otra escritura/acepción y se retira como alias de este objetivo.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 43,
+      "id": "n5-oz67on",
+      "originalWritten": "かける",
+      "originalReading": "かける",
+      "originalSpanish": "llamar por teléfono",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1207610",
+          "senses": [
+            4
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se conserva el sentido de llamada, añadiendo la tilde obligatoria de teléfono.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 45,
+      "id": "n5-lmt5xj",
+      "originalWritten": "かばん",
+      "originalReading": "かばん",
+      "originalSpanish": "bolsa",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1208910",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Bolsa es español regional válido. Se elimina 下番 (terminar un turno) y su etiqueta verbal; 鞄 es el lema nominal de bolsa/bolso.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 52,
+      "id": "n5-11fsr3z",
+      "originalWritten": "キロ/キログラム",
+      "originalReading": "キロ/キログラム",
+      "originalSpanish": "kilogramo",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1042620",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        },
+        {
+          "dictionaryId": "1042610",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "El objetivo de origen kilogram distingue la abreviatura キロ, JMdict 1042610 sentido 2. Se conserva como variante, con forma principal completa para no confundirla con kilómetro.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 53,
+      "id": "n5-1g1750v",
+      "originalWritten": "キロ/キロメートル",
+      "originalReading": "キロ/キロメートル",
+      "originalSpanish": "kilómetro",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1042650",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        },
+        {
+          "dictionaryId": "1042610",
+          "senses": [
+            3
+          ]
+        }
+      ],
+      "reason": "El objetivo kilometre distingue la abreviatura キロ, JMdict 1042610 sentido 3. Se conserva la abreviatura sin equiparar las dos unidades.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 60,
+      "id": "n5-3djqur",
+      "originalWritten": "こちら",
+      "originalReading": "こちら",
+      "originalSpanish": "esta persona o manera",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA manera mantiene el calco espacial incorrecto"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1004500",
+          "senses": [
+            1,
+            5
+          ]
+        }
+      ],
+      "reason": "El sentido direccional es this way y el personal está restringido a こちら. Se sustituye manera por por aquí sin añadir sentidos ajenos.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 61,
+      "id": "n5-ok476b",
+      "originalWritten": "こっち",
+      "originalReading": "こっち",
+      "originalSpanish": "esta persona o manera",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: el sentido personal de EN/CA no está autorizado para こっち"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1004500",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Los ejemplos de origen indican venir aquí; JMdict restringe this person a こちら. Se conserva aquí como objetivo informal, sin arrastrar la acepción personal de otra variante.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 63,
+      "id": "n5-qqq055",
+      "originalWritten": "この",
+      "originalReading": "この",
+      "originalSpanish": "este",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA això no representa el determinante この"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1582920",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "この determinante no es el numeral 九. Se retiran grafías y lecturas numéricas y se corrige categoría sin cambiar este. CA això no representa el determinante この; la metadata japonesa queda corregida, pero el conjunto de lenguas no se declara resuelto.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 64,
+      "id": "n5-dst5fr",
+      "originalWritten": "コピーする",
+      "originalReading": "コピーする",
+      "originalSpanish": "Copiar",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA còpia es nominal, el objetivo de origen es verbal"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1050590",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "El origen escribe explícitamente コピーする y sus ejemplos lo usan verbalmente. Es compuesto irregular con suru, no godan; no convertirlo en el sustantivo コピー.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 68,
+      "id": "n5-15cm267",
+      "originalWritten": "さ来年",
+      "originalReading": "さらいねん",
+      "originalSpanish": "dentro de dos años",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA l’any següent no expresa por sí solo el año posterior al próximo"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1293660",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Indica el año posterior al próximo; año tras año expresa repetición. El diagnóstico entre campos detecta: CA l’any següent no expresa por sí solo el año posterior al próximo. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 70,
+      "id": "n5-o1lvv5",
+      "originalWritten": "じゃ/じゃあ",
+      "originalReading": "じゃ/じゃあ",
+      "originalSpanish": "bueno entonces…",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1005900",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "JMdict 1005900 documenta ambas formas conjuntivas; la cadena con barra se sustituye por principal y variante, no por otro lema homófono.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 76,
+      "id": "n5-l67079",
+      "originalWritten": "ストーブ",
+      "originalReading": "ストーブ",
+      "originalSpanish": "calentador",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1070790",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Calentador es término regional válido para un aparato de calefacción; estufa sería otra opción correcta y no se impone.",
+      "historyPolicy": "unchanged",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 80,
+      "id": "n5-cvxba5",
+      "originalWritten": "スリッパ",
+      "originalReading": "スリッパ",
+      "originalSpanish": "zapatillas de casa",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1073900",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se precisa calzado de interior frente al deportivo.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 83,
+      "id": "n5-n1huxz",
+      "originalWritten": "せっけん",
+      "originalReading": "せっけん",
+      "originalSpanish": "economía",
+      "status": "blocked",
+      "blockedReasons": [
+        "semantic_identity: objetivo jabón frente a historial potencial de economía",
+        "EN_CA_scope: economy/economia contradicen jabón"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1382590",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        },
+        {
+          "dictionaryId": "1386220",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "Los dos ejemplos del origen describen jabón, corroborado por 石鹸 1382590. Economy/economia siguen contradiciendo ese objetivo y el historial pudo aprender economía: no se cambia la ficha ni su concepto hasta autorizar EN/CA y una política histórica.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 85,
+      "id": "n5-cmt7v9",
+      "originalWritten": "そうして/そして",
+      "originalReading": "そうして/そして",
+      "originalSpanish": "y",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1006730",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        },
+        {
+          "dictionaryId": "1612860",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "Los dos conectores tienen la equivalencia conjuntiva y, documentada en 1612860 y 1006730. Se conservan ambas formas solo para ese objetivo, sin importar usos distintos como like that.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 89,
+      "id": "n5-ep254d",
+      "originalWritten": "その",
+      "originalReading": "その",
+      "originalSpanish": "ese / esa (ante un sustantivo)",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA això es pronombre; el objetivo その es determinante"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1006830",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: その es determinante; eso es pronombre. El diagnóstico entre campos detecta: CA això es pronombre; el objetivo その es determinante. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 90,
+      "id": "n5-1xbona5",
+      "originalWritten": "そば",
+      "originalReading": "そば",
+      "originalSpanish": "cerca",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1403830",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Cerca corresponde a 側/傍. 蕎麦 y sus lecturas designan alforfón, otro homófono; se eliminan.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 97,
+      "id": "n5-rg5twp",
+      "originalWritten": "たて",
+      "originalReading": "たて",
+      "originalSpanish": "longitud",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1335640",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Longitud es el sentido front-to-back documentado en 縦. 殺陣 y さつじん son otra palabra. Los ejemplos de origen coinciden por subcadena verbal y no sirven para fijar aquí la acepción nominal.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 99,
+      "id": "n5-1ea5llr",
+      "originalWritten": "たぶん",
+      "originalReading": "たぶん",
+      "originalSpanish": "probablemente",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1407980",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Probablemente corresponde al adverbio 多分; 他聞 y su categoría nominal no pertenecen al objetivo.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 104,
+      "id": "n5-13590lj",
+      "originalWritten": "つける",
+      "originalReading": "つける",
+      "originalSpanish": "encender",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1610400",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Encender corresponde a 点ける, no a entronizar/nombrar de 就ける/即ける.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 109,
+      "id": "n5-kp6c0v",
+      "originalWritten": "できる",
+      "originalReading": "できる",
+      "originalSpanish": "poder",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1340450",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "出来る para poder es ichidan; 出切る es otro verbo, godan, de agotamiento.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 111,
+      "id": "n5-11k8rb",
+      "originalWritten": "では",
+      "originalReading": "では",
+      "originalSpanish": "con eso...",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1008450",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Los ejemplos de origen confirman el uso discursivo then/well. Entonces / pues bien expresa de forma natural la función de では.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 117,
+      "id": "n5-10vobp",
+      "originalWritten": "どう",
+      "originalReading": "どう",
+      "originalSpanish": "cómo",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1008910",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "どう interrogativo es adverbio de modo; 仝 es otro signo y no su grafía léxica.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 118,
+      "id": "n5-13yyz93",
+      "originalWritten": "どうして",
+      "originalReading": "どうして",
+      "originalSpanish": "por qué razón",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1466940",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Interrogación causal con tildes obligatorias.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 122,
+      "id": "n5-nrzccn",
+      "originalWritten": "どちら",
+      "originalReading": "どちら",
+      "originalSpanish": "cuál de los dos",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1189360",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Pronombre interrogativo con tilde; formulación natural.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 123,
+      "id": "n5-a8ms87",
+      "originalWritten": "どっち",
+      "originalReading": "どっち",
+      "originalSpanish": "cuál",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA que necesita revisar la función interrogativa de cuál"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1189360",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Pronombre interrogativo, no relativo. El diagnóstico entre campos detecta: CA que necesita revisar la función interrogativa de cuál. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 125,
+      "id": "n5-176zm6f",
+      "originalWritten": "どなた",
+      "originalReading": "どなた",
+      "originalSpanish": "quién (trato respetuoso)",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA OMS es una organización, no el interrogativo de persona"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1189370",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: OMS corresponde al acrónimo inglés WHO, no al interrogativo japonés de persona. El diagnóstico entre campos detecta: CA OMS es una organización, no el interrogativo de persona. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 126,
+      "id": "n5-rtllmt",
+      "originalWritten": "どの",
+      "originalReading": "どの",
+      "originalSpanish": "qué / cuál (ante un sustantivo)",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA que necesita revisar el determinante interrogativo de どの"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1920240",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "どの es determinante interrogativo, no el sufijo honorífico 殿. CA que necesita revisar el determinante interrogativo de どの; la metadata japonesa queda corregida, pero el conjunto de lenguas no se declara resuelto.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 127,
+      "id": "n5-ovfmgi",
+      "originalWritten": "とり肉",
+      "originalReading": "とりにく",
+      "originalSpanish": "carne de pollo",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1253020",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan とりにく, けいにく y ちょうにく con restricciones: las dos últimas se vinculan a 鶏肉 y 鳥肉 respectivamente, no a とり肉.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 134,
+      "id": "n5-1fi09kl",
+      "originalWritten": "ネクタイ",
+      "originalReading": "ネクタイ",
+      "originalSpanish": "corbata",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1092820",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tie es sustantivo, no el verbo atar.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 135,
+      "id": "n5-cmjbnb",
+      "originalWritten": "ノート",
+      "originalReading": "ノート",
+      "originalSpanish": "cuaderno",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1093450",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: El inglés explicita exercise book: sentido de papel, no portátil informático de otra acepción.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 138,
+      "id": "n5-120imaf",
+      "originalWritten": "はく",
+      "originalReading": "はく",
+      "originalSpanish": "tener puesto",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA desgast significa desgaste, no llevar ropa"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1607260",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Tener puesto es una glosa válida del uso de ropa inferior. Se sustituye la grafía ajena 掃く por 履く/穿く; no cambiar a barrer ni a desgaste.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 139,
+      "id": "n5-d4yemv",
+      "originalWritten": "はし",
+      "originalReading": "はし",
+      "originalSpanish": "palillos",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA escuradents indica palillos de dientes, no 箸"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1476410",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "El objetivo chopsticks es 箸. 橋 es puente, otro homófono. Se conserva palillos y el ID; la glosa catalana escuradents sigue siendo otro utensilio y se documenta.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 144,
+      "id": "n5-1ln4klp",
+      "originalWritten": "フィルム",
+      "originalReading": "フィルム",
+      "originalSpanish": "carrete de película fotográfica",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1109380",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Roll of film es soporte fotográfico; rodaje es proceso de filmación.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 155,
+      "id": "n5-746b0j",
+      "originalWritten": "ポスト",
+      "originalReading": "ポスト",
+      "originalSpanish": "correo",
+      "status": "blocked",
+      "blockedReasons": [
+        "curriculum_sense: buzón, puesto o publicación sin un objetivo coherente",
+        "semantic_identity: posible cambio entre sentidos e historial",
+        "EN_CA_scope: glosas discordantes"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1125150",
+          "senses": [
+            1,
+            2,
+            4
+          ],
+          "role": "competing senses; no final sense selected"
+        }
+      ],
+      "reason": "ポスト es polisémico: buzón, puesto y publicación. Los ejemplos recuperados tratan del puesto laboral, mientras ES indica correo y CA publicación. No elegir buzón por frecuencia N5 ni fijar otra identidad sin contexto/política histórica.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 158,
+      "id": "n5-1ks144z",
+      "originalWritten": "ほんとう",
+      "originalReading": "ほんとう",
+      "originalSpanish": "verdad",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1523060",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Verdad corresponde a 本当, no a la isla principal 本島.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 159,
+      "id": "n5-1qvgegn",
+      "originalWritten": "まずい",
+      "originalReading": "まずい",
+      "originalSpanish": "desagradable",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1495000",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Desagradable puede aplicarse al sabor o a una situación; el origen incluye un ejemplo situacional y una coincidencia de subcadena irrelevante. No reducirlo a mal sabor sin una decisión curricular.",
+      "historyPolicy": "unchanged",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 160,
+      "id": "n5-nou75p",
+      "originalWritten": "また",
+      "originalReading": "また",
+      "originalSpanish": "de nuevo",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1524930",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "De nuevo / and corresponden a 又 adverbio y conjunción; 股/叉/胯/俣 son otros lemas nominales.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 170,
+      "id": "n5-11vyy2r",
+      "originalWritten": "ゆっくりと",
+      "originalReading": "ゆっくりと",
+      "originalSpanish": "despacio",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1013050",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "ゆっくりと es una composición válida de un adverbio adv-to. No era una lectura errónea: se corrige la etiqueta other y se conserva con la variante sin と.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 171,
+      "id": "n5-8d06fh",
+      "originalWritten": "よく",
+      "originalReading": "よく",
+      "originalSpanish": "a menudo",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1605870",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "A menudo / bien corresponde a 良く adverbio; 欲/慾 y la categoría nominal son contaminación de homófono.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 172,
+      "id": "n5-1tlxcjr",
+      "originalWritten": "より、ほう",
+      "originalReading": "より、ほう",
+      "originalSpanish": "Utilizado para comparación.",
+      "status": "blocked",
+      "blockedReasons": [
+        "curriculum_unit: dos elementos gramaticales, no un lema único"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1013190",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        },
+        {
+          "dictionaryId": "1516930",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "La cadena reúne la partícula より y el sustantivo relacional ほう. No hay un único lema ni una lectura alternativa equivalente; normalizarlo supondría decidir otra unidad didáctica. Bloqueo editorial, sin dividir ni crear IDs.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 174,
+      "id": "n5-1rc8hqv",
+      "originalWritten": "ラジカセ / ラジオカセット",
+      "originalReading": "ラジカセ / ラジオカセット",
+      "originalSpanish": "reproductor de casetes de radio",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1138900",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        },
+        {
+          "dictionaryId": "1138960",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "ラジカセ y ラジオカセット designan el mismo aparato; se separan las formas y se usa radiocasete, sin el calco reproductor de casetes de radio.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 176,
+      "id": "n5-dkzyif",
+      "originalWritten": "レコード",
+      "originalReading": "レコード",
+      "originalSpanish": "registro",
+      "status": "blocked",
+      "blockedReasons": [
+        "semantic_identity: disco musical frente a registro previo",
+        "EN_CA_scope: revisar registre y objetivo de record antes de fijar música"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1144940",
+          "senses": [
+            1,
+            3
+          ],
+          "role": "competing senses; no final sense selected"
+        }
+      ],
+      "reason": "Los ejemplos de origen describen discos musicales, pero registro/registre también corresponden a otros sentidos de record. El cambio de concepto requiere revisar EN/CA y el alcance histórico; no se fuerza disco.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 178,
+      "id": "n5-1y1a55j",
+      "originalWritten": "ワイシャツ",
+      "originalReading": "ワイシャツ",
+      "originalSpanish": "camisa de vestir",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA samarreta indica camiseta, no la camisa de vestir del objetivo"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1148640",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Business shirt describe camisa formal, no una camisa que tenga negocios. El diagnóstico entre campos detecta: CA samarreta indica camiseta, no la camisa de vestir del objetivo. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 186,
+      "id": "n5-1e8135n",
+      "originalWritten": "医者",
+      "originalReading": "いしゃ",
+      "originalSpanish": "médico",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1159980",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Sustantivo de profesión con tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 203,
+      "id": "n5-12wetoe",
+      "originalWritten": "英語",
+      "originalReading": "えいご",
+      "originalSpanish": "idioma inglés",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1174420",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: No significa un idioma expresado en inglés; nombre de idioma en minúscula.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 204,
+      "id": "n5-ugo8b3",
+      "originalWritten": "駅",
+      "originalReading": "えき",
+      "originalSpanish": "estación de tren",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1175140",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 駅 designa la estación ferroviaria, no cualquier estación o temporada.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 209,
+      "id": "n5-1w0bxkf",
+      "originalWritten": "奥さん",
+      "originalReading": "おくさん",
+      "originalSpanish": "esposa (trato respetuoso)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1179330",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Honorable es calco de tratamiento, no juicio moral de la persona.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 211,
+      "id": "n5-12n8bt6",
+      "originalWritten": "横",
+      "originalReading": "よこ",
+      "originalSpanish": "al lado de",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1180570",
+          "senses": [
+            4
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 217,
+      "id": "n5-pi0as4",
+      "originalWritten": "下手",
+      "originalReading": "へた",
+      "originalSpanish": "inexperto",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1185200",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 218,
+      "id": "n5-p57dwn",
+      "originalWritten": "何",
+      "originalReading": "なん/なに",
+      "originalSpanish": "qué",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1577100",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        },
+        {
+          "dictionaryId": "2846738",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "なん y なに son lecturas interrogativas válidas de 何, respaldadas por dos registros relacionados. Se mantienen separadas y se corrige categoría a pronombre.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 223,
+      "id": "n5-5qaqkf",
+      "originalWritten": "家庭",
+      "originalReading": "かてい",
+      "originalSpanish": "hogar / familia",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1192280",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 家庭 es sustantivo de ámbito doméstico; familiar como adjetivo no traduce household en este objetivo.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 224,
+      "id": "n5-1l6q2uy",
+      "originalWritten": "暇",
+      "originalReading": "ひま",
+      "originalSpanish": "tiempo libre",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1577280",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 237,
+      "id": "n5-1kbl7mw",
+      "originalWritten": "絵",
+      "originalReading": "え",
+      "originalSpanish": "imagen",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1202270",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 238,
+      "id": "n5-1yjjy6u",
+      "originalWritten": "開く",
+      "originalReading": "あく",
+      "originalSpanish": "abrirse",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA obert es adjetivo/participio, no la presentación verbal de abrirse"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1586270",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: あく es verbo intransitivo; abierto es participio/adjetivo y oculta contraste con あける. El diagnóstico entre campos detecta: CA obert es adjetivo/participio, no la presentación verbal de abrirse. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 239,
+      "id": "n5-1g8izlc",
+      "originalWritten": "開ける",
+      "originalReading": "あける",
+      "originalSpanish": "abrir",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA obert no presenta el verbo transitivo abrir"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1202450",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: あける es verbo transitivo; no el adjetivo abierto. El diagnóstico entre campos detecta: CA obert no presenta el verbo transitivo abrir. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 244,
+      "id": "n5-5uozy7",
+      "originalWritten": "覚える",
+      "originalReading": "おぼえる",
+      "originalSpanish": "memorizar / aprender",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: EN remember y CA recorda requieren revisar el matiz adquirir un recuerdo frente a recuperarlo; no se certifica esa alineación"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1206050",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 覚える expresa adquirir y guardar en memoria; recordar puede confundir con recuperar un recuerdo (思い出す). El diagnóstico entre campos detecta: EN remember y CA recorda requieren revisar el matiz adquirir un recuerdo frente a recuperarlo; no se certifica esa alineación. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 253,
+      "id": "n5-f2jfha",
+      "originalWritten": "眼鏡",
+      "originalReading": "めがね",
+      "originalSpanish": "anteojos",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1577670",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 258,
+      "id": "n5-119te1p",
+      "originalWritten": "喫茶店",
+      "originalReading": "きっさてん",
+      "originalSpanish": "salón de café",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1226440",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Cafetería expresa coffee shop de forma natural; dos ejemplos de origen corroboran el establecimiento, sin cambiar el concepto a un salón distinto.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 259,
+      "id": "n5-zxjrix",
+      "originalWritten": "休み",
+      "originalReading": "やすみ",
+      "originalSpanish": "descanso",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA descansar mantiene presentación verbal frente al sustantivo de descanso; requiere convención didáctica explícita"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1227500",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 休み es sustantivo; descansar corresponde al verbo 休む. El diagnóstico entre campos detecta: CA descansar mantiene presentación verbal frente al sustantivo de descanso; requiere convención didáctica explícita. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 265,
+      "id": "n5-1issbii",
+      "originalWritten": "居る",
+      "originalReading": "いる",
+      "originalSpanish": "haber / estar (personas y animales)",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA ser no desambigua existencia animada frente a cópula"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1577980",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 居る expresa existencia o presencia animada, no la cópula ser. El diagnóstico entre campos detecta: CA ser no desambigua existencia animada frente a cópula. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 278,
+      "id": "n5-1o3ndsw",
+      "originalWritten": "九",
+      "originalReading": "きゅう / く",
+      "originalSpanish": "nueve",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1578150",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "Se separan きゅう y く como lecturas del numeral 九; no se añaden lecturas arcaicas ajenas al currículo.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 280,
+      "id": "n5-1egzx0k",
+      "originalWritten": "九日",
+      "originalReading": "ここのか",
+      "originalSpanish": "nueve días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1243850",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria de días; se mantiene sentido de duración sin añadir fecha como alternativa.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 284,
+      "id": "n5-ggz3xq",
+      "originalWritten": "兄",
+      "originalReading": "あに",
+      "originalSpanish": "hermano mayor (propio)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1249900",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Humilde describe actitud en español; el original marca referencia a la propia familia.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 285,
+      "id": "n5-f7l6oa",
+      "originalWritten": "兄弟",
+      "originalReading": "きょうだい",
+      "originalSpanish": "hermanos (de la propia familia)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1249960",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se expresa el ámbito familiar en lugar de atribuir humildad de carácter.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 287,
+      "id": "n5-bwnayy",
+      "originalWritten": "軽い",
+      "originalReading": "かるい",
+      "originalSpanish": "ligero",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA llum expresa luz, no poco peso"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1252560",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 軽い expresa poco peso, no luz; confusión inglesa light. El diagnóstico entre campos detecta: CA llum expresa luz, no poco peso. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 291,
+      "id": "n5-7d4cs1",
+      "originalWritten": "嫌",
+      "originalReading": "いや",
+      "originalSpanish": "desagradable",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1587610",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 294,
+      "id": "n5-86ld3t",
+      "originalWritten": "犬",
+      "originalReading": "いぬ",
+      "originalSpanish": "perro",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1258330",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 295,
+      "id": "n5-fh026r",
+      "originalWritten": "見せる",
+      "originalReading": "みせる",
+      "originalSpanish": "mostrar",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA espectacle indica un espectáculo, no el verbo mostrar"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1259210",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 見せる es verbo transitivo, no el sustantivo espectáculo. El diagnóstico entre campos detecta: CA espectacle indica un espectáculo, no el verbo mostrar. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 302,
+      "id": "n5-n7ts77",
+      "originalWritten": "呼ぶ",
+      "originalReading": "よぶ",
+      "originalSpanish": "llamar (a alguien)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1266440",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 呼ぶ es llamar o convocar a alguien; gritar solo expresa elevar la voz.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 306,
+      "id": "n5-14p32dj",
+      "originalWritten": "五日",
+      "originalReading": "いつか",
+      "originalSpanish": "cinco días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1268570",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria de días.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 313,
+      "id": "n5-1yls73d",
+      "originalWritten": "交番",
+      "originalReading": "こうばん",
+      "originalSpanish": "pequeña comisaría de barrio",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA caixa de policia necesita revisar la equivalencia cultural de pequeña comisaría"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1272500",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 交番 es puesto policial de barrio; cabina de policía sugiere cabina telefónica y omite el carácter de comisaría. El diagnóstico entre campos detecta: CA caixa de policia necesita revisar la equivalencia cultural de pequeña comisaría. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 318,
+      "id": "n5-s0umyr",
+      "originalWritten": "好き",
+      "originalReading": "すき",
+      "originalSpanish": "gustar",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope: likeable/simpàtic no expresan gustar"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1277450",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "好き es adjetivo な (también sustantivo), no un verbo japonés aunque su equivalencia española sea gustar. Se conserva la corrección y la categoría; EN likeable y CA simpàtic siguen pendientes.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 323,
+      "id": "n5-1au7c1v",
+      "originalWritten": "降る",
+      "originalReading": "ふる",
+      "originalSpanish": "caer (lluvia o nieve)",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA tardor expresa otoño, no precipitarse lluvia o nieve"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1282790",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se precisa precipitación; no caer una persona u objeto. El diagnóstico entre campos detecta: CA tardor expresa otoño, no precipitarse lluvia o nieve. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 337,
+      "id": "n5-14rv6pm",
+      "originalWritten": "差す",
+      "originalReading": "さす",
+      "originalSpanish": "estirar las manos",
+      "status": "blocked",
+      "blockedReasons": [
+        "curriculum_sense: danza frente a paraguas sin contexto suficiente"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1291330",
+          "senses": [
+            6,
+            7
+          ],
+          "role": "competing senses; no final sense selected"
+        }
+      ],
+      "reason": "La glosa de manos puede proceder del sentido de extender el brazo en danza; la de paraguas es otra acepción. Los ejemplos del origen no desambiguan esos dos objetivos. Se conserva la ficha hasta una decisión curricular, sin imponer una acepción por frecuencia.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 342,
+      "id": "n5-1szygsm",
+      "originalWritten": "咲く",
+      "originalReading": "さく",
+      "originalSpanish": "florecer",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1297210",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 咲く es verbo; floración es sustantivo.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 351,
+      "id": "n5-11szxu0",
+      "originalWritten": "三日",
+      "originalReading": "みっか",
+      "originalSpanish": "tres días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1301330",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 354,
+      "id": "n5-h5wg12",
+      "originalWritten": "散歩",
+      "originalReading": "さんぽする",
+      "originalSpanish": "paseo",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA passeig mantiene forma nominal frente al verbo explícito"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1303620",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "La lectura de origen incluye する y EN indica to stroll. Se normaliza el verbo completo 散歩する y su clase irregular, con pasear; no se conserva el sustantivo desnudo como si fuera otra grafía del verbo.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 357,
+      "id": "n5-1rmwkyr",
+      "originalWritten": "四",
+      "originalReading": "し / よん",
+      "originalSpanish": "cuatro",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1579470",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "し y よん se conservan como lecturas de 四; la barra no es parte de una lectura.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 359,
+      "id": "n5-1p0i7o3",
+      "originalWritten": "四日",
+      "originalReading": "よっか",
+      "originalSpanish": "cuatro días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1307320",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 361,
+      "id": "n5-p1l66d",
+      "originalWritten": "姉",
+      "originalReading": "あね",
+      "originalSpanish": "hermana mayor (propia)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1307630",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Humilde es calco del tratamiento de la propia familia, no rasgo personal.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 365,
+      "id": "n5-jqsdtk",
+      "originalWritten": "私",
+      "originalReading": "わたくし",
+      "originalSpanish": "yo (formal)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "2842390",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: わたくし es pronombre formal; humilde puede entenderse como característica personal.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 372,
+      "id": "n5-4la82a",
+      "originalWritten": "時計",
+      "originalReading": "とけい",
+      "originalSpanish": "reloj",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA mirar es verbo, no reloj"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1316140",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 時計 es objeto; mirar es verbo, confusión de watch. El diagnóstico entre campos detecta: CA mirar es verbo, no reloj. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 379,
+      "id": "n5-n27ydh",
+      "originalWritten": "七",
+      "originalReading": "しち / なな",
+      "originalSpanish": "Siete",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1319210",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "しち y なな se conservan como lecturas del numeral 七.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 381,
+      "id": "n5-8wnq0o",
+      "originalWritten": "七日",
+      "originalReading": "なのか",
+      "originalSpanish": "siete días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1579630",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 384,
+      "id": "n5-t0kc5x",
+      "originalWritten": "車",
+      "originalReading": "くるま",
+      "originalSpanish": "auto",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1323080",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 396,
+      "id": "n5-cm95rj",
+      "originalWritten": "十",
+      "originalReading": "じゅう とお",
+      "originalSpanish": "diez",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1579840",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "じゅう y とお se separan y se mantienen para 十. No se añade la acepción de edad a la glosa española.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 397,
+      "id": "n5-qmnxq0",
+      "originalWritten": "十日",
+      "originalReading": "とおか",
+      "originalSpanish": "diez días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1335000",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 401,
+      "id": "n5-eyxeov",
+      "originalWritten": "出す",
+      "originalReading": "だす",
+      "originalSpanish": "sacar",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA apagar corresponde a otro sentido de put out, no a sacar"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1338180",
+          "senses": [
+            1,
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 出す es sacar o exteriorizar; apagar corresponde a otro sentido inglés de put out, no a este verbo. El diagnóstico entre campos detecta: CA apagar corresponde a otro sentido de put out, no a sacar. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 408,
+      "id": "n5-16x8wa6",
+      "originalWritten": "暑い",
+      "originalReading": "あつい",
+      "originalSpanish": "caluroso (tiempo)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1343460",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 暑い describe calor ambiental; no la temperatura al tacto de un objeto.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 414,
+      "id": "n5-13tnn4g",
+      "originalWritten": "少し",
+      "originalReading": "すこし",
+      "originalSpanish": "un poco",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1348870",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 少し es expresión adverbial de cantidad pequeña; pocos no representa por sí solo esa función.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 415,
+      "id": "n5-45j89c",
+      "originalWritten": "少ない",
+      "originalReading": "すくない",
+      "originalSpanish": "poco / escaso",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: EN a few y CA uns quants requieren revisar el matiz de escasez de 少ない; no se certifica como equivalencia inequívoca"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1348910",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 少ない expresa escasez o cantidad reducida; algunos no implica poca cantidad. El diagnóstico entre campos detecta: EN a few y CA uns quants requieren revisar el matiz de escasez de 少ない; no se certifica como equivalencia inequívoca. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 421,
+      "id": "n5-ysai2s",
+      "originalWritten": "上着",
+      "originalReading": "うわぎ",
+      "originalSpanish": "chaqueta",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1580340",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 423,
+      "id": "n5-1e41kku",
+      "originalWritten": "乗る",
+      "originalReading": "のる",
+      "originalSpanish": "subirse",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA endavant no significa subirse a un vehículo"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1355120",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 427,
+      "id": "n5-1q1sakk",
+      "originalWritten": "食堂",
+      "originalReading": "しょくどう",
+      "originalSpanish": "refectorio",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1358550",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Comedor expresa el espacio de dining hall/cafeteria confirmado por los ejemplos de origen. Refectorio es válido en instituciones, pero limita innecesariamente el objetivo compartido con CA menjador.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 432,
+      "id": "n5-omwat1",
+      "originalWritten": "人",
+      "originalReading": "ひと",
+      "originalSpanish": "persona",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1580640",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 434,
+      "id": "n5-ryp01z",
+      "originalWritten": "吹く",
+      "originalReading": "ふく",
+      "originalSpanish": "soplar",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA cop expresa golpe, no soplar"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1370760",
+          "senses": [
+            1,
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 吹く no es explotar; confusión de acepciones inglesas de blow. El diagnóstico entre campos detecta: CA cop expresa golpe, no soplar. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 457,
+      "id": "n5-1kntmso",
+      "originalWritten": "川/河",
+      "originalReading": "かわ",
+      "originalSpanish": "río",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1390020",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "川 y 河 son las dos grafías del río leído かわ. 佳話 significa relato hermoso, otra palabra, y se elimina.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 462,
+      "id": "n5-10ujywz",
+      "originalWritten": "掃除",
+      "originalReading": "そうじする",
+      "originalSpanish": "limpio",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA net es adjetivo frente al verbo de limpiar"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1399790",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "La lectura original そうじする y EN verbal apoyan la acción de limpiar: se alinea 掃除する, clase irregular y limpiar. No se deja 掃除 nominal con lectura verbal; la glosa catalana net aún requiere autorización de edición.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 478,
+      "id": "n5-1tltg6a",
+      "originalWritten": "大好き",
+      "originalReading": "だいすき",
+      "originalSpanish": "gustar mucho / encantar",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: EN be very likeable y CA ser molt simpàtic atribuyen simpatía en lugar de expresar agrado intenso"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1413660",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 大好き indica agrado intenso; ser simpático atribuye cualidad personal y cambia la relación. El diagnóstico entre campos detecta: EN be very likeable y CA ser molt simpàtic atribuyen simpatía en lugar de expresar agrado intenso. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 485,
+      "id": "n5-dc6ib5",
+      "originalWritten": "誰",
+      "originalReading": "だれ",
+      "originalSpanish": "quién",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA OMS no corresponde a quién"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1416830",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: OMS es acrónimo de otra acepción inglesa de WHO, no interrogativo. El diagnóstico entre campos detecta: CA OMS no corresponde a quién. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 488,
+      "id": "n5-krbqj5",
+      "originalWritten": "弾く",
+      "originalReading": "ひく",
+      "originalSpanish": "tocar un instrumento de cuerda o teclado",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1419370",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 弾く incluye teclado como el piano; se conserva la distinción frente a instrumentos de viento.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 500,
+      "id": "n5-vxn95c",
+      "originalWritten": "着る",
+      "originalReading": "きる",
+      "originalSpanish": "ponerse / llevar ropa (desde los hombros hacia abajo)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1423000",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se pasa del imperativo ponte al infinitivo y se conserva la delimitación de prenda indicada por el origen.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 508,
+      "id": "n5-17a05ue",
+      "originalWritten": "鳥",
+      "originalReading": "とり",
+      "originalSpanish": "pájaro",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1430250",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 510,
+      "id": "n5-bilik6",
+      "originalWritten": "低い",
+      "originalReading": "ひくい",
+      "originalSpanish": "bajo (altura)",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA curt indica corto, no bajo de altura"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1434180",
+          "senses": [
+            2,
+            3
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 低い describe altura o nivel bajo; corto corresponde a longitud o duración, no ese eje. El diagnóstico entre campos detecta: CA curt indica corto, no bajo de altura. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 516,
+      "id": "n5-at9wdu",
+      "originalWritten": "貼る",
+      "originalReading": "はる",
+      "originalSpanish": "pegar / adherir",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA pal es sustantivo de objeto, no pegar/adherir"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1427900",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 貼る es verbo de fijación; palo proviene del sustantivo inglés stick. El diagnóstico entre campos detecta: CA pal es sustantivo de objeto, no pegar/adherir. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 518,
+      "id": "n5-g8jwxg",
+      "originalWritten": "電車",
+      "originalReading": "でんしゃ",
+      "originalSpanish": "tren eléctrico",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1443530",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria de eléctrico.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 526,
+      "id": "n5-kq8pnp",
+      "originalWritten": "答える",
+      "originalReading": "こたえる",
+      "originalSpanish": "responder",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA resposta es sustantivo, el objetivo 答える es verbo"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1449540",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 答える es verbo; respuesta es sustantivo. El diagnóstico entre campos detecta: CA resposta es sustantivo, el objetivo 答える es verbo. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 535,
+      "id": "n5-1117k71",
+      "originalWritten": "曇る",
+      "originalReading": "くもる",
+      "originalSpanish": "nublarse",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1457560",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se sustituye el calco volverse nublado por el verbo español natural, conservando el cambio de estado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 541,
+      "id": "n5-1f7zukh",
+      "originalWritten": "二十日",
+      "originalReading": "はつか",
+      "originalSpanish": "veinte días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1600850",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 543,
+      "id": "n5-lq9cks",
+      "originalWritten": "二日",
+      "originalReading": "ふつか",
+      "originalSpanish": "dos días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1462900",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 550,
+      "id": "n5-1t2etri",
+      "originalWritten": "猫",
+      "originalReading": "ねこ",
+      "originalSpanish": "gato",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1467640",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 554,
+      "id": "n5-6tjkhl",
+      "originalWritten": "背広",
+      "originalReading": "せびろ",
+      "originalSpanish": "traje de negocios",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1472740",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 558,
+      "id": "n5-oka1cl",
+      "originalWritten": "伯父/叔父",
+      "originalReading": "おじいさん",
+      "originalSpanish": "abuelo",
+      "status": "blocked",
+      "blockedReasons": [
+        "semantic_identity: tío/abuelo no resuelto por el origen"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1607070",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        },
+        {
+          "dictionaryId": "1002320",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "El origen fijado ya contrapone 伯父/叔父 con おじいさん y grandfather; no incluye ejemplos ni otra referencia que dirima tío frente a abuelo. Se conserva íntegra y bloqueada; corregirla por mayoría de campos no sería evidencia inequívoca.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 563,
+      "id": "n5-180eg6u",
+      "originalWritten": "箱",
+      "originalReading": "はこ",
+      "originalSpanish": "caja",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1585650",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 566,
+      "id": "n5-yyg04e",
+      "originalWritten": "八日",
+      "originalReading": "ようか",
+      "originalSpanish": "ocho días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1476920",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 569,
+      "id": "n5-152f5hq",
+      "originalWritten": "半分",
+      "originalReading": "はんぶん",
+      "originalSpanish": "mitad",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope: half minute/mig minut añaden minutos inexistentes"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1479890",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "半分 significa mitad, sin minutos. La corrección española anterior sigue siendo correcta; EN half minute y CA mig minut no lo son. No se oculta ese bloqueo ni se reinicia el historial.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 578,
+      "id": "n5-1polhv1",
+      "originalWritten": "百",
+      "originalReading": "ひゃく",
+      "originalSpanish": "centenar",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1488000",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 586,
+      "id": "n5-1h4sk18",
+      "originalWritten": "物",
+      "originalReading": "もの",
+      "originalSpanish": "cosa",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1502390",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 587,
+      "id": "n5-jbf3jg",
+      "originalWritten": "分かる",
+      "originalReading": "わかる",
+      "originalSpanish": "entenderse",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1606560",
+          "senses": [
+            1,
+            2
+          ]
+        }
+      ],
+      "reason": "Los ejemplos de origen y JMdict apoyan comprender. Entenderse es posible como pasiva refleja, pero entender / comprender enseña de forma clara el mismo concepto, sin atribuirlo a una relación recíproca.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 590,
+      "id": "n5-lx3cro",
+      "originalWritten": "並ぶ",
+      "originalReading": "ならぶ",
+      "originalSpanish": "ponerse en fila",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1508380",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se conserva el verbo intransitivo en infinitivo, no una orden de cortesía.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 591,
+      "id": "n5-13xu4r6",
+      "originalWritten": "並べる",
+      "originalReading": "ならべる",
+      "originalSpanish": "poner en fila / ordenar",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA alinear-se es reflexivo; 並べる ordena cosas o personas como objeto"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1508390",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 並べる es transitivo: ordenar cosas o personas; póngase expresa alinearse uno mismo. El diagnóstico entre campos detecta: CA alinear-se es reflexivo; 並べる ordena cosas o personas como objeto. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 592,
+      "id": "n5-1du1dtt",
+      "originalWritten": "閉まる",
+      "originalReading": "しまる",
+      "originalSpanish": "cerrarse",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1436560",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "閉まる es intransitivo: cerrarse o cerrar un establecimiento sin objeto. Se conserva la glosa española y la categoría godan. No confundir con 閉める transitivo; el uso intransitivo de tancar no prueba por sí solo un error en CA.",
+      "historyPolicy": "unchanged",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 597,
+      "id": "n5-rhke1n",
+      "originalWritten": "勉強",
+      "originalReading": "べんきょうする",
+      "originalSpanish": "estudiar",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1512670",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "La lectura de origen y los ejemplos especifican 勉強する. Se representa el verbo completo irregular; estudiar y EN/CA mantienen el mismo objetivo.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 606,
+      "id": "n5-frwjnw",
+      "originalWritten": "磨く",
+      "originalReading": "みがく",
+      "originalSpanish": "cepillarse los dientes",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1523940",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Los ejemplos de origen describen cepillarse los dientes; se mantiene esa glosa válida en lugar de ampliar indiscriminadamente a todos los usos de pulir.",
+      "historyPolicy": "unchanged",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 607,
+      "id": "n5-1vzrsqo",
+      "originalWritten": "妹",
+      "originalReading": "いもうと",
+      "originalSpanish": "hermana menor (propia)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1524590",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Humilde no es rasgo de carácter: se refiere a la propia familia.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 608,
+      "id": "n5-13duv93",
+      "originalWritten": "毎月",
+      "originalReading": "まいげつ/まいつき",
+      "originalSpanish": "cada mes",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1584350",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "Se conservan まいげつ y まいつき separadamente para 毎月, con función nominal/adverbial de frecuencia.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 612,
+      "id": "n5-10kck3v",
+      "originalWritten": "毎年",
+      "originalReading": "まいねん/まいとし",
+      "originalSpanish": "cada año",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1584360",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "Se conservan まいねん y まいとし separadamente para 毎年, con función nominal/adverbial.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 613,
+      "id": "n5-m191b",
+      "originalWritten": "毎晩",
+      "originalReading": "まいばん",
+      "originalSpanish": "cada noche",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1524730",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 毎晩 en esta expresión corresponde a every night, no cada tarde.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 620,
+      "id": "n5-52k4yv",
+      "originalWritten": "鳴く",
+      "originalReading": "なく",
+      "originalSpanish": "emitir sonidos (un animal)",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1532870",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 鳴く es verbo de vocalización animal; chirriar no cubre rugir o croar y la glosa original mezcla fragmentos.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 628,
+      "id": "n5-1b1vbah",
+      "originalWritten": "薬",
+      "originalReading": "くすり",
+      "originalSpanish": "medicamento",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1538160",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 634,
+      "id": "n5-cy7di8",
+      "originalWritten": "夕方",
+      "originalReading": "ゆうがた",
+      "originalSpanish": "al atardecer / a última hora de la tarde",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1542790",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 夕方 es franja previa a la noche, no la noche completa; se distingue de 夜 y 晩.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 636,
+      "id": "n5-17ze54m",
+      "originalWritten": "葉書",
+      "originalReading": "はがき",
+      "originalSpanish": "tarjeta postal",
+      "status": "corrected",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1546590",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conservan las variantes legítimas y se añade su relación por grafía según las restricciones de JMdict; no se presenta una lectura de otra grafía como lectura de la principal. La variante katakana se conserva como grafía; anotar la misma pronunciación en hiragana o katakana es equivalente y no se rechaza como si fuera otro sonido.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 637,
+      "id": "n5-1c3q0u6",
+      "originalWritten": "要る",
+      "originalReading": "いる",
+      "originalSpanish": "ser necesario",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA necessitat mantiene sustantivo frente a verbo de ser necesario; requiere revisión de presentación"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1546640",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 要る es verbo de necesidad; necesidad es sustantivo. El diagnóstico entre campos detecta: CA necessitat mantiene sustantivo frente a verbo de ser necesario; requiere revisión de presentación. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 642,
+      "id": "n5-15r9su5",
+      "originalWritten": "来年",
+      "originalReading": "らいねん",
+      "originalSpanish": "el año que viene",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1548220",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Se elimina la preposición impropia para la referencia temporal aislada.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 643,
+      "id": "n5-1deye2i",
+      "originalWritten": "頼む",
+      "originalReading": "たのむ",
+      "originalSpanish": "pedir / solicitar",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope: preguntar no es pedir un favor"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1548370",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "頼む es pedir o solicitar, no preguntar por información. La glosa española anterior es correcta; CA preguntar sigue contradiciendo ese objetivo.",
+      "historyPolicy": "blocked: no semantic reassignment or reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 647,
+      "id": "n5-1gclo9i",
+      "originalWritten": "旅行",
+      "originalReading": "りょこう",
+      "originalSpanish": "viajar",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1553170",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "旅行 es nombre de actividad y admite suru. El infinitivo español viajar puede nombrar esa actividad, como en viajar es agradable; no se fuerza una conversión del lema nominal ni se excluye su uso con suru.",
+      "historyPolicy": "unchanged",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 653,
+      "id": "n5-xl65hf",
+      "originalWritten": "冷たい",
+      "originalReading": "つめたい",
+      "originalSpanish": "frío al tacto",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1556730",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria de frío.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 656,
+      "id": "n5-ufmxaa",
+      "originalWritten": "練習",
+      "originalReading": "れんしゅうする",
+      "originalSpanish": "práctica",
+      "status": "partial_blocked",
+      "blockedReasons": [
+        "EN_CA_scope: CA pràctica mantiene forma nominal frente al verbo explícito"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1559160",
+          "senses": [
+            1
+          ],
+          "basis": "constituent-or-conflicting-reference; not a literal primary-pair match"
+        }
+      ],
+      "reason": "La lectura de origen incluye する y EN indica to practice. Se representa 練習する como verbo irregular y practicar; la glosa catalana nominal sigue pendiente.",
+      "historyPolicy": "same lexical concept: preserve existing IDs and events; no reset",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 660,
+      "id": "n5-1jzwsri",
+      "originalWritten": "六日",
+      "originalReading": "むいか",
+      "originalSpanish": "seis días",
+      "status": "retained",
+      "blockedReasons": [],
+      "evidence": [
+        {
+          "dictionaryId": "1561470",
+          "senses": [
+            2
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: Tilde obligatoria.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    },
+    {
+      "index": 661,
+      "id": "n5-suqpo2",
+      "originalWritten": "話",
+      "originalReading": "はなし",
+      "originalSpanish": "conversación / charla",
+      "status": "blocked",
+      "blockedReasons": [
+        "EN_CA_scope_or_review: CA parlar mantiene presentación verbal frente al sustantivo 話; requiere revisar la glosa de conversación"
+      ],
+      "evidence": [
+        {
+          "dictionaryId": "1600900",
+          "senses": [
+            1
+          ]
+        }
+      ],
+      "reason": "Se conserva íntegramente la corrección española anterior y se comprueba su coherencia pedagógica: 話 es sustantivo; hablar es verbo y coincide indebidamente con 話す. El diagnóstico entre campos detecta: CA parlar mantiene presentación verbal frente al sustantivo 話; requiere revisar la glosa de conversación. No se modifica EN/CA ni se revierte la corrección española válida; el caso no se declara cerrado.",
+      "historyPolicy": "previous Spanish correction unchanged; no history or FSRS change",
+      "reviewer": "agent-linguistic-review",
+      "independentHumanReview": false
+    }
+  ],
+  "baselineDigest": "e15ae45ce7585c3ac5ef5e1c405c233c5dc936db5b3a96b0383c187ab1a15b67"
+}

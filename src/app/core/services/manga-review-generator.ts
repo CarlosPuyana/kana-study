@@ -1,3 +1,4 @@
+import {vocabularyFormAllowsReading, vocabularyReadingForForm} from './vocabulary-form-readings';
 import { AppLanguage } from '../models/settings.model';
 import { MangaStudySavedItem } from '../models/manga-study-saved.model';
 import { MangaExerciseType, MangaReviewEvent, MangaReviewMode, MangaReviewQuestion } from '../models/manga-review.model';
@@ -42,7 +43,9 @@ export function mangaContext(item: MangaStudySavedItem): MangaReviewQuestion['co
 function catalogEntry(item: MangaStudySavedItem, catalog: readonly VocabularyEntry[]): VocabularyEntry | undefined {
   const term = {id: item.id, dictionaryId: 'saved', expression: item.expression, reading: item.reading ?? '', glossaries: [], definitionTags: '', rules: '', score: 0, sequence: 0, termTags: ''};
   const matched = matchMangaVocabulary({installed: true, query: item.expression, reading: item.reading, baseForm: item.baseForm, terms: [term], principal: term}, catalog);
-  if (item.reading && matched && ![matched.primaryReading, ...matched.readings].some(reading => normalize(reading) === normalize(item.reading!))) return undefined;
+  if (item.reading && matched && (matched.formReadings
+    ? !vocabularyFormAllowsReading(matched, item.baseForm || item.expression, item.reading)
+    : ![matched.primaryReading, ...matched.readings].some(reading => normalize(reading) === normalize(item.reading!)))) return undefined;
   return item.vocabularyId && matched?.id !== item.vocabularyId ? undefined : matched;
 }
 function meanings(entry: VocabularyEntry, language: AppLanguage): Set<string> {
@@ -52,7 +55,7 @@ function meanings(entry: VocabularyEntry, language: AppLanguage): Set<string> {
 export function mangaRecallEvidence(item: MangaStudySavedItem, language: AppLanguage) {
   const entry = catalogEntry(item, VOCABULARY_N5);
   return {meaning: entry?.quizMeaning[language]?.trim() || item.meaning?.trim() || '',
-    reading: item.reading?.trim() || entry?.primaryReading || ''};
+    reading: item.reading?.trim() || (entry ? vocabularyReadingForForm(entry, item.baseForm || item.expression) : '')};
 }
 /** Distractors come only from saved, unambiguously matched catalog entries.
  * External definitions have no synonym/alternative-reading contract, so use
@@ -65,7 +68,7 @@ export function generateMangaReview(input: {
   const items = [...new Map(input.items.map(item => [item.id, item])).values()].sort((a, b) => a.id.localeCompare(b.id));
   const evidence = items.map(item => {
     const entry = catalogEntry(item, catalog);
-    return {item, entry, meaning: entry?.quizMeaning[input.language]?.trim() || item.meaning?.trim() || '', reading: item.reading?.trim() || entry?.primaryReading || ''};
+    return {item, entry, meaning: entry?.quizMeaning[input.language]?.trim() || item.meaning?.trim() || '', reading: item.reading?.trim() || (entry ? vocabularyReadingForForm(entry, item.baseForm || item.expression) : '')};
   }).filter(row => row.meaning || row.reading);
   const stats = evidence.map(row => {
     const events = input.history.filter(e => !e.reviewKind && e.savedItemId === row.item.id).sort((a, b) => a.reviewedAt.localeCompare(b.reviewedAt) || a.id.localeCompare(b.id));

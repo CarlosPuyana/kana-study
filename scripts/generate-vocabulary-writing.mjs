@@ -5,7 +5,10 @@ const source=await readFile('src/app/data/vocabulary-n5.generated.ts','utf8');
 const entries=JSON.parse(source.slice(source.indexOf('=[')+1).trim().replace(/;$/,''));
 const kanjiSource=await readFile('src/app/data/kanji-n5.generated.ts','utf8');
 const kanjiEntries=JSON.parse(kanjiSource.slice(kanjiSource.indexOf('= [')+1).trim().replace(/;$/,''));
-const characters=[...new Set([...entries.flatMap(e=>[...e.primaryWrittenForm.normalize('NFC')]),...kanjiEntries.map(e=>e.character)])].sort();
+// The normalized river entry still teaches both 川 and 河; preserve its existing variant glyph.
+const river=entries.find(entry=>entry.id==='n5-1kntmso');
+if(!river?.writtenForms.includes('河'))throw new Error('Missing reviewed river variant');
+const characters=[...new Set([...entries.flatMap(e=>[...e.primaryWrittenForm.normalize('NFC')]),...river.writtenForms.flatMap(form=>[...form]),...kanjiEntries.map(e=>e.character)])].sort();
 const kanji=characters.filter(c=>/\p{Script=Han}/u.test(c));
 const directory='public/vocabulary-writing';await mkdir(directory,{recursive:true});
 async function download(url){const r=await fetch(url);if(!r.ok)throw new Error(`${r.status}: ${url}`);return r.text();}

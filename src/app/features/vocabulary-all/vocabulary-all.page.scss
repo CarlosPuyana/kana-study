@@ -9,3 +9,5 @@
 .romaji{color:var(--text-secondary);font-size:.85rem}
 
 @include learning-reference.frame;
+
+.reading-variant{display:inline-block;max-width:100%;overflow-wrap:anywhere}

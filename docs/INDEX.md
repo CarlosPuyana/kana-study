@@ -30,6 +30,8 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
 - Para la selección diaria vigente: [lecciones cortas de 10/15 palabras](features/vocabulary/VOCABULARY_SHORT_DAILY_LESSONS.md).
 - Para el historial de la implementación FSRS y los dos RUSH del resultado: [FSRS diario y RUSH de sesión](features/vocabulary/VOCABULARY_FSRS_RUSH_REDESIGN.md).
 - Para consultar el resumen y las estadísticas actuales de Vocabulario: [estadísticas avanzadas](features/vocabulary/VOCABULARY_ADVANCED_STATS.md).
+- Para verificar los significados españoles y las incidencias pendientes del catálogo: [auditoría lingüística de Vocabulario](features/vocabulary/VOCABULARY_SPANISH_LINGUISTIC_AUDIT.md).
+- Para las normalizaciones, los bloqueos EN/CA/identidad y la decisión de cierre: [revisión lingüística final](features/vocabulary/VOCABULARY_LINGUISTIC_FINAL_REVIEW.md).
 - Para el diagnóstico histórico de estadísticas de Vocabulario: [auditoría y propuesta](features/vocabulary/VOCABULARY_STATS_AUDIT.md).
 - Para comprender FSRS de Vocabulario y Mazos: [auditoría de arquitectura](features/srs/01-ARQUITECTURA-FSRS.md),
   [comparación](features/srs/02-VOCABULARIO-VS-MAZOS.md), [simulaciones](features/srs/03-INTERVALOS-Y-SIMULACIONES.md),

@@ -1,3 +1,4 @@
+import {vocabularyFormAllowsReading} from './vocabulary-form-readings';
 import {inject, Injectable} from '@angular/core';
 import {MangaStudySavedItem} from '../models/manga-study-saved.model';
 import {DictionaryLookup} from '../models/dictionary.model';
@@ -21,7 +22,7 @@ export function matchMangaVocabulary(lookup:DictionaryLookup,catalog:readonly Vo
   let writtenEvidence=false;
   for(const form of [...new Set(forms)]){
     const primary=entries.filter(e=>normalized(e.primaryWrittenForm)===form);
-    const exact=primary.length?primary:entries.filter(e=>e.writtenForms.some(w=>normalized(w)===form));
+    const exact=(primary.length?primary:entries.filter(e=>e.writtenForms.some(w=>normalized(w)===form))).filter(e=>!reading||!e.formReadings||vocabularyFormAllowsReading(e,form,reading));
     if(!exact.length)continue;
     writtenEvidence=true;
     if(exact.length===1)return exact[0];
