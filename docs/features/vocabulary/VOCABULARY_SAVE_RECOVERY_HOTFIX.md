@@ -44,3 +44,15 @@ La recuperación de cuota realmente agotada u otros datos corruptos seguirá
 mostrando un error: esta corrección resuelve el rechazo indebido del tiempo
 válido, sin ocultar fallos de almacenamiento. Tras publicarla, recargar la
 aplicación y continuar la lección; no es necesario borrar datos del navegador.
+
+## Incidencia de CI posterior al primer push
+
+El workflow de `ef67089`, ejecución `42689487645`, detuvo la publicación con
+2709 tests correctos y un fallo preexistente en `learning-writing-prompt.spec.ts`.
+El test disparaba un clic de Kanji, esperaba `fixture.whenStable()` y comprobaba
+el contador antes de terminar `answerQuick()`, que ahora espera IndexedDB por K0.
+Se espera explícitamente la promesa devuelta por el método invocado desde el
+botón, tanto para el error como para el acierto. Se conserva la interacción UI
+y todas las aserciones, sin sleeps, polling, reintentos ni cambios de producción.
+El test dirigido pasa **7/7** y TypeScript spec es correcto. Las adaptaciones
+del mock de disponibilidad de K1 quedan fuera de este ajuste de CI.
