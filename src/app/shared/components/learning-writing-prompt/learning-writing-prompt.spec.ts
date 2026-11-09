@@ -1,3 +1,4 @@
+import {isolatedKanjiAnswers} from '../../../core/services/kanji-answer-store.test-support';
 import {TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {provideRouter} from '@angular/router';
@@ -29,7 +30,7 @@ for(const module of ['kana','kanji'] as const)describe(`${module} drawing inside
     kanaRound=[{key:`${kana.id}:romaji-to-kana`,kanaId:kana.id,questionType:'romaji-to-kana'}];
     kanjiRound=[{key:`kanji:${kanji.id}:meaning-to-kanji`,kanjiId:kanji.id,questionType:'meaning-to-kanji'}];
     progress.buildRound.mockImplementation(()=>module==='kana'?kanaRound:kanjiRound);
-    TestBed.configureTestingModule({providers:[provideRouter([]),{provide:ProgressService,useValue:progress},{provide:KanjiProgressService,useValue:progress},
+    TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,provideRouter([]),{provide:ProgressService,useValue:progress},{provide:KanjiProgressService,useValue:progress},
       {provide:MedalService,useValue:{evaluateUnlocks:()=>[]}},{provide:KanjiMedalService,useValue:{evaluateUnlocks:()=>[]}},
       {provide:SessionHistoryService,useValue:{record:vi.fn()}},{provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:vi.fn()}},
       {provide:KanaStrokesService,useValue:{load:async()=>[glyph]}},{provide:JapaneseGlyphService,useValue:{load:async()=>[glyph]}}]});
@@ -54,8 +55,8 @@ for(const module of ['kana','kanji'] as const)describe(`${module} drawing inside
     draw(canvas,f.nativeElement.querySelector('svg.writing-surface'));
     f.nativeElement.querySelector('.reveal').click();await f.whenStable();f.detectChanges();
     expect(f.nativeElement.querySelector('.model')).not.toBeNull();expect(canvas.strokes()).toHaveLength(1);expect(f.nativeElement.querySelectorAll('.ratings button')).toHaveLength(3);
-    learning.rate('again');await f.whenStable();f.detectChanges();expect(canvas.strokes()).toHaveLength(0);expect(f.nativeElement.querySelector('.model')).toBeNull();
-    learning.reveal();learning.rate('hard');learning.reveal();learning.rate('good');
+    await learning.rate('again');await f.whenStable();f.detectChanges();expect(canvas.strokes()).toHaveLength(0);expect(f.nativeElement.querySelector('.model')).toBeNull();
+    learning.reveal();await learning.rate('hard');learning.reveal();await learning.rate('good');
     expect(progress.recordReview).toHaveBeenCalledTimes(1);expect(progress.recordPracticeAttempt).toHaveBeenCalledTimes(2);expect(learning.session()!.attempts).toBe(3);
   });
   it('offers accessible quick options without grading the drawing; resets the gate and strokes on repeat and new sessions',async()=>{

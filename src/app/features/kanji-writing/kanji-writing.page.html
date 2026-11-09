@@ -1,5 +1,6 @@
-<main class="writing-shell">
+<main [attr.aria-busy]="saving()" class="writing-shell">
   <header><a [routerLink]="returnLink()" [attr.aria-label]="i18n.t('common.back')">←</a><h1>✍ {{i18n.t('kanjiWriting.title')}}</h1></header>
+  @if(saveError() || integrity.error()){<p role="alert">{{i18n.t('kanji.saveError')}}</p><button type="button" [disabled]="saving()" (click)="retrySave()">{{i18n.t('common.retry')}}</button>}
   @if(!individual()&&!session()){
     <section class="configuration">
       <fieldset><legend>{{i18n.t('writing.content')}}</legend>
@@ -26,7 +27,7 @@
           @if(loadError()||!data[0]?.strokes?.length){<p role="alert">{{i18n.t('kanjiWriting.missing')}}</p>}
           @if(individual()){<button class="primary" type="button" (click)="restart()">{{i18n.t('kanjiWriting.again')}}</button>}
           @else if(!revealed()){<button class="primary" type="button" (click)="revealed.set(true)">{{i18n.t('writing.answer')}}</button>}
-          @else{<div class="answer" aria-live="polite"><strong lang="ja">{{entry.character}}</strong><div class="choices"><button type="button" (click)="answer(false)">{{i18n.t('writing.repeat')}}</button><button class="primary" type="button" (click)="answer(true)">{{i18n.t('writing.correct')}}</button></div></div>}
+          @else{<div class="answer" aria-live="polite"><strong lang="ja">{{entry.character}}</strong><div class="choices"><button type="button" [disabled]="saving() || saveError()" (click)="answer(false)">{{i18n.t('writing.repeat')}}</button><button class="primary" type="button" [disabled]="saving() || saveError()" (click)="answer(true)">{{i18n.t('writing.correct')}}</button></div></div>}
         }@else{<p role="status">{{i18n.t('writing.loading')}}</p>}
       </section>
     }@else{<section class="finished"><h2>{{i18n.t('writing.finished')}}</h2><button class="primary" type="button" (click)="configure()">{{i18n.t('writing.configure')}}</button></section>}

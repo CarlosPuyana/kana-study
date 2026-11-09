@@ -1,3 +1,4 @@
+import {isolatedKanjiAnswers} from './kanji-answer-store.test-support';
 import {TestBed} from '@angular/core/testing';
 import {signal} from '@angular/core';
 import {provideRouter} from '@angular/router';
@@ -39,7 +40,7 @@ describe('AttemptEvent integration at real grading boundaries',()=>{
     TestBed.resetTestingModule();localStorage.clear();vi.clearAllMocks();audioState.set('ready');vocabularyWrites=[];progress.recordReview.mockImplementation((...args:unknown[])=>{const attempt=args[5] as AttemptEvent|undefined;if(attempt)vocabularyWrites.push(TestBed.inject(AttemptEventRepository).insert(attempt));});
     vi.stubGlobal('indexedDB',new IDBFactory());vi.stubGlobal('IDBKeyRange',IDBKeyRange);
     vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
-    TestBed.configureTestingModule({providers:[provideRouter([]),GrammarPracticeSession,
+    TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,provideRouter([]),GrammarPracticeSession,
       {provide:SessionHistoryService,useValue:history},{provide:DailyLearningService,useValue:daily},
       ...[ProgressService,KanjiProgressService,VocabularyProgressService].map(provide=>({provide,useValue:progress})),
       ...[MedalService,KanjiMedalService,VocabularyMedalService].map(provide=>({provide,useValue:{evaluateUnlocks:()=>[]}})),
@@ -57,7 +58,7 @@ describe('AttemptEvent integration at real grading boundaries',()=>{
     }
     it(`${module}: keeps Again/Hard/Good separate, logs repetitions once and respects each module’s FSRS review contract`,async()=>{
       const service=learning();service.start('self-assessment');expect(await events()).toEqual([]);
-      for(const rating of ['again','hard','good'] as const){service.reveal();expect((await events()).length).toBe(service.session()!.attempts);service.rate(rating);}
+      for(const rating of ['again','hard','good'] as const){service.reveal();expect((await events()).length).toBe(service.session()!.attempts);await service.rate(rating);}
       const recorded=await events();expect(recorded.map(e=>e.result)).toEqual([{source:'self',rating:'again'},{source:'self',rating:'hard'},{source:'self',rating:'good'}]);
       expect(recorded.map(e=>e.firstAttempt)).toEqual(module==='vocabulary'?[true,true,true]:[true,false,false]);expect(new Set(recorded.map(e=>e.id)).size).toBe(3);
       expect(progress.recordReview).toHaveBeenCalledTimes(module==='vocabulary'?3:1);expect(progress.recordPracticeAttempt).toHaveBeenCalledTimes(module==='vocabulary'?0:2);expect(service.session()!.attempts).toBe(3);
@@ -65,27 +66,27 @@ describe('AttemptEvent integration at real grading boundaries',()=>{
     it(`${module}: objective quick answers and compatible practice record exactly once without FSRS changes`,async()=>{
       const service=learning();service.start('quick-practice');
       const correct=module==='kana'?ALL_KANA[0].character:module==='kanji'?KANJI_N5[0].id:VOCABULARY_N5[0].id;
-      service.answerQuick(correct);service.answerQuick(correct);const recorded=await events();expect(recorded).toHaveLength(1);expect(recorded[0].result).toEqual({source:'objective',correct:true});
+      await service.answerQuick(correct);await service.answerQuick(correct);const recorded=await events();expect(recorded).toHaveLength(1);expect(recorded[0].result).toEqual({source:'objective',correct:true});
       service.continueQuick();expect(await events()).toHaveLength(1);expect(TestBed.inject(WeaknessService).records()[0].attempts).toBe(1);
       service.clear();progress.recordReview.mockClear();progress.recordPracticeAttempt.mockClear();
       if(module==='kana')TestBed.inject(LearningSessionService).startPractice([{key:'a',kanaId:ALL_KANA[0].id,questionType:'romaji-to-kana'}]);
       else if(module==='kanji')TestBed.inject(KanjiSessionService).startPractice([{key:'a',kanjiId:KANJI_N5[0].id,questionType:'meaning-to-kanji'}]);
       else TestBed.inject(VocabularySessionService).startPractice([{key:'a',entryId:VOCABULARY_N5[0].id,questionType:'meaning-to-japanese'}]);
-      service.answerQuick(correct);expect(await events()).toHaveLength(2);expect(progress.recordReview).not.toHaveBeenCalled();expect(progress.recordPracticeAttempt).not.toHaveBeenCalled();
+      await service.answerQuick(correct);expect(await events()).toHaveLength(2);expect(progress.recordReview).not.toHaveBeenCalled();expect(progress.recordPracticeAttempt).not.toHaveBeenCalled();
     });
   }
   for(const module of ['kana','kanji','vocabulary'] as const)it(`${module}: writing reveal alone never emits, explicit assessment uses self provenance`,async()=>{
     const f=module==='kana'?TestBed.createComponent(KanaWritingPage):module==='kanji'?TestBed.createComponent(KanjiWritingPage):TestBed.createComponent(VocabularyWritingPage);
-    const c=f.componentInstance;c.start();await f.whenStable();f.detectChanges();c.answer(true);expect(await events()).toEqual([]);
+    const c=f.componentInstance;c.start();await f.whenStable();f.detectChanges();await c.answer(true);expect(await events()).toEqual([]);
     c.revealed.set(true);expect(await events()).toEqual([]);if(c instanceof VocabularyWritingPage)c.wordFinished.set(true);
-    c.answer(false);const recorded=await events();expect(recorded).toHaveLength(1);expect(recorded[0]).toMatchObject({module,activity:'writing',result:{source:'self',rating:'again'}});
-    c.answer(true);expect(await events()).toHaveLength(1);
+    await c.answer(false);const recorded=await events();expect(recorded).toHaveLength(1);expect(recorded[0]).toMatchObject({module,activity:'writing',result:{source:'self',rating:'again'}});
+    await c.answer(true);expect(await events()).toHaveLength(1);
   });
   it('listening commits objective assessment on Continue only after valid playback, with no navigation duplicates',async()=>{
     const f=TestBed.createComponent(VocabularyListeningPage),c=f.componentInstance;c.start();await f.whenStable();
-    const q=c.question()!;c.answer(q.options.find(o=>o.correct)!.id);expect(await events()).toEqual([]);c.next();c.next();
+    const q=c.question()!;await c.answer(q.options.find(o=>o.correct)!.id);expect(await events()).toEqual([]);c.next();c.next();
     expect(await events()).toHaveLength(1);expect((await events())[0]).toMatchObject({module:'vocabulary',activity:'listening',questionType:q.kind,result:{source:'objective',correct:true}});
-    await f.whenStable();c.answer(c.question()!.options.find(o=>!o.correct)!.id);audioState.set('error');c.next();expect(await events()).toHaveLength(1);
+    await f.whenStable();await c.answer(c.question()!.options.find(o=>!o.correct)!.id);audioState.set('error');c.next();expect(await events()).toHaveLength(1);
   });
   it.each([
     ['ffffffff-ffff-4fff-8fff-ffffffffffff','00000000-0000-4000-8000-000000000000'],
@@ -95,7 +96,7 @@ describe('AttemptEvent integration at real grading boundaries',()=>{
     vi.spyOn(crypto,'randomUUID').mockReturnValueOnce(firstSession).mockReturnValueOnce(secondSession);
     const exercise=GRAMMAR_LESSONS.flatMap(l=>l.concept?.exercises??[])[0];expect(exercise).toBeDefined();
     const session=TestBed.inject(GrammarPracticeSession);session.reset([exercise]);session.start();expect(await events()).toEqual([]);
-    session.answer(false);session.answer(true);session.next();session.reviewErrors();session.answer(true);session.next();const recorded=await events();
+    await session.answer(false);await session.answer(true);session.next();session.reviewErrors();await session.answer(true);session.next();const recorded=await events();
     expect(recorded).toHaveLength(2);
     const firstId=`${firstSession}:grammar:learn:1`,secondId=`${secondSession}:grammar:learn:1`;
     // scan orders equal dates by primary key; chronology across distinct session UUIDs is not guaranteed.

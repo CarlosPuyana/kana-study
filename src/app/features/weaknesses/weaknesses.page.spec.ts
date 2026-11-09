@@ -1,3 +1,4 @@
+import {isolatedKanjiAnswers} from '../../core/services/kanji-answer-store.test-support';
 import {TestBed} from '@angular/core/testing';
 import {signal, Type} from '@angular/core';
 import {ActivatedRoute,convertToParamMap,provideRouter,Router} from '@angular/router';
@@ -30,7 +31,7 @@ describe('Weak spots page and Writing integrations',()=>{
   let values:Map<string,unknown>;
   beforeEach(()=>{
     values=new Map();vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
-    TestBed.configureTestingModule({providers:[provideRouter([]),
+    TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,provideRouter([]),
       {provide:StorageService,useValue:{get:(key:string,fallback:unknown)=>values.get(key)??fallback,
         set:(key:string,value:unknown)=>values.set(key,value),rawKey:(key:string)=>key,cloudRevision:signal(0)}},
       {provide:JapaneseGlyphService,useValue:{load:async(character:string)=>[{character,strokes:[],clipPaths:[]}]}},
@@ -107,9 +108,9 @@ describe('Weak spots page and Writing integrations',()=>{
     it(`${mode.module}: normal self-evaluation records exactly once, with reveal gating`,async()=>{
       const f=TestBed.createComponent(mode.page),c=f.componentInstance;c.start();await f.whenStable();
       const id=c.current()!.id,s=TestBed.inject(WeaknessService);expect(s.records()).toEqual([]);
-      c.answer(false);expect(s.records()).toEqual([]);reveal(c);c.answer(false);c.answer(false);
+      await c.answer(false);expect(s.records()).toEqual([]);reveal(c);await c.answer(false);await c.answer(false);
       expect(s.records()).toHaveLength(1);expect(s.records()[0]).toEqual(expect.objectContaining({module:mode.module,itemId:id,attempts:1,score:2}));
-      const next=c.current()!.id;reveal(c);c.answer(true);
+      const next=c.current()!.id;reveal(c);await c.answer(true);
       expect(s.records().find(r=>r.itemId===next)?.consecutiveCorrect).toBe(1);
     });
     it(`${mode.module}: weak entry uses only the ten highest-priority valid items and keeps feeding scores`,async()=>{
@@ -117,10 +118,10 @@ describe('Weak spots page and Writing integrations',()=>{
       const expected=s.items(mode.module,mode.entries,10).map(e=>e.id);
       const f=TestBed.createComponent(mode.page),c=f.componentInstance;await f.whenStable();f.detectChanges();
       expect(c.session()!.total).toBe(10);expect(f.nativeElement.querySelector('fieldset')).toBeNull();
-      const seen:string[]=[];while(c.current()){seen.push(c.current()!.id);reveal(c);c.answer(true);}
+      const seen:string[]=[];while(c.current()){seen.push(c.current()!.id);reveal(c);await c.answer(true);}
       expect(seen.sort()).toEqual(expected.sort());expect(c.resolved()).toBe(10);
       expect(s.records().filter(r=>expected.includes(r.itemId)).every(r=>r.score===3)).toBe(true);
-      c.configure();while(c.current()){reveal(c);c.answer(true);}
+      c.configure();while(c.current()){reveal(c);await c.answer(true);}
       expect(s.weak().filter(r=>r.module===mode.module&&expected.includes(r.itemId)).length).toBeLessThan(10);
       expect(values.has(WEAKNESSES_KEY)).toBe(true);
     });

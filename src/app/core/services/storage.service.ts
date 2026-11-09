@@ -1,6 +1,7 @@
 import { inject, Injectable, linkedSignal, signal, untracked, WritableSignal } from '@angular/core';
 import { makeOutboxItem, SyncOutboxService } from './sync-outbox.service';
 import { WorkspaceService } from './workspace.service';
+import {LocalWorkspaceId} from '../models/account.model';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
@@ -19,10 +20,11 @@ export class StorageService {
     }
   }
 
-  set<T>(key: string, value: T, options: {localOnly?: boolean; silent?: boolean; strict?: boolean} = {}): void {
+  set<T>(key: string, value: T, options: {localOnly?: boolean; silent?: boolean; strict?: boolean; owner?:LocalWorkspaceId} = {}): void {
     try {
-      localStorage.setItem(this.workspace.storageKey(key), JSON.stringify(value));
-      if (!options.localOnly) this.enqueue(key, value, 'upsert');
+      const owner=options.owner??this.workspace.active();
+      localStorage.setItem(this.workspace.storageKey(key,owner), JSON.stringify(value));
+      if (!options.localOnly) this.enqueue(key, value, 'upsert',owner);
     } catch (error) {
       if (!options.silent) this.persistenceFailed.set(true);
       if (options.strict) throw error;
@@ -38,6 +40,7 @@ export class StorageService {
     }
   }
 
+
   setFromCloud<T>(key: string, value: T): void {
     try { localStorage.setItem(this.workspace.storageKey(key), JSON.stringify(value)); } catch { /* local mode remains usable */ }
     this.cloudRevision.update(value => value + 1);
@@ -45,8 +48,8 @@ export class StorageService {
 
   rawKey(key: string): string { return this.workspace.storageKey(key); }
 
-  private enqueue(key: string, value: unknown, operation: 'upsert' | 'delete'): void {
-    const item = makeOutboxItem(this.workspace.active(), 'local-storage', key, value, operation);
+  private enqueue(key: string, value: unknown, operation: 'upsert' | 'delete',owner=this.workspace.active()): void {
+    const item = makeOutboxItem(owner, 'local-storage', key, value, operation);
     if (item) void this.outbox.enqueue(item).catch(() => undefined);
   }
 }

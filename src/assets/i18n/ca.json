@@ -12754,5 +12754,6 @@
   "conjugations.rule.verb.past": "Godan: う・つ・る → った; む・ぶ・ぬ → んだ; く → いた; ぐ → いだ; す → した. 行く → 行った. Ichidan: る → た. する → した; 来る → きた.",
   "conjugations.rule.verb.negativePast": "Parteix de la forma negativa en ない i substitueix ない per なかった: 行かない → 行かなかった; しない → しなかった; こない → こなかった; ある → なかった.",
   "conjugations.rule.verb.te": "Godan: う・つ・る → って; む・ぶ・ぬ → んで; く → いて; ぐ → いで; す → して. 行く → 行って. Ichidan: る → て. する → して; 来る → きて.",
-  "conjugations.rule.verb.note": "El grup importa: 帰る i 入る són godan; 見る i 借りる són ichidan. La lectura de 来る canvia: こない, きた, きて. Els compostos amb する segueixen la seva conjugació."
+  "conjugations.rule.verb.note": "El grup importa: 帰る i 入る són godan; 見る i 借りる són ichidan. La lectura de 来る canvia: こない, きた, きて. Els compostos amb する segueixen la seva conjugació.",
+  "kanji.saveError": "No s’ha desat. Torna a provar la mateixa resposta."
 }

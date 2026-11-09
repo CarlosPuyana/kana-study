@@ -24,7 +24,7 @@ export class KanjiPlayPage {
   constructor(){inject(DestroyRef).onDestroy(()=>this.learning.clear());}
 readonly daily=inject(DailyLearningService);readonly learning=inject(KanjiSessionService);readonly progress=inject(KanjiProgressService);readonly i18n=inject(TranslationService);readonly showExit=signal(false);private readonly router=inject(Router);options(){return this.learning.options(this.i18n.language())}promptKey(type:KanjiQuestionType){return `kanji.prompt.${type}`}statusKey(){const u=this.learning.currentUnit();if(!u)return'home.new';const p=this.progress.get(u.key);if(!p)return'home.new';return p.fsrs.state==='review'?'home.memorized':'home.pending'}requestExit(){const s=this.learning.session();if(!s||s.attempts===0||s.completedAt)this.exit();else this.showExit.set(true)}exit(){this.learning.clear();void this.router.navigateByUrl('/kanji')}anotherRound(){if(!this.learning.restart())void this.router.navigateByUrl('/kanji')}duration():string{return this.learning.clock?.label()??'00:00';}
 handleKey(event:KeyboardEvent):void {
-    if(!this.learning.session() || this.learning.session()!.mode!=='self-assessment' || this.learning.completed() ||
+    if(this.learning.saving() || this.learning.error() || !this.learning.session() || this.learning.session()!.mode!=='self-assessment' || this.learning.completed() ||
       !this.learning.currentKanji() || this.showExit() || this.learning.newlyUnlockedMedals().length || this.writingPrompt()?.keyboardBusy())return;
     runStudyShortcut(event,this.learning.revealed()?null:()=>this.learning.reveal(),
       this.learning.revealed()?(['again','hard','good'] as const).map(rating=>()=>this.learning.rate(rating)):[]);

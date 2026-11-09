@@ -1,3 +1,4 @@
+import {isolatedKanjiAnswers} from '../../../core/services/kanji-answer-store.test-support';
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router,provideRouter } from '@angular/router';
@@ -36,7 +37,7 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
   beforeEach(()=>{
     localStorage.clear();vi.clearAllMocks();language.set('es');
     const progress=(buildRound:()=>readonly {key:string}[])=>({buildRound:()=>buildRound===wordRound?buildRound().filter(u=>!review.mock.calls.some(c=>c[0].key===u.key&&c[1]==='good')):buildRound(),recordReview:review,recordInternalAttempt:internal,recordPracticeAttempt:practice,completedToday:()=>false,get:()=>null,roundSummary:()=>({roundDue:0,roundNew:10})});
-    TestBed.configureTestingModule({providers:[
+    TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,
       {provide:SettingsService,useValue:{language}},
       {provide:KanjiProgressService,useValue:progress(kanjiRound)},
       {provide:VocabularyProgressService,useValue:progress(wordRound)},
@@ -51,7 +52,7 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();});
   for(const module of ['kanji','vocabulary'] as const)for(const mode of ['self-assessment','quick-practice'] as const)for(const extra of [false,true]){
-    it(`${module}, ${mode}, ${extra?'additional practice':'daily Learn'}: repeated targets, order, unique count and unchanged totals`,()=>{
+    it(`${module}, ${mode}, ${extra?'additional practice':'daily Learn'}: repeated targets, order, unique count and unchanged totals`,async ()=>{
       const k=module==='kanji',engine=k?TestBed.inject(KanjiSessionService):TestBed.inject(VocabularySessionService);
       vi.spyOn(TestBed.inject(Router),'navigateByUrl').mockImplementation(url=>{navigate(url);return Promise.resolve(true);});
       const fixture=k?TestBed.createComponent(KanjiPlayPage):TestBed.createComponent(VocabularyPlayPage);
@@ -61,8 +62,8 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
       let turns=0;
       while(!engine.completed()&&turns<10){
         const target=k?TestBed.inject(KanjiSessionService).currentKanji()!.id:TestBed.inject(VocabularySessionService).currentEntry()!.id;
-        if(mode==='self-assessment'){engine.reveal();engine.rate(turns===0?'again':'good');}
-        else {const wrong=engine.options('es').find(o=>o.id!==target);expect(wrong||turns>0).toBeTruthy();engine.answerQuick(turns===0?wrong!.id:target);engine.continueQuick();}
+        if(mode==='self-assessment'){engine.reveal();await engine.rate(turns===0?'again':'good');}
+        else {const wrong=engine.options('es').find(o=>o.id!==target);expect(wrong||turns>0).toBeTruthy();await engine.answerQuick(turns===0?wrong!.id:target);engine.continueQuick();}
         turns++;
       }
       expect(engine.completed()).toBe(true);expect(turns).toBe(k||extra?4:5);
@@ -79,13 +80,13 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
       expect([review.mock.calls.length,practice.mock.calls.length,record.mock.calls.length,internal.mock.calls.length,history.mock.calls.length]).toEqual(writes);
       expect(review).toHaveBeenCalledTimes(extra?0:k?3:2);expect(practice).toHaveBeenCalledTimes(extra?0:k?1:0);expect(history).toHaveBeenCalledTimes(extra?0:1);
       if(!k&&!extra){expect(internal).toHaveBeenCalledTimes(3);expect(list.querySelectorAll('.session-word-note')).toHaveLength(2);expect(list.textContent).toContain('Primera respuesta: NO');}
-      if(!extra){const summary=expect.objectContaining({module,exercisesCompleted:k?3:2,attempts:k?4:5,needsPracticeCount:1});if(k)expect(history).toHaveBeenCalledWith(summary);else expect(history).toHaveBeenCalledWith(summary,{strict:true});}
+      if(!extra){const summary=expect.objectContaining({module,exercisesCompleted:k?3:2,attempts:k?4:5,needsPracticeCount:1});expect(history).toHaveBeenCalledWith(summary,{strict:true});}
       expect(root.querySelector<HTMLButtonElement>('.results .secondary')?.disabled).toBe(false);
       if(extra){
         fixture.componentInstance.anotherRound();fixture.detectChanges();expect(root.querySelector('app-learning-session-list')).toBeNull();expect(engine.session()?.attempts).toBe(0);
         if(k)TestBed.inject(KanjiSessionService).startPractice([{key:'new',kanjiId:kanji[2].id,questionType:'kanji-to-meaning'}],mode);
         else TestBed.inject(VocabularySessionService).startPractice([{key:'new',entryId:words[2].id,questionType:'japanese-to-meaning'}],mode);
-        if(mode==='self-assessment'){engine.reveal();engine.rate('good');}else{engine.answerQuick(k?kanji[2].id:words[2].id);engine.continueQuick();}
+        if(mode==='self-assessment'){engine.reveal();await engine.rate('good');}else{await engine.answerQuick(k?kanji[2].id:words[2].id);engine.continueQuick();}
         fixture.detectChanges();expect([...root.querySelectorAll('app-learning-session-list li')].map(li=>li.getAttribute('data-entry-id'))).toEqual([k?kanji[2].id:words[2].id]);
       }
       fixture.componentInstance.exit();fixture.detectChanges();expect(root.querySelector('app-learning-session-list')).toBeNull();expect(navigate).toHaveBeenCalledWith('/'+module);

@@ -14,8 +14,16 @@ function valid(value: unknown): value is WeaknessRecord {
     && r.attempts > 0 && r.failures <= r.attempts && r.consecutiveCorrect <= r.attempts
     && r.score <= 10 && typeof r.lastAttemptAt === 'string' && Number.isFinite(Date.parse(r.lastAttemptAt));
 }
-function key(record: Pick<WeaknessRecord,'module'|'activity'|'itemId'|'questionType'>): string {
+export function weaknessKey(record: Pick<WeaknessRecord,'module'|'activity'|'itemId'|'questionType'>): string {
   return JSON.stringify([record.module,record.activity,record.itemId,record.questionType ?? null]);
+}
+const key=weaknessKey;
+
+/** Same scoring for immediate recording and recoverable Kanji receipts. */
+export function nextWeaknessRecord(identity:Pick<WeaknessRecord,'module'|'activity'|'itemId'|'questionType'>,previous:WeaknessRecord|undefined,rating:StudyRating,at:string):WeaknessRecord {
+  return {...identity,attempts:(previous?.attempts??0)+1,failures:(previous?.failures??0)+Number(rating==='again'),
+    consecutiveCorrect:rating==='good'?(previous?.consecutiveCorrect??0)+1:0,
+    score:Math.max(0,Math.min(10,(previous?.score??0)+(rating==='good'?-1:rating==='hard'?1:2))),lastAttemptAt:at};
 }
 
 @Injectable({providedIn:'root'})
@@ -41,13 +49,7 @@ export class WeaknessService {
     if (!itemId) return;
     const identity = {module,activity,itemId,...(questionType ? {questionType} : {})};
     const previous = this.state().find(r => key(r) === key(identity));
-    const next: WeaknessRecord = {
-      ...identity, attempts:(previous?.attempts ?? 0)+1,
-      failures:(previous?.failures ?? 0)+(rating === 'again' ? 1 : 0),
-      consecutiveCorrect:rating === 'good' ? (previous?.consecutiveCorrect ?? 0)+1 : 0,
-      score:Math.max(0,Math.min(10,(previous?.score ?? 0)+(rating === 'good' ? -1 : rating === 'hard' ? 1 : 2))),
-      lastAttemptAt:new Date().toISOString(),
-    };
+    const next=nextWeaknessRecord(identity,previous,rating,new Date().toISOString());
     this.state.update(records => [...records.filter(r => key(r) !== key(next)),next]);
     this.storage.set(WEAKNESSES_KEY,this.state(),{localOnly:true});
   }

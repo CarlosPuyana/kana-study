@@ -1,3 +1,4 @@
+import {isolatedKanjiAnswers} from '../../core/services/kanji-answer-store.test-support';
 import {TestBed} from '@angular/core/testing';
 import {ActivatedRoute, convertToParamMap, provideRouter} from '@angular/router';
 import {signal} from '@angular/core';
@@ -17,7 +18,7 @@ describe('Kanji handwriting', () => {
   beforeEach(() => {
     selection.set({levels:{N5:true},questionTypes:['kanji-to-meaning']}); load.mockClear();
     vi.stubGlobal('matchMedia',vi.fn(() => ({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
-    TestBed.configureTestingModule({providers:[provideRouter([]),
+    TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,provideRouter([]),
       {provide:ActivatedRoute,useValue:{queryParamMap:of(convertToParamMap({}))}},
       {provide:JapaneseGlyphService,useValue:{load}},
       {provide:KanjiSettingsService,useValue:{selection}},
@@ -63,16 +64,16 @@ describe('Kanji handwriting', () => {
   });
   it('gates rating until reveal and completes correctly with one selected Kanji', async () => {
     const f=await page(),c=f.componentInstance;c.start();await f.whenStable();
-    const first=c.current();c.answer(true);expect(c.current()).toBe(first);
-    c.revealed.set(true);c.answer(false);await f.whenStable();expect(c.current()).not.toBe(first);expect(c.resolved()).toBe(0);
-    c.revealed.set(true);c.answer(true);expect(c.resolved()).toBe(1);
-    const session=new KanjiWritingSession([KANJI_N5[0]]);session.answer(false);expect(session.current).toBe(KANJI_N5[0]);
-    session.answer(true);expect(session.current).toBeNull();expect(session.resolved).toBe(1);
+    const first=c.current();await c.answer(true);expect(c.current()).toBe(first);
+    c.revealed.set(true);await c.answer(false);await f.whenStable();expect(c.current()).not.toBe(first);expect(c.resolved()).toBe(0);
+    c.revealed.set(true);await c.answer(true);expect(c.resolved()).toBe(1);
+    const session=new KanjiWritingSession([KANJI_N5[0]]);await session.answer(false);expect(session.current).toBe(KANJI_N5[0]);
+    await session.answer(true);expect(session.current).toBeNull();expect(session.resolved).toBe(1);
   });
-  it('requeues repeated Kanji after all remaining entries and never duplicates the initial queue', () => {
+  it('requeues repeated Kanji after all remaining entries and never duplicates the initial queue', async () => {
     const entries=KANJI_N5.slice(0,5),session=new KanjiWritingSession([...entries,entries[0]],()=>0);
-    expect(session.total).toBe(5);const first=session.current!;session.answer(false);
-    const seen:string[]=[];while(session.current){seen.push(session.current.id);session.answer(true);}
+    expect(session.total).toBe(5);const first=session.current!;await session.answer(false);
+    const seen:string[]=[];while(session.current){seen.push(session.current.id);await session.answer(true);}
     expect(new Set(seen).size).toBe(5);expect(seen.at(-1)).toBe(first.id);expect(session.resolved).toBe(5);
   });
   it('covers every N5 Kanji with the existing local glyph provider and matching stroke counts', async () => {

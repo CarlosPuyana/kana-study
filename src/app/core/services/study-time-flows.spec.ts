@@ -1,3 +1,4 @@
+import {isolatedKanjiAnswers} from './kanji-answer-store.test-support';
 import { signal, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
@@ -61,8 +62,8 @@ describe('credited time in the actual study pages', () => {
     {name:'vocabulary',page:VocabularyPlayPage,service:VocabularySessionService,progress:VocabularyProgressService,medal:VocabularyMedalService,
       unit:{key:`vocab:${VOCABULARY_N5[0].id}:japanese-to-meaning`,entryId:VOCABULARY_N5[0].id,questionType:'japanese-to-meaning'}},
   ];
-  for (const c of normalCases) it(`${c.name}: visible counter and final time match history, route destruction clears the clock`, () => {
-    const review=vi.fn();TestBed.configureTestingModule({imports:[c.page],providers:[provideRouter([]),
+  for (const c of normalCases) it(`${c.name}: visible counter and final time match history, route destruction clears the clock`, async () => {
+    const review=vi.fn();TestBed.configureTestingModule({imports:[c.page],providers:[isolatedKanjiAnswers,provideRouter([]),
       {provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
       {provide:c.progress,useValue:{buildRound:()=>c.name==='vocabulary'&&review.mock.calls.length?[]:[c.unit],get:()=>null,recordReview:review,recordInternalAttempt:vi.fn(),recordPracticeAttempt:vi.fn(),roundSummary:signal({roundDue:0,roundNew:1})}},
       {provide:c.medal,useValue:{evaluateUnlocks:()=>[]}},
@@ -77,11 +78,11 @@ describe('credited time in the actual study pages', () => {
     expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:00');
     now+=4000; service.clock.pause(); service.clock.resume(); fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:04');
-    if(service instanceof FlagSessionService){service.answer('jp');service.continue();}
-    else {service.reveal();service.rate('good');if(c.name==='vocabulary'){expect(service.completed()).toBe(false);service.reveal();service.rate('good');}}
+    if(service instanceof FlagSessionService){await service.answer('jp');service.continue();}
+    else {service.reveal();await service.rate('good');if(c.name==='vocabulary'){expect(service.completed()).toBe(false);service.reveal();await service.rate('good');}}
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.results app-study-timer').textContent).toContain('00:04');
-    if(c.name==='vocabulary')expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}),{strict:true});else expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}));
+    if(c.name==='vocabulary'||c.name==='kanji')expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}),{strict:true});else expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}));
     now+=60000;service.clock.pause();expect(service.clock.label()).toBe('00:04');
     fixture.destroy();expect(service.clock.seconds()).toBe(0);
   });
@@ -90,7 +91,7 @@ describe('credited time in the actual study pages', () => {
     ['kana',KanaRushPage,ALL_KANA[0].id],['kanji',KanjiRushPage,KANJI_N5[0].id],['vocabulary',VocabularyRushPage,VOCABULARY_N5[0].id],
   ] as const) it(`RUSH ${module}: counter starts on the card and the summary freezes completed time`,async()=>{
     vi.spyOn(page.prototype,'ngOnInit').mockImplementation(async()=>{});
-    TestBed.configureTestingModule({imports:[page],providers:[provideRouter([]),
+    TestBed.configureTestingModule({imports:[page],providers:[isolatedKanjiAnswers,provideRouter([]),
       {provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
       {provide:LocalRushRepository,useValue:{markOpenSessionsInterrupted:async()=>{},createSession:async()=>{},saveProgress:async()=>{},finishSession:async()=>{}}},
       {provide:RushMedalService,useValue:{refresh:async()=>[],newlyUnlocked:signal([])}},
@@ -105,9 +106,9 @@ describe('credited time in the actual study pages', () => {
     now+=60000;service.clock.pause();expect(service.activeSeconds()).toBe(15);
     fixture.destroy();
   });
-  for(const page of [GrammarPracticeComponent,GrammarIntegrationComponent,GrammarReviewPage]) it(`${page.name}: no intro timer, visible exercise timer and frozen final time`,()=>{
+  for(const page of [GrammarPracticeComponent,GrammarIntegrationComponent,GrammarReviewPage]) it(`${page.name}: no intro timer, visible exercise timer and frozen final time`,async ()=>{
     vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
-    TestBed.configureTestingModule({imports:[page],providers:[provideRouter([]),
+    TestBed.configureTestingModule({imports:[page],providers:[isolatedKanjiAnswers,provideRouter([]),
       {provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
       {provide:SessionHistoryService,useValue:history},
       {provide:WeaknessService,useValue:{recordLearn:vi.fn()}},
@@ -120,7 +121,7 @@ describe('credited time in the actual study pages', () => {
     fixture.detectChanges();expect(fixture.nativeElement.querySelector('app-study-timer')).toBeNull();
     const session=fixture.componentInstance.session;session.reset(grammarTopicRound('03').slice(0,1));now=60000;
     session.start();fixture.detectChanges();expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:00');
-    active(session.clock,7000);session.answer(true);session.next();fixture.detectChanges();
+    active(session.clock,7000);await session.answer(true);session.next();fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('app-study-timer').textContent).toContain('00:07');
     expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:7}));
     now+=60000;session.clock.pause();expect(session.clock.seconds()).toBe(7);

@@ -1,3 +1,4 @@
+import {KanjiAnswerStore} from '../../core/services/kanji-answer-store';
 import {safeReturnUrl} from '../../core/services/return-navigation';
 import { ModalFocusDirective } from '../../shared/directives/modal-focus.directive';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
@@ -9,6 +10,9 @@ import { TranslationService } from '../../core/services/translation.service';
 import { KANJI_N5_CATEGORIES, KANJI_THEME_BY_CHARACTER } from '../../data/kanji-n5-categories';
 @Component({selector:'app-kanji-all-page',imports:[RouterLink,ModalFocusDirective],templateUrl:'./kanji-all.page.html',styleUrl:'./kanji-all.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown.escape)':'!$event.defaultPrevented && closeOverlay()'}})
 export class KanjiAllPage {
+  readonly integrity=inject(KanjiAnswerStore);
+  async recoverSave(){try{await this.integrity.recover();}catch{/* The store exposes the recoverable error. */}}
+
   readonly viewModes = ['all', 'stroke', 'theme'] as const;
   readonly viewMode = signal<'all' | 'stroke' | 'theme'>('all');
   readonly groupedByStroke = computed(() => {

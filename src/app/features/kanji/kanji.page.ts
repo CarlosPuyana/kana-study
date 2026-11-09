@@ -1,3 +1,4 @@
+import {KanjiAnswerStore} from '../../core/services/kanji-answer-store';
 import {PageHeader} from '../../shared/components/page-header/page-header';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -19,6 +20,9 @@ import { KanjiStartPanel } from './components/kanji-start-panel/kanji-start-pane
 
 @Component({selector:'app-kanji-page',imports:[PageHeader,RouterLink,KanjiStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./kanji.page.html',styleUrl:'./kanji.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class KanjiPage {
+  readonly integrity=inject(KanjiAnswerStore);
+  async recoverSave(){try{await this.integrity.recover();}catch{/* The store exposes the recoverable error. */}}
+
   readonly daily=inject(DailyLearningService);readonly progress=inject(KanjiProgressService);readonly medals=inject(KanjiMedalService);readonly i18n=inject(TranslationService);
   readonly showStartPanel=signal(false);readonly showRushPanel=signal(false);readonly rushConfig=signal<RushConfiguration|null>(null);
   readonly rushContent:readonly RushConfigOption[]=[{id:'N5',labelKey:'kanji.level.N5'}];
