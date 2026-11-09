@@ -22,7 +22,13 @@ export interface AdjectiveQuestion {
   readonly transformation:AdjectiveTransformation;
   readonly answers:AcceptedConjugationAnswers;
 }
-export interface ConjugationCounters {attempts:number;correct:number;wrong:number;bestStreak:number;}
+export interface ConjugationCounters {
+  attempts:number;correct:number;wrong:number;bestStreak:number;
+  /** Absent for legacy counters whose study duration was never measured. */
+  durationSeconds?:number;
+  /** Coverage: a legacy bucket can have fewer timed attempts than total attempts. */
+  timedAttempts?:number;
+}
 export const VERB_CATEGORIES=['verb-negative','verb-past','verb-negative-past','verb-te'] as const;
 export type VerbCategory=typeof VERB_CATEGORIES[number];
 export type VerbTransformation=Exclude<AdjectiveTransformation,'adverbial'>;

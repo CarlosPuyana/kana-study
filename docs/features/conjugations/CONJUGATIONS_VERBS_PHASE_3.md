@@ -101,3 +101,14 @@ Cada celda muestra escritura japonesa y romaji. Para las palabras con kanji, el 
 | 勉強する (べんきょうする) | irregular | estudiar | 勉強しない · benkyoushinai | 勉強した · benkyoushita | 勉強しなかった · benkyoushinakatta | 勉強して · benkyoushite |
 | 料理する (りょうりする) | irregular | cocinar | 料理しない · ryourishinai | 料理した · ryourishita | 料理しなかった · ryourishinakatta | 料理して · ryourishite |
 | 運転する (うんてんする) | irregular | conducir | 運転しない · untenshinai | 運転した · untenshita | 運転しなかった · untenshinakatta | 運転して · untenshite |
+
+## Integración Anti-AFK V2 (9 de noviembre de 2026)
+
+El entrenador utiliza el reloj compartido: hasta 180 segundos activos por pregunta,
+pausa automática por visibilidad y cero tiempo de feedback/espera. El marcador muestra
+el total de la ronda. La duración y cobertura se guardan con el intento en los siete
+buckets locales por workspace, conservando los datos históricos sin tiempo como
+medición desconocida. El aprendizaje, las respuestas y las rachas no cambian.
+
+Arquitectura, archivos, compatibilidad y validación final:
+[Anti-AFK V2 — integración Conjugaciones](../study/STUDY_TIME_ANTI_AFK_V2.md#integración-posterior-conjugaciones-9-de-noviembre-de-2026).

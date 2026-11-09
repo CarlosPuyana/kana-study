@@ -27,16 +27,16 @@ describe('FlagSessionService', () => {let monotonic=0;
   it('stops at four appearances and marks the unit for practice',()=>{service.start();for(let i=0;i<FLAG_MAX_APPEARANCES;i++){service.answer('fr');service.continue();}const item=service.session()!.items[0];expect(item.appearances).toBe(4);expect(item.needsPractice).toBe(true);expect(item.resolved).toBe(true);expect(service.completed()).toBe(true);});
   it('records module metadata only after completion',()=>{service.start();service.answer('jp');expect(history.record).not.toHaveBeenCalled();service.continue();expect(history.record).toHaveBeenCalledWith(expect.objectContaining({module:'flags',countryIds:['jp'],questionTypes:['flag-to-country'],studyRegions:['asia']}));});
 
- it('credits a fresh ten second allowance on failure repetition and records once',()=>{
+ it('credits a fresh 180-second allowance on failure repetition and records once',()=>{
  round=round.slice(0,1);service.start();service.clock.attach();
- monotonic+=15000;service.answer('fr');service.continue();expect(service.clock.committedSeconds).toBe(10);
- monotonic+=4000;service.answer('jp');service.continue();expect(service.clock.committedSeconds).toBe(14);
+ for(let i=0;i<15;i++){monotonic+=1000;service.clock.appearanceMilliseconds();}service.answer('fr');service.continue();expect(service.clock.committedSeconds).toBe(15);
+ monotonic+=4000;service.answer('jp');service.continue();expect(service.clock.committedSeconds).toBe(19);
  service.answer('jp');service.continue();expect(history.record).toHaveBeenCalledTimes(1);
- expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:14}));
- monotonic+=60000;expect(service.clock.label()).toBe('00:14');
+ expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:19}));
+ monotonic+=60000;expect(service.clock.label()).toBe('00:19');
  service.clear();expect(service.clock.seconds()).toBe(0);
  service.start();monotonic+=60000;expect(service.clock.appearanceMilliseconds()).toBe(0);
- service.clock.attach();monotonic+=7000;service.answer('jp');service.continue();expect(history.record).toHaveBeenLastCalledWith(expect.objectContaining({durationSeconds:7}));
+ service.clock.attach();for(let i=0;i<7;i++){monotonic+=1000;service.clock.appearanceMilliseconds();}service.answer('jp');service.continue();expect(history.record).toHaveBeenLastCalledWith(expect.objectContaining({durationSeconds:7}));
  });
 });
 

@@ -58,7 +58,7 @@ describe('Common everyday verb catalog and explicit answer rounds',()=>{
   it('finishes all 200 verb questions, isolates each record and fences workspace changes',()=>{
     localStorage.clear();const enqueue=vi.fn();TestBed.configureTestingModule({providers:[ConjugationPracticeService,{provide:SyncOutboxService,useValue:{enqueue}}]});
     const p=TestBed.inject(ConjugationPracticeService),w=TestBed.inject(WorkspaceService);w.activateUser('verb-a');
-    for(const category of VERB_CATEGORIES){expect(p.start({mode:'single',categoryIds:[category]})).toBe(true);for(let i=0;i<50;i++){const answers=p.question()!.answers;expect(p.answer(answers.kana[0])).toBe(true);expect(p.answer(answers.kana[0])).toBe(false);p.next();}expect(p.session()?.complete).toBe(true);expect(p.stats.get(category)).toEqual({attempts:50,correct:50,wrong:0,bestStreak:50});}
+    for(const category of VERB_CATEGORIES){expect(p.start({mode:'single',categoryIds:[category]})).toBe(true);for(let i=0;i<50;i++){const answers=p.question()!.answers;expect(p.answer(answers.kana[0])).toBe(true);expect(p.answer(answers.kana[0])).toBe(false);p.next();}expect(p.session()?.complete).toBe(true);expect(p.stats.get(category)).toEqual({attempts:50,correct:50,wrong:0,bestStreak:50,durationSeconds:0,timedAttempts:50});}
     expect(p.stats.get('adjective-i').attempts).toBe(0);expect(p.stats.get('mixed').attempts).toBe(0);
     p.start({mode:'mixed',categoryIds:['verb-te','adjective-na']});p.answer('',true);expect(p.stats.get('mixed').wrong).toBe(1);
     w.activateUser('verb-b');expect(p.session()).toBeNull();expect(p.answer('anything',true)).toBe(false);expect(p.stats.get('verb-te').attempts).toBe(0);

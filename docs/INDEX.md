@@ -17,9 +17,11 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
   [checklist humana](../release/manga-guest-acceptance.md) y [historia de lanzamiento](history/releases/INDEX.md).
 - Para el catálogo y selección local del nuevo módulo: [Conjugaciones, fase 1](features/conjugations/CONJUGATIONS_MODULE_PHASE_1.md).
 - Para practicar adjetivos con respuestas explícitas y estadísticas locales: [Conjugaciones, fase 2](features/conjugations/CONJUGATIONS_ADJECTIVES_PHASE_2.md).
+- Para la navegación Más y los verbos de Conjugaciones: [Más y verbos, fase 3](features/conjugations/CONJUGATIONS_VERBS_PHASE_3.md).
 - Para modificar Manga × Mazos: [DESIGN acumulado](../MANGA_DECKS_DESIGN.md), sección más
   reciente aplicable; [historial por hito](history/manga-decks/INDEX.md) y [guía manual](../MANGA_DECKS_MANUAL_TESTING.md).
 - Para desarrollar/verificar: [guía de herramientas y evidencias](guides/DEVELOPMENT.md).
+- Para contabilización activa, visibilidad y suspensión: [tiempo de estudio anti-AFK V2](features/study/STUDY_TIME_ANTI_AFK_V2.md).
 - Para escribir documentación: [CONTRIBUTING-DOCS](CONTRIBUTING-DOCS.md).
 
 - Para Aprender, teclado y diálogos Kana/Kanji/Vocabulario: [guía de UX de aprendizaje](features/LEARNING_UX.md).

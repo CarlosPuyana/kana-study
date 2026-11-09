@@ -41,7 +41,7 @@ describe('study counter visibility and lifecycle',()=>{
     host.show.set(true);host.clock.startAppearance();fixture.detectChanges();now=4000;
     host.show.set(false);fixture.detectChanges();now+=60000;expect(host.clock.appearanceMilliseconds()).toBe(4000);
     host.clock.reset();host.clock.startAppearance();host.show.set(true);fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('00:00');now+=7000;host.clock.commitAppearance();fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('00:00');for(let i=0;i<7;i++){now+=1000;host.clock.appearanceMilliseconds();}host.clock.commitAppearance();fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('00:07');
   });
 });

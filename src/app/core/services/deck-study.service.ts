@@ -1,3 +1,4 @@
+import {CARD_STUDY_LIMIT_MS} from './card-study-time';
 import { compareDeckId, deckSeparations, separatedDeckChoice } from './deck-daily-queue';
 import { DeckMixCheckpointService, MixContext } from './deck-mix-checkpoint.service';
 import { inject, Injectable } from '@angular/core';
@@ -180,7 +181,7 @@ export class DeckStudyService {
       difficultyBefore: preview.cardBefore.difficulty, difficultyAfter: branch.card.difficulty,
       retrievabilityBefore: preview.retrievabilityBefore,
       desiredRetention: preview.desiredRetention,
-      elapsedAnswerMs: Math.min(10_000, Math.max(0, Math.round(elapsedAnswerMs))),
+      elapsedAnswerMs: Math.min(CARD_STUDY_LIMIT_MS, Math.max(0, Math.round(elapsedAnswerMs))),
       fsrsLog: branch.log,
       cardBefore: choice.progress?.card ?? null,
     };

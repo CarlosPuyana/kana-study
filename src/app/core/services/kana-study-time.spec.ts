@@ -52,7 +52,7 @@ describe('Daily KANA study time through local history, profile and synchronizati
   function complete(seconds:number){
     const learning=TestBed.inject(LearningSessionService);
     expect(learning.start('self-assessment')).toBe(true);
-    learning.clock.attach();monotonic+=seconds*1000;vi.setSystemTime(new Date(Date.now()+seconds*1000));learning.reveal();learning.rate('good');
+    learning.clock.attach();for(let i=0;i<seconds;i++){monotonic+=1000;vi.setSystemTime(new Date(Date.now()+1000));learning.clock.appearanceMilliseconds();}learning.reveal();learning.rate('good');
     expect(learning.completed()).toBe(true);
     learning.rate('good'); // Repeated UI action cannot record the completion twice.
     return learning.session()!.id;
@@ -61,22 +61,22 @@ describe('Daily KANA study time through local history, profile and synchronizati
     const history=TestBed.inject(SessionHistoryService),stats=TestBed.inject(ProfileStatsService);
     expect((await stats.load()).studySeconds).toBe(1325);
     const a=complete(40);expect(history.sessions()).toHaveLength(2);
-    expect(history.sessions().find(s=>s.sessionId===a)?.durationSeconds).toBe(10);
+    expect(history.sessions().find(s=>s.sessionId===a)?.durationSeconds).toBe(40);
     vi.setSystemTime(new Date('2026-10-03T10:00:00Z'));
     const b=complete(10);expect(b).not.toBe(a);expect(history.sessions()).toHaveLength(3);
     expect(history.sessions().find(s=>s.sessionId===b)?.durationSeconds).toBe(10);
-    expect((await stats.load()).studySeconds).toBe(1345);
+    expect((await stats.load()).studySeconds).toBe(1375);
     const sync=TestBed.inject(SyncService);expect(await sync.syncNow()).toBe(true);
-    expect(uploaded.some(s=>s.sessionId===a&&s.durationSeconds===10)).toBe(true);
+    expect(uploaded.some(s=>s.sessionId===a&&s.durationSeconds===40)).toBe(true);
     expect(uploaded.some(s=>s.sessionId===b&&s.durationSeconds===10)).toBe(true);
     remote=[{...baseline,durationSeconds:1}];expect(await sync.syncNow()).toBe(true);
     const stored=TestBed.inject(StorageService).get<CompletedSessionSummary[]>(key,[]);
     expect(new Set(stored.map(s=>s.sessionId))).toEqual(new Set(['historic',a,b]));
-    expect((await stats.load()).studySeconds).toBe(1345);
+    expect((await stats.load()).studySeconds).toBe(1375);
     const reloaded=TestBed.runInInjectionContext(()=>new SessionHistoryService());
     expect(reloaded.sessions()).toEqual(stored);
-    expect(calculateLearningAnalytics([],reloaded.sessions(),new Date()).summary.seconds).toBe(1345);
-    expect((await TestBed.runInInjectionContext(()=>new ProfileStatsService()).load()).studySeconds).toBe(1345);
+    expect(calculateLearningAnalytics([],reloaded.sessions(),new Date()).summary.seconds).toBe(1375);
+    expect((await TestBed.runInInjectionContext(()=>new ProfileStatsService()).load()).studySeconds).toBe(1375);
   });
   it('does not record practice as daily time or invent unknown legacy durations',async()=>{
     const storage=TestBed.inject(StorageService);

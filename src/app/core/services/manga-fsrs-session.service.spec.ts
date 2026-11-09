@@ -16,6 +16,7 @@ import { MangaStudySavedItem } from '../models/manga-study-saved.model';
 const item=(id='word'):MangaStudySavedItem=>({schemaVersion:1,id,expression:'龍',reading:'りゅう',meaning:'dragon',kanji:[],source:{volumeId:'fixture',pageNumber:1},createdAt:1});
 describe('Manga FSRS opt-in and durable session',()=>{
   let session:MangaFsrsSessionService,fsrs:MangaFsrsService,now:number;
+  function active(ms:number){for(let left=ms;left>0;){const step=Math.min(1000,left);now+=step;session.clock.appearanceMilliseconds();left-=step;}}
   const items=signal<readonly MangaStudySavedItem[]>([]);
   function setup():void {
     TestBed.configureTestingModule({providers:[MangaFsrsSessionService,
@@ -44,11 +45,11 @@ describe('Manga FSRS opt-in and durable session',()=>{
     expect(events).toHaveLength(1);expect(events[0]).toMatchObject({reviewKind:'fsrs',fsrsGrade:1,rating:'again',repetition:false});
     session.abandon();session.start();expect(session.state()).toBe('intro');
   });
-  it('credits 4/15/7 as 21 seconds at reveal; rating/results time adds nothing',async()=>{
+  it('credits 4/15/7 as 26 seconds at reveal; rating/results time adds nothing',async()=>{
     items.set([item('a'),item('b'),item('c')]);fsrs.setEnabled(true);session.start();
-    for(const ms of [4000,15000,7000]){now+=ms;session.reveal();now+=60000;await session.rate('good');}
+    for(const ms of [4000,15000,7000]){active(ms);session.reveal();now+=60000;await session.rate('good');}
     const sessions=TestBed.inject(SessionHistoryService).sessions();expect(sessions).toHaveLength(1);
-    expect(sessions[0]).toMatchObject({module:'manga',mangaSessionKind:'fsrs',durationSeconds:21,attempts:3});
+    expect(sessions[0]).toMatchObject({module:'manga',mangaSessionKind:'fsrs',durationSeconds:26,attempts:3});
     now+=60000;await session.retry();expect(TestBed.inject(SessionHistoryService).sessions()).toHaveLength(1);
   });
   it('retains one event ID after enqueue failure and retries before moving on',async()=>{

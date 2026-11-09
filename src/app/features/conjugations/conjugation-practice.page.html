@@ -5,6 +5,7 @@
       <span>{{i18n.t('conjugations.trainer.streak')}} <strong>{{session.streak}}</strong></span>
       <span>{{i18n.t('conjugations.trainer.best')}} <strong>{{practice.stats.get(practice.bucket()).bestStreak}}</strong></span>
       <span class="answer-score">{{i18n.t('conjugations.trainer.correctWrong')}} <span class="counts"><strong class="correct-count" [attr.title]="i18n.t('conjugations.trainer.correct')">{{session.correct}}</strong> / <strong class="wrong-count" [attr.title]="i18n.t('conjugations.trainer.wrong')">{{attempts()-session.correct}}</strong></span></span>
+      <app-study-timer [clock]="practice.clock" [result]="!!session.feedback||session.complete"/>
     </div>
     @if(session.complete){
       <section class="summary" aria-labelledby="round-title"><h2 id="round-title">{{i18n.t('conjugations.trainer.finished')}}</h2>

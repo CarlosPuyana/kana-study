@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';import base from './playwright.conjugations.config';
+export default defineConfig({...base,testMatch:['conjugations.spec.ts','adjectives.spec.ts','verbs.spec.ts','study-time.spec.ts'],outputDir:'.cache/conjugations-time/browser-results',projects:[...base.projects!,{name:'round-completion',testMatch:'round.spec.ts',use:{viewport:{width:1280,height:720},colorScheme:'dark'}}]});

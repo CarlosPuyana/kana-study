@@ -16,6 +16,7 @@ describe('AnkiStudyPage', () => {
   let fixture: ComponentFixture<AnkiStudyPage>;
   let study: StudyStub;
   let monotonic=0;
+  function active(clock:{appearanceMilliseconds:()=>number},ms:number){for(let left=ms;left>0;){const step=Math.min(1000,left);monotonic+=step;clock.appearanceMilliseconds();left-=step;}}
 
   beforeEach(async () => {
     monotonic=0;study = new StudyStub();
@@ -160,13 +161,13 @@ describe('AnkiStudyPage', () => {
   });
   it('shows the capped credited total, keeps focus on the same allowance and subtracts undo once',async()=>{
     const page=fixture.componentInstance;page.clock.attach();monotonic=4000;
-    page.refreshAvailability();await fixture.whenStable();monotonic=15000;
+    page.refreshAvailability();await fixture.whenStable();active(page.clock,11000);
     page.reveal();await page.rate('good');fixture.detectChanges();
-    expect(study.times).toEqual([10000]);expect(page.clock.committedSeconds).toBe(10);
-    expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:10');
+    expect(study.times).toEqual([15000]);expect(page.clock.committedSeconds).toBe(15);
+    expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:15');
     monotonic+=4000;await page.undo();fixture.detectChanges();expect(page.clock.committedSeconds).toBe(0);
     await page.undo();expect(page.clock.committedSeconds).toBe(0);
-    monotonic+=7000;page.reveal();await page.rate('good');expect(study.times).toEqual([10000,7000]);
+    active(page.clock,7000);page.reveal();await page.rate('good');expect(study.times).toEqual([15000,7000]);
     expect(page.clock.committedSeconds).toBe(7);expect(study.completed).toBe(0);
   });
   it('freezes during saves, rejects double clicks and freezes results without another duration record',async()=>{

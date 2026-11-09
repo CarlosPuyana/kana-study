@@ -5,8 +5,9 @@ import * as copy from '../../../assets/i18n/conjugations.generated';
 import {ConjugationPracticeIntent,ConjugationCategoryId} from '../../core/models/conjugations.model';
 import {ConjugationPracticeService} from '../../core/services/conjugation-practice.service';
 import {TranslationService} from '../../core/services/translation.service';
+import {StudyTimer} from '../../shared/components/study-timer/study-timer';
 
-@Component({selector:'app-conjugation-practice-page',imports:[RouterLink],providers:[ConjugationPracticeService],host:{'(document:keydown)':'advanceWithSpace($event)'},templateUrl:'./conjugation-practice.page.html',styleUrl:'./conjugation-practice.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-conjugation-practice-page',imports:[RouterLink,StudyTimer],providers:[ConjugationPracticeService],host:{'(document:keydown)':'advanceWithSpace($event)'},templateUrl:'./conjugation-practice.page.html',styleUrl:'./conjugation-practice.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class ConjugationPracticePage {
   readonly i18n=inject(TranslationService);
   readonly practice=inject(ConjugationPracticeService);

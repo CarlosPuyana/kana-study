@@ -446,7 +446,7 @@ describe('account sync reconciliation regressions', () => {
     vi.useFakeTimers({toFake:['setTimeout','clearTimeout']});vi.stubGlobal('indexedDB',new IDBFactory());
     let d=device('same-account',true),now=0;const timer=new CardStudyTimer(()=>now);timer.resume();
     const events:number[]=[];
-    for(const seconds of [4,15,7]){timer.startAppearance();now+=seconds*1000;events.push(timer.commitAppearance());}
+    for(const seconds of [4,240,7]){timer.startAppearance();for(let i=0;i<seconds;i++){now+=1000;timer.tick();}events.push(timer.commitAppearance());}
     const summary={sessionId:'capped',module:'kana',completedAt:'2026-10-08T12:00:00Z',mode:'self-assessment',exercisesCompleted:3,firstTrySuccesses:3,attempts:3,needsPracticeCount:0,durationSeconds:timer.committedSeconds} as const;
     TestBed.inject(SessionHistoryService).record({...summary,sessionId:'historic',durationSeconds:1325});
     TestBed.inject(SessionHistoryService).record(summary);
@@ -455,15 +455,15 @@ describe('account sync reconciliation regressions', () => {
       {id:`capped-${i}`,deckId:'japanese-1500',entryId:String(i),reviewedAt:100,elapsedAnswerMs} as any,
       {deckId:'japanese-1500',localDate:'2026-10-08',introducedEntryIds:['0','1','2'],newLimitOverride:null});
     await TestBed.inject(LocalRushRepository).saveProgress({id:'capped',module:'kana',startedAt:100,endedAt:200,activeSeconds:timer.committedSeconds,cardsCompleted:3,uniqueContentsSeen:3,cyclesCompleted:1,initialUnitCount:3,localDay:'2026-10-08',interrupted:false});
-    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(1388);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(1898);
     expect(await d.sync.syncNow()).toBe(true);
-    expect(cloud['deck_review_events'].map(row=>row.payload.elapsedAnswerMs)).toEqual([4000,10000,7000]);
-    expect(cloud['rush_sessions'][0].active_seconds).toBe(21);
+    expect(cloud['deck_review_events'].map(row=>row.payload.elapsedAnswerMs)).toEqual([4000,180000,7000]);
+    expect(cloud['rush_sessions'][0].active_seconds).toBe(191);
     TestBed.resetTestingModule();vi.stubGlobal('indexedDB',new IDBFactory());d=device('same-account',true);
     expect(await d.sync.syncNow()).toBe(true);expect(await d.sync.syncNow()).toBe(true);
     expect(TestBed.inject(SessionHistoryService).sessions()).toHaveLength(2);
     expect(TestBed.inject(SessionHistoryService).sessions().find(s=>s.sessionId==='historic')?.durationSeconds).toBe(1325);
     expect(await TestBed.inject(DeckDatabaseService).getDeckReviewEvents('japanese-1500')).toHaveLength(3);
-    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(1388);
+    expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(1898);
   });
 });

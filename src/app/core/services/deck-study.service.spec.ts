@@ -27,10 +27,10 @@ describe('DeckStudyService', () => {
 
   afterEach(() => TestBed.resetTestingModule());
 
-  it('caps new elapsedAnswerMs at ten seconds and undo removes the credited event', async () => {
-    const event = await service.rate(deck, {entryId:'e1',kind:'new',progress:null}, scheduler.previewValue, 'good', 60000, NOW);
-    expect(event.elapsedAnswerMs).toBe(10000);
-    expect(database.events[0].elapsedAnswerMs).toBe(10000);
+  it('caps new elapsedAnswerMs at 180 seconds and undo removes the credited event', async () => {
+    const event = await service.rate(deck, {entryId:'e1',kind:'new',progress:null}, scheduler.previewValue, 'good', 300000, NOW);
+    expect(event.elapsedAnswerMs).toBe(180000);
+    expect(database.events[0].elapsedAnswerMs).toBe(180000);
     await service.undo(event);
     expect(database.events).toHaveLength(0);
   });

@@ -48,6 +48,7 @@ import { GRAMMAR_V2_INTEGRATION } from '../../data/grammar/grammar-n5-v2.generat
 describe('credited time in the actual study pages', () => {
   let now = 0;
   const history = {record: vi.fn()};
+  function active(clock:{appearanceMilliseconds:()=>number},ms:number){for(let left=ms;left>0;){const step=Math.min(1000,left);now+=step;clock.appearanceMilliseconds();left-=step;}}
   beforeEach(() => { now = 0; history.record.mockClear(); });
   afterEach(() => { TestBed.resetTestingModule(); vi.restoreAllMocks(); });
   const normalCases = [
@@ -99,9 +100,9 @@ describe('credited time in the actual study pages', () => {
     await service.start(module as RushModule,[{key:'unit',module,contentId,questionType:module==='kana'?'kana-to-romaji':module==='kanji'?'kanji-to-meaning':'japanese-to-meaning'}]);
     now=60000;const fixture=TestBed.createComponent(page as Type<unknown>);fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:00');
-    now+=15000;service.reveal();await service.next();await service.finish();fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.summary app-study-timer').textContent).toContain('00:10');
-    now+=60000;service.clock.pause();expect(service.activeSeconds()).toBe(10);
+    active(service.clock,15000);service.reveal();await service.next();await service.finish();fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.summary app-study-timer').textContent).toContain('00:15');
+    now+=60000;service.clock.pause();expect(service.activeSeconds()).toBe(15);
     fixture.destroy();
   });
   for(const page of [GrammarPracticeComponent,GrammarIntegrationComponent,GrammarReviewPage]) it(`${page.name}: no intro timer, visible exercise timer and frozen final time`,()=>{
@@ -119,7 +120,7 @@ describe('credited time in the actual study pages', () => {
     fixture.detectChanges();expect(fixture.nativeElement.querySelector('app-study-timer')).toBeNull();
     const session=fixture.componentInstance.session;session.reset(grammarTopicRound('03').slice(0,1));now=60000;
     session.start();fixture.detectChanges();expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:00');
-    now+=7000;session.answer(true);session.next();fixture.detectChanges();
+    active(session.clock,7000);session.answer(true);session.next();fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('app-study-timer').textContent).toContain('00:07');
     expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:7}));
     now+=60000;session.clock.pause();expect(session.clock.seconds()).toBe(7);

@@ -11,6 +11,7 @@ import { StorageService } from './storage.service';
 const question=(id='word',options:readonly string[]=['dragon','cat']):MangaReviewQuestion=>({item:{schemaVersion:1,id,expression:'龍',reading:'りゅう',meaning:'dragon',kanji:[],source:{volumeId:'fixture',pageNumber:1},createdAt:1},type:'meaning',answer:'dragon',prompt:'龍',options,originalMeaning:true});
 describe('Manga review session',()=>{
   let session:MangaReviewSessionService,history:MangaReviewHistoryService,now:number;
+  function active(ms:number){for(let left=ms;left>0;){const step=Math.min(1000,left);now+=step;session.clock.appearanceMilliseconds();left-=step;}}
   beforeEach(()=>{
     TestBed.resetTestingModule();localStorage.clear();now=0;vi.useFakeTimers();vi.spyOn(document,'hidden','get').mockReturnValue(false);
     TestBed.configureTestingModule({providers:[MangaReviewSessionService,{provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
@@ -31,17 +32,17 @@ describe('Manga review session',()=>{
     expect(session.result()).toMatchObject({firstCorrect:0,initialErrors:1,recovered:correct?1:0,remainingErrors:correct?0:1,accuracy:0,appearances:2});
     expect(history.events().map(e=>e.repetition)).toEqual([false,true]);expect(new Set(history.events().map(e=>e.id)).size).toBe(2);
   });
-  it('credits 4/15/7 as 21 seconds, excluding feedback/results and configuration',async()=>{
+  it('credits 4/15/7 as 26 seconds, excluding feedback/results and configuration',async()=>{
     now=100000;session.start([question('a'),question('b'),question('c')]);
-    for(const duration of [4000,15000,7000]){now+=duration;await session.answer(true);now+=60000;await session.next();}
-    expect(session.clock.committedSeconds).toBe(21);expect(TestBed.inject(SessionHistoryService).sessions()[0].durationSeconds).toBe(21);
-    now+=60000;expect(session.clock.committedSeconds).toBe(21);
+    for(const duration of [4000,15000,7000]){active(duration);await session.answer(true);now+=60000;await session.next();}
+    expect(session.clock.committedSeconds).toBe(26);expect(TestBed.inject(SessionHistoryService).sessions()[0].durationSeconds).toBe(26);
+    now+=60000;expect(session.clock.committedSeconds).toBe(26);
   });
-  it('excludes hidden time and gives repetitions a fresh ten-second budget',async()=>{
+  it('excludes hidden time and gives repetitions a fresh 180-second budget',async()=>{
     session.start([question()]);now=4000;vi.spyOn(document,'hidden','get').mockReturnValue(true);document.dispatchEvent(new Event('visibilitychange'));
     now+=100000;vi.spyOn(document,'hidden','get').mockReturnValue(false);document.dispatchEvent(new Event('visibilitychange'));
-    now+=2000;await session.answer(false);await session.next();now+=15000;await session.answer(true);await session.next();
-    expect(session.clock.committedSeconds).toBe(16);
+    now+=2000;await session.answer(false);await session.next();active(15000);await session.answer(true);await session.next();
+    expect(session.clock.committedSeconds).toBe(21);
   });
   it('self-assessment requires reveal and freezes time when the answer is shown',async()=>{
     session.start([question('self',[])]);await session.answer(true);expect(history.events()).toHaveLength(0);

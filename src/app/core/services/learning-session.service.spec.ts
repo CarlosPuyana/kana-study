@@ -203,15 +203,15 @@ describe('LearningSessionService', () => {let monotonic=0;
     expect(service.session()).toBeNull();
   });
 
- it('credits a fresh ten second allowance on failure repetition and records once',()=>{
+ it('credits a fresh 180-second allowance on failure repetition and records once',()=>{
  round=round.slice(0,1);service.start('self-assessment');service.clock.attach();
- monotonic+=15000;service.reveal();service.rate('again');expect(service.clock.committedSeconds).toBe(10);
- monotonic+=4000;service.reveal();service.rate('good');expect(service.clock.committedSeconds).toBe(14);
+ for(let i=0;i<15;i++){monotonic+=1000;service.clock.appearanceMilliseconds();}service.reveal();service.rate('again');expect(service.clock.committedSeconds).toBe(15);
+ monotonic+=4000;service.reveal();service.rate('good');expect(service.clock.committedSeconds).toBe(19);
  service.reveal();service.rate('good');expect(history.record).toHaveBeenCalledTimes(1);
- expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:14}));
- monotonic+=60000;expect(service.clock.label()).toBe('00:14');
+ expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:19}));
+ monotonic+=60000;expect(service.clock.label()).toBe('00:19');
  service.clear();expect(service.clock.seconds()).toBe(0);
  service.start('self-assessment');monotonic+=60000;expect(service.clock.appearanceMilliseconds()).toBe(0);
- service.clock.attach();monotonic+=7000;service.reveal();service.rate('good');expect(history.record).toHaveBeenLastCalledWith(expect.objectContaining({durationSeconds:7}));
+ service.clock.attach();for(let i=0;i<7;i++){monotonic+=1000;service.clock.appearanceMilliseconds();}service.reveal();service.rate('good');expect(history.record).toHaveBeenLastCalledWith(expect.objectContaining({durationSeconds:7}));
  });
 });

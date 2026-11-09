@@ -145,24 +145,24 @@ describe('Grammar interactive answers and completed sessions',()=>{let monotonic
     expect(harness.routeNativeElement!.querySelector('app-grammar-exercise')).not.toBeNull();
   });
 
- it('counts real exercises only, records 21 seconds once and resets an error-review round',()=>{
+ it('counts real exercises only, records 26 seconds once and resets an error-review round',()=>{
  const session=TestBed.inject(GrammarPracticeSession),history=TestBed.inject(SessionHistoryService);
  session.reset(grammarTopicRound('03').slice(0,3));monotonic=60000;expect(session.clock.seconds()).toBe(0);
- session.start();session.clock.attach();for(const seconds of [4,15,7]){monotonic+=seconds*1000;session.answer(false);session.answer(true);session.next();session.next();}
- expect(history.sessions()).toHaveLength(1);expect(history.sessions()[0].durationSeconds).toBe(21);
- monotonic+=60000;session.clock.pause();expect(session.clock.label()).toBe('00:21');session.next();expect(history.sessions()).toHaveLength(1);
- session.reviewErrors();expect(session.clock.seconds()).toBe(0);session.clock.attach();monotonic+=15000;session.answer(true);session.next();expect(session.clock.committedSeconds).toBe(10);
+ session.start();session.clock.attach();for(const seconds of [4,15,7]){for(let i=0;i<seconds;i++){monotonic+=1000;session.clock.appearanceMilliseconds();}session.answer(false);session.answer(true);session.next();session.next();}
+ expect(history.sessions()).toHaveLength(1);expect(history.sessions()[0].durationSeconds).toBe(26);
+ monotonic+=60000;session.clock.pause();expect(session.clock.label()).toBe('00:26');session.next();expect(history.sessions()).toHaveLength(1);
+ session.reviewErrors();expect(session.clock.seconds()).toBe(0);session.clock.attach();for(let j=0;j<15;j++){monotonic+=1000;session.clock.appearanceMilliseconds();}session.answer(true);session.next();expect(session.clock.committedSeconds).toBe(15);
  });
  it('lesson exercises show their final credited time without creating another history source, and reset on route change',async()=>{
  const harness=await RouterTestingHarness.create();const page=await harness.navigateByUrl('/grammar/n5/01/sentence-structure-context',GrammarPage);
  const total=page.exercises().length;expect(total).toBeGreaterThan(0);
  for(let i=0;i<total;i++){
-   monotonic+=15000;page.answer(true);page.answer(true);harness.detectChanges();
+   for(let j=0;j<15;j++){monotonic+=1000;page.clock.appearanceMilliseconds();}page.answer(true);page.answer(true);harness.detectChanges();
    if(i<total-1){page.continueExercise();page.continueExercise();harness.detectChanges();}
  }
- expect(page.clock.committedSeconds).toBe(total*10);expect(page.exerciseFinished()).toBe(true);
+ expect(page.clock.committedSeconds).toBe(total*15);expect(page.exerciseFinished()).toBe(true);
  expect(harness.routeNativeElement!.querySelector('app-study-timer [role="status"]')).not.toBeNull();
- monotonic+=60000;page.clock.pause();expect(page.clock.seconds()).toBe(total*10);
+ monotonic+=60000;page.clock.pause();expect(page.clock.seconds()).toBe(total*15);
  expect(TestBed.inject(SessionHistoryService).sessions()).toHaveLength(0);
  const roadmap=await harness.navigateByUrl('/grammar',GrammarPage);expect(roadmap.clock.seconds()).toBe(0);
  expect(harness.routeNativeElement!.querySelector('app-study-timer')).toBeNull();

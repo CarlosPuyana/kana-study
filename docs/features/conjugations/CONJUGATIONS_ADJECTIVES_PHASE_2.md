@@ -433,3 +433,14 @@ src/app/features/conjugations/conjugation-practice.page.scss
 src/app/features/conjugations/conjugation-practice.page.spec.ts
 src/app/features/conjugations/conjugation-practice.page.ts
 ```
+
+## Integración Anti-AFK V2 (9 de noviembre de 2026)
+
+El entrenador utiliza el reloj compartido: hasta 180 segundos activos por pregunta,
+pausa automática por visibilidad y cero tiempo de feedback/espera. El marcador muestra
+el total de la ronda. La duración y cobertura se guardan con el intento en los siete
+buckets locales por workspace, conservando los datos históricos sin tiempo como
+medición desconocida. El aprendizaje, las respuestas y las rachas no cambian.
+
+Arquitectura, archivos, compatibilidad y validación final:
+[Anti-AFK V2 — integración Conjugaciones](../study/STUDY_TIME_ANTI_AFK_V2.md#integración-posterior-conjugaciones-9-de-noviembre-de-2026).

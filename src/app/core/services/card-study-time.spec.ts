@@ -1,21 +1,14 @@
-import { CardStudyTimer, formatStudyTime } from './card-study-time';
-describe('shared credited card study time',()=>{
-  let now:number,timer:CardStudyTimer;
-  beforeEach(()=>{now=0;timer=new CardStudyTimer(()=>now);timer.resume();timer.startAppearance();});
-  it.each([[4,4],[15,10],[60,10]])('%s real seconds credit %s', (real,credited)=>{now=real*1000;expect(timer.tick()).toBe(credited);expect(timer.commitAppearance()).toBe(credited*1000);});
-  it('4,15,7 seconds total 21 and repeated appearance gets a fresh allowance',()=>{
-    for(const seconds of [4,15,7]){now+=seconds*1000;timer.commitAppearance();timer.startAppearance();}
-    expect(timer.committedSeconds).toBe(21);now+=60_000;timer.commitAppearance();expect(timer.committedSeconds).toBe(31);
-  });
-  it('hidden time is excluded and returning resumes only the remaining allowance',()=>{
-    now=4000;timer.setVisible(false);now=64_000;expect(timer.tick()).toBe(4);timer.setVisible(true);now=67_000;expect(timer.tick()).toBe(7);now=80_000;expect(timer.tick()).toBe(10);
-  });
-  it('async pauses, double completion, discarded cards and undo do not add duplicate time',()=>{
-    now=4000;timer.pause();now=64_000;expect(timer.commitAppearance()).toBe(4000);expect(timer.commitAppearance()).toBe(0);
-    timer.startAppearance();timer.resume();now+=7000;timer.discardAppearance();expect(timer.committedSeconds).toBe(4);timer.undo(4000);expect(timer.seconds).toBe(0);
-  });
-  it('reset and an unmounted appearance do not count configuration/loading',()=>{
-    timer.reset();now=60_000;expect(timer.tick()).toBe(0);timer.pause();timer.startAppearance();now+=60_000;expect(timer.tick()).toBe(0);
-    expect(formatStudyTime(65)).toBe('01:05');
-  });
+import {CardStudyTimer,formatStudyTime} from './card-study-time';
+describe('active card time V2',()=>{
+ let now:number,wall:number,timer:CardStudyTimer;
+ const active=(ms:number)=>{for(let left=ms;left>0;){const step=Math.min(1000,left);now+=step;wall+=step;timer.tick();left-=step;}};
+ beforeEach(()=>{now=wall=0;timer=new CardStudyTimer(()=>now,()=>wall);timer.resume();timer.startAppearance();});
+ it.each([[5,5],[10,10],[25,25],[60,60],[120,120],[179,179],[180,180],[181,180],[240,180],[300,180],[600,180]])('%s active seconds credit %s',(real,credited)=>{active(real*1000);expect(timer.seconds).toBe(credited);expect(timer.commitAppearance()).toBe(credited*1000);expect(timer.commitAppearance()).toBe(0);});
+ it('gives each appearance its own budget, while reveal/ordinary ticks/resume do not replenish it',()=>{active(120000);timer.resume();active(120000);expect(timer.commitAppearance()).toBe(180000);timer.startAppearance();active(25000);expect(timer.commitAppearance()).toBe(25000);expect(timer.committedSeconds).toBe(205);});
+ it('40 active + five minutes hidden + 20 active equals 60, including repeated visibility events',()=>{active(40000);timer.setVisible(false);timer.setVisible(false);now+=300000;wall+=300000;expect(timer.tick()).toBe(40);timer.setVisible(true);timer.setVisible(true);active(20000);expect(timer.commitAppearance()).toBe(60000);});
+ it('retains the remaining budget across several pauses and starts the next card afresh',()=>{active(100000);for(let i=0;i<3;i++){timer.setVisible(false);now+=60000;wall+=60000;timer.setVisible(true);active(30000);}expect(timer.commitAppearance()).toBe(180000);timer.startAppearance();active(5000);expect(timer.commitAppearance()).toBe(5000);expect(timer.committedSeconds).toBe(185);});
+ it('does not count a card opened hidden until it becomes visible',()=>{timer.setVisible(false);timer.startAppearance();now+=300000;wall+=300000;expect(timer.seconds).toBe(0);timer.setVisible(true);active(25000);expect(timer.commitAppearance()).toBe(25000);});
+ it('excludes async waits, discarded cards, duplicate ticks, and undo exactly once',()=>{active(25000);timer.pause();now+=300000;wall+=300000;expect(timer.commitAppearance()).toBe(25000);expect(timer.commitAppearance()).toBe(0);timer.startAppearance();timer.resume();active(5000);timer.discardAppearance();expect(timer.committedSeconds).toBe(25);timer.undo(25000);expect(timer.seconds).toBe(0);});
+ it.each(['both','wall-only','backwards'] as const)('discards a missing heartbeat or anomalous clock: %s',kind=>{active(4000);if(kind==='both'){now+=300000;wall+=300000;}else if(kind==='wall-only'){now+=250;wall+=300000;}else{now-=5000;wall+=250;}timer.tick();expect(timer.seconds).toBe(4);active(2000);expect(timer.commitAppearance()).toBe(6000);});
+ it('restores historical committed time unchanged and never charges unmounted/loading time',()=>{timer.restoreCommitted(1325);now+=60000;wall+=60000;expect(timer.tick()).toBe(1325);timer.startAppearance();active(25000);expect(timer.tick()).toBe(1325);timer.resume();active(25000);expect(timer.commitAppearance()).toBe(25000);expect(timer.committedSeconds).toBe(1350);expect(formatStudyTime(1350)).toBe('22:30');});
 });

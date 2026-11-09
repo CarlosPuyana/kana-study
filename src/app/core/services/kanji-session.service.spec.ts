@@ -7,16 +7,16 @@ it('places Again sooner than Hard when intervening units exist',()=>{round=Array
 it('stops at four appearances and marks unresolved study for practice',()=>{service.start('self-assessment');for(let i=0;i<KANJI_MAX_APPEARANCES;i++){service.reveal();service.rate('again')}const item=service.session()!.items[0];expect(item.appearances).toBe(4);expect(item.needsPractice).toBe(true);expect(item.resolved).toBe(true);expect(service.completed()).toBe(true)});
 it('calculates results from first responses and resolved unique units',()=>{round=[{key:'kanji:日:kanji-to-meaning',kanjiId:'日',questionType:'kanji-to-meaning'},{key:'kanji:月:kanji-to-meaning',kanjiId:'月',questionType:'kanji-to-meaning'}];service.start('self-assessment');service.reveal();service.rate('again');service.reveal();service.rate('good');expect(service.resolvedCount()).toBe(1);expect(service.progressPercent()).toBe(50);service.reveal();service.rate('good');expect(service.firstTrySuccessCount()).toBe(1);expect(service.firstTryPercentage()).toBe(50)});
 it('blocks a second daily Kanji round even through direct navigation',()=>{const daily=TestBed.inject(DailyLearningService);vi.mocked(daily.isCompletedToday).mockReturnValue(true);expect(service.start('quick-practice')).toBe(false);expect(progress.buildRound).not.toHaveBeenCalled()});it('records Kanji module metadata on completion',()=>{service.start('quick-practice');service.answerQuick('日');service.continueQuick();expect(history.record).toHaveBeenCalledWith(expect.objectContaining({module:'kanji',kanjiIds:['日'],questionTypes:['kanji-to-meaning']}))})
- it('credits a fresh ten second allowance on failure repetition and records once',()=>{
+ it('credits a fresh 180-second allowance on failure repetition and records once',()=>{
  round=round.slice(0,1);service.start('self-assessment');service.clock.attach();
- monotonic+=15000;service.reveal();service.rate('again');expect(service.clock.committedSeconds).toBe(10);
- monotonic+=4000;service.reveal();service.rate('good');expect(service.clock.committedSeconds).toBe(14);
+ for(let i=0;i<15;i++){monotonic+=1000;service.clock.appearanceMilliseconds();}service.reveal();service.rate('again');expect(service.clock.committedSeconds).toBe(15);
+ monotonic+=4000;service.reveal();service.rate('good');expect(service.clock.committedSeconds).toBe(19);
  service.reveal();service.rate('good');expect(history.record).toHaveBeenCalledTimes(1);
- expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:14}));
- monotonic+=60000;expect(service.clock.label()).toBe('00:14');
+ expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:19}));
+ monotonic+=60000;expect(service.clock.label()).toBe('00:19');
  service.clear();expect(service.clock.seconds()).toBe(0);
  service.start('self-assessment');monotonic+=60000;expect(service.clock.appearanceMilliseconds()).toBe(0);
- service.clock.attach();monotonic+=7000;service.reveal();service.rate('good');expect(history.record).toHaveBeenLastCalledWith(expect.objectContaining({durationSeconds:7}));
+ service.clock.attach();for(let i=0;i<7;i++){monotonic+=1000;service.clock.appearanceMilliseconds();}service.reveal();service.rate('good');expect(history.record).toHaveBeenLastCalledWith(expect.objectContaining({durationSeconds:7}));
  });
 });
 
