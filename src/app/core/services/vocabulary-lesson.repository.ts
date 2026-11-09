@@ -3,6 +3,7 @@ import { VocabularyDailyLesson, VOCABULARY_LESSONS_KEY } from '../models/vocabul
 import { VOCABULARY_QUESTION_TYPES } from '../models/vocabulary.model';
 import { StorageService } from './storage.service';
 import { getSpainDayKey } from './daily-learning.service';
+import { CARD_STUDY_LIMIT_MS } from './card-study-time';
 
 const count=(n:unknown):n is number=>typeof n==='number'&&Number.isInteger(n)&&n>=0;
 export function validVocabularyLesson(value:unknown):value is VocabularyDailyLesson {
@@ -17,7 +18,7 @@ export function validVocabularyLesson(value:unknown):value is VocabularyDailyLes
       ||!Array.isArray(s.items)||s.items.length!==s.units.length||!s.units.every(u=>s.items.filter(i=>i.studyKey===u.key).length===1)
       ||!s.items.every(i=>count(i.attempts)&&count(i.appearances)&&typeof i.resolved==='boolean'&&typeof i.needsPractice==='boolean'&&(i.initialRating===null||['again','hard','good'].includes(i.initialRating)))
       ||s.attempts!==s.items.reduce((sum,i)=>sum+i.attempts,0)||s.sessionSize!==s.units.length
-      ||!count(v.durationSeconds)||v.durationSeconds>s.attempts*10||s.completedAt&&!s.items.every(i=>i.resolved))return false;
+      ||!count(v.durationSeconds)||v.durationSeconds>s.attempts*(CARD_STUDY_LIMIT_MS/1000)||s.completedAt&&!s.items.every(i=>i.resolved))return false;
     if(v.version===1)return s.items.every(i=>[0,1].includes(i.attempts)&&i.resolved===(i.attempts===1));
     const legacy=v.legacyResolvedKeys??[],pending=v.pendingKeys;
     return Array.isArray(legacy)&&new Set(legacy).size===legacy.length&&legacy.every(key=>s.items.some(i=>i.studyKey===key&&i.resolved&&i.attempts===1&&i.consecutiveCorrect===0))

@@ -28,6 +28,21 @@ describe('Vocabulary short persisted daily lessons',()=>{
  async function attempts(){await progress.flushAttempts();const result:AttemptEvent[]=[];await TestBed.inject(AttemptEventRepository).scan({from:'2020-01-01T00:00:00.000Z',to:'2030-01-01T00:00:00.000Z',module:'vocabulary'},e=>{result.push(e);});return result;}
 
  const finish=()=>{let guard=0;while(!session.completed()&&guard++<150){answer('good');if(session.error())throw Error('Lesson save failed');}expect(session.completed()).toBe(true);};
+ it.each([11,30,180])('saves a real %i-second first answer within the current Anti-AFK allowance',async seconds=>{
+   expect(session.start('self-assessment')).toBe(true);session.clock.attach();
+   for(let n=0;n<seconds;n++){monotonic+=1000;session.clock.appearanceMilliseconds();}
+   answer('good');expect(session.error()).toBe(false);expect(session.session()!.attempts).toBe(1);
+   expect(TestBed.inject(VocabularyLessonRepository).active()!.durationSeconds).toBe(seconds);
+   expect(localStorage.getItem('kana-study.vocabulary-review-intent.v1')).toBeNull();expect(progress.reviewEvents()).toHaveLength(1);expect(await attempts()).toHaveLength(1);
+ });
+ it('recovers a previously blocked 30-second journal on reload without dropping progress or grading FSRS twice',async()=>{
+   session.start('self-assessment');session.clock.attach();for(let n=0;n<30;n++){monotonic+=1000;session.clock.appearanceMilliseconds();}
+   const write=Storage.prototype.setItem;const crash=vi.spyOn(Storage.prototype,'setItem').mockImplementation(function(this:Storage,key,value){write.call(this,key,value);if(key.endsWith('vocabulary-review-intent.v1'))throw Error('Interrupted after durable journal');});
+   answer('good');expect(session.error()).toBe(true);const intent=JSON.parse(localStorage.getItem('kana-study.vocabulary-review-intent.v1')!);expect(intent.lesson.durationSeconds).toBe(30);expect(session.session()!.attempts).toBe(0);crash.mockRestore();
+   TestBed.resetTestingModule();const review=vi.spyOn(SpacedRepetitionService.prototype,'review');configure();expect(session.start('self-assessment')).toBe(true);expect(session.error()).toBe(false);expect(session.session()!.id).toBe(intent.lesson.session.id);expect(session.session()!.attempts).toBe(1);expect(session.currentItem()!.consecutiveCorrect).toBe(1);expect(session.clock.committedSeconds).toBe(30);
+   expect(progress.get(intent.event.key)!.fsrs).toEqual(intent.event.fsrsAfter);expect(review).not.toHaveBeenCalled();expect(progress.reviewEvents()).toHaveLength(1);expect(await attempts()).toHaveLength(1);expect(localStorage.getItem('kana-study.vocabulary-review-intent.v1')).toBeNull();
+   answer('good');expect(session.completed()).toBe(true);expect(progress.reviewEvents()).toHaveLength(1);expect(await attempts()).toHaveLength(2);
+ });
  it.each([
    [['good','good'],[1,2]],
    [['good','again','good','good'],[1,0,1,2]],
