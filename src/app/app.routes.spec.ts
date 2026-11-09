@@ -5,6 +5,12 @@ import { routes } from './app.routes';
 import { APP_MODULES } from './data/app-modules';
 
 describe('lazy feature routes', () => {
+  it('exposes Conjugations as a standalone lazy selection page without practice routes',()=>{
+    const feature=routes.find(route=>route.path==='conjugations');
+    expect(feature?.loadComponent).toBeTypeOf('function');expect(feature?.component).toBeUndefined();
+    expect(routes.some(route=>route.path?.startsWith('conjugations/'))).toBe(false);
+    expect(APP_MODULES.find(module=>module.id==='conjugations')).toEqual(expect.objectContaining({route:'/conjugations',available:true}));
+  });
   it('keeps Grammar N5 behind lazy routes and enables its module card', async () => {
     const feature=routes.find(route=>route.path==='grammar');
     expect(feature?.component).toBeUndefined();

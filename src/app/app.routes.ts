@@ -54,6 +54,7 @@ export const routes: Routes = [
   { path: 'rush/medals', data: {titleKey: 'medals.title'}, loadComponent: () => import('./features/rush/rush-medals.page').then(module => module.RushMedalsPage) },
   { path: 'rush', data: {titleKey: 'rush.title'}, loadComponent: () => import('./features/rush/kana-rush.page').then(module => module.KanaRushPage) },
   { path: 'manga', data: {titleKey: 'more.manga.title'}, loadChildren: () => import('./features/manga/manga.routes').then(module => module.MANGA_ROUTES) },
+  { path: 'conjugations', data:{titleKey:'more.conjugations.title'}, loadComponent:()=>import('./features/conjugations/conjugations.page').then(module=>module.ConjugationsPage) },
   { path: 'grammar-access', data:{titleKey:'grammarAccess.title'}, loadComponent:()=>import('./features/grammar-access/grammar-access.page').then(m=>m.GrammarAccessPage) },
   { path: 'grammar', canMatch:[grammarMatch], canActivateChild:[grammarChild], runGuardsAndResolvers:'always',
     loadComponent:()=>import('./features/grammar-access/grammar-access-shell').then(m=>m.GrammarAccessShell),

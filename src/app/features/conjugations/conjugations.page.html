@@ -1,0 +1,39 @@
+<main class="page-shell">
+  <app-page-header titleKey="more.conjugations.title" backRoute="/more" [backQueryParams]="{from:'conjugations'}"/>
+  <p class="intro">{{i18n.t('conjugations.subtitle')}}</p>
+  <p class="phase-note" id="phase-note">{{i18n.t('conjugations.phase')}}</p>
+
+  <section class="mix" aria-labelledby="mix-title">
+    <div class="mix-heading"><h2 id="mix-title">{{i18n.t('conjugations.mixLabel')}}</h2><strong class="selection-count" role="status">{{i18n.t('conjugations.selected',{count:selection.count(),total:categories.length})}}</strong></div>
+    @if(!selection.count()){<p class="empty-hint">{{i18n.t('conjugations.emptySelection')}}</p>}
+    @if(hiddenSelected()){<p class="hidden-selection">{{i18n.t('conjugations.hiddenSelected',{count:hiddenSelected()})}}</p>}
+    <div class="mix-actions">
+      <button type="button" (click)="selectAll()" [disabled]="selection.count()===categories.length">{{i18n.t('conjugations.selectAll')}}</button>
+      <button type="button" (click)="clear()" [disabled]="!selection.count()">{{i18n.t('conjugations.clear')}}</button>
+      <button class="primary" type="button" (click)="requestPractice()" [disabled]="!selection.count()" aria-describedby="phase-note">{{i18n.t('conjugations.practiceMix')}}</button>
+    </div>
+    @if(selection.saveError()){<p class="save-error" role="alert">{{i18n.t('conjugations.saveError')}}</p>}
+    <p class="practice-status" role="status" aria-live="polite" aria-atomic="true">{{notice()}}</p>
+  </section>
+
+  <fieldset class="filters"><legend>{{i18n.t('conjugations.filters')}}</legend>
+    @for(group of groups;track group){<label><input type="radio" name="conjugation-group" [value]="group" [checked]="filter()===group" (change)="filter.set(group)"/><span>{{i18n.t('conjugations.group.'+group)}}</span></label>}
+  </fieldset>
+  <p class="level-note">{{i18n.t('conjugations.levelHint')}}</p>
+  <section class="category-grid" [attr.aria-label]="i18n.t('conjugations.catalog')">
+    @for(category of visible();track category.id){
+      <article class="category-card" [class.selected]="selected(category.id)" [attr.data-category-id]="category.id">
+        <div class="card-heading"><div><h2>{{i18n.t(category.titleKey)}}</h2><span class="japanese" lang="ja">{{category.japanese}}</span></div>
+          <label class="check-label"><input type="checkbox" [checked]="selected(category.id)" (change)="toggle(category.id,$event)" [attr.aria-label]="i18n.t('conjugations.select',{name:i18n.t(category.titleKey)})"/><span>{{i18n.t('conjugations.mixLabel')}}</span></label>
+        </div>
+        @if(category.example?.result){<p class="description"><span>{{i18n.t('conjugations.example')}}: </span><span lang="ja">{{category.example!.base}} → {{category.example!.result}}</span></p>}
+        @else{<p class="description">{{i18n.t(category.descriptionKey)}}</p>}
+        <div class="tags"><span>{{i18n.t('conjugations.group.'+category.group)}}</span><span>{{i18n.t('conjugations.difficulty.'+category.difficulty)}}</span></div>
+        @if(category.example && !category.example.result){<p class="example"><span>{{i18n.t('conjugations.example')}}: </span><span lang="ja">{{category.example.base}}</span></p>}
+        <dl class="indicators"><div><dt>{{i18n.t('conjugations.words')}}</dt><dd>{{i18n.t('conjugations.pending')}}</dd></div><div><dt>{{i18n.t('conjugations.streak')}}</dt><dd>{{i18n.t('conjugations.pending')}}</dd></div></dl>
+        <button class="individual" type="button" (click)="requestPractice(category.id)" aria-describedby="phase-note">{{i18n.t('conjugations.practiceSingle')}}</button>
+        @if(requestedId()===category.id){<p class="description" aria-hidden="true">{{notice()}}</p>}
+      </article>
+    }
+  </section>
+</main>

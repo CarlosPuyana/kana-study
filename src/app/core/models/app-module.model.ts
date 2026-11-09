@@ -6,6 +6,7 @@ export type AppModuleId =
   | 'anki'
   | 'grammar'
   | 'manga'
+  | 'conjugations'
   | 'extras';
 
 export type AppModuleIcon = AppModuleId;

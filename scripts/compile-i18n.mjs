@@ -4,16 +4,17 @@ import {fileURLToPath} from 'node:url';
 export const GRAMMAR_COPY_KEY=/^grammar\.(content|n5|audit|stable|expansion|v2)\./;
 export const STUDY_COPY_KEY=/^(vocabulary\.daily\.|anki\.(day|results|rush)\.|kaishi\.(autoAudio|preparing|playing|autoplayBlocked|audioFailed)$)/;
 export function compiledDomain(grammar){
- const languages=['es','en','ca'],dictionaries=Object.fromEntries(languages.map(lang=>[lang,Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync(`src/assets/i18n/${lang}.json`,'utf8'))).filter(([key])=>grammar==='puyi'?key.startsWith('puyi.'):grammar==='study'?STUDY_COPY_KEY.test(key):grammar==='local'?key.startsWith('localDeck.'):grammar==='backup'?key.startsWith('deckBackup.'):!key.startsWith('puyi.')&&!STUDY_COPY_KEY.test(key)&&!key.startsWith('localDeck.')&&!key.startsWith('deckBackup.')&&GRAMMAR_COPY_KEY.test(key)===grammar))]));
+ const languages=['es','en','ca'],dictionaries=Object.fromEntries(languages.map(lang=>[lang,Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync(`src/assets/i18n/${lang}.json`,'utf8'))).filter(([key])=>grammar==='conjugations'?key.startsWith('conjugations.'):!key.startsWith('conjugations.')&&(grammar==='puyi'?key.startsWith('puyi.'):grammar==='study'?STUDY_COPY_KEY.test(key):grammar==='local'?key.startsWith('localDeck.'):grammar==='backup'?key.startsWith('deckBackup.'):!key.startsWith('puyi.')&&!STUDY_COPY_KEY.test(key)&&!key.startsWith('localDeck.')&&!key.startsWith('deckBackup.')&&GRAMMAR_COPY_KEY.test(key)===grammar)))]));
  const shared=Object.fromEntries(Object.entries(dictionaries.es).filter(([key,value])=>languages.every(lang=>Object.hasOwn(dictionaries[lang],key)&&dictionaries[lang][key]===value)));
  return '// Generated from es.json, en.json and ca.json. Do not edit.\n'+
   `const shared:Record<string,string> = ${JSON.stringify(shared,null,2)};\n`+
   languages.map(lang=>`export const ${lang}:Record<string,string> = {...shared,...${JSON.stringify(Object.fromEntries(Object.entries(dictionaries[lang]).filter(([key])=>!Object.hasOwn(shared,key))),null,2)}};\n`).join('');
 }
 export function compiledTranslations(){return '// Generated translation aggregate for tooling/tests. Runtime imports core only.\n'+
- "import * as study from './deck-study.generated';\nimport * as core from './core.generated';\nimport * as grammar from './grammar.generated';\nimport * as backup from './deck-backup.generated';\nimport * as puyi from './puyi.generated';\nimport * as local from './local-decks.generated';\n"+
- ['es','en','ca'].map(lang=>`export const ${lang}:Record<string,string> = {...puyi.${lang},...study.${lang},...core.${lang},...grammar.${lang},...backup.${lang},...local.${lang}};\n`).join('');}
+ "import * as study from './deck-study.generated';\nimport * as core from './core.generated';\nimport * as grammar from './grammar.generated';\nimport * as backup from './deck-backup.generated';\nimport * as puyi from './puyi.generated';\nimport * as local from './local-decks.generated';\nimport * as conjugations from './conjugations.generated';\n"+
+ ['es','en','ca'].map(lang=>`export const ${lang}:Record<string,string> = {...puyi.${lang},...study.${lang},...core.${lang},...grammar.${lang},...backup.${lang},...local.${lang},...conjugations.${lang}};\n`).join('');}
 export function compileTranslations(){
+ fs.writeFileSync('src/assets/i18n/conjugations.generated.ts',compiledDomain('conjugations'));
  fs.writeFileSync('src/assets/i18n/puyi.generated.ts',compiledDomain('puyi'));
  fs.writeFileSync('src/assets/i18n/deck-study.generated.ts',compiledDomain('study'));
  fs.writeFileSync('src/assets/i18n/local-decks.generated.ts',compiledDomain('local'));

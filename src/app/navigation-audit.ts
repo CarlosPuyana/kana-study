@@ -12,6 +12,7 @@ export const NAVIGATION_AUDIT:readonly RouteAuditEntry[]=[
   {route:'selection',entryPoint:'Home Explore selection / Grammar kana links',type:'ui'},
   {route:'medals',entryPoint:'Home medals',type:'ui'},
   {route:'more',entryPoint:'Home Explore modules / module back links',type:'ui'},
+  {route:'conjugations',entryPoint:'More Conjugations module card / direct hash URL',type:'ui'},
   {route:'auth',entryPoint:'AccountControl / auth email callbacks',type:'external-deeplink'},
   {route:'profile',entryPoint:'AccountControl',type:'ui'},
   {route:'writing',entryPoint:'Home Writing / Kana card practice',type:'ui'},

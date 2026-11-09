@@ -15,6 +15,7 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
 
 - Para decidir una promoción o retirada: [RELEASE-MANGA-3](../MANGA_DECKS_RELEASE_3.md),
   [checklist humana](../release/manga-guest-acceptance.md) y [historia de lanzamiento](history/releases/INDEX.md).
+- Para el catálogo y selección local del nuevo módulo: [Conjugaciones, fase 1](features/conjugations/CONJUGATIONS_MODULE_PHASE_1.md).
 - Para modificar Manga × Mazos: [DESIGN acumulado](../MANGA_DECKS_DESIGN.md), sección más
   reciente aplicable; [historial por hito](history/manga-decks/INDEX.md) y [guía manual](../MANGA_DECKS_MANUAL_TESTING.md).
 - Para desarrollar/verificar: [guía de herramientas y evidencias](guides/DEVELOPMENT.md).

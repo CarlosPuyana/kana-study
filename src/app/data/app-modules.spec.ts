@@ -34,12 +34,12 @@ const emptyStats = {
 describe('Module navigation', () => {
   afterEach(() => TestBed.resetTestingModule());
 
-  it('A: defines exactly eight modules in the requested order', () => {
-    expect(APP_MODULES).toHaveLength(8);
+  it('A: defines the nine modules in deterministic navigation order', () => {
+    expect(APP_MODULES).toHaveLength(9);
     expect(APP_MODULES.map(module => module.id)).toEqual([
-      'kana', 'kanji', 'vocabulary', 'flags', 'anki', 'grammar', 'manga', 'extras',
+      'kana', 'kanji', 'vocabulary', 'flags', 'anki', 'grammar', 'manga', 'conjugations', 'extras',
     ]);
-    expect(APP_MODULES.map(module => module.order)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+    expect(APP_MODULES.map(module => module.order)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   it('B: exposes Kana as available at the root route', () => {
@@ -75,13 +75,13 @@ describe('Module navigation', () => {
   it('D: hides Kana when the origin is kana', async () => {
     const fixture = await createMoreFixture('kana');
     expect(visibleModuleIds(fixture)).not.toContain('kana');
-    expect(visibleModuleIds(fixture)).toHaveLength(6);
+    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.filter(module=>module.available&&module.id!=='kana').map(module=>module.id));
   });
 
   it('E: hides Flags when the origin is flags', async () => {
     const fixture = await createMoreFixture('flags');
     expect(visibleModuleIds(fixture)).not.toContain('flags');
-    expect(visibleModuleIds(fixture)).toHaveLength(6);
+    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.filter(module=>module.available&&module.id!=='flags').map(module=>module.id));
   });
 
   it('F: shows available modules without an origin', async () => {
