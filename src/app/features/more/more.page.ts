@@ -26,8 +26,9 @@ export class MorePage {
     const requestedId = this.queryParams().get('from');
     return APP_MODULES.find(module => module.available && module.id === requestedId && (module.id!=='grammar'||this.grammarAccess.allowed()));
   });
+  readonly moduleOrder = ['kana','vocabulary','anki','conjugations','kanji','manga','grammar','flags'];
   readonly modules = computed(() =>
-    APP_MODULES.filter(module => module.available && module.id !== this.currentModule()?.id && (module.id!=='grammar'||this.grammarAccess.allowed())),
+    this.moduleOrder.flatMap(id => APP_MODULES.filter(module => module.id === id && module.available && (module.id !== 'grammar' || this.grammarAccess.allowed()))),
   );
   readonly returnRoute = computed(() => this.currentModule()?.route ?? '/');
 }

@@ -21,6 +21,7 @@ import { ModuleCard } from '../shared/components/module-card/module-card';
 import { SelectionCard } from '../shared/components/selection-card/selection-card';
 import { APP_MODULES } from './app-modules';
 
+const moreOrder = ['kana','vocabulary','anki','conjugations','kanji','manga','grammar','flags'];
 const translate = { t: (key: string) => key };
 const emptyStats = {
   total: 0,
@@ -72,44 +73,51 @@ describe('Module navigation', () => {
     );
   });
 
-  it('D: hides Kana when the origin is kana', async () => {
+  it('D: includes Kana when the origin is kana', async () => {
     const fixture = await createMoreFixture('kana');
-    expect(visibleModuleIds(fixture)).not.toContain('kana');
-    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.filter(module=>module.available&&module.id!=='kana').map(module=>module.id));
+    expect(visibleModuleIds(fixture)).toContain('kana');
+    expect(visibleModuleIds(fixture)).toEqual(moreOrder);
   });
 
-  it('E: hides Flags when the origin is flags', async () => {
+  it('E: includes Flags when the origin is flags', async () => {
     const fixture = await createMoreFixture('flags');
-    expect(visibleModuleIds(fixture)).not.toContain('flags');
-    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.filter(module=>module.available&&module.id!=='flags').map(module=>module.id));
+    expect(visibleModuleIds(fixture)).toContain('flags');
+    expect(visibleModuleIds(fixture)).toEqual(moreOrder);
   });
 
   it('F: shows available modules without an origin', async () => {
     const fixture = await createMoreFixture();
-    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.filter(module=>module.available).map(module => module.id));
+    expect(visibleModuleIds(fixture)).toEqual(moreOrder);
   });
 
-  it('F2: hides Kanji and returns to it when the origin is kanji', async () => {
+  it('F2: includes Kanji and returns to it when the origin is kanji', async () => {
     const fixture = await createMoreFixture('kanji');
-    expect(visibleModuleIds(fixture)).not.toContain('kanji');
+    expect(visibleModuleIds(fixture)).toContain('kanji');
     expect(fixture.componentInstance.returnRoute()).toBe('/kanji');
   });
 
-  it('F3: hides Vocabulary and returns to it when the origin is vocabulary', async () => {
+  it('F3: includes Vocabulary and returns to it when the origin is vocabulary', async () => {
     const fixture = await createMoreFixture('vocabulary');
-    expect(visibleModuleIds(fixture)).not.toContain('vocabulary');
+    expect(visibleModuleIds(fixture)).toContain('vocabulary');
     expect(fixture.componentInstance.returnRoute()).toBe('/vocabulary');
   });
 
-  it('F4: hides Decks and returns to it when the origin is anki', async () => {
+  it('F4: includes Decks and returns to it when the origin is anki', async () => {
     const fixture = await createMoreFixture('anki');
-    expect(visibleModuleIds(fixture)).not.toContain('anki');
+    expect(visibleModuleIds(fixture)).toContain('anki');
     expect(fixture.componentInstance.returnRoute()).toBe('/anki');
   });
 
   it('G: shows available modules for an unknown origin', async () => {
     const fixture = await createMoreFixture('unknown');
-    expect(visibleModuleIds(fixture)).toEqual(APP_MODULES.filter(module=>module.available).map(module => module.id));
+    expect(visibleModuleIds(fixture)).toEqual(moreOrder);
+  });
+
+  it('keeps restricted Grammar hidden and restores it in the requested position when access changes',async()=>{
+    const allowed=signal(false),fixture=await createMoreFixture('grammar',allowed);
+    expect(visibleModuleIds(fixture)).toEqual(moreOrder.filter(id=>id!=='grammar'));
+    expect(fixture.componentInstance.returnRoute()).toBe('/');allowed.set(true);fixture.detectChanges();
+    expect(visibleModuleIds(fixture)).toEqual(moreOrder);expect(fixture.componentInstance.returnRoute()).toBe('/grammar');
   });
 
   it('H: resolves the return route from the module definition', async () => {
@@ -191,12 +199,12 @@ describe('Module navigation', () => {
   });
 });
 
-async function createMoreFixture(from?: string): Promise<ComponentFixture<MorePage>> {
+async function createMoreFixture(from?: string, allowed=signal(true)): Promise<ComponentFixture<MorePage>> {
   const params = new BehaviorSubject<ParamMap>(convertToParamMap(from ? { from } : {}));
   await TestBed.configureTestingModule({
     imports: [MorePage],
     providers: [
-      {provide:GrammarAccessService,useValue:{allowed:()=>true}},
+      {provide:GrammarAccessService,useValue:{allowed}},
       provideRouter([]),
       { provide: TranslationService, useValue: translate },
       {

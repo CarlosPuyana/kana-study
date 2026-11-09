@@ -11,6 +11,8 @@ export class ConjugationPracticePage {
   readonly i18n=inject(TranslationService);
   readonly practice=inject(ConjugationPracticeService);
   private readonly route=inject(ActivatedRoute);
+  readonly isVerb=computed(()=>!!this.practice.question()?.id.startsWith('verb:'));
+  readonly ruleFamily=computed(()=>this.isVerb()?'verb':this.practice.question()?.word.type);
   readonly answer=signal('');readonly ruleOpen=signal(false);private composing=false;
   private readonly input=viewChild<ElementRef<HTMLInputElement>>('answerInput');
   readonly attempts=computed(()=>{const s=this.practice.session();return s?s.index+(s.feedback?1:0):0;});

@@ -9,7 +9,8 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 1,
     "descriptionKey": "conjugations.category.verb-negative.description",
-    "availability": "planned",
+    "availability": "available",
+    "wordCount": 50,
     "ruleFamily": "verb-plain",
     "example": {
       "base": "書く",
@@ -24,7 +25,8 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 2,
     "descriptionKey": "conjugations.category.verb-past.description",
-    "availability": "planned",
+    "availability": "available",
+    "wordCount": 50,
     "ruleFamily": "verb-plain",
     "example": {
       "base": "書く",
@@ -39,7 +41,8 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 3,
     "descriptionKey": "conjugations.category.verb-negative-past.description",
-    "availability": "planned",
+    "availability": "available",
+    "wordCount": 50,
     "ruleFamily": "verb-plain",
     "example": {
       "base": "書く",
@@ -54,7 +57,8 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 4,
     "descriptionKey": "conjugations.category.verb-te.description",
-    "availability": "planned",
+    "availability": "available",
+    "wordCount": 50,
     "ruleFamily": "verb-te",
     "example": {
       "base": "書く",

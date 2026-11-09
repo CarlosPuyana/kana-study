@@ -8,7 +8,7 @@ import {CONJUGATION_CATEGORIES} from '../../data/conjugations';
 import {PageHeader} from '../../shared/components/page-header/page-header';
 import {Router} from '@angular/router';
 import {ConjugationStatsService} from '../../core/services/conjugation-stats.service';
-import {isAdjectiveCategory} from '../../core/services/conjugation-questions';
+import {isPracticeCategory} from '../../core/services/conjugation-questions';
 
 @Component({selector:'app-conjugations-page',imports:[PageHeader],templateUrl:'./conjugations.page.html',styleUrl:'./conjugations.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class ConjugationsPage{
@@ -23,8 +23,8 @@ export class ConjugationsPage{
   readonly visible=computed(()=>this.categories.filter(category=>this.filter()==='all'||category.group===this.filter()));
   readonly hiddenSelected=computed(()=>this.selection.ids().filter(id=>!this.visible().some(category=>category.id===id)).length);
   private readonly request=linkedSignal<{id?:ConjugationCategoryId;count:number;ids:readonly ConjugationCategoryId[]}|null>(()=>{this.workspace.activationRevision();return null;});
-  readonly pendingCategories=computed(()=>this.request()?.ids.filter(id=>!isAdjectiveCategory(id))??[]);
-  readonly availableRequest=computed(()=>this.request()?.ids.filter(isAdjectiveCategory)??[]);
+  readonly pendingCategories=computed(()=>this.request()?.ids.filter(id=>!isPracticeCategory(id))??[]);
+  readonly availableRequest=computed(()=>this.request()?.ids.filter(isPracticeCategory)??[]);
   readonly requestedId=computed(()=>this.request()?.id??null);
   readonly notice=computed(()=>{const request=this.request();return !request?'':request.id?this.i18n.t('conjugations.requestSingle',{name:this.i18n.t(this.categories.find(category=>category.id===request.id)!.titleKey)}):this.i18n.t('conjugations.requestMix',{count:request.count})+' '+this.i18n.t('conjugations.pendingCategories',{names:this.pendingCategories().map(id=>this.i18n.t(this.categories.find(c=>c.id===id)!.titleKey)).join(', ')});});
   constructor(){this.i18n.useStudyCopy(copy);}
@@ -34,9 +34,9 @@ export class ConjugationsPage{
   clear():void{this.request.set(null);this.selection.clear();}
   requestPractice(id?:ConjugationCategoryId):void{
     const intent=this.selection.intent(id);if(!intent)return;
-    if(intent.categoryIds.every(isAdjectiveCategory)){void this.router.navigate(['/conjugations/practice'],{queryParams:{mode:intent.mode,categories:intent.categoryIds.join(',')}});return;}
+    if(intent.categoryIds.every(isPracticeCategory)){void this.router.navigate(['/conjugations/practice'],{queryParams:{mode:intent.mode,categories:intent.categoryIds.join(',')}});return;}
     this.request.set({id,count:intent.categoryIds.length,ids:intent.categoryIds});
   }
   practiceAvailable():void{const ids=this.availableRequest();if(ids.length)void this.router.navigate(['/conjugations/practice'],{queryParams:{mode:'mixed',categories:ids.join(',')}});}
-  best(id:ConjugationCategoryId):number|null{return isAdjectiveCategory(id)?this.stats.get(id).bestStreak:null;}
+  best(id:ConjugationCategoryId):number|null{return isPracticeCategory(id)?this.stats.get(id).bestStreak:null;}
 }

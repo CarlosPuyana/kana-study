@@ -12,17 +12,17 @@
         <button type="button" (click)="start()">{{i18n.t('conjugations.trainer.restart')}}</button>
       </section>
     }@else if(practice.question();as question){
-      <section class="question" [attr.data-adjective-id]="question.adjective.id" [attr.data-transformation]="question.transformation" [attr.data-family]="question.adjective.type">
-        <h2>{{i18n.t('conjugations.transform.'+question.transformation)}}</h2><p class="register">{{i18n.t('conjugations.trainer.register')}}</p>
-        <p class="word" lang="ja"><ruby>{{question.adjective.japanese}}<rt>{{question.adjective.kana===question.adjective.japanese?'':question.adjective.kana}}</rt></ruby></p>
-        <p class="meaning">{{i18n.t(question.adjective.meaningKey)}} <span>· {{i18n.t('conjugations.category.adjective-'+question.adjective.type+'.title')}}</span></p>
+      <section class="question" [attr.data-adjective-id]="isVerb()?null:question.word.id" [attr.data-verb-id]="isVerb()?question.word.id:null" [attr.data-transformation]="question.transformation" [attr.data-family]="question.word.type">
+        <h2>{{i18n.t('conjugations.transform.'+question.transformation)}}</h2><p class="register">{{i18n.t(isVerb()&&question.transformation==='te'?'conjugations.trainer.teRegister':'conjugations.trainer.register')}}</p>
+        <p class="word" lang="ja"><ruby>{{question.word.japanese}}<rt>{{question.word.kana===question.word.japanese?'':question.word.kana}}</rt></ruby></p>
+        <p class="meaning">{{i18n.t(question.word.meaningKey)}} <span>· {{i18n.t(isVerb()?'conjugations.verbGroup.'+question.word.type:'conjugations.category.adjective-'+question.word.type+'.title')}}</span></p>
         <form (submit)="submit($event)">
           <label for="conjugation-answer">{{i18n.t('conjugations.trainer.answer')}}</label>
           <input #answerInput id="conjugation-answer" name="answer" type="text" maxlength="128" autocomplete="off" autocapitalize="off" [spellcheck]="false" aria-describedby="answer-hint" [value]="answer()" (input)="answer.set($any($event.target).value)" (compositionstart)="composition(true)" (compositionend)="composition(false)" (keydown.enter)="enter($event)" [readOnly]="!!session.feedback"/>
           <p class="hint" id="answer-hint">{{i18n.t('conjugations.trainer.hint')}}</p>
           <details [open]="ruleOpen()" (toggle)="ruleOpen.set($any($event.target).open)"><summary>{{i18n.t('conjugations.trainer.rule')}}</summary>
-            <p>{{i18n.t('conjugations.rule.'+question.adjective.type+'.'+question.transformation)}}</p>
-            <p>{{i18n.t('conjugations.rule.'+question.adjective.type+'.note')}}</p>
+            <p>{{i18n.t('conjugations.rule.'+ruleFamily()+'.'+question.transformation)}}</p>
+            <p>{{i18n.t('conjugations.rule.'+ruleFamily()+'.note')}}</p>
           </details>
           <div class="actions"><button class="check" type="submit" [disabled]="!!session.feedback||!answer().trim()">{{i18n.t('conjugations.trainer.check')}}</button><button type="button" (click)="unknown()" [disabled]="!!session.feedback">{{i18n.t('conjugations.trainer.unknown')}}</button></div>
         </form>
@@ -31,7 +31,7 @@
           <section class="feedback" [class.correct]="session.feedback==='correct'" role="status" aria-live="polite">
             <h3>{{i18n.t('conjugations.feedback.'+session.feedback)}}</h3>
             <p class="expected" lang="ja">{{expected()}}</p><p lang="ja-Latn">{{question.answers.romaji[0]}}</p>
-            @if(session.feedback!=='correct'){<p>{{i18n.t('conjugations.rule.'+question.adjective.type+'.'+question.transformation)}}</p>}
+            @if(session.feedback!=='correct'){<p>{{i18n.t('conjugations.rule.'+ruleFamily()+'.'+question.transformation)}}</p>}
           </section>
           <button class="next" type="button" (click)="next()" aria-keyshortcuts="Space">{{i18n.t('conjugations.trainer.next')}} <kbd aria-hidden="true">{{i18n.t('conjugations.trainer.space')}}</kbd></button>
         }

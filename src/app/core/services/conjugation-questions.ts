@@ -1,3 +1,5 @@
+import {ConjugationQuestion,VerbCategory,VerbTransformation,VERB_CATEGORIES} from '../models/conjugation-practice.model';
+import {CONJUGATION_VERBS} from '../../data/conjugation-verbs';
 import {AdjectiveCategory,AdjectiveQuestion,ADJECTIVE_TRANSFORMATIONS} from '../models/conjugation-practice.model';
 import {ConjugationPracticeIntent,ConjugationCategoryId} from '../models/conjugations.model';
 import {CONJUGATION_ADJECTIVES} from '../../data/conjugation-adjectives';
@@ -14,8 +16,24 @@ function shuffle<T>(items:readonly T[],random:()=>number):T[]{
 export function adjectiveQuestions(intent:ConjugationPracticeIntent,random:()=>number=Math.random,previousId?:string):AdjectiveQuestion[]{
   if(!validAdjectiveIntent(intent))return [];
   const pools=intent.categoryIds.map(category=>shuffle(CONJUGATION_ADJECTIVES.filter(a=>'adjective-'+a.type===category).flatMap(adjective=>
-    ADJECTIVE_TRANSFORMATIONS.map(transformation=>({id:adjective.id+':'+transformation,adjective,transformation,answers:adjective.conjugations[transformation]}))),random));
+    ADJECTIVE_TRANSFORMATIONS.map(transformation=>({id:adjective.id+':'+transformation,word:adjective,transformation,answers:adjective.conjugations[transformation]}))),random));
   const result:AdjectiveQuestion[]=[];let family=random()<.5?0:pools.length-1;
+  while(pools.some(pool=>pool.length)){if(pools[family].length)result.push(pools[family].pop()!);family=(family+1)%pools.length;}
+  if(result.length>1&&result[0].id===previousId)[result[0],result[1]]=[result[1],result[0]];
+  return result;
+}
+
+/** All four verb forms read the same catalog. Locked categories never enter a round. */
+export function isPracticeCategory(id:ConjugationCategoryId|string):id is AdjectiveCategory|VerbCategory {
+  return isAdjectiveCategory(id)||VERB_CATEGORIES.some(category=>category===id);
+}
+const verbForms:Record<VerbCategory,VerbTransformation>={'verb-negative':'negative','verb-past':'past','verb-negative-past':'negativePast','verb-te':'te'};
+export function practiceQuestions(intent:ConjugationPracticeIntent,random:()=>number=Math.random,previousId?:string):ConjugationQuestion[]{
+  if(!['single','mixed'].includes(intent.mode)||!intent.categoryIds.length||(intent.mode==='single'&&intent.categoryIds.length!==1)||new Set(intent.categoryIds).size!==intent.categoryIds.length||!intent.categoryIds.every(isPracticeCategory))return [];
+  const pools=intent.categoryIds.map(category=>isAdjectiveCategory(category)
+    ?adjectiveQuestions({mode:'single',categoryIds:[category]},random)
+    :shuffle(CONJUGATION_VERBS.map(word=>{const transformation=verbForms[category];return {id:'verb:'+word.id+':'+transformation,word,transformation,answers:word.conjugations[transformation]};}),random));
+  const result:ConjugationQuestion[]=[];let family=Math.floor(random()*pools.length);
   while(pools.some(pool=>pool.length)){if(pools[family].length)result.push(pools[family].pop()!);family=(family+1)%pools.length;}
   if(result.length>1&&result[0].id===previousId)[result[0],result[1]]=[result[1],result[0]];
   return result;
