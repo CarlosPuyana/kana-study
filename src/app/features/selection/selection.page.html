@@ -43,6 +43,7 @@
 
   <section class="selection-section" aria-labelledby="questions-heading">
     <h2 id="questions-heading">{{ i18n.t('selection.questionTypes') }}</h2>
+    <p class="selection-scope">{{i18n.t('selection.writingScope')}}</p>
     <div class="question-grid">
       @for (option of questionOptions; track option.type) {
         <button type="button" class="question-card"

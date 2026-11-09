@@ -12551,5 +12551,7 @@
   "vocabulary.daily.stats.attemptKind.unknown": "Contracte o posició no disponible",
   "vocabulary.daily.stats.timeZone": "Dates a Europe/Madrid.",
   "vocabulary.daily.stats.seconds": "{{count}} s",
-  "vocabulary.daily.stats.milliseconds": "{{count}} ms"
+  "vocabulary.daily.stats.milliseconds": "{{count}} ms",
+  "vocabulary.compact.details": "Veure detalls",
+  "selection.writingScope": "La ronda normal utilitza aquests tipus. Romaji → Kana permet dibuixar opcionalment. Escriptura, RUSH i el reforç de punts febles tenen la seva pròpia selecció. Els canvis s’apliquen a la propera ronda; una ronda activa conserva la selecció inicial."
 }

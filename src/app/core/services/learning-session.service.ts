@@ -1,6 +1,7 @@
 import {AttemptRecordingService,AttemptRecordingSession} from './attempt-recording.service';
 import { createStudyClock } from './study-clock';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, linkedSignal } from '@angular/core';
+import {WorkspaceService} from './workspace.service';
 import { ALL_KANA } from '../../data/kana';
 import {
   LearningMode, LearningSession, SessionFeedback, SessionItem,
@@ -37,8 +38,11 @@ export class LearningSessionService {
   private readonly dailyLearning = inject(DailyLearningService);
   private readonly attempts=inject(AttemptRecordingService);private attemptSession?:AttemptRecordingSession;
   private readonly weaknesses = inject(WeaknessService);
-  private readonly state = signal<SessionState | null>(null);
-  private readonly newMedalState = signal<readonly MedalState[]>([]);
+  private readonly workspace = inject(WorkspaceService);
+  // A session owns its original selection, but never crosses account activations.
+  // linkedSignal invalidates synchronously, including A -> B -> A without a flush.
+  private readonly state = linkedSignal<SessionState | null>(() => {this.workspace.activationRevision();return null;});
+  private readonly newMedalState = linkedSignal<readonly MedalState[]>(() => {this.workspace.activationRevision();return [];});
 
   readonly session = computed(() => this.state()?.session ?? null);
   readonly isPractice = computed(() => this.state()?.practice ?? false);

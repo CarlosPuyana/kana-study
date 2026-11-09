@@ -18,3 +18,22 @@
 .lesson-progress{font-variant-numeric:tabular-nums;white-space:nowrap}.lesson-ratings{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin:.75rem 0;color:var(--text-secondary)}.lesson-ratings strong{color:var(--text-primary)}
 
 .play-header{grid-template-columns:2.75rem auto minmax(0,1fr) 2.75rem}
+
+// Compact study frame; results and the scheduler are unchanged.
+.exercise{padding-top:1rem;gap:.5rem}
+.exercise .status{margin:0}
+.exercise .prompt{margin:0;line-height:1.4}
+.exercise .meaning-prompt{font-size:clamp(2rem,4vw,3rem);line-height:1.5}
+.prompt-readings{margin:0;color:var(--text-secondary);font-size:1rem}
+.exercise .assessment-stage{min-height:15rem;margin-top:.5rem;gap:.65rem}
+.exercise .answer{gap:.5rem;padding:.75rem;width:100%}
+.rating-prompt{font-size:.9rem;color:var(--text-secondary)}
+.exercise .ratings{padding:0}
+.exercise .feedback-answer{width:100%;margin-top:.5rem}
+.exercise .options{margin-top:.5rem;gap:.5rem}
+@media(max-width:560px){.exercise .assessment-stage{min-height:13rem}.exercise .options button{min-height:48px;padding:.6rem}}
+@media(min-width:700px) and (max-height:650px){
+ .play-shell:not(.results-shell) .play-header{grid-template-columns:auto 2.75rem auto minmax(0,1fr) 2.75rem;min-height:2.75rem}
+ .play-shell:not(.results-shell) .play-header app-study-timer{grid-column:auto}
+ .exercise .assessment-stage{min-height:14rem}
+}

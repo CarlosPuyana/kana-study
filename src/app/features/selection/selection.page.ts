@@ -1,6 +1,7 @@
 import { safeReturnUrl } from '../../core/services/return-navigation';
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, untracked } from '@angular/core';
+import {WorkspaceService} from '../../core/services/workspace.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ALL_KANA } from '../../data/kana';
 import { KanaType, KanaVariant } from '../../core/models/kana.model';
@@ -41,7 +42,8 @@ export class SelectionPage {
   readonly types = KANA_TYPES;
   readonly variants = KANA_VARIANTS;
   readonly totalQuestionTypes = QUESTION_TYPES.length;
-  readonly draft = signal<LearningSelection>(structuredClone(this.settings.selection()));
+  private readonly workspace = inject(WorkspaceService);
+  readonly draft = linkedSignal<LearningSelection>(() => {this.workspace.activationRevision();return untracked(()=>structuredClone(this.settings.selection()));});
   readonly selectedCategoryCount = computed(() => countSelectedCategories(this.draft()));
   readonly selectedQuestionCount = computed(() => this.draft().questionTypes.length);
   readonly availableExercises = computed(() => countAvailableExercises(this.draft(), ALL_KANA));

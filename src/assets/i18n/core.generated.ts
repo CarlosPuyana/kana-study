@@ -1678,7 +1678,9 @@ export const es:Record<string,string> = {...shared,...{
   "kaishi.auto.retry": "Reintentar multimedia",
   "kaishi.auto.test": "Recursos de prueba: imagen y tonos de demostración, no grabaciones Kaishi.",
   "anki.publicUnavailable": "No se pudo actualizar Mazo Puyi. Los demás mazos siguen disponibles.",
-  "common.retry": "Reintentar"
+  "common.retry": "Reintentar",
+  "vocabulary.compact.details": "Ver detalles",
+  "selection.writingScope": "La ronda normal usa estos tipos. Romaji → Kana permite dibujar de forma opcional. Escritura, RUSH y el refuerzo de puntos débiles tienen su propia selección. Los cambios se aplican a la próxima ronda; una ronda activa conserva su selección inicial."
 }};
 export const en:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Objective answers",
@@ -3240,7 +3242,9 @@ export const en:Record<string,string> = {...shared,...{
   "kaishi.auto.retry": "Retry media",
   "kaishi.auto.test": "Test resources: demonstration image and tones, not Kaishi recordings.",
   "anki.publicUnavailable": "Could not refresh Mazo Puyi. Other decks remain available.",
-  "common.retry": "Retry"
+  "common.retry": "Retry",
+  "vocabulary.compact.details": "View details",
+  "selection.writingScope": "Normal rounds use these question types. Romaji → Kana lets you draw optionally. Writing, RUSH and focused weak-item practice use their own selection. Changes apply to the next round; an active round keeps its original selection."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Respostes objectives",
@@ -4802,5 +4806,7 @@ export const ca:Record<string,string> = {...shared,...{
   "kaishi.auto.retry": "Torna a provar el multimèdia",
   "kaishi.auto.test": "Recursos de prova: imatge i tons de demostració, no gravacions Kaishi.",
   "anki.publicUnavailable": "No s’ha pogut actualitzar Mazo Puyi. Els altres malls continuen disponibles.",
-  "common.retry": "Torna-ho a provar"
+  "common.retry": "Torna-ho a provar",
+  "vocabulary.compact.details": "Veure detalls",
+  "selection.writingScope": "La ronda normal utilitza aquests tipus. Romaji → Kana permet dibuixar opcionalment. Escriptura, RUSH i el reforç de punts febles tenen la seva pròpia selecció. Els canvis s’apliquen a la propera ronda; una ronda activa conserva la selecció inicial."
 }};

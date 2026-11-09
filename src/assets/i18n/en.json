@@ -12551,5 +12551,7 @@
   "vocabulary.daily.stats.attemptKind.unknown": "Contract or position unavailable",
   "vocabulary.daily.stats.timeZone": "Dates in Europe/Madrid.",
   "vocabulary.daily.stats.seconds": "{{count}} s",
-  "vocabulary.daily.stats.milliseconds": "{{count}} ms"
+  "vocabulary.daily.stats.milliseconds": "{{count}} ms",
+  "vocabulary.compact.details": "View details",
+  "selection.writingScope": "Normal rounds use these question types. Romaji → Kana lets you draw optionally. Writing, RUSH and focused weak-item practice use their own selection. Changes apply to the next round; an active round keeps its original selection."
 }

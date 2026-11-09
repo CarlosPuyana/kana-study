@@ -12551,5 +12551,7 @@
   "vocabulary.daily.stats.attemptKind.unknown": "Contrato o posición no disponible",
   "vocabulary.daily.stats.timeZone": "Fechas en Europe/Madrid.",
   "vocabulary.daily.stats.seconds": "{{count}} s",
-  "vocabulary.daily.stats.milliseconds": "{{count}} ms"
+  "vocabulary.daily.stats.milliseconds": "{{count}} ms",
+  "vocabulary.compact.details": "Ver detalles",
+  "selection.writingScope": "La ronda normal usa estos tipos. Romaji → Kana permite dibujar de forma opcional. Escritura, RUSH y el refuerzo de puntos débiles tienen su propia selección. Los cambios se aplican a la próxima ronda; una ronda activa conserva su selección inicial."
 }

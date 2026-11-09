@@ -1,3 +1,5 @@
+import {VocabularyStudyAnswer} from './vocabulary-study-answer';
+import {vocabularyReadingVariants} from '../../core/services/vocabulary-form-readings';
 import {VocabularyLessonSummary} from '../vocabulary/components/vocabulary-lesson-summary';
 import * as studyCopy from '../../../assets/i18n/deck-study.generated';
 import {runStudyShortcut} from '../../shared/keyboard/study-shortcuts';
@@ -9,7 +11,8 @@ import {ModalFocusDirective} from '../../shared/directives/modal-focus.directive
 import { StudyTimer } from '../../shared/components/study-timer/study-timer';
 import {vocabularyRomaji} from '../../core/services/vocabulary-romaji';
 import { ChangeDetectionStrategy,Component,DestroyRef,inject,signal } from '@angular/core';import { Router } from '@angular/router';import { VocabularyEntry,VocabularyQuestionType } from '../../core/models/vocabulary.model';import { VOCABULARY_N5 } from '../../data/vocabulary-n5.generated';import { TranslationService } from '../../core/services/translation.service';import { DailyLearningService } from '../../core/services/daily-learning.service';import { VocabularyProgressService } from '../../core/services/vocabulary-progress.service';import { VocabularySessionService } from '../../core/services/vocabulary-session.service';import { MedalBadge } from '../../shared/components/medal-badge/medal-badge';import { FuriganaText } from '../../shared/components/furigana-text/furigana-text';import { showFuriganaInOption,showFuriganaInPrompt } from '../../core/services/vocabulary-furigana-visibility';
-@Component({selector:'app-vocabulary-play-page',imports:[VocabularyLessonSummary,StudyTimer,MedalBadge,FuriganaText,ModalFocusDirective,LearningSessionList],templateUrl:'./vocabulary-play.page.html',styleUrl:'./vocabulary-play.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'handleKey($event)' }})export class VocabularyPlayPage{
+@Component({selector:'app-vocabulary-play-page',imports:[VocabularyStudyAnswer,VocabularyLessonSummary,StudyTimer,MedalBadge,FuriganaText,ModalFocusDirective,LearningSessionList],templateUrl:'./vocabulary-play.page.html',styleUrl:'./vocabulary-play.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'handleKey($event)' }})export class VocabularyPlayPage{
+  readonly readingVariants=vocabularyReadingVariants;
   readonly ratings=['again','hard','good'] as const;
   readonly studiedContent=computed<StudiedSessionContent>(()=>({kind:'vocabulary',entries:studiedSessionEntries(this.learning.session(),VOCABULARY_N5,unit=>unit.entryId),notes:this.learning.isPractice()?undefined:Object.fromEntries((this.learning.session()?.units??[]).flatMap(u=>{const item=this.learning.session()?.items.find(i=>i.studyKey===u.key);return item?.initialRating?[[u.entryId,this.i18n.t('vocabulary.daily.consolidation.wordResult',{rating:this.i18n.t(item.initialRating==='again'?'learn.no':item.initialRating==='hard'?'learn.almost':'learn.yes'),count:item.attempts})]]:[];}))}));
   private readonly rushPool=inject(VocabularySessionRush);
