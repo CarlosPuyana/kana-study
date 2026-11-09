@@ -10,10 +10,11 @@
     <div class="mix-actions">
       <button type="button" (click)="selectAll()" [disabled]="selection.count()===categories.length">{{i18n.t('conjugations.selectAll')}}</button>
       <button type="button" (click)="clear()" [disabled]="!selection.count()">{{i18n.t('conjugations.clear')}}</button>
-      <button class="primary" type="button" (click)="requestPractice()" [disabled]="!selection.count()" aria-describedby="phase-note">{{i18n.t('conjugations.practiceMix')}}</button>
+      <button class="primary" type="button" (click)="requestPractice()" [disabled]="!selection.count()" aria-describedby="phase-note">{{i18n.t('conjugations.practiceMixReady')}}</button>
     </div>
     @if(selection.saveError()){<p class="save-error" role="alert">{{i18n.t('conjugations.saveError')}}</p>}
     <p class="practice-status" role="status" aria-live="polite" aria-atomic="true">{{notice()}}</p>
+    @if(pendingCategories().length&&availableRequest().length){<button class="available-only" type="button" (click)="practiceAvailable()">{{i18n.t('conjugations.practiceAvailable')}}</button>}
   </section>
 
   <fieldset class="filters"><legend>{{i18n.t('conjugations.filters')}}</legend>
@@ -22,16 +23,16 @@
   <p class="level-note">{{i18n.t('conjugations.levelHint')}}</p>
   <section class="category-grid" [attr.aria-label]="i18n.t('conjugations.catalog')">
     @for(category of visible();track category.id){
-      <article class="category-card" [class.selected]="selected(category.id)" [attr.data-category-id]="category.id">
-        <div class="card-heading"><div><h2>{{i18n.t(category.titleKey)}}</h2><span class="japanese" lang="ja">{{category.japanese}}</span></div>
+      <article class="category-card" [class.selected]="selected(category.id)" [class.unavailable]="category.availability!=='available'" [attr.data-category-id]="category.id">
+        <div class="card-heading"><div><h2>@if(category.availability==='available'){<button class="card-open" type="button" (click)="requestPractice(category.id)" [attr.aria-label]="i18n.t('conjugations.practiceSingleReady')+': '+i18n.t(category.titleKey)">{{i18n.t(category.titleKey)}}</button>}@else{ {{i18n.t(category.titleKey)}} }</h2><span class="japanese" lang="ja">{{category.japanese}}</span></div>
           <label class="check-label"><input type="checkbox" [checked]="selected(category.id)" (change)="toggle(category.id,$event)" [attr.aria-label]="i18n.t('conjugations.select',{name:i18n.t(category.titleKey)})"/><span>{{i18n.t('conjugations.mixLabel')}}</span></label>
         </div>
+        @if(category.availability!=='available'){<span class="availability"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>{{i18n.t('conjugations.comingSoon')}}</span>}
         @if(category.example?.result){<p class="description"><span>{{i18n.t('conjugations.example')}}: </span><span lang="ja">{{category.example!.base}} → {{category.example!.result}}</span></p>}
         @else{<p class="description">{{i18n.t(category.descriptionKey)}}</p>}
         <div class="tags"><span>{{i18n.t('conjugations.group.'+category.group)}}</span><span>{{i18n.t('conjugations.difficulty.'+category.difficulty)}}</span></div>
         @if(category.example && !category.example.result){<p class="example"><span>{{i18n.t('conjugations.example')}}: </span><span lang="ja">{{category.example.base}}</span></p>}
-        <dl class="indicators"><div><dt>{{i18n.t('conjugations.words')}}</dt><dd>{{i18n.t('conjugations.pending')}}</dd></div><div><dt>{{i18n.t('conjugations.streak')}}</dt><dd>{{i18n.t('conjugations.pending')}}</dd></div></dl>
-        <button class="individual" type="button" (click)="requestPractice(category.id)" aria-describedby="phase-note">{{i18n.t('conjugations.practiceSingle')}}</button>
+        <dl class="indicators"><div><dt>{{i18n.t('conjugations.words')}}</dt><dd>{{category.wordCount??i18n.t('conjugations.pending')}}</dd></div><div><dt>{{i18n.t('conjugations.streak')}}</dt><dd>{{best(category.id)??i18n.t('conjugations.pending')}}</dd></div></dl>
         @if(requestedId()===category.id){<p class="description" aria-hidden="true">{{notice()}}</p>}
       </article>
     }

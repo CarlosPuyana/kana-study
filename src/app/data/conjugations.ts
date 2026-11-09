@@ -230,7 +230,8 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 16,
     "descriptionKey": "conjugations.category.adjective-i.description",
-    "availability": "planned",
+    "availability": "available",
+    "wordCount": 15,
     "ruleFamily": "adjective-i",
     "example": {
       "base": "高い"
@@ -266,7 +267,8 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 19,
     "descriptionKey": "conjugations.category.adjective-na.description",
-    "availability": "planned",
+    "availability": "available",
+    "wordCount": 10,
     "ruleFamily": "adjective-na",
     "example": {
       "base": "静か"

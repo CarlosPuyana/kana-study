@@ -1,5 +1,8 @@
 # Conjugaciones — fase 1
 
+Continuación: [entrenador de adjetivos, fase 2](CONJUGATIONS_ADJECTIVES_PHASE_2.md).
+El contenido siguiente conserva el alcance y los resultados históricos de la fase 1.
+
 Estado local, 9 de noviembre de 2026. Base de trabajo: `426f33bf52d9740a28884f0b7b43381abc29cea5`.
 Sin commit, push, despliegue, SQL ni cuentas remotas. Esta entrega prepara el catálogo y
 su selección; no implementa ejercicios ni modifica los sistemas de aprendizaje existentes.

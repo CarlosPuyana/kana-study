@@ -18,7 +18,8 @@ export interface ConjugationCategory {
   readonly difficulty:ConjugationDifficulty;
   readonly order:number;
   readonly descriptionKey:string;
-  readonly availability:'planned';
+  readonly availability:'planned'|'available';
+  readonly wordCount?:number;
   readonly ruleFamily:ConjugationRuleFamily;
   readonly example?:{readonly base:string;readonly result?:string};
 }
@@ -26,7 +27,7 @@ export interface ConjugationSelection {
   readonly version:1;
   readonly categoryIds:readonly ConjugationCategoryId[];
 }
-/** Request contract only. Phase 1 never creates or runs an exercise session. */
+/** Selection request; only available categories may start a practice. */
 export interface ConjugationPracticeIntent {
   readonly mode:'single'|'mixed';
   readonly categoryIds:readonly ConjugationCategoryId[];

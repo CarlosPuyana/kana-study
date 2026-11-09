@@ -5,9 +5,10 @@ test('native module navigation, catalog, geometry and coming-soon actions never 
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('./#/more');
  await page.locator('app-module-card a[href="#/conjugations"]').click();await expect(page.locator('app-conjugations-page h1')).toBeVisible();
  await expect(page.locator('.category-card')).toHaveCount(20);await expect(page.locator('.indicators dd')).toHaveCount(40);
- const pending=language(info.project.name)==='en'?'Pending':language(info.project.name)==='ca'?'Pendent':'Pendiente';expect(await page.locator('.indicators dd').allTextContents()).toEqual(Array(40).fill(pending));
+ expect(await page.locator('.category-card').evaluateAll(cards=>cards.slice(0,2).map(card=>card.getAttribute('data-category-id')))).toEqual(['adjective-i','adjective-na']);
+ const pending=language(info.project.name)==='en'?'Pending':language(info.project.name)==='ca'?'Pendent':'Pendiente';expect((await page.locator('.indicators dd').allTextContents()).filter(s=>s===pending)).toHaveLength(36);await expect(page.locator('[data-category-id="adjective-i"] dd').first()).toHaveText('15');await expect(page.locator('[data-category-id="adjective-na"] dd').first()).toHaveText('10');
  await expect(page.locator('.mix button.primary')).toBeDisabled();const before=await protectedState(page);
- await page.locator('.category-card').last().locator('.individual').click();await expect(page.locator('.practice-status')).not.toBeEmpty();await expect(page.locator('.category-card input:checked')).toHaveCount(0);
+ await expect(page.locator('.unavailable .availability')).toHaveCount(18);await expect(page.locator('.card-open')).toHaveCount(2);await page.locator('.category-card.unavailable').last().click();await expect(page.locator('.practice-status')).toBeEmpty();await expect(page.locator('.category-card input:checked')).toHaveCount(0);
  await expect(page).toHaveURL(/#\/conjugations$/);expect(await protectedState(page)).toEqual(before);
  await page.evaluate(()=>scrollTo(0,0));const measured=await geometry(page);expect(measured.scrollWidth).toBeLessThanOrEqual(measured.width+1);
  if(measured.width>=900){expect(measured.cards[1].top).toBeCloseTo(measured.cards[0].top,0);expect(measured.cards[1].left).toBeGreaterThan(measured.cards[0].right);}
