@@ -226,7 +226,28 @@ Ronda única diaria, cuatro apariciones, refuerzo posicional, RUSH sin FSRS y tr
 
 No se recomienda cambiar el motor FSRS, reprogramar históricos o ampliar catálogo como primera entrega.
 
-## 13. Roadmap propuesto, no implementado
+## 13. Roadmap original y cierre de K4
+
+Actualización 10/11/2026: K0–K3 están cerrados. En la ejecución aprobada,
+K2 corresponde a vocabulario contextual y K3 a interfaz compacta; la tabla
+inferior conserva los nombres de la propuesta original.
+
+K4 añade `/kanji/stats`, enlazado desde Kanji. La proyección es de solo lectura:
+estado FSRS de 80 caracteres (ambas direcciones), disponibilidad de la selección
+actual, valoraciones por día/dirección, precisión objetiva verificable, cinco
+kanjis difíciles con al menos tres revisiones y enlace a su ficha, actividad
+diaria y cinco rondas recientes. Filtros de 7/30/90 días, calendario de Madrid.
+Las revisiones normales son la fuente de valoraciones; los intentos detallados
+se vinculan por sesión, carácter, dirección e instante de la primera respuesta.
+No se mezclan refuerzos, práctica voluntaria, Escritura ni RUSH. Los resúmenes
+aportan tiempo registrado; los tiempos ausentes y las modalidades/aciertos
+antiguos sin detalle permanecen desconocidos. No hay reconstrucción ni nuevos
+eventos, estados, escrituras o reglas de estudio.
+
+Validación de K4: 19 tests dirigidos y 12 casos de navegador correctos; suite
+global ejecutada y dos contratos de navegación actualizados, verificados con
+9/9 tests dirigidos. Sin fallos pendientes en los 256 archivos comprobados.
+Build generado y carga diferida verificada: 748132 bytes iniciales (<750000).
 
 | Fase | Objetivo / módulos | Dependencias y pruebas | Riesgos / aceptación |
 | --- | --- | --- | --- |

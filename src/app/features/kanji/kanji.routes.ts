@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const KANJI_ROUTES: Routes = [
+  { path: 'stats', data: {titleKey: 'stats.title'}, loadComponent: () => import('../kanji-stats/kanji-stats.page').then(module => module.KanjiStatsPage) },
   { path: '', data: {titleKey: 'kanji.title'}, loadComponent: () => import('./kanji.page').then(module => module.KanjiPage) },
   { path: 'selection', data: {titleKey: 'kanji.selection.title'}, loadComponent: () => import('../kanji-selection/kanji-selection.page').then(module => module.KanjiSelectionPage) },
   { path: 'play', data: {titleKey: 'kanji.learn'}, loadComponent: () => import('../kanji-play/kanji-play.page').then(module => module.KanjiPlayPage) },

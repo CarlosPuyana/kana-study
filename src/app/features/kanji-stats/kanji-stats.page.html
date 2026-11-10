@@ -1,0 +1,84 @@
+<main class="stats-shell">
+  <app-page-header titleKey="stats.title" backRoute="/kanji"/>
+  <h1>{{i18n.t('kanji.stats.title')}}</h1>
+  <section aria-labelledby="catalog-title">
+    <h2 id="catalog-title">{{i18n.t('kanji.stats.catalog')}}</h2>
+    <p class="note">{{i18n.t('kanji.stats.catalogScope')}}</p>
+    <div class="state-bars" data-testid="catalog-states">
+      <app-progress-bar [label]="i18n.t('home.new')" [value]="overview().new" [total]="overview().total" kind="new"/>
+      <app-progress-bar [label]="i18n.t('kanji.stats.learning')" [value]="overview().learning" [total]="overview().total" kind="pending"/>
+      <app-progress-bar [label]="i18n.t('kanji.stats.review')" [value]="overview().review" [total]="overview().total" kind="memorized"/>
+    </div>
+    <h3>{{i18n.t('kanji.stats.selectedDue')}}</h3>
+    <app-kanji-availability-notice/>
+  </section>
+  <div class="filters">
+    <label>{{i18n.t('statsV2.period')}}<select [value]="period()" (change)="setPeriod($event)">
+      @for(days of [7,30,90];track days){<option [value]="days">{{i18n.t('stats.lastDays',{count:days})}}</option>}
+    </select></label>
+    <button type="button" (click)="refresh()">{{i18n.t('kanji.stats.refresh')}}</button>
+  </div>
+  <section aria-labelledby="history-title" [attr.aria-busy]="loading()">
+    <h2 id="history-title">{{i18n.t('kanji.stats.history')}}</h2>
+    <p class="note">{{i18n.t('kanji.stats.historyScope')}}</p>
+    @if(loading()){<p role="status">{{i18n.t('statsV2.loading')}}</p>}
+    @else if(error()){<p role="alert">{{i18n.t('statsV2.error')}}</p>}
+    @else if(history();as h){
+      @if(!h.total.reviews){<p data-testid="empty-history">{{i18n.t('statsV2.empty')}}</p>}
+      <dl class="metrics">
+        <div><dt>{{i18n.t('kanji.stats.reviews')}}</dt><dd data-testid="normal-reviews">{{h.total.reviews}}</dd></div>
+        <div><dt>{{i18n.t('statsV2.accuracy')}}</dt><dd data-testid="accuracy">{{percent(accuracy())}}</dd></div>
+        <div><dt>{{i18n.t('stats.successes')}} / {{i18n.t('stats.failures')}}</dt><dd>{{h.measured.correct}} / {{h.measured.objective-h.measured.correct}}</dd></div>
+      </dl>
+      <p>{{i18n.t('kanji.stats.measured',{count:h.measured.objective})}}</p>
+      <p>{{i18n.t('kanji.stats.ratings')}}: {{i18n.t('statsV2.again')}} {{h.total.again}} · {{i18n.t('statsV2.hard')}} {{h.total.hard}} · {{i18n.t('statsV2.good')}} {{h.total.good}}</p>
+      @if(h.unclassified){<p class="note">{{i18n.t('kanji.stats.unclassified',{count:h.unclassified})}}</p>}
+      @if(h.measured.objective){<app-attempt-history-chart [days]="h.days" [accuracy]="true"/>}
+      <details><summary>{{i18n.t('kanji.stats.dailyRatings')}}</summary><div class="table-scroll" tabindex="0" [attr.aria-label]="i18n.t('kanji.stats.dailyRatings')">
+        <table><thead><tr><th scope="col">{{i18n.t('statsV2.day')}}</th><th scope="col">{{i18n.t('kanji.stats.reviews')}}</th><th scope="col">{{i18n.t('statsV2.again')}}</th><th scope="col">{{i18n.t('statsV2.hard')}}</th><th scope="col">{{i18n.t('statsV2.good')}}</th></tr></thead>
+          <tbody>@for(day of h.ratingsByDay;track day.day){<tr><th scope="row">{{day.day}}</th><td>{{day.reviews}}</td><td>{{day.again}}</td><td>{{day.hard}}</td><td>{{day.good}}</td></tr>}</tbody>
+        </table>
+      </div></details>
+      <h3>{{i18n.t('kanji.stats.directions')}}</h3>
+      <p class="note">{{i18n.t('kanji.stats.directionScope')}}</p>
+      <div class="directions">
+        @for(row of overview().directions;track row.type){
+          <article><h4>{{i18n.t('kanji.questionType.'+row.type)}}</h4>
+            <p>{{i18n.t('home.new')}}: {{row.new}} · {{i18n.t('kanji.stats.learning')}}: {{row.learning}} · {{i18n.t('kanji.stats.review')}}: {{row.review}}</p>
+            @let recorded=h.directions[$index];
+            <p>{{i18n.t('kanji.stats.reviews')}}: {{recorded.reviews}}</p>
+            <p>{{i18n.t('statsV2.again')}} {{recorded.again}} · {{i18n.t('statsV2.hard')}} {{recorded.hard}} · {{i18n.t('statsV2.good')}} {{recorded.good}}</p>
+            <p>{{i18n.t('statsV2.accuracy')}}: {{percent(accuracyOf(recorded.measured))}} · {{i18n.t('statsV2.sample',{count:recorded.measured.objective})}}</p>
+          </article>
+        }
+      </div>
+      <h3>{{i18n.t('kanji.stats.difficult')}}</h3>
+      <p class="note">{{i18n.t('kanji.stats.difficultScope')}}</p>
+      <ol class="difficult">
+        @for(item of h.difficult;track item.kanji.id){
+          <li><a routerLink="/kanji/all" [queryParams]="{selected:item.kanji.id,return:'/kanji/stats'}"><strong lang="ja">{{item.kanji.character}}</strong><span>{{item.kanji.meanings[i18n.language()].join(' · ')}}</span></a>
+            <small>{{i18n.t('kanji.stats.reviews')}}: {{item.reviews}} · {{i18n.t('statsV2.again')}} {{item.again}} · {{i18n.t('statsV2.hard')}} {{item.hard}}</small>
+          </li>
+        }@empty{<li>{{i18n.t('stats.insufficient')}}</li>}
+      </ol>
+    }
+  </section>
+  <section aria-labelledby="activity-title">
+    <h2 id="activity-title">{{i18n.t('kanji.stats.activity')}}</h2>
+    <p class="note">{{i18n.t('kanji.stats.timeScope')}}</p>
+    <dl class="metrics">
+      <div><dt>{{i18n.t('kanji.stats.today')}}</dt><dd>{{activity().today}}</dd></div>
+      <div><dt>{{i18n.t('stats.sessions')}}</dt><dd>{{activity().sessions}}</dd></div>
+      <div><dt>{{i18n.t('kanji.stats.recordedTime')}}</dt><dd>{{duration(activity().seconds)}}</dd></div>
+    </dl>
+    <p class="note">{{i18n.t('kanji.stats.timeCoverage',{known:activity().measured,total:activity().sessions})}}</p>
+    <h3>{{i18n.t('stats.recent')}}</h3>
+    <ol class="recent">
+      @for(session of activity().recent;track session.sessionId){
+        <li><time [attr.datetime]="session.completedAt">{{date(session.completedAt)}}</time>
+          <span>{{i18n.t(session.mode==='quick-practice'?'learn.multipleChoice':'learn.selfAssessment')}} · {{i18n.t('learn.exerciseCount',{count:session.exercisesCompleted})}} · {{duration(session.seconds)}}</span>
+        </li>
+      }@empty{<li>{{i18n.t('stats.noRecent')}}</li>}
+    </ol>
+  </section>
+</main>

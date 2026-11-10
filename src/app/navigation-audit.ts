@@ -28,6 +28,7 @@ export const NAVIGATION_AUDIT:readonly RouteAuditEntry[]=[
   {route:'flags/countries',entryPoint:'Flags Explore countries',type:'ui'},
   {route:'flags/medals',entryPoint:'Flags medals',type:'ui'},
   {route:'kanji',entryPoint:'More Kanji',type:'ui'},
+  {route:'kanji/stats',entryPoint:'Kanji Explore statistics',type:'ui'},
   {route:'kanji/selection',entryPoint:'Kanji selection button / Explore',type:'ui'},
   {route:'kanji/play',entryPoint:'Kanji Learn start panel',type:'ui'},
   {route:'kanji/all',entryPoint:'Kanji Explore all',type:'ui'},
