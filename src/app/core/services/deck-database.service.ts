@@ -51,12 +51,17 @@ export class DeckDatabaseService {
   }
 
   async writeDailyState(state: DeckDailyState): Promise<void> {
-    const workspace = this.workspace.active();
-    const db = await this.database(workspace);
-    const transaction = db.transaction(DAILY_STORE, 'readwrite');
-    transaction.objectStore(DAILY_STORE).put(state);
-    await transactionDone(transaction);
-    await this.enqueue(workspace, 'deck-daily-state', `${state.deckId}:${state.localDate}`, state);
+    const workspace=this.workspace.active(),epoch=this.workspace.activationRevision();
+    const assertOwner=()=>{if(workspace!==this.workspace.active()||epoch!==this.workspace.activationRevision())throw new Error('Deck workspace changed');};
+    const db=await this.database(workspace);assertOwner();
+    const transaction=db.transaction(DAILY_STORE,'readwrite'),done=transactionDone(transaction);
+    try{
+      const stored=await requestResult<DeckDailyState|undefined>(transaction.objectStore(DAILY_STORE).get([state.deckId,state.localDate]));assertOwner();
+      state={...state,introducedEntryIds:stored?.introducedEntryIds??state.introducedEntryIds,completedAt:stored?.completedAt??(state.completedAt===undefined?stored?.completedAt:state.completedAt)};
+      transaction.objectStore(DAILY_STORE).put(state);
+    }catch(error){try{transaction.abort();}catch{}await done.catch(()=>{});throw error;}
+    await done;
+    await this.enqueue(workspace,'deck-daily-state',`${state.deckId}:${state.localDate}`,state);
   }
 
   async commitReview(progress: DeckCardProgress, event: DeckReviewEvent, dailyState: DeckDailyState,newCardLimit?:number): Promise<void> {
@@ -73,6 +78,7 @@ export class DeckDatabaseService {
         if(JSON.stringify(previous)!==JSON.stringify(event))throw new Error('Deck receipt conflict');
         publishedProgress=current??null;publishedDaily=currentDaily??dailyState;
       }else{
+        if(currentDaily?.completedAt!=null)throw new Error('Deck session is closed');
         if(JSON.stringify(current?.card??null)!==JSON.stringify(event.cardBefore))throw new Error('Deck card changed during review');
         if((event.cardBefore===null||event.cardBefore.state===0)&&newCardLimit!==undefined&&!currentDaily?.introducedEntryIds.includes(event.entryId)
           &&new Set(currentDaily?.introducedEntryIds??[]).size>=(currentDaily?.newLimitOverride??newCardLimit))throw new Error('Daily new-card limit reached');
@@ -104,7 +110,7 @@ export class DeckDatabaseService {
         publishedProgress=event.cardBefore?{deckId:event.deckId,entryId:event.entryId,due:event.cardBefore.due,state:event.cardBefore.state,card:event.cardBefore}:null;
         if(publishedProgress)transaction.objectStore(PROGRESS_STORE).put(publishedProgress);else transaction.objectStore(PROGRESS_STORE).delete([event.deckId,event.entryId]);
         transaction.objectStore(EVENTS_STORE).delete(event.id);
-        publishedDaily={...publishedDaily,...(dailyState.completedAt===null?{completedAt:null}:{}),introducedEntryIds:(event.cardBefore===null||event.cardBefore.state===0)?publishedDaily.introducedEntryIds.filter(id=>id!==event.entryId):publishedDaily.introducedEntryIds};
+        publishedDaily={...publishedDaily,introducedEntryIds:(event.cardBefore===null||event.cardBefore.state===0)?publishedDaily.introducedEntryIds.filter(id=>id!==event.entryId):publishedDaily.introducedEntryIds};
         transaction.objectStore(DAILY_STORE).put(publishedDaily);changed=true;
       }
     }catch(error){try{transaction.abort();}catch{}await done.catch(()=>{});throw error;}

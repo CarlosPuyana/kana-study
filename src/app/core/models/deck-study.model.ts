@@ -75,6 +75,7 @@ export interface DeckEntryIndexItem {
 export interface DeckStudyCounts {
   readonly newLimitOverride?: number | null;
   readonly introductionsClosed?: boolean;
+  readonly startedToday?: boolean;
   readonly nextRefreshAt?: number | null;
   /** Legacy presentation field: today's short steps are now included in learningDue. */
   readonly learningPending?: number;

@@ -86,6 +86,14 @@ describe('AnkiStudyPage', () => {
     expect(fixture.nativeElement.textContent).not.toContain('Yo soy Ann.');
   });
 
+  it('a failed voluntary close retries the same Madrid session day even after midnight',async()=>{
+    vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date('2026-11-10T22:59:00Z'));
+    const complete=vi.spyOn(study,'completeSession').mockRejectedValueOnce(Error('full'));
+    await fixture.componentInstance.finishToday();expect(fixture.componentInstance.pendingFinish()).toBe(true);
+    vi.setSystemTime(new Date('2026-11-10T23:01:00Z'));await fixture.componentInstance.finishToday();
+    expect(complete.mock.calls[0][2]).toEqual(new Date('2026-11-10T22:59:00Z'));expect(complete.mock.calls[1][2]).toEqual(complete.mock.calls[0][2]);expect(study.ratings).toEqual([]);
+  });
+
   it('keeps translation folded until requested', () => {
     fixture.componentInstance.reveal(); fixture.detectChanges();
     expect(fixture.nativeElement.textContent).not.toContain('Yo soy Ann.');
@@ -160,15 +168,10 @@ describe('AnkiStudyPage', () => {
     expect(study.completed).toBe(0);
   });
 
-  it('refreshes counts on foreground without replacing the active card or frozen preview', async () => {
-    fixture.componentInstance.reveal();const choice=fixture.componentInstance.choice(),preview=fixture.componentInstance.preview();
-    Object.assign(study.snapshotValue,{completedToday:true});
+  it('a closure observed on foreground invalidates the active question and blocks further ratings',async()=>{
+    const page=fixture.componentInstance;page.reveal();Object.assign(study.snapshotValue,{completedToday:true});
     window.dispatchEvent(new Event('focus'));await fixture.whenStable();
-    expect(fixture.componentInstance.choice()).toBe(choice);expect(fixture.componentInstance.preview()).toBe(preview);expect(fixture.componentInstance.revealed()).toBe(true);
-    expect(fixture.componentInstance.snapshot()?.completedToday).toBe(true);
-    Object.assign(study.snapshotValue,{completedToday:false});
-    document.dispatchEvent(new Event('visibilitychange'));await fixture.whenStable();
-    expect(fixture.componentInstance.choice()).toBe(choice);expect(fixture.componentInstance.snapshot()?.completedToday).toBe(false);
+    expect(page.choice()).toBeNull();expect(page.preview()).toBeNull();await page.rate('good');expect(study.ratings).toEqual([]);
   });
   it('shows the capped credited total, keeps focus on the same allowance and subtracts undo once',async()=>{
     const page=fixture.componentInstance;page.clock.attach();monotonic=4000;
@@ -208,27 +211,17 @@ describe('AnkiStudyPage', () => {
     expect(page.clock.committedSeconds).toBe(4);
   });
 
-  it('refreshes a waiting queue at its boundary without crediting wait, then cleans its timer',async()=>{
-    const now=new Date('2026-10-28T10:00:00Z');
+  it('a closed session wakes at Madrid midnight, credits no wait and cleans its timer',async()=>{
+    const now=new Date('2026-10-28T22:59:59Z'),boundary=now.getTime()+1000;
     fixture.destroy();vi.useFakeTimers({toFake:['Date','setInterval','clearInterval','setTimeout','clearTimeout']});vi.setSystemTime(now);
-    Object.assign(study.snapshotValue,{nextRefreshAt:now.getTime()+1000,learningPending:1});
-    Object.assign(study.snapshotValue,{nextDue:now.getTime()+21*60_000});
-    const choose=vi.spyOn(study,'chooseNext').mockReturnValueOnce({choice:null,cursor:{debt:0}});
-    fixture=TestBed.createComponent(AnkiStudyPage);fixture.detectChanges();await vi.advanceTimersByTimeAsync(0);TestBed.tick();fixture.detectChanges();
-    const page=fixture.componentInstance,read=vi.spyOn(study,'snapshot').mockImplementation(async()=>({...study.snapshotValue,nextRefreshAt:Date.now()+100000}));
-    expect(page.choice()).toBeNull();expect(study.completed).toBe(0);
-    expect(fixture.nativeElement.textContent).toContain('anki.scheduler.nextDueAt');
-    monotonic+=60000;
-    await vi.advanceTimersByTimeAsync(1000);await vi.advanceTimersByTimeAsync(0);TestBed.tick();fixture.detectChanges();
-    Object.assign(study.snapshotValue,{nextRefreshAt:Date.now()+100000});
-    expect(read).toHaveBeenCalled();expect(page.choice()).not.toBeNull();expect(page.clock.committedSeconds).toBe(0);
-    expect(choose).toHaveBeenCalledTimes(2);
-    page.reveal();const choice=page.choice(),preview=page.preview();read.mockClear();
-    Object.assign(study.snapshotValue,{nextRefreshAt:Date.now()+1000});
-    await vi.advanceTimersByTimeAsync(1000);await vi.advanceTimersByTimeAsync(0);TestBed.tick();
-    expect(page.choice()).toBe(choice);expect(page.preview()).toBe(preview);expect(page.revealed()).toBe(true);
-    fixture.destroy();const calls=read.mock.calls.length;await vi.advanceTimersByTimeAsync(3000);
-    expect(read).toHaveBeenCalledTimes(calls);
+    Object.assign(study.snapshotValue,{completedToday:true,newAvailable:0,nextDue:boundary,nextRefreshAt:boundary});
+    const choose=vi.spyOn(study,'chooseNext');fixture=TestBed.createComponent(AnkiStudyPage);fixture.detectChanges();await vi.advanceTimersByTimeAsync(0);TestBed.tick();fixture.detectChanges();
+    const page=fixture.componentInstance;expect(page.choice()).toBeNull();expect(choose).not.toHaveBeenCalled();
+    const read=vi.spyOn(study,'snapshot').mockImplementation(async()=>({...study.snapshotValue,completedToday:Date.now()<boundary,newAvailable:1,nextRefreshAt:Date.now()+100000}));
+    monotonic+=60000;await vi.advanceTimersByTimeAsync(1000);await vi.advanceTimersByTimeAsync(0);TestBed.tick();fixture.detectChanges();
+    expect(read).toHaveBeenCalled();expect(page.choice()).not.toBeNull();expect(page.clock.committedSeconds).toBe(0);expect(choose).toHaveBeenCalledTimes(1);
+    page.reveal();const choice=page.choice(),preview=page.preview();window.dispatchEvent(new Event('focus'));await vi.advanceTimersByTimeAsync(0);TestBed.tick();expect(page.choice()).toBe(choice);expect(page.preview()).toBe(preview);
+    fixture.destroy();const calls=read.mock.calls.length;await vi.advanceTimersByTimeAsync(3000);expect(read).toHaveBeenCalledTimes(calls);
   });
 
 });
@@ -247,5 +240,6 @@ class StudyStub {
   preview() { const base = { due: Date.now(), stability: 0, difficulty: 0, elapsedDays: 0, scheduledDays: 0, learningSteps: 0, reps: 0, lapses: 0, state: State.New, lastReview: null }; const log = { rating: Rating.Again, state: State.New, due: Date.now(), stability: 0, difficulty: 0, elapsedDays: 0, lastElapsedDays: 0, scheduledDays: 0, learningSteps: 0, review: Date.now() }; return { generatedAt: Date.now(), desiredRetention: 0.9, cardBefore: base, retrievabilityBefore: null, again: { card: { ...base, due: Date.now() + 60_000 }, log }, good: { card: { ...base, due: Date.now() + 10 * 60_000 }, log: { ...log, rating: Rating.Good } } }; }
   async rate(_deck: unknown, _choice: unknown, _preview: unknown, rating: string, elapsedAnswerMs: number) { this.ratings.push(rating); this.times.push(elapsedAnswerMs); return this.ratingPromise ?? {...this.event,elapsedAnswerMs}; }
   async undo() {}
-  async completeSession() { this.completed++;Object.assign(this.snapshotValue,{completedToday:true,newEntries:[],newAvailable:0}); }
+  async startSession() {}
+  async completeSession(_deck?:unknown,_index?:unknown,_at?:Date,_force?:boolean) { this.completed++;Object.assign(this.snapshotValue,{completedToday:true,newEntries:[],newAvailable:0}); }
 }

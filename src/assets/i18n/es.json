@@ -12257,7 +12257,7 @@
   "anki.scheduler.title": "Cómo se programan las tarjetas",
   "anki.scheduler.learning": "Aprendizaje: Otra vez vuelve al primer paso; Bien avanza. Al terminar los pasos, FSRS programa el siguiente repaso.",
   "anki.scheduler.relearning": "Al olvidar una tarjeta de repaso, comienza el reaprendizaje. Al terminar sus pasos, FSRS programa el siguiente repaso.",
-  "anki.scheduler.ahead": "Los pasos de aprendizaje y reaprendizaje vuelven a su hora. Los repasos se organizan por día de Madrid.",
+  "anki.scheduler.ahead": "Cuando no quedan otras tarjetas, los pasos cortos pueden adelantarse hasta 20 minutos. Los repasos siguen el día de Madrid.",
   "anki.scheduler.reviewDay": "Los repasos normales están disponibles desde el inicio de su día en Europe/Madrid, incluidos los atrasados.",
   "anki.scheduler.tomorrow": "Mañana",
   "anki.scheduler.advanced": "Tarjeta programada para hoy. La respuesta se registra ahora.",
@@ -12442,7 +12442,7 @@
   "anki.results.history.help.3": "Tras un olvido, vuelve a pasos cortos antes de retomar los repasos.",
   "localDeck.storageLink": "Personalizados: almacenamiento local · Información",
   "localDeck.storageTitle": "Almacenamiento y copias de Mazos",
-  "anki.day.queueHelp": "Los pasos de aprendizaje vuelven a su hora. No se adelantan repasos de días futuros.",
+  "anki.day.queueHelp": "Los pasos cortos pueden adelantarse hasta 20 minutos cuando no quedan otras tarjetas.",
   "anki.day.settings.today": "Nuevas de hoy",
   "anki.day.settings.effective": "Límite de hoy",
   "anki.day.settings.introduced": "Introducidas",
@@ -12776,5 +12776,11 @@
   "anki.day.state.1": "Aprendiendo",
   "anki.day.state.2": "Repasos",
   "anki.day.state.3": "Reaprendiendo",
-  "anki.day.previewChanged": "Ha cambiado el día. Revisa los intervalos actualizados y elige tu respuesta."
+  "anki.day.previewChanged": "Ha cambiado el día. Revisa los intervalos actualizados y elige tu respuesta.",
+  "anki.day.finishToday": "Terminar por hoy",
+  "anki.day.resume": "Reanudar sesión",
+  "anki.day.ahead": "Repaso adelantado para completar esta sesión.",
+  "anki.day.practiceAll": "RUSH · Practicar las palabras de hoy",
+  "anki.day.openSummary": "Ver resumen y RUSH",
+  "anki.day.nextSession": "Próxima sesión: {{date}} (Europe/Madrid)."
 }

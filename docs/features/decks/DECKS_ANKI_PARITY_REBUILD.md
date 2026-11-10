@@ -1,5 +1,7 @@
 # Mazos — reconstrucción del contrato Anki/FSRS
 
+Contrato vigente de Learn Ahead y sesión diaria: sección I. Las secciones anteriores conservan la auditoría de la reconstrucción.
+
 Trabajo local iniciado el 09/11/2026 sobre b334e69. El roadmap Kanji queda
 detenido y sus 30 archivos locales se conservan. Sin cuentas reales, SQL,
 commit, push ni despliegue. Validación cerrada el 10/11/2026; resultados y límites a continuación.
@@ -351,3 +353,139 @@ Inventario de esta entrega (excluye los archivos exclusivos previos de K1):
 - `src/assets/i18n/deck-study.generated.ts`
 - `src/assets/i18n/en.json`
 - `src/assets/i18n/es.json`
+
+
+## I. Actualización de producto: Learn Ahead y una sesión diaria (10/11/2026)
+
+Esta sección sustituye, para el contrato vigente, la espera obligatoria y la
+reapertura del mismo día descritas en B/C. El resto de la auditoría y sus resultados
+son históricos y se conservan. Base real de este encargo: `e4b549f`, árbol limpio.
+No se ha modificado Kanji K1, Conjugaciones, otros módulos, SQL ni gates.
+
+### Cola y transición
+
+Ventana fija predeterminada de 20 minutos, reutilizando `DECK_LEARNING_AHEAD_MS`.
+Primero Learning/Relearning ya vencidos; después Review y New según el orden y
+cuota configurados. **Solo si no queda trabajo ordinario** se toma el primer paso
+Learning/Relearning con due <= ahora + 20m. Desempate por due e ID. No hay
+separación posicional, adelanto de Review de otro día ni introducciones extra.
+
+La elección adelantada lleva contexto interno: añadir `advanced:true` manualmente
+no autoriza una respuesta. Antes de valorar se vuelve a comprobar la cola; si
+hay otro trabajo o ya no está dentro de ventana, se rechaza la selección antigua.
+Un recibo de reintento conserva la respuesta real original, como antes.
+
+Ejemplo: due 19:10 y respuesta a las 19:02. El log conserva 19:02, el snapshot previo
+conserva 19:10 y el scheduler calcula desde 19:02. No se simulan ocho minutos ni
+se cambia `lastReview` al vencimiento. Continúan Again=1, Good=3, pasos y matemática
+FSRS originales. Una tarjeta puede requerir más respuestas reales; no se gradúa
+por el hecho de haberla mostrado anticipadamente.
+
+Fuentes: [Preferencias de Anki](https://docs.ankiweb.net/manual/preferences),
+[opciones](https://docs.ankiweb.net/manual/deck-options),
+[cola intradiaria oficial 25.09.2](https://github.com/ankitects/anki/blob/25.09.2/rslib/src/scheduler/queue/learning.rs).
+`generate-anki-learn-ahead-reference.py` genera una colección temporal y fija
+learn_ahead_secs=1200 mediante la API oficial, sin SQL manual ni datos de usuarios.
+La fixture nueva conserva 12 escenarios (85/90/95): Learning primer paso a 19m,
+último paso a 8m, Relearning a 19m y exclusión a 21m. Se contrasta tanto si Anki la
+ofrece como ambas ramas de respuesta. Estados/pasos/minutos son exactos; memoria
+f32 y fuzz de días conservan las tolerancias explícitas de F. El backend sigue
+siendo Anki 25.9.2 y la librería de aplicación sigue en ts-fsrs 5.4.2.
+
+### Una sesión por mazo, workspace y día Madrid
+
+Se reutiliza `DeckDailyState`, sin campos nuevos ni migración de datos:
+
+- `completedAt` ausente: todavía no se abrió la sesión. `null`: sesión iniciada
+  durablemente y reanudable. Un timestamp: sesión cerrada hasta el siguiente día.
+- Abrir Aprender persiste el inicio. Salir no responde, no reinicia pasos y no
+  cierra la sesión; la portada ofrece **Reanudar sesión** si hay trabajo elegible.
+- El cierre automático ocurre al no quedar vencidas, nuevas permitidas ni pasos
+  adelantables. No se cierra por terminar un lote mientras exista ese trabajo.
+- **Terminar por hoy** cierra voluntariamente en cualquier pregunta, incluso con
+  cuota o pendientes. No valora la tarjeta mostrada ni modifica su memoria.
+- Un paso a más de 20m conserva el due exacto. Si se cierra hoy, no se ofrece al
+  vencer más tarde ese mismo día: estará disponible mañana si entonces está vencido.
+- La portada bloquea Aprender, muestra la fecha de **próxima sesión**, y mantiene
+  un acceso al resumen/RUSH. La fecha de sesión no se presenta como due de la tarjeta.
+- El resumen se reconstruye de los eventos canónicos ya persistidos y el cierre;
+  no hay otra copia de ratings ni otra fuente de estadísticas. RUSH no añade eventos
+  FSRS. Se puede practicar el conjunto de palabras estudiadas hoy o las difíciles.
+
+El límite de nuevas y la programación de memoria siguen siendo independientes.
+Cambiar cuotas, Ajustes o reabrir una ruta no elimina el cierre. Se honran también
+los marcadores numéricos históricos sin reescribirlos. Medianoche Europe/Madrid
+abre el registro del siguiente día; probados días DST de 23 y 25 horas y recarga.
+
+### Durabilidad, fallos, Deshacer y concurrencia local
+
+Los commits de review builtin/custom comprueban el cierre **dentro** de su
+transacción, no solo en la vista. Una respuesta antigua no puede atravesar un
+cierre ya confirmado. La escritura del diario conserva el primer cierre y los
+IDs introducidos actuales; iniciar de nuevo no lo sustituye por null. No se crean
+sesiones paralelas por doble clic. Las transacciones serializan cierre y review:
+si la revisión entra primero, queda incluida; si el cierre entra primero, se rechaza.
+
+Un fallo de cierre conserva pregunta y memoria, pausa el reloj y permite Reintentar.
+El reintento mantiene el día/instante original aun si cruza medianoche. Se comprueba
+propietario y revisión de activación durante la escritura del diario. A→B→A invalida
+el cierre pendiente. Una prueba de aislamiento que antes esperaba terminar una
+escritura antigua ahora exige su cancelación; conserva intacto el contrato de RUSH
+(captura de propietario), su outbox y los asserts de que B no recibe datos de A.
+
+Deshacer funciona mientras la sesión está abierta. Tras cerrar, el botón queda
+inactivo: no se usa para abrir una segunda sesión. Si una operación de undo llega
+por API interna, restaura el snapshot pero conserva el cierre; hay regresiones
+builtin/custom y backup. No se reescribe el journal histórico de versiones anteriores
+que sí hubieran reabierto un día: su replay mantiene sus registros originales.
+
+Límites: la sesión diaria es una regla **propia del producto**, no una regla universal
+de Anki. No garantiza exclusión distribuida entre dispositivos offline; no se ha
+introducido lease remoto ni cambiado SQL. Permanece la separación transaccional
+builtin/outbox descrita en C y la limitación de ajustes cloud de D. Se conservan
+las diferencias de fuzz, rollover, calendario UTC interno y opciones avanzadas de F.
+No se afirma paridad completa ni se han activado cloud/upload custom.
+
+### Validación específica de esta actualización
+
+| Comprobación | Resultado de esta actualización |
+|---|---|
+| Dirigidos de Mazos/backup/protocolo/RUSH | 354/354, 23 archivos |
+| Suite Angular | 2801/2801, 253 archivos; repetida correctamente tras los ajustes |
+| Referencias nuevas Anki | 12 casos oficiales de cola y ambas ramas; conserva también los 30 anteriores |
+| Navegador Learn Ahead/cierre | 24/24: tres mazos, ES/EN/CA, fallo de rating/cierre, recarga y workspace |
+| Navegador artefacto Pages | 33/33 en escritorio oscuro, 390 claro y 320 oscuro |
+| Regresión Manga × Mazos | 3/3; SDK/HTTP sintético, no Supabase Auth real |
+| TypeScript app/spec | Correctos |
+| FSRS | Auditoría 80 transiciones correcta; no se cambia su matemática |
+| i18n | Auditoría y 4/4 tests; 34 claves de sesión con placeholders ES/EN/CA sincronizados |
+| Builds Pages normal/candidato | Correctos; seis warnings SCSS previos |
+| Inicial normal/candidato | 748126 / 749012 bytes, estrictamente inferiores a 750000 |
+| Bundles/fronteras y git diff --check | Correctos; fixtures y código de desarrollo fuera del bundle |
+
+Se inspeccionan capturas claras/oscuras y 320 px. RUSH se coloca dentro del encabezado
+del resumen, preservando sus dos columnas. Solo se amplían el modelo de conteos,
+`deck-study.service.ts`, elegibilidad, guardado de diario/review builtin y custom,
+la página de estudio, DeckCard y ES/EN/CA con su dominio generado. Nuevos: generador
+Python, fixture oficial y `deck-learn-ahead.spec.ts`. Las otras modificaciones son
+pruebas afectadas y esta sección documental. No cambian catálogos, parámetros FSRS,
+providers de release, dependencias ni sincronización experimental.
+
+Edge Chromium instalado fue el navegador disponible. Safari/dispositivos físicos y
+Supabase Auth real no se han validado. El arnés Manga se ejecuta con la misma copia
+local que selecciona Edge y conserva sus aserciones; Firefox/WebKit no están instalados.
+Las comprobaciones de esta entrega no acceden a cuentas reales. HEAD permanece en
+`e4b549f4442ab249310105a96cb8869e60fa549f`, sin staging, commit, push ni despliegue.
+
+Los tests que exigían esperar pasos cortos, reabrir `completedAt` o usar Deshacer
+para romper el cierre se han sustituido por el contrato autorizado arriba. No se
+elimina cobertura: siguen comprobándose IDs, snapshots, due, memoria, secuencia de
+eventos y restauración exacta. Las fixtures de navegador inicializan ahora IndexedDB
+desde Tarjetas → Por Tiempo; abrir Aprender sin trabajo ya es una sesión que puede terminar y
+no debe utilizarse como simple inicializador de una base de prueba.
+
+Los controles nuevos tienen clases propias, separadas de `.undo`: se preserva el
+selector existente de Deshacer y se reutiliza su estilo sin rediseño. Los arneses
+esperan la carga real de Puyi tras reload. No hay sleeps, skips, only ni retries
+para ocultar fallos. Evidencias nuevas únicamente en `.cache/learn-ahead/`, capturas
+Playwright en los directorios existentes. No se incluyen builds/cachés en Git.

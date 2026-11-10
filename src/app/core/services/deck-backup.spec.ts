@@ -39,16 +39,15 @@ describe('RELEASE-MANGA-2A complete Guest backup',()=>{
   fresh();await service().restore(raw,true,signalFor());expect(await repo().guestInventory()).toEqual(original);
   TestBed.resetTestingModule();configure();expect(await repo().guestInventory()).toEqual(original);const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);expect(loaded.status).toBe('ready');await grade();expect(await repo().getDeckReviewEvents(fixture.deck.id)).toHaveLength(1);
  });
- it('backs up and restores resumed historical completion, graduation, undo and explicit reopening',async()=>{
+ it('backs up and restores persistent completion, graduation, undo and quota adjustment',async()=>{
   await seed();await grade();const study=TestBed.inject(DeckStudyService);
-  await repo().writeDailyState({deckId:fixture.deck.id,localDate:'2026-10-25',introducedEntryIds:[fixture.card.id],newLimitOverride:null,completedAt:now.getTime()});
   const event=await grade(1234,new Date(now.getTime()+600000));expect(event.stateAfter).toBe(2);await study.undo(event);
   const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(loaded.status!=='ready')throw Error('fixture');
   await repo().writeDailyState({deckId:fixture.deck.id,localDate:'2026-10-25',introducedEntryIds:[fixture.card.id],newLimitOverride:null,completedAt:now.getTime()});
   await study.adjustTodayNewLimit(loaded.value.deck,5,now);
   const original=await repo().guestInventory(),raw=await service().export(signalFor());
   fresh();await service().restore(raw,true,signalFor());expect(await repo().guestInventory()).toEqual(original);
-  expect((await repo().getDailyState(fixture.deck.id,'2026-10-25'))?.completedAt).toBeNull();
+  expect((await repo().getDailyState(fixture.deck.id,'2026-10-25'))?.completedAt).toBe(now.getTime());
   expect((await repo().getDeckProgress(fixture.deck.id))[0].state).toBe(1);
  });
  it('accepts historical undo journals that retained the completed marker without rewriting them',async()=>{
@@ -64,7 +63,7 @@ describe('RELEASE-MANGA-2A complete Guest backup',()=>{
   expect((await repo().getDailyState(fixture.deck.id,'2026-10-25'))?.completedAt).toBe(now.getTime());
   expect((await repo().guestInventory()).records['journal']).toEqual(data.records.journal);
   const resumed=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(resumed.status!=='ready')throw Error('fixture');
-  expect((await TestBed.inject(DeckStudyService).snapshot(resumed.value.deck,resumed.value.content.index,now)).completedToday).toBe(false);
+  expect((await TestBed.inject(DeckStudyService).snapshot(resumed.value.deck,resumed.value.content.index,now)).completedToday).toBe(true);
  });
  it.each([1,2,3])('validates exact serialized state %s without scheduling during backup',async state=>{
   await seed();await grade();const data=JSON.parse(await service().export(signalFor()));

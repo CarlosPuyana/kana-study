@@ -77,8 +77,7 @@ test('completed study derives unique cards, attempts, forecast and reinforcement
   await expect(page.locator('.difficulties app-kaishi-card-media')).toHaveCount(0);
   await expect(page.locator('.difficulties button')).toHaveCount(1);
   await noOverflow(page); await page.screenshot({ path: `.cache/deck-time-summary/summary-${info.project.name}.png`, fullPage: true });
-  await page.locator('.undo').click(); await expect(page.locator('.front h1')).toBeVisible();
-  await page.locator('.reveal').click(); await page.locator('.good').click();
+  await expect(page.locator('.undo')).toBeDisabled();
   await expect(page.locator('.metrics strong')).toHaveText(['1', '67%', '1']);
   await page.reload(); await expect(page.locator('.metrics strong')).toHaveText(['1', '67%', '1']);
   await page.getByRole('link', { name: 'Volver a Mazos', exact: true }).click();

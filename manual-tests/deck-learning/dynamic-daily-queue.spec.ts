@@ -12,8 +12,10 @@ test.beforeEach(async ({ page }) => {
     localStorage.setItem('kana-study.deck-settings.v1', JSON.stringify({ 'japanese-1500': { desiredRetention: .9, newCardsPerDay: 0, newCardOrder: 'after-reviews' } }));
   });
   await page.clock.setFixedTime(NOW);
-  await page.goto('./#/anki/japanese-1500/study');
-  await expect(page.locator('.end-state')).toBeVisible(); // Angular has opened/initialized its real database.
+  await page.goto('./#/anki/japanese-1500/cards');
+  await expect(page.locator('.entry-card').first()).toBeVisible();
+  await page.getByRole('button',{name:'Por Tiempo',exact:true}).click();
+  await expect(page.locator('.time-heading')).toHaveCount(1); // Read persisted progress without opening a study session.
   await page.evaluate(async ({ ids, now }) => {
     const db = await new Promise<IDBDatabase>((resolve, reject) => {
       const r = indexedDB.open('kana-study-decks');
@@ -30,7 +32,7 @@ test.beforeEach(async ({ page }) => {
     await new Promise<void>((resolve, reject) => { tx.oncomplete = () => resolve(); tx.onerror = () => reject(tx.error); });
     db.close();
   }, { ids: entries.map(e => e.id), now: NOW.getTime() });
-  await page.reload();
+  await page.goto('./#/anki/japanese-1500/study');
 });
 
 async function word(page: Page, i: number) { await expect(page.locator('.front h1')).toHaveText(entries[i].word); }
@@ -42,17 +44,16 @@ async function answer(page: Page, rating: 'again' | 'good') {
   await page.locator('.ratings .' + rating).click();
 }
 
-test('daily Review hours are eligible but Relearning waits ten minutes before completing', async ({ page }, info) => {
+test('daily Review runs first and Relearning uses Learn Ahead when nothing else remains', async ({ page }, info) => {
   await word(page, 0);
-  await expect(page.locator('.advance-note')).not.toContainText('antes de su hora');
+  await expect(page.locator('.advance-note')).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await page.screenshot({ path: `.cache/deck-daily-queue/study-${info.project.name}.png`, fullPage: true });
   await answer(page, 'good');
   await word(page, 1); await answer(page, 'good');
   await word(page, 2); await answer(page, 'again');
   await word(page, 3); await answer(page, 'good');
-  await expect(page.locator('.end-state')).toBeVisible();
-  await page.clock.setFixedTime(new Date(NOW.getTime()+604000));await page.reload();await word(page,2);await answer(page,'good');
+  await word(page,2);await answer(page,'good');
   await expect(page.locator('.result-hero')).toBeVisible();
   await expect(page.locator('.metrics strong')).toHaveText(['4', '80%', '1']);
   await expect(page.locator('.metric-help')).toContainText('5 valoraciones guardadas');
@@ -63,14 +64,10 @@ test('daily Review hours are eligible but Relearning waits ten minutes before co
   await expect(page.locator('.metrics strong')).toHaveText(['4', '80%', '1']);
 });
 
-test('a waiting lapse survives reload; Undo restores the exact previous card without duplicate history',async({page})=>{
- await word(page,0);await answer(page,'again');await word(page,1);await answer(page,'good');await word(page,2);await page.reload();await word(page,2);await answer(page,'good');await word(page,3);await answer(page,'good');
- await expect(page.locator('.end-state')).toBeVisible();await page.clock.setFixedTime(new Date(NOW.getTime()+601000));await page.reload();await word(page,0);await answer(page,'good');await expect(page.locator('.result-hero')).toBeVisible();await page.locator('.undo').click();await word(page,0);await answer(page,'good');await expect(page.locator('.metric-help')).toContainText('5 valoraciones guardadas');
+test('Undo during the open session restores the previous Review without duplicate history',async({page})=>{
+ await word(page,0);await answer(page,'again');await word(page,1);await answer(page,'good');await word(page,2);await page.reload();await word(page,2);await answer(page,'good');await word(page,3);await page.locator('.undo').click();await word(page,2);await answer(page,'good');await word(page,3);await answer(page,'good');await word(page,0);await answer(page,'good');await expect(page.locator('.metric-help')).toContainText('5 valoraciones guardadas');
  await page.goto('./#/anki/japanese-1500/cards');await page.getByRole('searchbox').fill('#1');await page.locator('.entry-card').click();await page.locator('.history>summary').click();await expect(page.locator('.timeline>li')).toHaveCount(2);
 });
-
-test('leaving a future Relearning step creates no answer and never advances it early',async({page})=>{
- await word(page,0);await answer(page,'again');await word(page,1);await answer(page,'again');await word(page,2);await answer(page,'good');await word(page,3);await answer(page,'good');await expect(page.locator('.end-state')).toBeVisible();
- await page.goto('./#/anki');await page.goto('./#/anki/japanese-1500/study');await expect(page.locator('.front h1')).toHaveCount(0);await expect(page.locator('.metric-help')).toContainText('4 valoraciones guardadas');
- await page.clock.setFixedTime(new Date(NOW.getTime()+601000));await page.reload();await word(page,0);await answer(page,'good');await word(page,1);await answer(page,'good');await expect(page.locator('.metrics strong')).toHaveText(['4','67%','2']);await expect(page.locator('.metric-help')).toContainText('6 valoraciones guardadas');
+test('leaving and resuming an advanced step creates no answer; daily completion stays closed',async({page})=>{
+ await word(page,0);await answer(page,'again');await word(page,1);await answer(page,'again');await word(page,2);await answer(page,'good');await word(page,3);await answer(page,'good');await word(page,0);await page.goto('./#/anki');await page.goto('./#/anki/japanese-1500/study');await word(page,0);await answer(page,'good');await word(page,1);await answer(page,'good');await expect(page.locator('.metrics strong')).toHaveText(['4','67%','2']);await expect(page.locator('.metric-help')).toContainText('6 valoraciones guardadas');await page.reload();await expect(page.locator('.study-card')).toHaveCount(0);
 });

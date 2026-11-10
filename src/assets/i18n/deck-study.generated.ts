@@ -7,7 +7,7 @@ export const es:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "Cómo se programan las tarjetas",
   "anki.scheduler.learning": "Aprendizaje: Otra vez vuelve al primer paso; Bien avanza. Al terminar los pasos, FSRS programa el siguiente repaso.",
   "anki.scheduler.relearning": "Al olvidar una tarjeta de repaso, comienza el reaprendizaje. Al terminar sus pasos, FSRS programa el siguiente repaso.",
-  "anki.scheduler.ahead": "Los pasos de aprendizaje y reaprendizaje vuelven a su hora. Los repasos se organizan por día de Madrid.",
+  "anki.scheduler.ahead": "Cuando no quedan otras tarjetas, los pasos cortos pueden adelantarse hasta 20 minutos. Los repasos siguen el día de Madrid.",
   "anki.scheduler.reviewDay": "Los repasos normales están disponibles desde el inicio de su día en Europe/Madrid, incluidos los atrasados.",
   "anki.scheduler.tomorrow": "Mañana",
   "anki.scheduler.advanced": "Tarjeta programada para hoy. La respuesta se registra ahora.",
@@ -119,7 +119,7 @@ export const es:Record<string,string> = {...shared,...{
   "anki.results.history.help.1": "La tarjeta está pasando por pasos de aprendizaje cortos.",
   "anki.results.history.help.2": "Tiene repasos espaciados. Este estado no significa dominio perfecto.",
   "anki.results.history.help.3": "Tras un olvido, vuelve a pasos cortos antes de retomar los repasos.",
-  "anki.day.queueHelp": "Los pasos de aprendizaje vuelven a su hora. No se adelantan repasos de días futuros.",
+  "anki.day.queueHelp": "Los pasos cortos pueden adelantarse hasta 20 minutos cuando no quedan otras tarjetas.",
   "anki.day.settings.today": "Nuevas de hoy",
   "anki.day.settings.effective": "Límite de hoy",
   "anki.day.settings.introduced": "Introducidas",
@@ -247,13 +247,19 @@ export const es:Record<string,string> = {...shared,...{
   "anki.day.state.1": "Aprendiendo",
   "anki.day.state.2": "Repasos",
   "anki.day.state.3": "Reaprendiendo",
-  "anki.day.previewChanged": "Ha cambiado el día. Revisa los intervalos actualizados y elige tu respuesta."
+  "anki.day.previewChanged": "Ha cambiado el día. Revisa los intervalos actualizados y elige tu respuesta.",
+  "anki.day.finishToday": "Terminar por hoy",
+  "anki.day.resume": "Reanudar sesión",
+  "anki.day.ahead": "Repaso adelantado para completar esta sesión.",
+  "anki.day.practiceAll": "RUSH · Practicar las palabras de hoy",
+  "anki.day.openSummary": "Ver resumen y RUSH",
+  "anki.day.nextSession": "Próxima sesión: {{date}} (Europe/Madrid)."
 }};
 export const en:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "How cards are scheduled",
   "anki.scheduler.learning": "Learning: Again returns to the first step; Good advances. After the steps, FSRS schedules the next review.",
   "anki.scheduler.relearning": "Forgetting a review card starts relearning. After its steps, FSRS schedules the next review.",
-  "anki.scheduler.ahead": "Learning and relearning steps return at their due time. Reviews are scheduled by Madrid day.",
+  "anki.scheduler.ahead": "When no other cards remain, short steps can appear up to 20 minutes early. Reviews follow the Madrid study day.",
   "anki.scheduler.reviewDay": "Regular reviews are available from the start of their Europe/Madrid study day, including overdue reviews.",
   "anki.scheduler.tomorrow": "Tomorrow",
   "anki.scheduler.advanced": "Card scheduled for today. Your answer is recorded now.",
@@ -365,7 +371,7 @@ export const en:Record<string,string> = {...shared,...{
   "anki.results.history.help.1": "The card is going through short learning steps.",
   "anki.results.history.help.2": "It has spaced reviews. This state does not mean perfect mastery.",
   "anki.results.history.help.3": "After forgetting, it returns to short steps before resuming reviews.",
-  "anki.day.queueHelp": "Learning steps return at their due time. Reviews from future days are not brought forward.",
+  "anki.day.queueHelp": "Short steps can appear up to 20 minutes early when no other cards remain.",
   "anki.day.settings.today": "Today's new cards",
   "anki.day.settings.effective": "Today's limit",
   "anki.day.settings.introduced": "Introduced",
@@ -493,13 +499,19 @@ export const en:Record<string,string> = {...shared,...{
   "anki.day.state.1": "Learning",
   "anki.day.state.2": "Reviews",
   "anki.day.state.3": "Relearning",
-  "anki.day.previewChanged": "The day has changed. Check the updated intervals and choose your answer."
+  "anki.day.previewChanged": "The day has changed. Check the updated intervals and choose your answer.",
+  "anki.day.finishToday": "Finish for today",
+  "anki.day.resume": "Resume session",
+  "anki.day.ahead": "Learning step brought forward to finish this session.",
+  "anki.day.practiceAll": "RUSH · Practise today’s words",
+  "anki.day.openSummary": "View summary and RUSH",
+  "anki.day.nextSession": "Next session: {{date}} (Europe/Madrid)."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "Com es programen les targetes",
   "anki.scheduler.learning": "Aprenentatge: Un altre cop torna al primer pas; Bé avança. En acabar els passos, FSRS programa el pròxim repàs.",
   "anki.scheduler.relearning": "Oblidar una targeta de repàs inicia el reaprenentatge. En acabar els passos, FSRS programa el pròxim repàs.",
-  "anki.scheduler.ahead": "Els passos d’aprenentatge i reaprenentatge tornen a la seva hora. Els repassos s’organitzen per dia de Madrid.",
+  "anki.scheduler.ahead": "Quan no queden altres targetes, els passos curts poden avançar-se fins a 20 minuts. Els repassos segueixen el dia de Madrid.",
   "anki.scheduler.reviewDay": "Els repassos normals estan disponibles des de l’inici del seu dia a Europe/Madrid, inclosos els endarrerits.",
   "anki.scheduler.tomorrow": "Demà",
   "anki.scheduler.advanced": "Targeta programada per a avui. La resposta es registra ara.",
@@ -611,7 +623,7 @@ export const ca:Record<string,string> = {...shared,...{
   "anki.results.history.help.1": "La targeta passa per passos curts d’aprenentatge.",
   "anki.results.history.help.2": "Té repassos espaiats. Aquest estat no significa domini perfecte.",
   "anki.results.history.help.3": "Després d’un oblit, torna a passos curts abans de reprendre els repassos.",
-  "anki.day.queueHelp": "Els passos d’aprenentatge tornen a la seva hora. No s’avancen repassos de dies futurs.",
+  "anki.day.queueHelp": "Els passos curts poden avançar-se fins a 20 minuts quan no queden altres targetes.",
   "anki.day.settings.today": "Noves d’avui",
   "anki.day.settings.effective": "Límit d’avui",
   "anki.day.settings.introduced": "Introduïdes",
@@ -739,5 +751,11 @@ export const ca:Record<string,string> = {...shared,...{
   "anki.day.state.1": "Aprenent",
   "anki.day.state.2": "Repassos",
   "anki.day.state.3": "Reaprenent",
-  "anki.day.previewChanged": "Ha canviat el dia. Revisa els intervals actualitzats i tria la resposta."
+  "anki.day.previewChanged": "Ha canviat el dia. Revisa els intervals actualitzats i tria la resposta.",
+  "anki.day.finishToday": "Acaba per avui",
+  "anki.day.resume": "Reprèn la sessió",
+  "anki.day.ahead": "Repàs avançat per completar aquesta sessió.",
+  "anki.day.practiceAll": "RUSH · Practica les paraules d’avui",
+  "anki.day.openSummary": "Mostra el resum i RUSH",
+  "anki.day.nextSession": "Pròxima sessió: {{date}} (Europe/Madrid)."
 }};

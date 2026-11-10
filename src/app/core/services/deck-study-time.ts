@@ -5,8 +5,8 @@ export const getLocalStudyDayKey = getSpainDayKey;
 export const DECK_LEARNING_AHEAD_MS = 20 * 60_000;
 
 /** Intraday steps use their actual deadline. Review uses the configured Madrid study day. */
-export function deckCardEligible(card: SerializedFsrsCard, now: Date, _allowAhead = false): boolean {
-  if(card.state===1||card.state===3)return card.due<=now.getTime();
+export function deckCardEligible(card: SerializedFsrsCard, now: Date, allowAhead = false): boolean {
+  if(card.state===1||card.state===3)return card.due<=now.getTime()+(allowAhead?DECK_LEARNING_AHEAD_MS:0);
   const day = getLocalStudyDayKey(now), dueDay = getLocalStudyDayKey(new Date(card.due));
   return card.state===2 && dueDay <= day;
 }

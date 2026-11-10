@@ -12257,7 +12257,7 @@
   "anki.scheduler.title": "Com es programen les targetes",
   "anki.scheduler.learning": "Aprenentatge: Un altre cop torna al primer pas; Bé avança. En acabar els passos, FSRS programa el pròxim repàs.",
   "anki.scheduler.relearning": "Oblidar una targeta de repàs inicia el reaprenentatge. En acabar els passos, FSRS programa el pròxim repàs.",
-  "anki.scheduler.ahead": "Els passos d’aprenentatge i reaprenentatge tornen a la seva hora. Els repassos s’organitzen per dia de Madrid.",
+  "anki.scheduler.ahead": "Quan no queden altres targetes, els passos curts poden avançar-se fins a 20 minuts. Els repassos segueixen el dia de Madrid.",
   "anki.scheduler.reviewDay": "Els repassos normals estan disponibles des de l’inici del seu dia a Europe/Madrid, inclosos els endarrerits.",
   "anki.scheduler.tomorrow": "Demà",
   "anki.scheduler.advanced": "Targeta programada per a avui. La resposta es registra ara.",
@@ -12442,7 +12442,7 @@
   "anki.results.history.help.3": "Després d’un oblit, torna a passos curts abans de reprendre els repassos.",
   "localDeck.storageLink": "Malls personalitzats: emmagatzematge local · Informació",
   "localDeck.storageTitle": "Emmagatzematge i còpies dels malls",
-  "anki.day.queueHelp": "Els passos d’aprenentatge tornen a la seva hora. No s’avancen repassos de dies futurs.",
+  "anki.day.queueHelp": "Els passos curts poden avançar-se fins a 20 minuts quan no queden altres targetes.",
   "anki.day.settings.today": "Noves d’avui",
   "anki.day.settings.effective": "Límit d’avui",
   "anki.day.settings.introduced": "Introduïdes",
@@ -12776,5 +12776,11 @@
   "anki.day.state.1": "Aprenent",
   "anki.day.state.2": "Repassos",
   "anki.day.state.3": "Reaprenent",
-  "anki.day.previewChanged": "Ha canviat el dia. Revisa els intervals actualitzats i tria la resposta."
+  "anki.day.previewChanged": "Ha canviat el dia. Revisa els intervals actualitzats i tria la resposta.",
+  "anki.day.finishToday": "Acaba per avui",
+  "anki.day.resume": "Reprèn la sessió",
+  "anki.day.ahead": "Repàs avançat per completar aquesta sessió.",
+  "anki.day.practiceAll": "RUSH · Practica les paraules d’avui",
+  "anki.day.openSummary": "Mostra el resum i RUSH",
+  "anki.day.nextSession": "Pròxima sessió: {{date}} (Europe/Madrid)."
 }

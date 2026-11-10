@@ -102,14 +102,14 @@ describe('DeckStudyService', () => {
     expect((await service.snapshot(deck, activeIndex(), NOW)).reviewEntries.map(item => item.entryId)).toEqual(['higher-r', 'lower-r']);
   });
 
-  it('includes Review by Madrid day but waits for the exact Learning deadline', async () => {
+  it('counts Review by Madrid day and separates due Learning from advanceable Learning', async () => {
     const future = NOW.getTime() + 8 * 60_000;
     database.progress = [progress('review', State.Review, future), progress('learning', State.Learning, future + 1)];
     const snapshot = await service.snapshot(deck, activeIndex(), NOW);
     expect(snapshot.reviewDue).toBe(1);
     expect(snapshot.learningDue).toBe(0);
     expect(snapshot.nextDue).toBe(future+1);
-    expect(snapshot.learningPending).toBe(1);expect(snapshot.learningAhead).toBe(0);
+    expect(snapshot.learningPending).toBe(1);expect(snapshot.learningAhead).toBe(1);
   });
 
   it.each(['again', 'good'] as const)('atomically persists and undoes a first New → %s rating', async rating => {
@@ -216,7 +216,7 @@ describe('DeckStudyService', () => {
 
   it('still rejects a new introduction when a historical completed day has no remaining allowance', async () => {
     database.daily={deckId:deck.id,localDate:TODAY,introducedEntryIds:[],newLimitOverride:0,completedAt:NOW.getTime()};
-    await expect(service.rate(deck,{entryId:'e1',kind:'new',progress:null},scheduler.previewValue,'good',100,NOW)).rejects.toThrow('limit');
+    await expect(service.rate(deck,{entryId:'e1',kind:'new',progress:null},scheduler.previewValue,'good',100,NOW)).rejects.toThrow('closed');
     expect(database.events).toHaveLength(0);
   });
 

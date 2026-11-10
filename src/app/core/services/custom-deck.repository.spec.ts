@@ -174,25 +174,15 @@ describe('Custom decks H1: atomic local catalog and the existing FSRS engine', (
         expect(await repo.getDeckReviewEvents(deck.id)).toHaveLength(1);
     });
 
-    it('resumes short steps despite historical completion, replays receipts and undoes a completed day',async()=>{
-        const {deck,content}=await seed();
-        const first=await grade();
-        await repo.writeDailyState({deckId:deck.id,localDate:'2026-10-21',introducedEntryIds:['card-猫'],newLimitOverride:null,completedAt:NOW.getTime()});
-        const pending=await study.snapshot(deck,content.index,NOW);
-        expect(pending.completedToday).toBe(false);expect(pending.learningDue).toBe(0);expect(pending.learningPending).toBe(1);expect(pending.newAvailable).toBe(0);
-        // Retry of the first introduction still resolves its existing receipt.
+    it('daily closure keeps short steps pending and receipt retries idempotent',async()=>{
+        const {deck,content}=await seed(),first=await grade();await study.completeSession(deck,content.index,NOW,true);
+        expect((await study.snapshot(deck,content.index,NOW)).completedToday).toBe(true);
         expect(await study.rate(deck,first.choice,first.preview,'good',9000,NOW)).toEqual(first.event);
-        const at=new Date(first.event.dueAfter),due=await study.snapshot(deck,content.index,at);const choice=study.chooseNext(due,deck,{debt:0}).choice!;
-        expect(choice.kind).toBe('learning');
-        const preview=study.preview(deck,choice,at),event=await study.rate(deck,choice,preview,'good',1000,at);
-        expect(event.stateAfter).toBe(2);expect((await study.snapshot(deck,content.index,NOW)).completedToday).toBe(true);
-        expect(await repo.getDeckReviewEvents(deck.id)).toHaveLength(2);
-        await study.undo(event);await study.undo(event);
-        expect((await repo.getDailyState(deck.id,'2026-10-21'))?.completedAt).toBeNull();
-        expect((await study.snapshot(deck,content.index,at)).learningDue).toBe(1);
-        expect(await repo.getDeckReviewEvents(deck.id)).toHaveLength(1);
-        await study.adjustTodayNewLimit(deck,5,NOW);
-        expect((await study.snapshot(deck,content.index,NOW)).effectiveNewLimit).toBe(15);
+        expect(study.chooseNext(await study.snapshot(deck,content.index,new Date(first.event.dueAfter)),deck,{debt:0}).choice).toBeNull();
+        await study.undo(first.event);await study.undo(first.event);
+        expect((await repo.getDailyState(deck.id,'2026-10-21'))?.completedAt).toBe(NOW.getTime());
+        expect(await repo.getDeckReviewEvents(deck.id)).toHaveLength(0);
+        await study.adjustTodayNewLimit(deck,5,NOW);expect((await study.snapshot(deck,content.index,NOW)).completedToday).toBe(true);
     });
 
 });

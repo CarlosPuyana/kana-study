@@ -108,10 +108,6 @@ describe('Deck settings functional audit', () => {
     }
     expect(introductions).toEqual(['n0', 'n1']);
     expect(sequence.filter(id => id.startsWith('r'))).toEqual(reviews.map(p => p.entryId));
-    expect(sequence).toHaveLength(42); // Forty reviews plus two introductions; steps are not due yet.
-    expect((await study.snapshot(deck,index,new Date(NOW.getTime()+599999))).learningDue).toBe(0);
-    const at=new Date(NOW.getTime()+600000);
-    for(let n=0;n<2;n++){const snap=await study.snapshot(deck,index,at),choice=study.chooseNext(snap,deck,cursor).choice!;sequence.push(choice.entryId);await study.rate(deck,choice,study.preview(deck,choice,at),'good',100,at);}
     expect(sequence).toHaveLength(44);
     expect((await db.getDeckReviewEvents(deck.id))).toHaveLength(44);
     expect(new Set(sequence).size).toBe(42);
@@ -120,7 +116,7 @@ describe('Deck settings functional audit', () => {
     if (order === 'mixed') { expect(sequence.indexOf('n0')).toBeGreaterThan(0); expect(sequence.indexOf('n0')).toBeLessThan(40); }
   });
 
-  it.each(['before-reviews', 'after-reviews', 'mixed'] as const)('%s with zero reviews retains editorial new order while the failed step waits', async order => {
+  it.each(['before-reviews', 'after-reviews', 'mixed'] as const)('%s with zero reviews retains editorial new order before Learn Ahead repeats', async order => {
     await saveUI(3, order);
     const snap = await study.snapshot(deck, fresh, NOW), choice = study.chooseNext(snap, deck, { debt: 0 }).choice!;
     expect(choice.entryId).toBe('n0');

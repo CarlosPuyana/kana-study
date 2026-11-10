@@ -12,7 +12,7 @@ import {
 import { DeckPersistenceRouter } from './deck-persistence-router';
 import { DeckSchedulePreview, DeckSchedulerService } from './deck-scheduler.service';
 import { DeckSettingsService } from './deck-settings.service';
-import { deckCardEligible, getLocalStudyDayKey, localStudyDayStart, nextLocalStudyDayStart } from './deck-study-time';
+import { DECK_LEARNING_AHEAD_MS, deckCardEligible, getLocalStudyDayKey, localStudyDayStart, nextLocalStudyDayStart } from './deck-study-time';
 
 export const DECK_NEW_LIMIT_STEP = 5;
 export { DECK_LEARNING_AHEAD_MS } from './deck-study-time';
@@ -27,6 +27,8 @@ export class DeckStudyService {
   private readonly mixSnapshots = new WeakMap<DeckQueueSnapshot, MixContext & { owner: string }>();
   private readonly mixChoices = new WeakMap<DeckQueueChoice, { context: MixContext; before: number; after: number; owner: string }>();
 
+  private readonly snapshotIndices=new WeakMap<DeckQueueSnapshot,readonly DeckEntryIndexItem[]>();
+  private readonly advanceIndices=new WeakMap<DeckQueueChoice,readonly DeckEntryIndexItem[]>();
   private readonly retries = new WeakMap<DeckSchedulePreview, Map<string, DeckReviewEvent>>();
   // Receipt order disambiguates live answers sharing a millisecond. It never changes
   // timestamps or persisted events; reload uses the deterministic historical tie policy.
@@ -57,8 +59,7 @@ export class DeckStudyService {
     const byEntry = new Map(progress.map(item => [item.entryId, item]));
     const unseen = [...new Map(index.map(item => [item.id, item])).values()].filter(item => (!byEntry.has(item.id) || byEntry.get(item.id)!.card.state === State.New)).sort((a, b) => a.order - b.order || compareDeckId(a.id, b.id));
     const effectiveNewLimit = daily.newLimitOverride ?? settings.newCardsPerDay;
-    // Historical completion closes new introductions, but must never hide valid
-    // Learning/Relearning or daily reviews arriving from old state or sync.
+    // Quota and memory remain visible independently of the persistent daily access lock.
     const newAvailable = Math.min(unseen.length, Math.max(0, effectiveNewLimit - new Set(daily.introducedEntryIds).size));
     const eligible = progress.filter(item => deckCardEligible(item.card, now)).sort(dueOrder);
     const learning = eligible.filter(isLearning);
@@ -67,8 +68,9 @@ export class DeckStudyService {
       && !deckCardEligible(item.card, now));
     const futureLearning = future.filter(isLearning);
     const nextDue = Math.min(...future.map(item => isLearning(item)?item.due:localStudyDayStart(new Date(item.due))));
-    const completedToday = daily.completedAt != null && !eligible.length && !futureLearning.length && !newAvailable;
-    const nextRefreshAt = Math.min(nextLocalStudyDayStart(now),nextDue);
+    const completedToday = daily.completedAt != null;
+    const ahead=futureLearning.filter(p=>p.due<=now.getTime()+DECK_LEARNING_AHEAD_MS).sort(dueOrder);
+    const nextRefreshAt = completedToday?nextLocalStudyDayStart(now):Math.min(nextLocalStudyDayStart(now),nextDue,...futureLearning.map(p=>p.due-DECK_LEARNING_AHEAD_MS).filter(t=>t>now.getTime()));
     const mix = await this.mixing.context(deck.id, localDate, [...new Set(events.filter(e => e.deckId === deck.id
       && e.reviewedAt <= now.getTime() && getLocalStudyDayKey(new Date(e.reviewedAt)) === localDate).map(e => e.id))]);
     database.assertOwner();
@@ -76,7 +78,8 @@ export class DeckStudyService {
     for (const id of mix.receiptOrder) if (!receiptOrder.has(id)) receiptOrder.set(id, receiptOrder.size);
     const snapshot: DeckQueueSnapshot = {
       newLimitOverride: daily.newLimitOverride,
-      introductionsClosed: false,
+      introductionsClosed: completedToday,
+      startedToday:storedDaily?.completedAt===null||events.some(e=>getLocalStudyDayKey(new Date(e.reviewedAt))===localDate),
       mixedCursor: { debt: mix.debt },
       separation: [],
       completedToday,
@@ -87,8 +90,8 @@ export class DeckStudyService {
       newAvailable,
       learningDue: learning.length,
       learningPending:futureLearning.length,
-      learningAhead:0,
-      advanceEntries: [],
+      learningAhead:ahead.length,
+      advanceEntries: ahead,
       nextRefreshAt,
       reviewDue: reviews.length,
       introducedToday: new Set(daily.introducedEntryIds).size,
@@ -97,6 +100,7 @@ export class DeckStudyService {
       nextDue: Number.isFinite(nextDue)?nextDue:null,
       remainingUnseen: unseen.length,
     };
+    this.snapshotIndices.set(snapshot,index);
     this.mixSnapshots.set(snapshot, { ...mix, owner: database.workspace });
     return snapshot;
   }
@@ -117,14 +121,21 @@ export class DeckStudyService {
     else {
       const debt = cursor.debt + fresh.length / (fresh.length + scheduled.length);
       candidates = debt >= 1 ? [...fresh, ...scheduled] : [...scheduled, ...fresh];
-      const choice = candidates[0] ?? null;
+      const choice = candidates[0] ?? this.chooseAhead(snapshot);
       nextCursor = { debt: debt - Number(choice?.kind === 'new') };
       this.rememberMix(snapshot, choice, cursor.debt, nextCursor.debt);
       return { choice, cursor: nextCursor };
     }
-    const choice = candidates[0] ?? null;
+    const choice = candidates[0] ?? this.chooseAhead(snapshot);
     this.rememberMix(snapshot, choice, cursor.debt, nextCursor.debt);
     return { choice, cursor: nextCursor };
+  }
+
+  private chooseAhead(snapshot:DeckQueueSnapshot):DeckQueueChoice|null {
+    const progress=snapshot.advanceEntries?.[0];if(!progress)return null;
+    const choice:DeckQueueChoice={...choiceFromProgress(progress,'learning'),advanced:true};
+    const index=this.snapshotIndices.get(snapshot);if(index)this.advanceIndices.set(choice,index);
+    return choice;
   }
 
   private rememberMix(snapshot: DeckQueueSnapshot, choice: DeckQueueChoice | null, before: number, after: number): void {
@@ -162,7 +173,12 @@ export class DeckStudyService {
     const localDate = getLocalStudyDayKey(cached ? new Date(cached.reviewedAt) : reviewedAt);
     const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
     const answerAt=cached?new Date(cached.reviewedAt):reviewedAt;
-    if(!cached&&choice.progress&&choice.progress.card.state!==State.New&&!deckCardEligible(choice.progress.card,answerAt))throw new Error('Deck card is not due');
+    if(!confirmed&&daily.completedAt!=null)throw new Error('Deck session is closed');
+    if(!cached&&choice.progress&&choice.progress.card.state!==State.New&&!deckCardEligible(choice.progress.card,answerAt)){
+      const index=this.advanceIndices.get(choice);if(!index)throw new Error('Deck card is not due');
+      const latest=await this.snapshot(deck,index,answerAt),next=this.chooseNext(latest,deck,{debt:0}).choice;
+      if(!next?.advanced||next.entryId!==choice.entryId)throw new Error('Deck card cannot be advanced');
+    }
     const firstIntroduction = choice.progress === null || choice.progress.card.state === State.New;
     if (!confirmed && firstIntroduction && !daily.introducedEntryIds.includes(choice.entryId)
       && new Set(daily.introducedEntryIds).size >= (daily.newLimitOverride ?? this.settings.settingsFor(deck).newCardsPerDay)) {
@@ -171,7 +187,7 @@ export class DeckStudyService {
     const introducedEntryIds = firstIntroduction && !daily.introducedEntryIds.includes(choice.entryId)
       ? [...daily.introducedEntryIds, choice.entryId]
       : [...daily.introducedEntryIds];
-    const nextDaily = { ...daily, introducedEntryIds };
+    const nextDaily = { ...daily, completedAt:daily.completedAt??null, introducedEntryIds };
     const progress: DeckCardProgress = {
       deckId: deck.id, entryId: choice.entryId, due: branch.card.due,
       state: branch.card.state, card: branch.card,
@@ -211,7 +227,7 @@ export class DeckStudyService {
     const introducedEntryIds = (event.cardBefore === null || event.cardBefore.state === State.New)
       ? daily.introducedEntryIds.filter(entryId => entryId !== event.entryId)
       : [...daily.introducedEntryIds];
-    await database.undoReview(event, { ...daily, completedAt:null, introducedEntryIds });
+    await database.undoReview(event, { ...daily, introducedEntryIds });
   }
 
   async adjustTodayNewLimit(deck: DeckDefinition, delta: number, now = new Date()): Promise<DeckDailyState> {
@@ -219,15 +235,21 @@ export class DeckStudyService {
     const localDate = getLocalStudyDayKey(now);
     const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
     const current = daily.newLimitOverride ?? this.settings.settingsFor(deck).newCardsPerDay;
-    const next = { ...daily, ...(delta>0&&daily.completedAt!=null?{completedAt:null}:{}), newLimitOverride: Math.max(0, current + delta) };
+    const next = { ...daily, newLimitOverride: Math.max(0, current + delta) };
     await database.writeDailyState(next);
     return next;
   }
 
-  async completeSession(deck: DeckDefinition, index: readonly DeckEntryIndexItem[], now = new Date()): Promise<void> {
+  async startSession(deck:DeckDefinition,now=new Date()):Promise<void>{
+    const database=this.database.bind(deck.id),day=getLocalStudyDayKey(now);
+    const daily=await database.getDailyState(deck.id,day)??emptyDailyState(deck.id,day);
+    if(daily.completedAt===undefined)await database.writeDailyState({...daily,completedAt:null});
+  }
+
+  async completeSession(deck: DeckDefinition, index: readonly DeckEntryIndexItem[], now = new Date(), force=false): Promise<void> {
     const database = this.database.bind(deck.id);
     const snapshot = await this.snapshot(deck, index, now);
-    if (snapshot.completedToday || snapshot.newAvailable || snapshot.learningDue || snapshot.reviewDue || snapshot.learningPending) return;
+    if (snapshot.completedToday || (!force&&(snapshot.newAvailable || snapshot.learningDue || snapshot.reviewDue || snapshot.learningAhead))) return;
     database.assertOwner();
     const localDate = getLocalStudyDayKey(now);
     const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);

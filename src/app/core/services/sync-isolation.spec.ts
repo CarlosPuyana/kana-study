@@ -65,15 +65,17 @@ describe('outbox and account isolation regressions',()=>{
     release({data:{id:'alice',display_name:'Alice'}});for(let i=0;i<5;i++)await Promise.resolve();
     expect(auth.profile()).toBeNull();expect(TestBed.inject(WorkspaceService).active()).toBe('guest');
   });
-  it('G: deck and RUSH writes retain the workspace captured before IndexedDB awaits',async()=>{
+  it('G: stale deck daily activation is cancelled while RUSH retains its captured workspace',async()=>{
     const workspace=TestBed.inject(WorkspaceService),outbox=TestBed.inject(SyncOutboxService);
     const decks=TestBed.inject(DeckDatabaseService),rush=TestBed.inject(LocalRushRepository);
     workspace.activateUser('alice');
     const daily=decks.writeDailyState({deckId:'d',localDate:'2026-10-08',introducedEntryIds:['a'],newLimitOverride:null});
     const session=rush.createSession({id:'s',module:'kana',startedAt:1,endedAt:null,activeSeconds:1} as any);
-    workspace.activateUser('bob');await Promise.all([daily,session]);
-    expect(await outbox.pending('user:bob')).toEqual([]);expect(await outbox.pending('user:alice')).toHaveLength(2);
+    workspace.activateUser('bob');const [deckWrite,rushWrite]=await Promise.allSettled([daily,session]);
+    expect(deckWrite).toMatchObject({status:'rejected',reason:expect.objectContaining({message:'Deck workspace changed'})});expect(rushWrite.status).toBe('fulfilled');
+    expect(await outbox.pending('user:bob')).toEqual([]);expect(await outbox.pending('user:alice')).toHaveLength(1);
     expect(await decks.getAllDailyStates()).toEqual([]);expect((await rush.getStats()).sessions).toEqual([]);
+    workspace.activateUser('alice');expect(await decks.getAllDailyStates()).toEqual([]);expect((await rush.getStats()).sessions).toHaveLength(1);
   });
   it('I/J: IndexedDB hydration survives reopen, respects newer deck FSRS and does not regress RUSH sessions',async()=>{
     const workspace=TestBed.inject(WorkspaceService);workspace.activateUser('alice');

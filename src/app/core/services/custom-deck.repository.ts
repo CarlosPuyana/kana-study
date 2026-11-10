@@ -372,7 +372,7 @@ export class CustomDeckRepository {
     async getDeckProgress(deckId: string, owner = this.owner()): Promise<DeckCardProgress[]> { return this.transaction(owner, false, r => [...r.progress.values()].map(x => x.value as DeckCardProgress).filter(x => x && x.deckId === deckId).map(x => { requireValid(progressValid(x)); return x; })); }
     async getDeckReviewEvents(deckId: string, owner = this.owner()): Promise<DeckReviewEvent[]> { return this.transaction(owner, false, r => [...r.events.values()].filter(x => x.canonical!==false&&!x.voidedBy && x.value.deckId === deckId).map(x => { requireValid(eventValid(x.value)); return x.value; })); }
     async getDailyState(deckId: string, day: string, owner = this.owner()): Promise<DeckDailyState | null> { return this.transaction(owner, false, r => { const d = r.daily.get(key(deckId, day))?.value ?? null; requireValid(d === null || dailyValid(d)); return d; }); }
-    async writeDailyState(daily: DeckDailyState, owner = this.owner()): Promise<void> { requireValid(dailyValid(daily)); return this.mutate(crypto.randomUUID(), 'daily', daily.deckId, daily, owner, r => { requireValid(r.decks.has(daily.deckId)); const stored = r.daily.get(key(daily.deckId, daily.localDate))?.value as DeckDailyState | undefined; r.daily.set(key(daily.deckId, daily.localDate), { workspace: owner, key: key(daily.deckId, daily.localDate), value: { ...daily, introducedEntryIds: stored?.introducedEntryIds ?? daily.introducedEntryIds, completedAt: daily.completedAt === undefined ? stored?.completedAt : daily.completedAt } }); }); }
+    async writeDailyState(daily: DeckDailyState, owner = this.owner()): Promise<void> { requireValid(dailyValid(daily)); return this.mutate(crypto.randomUUID(), 'daily', daily.deckId, daily, owner, r => { requireValid(r.decks.has(daily.deckId)); const stored = r.daily.get(key(daily.deckId, daily.localDate))?.value as DeckDailyState | undefined; r.daily.set(key(daily.deckId, daily.localDate), { workspace: owner, key: key(daily.deckId, daily.localDate), value: { ...daily, introducedEntryIds: stored?.introducedEntryIds ?? daily.introducedEntryIds, completedAt:stored?.completedAt??(daily.completedAt===undefined?stored?.completedAt:daily.completedAt) } }); }); }
     async commitReview(progress: DeckCardProgress, event: DeckReviewEvent, daily: DeckDailyState, owner = this.owner()): Promise<void> {
         requireValid(progressValid(progress) && eventValid(event) && dailyValid(daily) && progress.deckId === event.deckId && progress.entryId === event.entryId && daily.deckId === event.deckId && progress.due === event.dueAfter && progress.state === event.stateAfter && progress.card.stability === event.stabilityAfter && progress.card.difficulty === event.difficultyAfter);
         return this.mutate(event.id, 'review', event.deckId, { progress, event, daily }, owner, r => {
@@ -381,9 +381,10 @@ export class CustomDeckRepository {
             if (canonical(previous?.value?.card ?? null) !== canonical(event.cardBefore))
                 throw new CustomDeckError('Review is based on stale progress');
             const storedDaily = r.daily.get(key(daily.deckId, daily.localDate))?.value as DeckDailyState | undefined;
+            if(storedDaily?.completedAt!=null)throw new CustomDeckError('Deck session is closed');
             const limit=storedDaily?.newLimitOverride??r.decks.get(event.deckId)!.value.settings.newCardsPerDay;
             if((event.cardBefore===null||event.cardBefore.state===0)&&!storedDaily?.introducedEntryIds.includes(event.entryId)&&new Set(storedDaily?.introducedEntryIds??[]).size>=limit)throw new CustomDeckError('Daily new-card limit reached');
-            const merged = { ...daily, introducedEntryIds: [...new Set([...(storedDaily?.introducedEntryIds ?? []), ...daily.introducedEntryIds])] };
+            const merged = { ...daily,completedAt:storedDaily?.completedAt??daily.completedAt, introducedEntryIds: [...new Set([...(storedDaily?.introducedEntryIds ?? []), ...daily.introducedEntryIds])] };
             r.progress.set(key(event.deckId, event.entryId), { workspace: owner, key: key(event.deckId, event.entryId), value: progress, head: event.id });
             r.events.set(event.id, { workspace: owner, key: event.id, value: event, head: previous?.head ?? null });
             r.daily.set(key(daily.deckId, daily.localDate), { workspace: owner, key: key(daily.deckId, daily.localDate), value: merged });
@@ -401,7 +402,7 @@ export class CustomDeckRepository {
             p.value = event.cardBefore ? { deckId: event.deckId, entryId: event.entryId, due: event.cardBefore.due, state: event.cardBefore.state, card: event.cardBefore } : null;
             p.head = row.head ?? null;
             const current = r.daily.get(key(daily.deckId, daily.localDate))?.value as DeckDailyState | undefined;
-            r.daily.set(key(daily.deckId, daily.localDate), { workspace: owner, key: key(daily.deckId, daily.localDate), value: { ...(current ?? daily), ...(daily.completedAt === null ? {completedAt:null} : {}), introducedEntryIds: (event.cardBefore === null || event.cardBefore.state === 0) ? (current ?? daily).introducedEntryIds.filter(id => id !== event.entryId) : (current ?? daily).introducedEntryIds } });
+            r.daily.set(key(daily.deckId, daily.localDate), { workspace: owner, key: key(daily.deckId, daily.localDate), value: { ...(current ?? daily),  introducedEntryIds: (event.cardBefore === null || event.cardBefore.state === 0) ? (current ?? daily).introducedEntryIds.filter(id => id !== event.entryId) : (current ?? daily).introducedEntryIds } });
         });
     }
 }

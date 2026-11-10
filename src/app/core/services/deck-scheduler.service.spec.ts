@@ -4,6 +4,7 @@ import {DeckCardProgress,SerializedFsrsCard} from '../models/deck-study.model';
 import {DeckSchedulerService,DECK_SCHEDULER_ENABLE_FUZZ} from './deck-scheduler.service';
 import {deserializeDeckCard,serializeDeckCard,serializeDeckReviewLog} from './deck-study-serialization';
 import reference from './fixtures/anki-25.9.2-reference.json';
+import aheadReference from './fixtures/anki-25.9.2-learn-ahead.json';
 const NOW=new Date('2026-11-09T12:00:00Z');
 const progress=(card:SerializedFsrsCard):DeckCardProgress=>({deckId:'japanese-1500',entryId:'これ',due:card.due,state:card.state,card});
 /** Replaces the old fixed-tomorrow expectations with the explicit Anki/FSRS contract. */
@@ -39,7 +40,7 @@ describe('Deck scheduler: Anki steps and unmodified FSRS-6',()=>{
  it('undo returns the exact snapshot without manufacturing a new review',()=>{
    const p=scheduler.preview(null,.9,NOW);for(const b of [p.again,p.good])expect(scheduler.rollback(b.card,b.log,.9)).toEqual(p.cardBefore);
  });
- for(const c of reference.cases)it(`official Anki 25.9.2: ${c.name}, retention ${c.retention}`,()=>{
+ for(const c of [...reference.cases,...aheadReference.cases])it(`official Anki 25.9.2: ${c.name}, retention ${c.retention}`,()=>{
    const before=c.before as SerializedFsrsCard,actual=scheduler.preview(before.state===0?null:progress(before),c.retention,new Date(c.now));
    for(const key of ['again','good']as const){const expected=c.branches[key],branch=actual[key].card;
      expect(branch.state).toBe(expected.state);expect(branch.learningSteps).toBe(expected.step);

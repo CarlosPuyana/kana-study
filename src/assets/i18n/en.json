@@ -12257,7 +12257,7 @@
   "anki.scheduler.title": "How cards are scheduled",
   "anki.scheduler.learning": "Learning: Again returns to the first step; Good advances. After the steps, FSRS schedules the next review.",
   "anki.scheduler.relearning": "Forgetting a review card starts relearning. After its steps, FSRS schedules the next review.",
-  "anki.scheduler.ahead": "Learning and relearning steps return at their due time. Reviews are scheduled by Madrid day.",
+  "anki.scheduler.ahead": "When no other cards remain, short steps can appear up to 20 minutes early. Reviews follow the Madrid study day.",
   "anki.scheduler.reviewDay": "Regular reviews are available from the start of their Europe/Madrid study day, including overdue reviews.",
   "anki.scheduler.tomorrow": "Tomorrow",
   "anki.scheduler.advanced": "Card scheduled for today. Your answer is recorded now.",
@@ -12442,7 +12442,7 @@
   "anki.results.history.help.3": "After forgetting, it returns to short steps before resuming reviews.",
   "localDeck.storageLink": "Custom decks: local storage · Information",
   "localDeck.storageTitle": "Deck storage and backups",
-  "anki.day.queueHelp": "Learning steps return at their due time. Reviews from future days are not brought forward.",
+  "anki.day.queueHelp": "Short steps can appear up to 20 minutes early when no other cards remain.",
   "anki.day.settings.today": "Today's new cards",
   "anki.day.settings.effective": "Today's limit",
   "anki.day.settings.introduced": "Introduced",
@@ -12776,5 +12776,11 @@
   "anki.day.state.1": "Learning",
   "anki.day.state.2": "Reviews",
   "anki.day.state.3": "Relearning",
-  "anki.day.previewChanged": "The day has changed. Check the updated intervals and choose your answer."
+  "anki.day.previewChanged": "The day has changed. Check the updated intervals and choose your answer.",
+  "anki.day.finishToday": "Finish for today",
+  "anki.day.resume": "Resume session",
+  "anki.day.ahead": "Learning step brought forward to finish this session.",
+  "anki.day.practiceAll": "RUSH · Practise today’s words",
+  "anki.day.openSummary": "View summary and RUSH",
+  "anki.day.nextSession": "Next session: {{date}} (Europe/Madrid)."
 }
