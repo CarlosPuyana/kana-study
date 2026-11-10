@@ -7,8 +7,10 @@ import {TranslationService} from '../../../core/services/translation.service';
   selector: 'app-kanji-answer',
   template: `
     <section class="answer">
-      <strong class="character" lang="ja">{{kanji().character}}</strong>
-      <h2>{{kanji().meanings[i18n.language()].join(' · ')}}</h2>
+      <div class="answer-heading">
+        <strong class="character" lang="ja">{{kanji().character}}</strong>
+        <h2>{{kanji().meanings[i18n.language()].join(' · ')}}</h2>
+      </div>
       @if(kanji().examples[0]; as example){
         <article class="example" [attr.aria-label]="i18n.t('kanji.examples')">
           <strong class="word" lang="ja">{{example.word}}</strong>

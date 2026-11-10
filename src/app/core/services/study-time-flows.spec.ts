@@ -82,7 +82,12 @@ describe('credited time in the actual study pages', () => {
     if(service instanceof FlagSessionService){await service.answer('jp');service.continue();}
     else {service.reveal();await service.rate('good');if(c.name==='vocabulary'){expect(service.completed()).toBe(false);service.reveal();await service.rate('good');}}
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.results app-study-timer').textContent).toContain('00:04');
+    const resultTimer=fixture.nativeElement.querySelector(c.name==='kanji'?'.play-header app-study-timer':'.results app-study-timer');
+    expect(resultTimer.textContent).toContain('00:04');
+    if(c.name==='kanji'){
+      expect(fixture.nativeElement.querySelectorAll('app-study-timer')).toHaveLength(1);
+      expect(resultTimer.querySelector('[role="status"]')).not.toBeNull();
+    }
     if(c.name==='vocabulary'||c.name==='kanji')expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}),{strict:true});else expect(history.record).toHaveBeenCalledWith(expect.objectContaining({durationSeconds:4}));
     now+=60000;service.clock.pause();expect(service.clock.label()).toBe('00:04');
     fixture.destroy();expect(service.clock.seconds()).toBe(0);
