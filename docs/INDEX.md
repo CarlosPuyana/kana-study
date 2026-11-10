@@ -29,7 +29,10 @@ el estado de su propia fase, incluida la preparación previa a esa publicación.
 - Para la relación entre selección y lienzo Kana: [auditoría de selección](features/kana/KANA_WRITING_SELECTION_AUDIT.md).
 - Para estudiar Vocabulario con respuestas compactas según dirección: [layout de Aprender](features/vocabulary/VOCABULARY_PLAY_COMPACT_LAYOUT.md).
 - Para las listas finales de Kanji/Vocabulario: [contenido de la sesión terminada](features/LEARNING_SESSION_LIST.md).
+- Para Kanji: [auditoría funcional](features/kanji/KANJI_FUNCTIONAL_UX_AUDIT.md), [K0: integridad del progreso](features/kanji/KANJI_K0_PROGRESS_INTEGRITY.md) y [K1: disponibilidad de repasos](features/kanji/KANJI_K1_REVIEW_AVAILABILITY.md).
+- Para el bloqueo de guardado de Vocabulario tras Anti-AFK V2: [causa y recuperación](features/vocabulary/VOCABULARY_SAVE_RECOVERY_HOTFIX.md).
 - Para Tarjetas de Mazos y su finalización: [Por Tiempo y resumen del aprendizaje](features/decks/DECK_TIME_AND_LEARNING_SUMMARY.md).
+- Para el contrato local actualizado de Mazos, pasos y referencias Anki: [reconstrucción Anki/FSRS](features/decks/DECKS_ANKI_PARITY_REBUILD.md).
 - Para evolución por tarjeta y avisos de almacenamiento: [historial individual](features/decks/DECK_CARD_HISTORY.md).
 - Para verificar los controles y diseño de Ajustes de Mazos: [auditoría de Ajustes](features/decks/DECK_SETTINGS_AUDIT.md).
 - Para sus correcciones y el mixed persistido: [mejoras de Ajustes](features/decks/DECK_SETTINGS_IMPROVEMENTS.md).

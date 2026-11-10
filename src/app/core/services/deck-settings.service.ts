@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { DeckSettings, NewCardOrder } from '../models/deck.model';
 import { DeckDefinition } from '../models/deck-catalog.model';
 import { StorageService, workspaceStorageSignal } from './storage.service';
+import {validDeckLearningOptions} from './deck-learning-options';
 
 const STORAGE_KEY = 'kana-study.deck-settings.v1';
 const ORDERS: readonly NewCardOrder[] = ['mixed', 'after-reviews', 'before-reviews'];
@@ -19,7 +20,8 @@ export class DeckSettingsService {
 
   save(deckId: string, settings: DeckSettings): boolean {
     if (
-      !Number.isFinite(settings.desiredRetention)
+      !validDeckLearningOptions(settings)
+      || !Number.isFinite(settings.desiredRetention)
       || settings.desiredRetention <= 0
       || settings.desiredRetention >= 1
       || !ORDERS.includes(settings.newCardOrder)

@@ -51,7 +51,7 @@ export class KanjiSessionService {
   constructor(){effect(()=>{const owner=this.workspace.active(),epoch=this.workspace.activationRevision();untracked(()=>{const s=this.state();if(s&&(s.owner!==owner||s.epoch!==epoch))this.clear();});});}
   private valid():boolean {if(this.activeState())return true;this.clear();return false;}
   async recover():Promise<boolean>{const epoch=this.workspace.activationRevision();try{await this.store.recover();if(epoch!==this.workspace.activationRevision())return false;this.error.set(false);return true;}catch{if(epoch===this.workspace.activationRevision())this.error.set(true);return false;}}
-  start(mode:LearningMode){if(this.dailyLearning.isCompletedToday('kanji'))return false;return this.initialize(this.progress.buildRound(),mode,false);}
+  start(mode:LearningMode){this.dailyLearning.refresh();if(this.dailyLearning.isCompletedToday('kanji'))return false;return this.initialize(this.progress.buildRound(),mode,false);}
   startPractice(units:readonly KanjiStudyUnit[],mode:LearningMode='quick-practice'){
     const valid=units.filter(u=>KANJI_N5.some(e=>e.id===u.kanjiId&&e.enabled)&&KANJI_QUESTION_TYPES.includes(u.questionType));
     const unique=[...new Map(valid.map(u=>[u.kanjiId+':'+u.questionType,{...u,key:'kanji:'+u.kanjiId+':'+u.questionType}])).values()];

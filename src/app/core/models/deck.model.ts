@@ -7,6 +7,9 @@ export interface DeckSettings {
   readonly desiredRetention: DesiredRetention;
   readonly newCardsPerDay: number;
   readonly newCardOrder: NewCardOrder;
+  /** Optional intraday steps in minutes. Missing values retain the original 1m/10m and 10m defaults. */
+  readonly learningSteps?: readonly number[];
+  readonly relearningSteps?: readonly number[];
 }
 
 export interface StudyDeck {

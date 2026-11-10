@@ -142,7 +142,8 @@ describe('LexicalKnowledgeProjectionService: read-only workspace inventory, evid
   });
   it('invalidates after a builtin local commit even when the later outbox enqueue fails',async()=>{
     workspace.activateUser('offline-test');const p=projection(),initial=await p.load();
-    const m=memory('japanese-1500','controlled-unmapped-card'),revision=builtin.revision();
+    const m=memory('japanese-1500','controlled-unmapped-card');
+    if(m.event.cardBefore)await builtin.mergeFromCloud({progress:[{...m.progress,card:m.event.cardBefore,due:m.event.cardBefore.due,state:m.event.cardBefore.state}],events:[],daily:[]});const revision=builtin.revision();
     vi.spyOn(TestBed.inject(SyncOutboxService),'enqueue').mockRejectedValue(Error('controlled outbox failure'));
     await expect(builtin.commitReview(m.progress,m.event,{deckId:'japanese-1500',localDate:'2026-10-22',introducedEntryIds:[],newLimitOverride:null})).rejects.toThrow('controlled outbox failure');
     expect(builtin.revision()).toBe(revision+1);expect(p.snapshot()).toBeNull();

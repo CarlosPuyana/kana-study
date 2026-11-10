@@ -1,3 +1,4 @@
+import {isolatedKanjiAvailability} from '../../core/services/kanji-availability.test-support';
 import { computed, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
@@ -30,11 +31,11 @@ describe('Kanji Daily keyboard shortcuts', () => {
     learning.completed.set(false);
     TestBed.configureTestingModule({
       imports: [KanjiPlayPage],
-      providers: [
+      providers:[isolatedKanjiAvailability,
         { provide: KanjiSessionService, useValue: learning },
         { provide: KanjiProgressService, useValue: { get: () => null } },
         { provide: DailyLearningService, useValue: { isCompletedToday: () => false } },
-        { provide: TranslationService, useValue: { t: (key: string) => key, language: signal('es') } },
+        { provide: TranslationService, useValue: { useStudyCopy:()=>{}, t: (key: string) => key, language: signal('es') } },
         { provide: Router, useValue: { navigateByUrl: vi.fn() } },
       ],
     });

@@ -40,17 +40,17 @@ export function createDeckRouteResource(builtin?:DeckContentProvider){
   catalog,state,ready:()=>pending,
   get restricted(){return !!id?.startsWith('md-')&&!catalog.access.permitted();},
   get deck(){
-   if(owner!==catalog.owner()||id?.startsWith('md-')&&(!catalog.access.permitted()||epoch!==catalog.epoch()))return null;
+   if(owner!==catalog.owner()||epoch!==catalog.epoch()||id?.startsWith('md-')&&!catalog.access.permitted())return null;
    const current=state();
    return current.status==='ready'?current.value.deck:null;
   },
   get content(){
-   if(owner!==catalog.owner()||id?.startsWith('md-')&&(!catalog.access.permitted()||epoch!==catalog.epoch()))return null;
+   if(owner!==catalog.owner()||epoch!==catalog.epoch()||id?.startsWith('md-')&&!catalog.access.permitted())return null;
    const current=state();
    return current.status==='ready'?current.value.content:null;
   },
   title:(i18n:TranslationService)=>{
-   if(owner!==catalog.owner()||id?.startsWith('md-')&&(!catalog.access.permitted()||epoch!==catalog.epoch()))return '';
+   if(owner!==catalog.owner()||epoch!==catalog.epoch()||id?.startsWith('md-')&&!catalog.access.permitted())return '';
    const current=state();
    return current.status==='ready'?deckTitle(current.value.deck,i18n):'';
   },

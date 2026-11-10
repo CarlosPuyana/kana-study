@@ -406,7 +406,7 @@ describe('account sync reconciliation regressions', () => {
     const c=GRAMMAR_V2_CONCEPTS[0];d.grammar.open(c.id);c.exercises.forEach((e,i)=>d.grammar.record(c.id,e.id,i,true));
     const activity=GRAMMAR_V2_INTEGRATION.find(s=>s.track==='core')!;d.grammar.openIntegration('00');d.grammar.openIntegration(activity.id);d.grammar.recordIntegration(activity.id,activity.exercises[0].id,true);
     const progress={deckId:'d',entryId:'a',due:200,state:2,card:{lastReview:100,due:200,state:2}} as any;
-    await TestBed.inject(DeckDatabaseService).commitReview(progress,{id:'e',deckId:'d',entryId:'a',reviewedAt:100} as any,{deckId:'d',localDate:'2026-10-08',introducedEntryIds:['a'],newLimitOverride:null});
+    await TestBed.inject(DeckDatabaseService).commitReview(progress,{id:'e',deckId:'d',entryId:'a',reviewedAt:100,cardBefore:null} as any,{deckId:'d',localDate:'2026-10-08',introducedEntryIds:['a'],newLimitOverride:null});
     const session={id:'s',module:'kana',startedAt:100,endedAt:200,activeSeconds:50,cardsCompleted:4,uniqueContentsSeen:4,cyclesCompleted:1,initialUnitCount:4,localDay:'2026-10-08',interrupted:false};
     await TestBed.inject(LocalRushRepository).saveProgress(session as any,'a');
     expect(await d.sync.syncNow()).toBe(true);
@@ -452,7 +452,7 @@ describe('account sync reconciliation regressions', () => {
     TestBed.inject(SessionHistoryService).record(summary);
     for(const [i,elapsedAnswerMs] of events.entries())await TestBed.inject(DeckDatabaseService).commitReview(
       {deckId:'japanese-1500',entryId:String(i),due:200,state:2,card:{lastReview:100,due:200,state:2}} as any,
-      {id:`capped-${i}`,deckId:'japanese-1500',entryId:String(i),reviewedAt:100,elapsedAnswerMs} as any,
+      {id:`capped-${i}`,deckId:'japanese-1500',entryId:String(i),reviewedAt:100,elapsedAnswerMs,cardBefore:null} as any,
       {deckId:'japanese-1500',localDate:'2026-10-08',introducedEntryIds:['0','1','2'],newLimitOverride:null});
     await TestBed.inject(LocalRushRepository).saveProgress({id:'capped',module:'kana',startedAt:100,endedAt:200,activeSeconds:timer.committedSeconds,cardsCompleted:3,uniqueContentsSeen:3,cyclesCompleted:1,initialUnitCount:3,localDay:'2026-10-08',interrupted:false});
     expect((await TestBed.inject(ProfileStatsService).load()).studySeconds).toBe(1898);

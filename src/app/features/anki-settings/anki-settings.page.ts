@@ -1,4 +1,5 @@
 import * as studyCopy from '../../../assets/i18n/deck-study.generated';
+import {DEFAULT_DECK_LEARNING_STEPS,DEFAULT_DECK_RELEARNING_STEPS,parseDeckSteps} from '../../core/services/deck-learning-options';
 import { DeckStudyCounts } from '../../core/models/deck-study.model';
 import { DeckStudyService } from '../../core/services/deck-study.service';
 import { DailyLearningService } from '../../core/services/daily-learning.service';
@@ -69,6 +70,14 @@ export class AnkiSettingsPage {
   );
   readonly newCardsValid = signal(true);
   readonly saved = signal(false);
+  readonly stepInputs=signal({learning:'1m 10m',relearning:'10m'});
+  readonly stepsValid=signal(true);
+  setSteps(kind:'learning'|'relearning',event:Event):void{
+    this.stepInputs.update(v=>({...v,[kind]:(event.target as HTMLInputElement).value}));
+    const values=this.stepInputs(),learningSteps=parseDeckSteps(values.learning),relearningSteps=parseDeckSteps(values.relearning);
+    this.stepsValid.set(!!learningSteps&&!!relearningSteps);this.saved.set(false);
+    if(learningSteps&&relearningSteps)this.update({learningSteps,relearningSteps});
+  }
 
   constructor() {
     this.i18n.useStudyCopy?.(studyCopy);
@@ -87,6 +96,7 @@ export class AnkiSettingsPage {
         const scope = JSON.stringify([owner, epoch, this.deck.id]);
         if (scope !== this.scope) {
           this.scope = scope; this.draft.set({ ...this.settingsService.settingsFor(this.deck) });
+          const settings=this.draft();this.stepInputs.set({learning:(settings.learningSteps??DEFAULT_DECK_LEARNING_STEPS).map(n=>`${n}m`).join(' '),relearning:(settings.relearningSteps??DEFAULT_DECK_RELEARNING_STEPS).map(n=>`${n}m`).join(' ')});this.stepsValid.set(true);
           this.newCardsValid.set(true); this.saved.set(false); this.error.set(false); this.saving.set(false); this.restoreSaveFocus.set(false);
         }
         void this.refreshDaily();
@@ -129,7 +139,7 @@ export class AnkiSettingsPage {
 
   async save(): Promise<void> {
     const deck = this.deck;
-    if (!deck || !this.newCardsValid() || this.saving()) return;
+    if (!deck || !this.newCardsValid() || !this.stepsValid() || this.saving()) return;
     const owner = this.resource.catalog.owner(), scope = this.scope, epoch = this.resource.catalog.epoch();
     const draft = { ...this.draft() };
     const restoreFocus = document.activeElement === this.saveAction()?.nativeElement;

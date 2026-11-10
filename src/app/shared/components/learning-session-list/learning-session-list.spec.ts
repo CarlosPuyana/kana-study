@@ -1,3 +1,4 @@
+import {isolatedKanjiAvailability} from '../../../core/services/kanji-availability.test-support';
 import {isolatedKanjiAnswers} from '../../../core/services/kanji-answer-store.test-support';
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -37,7 +38,7 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
   beforeEach(()=>{
     localStorage.clear();vi.clearAllMocks();language.set('es');
     const progress=(buildRound:()=>readonly {key:string}[])=>({buildRound:()=>buildRound===wordRound?buildRound().filter(u=>!review.mock.calls.some(c=>c[0].key===u.key&&c[1]==='good')):buildRound(),recordReview:review,recordInternalAttempt:internal,recordPracticeAttempt:practice,completedToday:()=>false,get:()=>null,roundSummary:()=>({roundDue:0,roundNew:10})});
-    TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,
+    TestBed.configureTestingModule({providers:[isolatedKanjiAvailability,isolatedKanjiAnswers,
       {provide:SettingsService,useValue:{language}},
       {provide:KanjiProgressService,useValue:progress(kanjiRound)},
       {provide:VocabularyProgressService,useValue:progress(wordRound)},

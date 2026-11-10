@@ -36,22 +36,23 @@ test.beforeEach(async ({ page }) => {
 async function word(page: Page, i: number) { await expect(page.locator('.front h1')).toHaveText(entries[i].word); }
 async function answer(page: Page, rating: 'again' | 'good') {
   const count = (answers.get(page) ?? 0) + 1; answers.set(page, count);
-  await page.clock.setFixedTime(new Date(NOW.getTime() + count * 1_000));
+  await page.clock.setFixedTime(new Date(await page.evaluate(()=>Date.now()) + 1_000));
   await page.locator('.reveal').click();
   await expect(page.locator('.ratings button')).toHaveCount(2);
   await page.locator('.ratings .' + rating).click();
 }
 
-test('daily future hours are eligible; each response persists and the mandatory sequence completes', async ({ page }, info) => {
+test('daily Review hours are eligible but Relearning waits ten minutes before completing', async ({ page }, info) => {
   await word(page, 0);
-  await expect(page.locator('.advance-note')).toContainText('antes de su hora');
+  await expect(page.locator('.advance-note')).not.toContainText('antes de su hora');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await page.screenshot({ path: `.cache/deck-daily-queue/study-${info.project.name}.png`, fullPage: true });
   await answer(page, 'good');
   await word(page, 1); await answer(page, 'good');
   await word(page, 2); await answer(page, 'again');
   await word(page, 3); await answer(page, 'good');
-  await word(page, 2); await answer(page, 'good');
+  await expect(page.locator('.end-state')).toBeVisible();
+  await page.clock.setFixedTime(new Date(NOW.getTime()+604000));await page.reload();await word(page,2);await answer(page,'good');
   await expect(page.locator('.result-hero')).toBeVisible();
   await expect(page.locator('.metrics strong')).toHaveText(['4', '80%', '1']);
   await expect(page.locator('.metric-help')).toContainText('5 valoraciones guardadas');
@@ -62,38 +63,14 @@ test('daily future hours are eligible; each response persists and the mandatory 
   await expect(page.locator('.metrics strong')).toHaveText(['4', '80%', '1']);
 });
 
-test('separation survives reload; Undo restores the exact prior card and does not duplicate history', async ({ page }, info) => {
-  await word(page, 0); await answer(page, 'again');
-  await word(page, 1); await answer(page, 'good');
-  await word(page, 2); // A still owes a second distinct alternative
-  await page.reload(); await word(page, 2);
-  await answer(page, 'good'); await word(page, 0);
-  await page.locator('.undo').click(); await word(page, 2);
-  await answer(page, 'good'); await word(page, 0);
-  await answer(page, 'good'); await word(page, 3);
-  await answer(page, 'good');
-  await expect(page.locator('.metrics strong')).toHaveText(['4', '80%', '1']);
-  await expect(page.locator('.metric-help')).toContainText('5 valoraciones guardadas');
-  await page.goto('./#/anki/japanese-1500/cards');
-  await page.getByRole('button', { name: 'Por Tiempo', exact: true }).click();
-  await expect(page.locator('.time-heading').filter({ hasText: 'Hoy, más tarde' })).toHaveCount(0);
-  await page.locator('.time-heading').filter({ hasText: /^Mañana/ }).click();
-  await page.locator('.entry-card').first().click();
-  await page.locator('.history>summary').click();
-  await expect(page.locator('.timeline>li')).toHaveCount(2);
-  await page.screenshot({ path: `.cache/deck-daily-queue/history-${info.project.name}.png`, fullPage: true });
+test('a waiting lapse survives reload; Undo restores the exact previous card without duplicate history',async({page})=>{
+ await word(page,0);await answer(page,'again');await word(page,1);await answer(page,'good');await word(page,2);await page.reload();await word(page,2);await answer(page,'good');await word(page,3);await answer(page,'good');
+ await expect(page.locator('.end-state')).toBeVisible();await page.clock.setFixedTime(new Date(NOW.getTime()+601000));await page.reload();await word(page,0);await answer(page,'good');await expect(page.locator('.result-hero')).toBeVisible();await page.locator('.undo').click();await word(page,0);await answer(page,'good');await expect(page.locator('.metric-help')).toContainText('5 valoraciones guardadas');
+ await page.goto('./#/anki/japanese-1500/cards');await page.getByRole('searchbox').fill('#1');await page.locator('.entry-card').click();await page.locator('.history>summary').click();await expect(page.locator('.timeline>li')).toHaveCount(2);
 });
 
-test('two distinct intermediates precede a repeated earlier-due card; leaving does not create an answer', async ({ page }) => {
-  await word(page, 0); await answer(page, 'again');
-  await word(page, 1); await answer(page, 'again');
-  await word(page, 2); await answer(page, 'good');
-  await word(page, 0); // both B and C counted, regardless of B remaining today
-  await page.goto('./#/anki');
-  await page.goto('./#/anki/japanese-1500/study'); await word(page, 0);
-  await answer(page, 'good');
-  await word(page, 1); await answer(page, 'good');
-  await word(page, 3); await answer(page, 'good');
-  await expect(page.locator('.metrics strong')).toHaveText(['4', '67%', '2']);
-  await expect(page.locator('.metric-help')).toContainText('6 valoraciones guardadas');
+test('leaving a future Relearning step creates no answer and never advances it early',async({page})=>{
+ await word(page,0);await answer(page,'again');await word(page,1);await answer(page,'again');await word(page,2);await answer(page,'good');await word(page,3);await answer(page,'good');await expect(page.locator('.end-state')).toBeVisible();
+ await page.goto('./#/anki');await page.goto('./#/anki/japanese-1500/study');await expect(page.locator('.front h1')).toHaveCount(0);await expect(page.locator('.metric-help')).toContainText('4 valoraciones guardadas');
+ await page.clock.setFixedTime(new Date(NOW.getTime()+601000));await page.reload();await word(page,0);await answer(page,'good');await word(page,1);await answer(page,'good');await expect(page.locator('.metrics strong')).toHaveText(['4','67%','2']);await expect(page.locator('.metric-help')).toContainText('6 valoraciones guardadas');
 });

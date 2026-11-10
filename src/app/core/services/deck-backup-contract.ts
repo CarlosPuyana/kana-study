@@ -73,12 +73,12 @@ export async function validateBackupRecords(records:BackupRecords):Promise<void>
     keys(p.progress,['deckId','entryId','due','state','card']);fsrs(p.progress.card);check(progressValid(p.progress)&&equal(e.cardBefore,ctx.before)&&e.id===op.id&&p.progress.deckId===e.deckId&&p.progress.entryId===e.entryId);
     const a=p.progress.card;check(a.due===e.dueAfter&&a.state===e.stateAfter&&a.stability===e.stabilityAfter&&a.difficulty===e.difficultyAfter&&a.lastReview===e.fsrsLog.review);
     const b=e.cardBefore;check(e.stateBefore===(b?.state??0)&&e.stabilityBefore===(b?.stability??0)&&e.difficultyBefore===(b?.difficulty??0));if(b)check(e.dueBefore===b.due);check(e.fsrsLog.state===e.stateBefore&&e.fsrsLog.stability===e.stabilityBefore&&e.fsrsLog.difficulty===e.difficultyBefore);
-    const old=maps.daily.get(key(p.daily.deckId,p.daily.localDate))?.value;check((old?.completedAt==null||b&&getLocalStudyDayKey(new Date(e.reviewedAt))===p.daily.localDate&&deckCardEligible(b,new Date(e.reviewedAt),true))&&!maps.events.has(e.id));
+    const old=maps.daily.get(key(p.daily.deckId,p.daily.localDate))?.value;check(!maps.events.has(e.id)); // Preserve historical early steps; verify lineage, not today's scheduling policy.
     maps.progress.set(k,row(k,p.progress,{head:e.id}));maps.events.set(e.id,row(e.id,e,{head:before?.head??null}));maps.daily.set(key(p.daily.deckId,p.daily.localDate),row(key(p.daily.deckId,p.daily.localDate),{...p.daily,introducedEntryIds:[...new Set([...(old?.introducedEntryIds??[]),...p.daily.introducedEntryIds])]}));
    }else{
     const original=maps.events.get(e.id);check(original&&!original.voidedBy&&before?.head===e.id&&equal(original.value,e)&&op.id===await digest('undo-',e.id));original.voidedBy=op.id;
     maps.progress.set(k,{...before!,value:e.cardBefore?{deckId:e.deckId,entryId:e.entryId,due:e.cardBefore.due,state:e.cardBefore.state,card:e.cardBefore}:null,head:original.head??null});const old=maps.daily.get(key(p.daily.deckId,p.daily.localDate))?.value??p.daily;
-    maps.daily.set(key(p.daily.deckId,p.daily.localDate),row(key(p.daily.deckId,p.daily.localDate),{...old,...(p.daily.completedAt===null&&ctx.daily?.completedAt===null?{completedAt:null}:{}),introducedEntryIds:e.cardBefore===null?old.introducedEntryIds.filter((v:string)=>v!==e.entryId):old.introducedEntryIds}));
+    maps.daily.set(key(p.daily.deckId,p.daily.localDate),row(key(p.daily.deckId,p.daily.localDate),{...old,...(p.daily.completedAt===null&&ctx.daily?.completedAt===null?{completedAt:null}:{}),introducedEntryIds:(e.cardBefore===null||e.cardBefore.state===0)?old.introducedEntryIds.filter((v:string)=>v!==e.entryId):old.introducedEntryIds}));
    }
   }else if(['delete','restore','archive'].includes(op.kind)){
    // The current local lifecycle API journals intent without applying remote state locally.

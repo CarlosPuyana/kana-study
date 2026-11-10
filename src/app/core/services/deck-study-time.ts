@@ -4,10 +4,11 @@ import type { SerializedFsrsCard } from '../models/deck-study.model';
 export const getLocalStudyDayKey = getSpainDayKey;
 export const DECK_LEARNING_AHEAD_MS = 20 * 60_000;
 
-/** The full Madrid date decides eligibility for every scheduled FSRS state. */
+/** Intraday steps use their actual deadline. Review uses the configured Madrid study day. */
 export function deckCardEligible(card: SerializedFsrsCard, now: Date, _allowAhead = false): boolean {
+  if(card.state===1||card.state===3)return card.due<=now.getTime();
   const day = getLocalStudyDayKey(now), dueDay = getLocalStudyDayKey(new Date(card.due));
-  return [1, 2, 3].includes(card.state) && dueDay <= day;
+  return card.state===2 && dueDay <= day;
 }
 
 /** Madrid calendar boundary (23/24/25-hour days), independent of the host timezone. */

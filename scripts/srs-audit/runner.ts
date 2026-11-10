@@ -108,15 +108,14 @@ const graduation = unfuzzed.scheduler.preview(progress(learning), .9, graduation
 const official = fsrs(params).next(deserializeDeckCard(learning), graduationAt, Rating.Good);
 // FSRS log describes the PREVIOUS card; it must not be rewritten to match the next interval.
 assert.deepEqual(graduation.good.log, serializeDeckReviewLog(official.log));
-assert.equal(graduation.good.card.scheduledDays, 1);
-assert.equal(graduation.good.card.due, nextLocalStudyDayStart(graduationAt));
+assert.deepEqual(graduation.good.card, serializeDeckCard(official.card));
 assert.equal(graduation.good.card.stability, official.card.stability);
 const anchored = unfuzzed.scheduler.branch(graduation, 'again', new Date(graduationAt.getTime() + 13_000));
 assert.equal(anchored.card.due - (graduationAt.getTime() + 13_000), graduation.again.card.due - graduation.generatedAt);
 const delayedAt = new Date(start.getTime() + 2 * day);
-const frozen = unfuzzed.scheduler.branch(unfuzzed.scheduler.preview(progress(common), .9, start), 'good', delayedAt).card;
+assert.throws(() => unfuzzed.scheduler.branch(unfuzzed.scheduler.preview(progress(common), .9, start), 'good', delayedAt), /preview expired/);
 const recalculated = unfuzzed.scheduler.preview(progress(common), .9, delayedAt).good.card;
-assert.notEqual(frozen.stability, recalculated.stability);
+assert.notEqual(unfuzzed.scheduler.preview(progress(common), .9, start).good.card.stability, recalculated.stability);
 const midnightA = new Date('2026-11-04T23:59:00Z'), midnightB = new Date('2026-11-05T00:01:00Z');
 assert.equal(dateDiffInDays(midnightA, midnightB), 1);
 const midnightCard = { ...common, lastReview: midnightA.getTime() };
@@ -135,8 +134,25 @@ const maximumCard = { ...deserializeDeckCard(common), stability: 36500, difficul
 const maximumGood = fsrs(params).next(maximumCard, start, Rating.Good).card.scheduled_days;
 assert.equal(maximumGood, 36501); // Upstream Hard+1 ordering exceeds maximum_interval at saturation.
 
+// Synthetic これ examples requested for the rebuild. These are engine simulations,
+// not Nora's history and not an independent reference implementation of Anki.
+const koreStart=rows.length, koreDay=new Date('2026-11-08T12:00:00Z');
+let kore:SerializedFsrsCard|null=null,koreAt=koreDay;
+for(const rating of ['again','again','good'] as const){kore=step('deck','Kore A: nueva',kore,koreAt,rating);koreAt=new Date(kore.due);}
+step('deck','Kore B: graduación',kore,koreAt,'good');
+for(const [name,stability]of [['C',30],['E',90]]as const){
+ const mature={...common,stability,scheduledDays:stability,lastReview:koreDay.getTime()-stability*day,due:koreDay.getTime(),reps:50};
+ const lapse=step('deck',`Kore ${name}: olvido`,mature,koreDay,'again');
+ step('deck',`Kore ${name}: recuperación`,lapse,new Date(lapse.due),'good');
+ if(name==='E')step('deck','Kore E: Good sin olvido registrado',mature,koreDay,'good');
+}
+kore=null;koreAt=koreDay;
+for(let i=0;i<3;i++){kore=step('deck','Kore D: fallos ayer',kore,koreAt,'again');koreAt=new Date(kore.due);}
+step('deck','Kore D: Good hoy',kore,new Date(koreDay.getTime()+day),'good');
+writeFileSync('.cache/anki-parity/kore-scenarios.json',JSON.stringify(rows.slice(koreStart),null,2)+'\n');
+
 const evidence = { version: FSRSVersion, start: start.toISOString(), weights: params.w, parameters: params,
-  checks: 'All assertions passed', rows, delayedPreview: { at: delayedAt.toISOString(), frozen, recalculated },
+  checks: 'All assertions passed', rows, delayedPreview: { at: delayedAt.toISOString(), expiredPreviewRejected: true, recalculated },
   edgeCases: { midnight: { before: midnightA.toISOString(), after: midnightB.toISOString(), reportedR, usedR }, maximumGood },
   rounding: [29, 30, 44, 45, 60, 74, 75, 90, 104, 105, 364, 365].map(days => ({ days, label: formatStudyInterval(days * day) })) };
 writeFileSync('.cache/srs-audit/results.json', JSON.stringify(evidence, null, 2) + '\n');

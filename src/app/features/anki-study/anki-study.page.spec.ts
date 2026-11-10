@@ -94,6 +94,17 @@ describe('AnkiStudyPage', () => {
     expect(fixture.nativeElement.textContent).toContain('Yo soy Ann.');
   });
 
+  it('refreshes an expired preview visibly and requires a new confirmation before saving', async () => {
+    vi.useFakeTimers({toFake:['Date']});
+    const page=fixture.componentInstance;page.reveal();const before=page.preview()!;
+    vi.setSystemTime(before.generatedAt+2*86400000);
+    await page.rate('good');fixture.detectChanges();
+    expect(study.ratings).toEqual([]);expect(page.previewChanged()).toBe(true);
+    expect(page.preview()!.generatedAt).toBe(Date.now());
+    expect(fixture.nativeElement.textContent).toContain('anki.day.previewChanged');
+    await page.rate('good');expect(study.ratings).toEqual(['good']);
+  });
+
   it('supports Space reveal and numeric ratings without rating before reveal', async () => {
     fixture.componentInstance.handleKey(new KeyboardEvent('keydown', { key: '1', code: 'Digit1' }));
     expect(study.ratings).toEqual([]);
@@ -186,8 +197,8 @@ describe('AnkiStudyPage', () => {
     const first=page.rate('good');monotonic+=60000;reject(new Error('save'));await first;
     expect(page.error()).toBe(true);expect(page.clock.committedSeconds).toBe(0);
     expect(page.clock.appearanceMilliseconds()).toBe(4000);
-    monotonic+=3000;await page.rate('good');expect(study.times).toEqual([7000]);
-    expect(page.clock.committedSeconds).toBe(7);
+    monotonic+=3000;await page.rate('good');expect(study.times).toEqual([4000]);
+    expect(page.clock.committedSeconds).toBe(4);
   });
   it('a next-card loading error after a successful review cannot rate the saved card again',async()=>{
     const page=fixture.componentInstance;page.clock.attach();monotonic=4000;page.reveal();
@@ -199,22 +210,22 @@ describe('AnkiStudyPage', () => {
 
   it('refreshes a waiting queue at its boundary without crediting wait, then cleans its timer',async()=>{
     const now=new Date('2026-10-28T10:00:00Z');
-    fixture.destroy();vi.useFakeTimers({toFake:['Date','setInterval','clearInterval']});vi.setSystemTime(now);
+    fixture.destroy();vi.useFakeTimers({toFake:['Date','setInterval','clearInterval','setTimeout','clearTimeout']});vi.setSystemTime(now);
     Object.assign(study.snapshotValue,{nextRefreshAt:now.getTime()+1000,learningPending:1});
     Object.assign(study.snapshotValue,{nextDue:now.getTime()+21*60_000});
     const choose=vi.spyOn(study,'chooseNext').mockReturnValueOnce({choice:null,cursor:{debt:0}});
-    fixture=TestBed.createComponent(AnkiStudyPage);fixture.detectChanges();await fixture.whenStable();fixture.detectChanges();
-    const page=fixture.componentInstance,read=vi.spyOn(study,'snapshot');
+    fixture=TestBed.createComponent(AnkiStudyPage);fixture.detectChanges();await vi.advanceTimersByTimeAsync(0);TestBed.tick();fixture.detectChanges();
+    const page=fixture.componentInstance,read=vi.spyOn(study,'snapshot').mockImplementation(async()=>({...study.snapshotValue,nextRefreshAt:Date.now()+100000}));
     expect(page.choice()).toBeNull();expect(study.completed).toBe(0);
     expect(fixture.nativeElement.textContent).toContain('anki.scheduler.nextDueAt');
     monotonic+=60000;
-    await vi.advanceTimersByTimeAsync(1000);await fixture.whenStable();fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(1000);await vi.advanceTimersByTimeAsync(0);TestBed.tick();fixture.detectChanges();
     Object.assign(study.snapshotValue,{nextRefreshAt:Date.now()+100000});
     expect(read).toHaveBeenCalled();expect(page.choice()).not.toBeNull();expect(page.clock.committedSeconds).toBe(0);
     expect(choose).toHaveBeenCalledTimes(2);
     page.reveal();const choice=page.choice(),preview=page.preview();read.mockClear();
     Object.assign(study.snapshotValue,{nextRefreshAt:Date.now()+1000});
-    await vi.advanceTimersByTimeAsync(1000);await fixture.whenStable();
+    await vi.advanceTimersByTimeAsync(1000);await vi.advanceTimersByTimeAsync(0);TestBed.tick();
     expect(page.choice()).toBe(choice);expect(page.preview()).toBe(preview);expect(page.revealed()).toBe(true);
     fixture.destroy();const calls=read.mock.calls.length;await vi.advanceTimersByTimeAsync(3000);
     expect(read).toHaveBeenCalledTimes(calls);

@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import {fileURLToPath} from 'node:url';
 export const GRAMMAR_COPY_KEY=/^grammar\.(content|n5|audit|stable|expansion|v2)\./;
-export const STUDY_COPY_KEY=/^(vocabulary\.daily\.|anki\.(day|results|rush)\.|kaishi\.(autoAudio|preparing|playing|autoplayBlocked|audioFailed)$)/;
+export const STUDY_COPY_KEY=/^(kanji\.availability\.|vocabulary\.daily\.|anki\.(day|results|rush|scheduler)\.|kaishi\.(autoAudio|preparing|playing|autoplayBlocked|audioFailed)$)/;
 export function compiledDomain(grammar){
  const languages=['es','en','ca'],dictionaries=Object.fromEntries(languages.map(lang=>[lang,Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync(`src/assets/i18n/${lang}.json`,'utf8'))).filter(([key])=>grammar==='conjugations'?key.startsWith('conjugations.'):!key.startsWith('conjugations.')&&(grammar==='puyi'?key.startsWith('puyi.'):grammar==='study'?STUDY_COPY_KEY.test(key):grammar==='local'?key.startsWith('localDeck.'):grammar==='backup'?key.startsWith('deckBackup.'):!key.startsWith('puyi.')&&!STUDY_COPY_KEY.test(key)&&!key.startsWith('localDeck.')&&!key.startsWith('deckBackup.')&&GRAMMAR_COPY_KEY.test(key)===grammar)))]));
  const shared=Object.fromEntries(Object.entries(dictionaries.es).filter(([key,value])=>languages.every(lang=>Object.hasOwn(dictionaries[lang],key)&&dictionaries[lang][key]===value)));

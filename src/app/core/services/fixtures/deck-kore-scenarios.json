@@ -1,0 +1,509 @@
+[
+  {
+    "scenario": "Kore A: nueva",
+    "module": "deck",
+    "at": "2026-11-08T12:00:00.000Z",
+    "retention": 0.9,
+    "rating": "again",
+    "before": {
+      "due": 1794139200000,
+      "stability": 0,
+      "difficulty": 0,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 0,
+      "lapses": 0,
+      "state": 0,
+      "lastReview": null
+    },
+    "elapsed": 0,
+    "retrievability": null,
+    "after": {
+      "due": 1794139260000,
+      "stability": 0.212,
+      "difficulty": 6.4133,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 1,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139200000
+    },
+    "intervalDays": 0.0006944444444444445,
+    "due": "2026-11-08T12:01:00.000Z",
+    "label": {
+      "value": 1,
+      "unit": "minute"
+    }
+  },
+  {
+    "scenario": "Kore A: nueva",
+    "module": "deck",
+    "at": "2026-11-08T12:01:00.000Z",
+    "retention": 0.9,
+    "rating": "again",
+    "before": {
+      "due": 1794139260000,
+      "stability": 0.212,
+      "difficulty": 6.4133,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 1,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139200000
+    },
+    "elapsed": 0,
+    "retrievability": 1,
+    "after": {
+      "due": 1794139320000,
+      "stability": 0.08335672,
+      "difficulty": 8.80630447,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 2,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139260000
+    },
+    "intervalDays": 0.0006944444444444445,
+    "due": "2026-11-08T12:02:00.000Z",
+    "label": {
+      "value": 1,
+      "unit": "minute"
+    }
+  },
+  {
+    "scenario": "Kore A: nueva",
+    "module": "deck",
+    "at": "2026-11-08T12:02:00.000Z",
+    "retention": 0.9,
+    "rating": "good",
+    "before": {
+      "due": 1794139320000,
+      "stability": 0.08335672,
+      "difficulty": 8.80630447,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 2,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139260000
+    },
+    "elapsed": 0,
+    "retrievability": 1,
+    "after": {
+      "due": 1794139920000,
+      "stability": 0.10314065,
+      "difficulty": 8.79272653,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 1,
+      "reps": 3,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139320000
+    },
+    "intervalDays": 0.006944444444444444,
+    "due": "2026-11-08T12:12:00.000Z",
+    "label": {
+      "value": 10,
+      "unit": "minutes"
+    }
+  },
+  {
+    "scenario": "Kore B: graduación",
+    "module": "deck",
+    "at": "2026-11-08T12:12:00.000Z",
+    "retention": 0.9,
+    "rating": "good",
+    "before": {
+      "due": 1794139920000,
+      "stability": 0.10314065,
+      "difficulty": 8.79272653,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 1,
+      "reps": 3,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139320000
+    },
+    "elapsed": 0,
+    "retrievability": 1,
+    "after": {
+      "due": 1794226320000,
+      "stability": 0.12584424,
+      "difficulty": 8.77916217,
+      "elapsedDays": 0,
+      "scheduledDays": 1,
+      "learningSteps": 0,
+      "reps": 4,
+      "lapses": 0,
+      "state": 2,
+      "lastReview": 1794139920000
+    },
+    "intervalDays": 1,
+    "due": "2026-11-09T12:12:00.000Z",
+    "label": {
+      "value": 1,
+      "unit": "day"
+    }
+  },
+  {
+    "scenario": "Kore C: olvido",
+    "module": "deck",
+    "at": "2026-11-08T12:00:00.000Z",
+    "retention": 0.9,
+    "rating": "again",
+    "before": {
+      "due": 1794139200000,
+      "stability": 30,
+      "difficulty": 5,
+      "elapsedDays": 0,
+      "scheduledDays": 30,
+      "learningSteps": 0,
+      "reps": 50,
+      "lapses": 0,
+      "state": 2,
+      "lastReview": 1791547200000
+    },
+    "elapsed": 30,
+    "retrievability": 0.9,
+    "after": {
+      "due": 1794139800000,
+      "stability": 2.32398883,
+      "difficulty": 8.34176237,
+      "elapsedDays": 30,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 51,
+      "lapses": 1,
+      "state": 3,
+      "lastReview": 1794139200000
+    },
+    "intervalDays": 0.006944444444444444,
+    "due": "2026-11-08T12:10:00.000Z",
+    "label": {
+      "value": 10,
+      "unit": "minutes"
+    }
+  },
+  {
+    "scenario": "Kore C: recuperación",
+    "module": "deck",
+    "at": "2026-11-08T12:10:00.000Z",
+    "retention": 0.9,
+    "rating": "good",
+    "before": {
+      "due": 1794139800000,
+      "stability": 2.32398883,
+      "difficulty": 8.34176237,
+      "elapsedDays": 30,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 51,
+      "lapses": 1,
+      "state": 3,
+      "lastReview": 1794139200000
+    },
+    "elapsed": 0,
+    "retrievability": 1,
+    "after": {
+      "due": 1794312600000,
+      "stability": 2.32398883,
+      "difficulty": 8.32864898,
+      "elapsedDays": 0,
+      "scheduledDays": 2,
+      "learningSteps": 0,
+      "reps": 52,
+      "lapses": 1,
+      "state": 2,
+      "lastReview": 1794139800000
+    },
+    "intervalDays": 2,
+    "due": "2026-11-10T12:10:00.000Z",
+    "label": {
+      "value": 2,
+      "unit": "days"
+    }
+  },
+  {
+    "scenario": "Kore E: olvido",
+    "module": "deck",
+    "at": "2026-11-08T12:00:00.000Z",
+    "retention": 0.9,
+    "rating": "again",
+    "before": {
+      "due": 1794139200000,
+      "stability": 90,
+      "difficulty": 5,
+      "elapsedDays": 0,
+      "scheduledDays": 90,
+      "learningSteps": 0,
+      "reps": 50,
+      "lapses": 0,
+      "state": 2,
+      "lastReview": 1786363200000
+    },
+    "elapsed": 90,
+    "retrievability": 0.9,
+    "after": {
+      "due": 1794139800000,
+      "stability": 3.60312048,
+      "difficulty": 8.34176237,
+      "elapsedDays": 90,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 51,
+      "lapses": 1,
+      "state": 3,
+      "lastReview": 1794139200000
+    },
+    "intervalDays": 0.006944444444444444,
+    "due": "2026-11-08T12:10:00.000Z",
+    "label": {
+      "value": 10,
+      "unit": "minutes"
+    }
+  },
+  {
+    "scenario": "Kore E: recuperación",
+    "module": "deck",
+    "at": "2026-11-08T12:10:00.000Z",
+    "retention": 0.9,
+    "rating": "good",
+    "before": {
+      "due": 1794139800000,
+      "stability": 3.60312048,
+      "difficulty": 8.34176237,
+      "elapsedDays": 90,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 51,
+      "lapses": 1,
+      "state": 3,
+      "lastReview": 1794139200000
+    },
+    "elapsed": 0,
+    "retrievability": 1,
+    "after": {
+      "due": 1794485400000,
+      "stability": 3.60312048,
+      "difficulty": 8.32864898,
+      "elapsedDays": 0,
+      "scheduledDays": 4,
+      "learningSteps": 0,
+      "reps": 52,
+      "lapses": 1,
+      "state": 2,
+      "lastReview": 1794139800000
+    },
+    "intervalDays": 4,
+    "due": "2026-11-12T12:10:00.000Z",
+    "label": {
+      "value": 4,
+      "unit": "days"
+    }
+  },
+  {
+    "scenario": "Kore E: Good sin olvido registrado",
+    "module": "deck",
+    "at": "2026-11-08T12:00:00.000Z",
+    "retention": 0.9,
+    "rating": "good",
+    "before": {
+      "due": 1794139200000,
+      "stability": 90,
+      "difficulty": 5,
+      "elapsedDays": 0,
+      "scheduledDays": 90,
+      "learningSteps": 0,
+      "reps": 50,
+      "lapses": 0,
+      "state": 2,
+      "lastReview": 1786363200000
+    },
+    "elapsed": 90,
+    "retrievability": 0.9,
+    "after": {
+      "due": 1813752000000,
+      "stability": 227.47246673,
+      "difficulty": 4.99022837,
+      "elapsedDays": 90,
+      "scheduledDays": 227,
+      "learningSteps": 0,
+      "reps": 51,
+      "lapses": 0,
+      "state": 2,
+      "lastReview": 1794139200000
+    },
+    "intervalDays": 227,
+    "due": "2027-06-23T12:00:00.000Z",
+    "label": {
+      "value": 8,
+      "unit": "months"
+    }
+  },
+  {
+    "scenario": "Kore D: fallos ayer",
+    "module": "deck",
+    "at": "2026-11-08T12:00:00.000Z",
+    "retention": 0.9,
+    "rating": "again",
+    "before": {
+      "due": 1794139200000,
+      "stability": 0,
+      "difficulty": 0,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 0,
+      "lapses": 0,
+      "state": 0,
+      "lastReview": null
+    },
+    "elapsed": 0,
+    "retrievability": null,
+    "after": {
+      "due": 1794139260000,
+      "stability": 0.212,
+      "difficulty": 6.4133,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 1,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139200000
+    },
+    "intervalDays": 0.0006944444444444445,
+    "due": "2026-11-08T12:01:00.000Z",
+    "label": {
+      "value": 1,
+      "unit": "minute"
+    }
+  },
+  {
+    "scenario": "Kore D: fallos ayer",
+    "module": "deck",
+    "at": "2026-11-08T12:01:00.000Z",
+    "retention": 0.9,
+    "rating": "again",
+    "before": {
+      "due": 1794139260000,
+      "stability": 0.212,
+      "difficulty": 6.4133,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 1,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139200000
+    },
+    "elapsed": 0,
+    "retrievability": 1,
+    "after": {
+      "due": 1794139320000,
+      "stability": 0.08335672,
+      "difficulty": 8.80630447,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 2,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139260000
+    },
+    "intervalDays": 0.0006944444444444445,
+    "due": "2026-11-08T12:02:00.000Z",
+    "label": {
+      "value": 1,
+      "unit": "minute"
+    }
+  },
+  {
+    "scenario": "Kore D: fallos ayer",
+    "module": "deck",
+    "at": "2026-11-08T12:02:00.000Z",
+    "retention": 0.9,
+    "rating": "again",
+    "before": {
+      "due": 1794139320000,
+      "stability": 0.08335672,
+      "difficulty": 8.80630447,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 2,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139260000
+    },
+    "elapsed": 0,
+    "retrievability": 1,
+    "after": {
+      "due": 1794139380000,
+      "stability": 0.03485141,
+      "difficulty": 9.59286876,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 3,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139320000
+    },
+    "intervalDays": 0.0006944444444444445,
+    "due": "2026-11-08T12:03:00.000Z",
+    "label": {
+      "value": 1,
+      "unit": "minute"
+    }
+  },
+  {
+    "scenario": "Kore D: Good hoy",
+    "module": "deck",
+    "at": "2026-11-09T12:00:00.000Z",
+    "retention": 0.9,
+    "rating": "good",
+    "before": {
+      "due": 1794139380000,
+      "stability": 0.03485141,
+      "difficulty": 9.59286876,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "learningSteps": 0,
+      "reps": 3,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794139320000
+    },
+    "elapsed": 1,
+    "retrievability": 0.59456626,
+    "after": {
+      "due": 1794226200000,
+      "stability": 0.24732359,
+      "difficulty": 9.57850426,
+      "elapsedDays": 1,
+      "scheduledDays": 0,
+      "learningSteps": 1,
+      "reps": 4,
+      "lapses": 0,
+      "state": 1,
+      "lastReview": 1794225600000
+    },
+    "intervalDays": 0.006944444444444444,
+    "due": "2026-11-09T12:10:00.000Z",
+    "label": {
+      "value": 10,
+      "unit": "minutes"
+    }
+  }
+]

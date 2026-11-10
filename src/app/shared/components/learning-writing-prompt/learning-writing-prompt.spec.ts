@@ -1,3 +1,4 @@
+import {isolatedKanjiAvailability} from '../../../core/services/kanji-availability.test-support';
 import {isolatedKanjiAnswers} from '../../../core/services/kanji-answer-store.test-support';
 import {TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
@@ -30,7 +31,7 @@ for(const module of ['kana','kanji'] as const)describe(`${module} drawing inside
     kanaRound=[{key:`${kana.id}:romaji-to-kana`,kanaId:kana.id,questionType:'romaji-to-kana'}];
     kanjiRound=[{key:`kanji:${kanji.id}:meaning-to-kanji`,kanjiId:kanji.id,questionType:'meaning-to-kanji'}];
     progress.buildRound.mockImplementation(()=>module==='kana'?kanaRound:kanjiRound);
-    TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,provideRouter([]),{provide:ProgressService,useValue:progress},{provide:KanjiProgressService,useValue:progress},
+    TestBed.configureTestingModule({providers:[isolatedKanjiAvailability,isolatedKanjiAnswers,provideRouter([]),{provide:ProgressService,useValue:progress},{provide:KanjiProgressService,useValue:progress},
       {provide:MedalService,useValue:{evaluateUnlocks:()=>[]}},{provide:KanjiMedalService,useValue:{evaluateUnlocks:()=>[]}},
       {provide:SessionHistoryService,useValue:{record:vi.fn()}},{provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:vi.fn()}},
       {provide:KanaStrokesService,useValue:{load:async()=>[glyph]}},{provide:JapaneseGlyphService,useValue:{load:async()=>[glyph]}}]});

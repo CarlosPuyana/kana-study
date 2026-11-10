@@ -77,7 +77,7 @@ for(const module of ['kana','vocabulary','kanji'] as const){
     it('normal sessions still update FSRS, daily history and medals',async ()=>{
       const s=setup();s.service.start('quick-practice');await s.service.answerQuick(await s.answer());s.service.continueQuick();if(module==='vocabulary'){expect(s.service.completed()).toBe(false);await s.service.answerQuick(await s.answer());s.service.continueQuick();expect(s.progress.recordInternalAttempt).toHaveBeenCalledTimes(1);}
       expect(s.progress.recordReview).toHaveBeenCalledTimes(1);expect(s.history.record).toHaveBeenCalledTimes(1);
-      expect(s.daily.refresh).toHaveBeenCalledTimes(1);expect(s.medals.evaluateUnlocks).toHaveBeenCalledTimes(1);
+      expect(s.daily.refresh).toHaveBeenCalledTimes(module==='kanji'?2:1);expect(s.medals.evaluateUnlocks).toHaveBeenCalledTimes(1);
     });
     it('restart retains additional-practice isolation',async ()=>{
       const s=setup();s.focus();await s.service.answerQuick(await s.answer());s.service.continueQuick();

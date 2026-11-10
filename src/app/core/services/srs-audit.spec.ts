@@ -101,17 +101,13 @@ describe('SRS audit: independently checked equations and persistence', () => {
     expect(forgetting_curve(generatorParameters().w, 1, 30)).toBe(.99505387);
   });
 
-  it('documents a stale multi-day preview rather than hiding it with recalculation', () => {
-    const scheduler = TestBed.inject(DeckSchedulerService), preview = scheduler.preview(progress, .9, NOW);
-    const at = new Date(NOW.getTime() + 2 * DAY);
-    const frozen = scheduler.branch(preview, 'good', at), fresh = scheduler.preview(progress, .9, at);
-    expect(frozen.card.stability).not.toBe(fresh.good.card.stability);
-    expect(frozen.card.elapsedDays).toBe(30);
-    expect(fresh.good.card.elapsedDays).toBe(32);
+  it('rejects a stale multi-day preview instead of committing obsolete memory', () => {
+    const scheduler=TestBed.inject(DeckSchedulerService),preview=scheduler.preview(progress,.9,NOW);
+    expect(()=>scheduler.branch(preview,'good',new Date(NOW.getTime()+2*DAY))).toThrow('expired');
   });
 
-  it('uses Madrid-day availability for Review and Learning independently of the due hour', () => {
+  it('uses Madrid-day Review availability and precise Learning deadlines', () => {
     expect(deckCardEligible({ ...card, due: Date.parse('2026-11-04T20:00:00Z') }, NOW)).toBe(true);
-    expect(deckCardEligible({ ...card, state: State.Learning, due: Date.parse('2026-11-04T20:00:00Z') }, NOW)).toBe(true);
+    expect(deckCardEligible({ ...card, state: State.Learning, due: Date.parse('2026-11-04T20:00:00Z') }, NOW)).toBe(false);
   });
 });

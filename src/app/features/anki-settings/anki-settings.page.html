@@ -55,8 +55,9 @@
         </div>
       </fieldset>
 
+      <fieldset class="learning-steps"><legend>{{i18n.t('anki.day.steps.title')}}</legend><p class="description">{{i18n.t('anki.day.steps.help')}}</p><label class="number-field"><span>{{i18n.t('anki.day.steps.learning')}}</span><input type="text" [disabled]="saving()" [value]="stepInputs().learning" (input)="setSteps('learning',$event)" [attr.aria-invalid]="!stepsValid()" /></label><label class="number-field"><span>{{i18n.t('anki.day.steps.relearning')}}</span><input type="text" [disabled]="saving()" [value]="stepInputs().relearning" (input)="setSteps('relearning',$event)" [attr.aria-invalid]="!stepsValid()" /></label>@if(!stepsValid()){<p role="alert">{{i18n.t('anki.day.steps.invalid')}}</p>}</fieldset>
       <div class="save-row">
-        <button #saveAction class="save-button" type="submit" [disabled]="!newCardsValid() || saving()" [attr.aria-busy]="saving()">{{i18n.t(saving()?'anki.day.settings.saving':'anki.settings.save')}}</button>
+        <button #saveAction class="save-button" type="submit" [disabled]="!newCardsValid() || !stepsValid() || saving()" [attr.aria-busy]="saving()">{{i18n.t(saving()?'anki.day.settings.saving':'anki.settings.save')}}</button>
         @if(error()){<p class="error" role="alert">{{i18n.t('anki.day.settings.saveError')}}</p>}
         @if(saved()){<p class="saved" role="status">{{i18n.t('anki.settings.saved')}}</p>}
       </div>

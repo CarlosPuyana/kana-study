@@ -1,3 +1,4 @@
+import {resumeScheduledStep} from './scheduled-step';
 import {test,expect,Page} from '@playwright/test';
 const NOW=new Date('2026-11-05T11:00:00Z');
 test.beforeEach(async({page})=>{
@@ -16,7 +17,7 @@ async function saved(page:Page){return page.evaluate(async()=>{
 });}
 test('card history from All and By time is read-only and survives reload',async({page},info)=>{
  await page.goto('./#/anki/japanese-1500/study');
- for(const rating of ['again','good','good']){await page.locator('.reveal').click();await page.locator('.ratings .'+rating).click();}
+ for(const [i,rating] of ['again','good','good'].entries()){if(i)await resumeScheduledStep(page);await page.locator('.reveal').click();await page.locator('.ratings .'+rating).click();}
  await expect(page.locator('.result-hero')).toBeVisible();const before=await saved(page);
  await page.goto('./#/anki/japanese-1500/cards');await page.getByRole('searchbox').fill('#1');await page.locator('.entry-card').click();
  await page.locator('.history>summary').click();await expect(page.locator('.timeline>li')).toHaveCount(3);

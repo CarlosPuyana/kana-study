@@ -1,3 +1,4 @@
+import {resumeScheduledStep} from './scheduled-step';
 import { test, expect, Page } from '@playwright/test';
 import { JAPANESE_1500_ENTRIES } from '../../src/app/data/japanese-1500.generated';
 const NOW = new Date('2026-11-05T11:00:00Z'), DAY = 86_400_000;
@@ -66,7 +67,7 @@ test('All stays intact; By time lazily groups persisted remaining dates and show
 test('completed study derives unique cards, attempts, forecast and reinforcement; reload and undo preserve canonical events', async ({ page }, info) => {
   await page.goto('./#/anki/japanese-1500/study');
   await expect(page.locator('.front h1')).toBeVisible();
-  for (const rating of ['again', 'good', 'good']) { await page.locator('.reveal').click(); await page.locator('.ratings .' + rating).click(); }
+  for (const [i,rating] of ['again', 'good', 'good'].entries()) { if(i)await resumeScheduledStep(page);await page.locator('.reveal').click(); await page.locator('.ratings .' + rating).click(); }
   await expect(page.locator('.result-hero')).toBeVisible();
   await expect(page.locator('.metrics strong')).toHaveText(['1', '67%', '1']);
   await expect(page.locator('.metric-help')).toContainText('3 valoraciones guardadas');
@@ -105,7 +106,7 @@ test('English and Catalan labels load in both new views without translation keys
     await expect(page.locator('main')).not.toContainText('anki.results.');
     await page.goto('./#/anki/japanese-1500/study');
     if (language === 'en') {
-      for (let i = 0; i < 2; i++) { await page.locator('.reveal').click(); await page.locator('.good').click(); }
+      for (let i = 0; i < 2; i++) { if(i)await resumeScheduledStep(page);await page.locator('.reveal').click(); await page.locator('.good').click(); }
     }
     await expect(page.locator('.metrics strong')).toHaveText(['1', '100%', '0']);
     await expect(page.locator('.results-layout')).not.toContainText('anki.results.');
@@ -127,7 +128,7 @@ test('public Puyi uses its own private schedule and summary, separate from Japan
   await page.goto('./#/anki/mazo-puyi/cards'); await expect(page.locator('.entry-card')).toHaveCount(1);
   await page.getByRole('button', { name: 'Por Tiempo', exact: true }).click(); await expect(page.locator('.time-heading')).toContainText('Nuevas, sin programar');
   await page.goto('./#/anki/mazo-puyi/study');
-  for (let i = 0; i < 2; i++) { await page.locator('.reveal').click(); await page.locator('.good').click(); }
+  for (let i = 0; i < 2; i++) { if(i)await resumeScheduledStep(page);await page.locator('.reveal').click(); await page.locator('.good').click(); }
   await expect(page.locator('.metrics strong')).toHaveText(['1', '100%', '0']);
   await expect(page.locator('.result-deck')).toHaveText('Mazo Puyi');
   await page.reload(); await expect(page.locator('.metrics strong')).toHaveText(['1', '100%', '0']);

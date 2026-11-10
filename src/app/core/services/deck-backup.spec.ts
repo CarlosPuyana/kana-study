@@ -21,13 +21,16 @@ describe('RELEASE-MANGA-2A complete Guest backup',()=>{
  function fresh(){TestBed.resetTestingModule();db=new IDBFactory();vi.stubGlobal('indexedDB',db);configure();}
  const repo=()=>TestBed.inject(CustomDeckRepository),service=()=>TestBed.inject(DeckBackupService);
  async function seed(){await repo().confirmMangaCard(structuredClone(fixture) as unknown as MangaConfirmedCardOperation);}
- async function grade(elapsed=1234){const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(loaded.status!=='ready')throw Error('fixture');const {deck,content}=loaded.value,study=TestBed.inject(DeckStudyService);const snapshot=await study.snapshot(deck,content.index,now),choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;return study.rate(deck,choice,study.preview(deck,choice,now),'good',elapsed,now);}
+ async function grade(elapsed=1234,at=now){const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(loaded.status!=='ready')throw Error('fixture');const {deck,content}=loaded.value,study=TestBed.inject(DeckStudyService);const snapshot=await study.snapshot(deck,content.index,at),choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;return study.rate(deck,choice,study.preview(deck,choice,at),'good',elapsed,at);}
  async function signed(data:any){const {sha256,...body}=data;return JSON.stringify({...body,sha256:await digest('',body)});}
  beforeEach(()=>{localStorage.clear();vi.stubGlobal('IDBKeyRange',IDBKeyRange);fresh();});
  afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();localStorage.clear();});
  it('preserves a 180-second review through local validation, export and restore',async()=>{await seed();const event=await grade(180000);expect(event.elapsedAnswerMs).toBe(180000);const raw=await service().export(signalFor());expect((await decodeBackup(raw)).records.events[0].value.elapsedAnswerMs).toBe(180000);fresh();await service().restore(raw,true,signalFor());expect((await repo().getDeckReviewEvents(fixture.deck.id))[0]).toEqual(event);});
  it('exports an empty deck with escaped Unicode, settings and the complete closed inventory',async()=>{
   await repo().create('empty',customDeck(),[]);const data=await decodeBackup(await service().export(signalFor()));expect(data.counts.decks).toBe(1);expect(data.counts.cards).toBe(0);expect(Object.keys(data.records)).toEqual([...BACKUP_STORES]);expect(data.records.decks[0].value.title).toBe(customDeck().title);
+ });
+ it('round-trips configured steps and an in-flight Learning snapshot without scheduling on restore',async()=>{
+  await seed();await repo().saveSettings('steps',fixture.deck.id,{desiredRetention:.95,newCardsPerDay:10,newCardOrder:'mixed',learningSteps:[2,20],relearningSteps:[5]});const first=await grade();expect(first.dueAfter-first.reviewedAt).toBe(20*60000);const before=await repo().guestInventory(),raw=await service().export(signalFor());fresh();await service().restore(raw,true,signalFor());expect(await repo().guestInventory()).toEqual(before);const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(loaded.status!=='ready')throw Error('fixture');expect(loaded.value.deck.settings).toMatchObject({learningSteps:[2,20],relearningSteps:[5]});expect((await repo().getDeckReviewEvents(fixture.deck.id))[0]).toEqual(first);expect((await TestBed.inject(DeckStudyService).snapshot(loaded.value.deck,loaded.value.content.index,now)).learningPending).toBe(1);
  });
  it('restores all stores exactly, including permanent identities, voided events, null snapshots, daily, receipts and original journal',async()=>{
   await seed();const event=await grade();await TestBed.inject(DeckStudyService).undo(event);
@@ -39,7 +42,7 @@ describe('RELEASE-MANGA-2A complete Guest backup',()=>{
  it('backs up and restores resumed historical completion, graduation, undo and explicit reopening',async()=>{
   await seed();await grade();const study=TestBed.inject(DeckStudyService);
   await repo().writeDailyState({deckId:fixture.deck.id,localDate:'2026-10-25',introducedEntryIds:[fixture.card.id],newLimitOverride:null,completedAt:now.getTime()});
-  const event=await grade();expect(event.stateAfter).toBe(2);await study.undo(event);
+  const event=await grade(1234,new Date(now.getTime()+600000));expect(event.stateAfter).toBe(2);await study.undo(event);
   const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(loaded.status!=='ready')throw Error('fixture');
   await repo().writeDailyState({deckId:fixture.deck.id,localDate:'2026-10-25',introducedEntryIds:[fixture.card.id],newLimitOverride:null,completedAt:now.getTime()});
   await study.adjustTodayNewLimit(loaded.value.deck,5,now);
@@ -49,7 +52,7 @@ describe('RELEASE-MANGA-2A complete Guest backup',()=>{
   expect((await repo().getDeckProgress(fixture.deck.id))[0].state).toBe(1);
  });
  it('accepts historical undo journals that retained the completed marker without rewriting them',async()=>{
-  await seed();await grade();const event=await grade(),study=TestBed.inject(DeckStudyService);
+  await seed();await grade();const event=await grade(1234,new Date(now.getTime()+600000)),study=TestBed.inject(DeckStudyService);
   const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(loaded.status!=='ready')throw Error('fixture');
   await study.completeSession(loaded.value.deck,loaded.value.content.index,now);await study.undo(event);
   const data=JSON.parse(await service().export(signalFor()));

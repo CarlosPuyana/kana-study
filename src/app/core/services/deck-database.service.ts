@@ -59,45 +59,59 @@ export class DeckDatabaseService {
     await this.enqueue(workspace, 'deck-daily-state', `${state.deckId}:${state.localDate}`, state);
   }
 
-  async commitReview(progress: DeckCardProgress, event: DeckReviewEvent, dailyState: DeckDailyState): Promise<void> {
+  async commitReview(progress: DeckCardProgress, event: DeckReviewEvent, dailyState: DeckDailyState,newCardLimit?:number): Promise<void> {
     const workspace = this.workspace.active();
     const db = await this.database(workspace);
     const transaction = db.transaction([PROGRESS_STORE, EVENTS_STORE, DAILY_STORE], 'readwrite');
-    transaction.objectStore(PROGRESS_STORE).put(progress);
-    transaction.objectStore(EVENTS_STORE).add(event);
-    transaction.objectStore(DAILY_STORE).put(dailyState);
-    await transactionDone(transaction);
+    const done=transactionDone(transaction);
+    let publishedProgress:DeckCardProgress|null=progress,publishedDaily=dailyState;
+    try{
+      const previous=await requestResult<DeckReviewEvent|undefined>(transaction.objectStore(EVENTS_STORE).get(event.id));
+      const current=await requestResult<DeckCardProgress|undefined>(transaction.objectStore(PROGRESS_STORE).get([progress.deckId,progress.entryId]));
+      const currentDaily=await requestResult<DeckDailyState|undefined>(transaction.objectStore(DAILY_STORE).get([dailyState.deckId,dailyState.localDate]));
+      if(previous){
+        if(JSON.stringify(previous)!==JSON.stringify(event))throw new Error('Deck receipt conflict');
+        publishedProgress=current??null;publishedDaily=currentDaily??dailyState;
+      }else{
+        if(JSON.stringify(current?.card??null)!==JSON.stringify(event.cardBefore))throw new Error('Deck card changed during review');
+        if((event.cardBefore===null||event.cardBefore.state===0)&&newCardLimit!==undefined&&!currentDaily?.introducedEntryIds.includes(event.entryId)
+          &&new Set(currentDaily?.introducedEntryIds??[]).size>=(currentDaily?.newLimitOverride??newCardLimit))throw new Error('Daily new-card limit reached');
+        publishedDaily={...dailyState,...(currentDaily??{}),introducedEntryIds:[...new Set([...(currentDaily?.introducedEntryIds??[]),...dailyState.introducedEntryIds])]};
+        transaction.objectStore(PROGRESS_STORE).put(progress);
+        transaction.objectStore(EVENTS_STORE).add(event);
+        transaction.objectStore(DAILY_STORE).put(publishedDaily);
+      }
+    }catch(error){try{transaction.abort();}catch{/* Already aborted by IndexedDB. */}await done.catch(()=>{});throw error;}
+    await done;
     this.revision.update(n => n + 1);
-    await this.enqueue(workspace, 'deck-card-progress', `${progress.deckId}:${progress.entryId}`, progress);
+    await this.enqueue(workspace, 'deck-card-progress', `${progress.deckId}:${progress.entryId}`, publishedProgress,publishedProgress?'upsert':'delete');
     await this.enqueue(workspace, 'deck-review-event', event.id, event);
-    await this.enqueue(workspace, 'deck-daily-state', `${dailyState.deckId}:${dailyState.localDate}`, dailyState);
+    await this.enqueue(workspace, 'deck-daily-state', `${dailyState.deckId}:${dailyState.localDate}`, publishedDaily);
   }
 
   async undoReview(event: DeckReviewEvent, dailyState: DeckDailyState): Promise<void> {
     const workspace = this.workspace.active();
     const db = await this.database(workspace);
     const transaction = db.transaction([PROGRESS_STORE, EVENTS_STORE, DAILY_STORE], 'readwrite');
-    const progressStore = transaction.objectStore(PROGRESS_STORE);
-    if (event.cardBefore) {
-      progressStore.put({
-        deckId: event.deckId,
-        entryId: event.entryId,
-        due: event.cardBefore.due,
-        state: event.cardBefore.state,
-        card: event.cardBefore,
-      } satisfies DeckCardProgress);
-    } else {
-      progressStore.delete([event.deckId, event.entryId]);
-    }
-    transaction.objectStore(EVENTS_STORE).delete(event.id);
-    transaction.objectStore(DAILY_STORE).put(dailyState);
-    await transactionDone(transaction);
-    this.revision.update(n => n + 1);
-    await this.enqueue(workspace, 'deck-card-progress', `${event.deckId}:${event.entryId}`, event.cardBefore ? {
-      deckId: event.deckId, entryId: event.entryId, due: event.cardBefore.due, state: event.cardBefore.state, card: event.cardBefore,
-    } : null, event.cardBefore ? 'upsert' : 'delete');
-    await this.enqueue(workspace, 'deck-review-event', event.id, event, 'delete');
-    await this.enqueue(workspace, 'deck-daily-state', `${dailyState.deckId}:${dailyState.localDate}`, dailyState);
+    const done=transactionDone(transaction);let publishedProgress:DeckCardProgress|null=null,publishedDaily=dailyState,changed=false;
+    try{
+      const record=await requestResult<DeckReviewEvent|undefined>(transaction.objectStore(EVENTS_STORE).get(event.id));
+      const current=await requestResult<DeckCardProgress|undefined>(transaction.objectStore(PROGRESS_STORE).get([event.deckId,event.entryId]));
+      const storedDaily=await requestResult<DeckDailyState|undefined>(transaction.objectStore(DAILY_STORE).get([dailyState.deckId,dailyState.localDate]));
+      publishedProgress=current??null;publishedDaily=storedDaily??dailyState;
+      if(record){
+        if(JSON.stringify(record)!==JSON.stringify(event)||!current||current.card.lastReview!==event.reviewedAt||current.due!==event.dueAfter||current.state!==event.stateAfter||current.card.stability!==event.stabilityAfter)throw new Error('Deck undo is based on stale progress');
+        publishedProgress=event.cardBefore?{deckId:event.deckId,entryId:event.entryId,due:event.cardBefore.due,state:event.cardBefore.state,card:event.cardBefore}:null;
+        if(publishedProgress)transaction.objectStore(PROGRESS_STORE).put(publishedProgress);else transaction.objectStore(PROGRESS_STORE).delete([event.deckId,event.entryId]);
+        transaction.objectStore(EVENTS_STORE).delete(event.id);
+        publishedDaily={...publishedDaily,...(dailyState.completedAt===null?{completedAt:null}:{}),introducedEntryIds:(event.cardBefore===null||event.cardBefore.state===0)?publishedDaily.introducedEntryIds.filter(id=>id!==event.entryId):publishedDaily.introducedEntryIds};
+        transaction.objectStore(DAILY_STORE).put(publishedDaily);changed=true;
+      }
+    }catch(error){try{transaction.abort();}catch{}await done.catch(()=>{});throw error;}
+    await done;if(changed)this.revision.update(n=>n+1);
+    await this.enqueue(workspace,'deck-card-progress',`${event.deckId}:${event.entryId}`,publishedProgress,publishedProgress?'upsert':'delete');
+    await this.enqueue(workspace,'deck-review-event',event.id,event,'delete');
+    await this.enqueue(workspace,'deck-daily-state',`${dailyState.deckId}:${dailyState.localDate}`,publishedDaily);
   }
 
   async mergeFromCloud(input: { progress: readonly DeckCardProgress[]; events: readonly DeckReviewEvent[]; daily: readonly DeckDailyState[] }): Promise<void> {

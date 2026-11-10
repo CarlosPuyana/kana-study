@@ -66,14 +66,14 @@ describe('DeckStudyService', () => {
     expect(database.progress).toHaveLength(7);
   });
 
-  it('orders scheduled states chronologically while respecting new-order preferences', () => {
+  it('prioritizes due intraday steps before Review and new-order preferences', () => {
     const snapshot = queueSnapshot({ learning: [progress('learning', State.Learning, 2)], reviews: [progress('review', State.Review, 1)], newEntries: [{ id: 'new', order: 1 }] });
     for (const order of ['mixed', 'after-reviews'] as const) {
       settings.current = { ...settings.current, newCardOrder: order };
-      expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe('review');
+      expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe('learning');
     }
     settings.current = { ...settings.current, newCardOrder: 'before-reviews' };
-    expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe('new');
+    expect(service.chooseNext(snapshot, deck, { debt: 0 }).choice?.entryId).toBe('learning');
   });
 
   it('applies before-reviews and after-reviews ordering', () => {
@@ -102,14 +102,14 @@ describe('DeckStudyService', () => {
     expect((await service.snapshot(deck, activeIndex(), NOW)).reviewEntries.map(item => item.entryId)).toEqual(['higher-r', 'lower-r']);
   });
 
-  it('includes both Review and Learning later today without waiting', async () => {
+  it('includes Review by Madrid day but waits for the exact Learning deadline', async () => {
     const future = NOW.getTime() + 8 * 60_000;
     database.progress = [progress('review', State.Review, future), progress('learning', State.Learning, future + 1)];
     const snapshot = await service.snapshot(deck, activeIndex(), NOW);
     expect(snapshot.reviewDue).toBe(1);
-    expect(snapshot.learningDue).toBe(1);
-    expect(snapshot.nextDue).toBeNull();
-    expect(snapshot.learningPending).toBe(0);expect(snapshot.learningAhead).toBe(0);
+    expect(snapshot.learningDue).toBe(0);
+    expect(snapshot.nextDue).toBe(future+1);
+    expect(snapshot.learningPending).toBe(1);expect(snapshot.learningAhead).toBe(0);
   });
 
   it.each(['again', 'good'] as const)('atomically persists and undoes a first New → %s rating', async rating => {
@@ -153,8 +153,8 @@ describe('DeckStudyService', () => {
   it('calculates raw and first-review-per-card/day retention separately', async () => {
     const first = await service.rate(deck, { entryId: 'e1', kind: 'new', progress: null }, scheduler.previewValue, 'again', 10, NOW);
     const e1Progress = database.progress.find(item => item.entryId === 'e1')!;
-    await service.rate(deck, { entryId: 'e1', kind: 'learning', progress: e1Progress }, scheduler.previewValue, 'good', 10, new Date(NOW.getTime() + 1000));
-    await service.rate(deck, { entryId: 'e2', kind: 'new', progress: null }, scheduler.previewValue, 'good', 10, new Date(NOW.getTime() + 2000));
+    await service.rate(deck, { entryId: 'e1', kind: 'learning', progress: e1Progress }, scheduler.previewValue, 'good', 10, new Date(NOW.getTime() + 60000));
+    await service.rate(deck, { entryId: 'e2', kind: 'new', progress: null }, scheduler.previewValue, 'good', 10, new Date(NOW.getTime() + 61000));
     const stats = await service.statistics(deck, 1500, NOW);
     expect(first.rating).toBe('again');
     expect(stats.observedRetention).toBeCloseTo(2 / 3);
@@ -206,17 +206,17 @@ describe('DeckStudyService', () => {
     const saved=JSON.stringify(database.progress);
     await service.completeSession(deck,INDEX,NOW);
     const snapshot=await service.snapshot(deck,INDEX,NOW);
-    expect(snapshot.completedToday).toBe(false);expect(snapshot.learningDue).toBe(1);expect(snapshot.newAvailable).toBe(0);expect(snapshot.introducedToday).toBe(1);expect(snapshot.nextDue).toBeNull();
+    expect(snapshot.completedToday).toBe(false);expect(snapshot.learningDue).toBe(0);expect(snapshot.learningPending).toBe(1);expect(snapshot.newAvailable).toBe(0);expect(snapshot.introducedToday).toBe(1);expect(snapshot.nextDue).toBe(NOW.getTime()+60000);
     expect(JSON.stringify(database.progress)).toBe(saved);
     const graduation={...scheduler.previewValue,good:{...scheduler.previewValue.good,card:{...scheduler.previewValue.good.card,state:State.Review,due:NOW.getTime()+86_400_000}}};
-    await service.rate(deck,{entryId:'e1',kind:'learning',progress:database.progress[0]},graduation,'good',100,NOW);
+    await service.rate(deck,{entryId:'e1',kind:'learning',progress:database.progress[0]},graduation,'good',100,new Date(NOW.getTime()+60000));
     const graduated=JSON.stringify(database.progress);await service.completeSession(deck,INDEX,NOW);
     expect((await service.snapshot(deck,INDEX,NOW)).completedToday).toBe(true);expect(JSON.stringify(database.progress)).toBe(graduated);
   });
 
-  it('rejects rating a completed deck through a stale direct session', async () => {
-    database.daily={deckId:deck.id,localDate:TODAY,introducedEntryIds:[],newLimitOverride:null,completedAt:NOW.getTime()};
-    await expect(service.rate(deck,{entryId:'e1',kind:'new',progress:null},scheduler.previewValue,'good',100,NOW)).rejects.toThrow('completed');
+  it('still rejects a new introduction when a historical completed day has no remaining allowance', async () => {
+    database.daily={deckId:deck.id,localDate:TODAY,introducedEntryIds:[],newLimitOverride:0,completedAt:NOW.getTime()};
+    await expect(service.rate(deck,{entryId:'e1',kind:'new',progress:null},scheduler.previewValue,'good',100,NOW)).rejects.toThrow('limit');
     expect(database.events).toHaveLength(0);
   });
 

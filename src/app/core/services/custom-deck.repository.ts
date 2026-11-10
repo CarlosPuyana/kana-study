@@ -381,13 +381,8 @@ export class CustomDeckRepository {
             if (canonical(previous?.value?.card ?? null) !== canonical(event.cardBefore))
                 throw new CustomDeckError('Review is based on stale progress');
             const storedDaily = r.daily.get(key(daily.deckId, daily.localDate))?.value as DeckDailyState | undefined;
-            // Historical completion cannot hide an existing due review/short step.
-            // Keep the stale-card guard above and the receipt replay in mutate().
-            const before = event.cardBefore;
-            const day = getLocalStudyDayKey(new Date(event.reviewedAt));
-            const resumable = before && day === daily.localDate && deckCardEligible(before, new Date(event.reviewedAt), true);
-            if (storedDaily?.completedAt != null && !resumable)
-                throw new CustomDeckError('Daily session completed');
+            const limit=storedDaily?.newLimitOverride??r.decks.get(event.deckId)!.value.settings.newCardsPerDay;
+            if((event.cardBefore===null||event.cardBefore.state===0)&&!storedDaily?.introducedEntryIds.includes(event.entryId)&&new Set(storedDaily?.introducedEntryIds??[]).size>=limit)throw new CustomDeckError('Daily new-card limit reached');
             const merged = { ...daily, introducedEntryIds: [...new Set([...(storedDaily?.introducedEntryIds ?? []), ...daily.introducedEntryIds])] };
             r.progress.set(key(event.deckId, event.entryId), { workspace: owner, key: key(event.deckId, event.entryId), value: progress, head: event.id });
             r.events.set(event.id, { workspace: owner, key: event.id, value: event, head: previous?.head ?? null });
@@ -406,7 +401,7 @@ export class CustomDeckRepository {
             p.value = event.cardBefore ? { deckId: event.deckId, entryId: event.entryId, due: event.cardBefore.due, state: event.cardBefore.state, card: event.cardBefore } : null;
             p.head = row.head ?? null;
             const current = r.daily.get(key(daily.deckId, daily.localDate))?.value as DeckDailyState | undefined;
-            r.daily.set(key(daily.deckId, daily.localDate), { workspace: owner, key: key(daily.deckId, daily.localDate), value: { ...(current ?? daily), ...(daily.completedAt === null ? {completedAt:null} : {}), introducedEntryIds: event.cardBefore === null ? (current ?? daily).introducedEntryIds.filter(id => id !== event.entryId) : (current ?? daily).introducedEntryIds } });
+            r.daily.set(key(daily.deckId, daily.localDate), { workspace: owner, key: key(daily.deckId, daily.localDate), value: { ...(current ?? daily), ...(daily.completedAt === null ? {completedAt:null} : {}), introducedEntryIds: (event.cardBefore === null || event.cardBefore.state === 0) ? (current ?? daily).introducedEntryIds.filter(id => id !== event.entryId) : (current ?? daily).introducedEntryIds } });
         });
     }
 }

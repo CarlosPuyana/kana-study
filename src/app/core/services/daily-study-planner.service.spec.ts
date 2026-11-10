@@ -132,7 +132,7 @@ describe('daily planner reads existing contracts without writes',()=>{
   });
   it('refreshes at Madrid midnight and removes yesterday’s normal lock without polling',async()=>{
     const planner=await ready(),database=TestBed.inject(DeckDatabaseService),date=new Date(planner.now());
-    await database.writeDailyState({...emptyDailyState(STUDY_DECKS[0].id,getSpainDayKey(date)),completedAt:date.getTime()});await planner.refreshDecks();expect(planner.snapshot().decks[0].completedToday).toBe(true);
+    await database.writeDailyState({...emptyDailyState(STUDY_DECKS[0].id,getSpainDayKey(date)),newLimitOverride:0,completedAt:date.getTime()});await planner.refreshDecks();expect(planner.snapshot().decks[0].completedToday).toBe(true);
     const next=new Date(date.getTime()+27*3600000);TestBed.inject(DailyLearningService).refresh(next);planner.now.set(next.getTime());TestBed.tick();await planner.refreshDecks();expect(planner.snapshot().decks[0].completedToday).toBe(false);
   });
   it('reports IndexedDB errors without throwing away the usable local projection',async()=>{

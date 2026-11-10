@@ -1,3 +1,4 @@
+import {isolatedKanjiAvailability} from '../core/services/kanji-availability.test-support';
 import {GrammarAccessService} from '../core/services/grammar-access.service';
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -22,7 +23,7 @@ import { SelectionCard } from '../shared/components/selection-card/selection-car
 import { APP_MODULES } from './app-modules';
 
 const moreOrder = ['kana','vocabulary','anki','conjugations','kanji','manga','grammar','flags'];
-const translate = { t: (key: string) => key };
+const translate = { t: (key: string) => key, useStudyCopy:()=>{}, language:signal('es') };
 const emptyStats = {
   total: 0,
   newCount: 0,
@@ -187,7 +188,7 @@ describe('Module navigation', () => {
 
   it('L: Home Kanji links More with from=kanji', async () => {
     await TestBed.configureTestingModule({
-      imports: [KanjiPage], providers: [provideRouter([]),
+      imports: [KanjiPage], providers: [isolatedKanjiAvailability,provideRouter([]),
         { provide: TranslationService, useValue: translate },
         { provide: KanjiProgressService, useValue: { stats: signal(emptyStats) } },
         { provide: KanjiMedalService, useValue: { homeMedals: signal([]), presentation: vi.fn() } },

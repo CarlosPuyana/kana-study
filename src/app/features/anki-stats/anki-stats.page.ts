@@ -1,3 +1,4 @@
+import * as studyCopy from '../../../assets/i18n/deck-study.generated';
 import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import { ChangeDetectionStrategy, Component, effect, inject, untracked, OnInit, OnDestroy, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -21,7 +22,7 @@ export class AnkiStatsPage implements OnInit,OnDestroy {
   readonly stats = signal<DeckStudyStatistics | null>(null);
   readonly error = signal(false);
 
-  constructor(){effect(()=>{this.resource.state();this.resource.catalog.owner();untracked(()=>{this.stats.set(null);void this.ngOnInit();});});}
+  constructor(){this.i18n.useStudyCopy?.(studyCopy);effect(()=>{this.resource.state();this.resource.catalog.owner();untracked(()=>{this.stats.set(null);void this.ngOnInit();});});}
 
   async ngOnInit(): Promise<void> {
     if(!this.timer)this.timer=setInterval(()=>{const due=this.stats()?.nextRefreshAt;if(!this.error()&&due!=null&&due<=Date.now())this.refresh();},1000);

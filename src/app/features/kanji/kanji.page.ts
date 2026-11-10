@@ -1,3 +1,5 @@
+import {KanjiAvailabilityNotice} from './components/kanji-availability-notice';
+import {KanjiAvailabilityService} from '../../core/services/kanji-availability.service';
 import {KanjiAnswerStore} from '../../core/services/kanji-answer-store';
 import {PageHeader} from '../../shared/components/page-header/page-header';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
@@ -18,8 +20,9 @@ import { RushConfigDialog, RushConfigOption } from '../../shared/components/rush
 import { SelectionCard } from '../../shared/components/selection-card/selection-card';
 import { KanjiStartPanel } from './components/kanji-start-panel/kanji-start-panel';
 
-@Component({selector:'app-kanji-page',imports:[PageHeader,RouterLink,KanjiStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./kanji.page.html',styleUrl:'./kanji.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-kanji-page',imports:[KanjiAvailabilityNotice,PageHeader,RouterLink,KanjiStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./kanji.page.html',styleUrl:'./kanji.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class KanjiPage {
+  readonly availability=inject(KanjiAvailabilityService);
   readonly integrity=inject(KanjiAnswerStore);
   async recoverSave(){try{await this.integrity.recover();}catch{/* The store exposes the recoverable error. */}}
 

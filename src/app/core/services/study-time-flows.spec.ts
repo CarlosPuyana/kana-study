@@ -1,3 +1,4 @@
+import {isolatedKanjiAvailability} from './kanji-availability.test-support';
 import {isolatedKanjiAnswers} from './kanji-answer-store.test-support';
 import { signal, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -63,14 +64,14 @@ describe('credited time in the actual study pages', () => {
       unit:{key:`vocab:${VOCABULARY_N5[0].id}:japanese-to-meaning`,entryId:VOCABULARY_N5[0].id,questionType:'japanese-to-meaning'}},
   ];
   for (const c of normalCases) it(`${c.name}: visible counter and final time match history, route destruction clears the clock`, async () => {
-    const review=vi.fn();TestBed.configureTestingModule({imports:[c.page],providers:[isolatedKanjiAnswers,provideRouter([]),
+    const review=vi.fn();TestBed.configureTestingModule({imports:[c.page],providers:[isolatedKanjiAvailability,isolatedKanjiAnswers,provideRouter([]),
       {provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
       {provide:c.progress,useValue:{buildRound:()=>c.name==='vocabulary'&&review.mock.calls.length?[]:[c.unit],get:()=>null,recordReview:review,recordInternalAttempt:vi.fn(),recordPracticeAttempt:vi.fn(),roundSummary:signal({roundDue:0,roundNew:1})}},
       {provide:c.medal,useValue:{evaluateUnlocks:()=>[]}},
       {provide:SessionHistoryService,useValue:history},
       {provide:WeaknessService,useValue:{recordLearn:vi.fn()}},
       {provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:vi.fn()}},
-      {provide:TranslationService,useValue:{t:(key:string)=>key,language:signal('es')}}]});
+      {provide:TranslationService,useValue:{useStudyCopy:()=>{},t:(key:string)=>key,language:signal('es')}}]});
     const service = TestBed.inject(c.service as Type<LearningSessionService | FlagSessionService | KanjiSessionService | VocabularySessionService>);
     if (service instanceof FlagSessionService) service.start(); else service.start('self-assessment');
     now=60000; // The page has not appeared yet.
@@ -91,12 +92,12 @@ describe('credited time in the actual study pages', () => {
     ['kana',KanaRushPage,ALL_KANA[0].id],['kanji',KanjiRushPage,KANJI_N5[0].id],['vocabulary',VocabularyRushPage,VOCABULARY_N5[0].id],
   ] as const) it(`RUSH ${module}: counter starts on the card and the summary freezes completed time`,async()=>{
     vi.spyOn(page.prototype,'ngOnInit').mockImplementation(async()=>{});
-    TestBed.configureTestingModule({imports:[page],providers:[isolatedKanjiAnswers,provideRouter([]),
+    TestBed.configureTestingModule({imports:[page],providers:[isolatedKanjiAvailability,isolatedKanjiAnswers,provideRouter([]),
       {provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
       {provide:LocalRushRepository,useValue:{markOpenSessionsInterrupted:async()=>{},createSession:async()=>{},saveProgress:async()=>{},finishSession:async()=>{}}},
       {provide:RushMedalService,useValue:{refresh:async()=>[],newlyUnlocked:signal([])}},
       ...[SettingsService,KanjiSettingsService,VocabularySettingsService,RushSettingsService].map(provide=>({provide,useValue:{}})),
-      {provide:TranslationService,useValue:{t:(key:string)=>key,language:signal('es')}}]});
+      {provide:TranslationService,useValue:{useStudyCopy:()=>{},t:(key:string)=>key,language:signal('es')}}]});
     const service=TestBed.inject(RushSessionService);
     await service.start(module as RushModule,[{key:'unit',module,contentId,questionType:module==='kana'?'kana-to-romaji':module==='kanji'?'kanji-to-meaning':'japanese-to-meaning'}]);
     now=60000;const fixture=TestBed.createComponent(page as Type<unknown>);fixture.detectChanges();
@@ -108,13 +109,13 @@ describe('credited time in the actual study pages', () => {
   });
   for(const page of [GrammarPracticeComponent,GrammarIntegrationComponent,GrammarReviewPage]) it(`${page.name}: no intro timer, visible exercise timer and frozen final time`,async ()=>{
     vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
-    TestBed.configureTestingModule({imports:[page],providers:[isolatedKanjiAnswers,provideRouter([]),
+    TestBed.configureTestingModule({imports:[page],providers:[isolatedKanjiAvailability,isolatedKanjiAnswers,provideRouter([]),
       {provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
       {provide:SessionHistoryService,useValue:history},
       {provide:WeaknessService,useValue:{recordLearn:vi.fn()}},
       {provide:GrammarProgressService,useValue:{state:()=>({concepts:{}}),difficulties:()=>[],buildReview:()=>[],flagDifficulty:vi.fn()}},
       {provide:GrammarV2ProgressService,useValue:{integrationStatus:()=> 'new',coreCompleted:()=>false,state:()=>({}),openIntegration:vi.fn(),recordIntegration:vi.fn()}},
-      {provide:TranslationService,useValue:{t:(key:string)=>key,language:signal('es')}}]});
+      {provide:TranslationService,useValue:{useStudyCopy:()=>{},t:(key:string)=>key,language:signal('es')}}]});
     const fixture=TestBed.createComponent(page as Type<GrammarPracticeComponent | GrammarIntegrationComponent | GrammarReviewPage>);
     if(page===GrammarPracticeComponent)fixture.componentRef.setInput('practice',GRAMMAR_PRACTICES.find(p=>p.topicId==='03'));
     if(page===GrammarIntegrationComponent)fixture.componentRef.setInput('activityId',GRAMMAR_V2_INTEGRATION[0].id);
