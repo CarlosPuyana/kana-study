@@ -6,4 +6,20 @@ describe('Kanji dataset',()=>{
   it('has complete localized meanings and KANJIDIC metadata',()=>expect(KANJI_N5.every(k=>k.meanings.es.length&&k.meanings.en.length&&k.meanings.ca.length&&k.strokeCount>0&&k.schoolGrade!==undefined&&k.frequencyRank!==undefined)).toBe(true));
   it('always exposes reading and example arrays',()=>expect(KANJI_N5.every(k=>Array.isArray(k.onyomi)&&Array.isArray(k.kunyomi)&&Array.isArray(k.examples))).toBe(true));
   it('has at least one fully localized teaching example per kanji',()=>expect(KANJI_N5.every(k=>k.examples.length>=1&&k.examples.every(e=>e.word&&e.reading&&e.romaji&&e.targetReading&&e.translations.es&&e.translations.en&&e.translations.ca&&['on','kun','irregular'].includes(e.readingType)))).toBe(true));
+  it('has one principal real-word example containing its kanji, with a kana reading',()=>{
+    for(const kanji of KANJI_N5){
+      expect(kanji.examples,kanji.id).toHaveLength(1);
+      expect(kanji.examples[0].word,kanji.id).toContain(kanji.character);
+      expect(kanji.examples[0].reading,kanji.id).toMatch(/^[ぁ-ゖー]+$/u);
+    }
+  });
+  it.each([
+    ['十','十月','じゅうがつ','octubre','October','octubre'],
+    ['千','千円','せんえん','mil yenes','one thousand yen','mil iens'],
+    ['百','百円','ひゃくえん','cien yenes','one hundred yen','cent iens'],
+    ['土','土曜日','どようび','sábado','Saturday','dissabte'],
+    ['東','東口','ひがしぐち','salida este','east exit','sortida est'],
+  ])('keeps the checked spelling, reading and sense for %s', (id,word,reading,es,en,ca)=>{
+    expect(KANJI_N5.find(k=>k.id===id)!.examples[0]).toMatchObject({word,reading,translations:{es,en,ca}});
+  });
 });

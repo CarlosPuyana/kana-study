@@ -3,6 +3,7 @@ import { computed, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { DailyLearningService } from '../../core/services/daily-learning.service';
+import { JapaneseGlyphService } from '../../core/services/japanese-glyph.service';
 import { KanjiProgressService } from '../../core/services/kanji-progress.service';
 import { KanjiSessionService } from '../../core/services/kanji-session.service';
 import { TranslationService } from '../../core/services/translation.service';
@@ -12,13 +13,15 @@ import { KanjiPlayPage } from './kanji-play.page';
 describe('Kanji Daily keyboard shortcuts', () => {
   const mode = signal('self-assessment');
   const revealed = signal(false);
+  const language = signal<'es'|'en'|'ca'>('es');
   const learning = {
     clear: vi.fn(), saving:signal(false), error:signal(false),
     session: computed(() => ({ mode: mode(), sessionSize: 1, attempts: 0 })),
     currentKanji: signal(KANJI_N5[0]),
     currentUnit: signal({ key: 'test', questionType: 'kanji-to-meaning' }),
     completed: signal(false), resolvedCount: signal(0), progressPercent: signal(0),
-    newlyUnlockedMedals: signal([]), feedback: signal(null), revealed,
+    newlyUnlockedMedals: signal([]), feedback: signal<{correct:boolean;selectedId:string}|null>(null), revealed,
+    currentItem: () => ({appearances:1}),
     options: () => [], meaning: () => 'meaning',
     reveal: vi.fn(() => revealed.set(true)),
     rate: vi.fn(() => revealed.set(false)),
@@ -27,6 +30,10 @@ describe('Kanji Daily keyboard shortcuts', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     revealed.set(false);
+    language.set('es');
+    learning.currentKanji.set(KANJI_N5[0]);
+    learning.currentUnit.set({key:'test',questionType:'kanji-to-meaning'});
+    learning.feedback.set(null);
     mode.set('self-assessment');
     learning.completed.set(false);
     TestBed.configureTestingModule({
@@ -35,7 +42,8 @@ describe('Kanji Daily keyboard shortcuts', () => {
         { provide: KanjiSessionService, useValue: learning },
         { provide: KanjiProgressService, useValue: { get: () => null } },
         { provide: DailyLearningService, useValue: { isCompletedToday: () => false } },
-        { provide: TranslationService, useValue: { useStudyCopy:()=>{}, t: (key: string) => key, language: signal('es') } },
+        { provide: TranslationService, useValue: { useStudyCopy:()=>{}, t: (key: string) => key, language } },
+        { provide: JapaneseGlyphService, useValue: {load:vi.fn(async()=>[])} },
         { provide: Router, useValue: { navigateByUrl: vi.fn() } },
       ],
     });
@@ -135,5 +143,37 @@ describe('Kanji Daily keyboard shortcuts', () => {
     const buttons = [...fixture.nativeElement.querySelectorAll('.ratings button')] as HTMLButtonElement[];
     expect(buttons.map(button => button.getAttribute('aria-keyshortcuts'))).toEqual(['1', '2', '3']);
     expect(buttons.map(button => button.textContent?.trim())).toEqual(['1 · learn.no', '2 · learn.almost', '3 · learn.yes']);
+  });
+
+  describe('K2 contextual answer',()=>{
+    for(const direction of ['kanji-to-meaning','meaning-to-kanji']){
+      for(const studyMode of ['self-assessment','quick-practice']){
+        it.each(['es','en','ca'] as const)(`${direction}, ${studyMode}: shows the localized word only after revealing in %s`,lang=>{
+          const kanji=KANJI_N5.find(k=>k.id==='食')!,example=kanji.examples[0];
+          learning.currentKanji.set(kanji);
+          learning.currentUnit.set({key:'kanji:食:'+direction,questionType:direction});
+          mode.set(studyMode);language.set(lang);
+          const fixture=render(),before=JSON.stringify(kanji);
+          expect(fixture.nativeElement.querySelector('app-kanji-answer')).toBeNull();
+          const writes=vi.spyOn(Storage.prototype,'setItem');
+          try{
+            if(studyMode==='self-assessment')learning.reveal();
+            else learning.feedback.set({correct:false,selectedId:'山'});
+            fixture.detectChanges();
+            const answer=fixture.nativeElement.querySelector('app-kanji-answer');
+            expect(answer.querySelector('.word').textContent).toBe('食べる');
+            expect(answer.querySelector('.reading').textContent).toBe('たべる');
+            expect(answer.querySelector('.example p').textContent).toBe(example.translations[lang]);
+            expect(answer.querySelector('.word').lang).toBe('ja');
+            expect(answer.querySelector('details').open).toBe(false);
+            expect(answer.querySelector('dd').textContent).toContain(kanji.onyomi[0]);
+            expect(answer.querySelectorAll('button,input')).toHaveLength(0);
+            expect(learning.rate).not.toHaveBeenCalled();
+            expect(writes).not.toHaveBeenCalled();
+            expect(JSON.stringify(kanji)).toBe(before);
+          }finally{writes.mockRestore();}
+        });
+      }
+    }
   });
 });

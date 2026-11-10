@@ -1,7 +1,10 @@
 # Kanji K1 — disponibilidad de repasos
 
 09/11/2026. Base inicial `e89104b4e4ba8f119a4f90cd75f85e320084eb1b`, K0 presente
-y árbol inicialmente limpio. K1 permanece local, sin commit, push, SQL ni despliegue.
+y árbol inicialmente limpio. K1 quedó incorporado en `e4b549f` y se verificó cerrado
+el 10/11/2026: 94/94 pruebas dirigidas, 15/15 Playwright y 3/3 comprobaciones
+temporales de recarga/bloqueo diario. Esa verificación no modificó producción,
+no repitió la suite global y no hizo commit, push, SQL ni despliegue.
 Durante su cierre se atendió y publicó por autorización independiente el hotfix
 de Vocabulario `ef67089`; ese commit no contiene cambios de K1.
 El ajuste del test asíncrono de CI quedó en `b334e69`, también sin K1. Su

@@ -1061,13 +1061,13 @@ export const KANJI_N5: readonly Kanji[] = [
     "jlptApproxLevel": "N5",
     "examples": [
       {
-        "word": "十",
-        "reading": "じゅう",
-        "romaji": "juu",
+        "word": "十月",
+        "reading": "じゅうがつ",
+        "romaji": "juugatsu",
         "translations": {
-          "en": "ten",
-          "es": "diez",
-          "ca": "deu"
+          "en": "October",
+          "es": "octubre",
+          "ca": "octubre"
         },
         "readingType": "on",
         "targetReading": "ジュウ"
@@ -1101,13 +1101,13 @@ export const KANJI_N5: readonly Kanji[] = [
     "jlptApproxLevel": "N5",
     "examples": [
       {
-        "word": "千",
-        "reading": "せん",
-        "romaji": "sen",
+        "word": "千円",
+        "reading": "せんえん",
+        "romaji": "senen",
         "translations": {
-          "en": "thousand",
-          "es": "mil",
-          "ca": "mil"
+          "en": "one thousand yen",
+          "es": "mil yenes",
+          "ca": "mil iens"
         },
         "readingType": "on",
         "targetReading": "セン"
@@ -1472,16 +1472,16 @@ export const KANJI_N5: readonly Kanji[] = [
     "jlptApproxLevel": "N5",
     "examples": [
       {
-        "word": "土",
-        "reading": "つち",
-        "romaji": "tsuchi",
+        "word": "土曜日",
+        "reading": "どようび",
+        "romaji": "doyoubi",
         "translations": {
-          "en": "soil",
-          "es": "tierra",
-          "ca": "terra"
+          "en": "Saturday",
+          "es": "sábado",
+          "ca": "dissabte"
         },
-        "readingType": "kun",
-        "targetReading": "つち"
+        "readingType": "on",
+        "targetReading": "ド"
       }
     ],
     "enabled": true
@@ -2340,16 +2340,16 @@ export const KANJI_N5: readonly Kanji[] = [
     "jlptApproxLevel": "N5",
     "examples": [
       {
-        "word": "東京",
-        "reading": "とうきょう",
-        "romaji": "toukyou",
+        "word": "東口",
+        "reading": "ひがしぐち",
+        "romaji": "higashiguchi",
         "translations": {
-          "en": "Tokyo",
-          "es": "Tokio",
-          "ca": "Tòquio"
+          "en": "east exit",
+          "es": "salida este",
+          "ca": "sortida est"
         },
-        "readingType": "on",
-        "targetReading": "トウ"
+        "readingType": "kun",
+        "targetReading": "ひがし"
       }
     ],
     "enabled": true
@@ -2819,13 +2819,13 @@ export const KANJI_N5: readonly Kanji[] = [
     "jlptApproxLevel": "N5",
     "examples": [
       {
-        "word": "百",
-        "reading": "ひゃく",
-        "romaji": "hyaku",
+        "word": "百円",
+        "reading": "ひゃくえん",
+        "romaji": "hyakuen",
         "translations": {
-          "en": "hundred",
-          "es": "cien",
-          "ca": "cent"
+          "en": "one hundred yen",
+          "es": "cien yenes",
+          "ca": "cent iens"
         },
         "readingType": "on",
         "targetReading": "ヒャク"

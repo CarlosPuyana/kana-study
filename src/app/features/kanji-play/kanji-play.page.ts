@@ -1,3 +1,4 @@
+import {KanjiAnswer} from '../../shared/components/kanji-answer/kanji-answer';
 import {KanjiAvailabilityNotice} from '../kanji/components/kanji-availability-notice';
 import {KanjiAvailabilityService} from '../../core/services/kanji-availability.service';
 import {runStudyShortcut} from '../../shared/keyboard/study-shortcuts';
@@ -15,7 +16,7 @@ import { KanjiSessionService } from '../../core/services/kanji-session.service';
 import { TranslationService } from '../../core/services/translation.service';
 import { DailyLearningService } from '../../core/services/daily-learning.service';
 import { MedalBadge } from '../../shared/components/medal-badge/medal-badge';
-@Component({selector:'app-kanji-play-page',imports:[KanjiAvailabilityNotice,StudyTimer,MedalBadge,LearningWritingPrompt,ModalFocusDirective,LearningSessionList],templateUrl:'./kanji-play.page.html',styleUrl:'./kanji-play.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'handleKey($event)'}})
+@Component({selector:'app-kanji-play-page',imports:[KanjiAnswer,KanjiAvailabilityNotice,StudyTimer,MedalBadge,LearningWritingPrompt,ModalFocusDirective,LearningSessionList],templateUrl:'./kanji-play.page.html',styleUrl:'./kanji-play.page.scss',changeDetection:ChangeDetectionStrategy.OnPush,host:{'(document:keydown)':'handleKey($event)'}})
 export class KanjiPlayPage {
   readonly availability=inject(KanjiAvailabilityService);
   readonly studiedContent=computed<StudiedSessionContent>(()=>({kind:'kanji',entries:studiedSessionEntries(this.learning.session(),KANJI_N5,unit=>unit.kanjiId)}));

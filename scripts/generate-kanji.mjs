@@ -23,8 +23,8 @@ const raw = `一|one|uno|un|一つ|ひとつ|hitotsu|one|uno|un|kun|ひと
 分|part, minute|parte, minuto|part, minut|分かる|わかる|wakaru|to understand|entender|entendre|kun|わ
 前|before, front|antes, delante|abans, davant|前|まえ|mae|front|delante|davant|kun|まえ
 北|north|norte|nord|北|きた|kita|north|norte|nord|kun|きた
-十|ten|diez|deu|十|じゅう|juu|ten|diez|deu|on|ジュウ
-千|thousand|mil|mil|千|せん|sen|thousand|mil|mil|on|セン
+十|ten|diez|deu|十月|じゅうがつ|juugatsu|October|octubre|octubre|on|ジュウ
+千|thousand|mil|mil|千円|せんえん|senen|one thousand yen|mil yenes|mil iens|on|セン
 午|noon|mediodía|migdia|午後|ごご|gogo|afternoon|tarde|tarda|on|ゴ
 半|half|mitad|meitat|半分|はんぶん|hanbun|half|mitad|meitat|on|ハン
 南|south|sur|sud|南|みなみ|minami|south|sur|sud|kun|みなみ
@@ -33,7 +33,7 @@ const raw = `一|one|uno|un|一つ|ひとつ|hitotsu|one|uno|un|kun|ひと
 名|name|nombre|nom|名前|なまえ|namae|name|nombre|nom|kun|な
 四|four|cuatro|quatre|四つ|よっつ|yottsu|four|cuatro|quatre|kun|よっ
 国|country|país|país|国|くに|kuni|country|país|país|kun|くに
-土|earth, soil|tierra, suelo|terra, sòl|土|つち|tsuchi|soil|tierra|terra|kun|つち
+土|earth, soil|tierra, suelo|terra, sòl|土曜日|どようび|doyoubi|Saturday|sábado|dissabte|on|ド
 外|outside|exterior, fuera|exterior, fora|外|そと|soto|outside|fuera|fora|kun|そと
 大|big|grande|gran|大きい|おおきい|ookii|big|grande|gran|kun|おお
 天|heaven, sky|cielo|cel|天気|てんき|tenki|weather|tiempo|temps|on|テン
@@ -53,7 +53,7 @@ const raw = `一|one|uno|un|一つ|ひとつ|hitotsu|one|uno|un|kun|ひと
 木|tree, wood|árbol, madera|arbre, fusta|木|き|ki|tree|árbol|arbre|kun|き
 本|book, origin|libro, origen|llibre, origen|本|ほん|hon|book|libro|llibre|on|ホン
 来|come|venir|venir|来る|くる|kuru|to come|venir|venir|kun|く
-東|east|este|est|東京|とうきょう|toukyou|Tokyo|Tokio|Tòquio|on|トウ
+東|east|este|est|東口|ひがしぐち|higashiguchi|east exit|salida este|sortida est|kun|ひがし
 校|school|escuela|escola|学校|がっこう|gakkou|school|escuela|escola|on|コウ
 母|mother|madre|mare|母|はは|haha|mother|madre|mare|kun|はは
 毎|every|cada|cada|毎日|まいにち|mainichi|every day|cada día|cada dia|on|マイ
@@ -64,7 +64,7 @@ const raw = `一|one|uno|un|一つ|ひとつ|hitotsu|one|uno|un|kun|ひと
 生|life, birth|vida, nacimiento|vida, naixement|生きる|いきる|ikiru|to live|vivir|viure|kun|い
 男|man, male|hombre, varón|home, mascle|男|おとこ|otoko|man|hombre|home|kun|おとこ
 白|white|blanco|blanc|白い|しろい|shiroi|white|blanco|blanc|kun|しろ
-百|hundred|cien|cent|百|ひゃく|hyaku|hundred|cien|cent|on|ヒャク
+百|hundred|cien|cent|百円|ひゃくえん|hyakuen|one hundred yen|cien yenes|cent iens|on|ヒャク
 聞|hear, listen|oír, escuchar|sentir, escoltar|聞く|きく|kiku|to listen|escuchar|escoltar|kun|き
 行|go|ir|anar|行く|いく|iku|to go|ir|anar|kun|い
 西|west|oeste|oest|西|にし|nishi|west|oeste|oest|kun|にし
