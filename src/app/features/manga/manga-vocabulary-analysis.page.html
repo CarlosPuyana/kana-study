@@ -1,0 +1,60 @@
+<main>
+  <nav class="manga-nav"><a class="manga-nav-link" routerLink="/manga"><span aria-hidden="true">←</span>{{i18n.t('manga.library')}}</a> <a class="manga-nav-link" [routerLink]="['/manga/read',volumeId()]">{{i18n.t('manga.read')}}</a></nav>
+  <h1>{{i18n.t('mangaM1.title')}}</h1>
+  @if(failed()) {
+    <p role="alert">{{i18n.t('mangaM1.failed')}}</p><button (click)="reload()">{{i18n.t('manga.catalog.retry')}}</button>
+  } @else if(index(); as result) {
+    @if(result.volumeTitle){<p>{{result.volumeTitle}}</p>}
+    <a class="practice-action" [routerLink]="['/manga/practice',volumeId()]">{{i18n.t('mangaM1.practice')}}</a>
+    <p role="status">{{i18n.t('mangaM1.status.'+result.status)}}</p>
+    @if(knowledgeFailed()){<p role="status">{{i18n.t('mangaM1.knowledgeFailed')}}</p>}
+    <h2>{{i18n.t('mangaM1.global')}}</h2>
+    <section class="metrics" [attr.aria-label]="i18n.t('mangaM1.metrics')">
+      <article><strong>{{result.occurrences}}</strong><span>{{i18n.t('mangaM1.occurrences')}}</span></article>
+      <article><strong>{{result.entries.length}}</strong><span>{{i18n.t('mangaM1.unique')}}</span></article>
+      <article><strong>{{metrics().readingCoverage === null ? '—' : (metrics().readingCoverage | number:'1.1-1') + '%'}}</strong><span>{{i18n.t('mangaM1.coverage')}}</span></article>
+      <article><strong>{{metrics().uniqueCoverage === null ? '—' : (metrics().uniqueCoverage | number:'1.1-1') + '%'}}</strong><span>{{i18n.t('mangaM1.uniqueCoverage')}}</span></article>
+    </section>
+    <p>{{i18n.t('mangaM1.metricHelp')}}</p>
+    <ul class="breakdown">@for(row of metrics().breakdown; track row.state){<li>{{i18n.t('mangaM1.state.'+row.state)}}: {{row.occurrences}} {{i18n.t('mangaM1.occurrences')}} · {{row.unique}} {{i18n.t('mangaM1.unique')}}</li>}</ul>
+    <div class="sections" role="group" [attr.aria-label]="i18n.t('mangaM1.sections')">
+      @for(c of categories;track c){<button type="button" [attr.aria-pressed]="category()===c" (click)="category.set(c);limit.set(100)">{{i18n.t('mangaM1.category.'+c)}} <span>{{sectionCounts()[c]}}</span></button>}
+    </div>
+    <p class="section-help">{{i18n.t('mangaM1.sectionHelp')}}</p>
+    @if(category()==='unclassified'){
+      <section class="classification-diagnostics" [attr.aria-label]="i18n.t('mangaM1.diagnostics')">
+        <h2>{{i18n.t('mangaM1.diagnostics')}}</h2>
+        <p>{{i18n.t('mangaM1.insufficientEntries')}}: {{insufficientCategories()}}</p>
+        <p>{{i18n.t('mangaM1.ambiguousEntries')}}: {{ambiguousCategories()}}</p>
+        <p>{{i18n.t('mangaM1.posNotOcr')}}</p>
+        <details><summary>{{i18n.t('mangaM1.unresolvedIdentity')}} ({{unidentified().length}})</summary>
+          @for(issue of unidentified().slice(0,100);track $index){<p>{{i18n.t('manga.pages')}} {{issue.pageIndex+1}} · {{i18n.t('mangaM1.issue.'+issue.reason)}} <span lang="ja">{{issue.context}}</span></p>}
+        </details>
+      </section>
+    }
+    <div class="controls">
+      <label>{{i18n.t('mangaM1.filter')}}<select [ngModel]="state()" (ngModelChange)="state.set($event);limit.set(100)"><option value="all">{{i18n.t('mangaM1.all')}}</option>@for(s of states; track s){<option [value]="s">{{i18n.t('mangaM1.state.'+s)}}</option>}</select></label>
+      <label>{{i18n.t('mangaM1.sort')}}<select [ngModel]="ascending()" (ngModelChange)="ascending.set($event)"><option [ngValue]="false">{{i18n.t('mangaM1.desc')}}</option><option [ngValue]="true">{{i18n.t('mangaM1.asc')}}</option></select></label>
+    </div>
+    <div class="words">@for(word of visible(); track word.entry.key){
+      <details><summary><span lang="ja" class="word-label">{{word.entry.lemma}}@if(readingAddsInformation(word.entry.lemma,word.entry.reading)){<small> · {{word.entry.reading}}</small>}</span><span class="frequency" [attr.title]="i18n.t('mangaM1.occurrences')">{{word.entry.occurrences.length}}</span>@if(categoryOf(word.entry)==='unclassified'){<small class="category-diagnostic">{{i18n.t(word.entry.categoryReason==='conflicting-pos'?'mangaM1.ambiguous':'mangaM1.insufficient')}}</small>}<span role="img" [class]="'knowledge-indicator '+word.state" [attr.aria-label]="i18n.t('mangaM1.state.'+word.state)" [attr.title]="i18n.t('mangaM1.knowledgeHelp.'+word.state)">@switch(word.state){@case('known'){●}@case('learning'){◐}@case('unknown'){○}@case('unlinked'){◇}}</span></summary>
+        <p lang="ja">{{word.entry.lemma}}【{{word.entry.reading}}】</p>
+        <p class="knowledge-help"><strong>{{i18n.t('mangaM1.state.'+word.state)}}</strong> · {{i18n.t('mangaM1.knowledgeHelp.'+word.state)}}</p>
+        <p>{{i18n.t('mangaM1.category.'+categoryOf(word.entry))}} · {{i18n.t('mangaM1.categoryReason.'+(word.entry.categoryReason??'missing-pos'))}}</p>
+        @if(word.entry.categoryEvidence?.length){<p>{{i18n.t('mangaM1.posEvidence')}}: @for(e of word.entry.categoryEvidence;track $index){<code>{{e.definitionTags || '—'}} [{{e.rules || '—'}}]</code> }</p>}
+        @for(e of word.entry.categoryEvidence;track $index){@if(e.alternatives?.length){<p>{{i18n.t('mangaM1.documentedAlternatives')}}: @for(a of e.alternatives;track $index){<code>{{a.entryId}}: {{a.definitionTags}}</code> }</p>}}
+        @for(gloss of word.entry.glosses;track $index){<p>{{gloss}}</p>}
+        <p>{{i18n.t('mangaM1.source')}}: {{word.entry.dictionaryId}} · {{word.entry.sequence}}</p>
+        <h2>{{i18n.t('mangaM1.context')}}</h2>
+        @for(o of word.entry.occurrences.slice(0,30);track $index){<p><a [routerLink]="['/manga/read',volumeId()]" [queryParams]="{page:o.pageIndex+1}">{{i18n.t('manga.pages')}} {{o.pageIndex+1}}</a> · <span lang="ja">{{o.surface}} — {{o.context}}</span></p>}
+        @if(word.entry.occurrences.length>30){<p>{{i18n.t('mangaM1.contextLimit')}}</p>}
+      </details>
+    } @empty {<p>{{i18n.t('mangaM1.empty')}}</p>}</div>
+    @if(visible().length<filtered().length){<button (click)="limit.set(limit()+100)">{{i18n.t('mangaM1.more')}}</button>}
+    @if(result.issues.length){<details class="issues"><summary>{{i18n.t('mangaM1.issues')}} ({{result.issues.length}})</summary>
+      <p>{{i18n.t('mangaM1.identificationHelp')}}</p>
+      @for(issue of result.issues.slice(0,100);track $index){<p>{{i18n.t('manga.pages')}} {{issue.pageIndex+1}} · {{i18n.t('mangaM1.issue.'+issue.reason)}} @if(issue.context){<span lang="ja">— {{issue.context}}</span>}</p>}
+      @if(result.issues.length>100){<p>{{i18n.t('mangaM1.issueLimit')}}</p>}
+    </details>}
+  } @else {<p role="status">{{i18n.t('mangaM1.loading')}}</p>}
+</main>

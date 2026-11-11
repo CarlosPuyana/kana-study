@@ -1,0 +1,61 @@
+<main class="rush-shell">
+  <header class="rush-header"><a class="manga-nav-link" [routerLink]="['/manga/analysis',volumeId()]"> <span aria-hidden="true">←</span> {{i18n.t('mangaM1.title')}}</a><span>{{i18n.t('mangaM2.badge')}}</span></header>
+  <h1>{{i18n.t('mangaM2.title')}}</h1>
+  @if(index()?.volumeTitle){<p>{{index()?.volumeTitle}}</p>}
+  @if(loading()) {<p role="status">{{i18n.t('mangaM2.loading')}}</p>}
+  @else if(unavailable()) {
+    <p role="status">{{i18n.t('mangaM2.unavailable')}}</p><a class="action" [routerLink]="['/manga/analysis',volumeId()]">{{i18n.t('mangaM2.prepare')}}</a>
+  } @else if(rush.summary();as summary) {
+    <section class="summary">
+      <h2 #summaryHeading tabindex="-1">{{i18n.t('mangaM2.finished')}}</h2>
+      <div class="summary-grid"><article><strong>{{summary.total}}</strong><span>{{i18n.t('mangaM2.completed')}}</span></article><article><strong>{{summary.distinct}}</strong><span>{{i18n.t('mangaM2.distinct')}}</span></article><article><strong>{{summary.knew}}</strong><span>{{i18n.t('mangaM2.knew')}}</span></article><article><strong>{{summary.didNotKnow}}</strong><span>{{i18n.t('mangaM2.didNotKnow')}}</span></article></div>
+      <p>{{i18n.t('mangaM2.selfReport')}}</p><p>{{i18n.t('mangaM2.temporary')}}</p>
+      <div class="actions"><button class="action" (click)="another()">{{i18n.t('mangaM2.another')}}</button><button (click)="exit()">{{i18n.t('mangaM2.back')}}</button></div>
+    </section>
+  } @else if(rush.current();as card) {
+    @let session=rush.session()!;
+    <div class="session-progress" role="status">{{session.answers.length}} / {{session.cards.length}} · {{i18n.t('mangaM2.completed')}}</div>
+    <progress [value]="session.answers.length" [max]="session.cards.length" [attr.aria-label]="i18n.t('mangaM2.progress')"></progress>
+    <section class="exercise">
+      <p>{{i18n.t('mangaM2.prompt')}}</p><h2 class="question" lang="ja">{{card.occurrence.surface}}</h2>
+      @if(card.surfaceReading && addsReading(card.occurrence.surface,card.surfaceReading)){<p class="reading" lang="ja">{{card.surfaceReading}}</p>}
+      @if(session.revealed){
+        <div class="answer">
+          <h3>{{i18n.t('mangaM2.dictionaryAnswer')}}</h3>
+          <ul class="meanings">@for(meaning of card.answer.meanings;track $index){<li>{{meaning}}</li>}</ul>
+          @if(card.category==='unclassified'){<p>{{i18n.t('mangaM2.ambiguousHelp')}}</p>}
+          <p>{{i18n.t('mangaM2.lemma')}}: <span lang="ja">{{card.lemma}}@if(addsReading(card.lemma,card.lemmaReading)){【{{card.lemmaReading}}】}</span></p>
+          <h3>{{i18n.t('mangaM2.example')}} · {{i18n.t('manga.pages')}} {{card.occurrence.pageIndex+1}}</h3>
+          <p class="context" lang="ja">{{card.occurrence.context.slice(0,card.occurrence.start)}}<mark>{{card.occurrence.surface}}</mark>{{card.occurrence.context.slice(card.occurrence.end)}}</p>
+          <p>{{i18n.t('mangaM2.selfReport')}}</p>
+        </div>
+        <div class="actions ratings"><button #knownButton studyPrimaryAction aria-keyshortcuts="2" class="action" (click)="rate(true)">{{i18n.t('mangaM2.knew')}} <kbd aria-hidden="true">2</kbd></button><button studyPrimaryAction aria-keyshortcuts="1" (click)="rate(false)">{{i18n.t('mangaM2.didNotKnow')}} <kbd aria-hidden="true">1</kbd></button></div>
+      } @else {<button #revealButton studyPrimaryAction class="action reveal" aria-keyshortcuts="Space Enter" (click)="reveal()">{{i18n.t('mangaM2.reveal')}} <kbd aria-hidden="true">{{i18n.t('mangaM2.keys')}}</kbd></button>}
+    </section>
+    <button class="exit" (click)="exit()">{{i18n.t('mangaM2.exit')}}</button>
+  } @else if(index();as volume) {
+    <p>{{i18n.t('mangaM2.temporary')}}</p>
+    @if(volume.status!=='complete'){<p role="status">{{i18n.t('mangaM2.partial')}}</p>}
+    @if(knowledgeFailed()){<p role="status">{{i18n.t('mangaM2.knowledgeFailed')}}</p>}
+    <form class="configuration" (ngSubmit)="start()">
+      <label>{{i18n.t('mangaM2.knowledge')}}<select name="knowledge" [ngModel]="config().knowledge" (ngModelChange)="update('knowledge',$event)">@for(k of knows;track k){<option [value]="k">{{i18n.t('mangaM2.knowledge.'+k)}}</option>}</select></label>
+      <label>{{i18n.t('mangaM2.category')}}<select name="category" [ngModel]="config().category" (ngModelChange)="update('category',$event)">@for(c of categories;track c){<option [value]="c">{{i18n.t('mangaM2.category.'+c)}}</option>}</select></label>
+      <label>{{i18n.t('mangaM2.selection')}}<select name="selection" [ngModel]="config().selection" (ngModelChange)="update('selection',$event)">@for(s of selections;track s){<option [value]="s">{{i18n.t('mangaM2.selection.'+s)}}</option>}</select></label>
+      <label>{{i18n.t('mangaM2.amount')}}<select name="amount" [ngModel]="config().amount" (ngModelChange)="update('amount',$event)">@for(n of amounts;track n){<option [ngValue]="n">{{n==='all'?i18n.t('mangaM2.allAvailable'):n}}</option>}</select></label>
+      @if(pool();as available){
+        <section class="eligibility" aria-live="polite">
+          <h2>{{i18n.t('mangaM2.eligible')}}: {{available.availableCards}}</h2>
+          <p>{{available.distinct}} {{i18n.t('mangaM2.distinct')}} · {{available.occurrences}} {{i18n.t('mangaM1.occurrences')}}</p>
+          <p>{{i18n.t('mangaM2.sessionSize')}}: {{available.selectedCards}}</p>
+          @if(config().selection==='weighted'){<p>{{i18n.t('mangaM2.weightedHelp')}}</p>}
+          <p>{{i18n.t('mangaM2.filteredOut')}}: {{available.filteredOut}}</p>
+          @for(reason of exclusions();track reason[0]){<p>{{i18n.t('mangaM2.excluded.'+reason[0])}}: {{reason[1]}}</p>}
+          @if(available.unresolvedSpans){<p>{{i18n.t('mangaM2.unresolved')}}: {{available.unresolvedSpans}}</p>}
+          @if(!available.selectedCards){<p>{{i18n.t('mangaM2.empty')}}</p>}
+        </section>
+        @if(knowledgeLoading()){<p role="status">{{i18n.t('mangaM2.loadingKnowledge')}}</p>}
+        <button #startButton class="action" type="submit" [disabled]="!available.selectedCards || knowledgeLoading()">{{i18n.t('mangaM2.start')}}</button>
+      }
+    </form>
+  }
+</main>

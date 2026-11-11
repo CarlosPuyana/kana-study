@@ -119,6 +119,7 @@ const shared:Record<string,string> = {
   "daily.module.manga": "Manga FSRS"
 };
 export const es:Record<string,string> = {...shared,...{
+  "mangaM1.title": "Vocabulario de la obra",
   "statsV2.objectiveAnswers": "Respuestas objetivas",
   "statsV2.objectiveFailures": "Fallos objetivos",
   "statsV2.title": "Historial de intentos",
@@ -863,7 +864,7 @@ export const es:Record<string,string> = {...shared,...{
   "manga.processing": "Procesando manga…",
   "manga.empty": "Tu biblioteca está vacía.",
   "manga.pages": "páginas",
-  "manga.continue": "Continuar",
+  "manga.continue": "Continuar leyendo",
   "manga.read": "Leer",
   "manga.delete": "Eliminar",
   "manga.deleteConfirm": "¿Eliminar este volumen y su progreso?",
@@ -1676,6 +1677,7 @@ export const es:Record<string,string> = {...shared,...{
   "selection.includeCanvas": "Incluir ejercicios con lienzo"
 }};
 export const en:Record<string,string> = {...shared,...{
+  "mangaM1.title": "Work vocabulary",
   "statsV2.objectiveAnswers": "Objective answers",
   "statsV2.objectiveFailures": "Objective failures",
   "statsV2.title": "Attempt history",
@@ -2420,7 +2422,7 @@ export const en:Record<string,string> = {...shared,...{
   "manga.processing": "Processing manga…",
   "manga.empty": "Your library is empty.",
   "manga.pages": "pages",
-  "manga.continue": "Continue",
+  "manga.continue": "Continue reading",
   "manga.read": "Read",
   "manga.delete": "Delete",
   "manga.deleteConfirm": "Delete this volume and its progress?",
@@ -3233,6 +3235,7 @@ export const en:Record<string,string> = {...shared,...{
   "selection.includeCanvas": "Include canvas exercises"
 }};
 export const ca:Record<string,string> = {...shared,...{
+  "mangaM1.title": "Vocabulari de l’obra",
   "statsV2.objectiveAnswers": "Respostes objectives",
   "statsV2.objectiveFailures": "Errors objectius",
   "statsV2.title": "Historial d’intents",
@@ -3977,7 +3980,7 @@ export const ca:Record<string,string> = {...shared,...{
   "manga.processing": "Processant manga…",
   "manga.empty": "La biblioteca és buida.",
   "manga.pages": "pàgines",
-  "manga.continue": "Continuar",
+  "manga.continue": "Continua llegint",
   "manga.read": "Llegir",
   "manga.delete": "Eliminar",
   "manga.deleteConfirm": "Vols eliminar aquest volum i el seu progrés?",

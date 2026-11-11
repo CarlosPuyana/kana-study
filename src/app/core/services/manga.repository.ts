@@ -3,6 +3,7 @@ import { WorkspaceService } from './workspace.service';
 import { MangaPage, MangaProgress, MangaVolume } from '../models/manga.model';
 import { LocalWorkspaceId } from '../models/account.model';
 import { withMangaLock } from './manga-lock';
+import { MangaVocabularyIndex } from '../models/manga-vocabulary-index.model';
 interface MangaProvisioningState {id:string;provisionedAt?:string;deletedAt?:string}
 const request = <T>(req: IDBRequest<T>): Promise<T> => new Promise((resolve, reject) => { req.onsuccess = () => resolve(req.result); req.onerror = () => reject(req.error); });
 @Injectable({ providedIn: 'root' })
@@ -15,7 +16,7 @@ export class MangaRepository {
     if (!pending) {
       pending = new Promise((resolve, reject) => {
         let blocked=false;
-        const req = indexedDB.open(name, 2);
+        const req = indexedDB.open(name, 3);
         req.onupgradeneeded = () => {
           if (!req.result.objectStoreNames.contains('volumes')) {
           req.result.createObjectStore('volumes', { keyPath: 'id' });
@@ -23,6 +24,8 @@ export class MangaRepository {
           req.result.createObjectStore('reading-progress', { keyPath: 'volumeId' });
           }
           if (!req.result.objectStoreNames.contains('provisioning')) req.result.createObjectStore('provisioning', {keyPath:'id'});
+          if (!req.result.objectStoreNames.contains('ocr-revisions')) req.result.createObjectStore('ocr-revisions');
+          if (!req.result.objectStoreNames.contains('vocabulary-index')) req.result.createObjectStore('vocabulary-index', {keyPath:'volumeId'});
         };
         req.onblocked = () => {blocked=true;this.databases.delete(name);reject(new Error('IndexedDB upgrade blocked by another tab'));};
         req.onsuccess = () => {const db=req.result;if(blocked){db.close();return;} db.onversionchange=()=>{db.close();this.databases.delete(name);}; resolve(db);}; req.onerror = () => { this.databases.delete(name); reject(req.error); };
@@ -34,6 +37,32 @@ export class MangaRepository {
   async volume(id: string, workspace = this.workspace.active()): Promise<MangaVolume | undefined> { const db = await this.open(workspace); return request(db.transaction('volumes').objectStore('volumes').get(id)); }
   async page(id: string, index: number, workspace = this.workspace.active()): Promise<MangaPage | undefined> { const db = await this.open(workspace); return request(db.transaction('pages').objectStore('pages').get([id, index])); }
   async progress(id: string, workspace = this.workspace.active()): Promise<MangaProgress | undefined> { const db = await this.open(workspace); return request(db.transaction('reading-progress').objectStore('reading-progress').get(id)); }
+  async ocrRevision(id: string, workspace = this.workspace.active()): Promise<number> {
+    const db = await this.open(workspace);
+    return (await request(db.transaction('ocr-revisions').objectStore('ocr-revisions').get(id))) ?? 0;
+  }
+  async vocabularyIndex(id: string, workspace = this.workspace.active()): Promise<MangaVocabularyIndex | undefined> {
+    const db = await this.open(workspace);
+    return request(db.transaction('vocabulary-index').objectStore('vocabulary-index').get(id));
+  }
+  async saveVocabularyIndex(index: MangaVocabularyIndex, revision: number, workspace = this.workspace.active()): Promise<void> {
+    const db = await this.open(workspace);
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(['ocr-revisions', 'vocabulary-index', 'volumes'], 'readwrite');
+      tx.oncomplete = () => resolve(); tx.onerror = tx.onabort = () => reject(tx.error ?? Error('source-changed'));
+      const current = tx.objectStore('ocr-revisions').get(index.volumeId);
+      current.onsuccess = () => {
+        if ((current.result ?? 0) !== revision) { tx.abort(); return; }
+        const volume = tx.objectStore('volumes').get(index.volumeId);
+        volume.onsuccess = () => { if (!volume.result?.complete) tx.abort(); else tx.objectStore('vocabulary-index').put(index); };
+      };
+    });
+  }
+  private touchOcr(tx: IDBTransaction, id: string): void {
+    const store = tx.objectStore('ocr-revisions'), prior = store.get(id);
+    prior.onsuccess = () => store.put((prior.result ?? 0) + 1, id);
+    tx.objectStore('vocabulary-index').delete(id);
+  }
   async provisioningState(id:string,workspace=this.workspace.active()):Promise<MangaProvisioningState|undefined>{
     const db=await this.open(workspace);
     return request(db.transaction('provisioning').objectStore('provisioning').get(id));
@@ -46,23 +75,29 @@ export class MangaRepository {
   async completeBuiltin(volume: MangaVolume, workspace = this.workspace.active()): Promise<void> {
     const db=await this.open(workspace);
     await new Promise<void>((resolve,reject)=>{
-      const tx=db.transaction(['volumes','provisioning'],'readwrite');
+      const tx=db.transaction(['volumes','provisioning','ocr-revisions','vocabulary-index'],'readwrite');
       tx.oncomplete=()=>resolve();tx.onerror=tx.onabort=()=>reject(tx.error);
       tx.objectStore('volumes').put({...volume,complete:true});
+      this.touchOcr(tx,volume.id);
       tx.objectStore('provisioning').put({id:volume.id,provisionedAt:new Date().toISOString()});
     });
   }
   async put(store: 'volumes' | 'pages' | 'reading-progress', value: MangaVolume | MangaPage | MangaProgress, workspace = this.workspace.active()): Promise<void> {
     const db = await this.open(workspace);
-    await new Promise<void>((resolve, reject) => { const tx = db.transaction(store, 'readwrite'); tx.oncomplete = () => resolve(); tx.onerror = tx.onabort = () => reject(tx.error); tx.objectStore(store).put(value); });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(store === 'reading-progress' ? [store] : [store,'ocr-revisions','vocabulary-index'], 'readwrite');
+      tx.oncomplete = () => resolve(); tx.onerror = tx.onabort = () => reject(tx.error); tx.objectStore(store).put(value);
+      if (store !== 'reading-progress') this.touchOcr(tx, store === 'volumes' ? (value as MangaVolume).id : (value as MangaPage).volumeId);
+    });
   }
   async delete(id: string, workspace = this.workspace.active(), voluntary = true): Promise<void> {
     const db = await this.open(workspace);
     await new Promise<void>((resolve, reject) => {
       const tombstone=voluntary && id.startsWith('builtin:');
-      const tx = db.transaction(['volumes', 'pages', 'reading-progress',...(tombstone?['provisioning']:[])], 'readwrite');
+      const tx = db.transaction(['volumes', 'pages', 'reading-progress','ocr-revisions','vocabulary-index',...(tombstone?['provisioning']:[])], 'readwrite');
       tx.oncomplete = () => resolve(); tx.onerror = tx.onabort = () => reject(tx.error);
       tx.objectStore('volumes').delete(id); tx.objectStore('reading-progress').delete(id);
+      this.touchOcr(tx,id);
       if(tombstone){const store=tx.objectStore('provisioning'),previous=store.get(id);previous.onsuccess=()=>store.put({...previous.result,id,deletedAt:new Date().toISOString()});}
       const cursor = tx.objectStore('pages').index('volumeId').openCursor(IDBKeyRange.only(id));
       cursor.onsuccess = () => { const row = cursor.result; if (row) { row.delete(); row.continue(); } };

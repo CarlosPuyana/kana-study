@@ -1,0 +1,37 @@
+@use './manga-navigation';
+:host { display: block; color: var(--text-primary); }
+main { max-width: 1050px; margin: auto; padding: 1rem; }
+nav, p { overflow-wrap: anywhere; }
+a { color: var(--accent); }
+.practice-action { display:inline-flex; align-items:center; min-height:44px; padding:.7rem 1rem; margin-bottom:.75rem; border:1px solid var(--border); border-radius:.7rem; background:var(--primary); color:var(--on-primary); text-decoration:none; }
+.metrics { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .75rem; }
+article, details { background: var(--surface); border: 1px solid var(--border); border-radius: .75rem; padding: 1rem; }
+article { display: flex; flex-direction: column; gap: .5rem; }
+strong { font-size: 1.6rem; }
+article span, p, .breakdown { color: var(--text-secondary); }
+.controls { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
+label { display: flex; flex-direction: column; gap: .5rem; }
+select, button { padding: .7rem; background: var(--surface-raised); color: var(--text-primary); border: 1px solid var(--border); border-radius: .5rem; }
+.words { display: grid; gap: .5rem; margin-bottom: 1rem; }
+summary { cursor: pointer; overflow-wrap: anywhere; }
+summary span { margin-inline-end: .5rem; }
+.word-label { font-weight:600; }
+.word-label small { color:var(--text-secondary); font-size:.9em; font-weight:400; }
+.frequency { display:inline-block; min-width:2rem; padding:.2rem .4rem; border-radius:.4rem; background:var(--surface-raised); text-align:center; font-variant-numeric:tabular-nums; }
+.knowledge-indicator { display:inline-block; color:var(--text-muted); }
+.knowledge-indicator.known { color:var(--success); }
+.knowledge-indicator.learning { color:var(--warning); }
+.knowledge-indicator.unknown { color:var(--text-secondary); }
+.knowledge-help strong { font-size:inherit; }
+.sections { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.5rem; }
+.sections button { cursor:pointer; min-height:44px; flex:1 1 auto; }
+.sections button[aria-pressed=true] { border-color:var(--accent); background:var(--primary-soft); }
+.sections button span { margin-inline-start:.4rem; font-variant-numeric:tabular-nums; }
+.section-help { font-size:.9rem; }
+.classification-diagnostics { padding:1rem; border:1px solid var(--border); border-radius:.75rem; background:var(--surface-raised); }
+.category-diagnostic { display:inline-block; color:var(--text-secondary); margin-inline-end:.5rem; }
+code { overflow-wrap:anywhere; }
+h2 { font-size: 1rem; }
+.issues { margin-top: 1.5rem; }
+:is(a, button, select, summary):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media(min-width: 750px) { .metrics { grid-template-columns: repeat(4,minmax(0,1fr)); } main { padding: 2rem; } }

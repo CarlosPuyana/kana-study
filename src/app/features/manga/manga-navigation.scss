@@ -1,0 +1,10 @@
+
+.manga-nav { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; }
+a.manga-nav-link { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; min-height:44px; max-width:100%; padding:.5rem .75rem; border:1px solid var(--border); border-radius:.65rem; background:var(--surface); color:var(--text-secondary); text-decoration:none; line-height:1.35; overflow-wrap:anywhere; }
+a.manga-nav-link:hover { background:var(--surface-hover); color:var(--text-primary); }
+a.manga-nav-link:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+
+.manga-reader .reader-header { grid-template-columns:auto minmax(0,1fr) auto; }
+.reader-header .reader-title { grid-column:2; grid-row:1; min-width:0; }
+.reader-header .fullscreen-button { grid-column:3; grid-row:1; }
+.reader-header .reader-vocabulary { grid-column:1/-1; justify-self:start; font-size:.8rem; padding:.35rem .6rem; }

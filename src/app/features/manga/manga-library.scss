@@ -5,3 +5,12 @@
 @media (pointer:coarse), (max-width:600px){.manga-library header>a,.manga-library .actions>a,.guide-page>a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}.manga-library .actions>a{padding-inline:.35rem}}
 
 .saved-library-link{margin:1rem 0}.saved-library-link a{display:inline-flex;align-items:center;min-height:44px;padding:.65rem 1rem;border:1px solid var(--border);border-radius:.7rem;background:var(--surface)}.saved-library-link a:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+// One action stack per volume. Future volume actions can join the stack.
+.volume-actions { align-items:flex-start; flex-wrap:nowrap; margin-top:.25rem; }
+.volume-action-list { flex:1; min-width:0; display:grid; gap:.65rem; }
+.manga-library .volume-action { display:flex; align-items:center; justify-content:center; min-height:44px; padding:.7rem .85rem; border:1px solid var(--border); border-radius:.7rem; text-align:center; line-height:1.4; overflow-wrap:anywhere; }
+.manga-library .volume-action.primary-action { color:var(--on-primary)!important; font-weight:600; }
+.volume-action.secondary-action { background:var(--surface-raised); color:var(--accent); }
+.volume-action:hover { filter:brightness(1.08); }
+.volume-action:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }

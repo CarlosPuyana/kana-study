@@ -28,10 +28,10 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
 @Component({
   selector: "app-manga-page",
   imports: [FormsModule, RouterLink, AccountControl, DictionaryInstallComponent],
-  styleUrls: ["./manga.scss", "./manga-library.scss"],
+  styleUrls: ["./manga.scss", "./manga-library.scss", "./manga-navigation.scss"],
   template: `<main class="manga-library">
     <header>
-      <a routerLink="/more" [queryParams]="{ from: 'manga' }">{{
+      <a class="manga-nav-link" routerLink="/more"><span aria-hidden="true">←</span>{{
         i18n.t("manga.modules")
       }}</a
       ><app-account-control />
@@ -101,11 +101,11 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
             [attr.aria-label]="i18n.t('manga.landing.progress')" [value]="readPages(volume)"
             [max]="volume.pageCount"
           ></progress>
-          <div class="actions">
-            <a [routerLink]="['/manga/read', volume.id]">{{
+          <div class="actions volume-actions">
+            <div class="volume-action-list"><a class="primary-action volume-action" [routerLink]="['/manga/read', volume.id]">{{
               i18n.t(progress()[volume.id] ? "manga.continue" : "manga.read")
             }}</a
-            >@if(access.permitted()&&customEnabled()&&assistedEnabled()){<a [routerLink]="['/manga/vocabulary',volume.id]">{{i18n.t('mangaVocab.title')}}</a>}<details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
+            ><a class="secondary-action volume-action" [routerLink]="['/manga/analysis',volume.id]">{{i18n.t('mangaM1.title')}}</a>@if(access.permitted()&&customEnabled()&&assistedEnabled()){<a [routerLink]="['/manga/vocabulary',volume.id]">{{i18n.t('mangaVocab.title')}}</a>}</div><details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
           </div>
         </article>
       }
