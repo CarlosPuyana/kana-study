@@ -165,3 +165,50 @@ edición, modales, repetición, respuesta oculta, sesión terminada y navegació
 real. Se mantienen las comprobaciones de cero escrituras de aprendizaje.
 
 Validación M2.0.1: 3.019 pruebas globales correctas en 269 archivos; nueve recorridos de regresión Playwright correctos y repetición focalizada de Espacio/Enter/1/2 mantenidos en 320/390/1280 px. ES/EN/CA y claro/oscuro comprobados. Build correcto; inicial idéntico de 749.636 bytes y lógica diferida.
+
+## M2.1: consulta contextual explícita
+
+Tras revelar una tarjeta, «Consultar en contexto con IA» invoca el adaptador
+`MangaRushMeaningService`, que implementa el puerto preparado en M2. Reutiliza
+`MangaContextService.request('translate', ...)` y el endpoint configurado por
+`kana-study-manga-assistant`. No se toca el Worker, modelo, prompts ni límites.
+El contrato translate admite palabra seleccionada y contexto como evidencia,
+sin traducir el bocadillo completo ni elegir sentidos verificados.
+
+Solo se envían la forma encontrada, su indicación de selección, idioma y una
+ventana literal del OCR alrededor de su rango (hasta 1.200 unidades). Se respetan
+los límites existentes de petición/respuesta. No se envían imágenes, progreso,
+workspace, identidad de cuenta ni glosas. El resultado y sus notas se presentan
+en una sección distinta, marcada como interpretación generada no verificada;
+JMdict, las tarjetas y los autorregistros nunca se sustituyen ni modifican.
+
+No hay llamadas al abrir, revelar, avanzar o importar, ni precargas, lotes o
+reintentos automáticos. El botón se bloquea mientras espera y desaparece cuando
+ya hay respuesta. Los errores permiten únicamente reintento manual. Si falta un
+endpoint seguro se muestra asistencia no configurada. La accesibilidad real se
+comprueba al consultar: HTTP, CORS, cuota y salida inválida producen un error
+local que conserva todo el funcionamiento JMdict. En desarrollo/pruebas, el
+origen debe estar permitido por el Worker; no se cambian sus orígenes admitidos.
+
+Se reutiliza la implementación de caché existente y su máximo de 20 respuestas,
+con un namespace RUSH por workspace. No se reutiliza la caché global antigua,
+que no contiene evidencia de propietario. La clave incluye endpoint, operación,
+palabra/identidad, contexto, tomo/localización e idioma. Workspace e identidad
+son únicamente parte de la clave local, no del envío. Los otros consumidores
+de MangaContextService mantienen su comportamiento anterior.
+
+El controlador cancela al cambiar tarjeta, idioma, tomo o workspace y al destruir
+la vista. Una barrera síncrona adicional comprueba posición/objeto de tarjeta,
+propietario y revisión de activación antes de mostrar y antes de guardar. Así,
+una respuesta tardía tampoco se almacena si el transporte ignora la cancelación.
+La única escritura nueva es la caché de IA del workspace que solicitó la consulta;
+no se escriben FSRS, conocimiento, estadísticas, respuestas ni OCR.
+
+Pruebas de adaptador con fetch simulado cubren caché, errores sin retry, ausencia
+de configuración, cambio de idioma/tomo/workspace y respuestas tardías. Playwright
+intercepta todas las solicitudes `/assist`: cero inferencias reales. Verifica
+consentimiento, notas, caché tras recarga y fallo conservando JMdict en los tres
+tamaños e idiomas del recorrido. OPTIONS real del endpoint configurado devolvió
+204 con CORS para producción; no se realizó ninguna inferencia de comprobación.
+
+Validación M2.1: 3.023 pruebas globales correctas en 270 archivos; tres recorridos Playwright con IA simulada en 320/390/1280 px, ES/EN/CA y ambos temas. Build correcto; arranque sin crecimiento, 749.636 bytes. La integración y las traducciones siguen diferidas. Solo se comprobó OPTIONS del endpoint real, sin inferencias.

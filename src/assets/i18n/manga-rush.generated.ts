@@ -3,6 +3,12 @@ const shared:Record<string,string> = {
   "mangaM2.badge": "⚡ RUSH · Manga"
 };
 export const es:Record<string,string> = {...shared,...{
+  "mangaM2.ai.title": "Interpretación contextual con IA",
+  "mangaM2.ai.consult": "Consultar en contexto con IA",
+  "mangaM2.ai.notice": "Interpretación orientativa generada, no verificada lingüísticamente. Envía esta palabra y su contexto OCR al asistente configurado. JMdict permanece independiente.",
+  "mangaM2.ai.unavailable": "Asistencia no configurada. Puedes seguir usando JMdict sin conexión.",
+  "mangaM2.ai.loading": "Consultando el contexto…",
+  "mangaM2.ai.failed": "No se pudo consultar la IA. JMdict sigue disponible; puedes reintentarlo manualmente.",
   "mangaM2.keys": "Espacio / Enter",
   "mangaM2.title": "Practicar vocabulario del manga",
   "mangaM2.loading": "Cargando el índice preparado…",
@@ -59,6 +65,12 @@ export const es:Record<string,string> = {...shared,...{
   "mangaM2.start": "Empezar práctica"
 }};
 export const en:Record<string,string> = {...shared,...{
+  "mangaM2.ai.title": "AI contextual interpretation",
+  "mangaM2.ai.consult": "Consult AI in context",
+  "mangaM2.ai.notice": "Generated guidance, not linguistically verified. Sends this word and its OCR context to the configured assistant. JMdict remains independent.",
+  "mangaM2.ai.unavailable": "Assistance is not configured. You can continue using JMdict offline.",
+  "mangaM2.ai.loading": "Consulting context…",
+  "mangaM2.ai.failed": "AI assistance failed. JMdict remains available; you may retry manually.",
   "mangaM2.keys": "Space / Enter",
   "mangaM2.title": "Practice manga vocabulary",
   "mangaM2.loading": "Loading the prepared index…",
@@ -115,6 +127,12 @@ export const en:Record<string,string> = {...shared,...{
   "mangaM2.start": "Start practice"
 }};
 export const ca:Record<string,string> = {...shared,...{
+  "mangaM2.ai.title": "Interpretació contextual amb IA",
+  "mangaM2.ai.consult": "Consulta en context amb IA",
+  "mangaM2.ai.notice": "Interpretació orientativa generada, no verificada lingüísticament. Envia aquesta paraula i el context OCR a l’assistent configurat. JMdict continua independent.",
+  "mangaM2.ai.unavailable": "Assistència no configurada. Pots continuar amb JMdict sense connexió.",
+  "mangaM2.ai.loading": "Consultant el context…",
+  "mangaM2.ai.failed": "No s’ha pogut consultar la IA. JMdict continua disponible; pots tornar-ho a provar manualment.",
   "mangaM2.keys": "Espai / Enter",
   "mangaM2.title": "Practica el vocabulari del manga",
   "mangaM2.loading": "Carregant l’índex preparat…",

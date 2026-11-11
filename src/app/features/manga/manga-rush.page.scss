@@ -41,3 +41,6 @@ progress { width:100%; accent-color:var(--primary); }
 
 kbd { display:inline-block; margin-inline-start:.5rem; padding:.1rem .35rem; border:1px solid currentColor; border-radius:.3rem; font-size:.75rem; opacity:.8; }
 @media(pointer:coarse) { kbd { display:none; } }
+
+.ai-assistance { margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); }
+.interpretation { color:var(--text-primary); }

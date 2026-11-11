@@ -18,13 +18,14 @@ export interface MangaRushDictionaryAnswer {
 }
 /** Future context-service adapter boundary only. No provider is invoked by M2. */
 export interface MangaRushMeaningRequest {
+  isCurrent?: () => boolean;
   lexicalKey: string;
   location: MangaContextLocation;
   request: MangaTranslationRequest;
 }
 export interface MangaRushMeaningProvider {
   resolve(input: MangaRushMeaningRequest, signal: AbortSignal): Promise<MangaRushDictionaryAnswer | {
-    kind: 'contextual'; meaning: string; provenance: string;
+    kind: 'contextual'; meaning: string; provenance: string; notes?: string[]; literal?: string;
   }>;
 }
 export interface MangaRushCard {

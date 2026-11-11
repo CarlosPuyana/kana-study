@@ -1,4 +1,10 @@
 {
+  "mangaM2.ai.title": "AI contextual interpretation",
+  "mangaM2.ai.consult": "Consult AI in context",
+  "mangaM2.ai.notice": "Generated guidance, not linguistically verified. Sends this word and its OCR context to the configured assistant. JMdict remains independent.",
+  "mangaM2.ai.unavailable": "Assistance is not configured. You can continue using JMdict offline.",
+  "mangaM2.ai.loading": "Consulting context…",
+  "mangaM2.ai.failed": "AI assistance failed. JMdict remains available; you may retry manually.",
   "mangaM2.keys": "Space / Enter",
   "mangaM1.practice": "Practice vocabulary",
   "mangaM2.title": "Practice manga vocabulary",

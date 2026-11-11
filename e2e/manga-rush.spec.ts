@@ -30,6 +30,8 @@ test('Manga RUSH fresh import -> configuration -> self-report -> summary with no
     for(const method of ['setItem','removeItem','clear'] as const){const original=Storage.prototype[method];
       (Storage.prototype as any)[method]=function(...args:unknown[]){state.writes.push('storage:'+method+':'+(args[0]??''));return Reflect.apply(original,this,args);};}
   },info.project.use.colorScheme==='light'?'light':'dark');
+  let aiCalls=0,aiError=false;
+  await page.route('**/assist',r=>{aiCalls++;return r.fulfill(aiError?{status:503,body:'unavailable'}:{json:{natural:'Interpretación simulada',notes:['Sentido ambiguo: respuesta orientativa.']}});});
   const posts:string[]=[];page.on('request',r=>{if(r.method()==='POST')posts.push(r.url());});
   await page.goto('/#/more');
   const dictionary=new ZipReader(new Uint8ArrayReader(await readFile('public/dictionaries/JMdict_spanish.zip')),{useWebWorkers:false});
@@ -104,6 +106,15 @@ test('Manga RUSH fresh import -> configuration -> self-report -> summary with no
   expect(await page.evaluate(()=>(window as any).__m2Io.writes)).toEqual([]);expect(await page.evaluate(()=>JSON.stringify(localStorage))).toBe(storageBefore);
   await page.locator('.practice-action').click();await expect(start).toBeEnabled();await start.click();await page.reload();
   await expect(start).toBeEnabled();await expect(page.locator('.question')).toHaveCount(0);await expect(page.locator('.summary')).toHaveCount(0);
+  expect(aiCalls).toBe(0);
+  await start.click();await page.locator('.reveal').click();await page.locator('.ai-assistance button').click();
+  await expect(page.locator('.interpretation')).toHaveText('Interpretación simulada');await expect(page.locator('.ai-assistance')).toContainText('Sentido ambiguo');
+  expect(aiCalls).toBe(1);await expect(page.locator('.meanings li').first()).toBeVisible();
+  await page.reload();await expect(start).toBeEnabled();await start.click();await page.locator('.reveal').click();
+  expect(aiCalls).toBe(1);await page.locator('.ai-assistance button').click();await expect(page.locator('.interpretation')).toBeVisible();expect(aiCalls).toBe(1);
+  await page.locator('.ratings button').first().click();await page.locator('.reveal').click();aiError=true;
+  await page.locator('.ai-assistance button').click();await expect(page.locator('.ai-assistance [role=alert]')).toBeVisible();expect(aiCalls).toBe(2);
+  await expect(page.locator('.meanings li').first()).toBeVisible();await page.reload();await expect(start).toBeEnabled();
   for(const [language,title] of [['es','Practicar vocabulario del manga'],['en','Practice manga vocabulary'],['ca','Practica el vocabulari del manga']]){
     await page.evaluate(language=>{const key='kana-study.settings.v1';localStorage.setItem(key,JSON.stringify({...JSON.parse(localStorage.getItem(key)!),language}));},language);
     await page.reload();await expect(page.getByRole('heading',{name:title,exact:true})).toBeVisible();

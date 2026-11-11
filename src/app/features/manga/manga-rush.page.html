@@ -27,6 +27,14 @@
           <p>{{i18n.t('mangaM2.lemma')}}: <span lang="ja">{{card.lemma}}@if(addsReading(card.lemma,card.lemmaReading)){【{{card.lemmaReading}}】}</span></p>
           <h3>{{i18n.t('mangaM2.example')}} · {{i18n.t('manga.pages')}} {{card.occurrence.pageIndex+1}}</h3>
           <p class="context" lang="ja">{{card.occurrence.context.slice(0,card.occurrence.start)}}<mark>{{card.occurrence.surface}}</mark>{{card.occurrence.context.slice(card.occurrence.end)}}</p>
+          <section class="ai-assistance" [attr.aria-label]="i18n.t('mangaM2.ai.title')">
+            <h3>{{i18n.t('mangaM2.ai.title')}}</h3><p>{{i18n.t('mangaM2.ai.notice')}}</p>
+            @if(!meaningProvider.available){<p role="status">{{i18n.t('mangaM2.ai.unavailable')}}</p>}
+            @else if(interpretation();as result){<p class="interpretation">{{result.meaning}}</p>@if(result.literal){<p>{{result.literal}}</p>}@for(note of result.notes;track $index){<p>{{note}}</p>}}
+            @else{<button type="button" [disabled]="aiPending()" (click)="consult()">{{i18n.t('mangaM2.ai.consult')}}</button>}
+            @if(aiPending()){<p role="status">{{i18n.t('mangaM2.ai.loading')}}</p>}
+            @if(aiFailed()){<p role="alert">{{i18n.t('mangaM2.ai.failed')}}</p>}
+          </section>
           <p>{{i18n.t('mangaM2.selfReport')}}</p>
         </div>
         <div class="actions ratings"><button #knownButton studyPrimaryAction aria-keyshortcuts="2" class="action" (click)="rate(true)">{{i18n.t('mangaM2.knew')}} <kbd aria-hidden="true">2</kbd></button><button studyPrimaryAction aria-keyshortcuts="1" (click)="rate(false)">{{i18n.t('mangaM2.didNotKnow')}} <kbd aria-hidden="true">1</kbd></button></div>

@@ -35,12 +35,16 @@ export class MangaContextService {
     if(!this.configuredEndpoint)return null;
     try {const url=new URL(this.configuredEndpoint,document.baseURI);return !url.username && !url.password && (url.protocol==='https:' || (url.protocol==='http:' && url.origin===location.origin))?url.href:null;}catch{return null;}
   }
-  async request(mode:MangaContextMode,request:MangaTranslationRequest,location:MangaContextLocation,signal:AbortSignal):Promise<ContextResult> {
+  async request(mode:MangaContextMode,request:MangaTranslationRequest,location:MangaContextLocation,signal:AbortSignal,
+    scope?:{workspace:string;identity:string;current:()=>boolean}):Promise<ContextResult> {
+    const guard=()=>{signal.throwIfAborted();if(scope&&!scope.current())throw Error('stale');};
+    guard();
     signal.throwIfAborted();if(!this.endpoint)throw new Error('unavailable');
     const bounded=limitedMangaRequest(request);
-    const key=JSON.stringify({schemaVersion:1,endpoint:this.endpoint,...location,mode,...bounded,sourceText:request.selectedText,sourceContextText:request.contextText});
+    const storageKey=scope?CACHE_KEY+'.rush.'+scope.workspace:CACHE_KEY;
+    const key=JSON.stringify({schemaVersion:1,endpoint:this.endpoint,...location,mode,...bounded,sourceText:request.selectedText,sourceContextText:request.contextText,...(scope?{workspace:scope.workspace,identity:scope.identity}:{})});
     let cache:{key:string;value:ContextResult}[]=[];
-    try{const saved:unknown=JSON.parse(localStorage.getItem(CACHE_KEY)??'[]');if(Array.isArray(saved))cache=saved.filter(row=>row && typeof row.key==='string' && row.key.length<8000).slice(-20);}catch{/* Cache is optional. */}
+    try{const saved:unknown=JSON.parse(localStorage.getItem(storageKey)??'[]');if(Array.isArray(saved))cache=saved.filter(row=>row && typeof row.key==='string' && row.key.length<8000).slice(-20);}catch{/* Cache is optional. */}
     const hit=cache.find(row=>row.key===key && validMangaContext(row.value,mode));if(hit)return hit.value;
     this.pending++;this.loading.set(true);this.error.set(false);
     try {
@@ -50,8 +54,8 @@ export class MangaContextService {
       const reader=response.body?.getReader();let raw='';
       if(reader){const decoder=new TextDecoder();let size=0;try{while(true){const chunk=await reader.read();if(chunk.done)break;size+=chunk.value.byteLength;if(size>100_000){await reader.cancel();throw new Error('response-too-large');}raw+=decoder.decode(chunk.value,{stream:true});}raw+=decoder.decode();}finally{reader.releaseLock();}}
       else {raw=await response.text();if(raw.length>100_000)throw new Error('response-too-large');}
-      const result:unknown=JSON.parse(raw);signal.throwIfAborted();if(!validMangaContext(result,mode))throw new Error('invalid');
-      try{localStorage.setItem(CACHE_KEY,JSON.stringify([...cache.filter(row=>row.key!==key),{key,value:result}].slice(-20)));}catch{/* Quota/private browsing must not prevent assistance. */}
+      const result:unknown=JSON.parse(raw);guard();if(!validMangaContext(result,mode))throw new Error('invalid');
+      try{localStorage.setItem(storageKey,JSON.stringify([...cache.filter(row=>row.key!==key),{key,value:result}].slice(-20)));}catch{/* Quota/private browsing must not prevent assistance. */}
       return result;
     }catch(error){if(!signal.aborted)this.error.set(true);throw error;}
     finally {this.pending--;this.loading.set(this.pending>0);}

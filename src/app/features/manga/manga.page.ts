@@ -5,6 +5,7 @@ import {LocalManga} from '../../core/models/local-manga.model';
 import {LocalMangaCatalogService,LOCAL_MANGA_PREFIX} from '../../core/services/local-manga-catalog.service';
 import {
   Component,
+  computed,
   effect,
   inject,
   isDevMode,
@@ -36,19 +37,7 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
       }}</a
       ><app-account-control />
     </header>
-    <section class="manga-hero"><span class="eyebrow">{{i18n.t("more.manga.title")}}</span><h1>{{i18n.t("manga.landing.title")}}</h1><p>{{i18n.t("manga.landing.intro")}}</p><div class="actions"><button class="primary-action" [disabled]="busy()" (click)="fileInput.click()">{{i18n.t("manga.landing.add")}}</button><a routerLink="/manga/guide">{{i18n.t("manga.landing.how")}} →</a></div></section><section class="manga-steps">@for(step of [1,2,3];track step){<article><div class="step-art" aria-hidden="true">@switch(step){@case(1){<span class="file-art">ZIP / CBZ</span>}@case(2){<span class="bubble-art">何してるの？</span>}@case(3){<span class="word-art">食べなかった → 食べる</span>}}</div><h2>{{step}} · {{i18n.t("manga.landing.step"+step)}}</h2></article>}</section>
-    <div class="saved-library-link"><a routerLink="/manga/study">📚 {{i18n.t('manga.saved.title')}} · {{saved.count()}}</a></div>
-    <details class="remote-entry"><summary>{{i18n.t('manga.remote.openLink')}}</summary>
-      <p>{{i18n.t('manga.remote.linkHelp')}}</p><form (ngSubmit)="openRemote()">
-        <label>{{i18n.t('manga.remote.archiveUrl')}}<input name="cbz" type="url" required [(ngModel)]="remoteCbz" /></label>
-        <label>{{i18n.t('manga.remote.manifestUrl')}}<input name="manifest" type="url" required [(ngModel)]="remoteManifest" /></label>
-        <label>{{i18n.t('manga.remote.coverUrl')}}<input name="cover" type="url" [(ngModel)]="remoteCover" /></label>
-        @if(remoteInvalid()){<p role="alert">{{i18n.t('manga.remote.invalidLink')}}</p>}
-        <button type="submit" [disabled]="busy()">{{i18n.t('manga.remote.openLink')}}</button>
-      </form>
-    </details>
-    <p>{{ i18n.t("manga.rights") }}</p>
-    <app-dictionary-install />
+    <section class="library-intro"><div><span class="eyebrow">{{i18n.t('more.manga.title')}}</span><h1>{{i18n.t('manga.library')}}</h1></div><button class="primary-action" type="button" [disabled]="busy()" (click)="fileInput.click()">＋ {{i18n.t('manga.landing.add')}}</button></section>
     <input hidden [attr.aria-label]="i18n.t('manga.landing.add')"
         #fileInput type="file"
         accept=".zip,.cbz"
@@ -69,17 +58,8 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
       <section class="empty-library"><div class="file-art" aria-hidden="true">＋</div><h2>{{i18n.t("manga.landing.empty")}}</h2><p>{{i18n.t("manga.landing.emptyHelp")}}</p><div class="actions"><button class="primary-action" (click)="fileInput.click()">{{i18n.t("manga.landing.add")}}</button><a routerLink="/manga/guide">{{i18n.t("manga.landing.how")}}</a></div></section>
     }
     @if(catalogError()){<p role="status">{{i18n.t('manga.catalog.unavailable')}} <button (click)="loadCatalog()">{{i18n.t('manga.catalog.retry')}}</button></p>}
-    @if(localMangas().length){<h2 class="library-heading">{{i18n.t('manga.catalog.title')}}</h2><section class="library-grid">
-      @for(manga of localMangas();track manga.id){<article class="catalog-manga">
-        @if(manga.cover){<img class="cover" [src]="catalog.asset(manga,manga.cover)" [alt]="manga.titles.ja"/>}
-        <h2 lang="ja">{{manga.titles.ja}}</h2>@if(manga.reading){<p lang="ja">{{manga.reading}}</p>}
-        @if(manga.titles.es && i18n.language()==='es'){<p>{{manga.titles.es}}</p>}
-        @if(manga.description?.[i18n.language()];as description){<p>{{description}}</p>}
-        <p>{{manga.pages.length}} {{i18n.t('manga.pages')}} · @for(lang of manga.availableLanguages;track lang){<span>{{i18n.t('manga.catalog.language.'+lang)}} </span>}</p>
-        <div class="actions"><a [routerLink]="['/manga/read',localVolumeId(manga)]">{{i18n.t('manga.read')}}</a></div>
-      </article>}
-    </section>}
-    <h2 class="library-heading">{{i18n.t("manga.library")}}</h2><section class="library-grid">
+    @if(continuing();as volume){<section class="continue-reading" aria-labelledby="continue-title">@if(covers()[volume.id]){<img [src]="covers()[volume.id]" alt=""/>}<div><span class="eyebrow" id="continue-title">{{i18n.t('manga.continue')}}</span><h2 [attr.title]="volume.title">{{volume.title}}</h2><p>{{readPages(volume)}} / {{volume.pageCount}} {{i18n.t('manga.pages')}}</p><a class="primary-action" [routerLink]="['/manga/read',volume.id]">{{i18n.t('manga.continue')}} →</a></div></section>}
+    <section class="library-grid personal-library" [attr.aria-label]="i18n.t('manga.library')">
       @for (volume of volumes(); track volume.id) {
         <article>
           @if (covers()[volume.id]) {
@@ -89,7 +69,8 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
               [alt]="volume.title"
             />
           }
-          <h2>{{ volume.title }}</h2>
+          @if(!covers()[volume.id]){<div class="cover-placeholder" aria-hidden="true">{{volume.title.slice(0,1)}}</div>}
+          <h2 [attr.title]="volume.title">{{ volume.title }}</h2>
           @if (volume.seriesTitle !== volume.title) {
             <p>{{ volume.seriesTitle }}</p>
           }
@@ -105,11 +86,35 @@ import { MANGA_DECK_ASSISTED_ENABLED } from '../../core/services/manga-deck-gate
             <div class="volume-action-list"><a class="primary-action volume-action" [routerLink]="['/manga/read', volume.id]">{{
               i18n.t(progress()[volume.id] ? "manga.continue" : "manga.read")
             }}</a
-            ><a class="secondary-action volume-action" [routerLink]="['/manga/analysis',volume.id]">{{i18n.t('mangaM1.title')}}</a>@if(access.permitted()&&customEnabled()&&assistedEnabled()){<a [routerLink]="['/manga/vocabulary',volume.id]">{{i18n.t('mangaVocab.title')}}</a>}</div><details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
+            ><a class="secondary-action volume-action" [routerLink]="['/manga/analysis',volume.id]">{{i18n.t('mangaM1.title')}}</a><a class="secondary-action volume-action" [routerLink]="['/manga/practice',volume.id]">⚡ {{i18n.t('rush.title')}}</a>@if(access.permitted()&&customEnabled()&&assistedEnabled()){<a [routerLink]="['/manga/vocabulary',volume.id]">{{i18n.t('mangaVocab.title')}}</a>}</div><details class="volume-menu"><summary [attr.aria-label]="i18n.t('manga.landing.options')">⋯</summary><button (click)="confirmDelete.set(volume)">{{i18n.t("manga.delete")}}</button></details>
           </div>
         </article>
       }
     </section>
+    @if(localMangas().length){<h2 class="library-heading">{{i18n.t('manga.catalog.title')}}</h2><section class="library-grid">
+      @for(manga of localMangas();track manga.id){<article class="catalog-manga">
+        @if(manga.cover){<img class="cover" [src]="catalog.asset(manga,manga.cover)" [alt]="manga.titles.ja"/>}@else{<div class="cover-placeholder" aria-hidden="true">{{manga.titles.ja.slice(0,1)}}</div>}
+        <h2 lang="ja">{{manga.titles.ja}}</h2>@if(manga.reading){<p lang="ja">{{manga.reading}}</p>}
+        @if(manga.titles.es && i18n.language()==='es'){<p>{{manga.titles.es}}</p>}
+        @if(manga.description?.[i18n.language()];as description){<p>{{description}}</p>}
+        <p>{{manga.pages.length}} {{i18n.t('manga.pages')}} · @for(lang of manga.availableLanguages;track lang){<span>{{i18n.t('manga.catalog.language.'+lang)}} </span>}</p>
+        <div class="actions"><a class="primary-action" [routerLink]="['/manga/read',localVolumeId(manga)]">{{i18n.t('manga.read')}}</a><a [routerLink]="['/manga/analysis',localVolumeId(manga)]">{{i18n.t('mangaM1.title')}}</a><a [routerLink]="['/manga/practice',localVolumeId(manga)]">⚡ {{i18n.t('rush.title')}}</a></div>
+      </article>}
+    </section>}
+    <details class="library-help"><summary>{{i18n.t('manga.landing.how')}}</summary><a routerLink="/manga/guide">{{i18n.t('manga.landing.how')}} →</a>
+    <div class="saved-library-link"><a routerLink="/manga/study">📚 {{i18n.t('manga.saved.title')}} · {{saved.count()}}</a></div>
+    <details class="remote-entry"><summary>{{i18n.t('manga.remote.openLink')}}</summary>
+      <p>{{i18n.t('manga.remote.linkHelp')}}</p><form (ngSubmit)="openRemote()">
+        <label>{{i18n.t('manga.remote.archiveUrl')}}<input name="cbz" type="url" required [(ngModel)]="remoteCbz" /></label>
+        <label>{{i18n.t('manga.remote.manifestUrl')}}<input name="manifest" type="url" required [(ngModel)]="remoteManifest" /></label>
+        <label>{{i18n.t('manga.remote.coverUrl')}}<input name="cover" type="url" [(ngModel)]="remoteCover" /></label>
+        @if(remoteInvalid()){<p role="alert">{{i18n.t('manga.remote.invalidLink')}}</p>}
+        <button type="submit" [disabled]="busy()">{{i18n.t('manga.remote.openLink')}}</button>
+      </form>
+    </details>
+    <p>{{ i18n.t("manga.rights") }}</p>
+    <app-dictionary-install />
+    </details>
     @if (confirmDelete(); as volume) {
       <div class="modal-backdrop">
         <section role="dialog" aria-modal="true" aria-labelledby="delete-title">
@@ -149,6 +154,7 @@ export class MangaPage implements OnDestroy {
   private readonly repository = inject(MangaRepository);
   private readonly importer = inject(MangaImportService);
   readonly volumes = signal<MangaVolume[]>([]);
+  readonly continuing=computed(()=>this.volumes().filter(v=>{const p=this.progress()[v.id];return p&&!p.completed&&v.pageCount>0;}).sort((a,b)=>(Date.parse(this.progress()[b.id].lastOpenedAt)||0)-(Date.parse(this.progress()[a.id].lastOpenedAt)||0))[0]??null);
   readonly customEnabled=inject(CUSTOM_DECKS_ENABLED);
   readonly assistedEnabled=inject(MANGA_DECK_ASSISTED_ENABLED);
   readonly covers = signal<Record<string, string>>({});

@@ -1,3 +1,4 @@
+import { MangaRushMeaningService } from '../../core/services/manga-rush-meaning.service';
 import * as rushCopy from '../../../assets/i18n/manga-rush.generated';
 import * as analysisCopy from '../../../assets/i18n/manga-analysis.generated';
 import { StudyPrimaryAction } from '../../shared/keyboard/study-primary-action';
@@ -18,10 +19,15 @@ import { MANGA_RUSH_DEFAULTS, mangaRushPool, selectMangaRushCards } from '../../
 import { MangaRushAmount, MangaRushCategory, MangaRushConfiguration, MangaRushExclusion, MangaRushKnowledge, MangaRushSelection } from '../../core/models/manga-rush.model';
 import { MangaProjectedWord, MangaVocabularyIndex } from '../../core/models/manga-vocabulary-index.model';
 
-@Component({selector:'app-manga-rush', imports:[FormsModule,RouterLink,StudyPrimaryAction], providers:[MangaRushSessionService],
+@Component({selector:'app-manga-rush', imports:[FormsModule,RouterLink,StudyPrimaryAction], providers:[MangaRushSessionService,MangaRushMeaningService],
   host:{'(document:keydown)':'key($event)'},
   templateUrl:'./manga-rush.page.html',styleUrl:'./manga-rush.page.scss'})
 export class MangaRushPage {
+  readonly meaningProvider=inject(MangaRushMeaningService);
+  readonly interpretation=signal<Awaited<ReturnType<MangaRushMeaningService['resolve']>>|null>(null);
+  readonly aiPending=signal(false);
+  readonly aiFailed=signal(false);
+  private aiController:AbortController|null=null;
   readonly i18n = inject(TranslationService);
   readonly rush = inject(MangaRushSessionService);
   private readonly workspace = inject(WorkspaceService);
@@ -52,8 +58,12 @@ export class MangaRushPage {
   private scope: {id:string; owner:string; epoch:number} | null = null;
   private alive = true;
   constructor() {
+    effect(()=>{
+      this.rush.current();this.workspace.active();this.workspace.activationRevision();this.i18n.language();
+      untracked(()=>{this.aiController?.abort();this.interpretation.set(null);this.aiPending.set(false);this.aiFailed.set(false);});
+    });
     this.i18n.useStudyCopy(analysisCopy); this.i18n.useStudyCopy(rushCopy);
-    inject(DestroyRef).onDestroy(() => {this.alive = false; this.rush.clear();});
+    inject(DestroyRef).onDestroy(() => {this.alive = false; this.aiController?.abort(); this.rush.clear();});
     effect(onCleanup => {
       const id = this.volumeId(), owner = this.workspace.active(), epoch = this.workspace.activationRevision(); this.workspace.dataRevision();
       const controller = new AbortController(); onCleanup(() => controller.abort());
@@ -80,6 +90,21 @@ export class MangaRushPage {
         if (alive && owner === this.workspace.active() && key === this.knowledge.cacheKey()) this.words.set(projectMangaVocabulary(index,snapshot,receipts));
       }).catch(() => {if (alive) this.knowledgeFailed.set(true);}).finally(() => {if (alive) this.knowledgeLoading.set(false);});
     });
+  }
+  async consult():Promise<void>{
+    const card=this.rush.current(),language=this.i18n.language();
+    if(!card||!this.validScope()||!this.rush.session()?.revealed||!this.meaningProvider.available||this.aiPending()||this.interpretation())return;
+    const controller=new AbortController();this.aiController?.abort();this.aiController=controller;
+    const epoch=this.workspace.activationRevision();
+    const current=()=>this.alive&&this.validScope()&&this.rush.current()===card&&this.workspace.activationRevision()===epoch&&this.i18n.language()===language;
+    this.aiPending.set(true);this.aiFailed.set(false);
+    try{
+      const result=await this.meaningProvider.resolve({lexicalKey:card.lexicalKey,
+        location:{volumeId:card.volumeId,pageIndex:card.occurrence.pageIndex,blockIndex:card.occurrence.blockIndex},
+        request:{selectedText:card.occurrence.surface,selectedExpression:card.occurrence.surface,contextText:card.occurrence.context.slice(Math.max(0,card.occurrence.start-400),Math.max(0,card.occurrence.start-400)+1200),targetLanguage:language},isCurrent:current},controller.signal);
+      if(current()&&!controller.signal.aborted)this.interpretation.set(result);
+    }catch{if(current()&&!controller.signal.aborted)this.aiFailed.set(true);}
+    finally{if(current()&&!controller.signal.aborted)this.aiPending.set(false);}
   }
   update<K extends keyof MangaRushConfiguration>(key: K, value: MangaRushConfiguration[K]): void {
     if (!this.rush.session()) this.config.update(c => ({...c,[key]:value}));

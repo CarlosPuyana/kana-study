@@ -1,4 +1,10 @@
 {
+  "mangaM2.ai.title": "Interpretació contextual amb IA",
+  "mangaM2.ai.consult": "Consulta en context amb IA",
+  "mangaM2.ai.notice": "Interpretació orientativa generada, no verificada lingüísticament. Envia aquesta paraula i el context OCR a l’assistent configurat. JMdict continua independent.",
+  "mangaM2.ai.unavailable": "Assistència no configurada. Pots continuar amb JMdict sense connexió.",
+  "mangaM2.ai.loading": "Consultant el context…",
+  "mangaM2.ai.failed": "No s’ha pogut consultar la IA. JMdict continua disponible; pots tornar-ho a provar manualment.",
   "mangaM2.keys": "Espai / Enter",
   "mangaM1.practice": "Practica vocabulari",
   "mangaM2.title": "Practica el vocabulari del manga",
