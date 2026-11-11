@@ -12815,5 +12815,6 @@
   "vocabulary.daily.undo": "Deshacer última respuesta",
   "vocabulary.daily.undoError": "No se ha podido verificar Deshacer. No respondas otra tarjeta; reintenta para completar la recuperación.",
   "vocabulary.daily.undoAction": "Deshacer",
-  "kanji.stats.undo": "Deshacer"
+  "kanji.stats.undo": "Deshacer",
+  "kaishi.sentenceVolume": "Volumen de audio"
 }

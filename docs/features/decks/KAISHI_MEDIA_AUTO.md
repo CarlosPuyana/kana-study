@@ -113,3 +113,33 @@ Capturas: `card-desktop-dark.png`, `card-mobile-light.png`, `card-narrow-dark.pn
 ## Límites pendientes
 
 La publicación de originales permanece bloqueada. Safari/iOS y hardware de audio real requieren comprobación manual; no hay WebKit/Firefox instalados en este entorno. La prueba mecánica de tonos y de muestras locales originales no es una validación lingüística masiva. No se ha usado Supabase real ni modificado SQL. Gramática restringida, Guest-only, custom cloud/upload apagados, FSRS y SCHEDULER-1 permanecen intactos. No se inicia otro hito.
+
+## Volumen de frases y legibilidad (11/11/2026)
+
+La pantalla de estudio muestra frases japonesas a 20 px (18 px hasta 560 px),
+incluido el contexto de mazos personalizados, conservando furigana y saltos.
+El volumen de frases 0–100 se guarda por workspace mediante las preferencias
+de Kaishi; por defecto 100, igual al reproductor anterior. Se aplica al audio
+de frase automático/manual y a sus repeticiones, sin cambiar palabra ni RUSH.
+Los otros mazos mantienen sus capacidades de audio actuales; no se generan voces.
+
+No hay normalización real. Tres MP3 publicados, analizados sin reescribirlos con
+volumedetect, dieron medias de −24,2/−19,1/−22,7 dB y picos de −6,7/−2,6/−8,1 dB.
+Son medidas de una muestra, no LUFS ni una comparación controlada entre voces.
+Igualar sonoridad exigiría analizar/decodificar cada archivo o preparar ganancias
+por recurso; no se añade ese procesamiento al reproductor directo en esta entrega.
+
+Validación: 27/27 dirigidos, global 2929/2929, 12/12 Playwright en 320/390/1280 px,
+ES/EN/CA y claro/oscuro, con reproducción, 0/50/100 y recarga. Las preferencias
+se comprueban también con A→B→A y recreación del servicio en perfiles sintéticos.
+
+### Corrección: un único volumen para palabra y frase
+
+«Volumen de audio» controla ahora ambos clips en estudio, incluida repetición
+y cambios durante reproducción. Ambos son archivos reproducidos por el mismo
+HTMLAudioElement; no se añade TTS/Web Speech. Se conserva la clave anterior
+`kana-study.kaishi-sentence-volume.v1` y sus valores por workspace, sin migración.
+El control también aparece si la tarjeta solo tiene audio de palabra. Práctica
+y otros módulos mantienen su comportamiento previo; no se modifica normalización.
+Puyi y personalizados no tienen una ruta adicional de audio en esta pantalla:
+se comprueba su navegación sin inventar reproductores ni voces.

@@ -285,7 +285,8 @@ export const es:Record<string,string> = {...shared,...{
   "vocabulary.daily.undo": "Deshacer última respuesta",
   "vocabulary.daily.undoError": "No se ha podido verificar Deshacer. No respondas otra tarjeta; reintenta para completar la recuperación.",
   "vocabulary.daily.undoAction": "Deshacer",
-  "kanji.stats.undo": "Deshacer"
+  "kanji.stats.undo": "Deshacer",
+  "kaishi.sentenceVolume": "Volumen de audio"
 }};
 export const en:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "How cards are scheduled",
@@ -569,7 +570,8 @@ export const en:Record<string,string> = {...shared,...{
   "vocabulary.daily.undo": "Undo last answer",
   "vocabulary.daily.undoError": "Undo could not be verified. Do not answer another card; retry to complete recovery.",
   "vocabulary.daily.undoAction": "Undo",
-  "kanji.stats.undo": "Undo"
+  "kanji.stats.undo": "Undo",
+  "kaishi.sentenceVolume": "Audio volume"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "Com es programen les targetes",
@@ -853,5 +855,6 @@ export const ca:Record<string,string> = {...shared,...{
   "vocabulary.daily.undo": "Desfés l’última resposta",
   "vocabulary.daily.undoError": "No s’ha pogut verificar Desfer. No responguis una altra targeta; torna-ho a provar per completar la recuperació.",
   "vocabulary.daily.undoAction": "Desfés",
-  "kanji.stats.undo": "Desfés"
+  "kanji.stats.undo": "Desfés",
+  "kaishi.sentenceVolume": "Volum d’àudio"
 }};

@@ -7,3 +7,5 @@
 :host(.practice-media) .pitch p{font-size:1rem}
 :host(.practice-media) img{max-height:clamp(140px,20dvh,200px)}
 :host(.practice-media) .sentence-row{gap:.5rem}
+
+.sentence-volume{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;max-width:100%;font-size:.85rem;color:var(--text-secondary)}.sentence-volume input{min-height:44px;width:min(100%,12rem);accent-color:var(--accent)}

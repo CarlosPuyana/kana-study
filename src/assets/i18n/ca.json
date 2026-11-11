@@ -12815,5 +12815,6 @@
   "vocabulary.daily.undo": "Desfés l’última resposta",
   "vocabulary.daily.undoError": "No s’ha pogut verificar Desfer. No responguis una altra targeta; torna-ho a provar per completar la recuperació.",
   "vocabulary.daily.undoAction": "Desfés",
-  "kanji.stats.undo": "Desfés"
+  "kanji.stats.undo": "Desfés",
+  "kaishi.sentenceVolume": "Volum d’àudio"
 }

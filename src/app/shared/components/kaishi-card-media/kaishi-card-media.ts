@@ -27,6 +27,7 @@ export class KaishiCardMedia {
   void this.load(id,generation,controller.signal,this.reload);
   onCleanup(()=>{controller.abort();++this.generation;this.stop();for(const url of owned)URL.revokeObjectURL(url);});
  });
+ effect(()=>{const volume=this.media.sentenceVolume?.()??100;if(this.layout()==='study'&&this.audio&&this.playing()!==null)this.audio.volume=volume/100;});
  effect(()=>{const enabled=this.media.autoAudio(),active=this.active();if(!enabled||!active)untracked(()=>this.cancelAutomatic());});
  }
  private async load(id:string,generation:number,signal:AbortSignal,retry:boolean):Promise<void>{
@@ -87,7 +88,7 @@ export class KaishiCardMedia {
    let url=this.urls()[kind];
    if(!url){const blob=await this.blob(source,request.signal,this.reload);if(request.signal.aborted||generation!==this.generation||token!==this.playback)return null;url=URL.createObjectURL(blob);this.owned.add(url);this.urls.update(old=>({...old,[kind]:url}));}
    if(request.signal.aborted||generation!==this.generation||token!==this.playback)return null;
-   const audio=this.audio??new Audio();this.audio=audio;audio.src=url;
+   const audio=this.audio??new Audio();this.audio=audio;audio.src=url;audio.volume=this.layout()==='study'?(this.media.sentenceVolume?.()??100)/100:1;
    const done=new Promise<boolean>(resolve=>{this.finishAudio=resolve;});
    audio.onended=()=>{if(token===this.playback){this.playing.set(null);this.finishAudio?.(true);this.finishAudio=undefined;}};
    audio.onerror=()=>{if(token===this.playback){this.audioError.set('failed');this.stop();}};

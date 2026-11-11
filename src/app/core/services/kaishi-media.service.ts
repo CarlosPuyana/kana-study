@@ -4,12 +4,13 @@ import { KaishiMediaStore } from './kaishi-media-store';
 import { WorkspaceService } from './workspace.service';
 export const KAISHI_MEDIA_STORE=new InjectionToken<KaishiMediaStore>('kaishi device media',{providedIn:'root',factory:()=>new KaishiMediaStore()});
 export const KAISHI_MEDIA_WORKER=new InjectionToken<()=>Worker>('kaishi worker',{providedIn:'root',factory:()=>()=>new Worker(new URL('./kaishi-media.worker',import.meta.url),{type:'module'})});
-const PENDING='kana-study.kaishi.pending.v1',PITCH='kana-study.kaishi-pitch.v1',AUTO='kana-study.kaishi-auto-audio.v1';
+const PENDING='kana-study.kaishi.pending.v1',PITCH='kana-study.kaishi-pitch.v1',AUTO='kana-study.kaishi-auto-audio.v1',VOLUME='kana-study.kaishi-sentence-volume.v1';
 @Injectable({providedIn:'root'})
 export class KaishiMediaService {
   readonly store=inject(KAISHI_MEDIA_STORE);
   private readonly makeWorker=inject(KAISHI_MEDIA_WORKER);
   private readonly workspace=inject(WorkspaceService);
+  readonly sentenceVolume=signal(this.readSentenceVolume());
   readonly phase=signal<KaishiImportPhase>('idle');readonly count=signal(0);readonly error=signal<KaishiErrorCode|null>(null);
   readonly installation=signal<KaishiInstallation|null>(null);readonly revision=signal(0);readonly pitch=signal(this.readPitch());readonly preferenceError=signal(false);readonly autoAudio=signal(this.readAutoAudio());
   private worker?:Worker;private operation?:string;private serial=0;
@@ -18,11 +19,13 @@ export class KaishiMediaService {
   constructor(){
     this.channel?.addEventListener('message',()=>{void this.refresh();});
     let activation=this.workspace.activationRevision();
-    effect(()=>{this.workspace.active();const next=this.workspace.activationRevision();untracked(()=>{this.pitch.set(this.readPitch());this.autoAudio.set(this.readAutoAudio());if(next!==activation&&this.busy())void this.cancel();activation=next;});});
+    effect(()=>{this.workspace.active();const next=this.workspace.activationRevision();untracked(()=>{this.sentenceVolume.set(this.readSentenceVolume());this.pitch.set(this.readPitch());this.autoAudio.set(this.readAutoAudio());if(next!==activation&&this.busy())void this.cancel();activation=next;});});
     const pagehide=()=>{this.worker?.terminate();};window.addEventListener('pagehide',pagehide);
     inject(DestroyRef).onDestroy(()=>{this.serial++;this.worker?.terminate();if(this.operation)void this.store.discard(this.operation).finally(()=>this.store.close()).catch(()=>{});else this.store.close();this.channel?.close();window.removeEventListener('pagehide',pagehide);});
     void this.recover().then(()=>this.refresh());
   }
+  private readSentenceVolume():number{try{const raw=localStorage.getItem(this.workspace.storageKey(VOLUME));if(raw===null)return 100;const value=Number(raw);return Number.isFinite(value)&&value>=0&&value<=100?value:100;}catch{return 100;}}
+  setSentenceVolume(value:number):void{if(!Number.isFinite(value))return;value=Math.max(0,Math.min(100,Math.round(value)));try{localStorage.setItem(this.workspace.storageKey(VOLUME),String(value));this.sentenceVolume.set(value);this.preferenceError.set(false);}catch{this.preferenceError.set(true);}}
   private readPitch():boolean {try{return localStorage.getItem(this.workspace.storageKey(PITCH))!=='false';}catch{return true;}}
   setPitch(value:boolean):void {try{localStorage.setItem(this.workspace.storageKey(PITCH),String(value));this.pitch.set(value);this.preferenceError.set(false);}catch{this.preferenceError.set(true);}}
   private readAutoAudio():boolean {try{return localStorage.getItem(this.workspace.storageKey(AUTO))!=='false';}catch{return true;}}

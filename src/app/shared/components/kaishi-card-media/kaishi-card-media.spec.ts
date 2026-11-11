@@ -7,7 +7,7 @@ import {TranslationService} from '../../../core/services/translation.service';
 import {WorkspaceService} from '../../../core/services/workspace.service';
 import {JAPANESE_1500_ENTRIES} from '../../../data/japanese-1500.generated';
 describe('Kaishi back media lifecycle',()=>{
- let media:{autoAudio:ReturnType<typeof signal<boolean>>;pitch:ReturnType<typeof signal<boolean>>;revision:ReturnType<typeof signal<number>>;store:{resource:ReturnType<typeof vi.fn>}};
+ let media:{sentenceVolume:ReturnType<typeof signal<number>>;setSentenceVolume:ReturnType<typeof vi.fn>;autoAudio:ReturnType<typeof signal<boolean>>;pitch:ReturnType<typeof signal<boolean>>;revision:ReturnType<typeof signal<number>>;store:{resource:ReturnType<typeof vi.fn>}};
  const audios:{src?:string;onended?:null|(()=>void);onerror?:null|(()=>void);pause:ReturnType<typeof vi.fn>;load:ReturnType<typeof vi.fn>;removeAttribute:ReturnType<typeof vi.fn>;play:ReturnType<typeof vi.fn>}[]=[];
  const remote={card:vi.fn(),resource:vi.fn()};
  const create=vi.fn(),revoke=vi.fn();
@@ -15,11 +15,13 @@ describe('Kaishi back media lifecycle',()=>{
   vi.stubGlobal('URL',{createObjectURL:create,revokeObjectURL:revoke});
   vi.stubGlobal('Audio',class{pause=vi.fn();load=vi.fn();removeAttribute=vi.fn();play=vi.fn(async()=>{});constructor(){audios.push(this);}});
   remote.card.mockReset().mockResolvedValue({catalog:{publication:'blocked'},card:null});remote.resource.mockReset().mockResolvedValue(new Blob(['fixture']));
-  media={autoAudio:signal(false),pitch:signal(false),revision:signal(0),store:{resource:vi.fn(async(_id:string,kind:string)=>kind==='picture'?null:new Blob(['ID3'],{type:'audio/mpeg'}))}};
+  media={sentenceVolume:signal(100),setSentenceVolume:vi.fn(),autoAudio:signal(false),pitch:signal(false),revision:signal(0),store:{resource:vi.fn(async(_id:string,kind:string)=>kind==='picture'?null:new Blob(['ID3'],{type:'audio/mpeg'}))}};
   TestBed.configureTestingModule({imports:[KaishiCardMedia],providers:[{provide:KaishiStaticMediaService,useValue:remote},{provide:KaishiMediaService,useValue:media},{provide:TranslationService,useValue:{t:(key:string)=>key}}]});
  });
  afterEach(()=>{TestBed.resetTestingModule();vi.unstubAllGlobals();});
  async function render(){const f=TestBed.createComponent(KaishiCardMedia);f.componentRef.setInput('entry',JAPANESE_1500_ENTRIES[0]);f.detectChanges();await f.whenStable();f.detectChanges();return f;}
+ it.each([0,50,100])('applies saved volume %i to both audio types and replay without changing practice',async volume=>{const f=await render();await vi.waitFor(()=>expect(f.componentInstance.sources().sentenceAudio).toBeTruthy());media.sentenceVolume.set(volume);await f.componentInstance.play('sentenceAudio');expect((audios[0] as unknown as {volume:number}).volume).toBe(volume/100);await f.componentInstance.play('sentenceAudio');expect((audios[0] as unknown as {volume:number}).volume).toBe(volume/100);await f.componentInstance.play('wordAudio');expect((audios[0] as unknown as {volume:number}).volume).toBe(volume/100);await f.componentInstance.play('wordAudio');expect((audios[0] as unknown as {volume:number}).volume).toBe(volume/100);f.componentRef.setInput('layout','practice');await f.componentInstance.play('sentenceAudio');expect((audios[0] as unknown as {volume:number}).volume).toBe(1);});
+ for(const kind of ['wordAudio','sentenceAudio'] as const)it('updates '+kind+' volume while playing',async()=>{const f=await render();await vi.waitFor(()=>expect(f.componentInstance.sources()[kind]).toBeTruthy());await f.componentInstance.play(kind);for(const volume of [0,50,100]){media.sentenceVolume.set(volume);TestBed.tick();expect((audios[0] as unknown as {volume:number}).volume).toBe(volume/100);}});
  it('plays only on request, stops previous audio and revokes every URL on card/workspace/destroy',async()=>{
   const f=await render();await vi.waitFor(()=>expect(f.componentInstance.sources().wordAudio).toBeTruthy());expect(audios).toHaveLength(0);expect(f.nativeElement.querySelector('img')).toBeNull();
   await f.componentInstance.play('wordAudio');expect(audios).toHaveLength(1);

@@ -17,3 +17,5 @@
 @if(preparing()){<p class="media-status" role="status">{{i18n.t('kaishi.preparing')}}</p>}
 @if(playing()){<p class="media-status" role="status">{{i18n.t('kaishi.playing')}}</p>}
 @if(audioError();as error){<p class="media-status" role="status">{{i18n.t(error==='blocked'?'kaishi.autoplayBlocked':'kaishi.audioFailed')}}</p>}
+
+@if(layout()==='study' && (sources().sentenceAudio || sources().wordAudio)){<label class="sentence-volume"><span>{{i18n.t('kaishi.sentenceVolume')}} {{media.sentenceVolume()}}%</span><input type="range" min="0" max="100" step="1" [value]="media.sentenceVolume()" (input)="media.setSentenceVolume(+$any($event.target).value)" /></label>}
