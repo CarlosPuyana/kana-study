@@ -24,7 +24,16 @@ describe('RELEASE-MANGA-2A complete Guest backup',()=>{
  async function grade(elapsed=1234,at=now){const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(loaded.status!=='ready')throw Error('fixture');const {deck,content}=loaded.value,study=TestBed.inject(DeckStudyService);const snapshot=await study.snapshot(deck,content.index,at),choice=study.chooseNext(snapshot,deck,{debt:0}).choice!;return study.rate(deck,choice,study.preview(deck,choice,at),'good',elapsed,at);}
  async function signed(data:any){const {sha256,...body}=data;return JSON.stringify({...body,sha256:await digest('',body)});}
  beforeEach(()=>{localStorage.clear();vi.stubGlobal('IDBKeyRange',IDBKeyRange);fresh();});
- afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();localStorage.clear();});
+ afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();localStorage.clear();});
+ it('round-trips an automatic closure reopened by undo, including original journal and exact snapshots',async()=>{
+  vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(now.getTime()+600001));
+  await seed();await grade();const event=await grade(1234,new Date(now.getTime()+600000));
+  const loaded=await TestBed.inject(DeckCatalogService).load(fixture.deck.id);if(loaded.status!=='ready')throw Error('fixture');
+  const study=TestBed.inject(DeckStudyService);await study.completeSession(loaded.value.deck,loaded.value.content.index,new Date());
+  expect((await repo().getDailyState(fixture.deck.id,'2026-10-25'))?.closureOrigin).toBe('automatic');
+  await study.undo(event,true);expect((await repo().getDailyState(fixture.deck.id,'2026-10-25'))?.completedAt).toBeNull();
+  const original=await repo().guestInventory(),raw=await service().export(signalFor());fresh();await service().restore(raw,true,signalFor());expect(await repo().guestInventory()).toEqual(original);
+ });
  it('preserves a 180-second review through local validation, export and restore',async()=>{await seed();const event=await grade(180000);expect(event.elapsedAnswerMs).toBe(180000);const raw=await service().export(signalFor());expect((await decodeBackup(raw)).records.events[0].value.elapsedAnswerMs).toBe(180000);fresh();await service().restore(raw,true,signalFor());expect((await repo().getDeckReviewEvents(fixture.deck.id))[0]).toEqual(event);});
  it('exports an empty deck with escaped Unicode, settings and the complete closed inventory',async()=>{
   await repo().create('empty',customDeck(),[]);const data=await decodeBackup(await service().export(signalFor()));expect(data.counts.decks).toBe(1);expect(data.counts.cards).toBe(0);expect(Object.keys(data.records)).toEqual([...BACKUP_STORES]);expect(data.records.decks[0].value.title).toBe(customDeck().title);

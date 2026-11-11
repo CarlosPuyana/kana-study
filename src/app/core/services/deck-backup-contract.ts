@@ -1,5 +1,6 @@
 import { deckCardEligible, getLocalStudyDayKey } from './deck-study-time';
 import {canonical,digest,validateCard,validateDeck,progressValid,eventValid,dailyValid,settingsValid,id} from './custom-deck-validation';
+import {preserveClosure} from './deck-closure-state';
 import {validateMangaConfirmedOperation} from './manga-deck-confirmation';
 
 export const BACKUP_STORES=['decks','cards','progress','events','daily','identities','registry-meta','confirmations','volume-links','journal','reconciliation'] as const;
@@ -19,7 +20,7 @@ export function boundedJson(value:unknown){let nodes=0;function visit(v:any,dept
 const card=async(v:any)=>{check(equal(v,await validateCard(v)));};
 const deck=(v:any)=>{check(equal(v,validateDeck(v)));};
 function fsrs(v:any){keys(v,['due','stability','difficulty','elapsedDays','scheduledDays','learningSteps','reps','lapses','state','lastReview']);}
-function daily(v:any){keys(v,['deckId','localDate','introducedEntryIds','newLimitOverride'],['completedAt']);check(dailyValid(v));}
+function daily(v:any){keys(v,['deckId','localDate','introducedEntryIds','newLimitOverride'],['completedAt','closureOrigin','closedByReviewId']);check(dailyValid(v));}
 function event(v:any){keys(v,['id','deckId','entryId','reviewedAt','rating','fsrsRating','stateBefore','stateAfter','dueBefore','dueAfter','stabilityBefore','stabilityAfter','difficultyBefore','difficultyAfter','retrievabilityBefore','desiredRetention','elapsedAnswerMs','fsrsLog','cardBefore']);check(eventValid(v));if(v.cardBefore)fsrs(v.cardBefore);keys(v.fsrsLog,['rating','state','due','stability','difficulty','elapsedDays','lastElapsedDays','scheduledDays','learningSteps','review']);}
 async function confirmation(p:any){
  keys(p,['schemaVersion','deck','card','expectedContentVersion','confirmation']);await validateMangaConfirmedOperation(p);deck(p.deck);await card(p.card);
@@ -65,7 +66,7 @@ export async function validateBackupRecords(records:BackupRecords):Promise<void>
    keys(p,['settings']);check(d&&settingsValid(p.settings)&&equal(ctx.deck?.settings,p.settings));maps.decks.set(d.key,{...d,value:ctx.deck});
   }else if(op.kind==='daily'){
    daily(p);check(d&&p.deckId===op.entityId);const k=key(p.deckId,p.localDate),old=maps.daily.get(k)?.value;
-   maps.daily.set(k,row(k,{...p,introducedEntryIds:old?.introducedEntryIds??p.introducedEntryIds,completedAt:p.completedAt===null&&ctx.daily?.completedAt===null?null:old?.completedAt??p.completedAt}));
+   maps.daily.set(k,row(k,{...preserveClosure(old,p),...(p.completedAt===null&&ctx.daily?.completedAt===null?{completedAt:null}:{})}));
   }else if(op.kind==='review'||op.kind==='undo'){
    keys(p,op.kind==='review'?['progress','event','daily']:['event','daily']);event(p.event);daily(p.daily);const e=p.event,k=key(e.deckId,e.entryId),before=maps.progress.get(k);check(d&&e.deckId===op.entityId&&maps.cards.has(k)&&p.daily.deckId===op.entityId);
    check(equal(ctx.before,before?.value?.card??null)&&ctx.beforeHead===(before?.head??null));

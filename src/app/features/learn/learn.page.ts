@@ -1,3 +1,4 @@
+import {SettingsService} from '../../core/services/settings.service';
 import {runStudyShortcut} from '../../shared/keyboard/study-shortcuts';
 import {ModalFocusDirective} from '../../shared/directives/modal-focus.directive';
 import {LearningWritingPrompt} from '../../shared/components/learning-writing-prompt/learning-writing-prompt';
@@ -19,6 +20,9 @@ import { DailyLearningService } from '../../core/services/daily-learning.service
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LearnPage {
+  private readonly canvasSettings=inject(SettingsService);
+  usesCanvas():boolean {return this.canvasSettings.selection().includeCanvas !== false && this.learning.currentUnit()?.questionType==='romaji-to-kana';}
+
   private readonly writingPrompt=viewChild(LearningWritingPrompt);
   handleKey(event:KeyboardEvent):void {
     if(!this.learning.session() || this.learning.completed() || !this.learning.currentKana() ||
@@ -32,7 +36,7 @@ export class LearnPage {
   }
   readonly drawingOptionsKey=signal('');
   writingKey():string {return `${this.learning.session()?.id}:${this.learning.currentUnit()?.key}:${this.learning.currentItem()?.appearances}`;}
-  writingOptionsVisible():boolean {return this.learning.currentUnit()?.questionType!=='romaji-to-kana' || this.drawingOptionsKey()===this.writingKey();}
+  writingOptionsVisible():boolean {return !this.usesCanvas() || this.drawingOptionsKey()===this.writingKey();}
 
   constructor(){inject(DestroyRef).onDestroy(()=>this.learning.clear());}
 

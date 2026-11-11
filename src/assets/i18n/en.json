@@ -12805,5 +12805,15 @@
   "kanji.stats.today": "Rounds today · Madrid",
   "kanji.stats.recordedTime": "Recorded time",
   "kanji.stats.timeCoverage": "Time available for {{known}} of {{total}} rounds. Missing values are not converted to zero.",
-  "kanji.stats.dailyRatings": "Ratings by day"
+  "kanji.stats.dailyRatings": "Ratings by day",
+  "selection.includeCanvas": "Include canvas exercises",
+  "kanji.availability.homeFresh": "New remaining: {{count}}",
+  "kanji.availability.homeToday": "New today: {{count}}",
+  "kanji.availability.homeDue": "Due reviews: {{count}}",
+  "kanji.availability.homeCompleted": "Round completed. You can learn again tomorrow.",
+  "vocabulary.daily.stats.view": "View statistics",
+  "vocabulary.daily.undo": "Undo last answer",
+  "vocabulary.daily.undoError": "Undo could not be verified. Do not answer another card; retry to complete recovery.",
+  "vocabulary.daily.undoAction": "Undo",
+  "kanji.stats.undo": "Undo"
 }

@@ -79,6 +79,7 @@ export class SettingsService {
     this.state.update(current => ({
       ...current,
       learning: {
+        ...(selection.includeCanvas === undefined ? {} : {includeCanvas: selection.includeCanvas !== false}),
         categories: structuredClone(selection.categories),
         questionTypes: selection.questionTypes.filter(type => AVAILABLE_QUESTION_TYPES.includes(type)),
       },
@@ -130,6 +131,7 @@ export class SettingsService {
           hiragana: this.normalizeCategory(categories['hiragana'], 'hiragana'),
           katakana: this.normalizeCategory(categories['katakana'], 'katakana'),
         },
+        ...(learning['includeCanvas'] === false ? {includeCanvas: false} : {}),
         questionTypes: this.normalizeQuestionTypes(learning['questionTypes']),
       };
     }
@@ -142,6 +144,7 @@ export class SettingsService {
           hiragana: this.migrateCategory(content, variants, 'hiragana'),
           katakana: this.migrateCategory(content, variants, 'katakana'),
         },
+        ...(learning['includeCanvas'] === false ? {includeCanvas: false} : {}),
         questionTypes: this.normalizeQuestionTypes(learning['questionTypes']),
       };
     }

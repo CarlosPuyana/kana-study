@@ -1,8 +1,8 @@
-import {KanjiAvailabilityNotice} from './components/kanji-availability-notice';
+import * as studyCopy from '../../../assets/i18n/deck-study.generated';
 import {KanjiAvailabilityService} from '../../core/services/kanji-availability.service';
 import {KanjiAnswerStore} from '../../core/services/kanji-answer-store';
 import {PageHeader} from '../../shared/components/page-header/page-header';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RushConfiguration } from '../../core/models/rush.model';
 import { buildKanjiRushUnits, kanjiRushConfiguration } from '../../core/services/rush-builders';
@@ -20,7 +20,7 @@ import { RushConfigDialog, RushConfigOption } from '../../shared/components/rush
 import { SelectionCard } from '../../shared/components/selection-card/selection-card';
 import { KanjiStartPanel } from './components/kanji-start-panel/kanji-start-panel';
 
-@Component({selector:'app-kanji-page',imports:[KanjiAvailabilityNotice,PageHeader,RouterLink,KanjiStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./kanji.page.html',styleUrl:'./kanji.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
+@Component({selector:'app-kanji-page',imports:[PageHeader,RouterLink,KanjiStartPanel,MedalBadge,ProgressBar,ProgressCircle,SelectionCard,RushConfigDialog],templateUrl:'./kanji.page.html',styleUrl:'./kanji.page.scss',changeDetection:ChangeDetectionStrategy.OnPush})
 export class KanjiPage {
   readonly availability=inject(KanjiAvailabilityService);
   readonly integrity=inject(KanjiAnswerStore);
@@ -32,7 +32,7 @@ export class KanjiPage {
   readonly rushTypes:readonly RushConfigOption[]=[{id:'kanji-to-meaning',labelKey:'kanji.questionType.kanji-to-meaning'},{id:'meaning-to-kanji',labelKey:'kanji.questionType.meaning-to-kanji'}];
   readonly countRushUnits=(config:RushConfiguration)=>buildKanjiRushUnits(KANJI_N5,config).length;
   private readonly rushSettings=inject(RushSettingsService);private readonly settings=inject(KanjiSettingsService);private readonly router=inject(Router);private readonly route=inject(ActivatedRoute);
-  constructor(){if(this.route.snapshot.queryParamMap.get('rush')==='1')queueMicrotask(()=>this.openRush())}
+  constructor(){this.i18n.useStudyCopy(studyCopy);this.availability.watch(inject(DestroyRef));if(this.route.snapshot.queryParamMap.get('rush')==='1')queueMicrotask(()=>this.openRush())}
   openRush(){this.rushConfig.set(this.rushSettings.getOrInitialize('kanji',kanjiRushConfiguration(this.settings.selection())));this.showRushPanel.set(true)}
   startRush(config:RushConfiguration){this.rushSettings.save('kanji',config);this.showRushPanel.set(false);void this.router.navigateByUrl('/kanji/rush')}
 }

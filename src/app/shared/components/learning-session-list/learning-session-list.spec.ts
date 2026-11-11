@@ -47,7 +47,7 @@ describe('Learn result lists use actual engines and catalog targets',()=>{
       {provide:SessionHistoryService,useValue:{record:history}},
       {provide:AttemptRecordingService,useValue:{begin:()=>({record})}},
       {provide:WeaknessService,useValue:{recordLearn:()=>{}}},
-      {provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:()=>{}}},
+      {provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:()=>{},spainDay:signal('2026-11-10')}},
       provideRouter([]),
     ]});
   });

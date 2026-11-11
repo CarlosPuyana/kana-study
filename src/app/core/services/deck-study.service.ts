@@ -82,7 +82,7 @@ export class DeckStudyService {
       startedToday:storedDaily?.completedAt===null||events.some(e=>getLocalStudyDayKey(new Date(e.reviewedAt))===localDate),
       mixedCursor: { debt: mix.debt },
       separation: [],
-      completedToday,
+      completedToday,closureOrigin:daily.closureOrigin,closedByReviewId:daily.closedByReviewId,
       progress,
       newEntries: unseen.slice(0, newAvailable),
       learningEntries: learning,
@@ -219,7 +219,7 @@ export class DeckStudyService {
     return event;
   }
 
-  async undo(event: DeckReviewEvent): Promise<void> {
+  async undo(event: DeckReviewEvent, reopen=false): Promise<void> {
     const database = this.database.bind(event.deckId);
     const localDate = getLocalStudyDayKey(new Date(event.reviewedAt));
     const daily = await database.getDailyState(event.deckId, localDate)
@@ -227,7 +227,9 @@ export class DeckStudyService {
     const introducedEntryIds = (event.cardBefore === null || event.cardBefore.state === State.New)
       ? daily.introducedEntryIds.filter(entryId => entryId !== event.entryId)
       : [...daily.introducedEntryIds];
-    await database.undoReview(event, { ...daily, introducedEntryIds });
+    reopen ||= daily.completedAt!=null&&daily.closureOrigin==='automatic'&&daily.closedByReviewId===event.id&&localDate===getLocalStudyDayKey(new Date());
+    if(reopen&&(daily.closureOrigin!=='automatic'||daily.closedByReviewId!==event.id||localDate!==getLocalStudyDayKey(new Date())))throw Error('Unsafe session reopen');
+    await database.undoReview(event, { ...daily, ...(reopen?{completedAt:null}:{}), introducedEntryIds });
   }
 
   async adjustTodayNewLimit(deck: DeckDefinition, delta: number, now = new Date()): Promise<DeckDailyState> {
@@ -253,7 +255,9 @@ export class DeckStudyService {
     database.assertOwner();
     const localDate = getLocalStudyDayKey(now);
     const daily = await database.getDailyState(deck.id, localDate) ?? emptyDailyState(deck.id, localDate);
-    await database.writeDailyState({ ...daily, completedAt: now.getTime() });
+    const events=(await database.getDeckReviewEvents(deck.id)).filter(e=>getLocalStudyDayKey(new Date(e.reviewedAt))===localDate).sort((a,b)=>b.reviewedAt-a.reviewedAt);
+    const last=events[0],unique=last&&!events.slice(1).some(e=>e.reviewedAt===last.reviewedAt);
+    await database.writeDailyState({ ...daily, completedAt: now.getTime(),closureOrigin:force?'voluntary':'automatic',...(!force&&unique?{closedByReviewId:last.id}:{}) },force?undefined:{progress:snapshot.progress,entryIds:index.map(e=>e.id)});
   }
 
   async statistics(deck: DeckDefinition, total: number, now = new Date()): Promise<DeckStudyStatistics> {

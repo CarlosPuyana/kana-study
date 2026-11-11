@@ -89,6 +89,7 @@
     }
   </section>
 
+  <section class="selection-section"><label><input type="checkbox" [checked]="draft().includeCanvas !== false" (change)="toggleCanvas()"/> {{i18n.t('selection.includeCanvas')}}</label></section>
   <button class="save-button" type="button" [disabled]="!valid()" (click)="save()">
     {{ i18n.t('selection.save') }}
   </button>

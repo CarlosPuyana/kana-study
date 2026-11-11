@@ -1,1 +1,3 @@
 // Shared module-home styles are scoped globally in shared/styles/_module-home.scss.
+
+.progress-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:.4rem .75rem;min-width:0}.stats-toggle{min-height:44px;padding:.4rem .65rem;border:1px solid var(--border);border-radius:.6rem;background:var(--surface);color:var(--accent);font:inherit;font-size:.85rem;cursor:pointer}.stats-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:3px}@media(max-width:400px){.progress-section>.section-heading{flex-wrap:wrap}.progress-tools{justify-content:flex-start;width:100%}}

@@ -37,7 +37,7 @@ describe('AttemptEvent integration at real grading boundaries',()=>{
   const progress={buildRound:vi.fn(),recordReview:vi.fn(),recordPracticeAttempt:vi.fn(),roundSummary:()=>({roundNew:0,roundDue:0})};
   const audioState=signal('ready');let vocabularyWrites:Promise<unknown>[]=[];
   beforeEach(()=>{
-    TestBed.resetTestingModule();localStorage.clear();vi.clearAllMocks();audioState.set('ready');vocabularyWrites=[];progress.recordReview.mockImplementation((...args:unknown[])=>{const attempt=args[5] as AttemptEvent|undefined;if(attempt)vocabularyWrites.push(TestBed.inject(AttemptEventRepository).insert(attempt));});
+    TestBed.resetTestingModule();localStorage.clear();vi.clearAllMocks();audioState.set('ready');vocabularyWrites=[];progress.recordReview.mockImplementation((...args:unknown[])=>{const attempt=args[5] as AttemptEvent|undefined;if(attempt){vocabularyWrites.push(TestBed.inject(AttemptEventRepository).insert(attempt));TestBed.inject(WeaknessService).recordLearn('vocabulary',attempt.itemId,attempt.questionType!,args[1] as 'again'|'hard'|'good');}});
     vi.stubGlobal('indexedDB',new IDBFactory());vi.stubGlobal('IDBKeyRange',IDBKeyRange);
     vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
     TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,provideRouter([]),GrammarPracticeSession,
@@ -52,7 +52,7 @@ describe('AttemptEvent integration at real grading boundaries',()=>{
   async function events(){await Promise.all(vocabularyWrites);await TestBed.inject(AttemptRecordingService).settle();const values:AttemptEvent[]=[];await TestBed.inject(AttemptEventRepository).scan({from:'0000',to:'9999'},e=>{values.push(e);});return values;}
   for(const module of ['kana','kanji','vocabulary'] as const){
     function learning(){
-      const unit=module==='kana'?{key:'a',kanaId:ALL_KANA[0].id,questionType:'romaji-to-kana'}:module==='kanji'?{key:'a',kanjiId:KANJI_N5[0].id,questionType:'meaning-to-kanji'}:{key:`vocab:${VOCABULARY_N5[0].id}:meaning-to-japanese`,entryId:VOCABULARY_N5[0].id,questionType:'meaning-to-japanese'};
+      const unit=module==='kana'?{key:'a',kanaId:ALL_KANA[0].id,questionType:'romaji-to-kana'}:module==='kanji'?{key:`kanji:${KANJI_N5[0].id}:meaning-to-kanji`,kanjiId:KANJI_N5[0].id,questionType:'meaning-to-kanji'}:{key:`vocab:${VOCABULARY_N5[0].id}:meaning-to-japanese`,entryId:VOCABULARY_N5[0].id,questionType:'meaning-to-japanese'};
       progress.buildRound.mockReturnValue(module==='vocabulary'?VOCABULARY_N5.slice(0,3).map(e=>({key:`vocab:${e.id}:meaning-to-japanese`,entryId:e.id,questionType:'meaning-to-japanese'})):[unit]);
       return module==='kana'?TestBed.inject(LearningSessionService):module==='kanji'?TestBed.inject(KanjiSessionService):TestBed.inject(VocabularySessionService);
     }

@@ -15,7 +15,7 @@ export class KanjiStatisticsReader {
 
   async load(count:7|30|90,now:Date){
     const owner=this.workspace.active(),epoch=this.workspace.activationRevision();
-    const current=()=>owner===this.workspace.active()&&epoch===this.workspace.activationRevision();
+    const current=()=>owner===this.workspace.active()&&epoch===this.workspace.activationRevision()&&localStorage.getItem(this.workspace.storageKey('kana-study.kanji-undo-pending.v1',owner))===null;
     const accumulator=kanjiHistoryAccumulator(this.progress.reviewEvents(),count,now);
     await this.repository.scan({from:accumulator.from,to:accumulator.to,module:'kanji',activity:'learn'},e=>{
       if(!current())return false;

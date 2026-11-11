@@ -23,7 +23,7 @@ export class DeckPersistenceRouter {
             getDeckProgress: async (id) => { assertOwner(); const v = await (custom ? this.custom.getDeckProgress(id, owner) : this.builtin.getDeckProgress(id)); assertOwner(); const active=id==='mazo-puyi'?this.catalog.publicEntryIds():null;return active?v.filter(p=>active.has(p.entryId)):v; },
             getDeckReviewEvents: async (id) => { assertOwner(); const v = await (custom ? this.custom.getDeckReviewEvents(id, owner) : this.builtin.getDeckReviewEvents(id)); assertOwner(); return v; },
             getDailyState: async (id, day) => { assertOwner(); const v = await (custom ? this.custom.getDailyState(id, day, owner) : this.builtin.getDailyState(id, day)); assertOwner(); return v; },
-            writeDailyState: async (d) => { assertOwner(); await (custom ? this.custom.writeDailyState(d, owner) : this.builtin.writeDailyState(d)); assertOwner(); },
+            writeDailyState: async (d,expected) => { assertOwner(); await (custom ? this.custom.writeDailyState(d, owner,expected) : this.builtin.writeDailyState(d,expected)); assertOwner(); },
             commitReview: async (p, e, d, limit) => { assertOwner(); await (custom ? this.custom.commitReview(p, e, d, owner) : this.builtin.commitReview(p, e, d,limit)); assertOwner(); },
             undoReview: async (e, d) => { assertOwner(); await (custom ? this.custom.undoReview(e, d, owner) : this.builtin.undoReview(e, d)); assertOwner(); },
         };

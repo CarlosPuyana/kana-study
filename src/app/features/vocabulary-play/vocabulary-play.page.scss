@@ -18,6 +18,8 @@
 .lesson-progress{font-variant-numeric:tabular-nums;white-space:nowrap}.lesson-ratings{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin:.75rem 0;color:var(--text-secondary)}.lesson-ratings strong{color:var(--text-primary)}
 
 .play-header{grid-template-columns:2.75rem auto minmax(0,1fr) 2.75rem}
+.play-header .study-tools{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;gap:.5rem;min-width:0}
+.play-header .undo-answer{width:auto;min-height:44px;margin:0;padding:.4rem .75rem;font-size:.85rem;white-space:normal}
 
 // Compact study frame; results and the scheduler are unchanged.
 .exercise{padding-top:1rem;gap:.5rem}

@@ -1,6 +1,22 @@
 # Mazos — reconstrucción del contrato Anki/FSRS
 
-Contrato vigente de Learn Ahead y sesión diaria: sección I. Las secciones anteriores conservan la auditoría de la reconstrucción.
+## Corrección acotada de la vista de Deshacer (10/11/2026)
+
+Dos regresiones sintéticas demuestran que una lectura fallida después de
+`undoReview` eliminaba `lastEvent` antes de restaurar la tarjeta, y que Reintentar
+tras un fallo de escritura refrescaba la cola en lugar de reintentar Deshacer.
+La vista conserva ahora el evento hasta completar las lecturas y restaurar la
+tarjeta; pausa nuevas respuestas, cierre y refrescos mientras la reversión está
+pendiente. Reintentar vuelve a la misma operación mediante la persistencia
+idempotente existente. No se atribuye esta reproducción al historial real de la
+usuaria ni se cambia la sincronización, FSRS o el formato de guardado.
+
+La continuación de esta corrección se describe en J: incorpora origen durable,
+reapertura atómica y recuperación local. La limitación de la primera entrega
+queda sustituida por ese contrato, conservando las dos regresiones originales.
+
+Contrato vigente: sección I para cola/sesión diaria y J para cierre/Deshacer.
+Las secciones anteriores conservan la auditoría de la reconstrucción.
 
 Trabajo local iniciado el 09/11/2026 sobre b334e69. El roadmap Kanji queda
 detenido y sus 30 archivos locales se conservan. Sin cuentas reales, SQL,
@@ -489,3 +505,47 @@ selector existente de Deshacer y se reutiliza su estilo sin rediseño. Los arnes
 esperan la carga real de Puyi tras reload. No hay sleeps, skips, only ni retries
 para ocultar fallos. Evidencias nuevas únicamente en `.cache/learn-ahead/`, capturas
 Playwright en los directorios existentes. No se incluyen builds/cachés en Git.
+
+## J. Deshacer tras cierre automático y recuperación local (10/11/2026)
+
+Se añaden a DeckDailyState dos campos opcionales: closureOrigin (automatic o
+voluntary) y closedByReviewId. No hay migración ni inferencia de cierres antiguos.
+El cierre automático conserva el último evento inequívoco del día; el voluntario
+y los históricos siguen cerrados. El inventario y replay de backup admiten los
+campos nuevos y conservan los journals anteriores.
+
+Deshacer valida el evento canónico, el head/snapshot actual, el día Madrid y
+el origen del cierre dentro de la transacción. La misma transacción restaura
+cardBefore, evento, cuota y completedAt:null en el mismo registro diario. No crea
+otra sesión. Un cierre automático compara además su snapshot dentro de la
+transacción: un cierre calculado antes de una reversión no puede cerrar su estado
+restaurado. Una revisión posterior, un día distinto o una activación A→B→A
+invalidan la operación correspondiente.
+
+Antes de ejecutar se guarda un marcador local por workspace/mazo con el evento
+inmutable y la intención de reapertura. No forma parte del protocolo cloud.
+Tras recargar, la vista detecta ese marcador y muestra error seguro, sin elegir
+otra tarjeta. Reintentar reutiliza el undo idempotente y comprueba el snapshot
+restaurado antes de limpiar el marcador y actualizar reloj/vista. Un error de
+outbox posterior al commit mantiene el marcador y permite volver a publicar el
+estado canónico sin duplicar la reversión. Los personalizados conservan su
+journal/recibo existente. No se modifica la sincronización experimental ni SQL.
+
+Límites: marcador ilegible/corrupto, cambio de día o estado canónico posterior
+incompatible bloquean la recuperación; se conserva el error y no se borra ni se
+inventa una operación. Un cierre voluntario concurrente conserva el bloqueo.
+No se garantiza concurrencia distribuida entre dispositivos ni persistencia si
+el navegador elimina el almacenamiento. No se han usado cuentas reales.
+
+Validación: 99/99 tests dirigidos finales (incluye backup exacto y cuota), 27/27
+Playwright nuevos en Japanese 1500/Puyi/custom, ES/EN/CA, escritorio y móvil.
+La única suite global ejecutada detectó una regresión en la conservación de
+introducciones; se corrigió y su test pasó en la repetición dirigida de 99 tests.
+El resto de la ejecución global pasó (2864 tests). No se repitió la suite completa.
+Build correcto, seis warnings SCSS previos; límite inicial y carga diferida
+comprobados en las estadísticas del artefacto. Evidencias en .cache/deck-undo-close/.
+
+Comprobación previa a Deshacer en Vocabulario/Kanji (10/11/2026): suite completa
+**2866/2866**, 258 archivos, incluida la regresión de cuota corregida. La primera
+ejecución agotó los cinco segundos del benchmark de backups; la repetición completa
+con cuatro workers pasó sin cambiar tests ni producción de Mazos.

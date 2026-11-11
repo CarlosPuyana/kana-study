@@ -1,5 +1,45 @@
 # Kanji K0 — Integridad del progreso
 
+## Ronda durable y Deshacer (11/11/2026)
+
+Se conserva la ronda normal abierta en `kana-study.kanji-open-round.v1`, con
+workspace, día Madrid, modalidad, unidades, cola/posición, apariciones, contadores,
+respuesta revelada, feedback, duración y transición pendiente. El diario de K0
+incluye los snapshots de ronda anterior/posterior a la respuesta; recuperar un
+review parcial también confirma su ronda, sin volver a calcular FSRS. La recarga
+reanuda la misma ronda, incluidos los refuerzos de NO/CASI. Un marcador durable
+de cierre y el resumen canónico impiden reabrir una ronda terminada.
+
+Deshacer usa un diario inverso local identificable por el intento confirmado.
+Comprueba el head de la ronda, progreso y debilidad antes de restaurar; anula el
+intento compartido con una fila IndexedDB que no es un AttemptEvent y no entra
+en métricas. Un envío atrasado no puede resucitarlo. Se retira solo su review FSRS,
+se restaura el snapshot de progreso/debilidad y la misma ronda/tarjeta. Los IDs de
+nuevas respuestas son únicos aunque se responda otra vez al mismo ordinal.
+No se fabrican reviews inversos ni se cambia la matemática del programador.
+
+El diario precede a toda reversión; ante fallo bloquea valoraciones y conserva
+la operación para Reintentar después de recargar. Las lecturas verifican el estado
+anterior/posterior y las estadísticas K4 rechazan una lectura durante una reversión
+pendiente. Se confirma la outbox local antes de retirar el diario. Los cambios de
+activación, incluido A→B→A, no reactivan vistas antiguas ni escriben en otro usuario.
+No se presenta localStorage + IndexedDB como una transacción única.
+
+Límites: solo rondas normales abiertas del día; sin Deshacer en práctica voluntaria,
+rondas cerradas o recibos históricos sin snapshots. No hay coordinación distribuida
+entre pestañas/dispositivos. La prueba de backup verifica serialización/restauración
+local del snapshot; no añade Kanji al formato de backups de Mazos ni modifica ese
+módulo. Los trazos del lienzo siguen siendo efímeros; no se inventa tinta histórica.
+La sección histórica inferior describe K0 anterior a esta extensión.
+
+Validación: 20 tests nuevos de ronda/reversión, 6/6 Playwright (ES/EN/CA,
+1280/390/320 px, claro/oscuro), 71/71 dirigidos finales. La única suite global
+obtuvo 2920/2923: tres fixtures no reflejaban claves canónicas o la nueva
+reanudación; se corrigieron y sus dos archivos pasan 21/21, sin repetir la global.
+Build definitivo correcto: 749224 bytes iniciales, 776 de margen; los tres
+servicios nuevos están diferidos. Siete warnings SCSS, uno nuevo en Kanji Play
+(174 bytes sobre su presupuesto de estilos; no cambia el límite inicial).
+
 Entrega local del 9 de noviembre de 2026 sobre `c59da61`. Sin commit, push, despliegue o SQL. Se conserva el informe anterior [KANJI_FUNCTIONAL_UX_AUDIT.md](KANJI_FUNCTIONAL_UX_AUDIT.md).
 
 ## Fallos originales y alcance

@@ -1,5 +1,50 @@
 # Vocabulario: consolidación con dos aciertos consecutivos
 
+## Deshacer seguro de una respuesta (10/11/2026)
+
+Disponible en lecciones normales abiertas, cuatro direcciones, opciones y
+autovaloración. El diario de respuesta conserva ahora un recibo anterior/posterior:
+lección completa (FIFO, rachas, contadores y duración), tarjeta completa y evento
+FSRS cuando corresponde, intento inmutable y debilidad. No se reconstruyen
+respuestas antiguas; los diarios anteriores siguen recuperándose hacia delante.
+
+Una operación explícita valida la transición de una sola respuesta y el estado
+canónico antes de revertir. `VocabularyLessonRepository.save` conserva sus guardas
+monotónicas; solo el diario inverso verificado puede restaurar su snapshot previo.
+Los nuevos IDs incluyen un identificador de operación para poder responder otra
+vez al mismo ordinal sin reutilizar el intento anulado. No hay pila de deshacer.
+
+El intento se sustituye transaccionalmente por una anulación local en IndexedDB:
+los lectores compartidos lo omiten y un insert atrasado no lo resucita. Se retira
+solo su evento FSRS y su envío pendiente, restaurando progreso y debilidad sin
+sobrescribir otras tarjetas. La respuesta interna revierte racha/cola/estadística,
+pero no recalcula FSRS. La operación queda registrada antes de la primera
+proyección; no se presenta como una transacción entre localStorage e IndexedDB.
+
+Ante fallo se bloquean valoraciones y cierre. Recargar conserva el diario y exige
+Reintentar; los snapshots anterior/posterior permiten completar la misma operación.
+También se verifica la outbox local y se conserva el recibo terminal por si falla
+la notificación posterior al commit. Un conflicto o diario corrupto conserva el
+error: no se inventa recuperación. Las consultas de Vocabulario detectan el diario
+inverso pendiente y la revisión del repositorio invalida métricas compartidas.
+
+Límites deliberados: sin Deshacer en práctica voluntaria ni rondas ya cerradas.
+La última respuesta con opciones puede revertirse antes de Continuar/cerrar;
+tras confirmar el resumen se conserva el bloqueo diario. Reabrir resúmenes y
+revocar medallas exige otro contrato compartido y queda fuera de esta entrega.
+No se promete coordinación entre pestañas/dispositivos ni restaurar operaciones
+si el navegador elimina sus diarios. Los snapshots son locales por workspace;
+no se cambia el protocolo cloud ni se migran perfiles o backups históricos.
+
+Validación sintética: 37 regresiones nuevas de Deshacer, dirigidos de cola/FSRS/
+estadísticas, TypeScript y 9/9 Playwright (ES/EN/CA, 1280/390/320 px, claro/oscuro).
+La única ejecución global final tuvo 2897/2903 correctos; sus seis fallos eran
+mocks anteriores al traslado de debilidad al diario y a la lectura del día.
+Se adaptaron esos mocks: 49/49 en los tres archivos afectados, sin volver a
+cambiar producción ni repetir la suite global. Build correcto, 749224 bytes
+iniciales (776 de margen), recibo/reversión en chunks diferidos; seis warnings
+SCSS existentes. Evidencias locales en `.cache/vocabulary-undo/browser-results/`.
+
 Entrega local del 07/11/2026 sobre `d681be57dcc09e2e6ecbe716c3dc6a38633642c0`. Sin commit, push, despliegue, migraciones SQL ni acceso a datos personales. Conserva los cambios previos sin commit y los dos commits de Mazos.
 
 ## Selección fija, práctica limitada al contenido

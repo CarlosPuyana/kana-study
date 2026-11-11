@@ -1,1 +1,3 @@
 // Shared module-home styles are scoped globally in shared/styles/_module-home.scss.
+
+.learn-action{display:grid;gap:.5rem;width:min(100%,24rem);min-width:0}.learn-action .play-button{width:100%}.learn-summary{display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem .75rem;color:var(--text-secondary);font-size:.8rem;line-height:1.5}.learn-summary strong{flex-basis:100%;font-weight:500}.study-actions{align-items:start}

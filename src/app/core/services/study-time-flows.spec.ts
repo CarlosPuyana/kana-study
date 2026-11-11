@@ -59,18 +59,18 @@ describe('credited time in the actual study pages', () => {
     {name:'flags',page:FlagsPlayPage,service:FlagSessionService,progress:FlagProgressService,medal:FlagMedalService,
       unit:{key:'flags',countryId:'jp',questionType:'flag-to-country'}},
     {name:'kanji',page:KanjiPlayPage,service:KanjiSessionService,progress:KanjiProgressService,medal:KanjiMedalService,
-      unit:{key:'kanji',kanjiId:KANJI_N5[0].id,questionType:'kanji-to-meaning'}},
+      unit:{key:`kanji:${KANJI_N5[0].id}:kanji-to-meaning`,kanjiId:KANJI_N5[0].id,questionType:'kanji-to-meaning'}},
     {name:'vocabulary',page:VocabularyPlayPage,service:VocabularySessionService,progress:VocabularyProgressService,medal:VocabularyMedalService,
       unit:{key:`vocab:${VOCABULARY_N5[0].id}:japanese-to-meaning`,entryId:VOCABULARY_N5[0].id,questionType:'japanese-to-meaning'}},
   ];
   for (const c of normalCases) it(`${c.name}: visible counter and final time match history, route destruction clears the clock`, async () => {
-    const review=vi.fn();TestBed.configureTestingModule({imports:[c.page],providers:[isolatedKanjiAvailability,isolatedKanjiAnswers,provideRouter([]),
+    const review=vi.fn();TestBed.configureTestingModule({imports:[c.page],providers:[{provide:SettingsService,useValue:{selection:()=>({includeCanvas:true})}},isolatedKanjiAvailability,isolatedKanjiAnswers,provideRouter([]),
       {provide:STUDY_MONOTONIC_NOW,useValue:()=>now},
       {provide:c.progress,useValue:{buildRound:()=>c.name==='vocabulary'&&review.mock.calls.length?[]:[c.unit],get:()=>null,recordReview:review,recordInternalAttempt:vi.fn(),recordPracticeAttempt:vi.fn(),roundSummary:signal({roundDue:0,roundNew:1})}},
       {provide:c.medal,useValue:{evaluateUnlocks:()=>[]}},
       {provide:SessionHistoryService,useValue:history},
       {provide:WeaknessService,useValue:{recordLearn:vi.fn()}},
-      {provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:vi.fn()}},
+      {provide:DailyLearningService,useValue:{isCompletedToday:()=>false,refresh:vi.fn(),spainDay:signal('2026-11-10')}},
       {provide:TranslationService,useValue:{useStudyCopy:()=>{},t:(key:string)=>key,language:signal('es')}}]});
     const service = TestBed.inject(c.service as Type<LearningSessionService | FlagSessionService | KanjiSessionService | VocabularySessionService>);
     if (service instanceof FlagSessionService) service.start(); else service.start('self-assessment');

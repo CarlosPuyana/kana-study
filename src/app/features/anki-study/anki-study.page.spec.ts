@@ -1,3 +1,4 @@
+import {DeckUndoPendingService} from '../../core/services/deck-undo-pending.service';
 import {DeckDayPresentation} from '../../core/services/deck-day-presentation';
 import {KaishiStaticMediaService} from '../../core/services/kaishi-static-media.service';
 import {STUDY_MONOTONIC_NOW} from '../../core/services/study-clock';
@@ -22,7 +23,7 @@ describe('AnkiStudyPage', () => {
     monotonic=0;study = new StudyStub();
     await TestBed.configureTestingModule({
       imports: [AnkiStudyPage],
-      providers: [{provide:DeckDayPresentation,useValue:{events:async()=>[]}},{provide:KaishiStaticMediaService,useValue:{publication:()=> 'blocked',catalog:async()=>({publication:'blocked'}),card:async()=>({catalog:{publication:'blocked'},card:null})}},{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},
+      providers: [{provide:DeckUndoPendingService,useValue:{read:()=>null,begin:()=>{},clear:()=>{}}},{provide:DeckDayPresentation,useValue:{events:async()=>[]}},{provide:KaishiStaticMediaService,useValue:{publication:()=> 'blocked',catalog:async()=>({publication:'blocked'}),card:async()=>({catalog:{publication:'blocked'},card:null})}},{provide:STUDY_MONOTONIC_NOW,useValue:()=>monotonic},
         provideRouter([]),
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ deckId: 'japanese-1500' }) } } },
         { provide: DeckStudyService, useValue: study },
@@ -36,6 +37,46 @@ describe('AnkiStudyPage', () => {
   });
 
   afterEach(() => { fixture.destroy(); TestBed.resetTestingModule(); vi.useRealTimers(); vi.restoreAllMocks(); });
+
+  it('can undo the last automatic closure from the summary and resumes the same session',async()=>{
+    const p=fixture.componentInstance;study.exhaustAfterRating=true;p.reveal();await p.rate('good');
+    p.snapshot.set({...p.snapshot()!,closureOrigin:'automatic',closedByReviewId:p.lastEvent()!.id});fixture.detectChanges();
+    expect(p.canUndoClosed()).toBe(true);
+    expect((fixture.nativeElement.querySelector('.study-header .undo') as HTMLButtonElement).disabled).toBe(false);
+    vi.spyOn(study,'undo').mockImplementationOnce(async()=>{Object.assign(study.snapshotValue,{completedToday:false});});
+    await p.undo();expect(p.pendingUndo()).toBe(false);expect(p.lastEvent()).toBeNull();expect(p.choice()?.entryId).toBe(study.event.entryId);
+  });
+
+  it('a durable pending undo stops a reloaded view before choosing another card',async()=>{
+    const p=fixture.componentInstance,store=TestBed.inject(DeckUndoPendingService);
+    vi.spyOn(store,'read').mockReturnValue({event:study.event,reopen:false});
+    p.choice.set(null);p.entry.set(null);p.refreshAvailability();await fixture.whenStable();
+    expect(p.pendingUndo()).toBe(true);expect(p.error()).toBe(true);expect(p.choice()).toBeNull();
+    p.retrySave();await fixture.whenStable();expect(p.pendingUndo()).toBe(false);expect(p.choice()?.entryId).toBe(study.event.entryId);
+  });
+
+  it('keeps a safe error if a voluntary closure wins while undo is pending',async()=>{
+    const p=fixture.componentInstance;p.reveal();await p.rate('good');const choice=p.choice();
+    vi.spyOn(study,'undo').mockImplementationOnce(async()=>{Object.assign(study.snapshotValue,{completedToday:true,closureOrigin:'voluntary'});});
+    await p.undo();expect(p.error()).toBe(true);expect(p.pendingUndo()).toBe(true);expect(p.choice()).toEqual(choice);expect(p.lastEvent()).not.toBeNull();
+  });
+
+  it('retains undo and freezes the view when reading after a confirmed reversal fails',async()=>{
+    const p=fixture.componentInstance;p.reveal();await p.rate('good');
+    const event=p.lastEvent(),choice=p.choice();
+    vi.spyOn(study,'snapshot').mockRejectedValueOnce(Error('Synthetic post-commit read failure'));
+    await p.undo();expect(p.error()).toBe(true);expect(p.lastEvent()).toEqual(event);expect(p.choice()).toEqual(choice);
+    p.refreshAvailability();await fixture.whenStable();expect(p.error()).toBe(true);
+    p.retrySave();await fixture.whenStable();expect(p.error()).toBe(false);expect(p.lastEvent()).toBeNull();
+    expect(p.choice()?.entryId).toBe(event!.entryId);
+  });
+
+  it('routes retry to undo rather than advancing after an undo write failure',async()=>{
+    const p=fixture.componentInstance;p.reveal();await p.rate('good');
+    const undo=vi.spyOn(study,'undo').mockRejectedValueOnce(Error('Synthetic IndexedDB failure'));
+    await p.undo();expect(p.error()).toBe(true);expect(p.lastEvent()).not.toBeNull();
+    p.retrySave();await fixture.whenStable();expect(undo).toHaveBeenCalledTimes(2);expect(p.lastEvent()).toBeNull();
+  });
 
   it('rejects an empty practice and preserves the ranking order of selected unique words',()=>{
     const p=fixture.componentInstance;p.startPractice();expect(p.practiceEntries()).toBeNull();
@@ -232,7 +273,7 @@ class StudyStub {
   ratings: string[] = [];
   times: number[] = [];
   ratingPromise: Promise<DeckReviewEvent> | null = null;
-  readonly event = { id: 'event-1', deckId: 'japanese-1500', entryId: JAPANESE_1500_ENTRIES[0].id, reviewedAt: Date.now(), rating: 'good' } as DeckReviewEvent;
+  readonly event = { id: 'event-1', cardBefore:null, deckId: 'japanese-1500', entryId: JAPANESE_1500_ENTRIES[0].id, reviewedAt: Date.now(), rating: 'good' } as DeckReviewEvent;
   readonly snapshotValue: DeckQueueSnapshot = { progress: [], newEntries: [{ id: JAPANESE_1500_ENTRIES[0].id, order: 1 }], learningEntries: [], reviewEntries: [], newAvailable: 10, learningDue: 0, reviewDue: 0, introducedToday: 0, effectiveNewLimit: 10, nextLearningDue: null, nextDue: null, remainingUnseen: 1500 };
   async snapshot() { return this.snapshotValue; }
   restoreAfterUndo(_snapshot: unknown, _deck: unknown, choice: unknown) { return choice; }

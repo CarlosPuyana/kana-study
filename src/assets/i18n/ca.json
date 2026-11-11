@@ -12805,5 +12805,15 @@
   "kanji.stats.today": "Rondes avui · Madrid",
   "kanji.stats.recordedTime": "Temps registrat",
   "kanji.stats.timeCoverage": "Temps disponible en {{known}} de {{total}} rondes. Els valors absents no es converteixen en zero.",
-  "kanji.stats.dailyRatings": "Valoracions per dia"
+  "kanji.stats.dailyRatings": "Valoracions per dia",
+  "selection.includeCanvas": "Incloure exercicis amb llenç",
+  "kanji.availability.homeFresh": "Nous pendents: {{count}}",
+  "kanji.availability.homeToday": "Nous avui: {{count}}",
+  "kanji.availability.homeDue": "Repassos vençuts: {{count}}",
+  "kanji.availability.homeCompleted": "Ronda completada. Podràs tornar a aprendre demà.",
+  "vocabulary.daily.stats.view": "Veure estadístiques",
+  "vocabulary.daily.undo": "Desfés l’última resposta",
+  "vocabulary.daily.undoError": "No s’ha pogut verificar Desfer. No responguis una altra targeta; torna-ho a provar per completar la recuperació.",
+  "vocabulary.daily.undoAction": "Desfés",
+  "kanji.stats.undo": "Desfés"
 }

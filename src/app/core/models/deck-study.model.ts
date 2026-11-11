@@ -61,6 +61,8 @@ export interface DeckReviewEvent {
 
 export interface DeckDailyState {
   readonly completedAt?: number | null;
+  readonly closureOrigin?: 'automatic' | 'voluntary';
+  readonly closedByReviewId?: string;
   readonly deckId: string;
   readonly localDate: string;
   readonly introducedEntryIds: readonly string[];
@@ -91,6 +93,8 @@ export interface DeckStudyCounts {
 }
 
 export interface DeckQueueSnapshot extends DeckStudyCounts {
+  readonly closureOrigin?: 'automatic'|'voluntary';
+  readonly closedByReviewId?: string;
   readonly mixedCursor?: DeckMixedCursor;
   readonly separation?: readonly { readonly entryId: string; readonly seen: readonly string[] }[];
   readonly advanceEntries?: readonly DeckCardProgress[];

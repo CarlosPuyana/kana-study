@@ -1,3 +1,4 @@
+import {DeckUndoPendingService} from '../../core/services/deck-undo-pending.service';
 import * as studyCopy from '../../../assets/i18n/deck-study.generated';
 import { DeckLearningSummary } from '../../shared/components/deck-learning-summary/deck-learning-summary';
 import { deckLearningSummary } from '../../core/services/deck-learning-presentation';
@@ -34,6 +35,7 @@ import { DeckSentenceText } from '../anki-cards/components/deck-sentence-text/de
 export class AnkiStudyPage implements OnInit, OnDestroy {
   private readonly tasks = inject(PendingTasks);
   private readonly study = inject(DeckStudyService);
+  private readonly undoPendingStore=inject(DeckUndoPendingService);
   private readonly dayPresentation = inject(DeckDayPresentation);
   readonly dayEvents = signal<readonly DeckReviewEvent[]>([]);
   readonly presentationNow = signal(new Date());
@@ -53,7 +55,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     if(entries.length){this.clock.pause();this.practiceEntries.set(entries);}
   }
   async finishToday():Promise<void>{
-    if(!this.deck||!this.resource.content||this.saving()||this.retryRating())return;
+    if(!this.deck||!this.resource.content||this.saving()||this.retryRating()||this.pendingUndo())return;
     const resource=this.resource.state();this.finishAt??=new Date();this.pendingFinish.set(true);this.saving.set(true);this.error.set(false);this.clock.pause();
     try{await this.study.completeSession(this.deck,this.resource.content.index,this.finishAt,true);
       if(resource!==this.resource.state()||this.destroyed)return;
@@ -81,10 +83,12 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   readonly error = signal(false);
   private finishAt:Date|null=null;
   readonly pendingFinish=signal(false);
+  readonly pendingUndo=signal(false);
+  private lastEventResource:unknown;
   readonly retryRating=signal<DeckRating|null>(null);
   readonly previewChanged=signal(false);
   readonly queueCounts=computed(()=>{const s=this.snapshot();return {new:s?.newAvailable??0,learning:s?.learningEntries.filter(p=>p.card.state===1).length??0,review:s?.reviewDue??0,relearning:s?.learningEntries.filter(p=>p.card.state===3).length??0};});
-  retrySave():void{if(this.pendingFinish()){void this.finishToday();return;}const rating=this.retryRating();if(rating)void this.rate(rating);else this.refreshAvailability();}
+  retrySave():void{if(this.pendingUndo()){void this.undo();return;}if(this.pendingFinish()){void this.finishToday();return;}const rating=this.retryRating();if(rating)void this.rate(rating);else this.refreshAvailability();}
   readonly snapshot = signal<DeckQueueSnapshot | null>(null);
   readonly choice = signal<DeckQueueChoice | null>(null);
   readonly entry = signal<DeckStudyEntryView | null>(null);
@@ -92,6 +96,8 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   readonly translationOpen = signal(false);
   readonly preview = signal<DeckSchedulePreview | null>(null);
   readonly lastEvent = signal<DeckReviewEvent | null>(null);
+  readonly canUndoClosed=computed(()=>this.snapshot()?.closureOrigin==='automatic'&&this.snapshot()?.closedByReviewId===this.lastEvent()?.id&&!!this.lastEvent()&&getLocalStudyDayKey(new Date(this.lastEvent()!.reviewedAt))===getLocalStudyDayKey(new Date()));
+  private undoReopen=false;
   readonly elapsedSeconds = this.clock.seconds;
   readonly elapsedLabel = this.clock.label;
 
@@ -104,9 +110,9 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     effect(()=>{const rows=this.difficulties();untracked(()=>this.selected.set(rows.slice(0,10).map(row=>row.entryId)));});
     effect(() => {
       const state=this.resource.state();
-      const key=this.resource.catalog.owner()+':'+(this.deck?.id??'');
+      const key=this.resource.catalog.owner()+':'+this.resource.catalog.epoch()+':'+(this.deck?.id??'');
       if(this.routeKey!==null&&this.routeKey!==key) untracked(() => {
-        this.finishAt=null;this.pendingFinish.set(false);this.retryRating.set(null);this.lastEvent.set(null);this.choice.set(null);this.entry.set(null);this.snapshot.set(null);
+        this.finishAt=null;this.pendingFinish.set(false);this.pendingUndo.set(false);this.retryRating.set(null);this.lastEvent.set(null);this.choice.set(null);this.entry.set(null);this.snapshot.set(null);
         this.returnToSummary.set(false);this.practiceEntries.set(null);this.dayEvents.set([]);this.cursor={debt:0};this.clock.discardAppearance();this.clock.pause();
         if(state.status==='ready')void this.tasks.run(()=>this.loadNext());
       });
@@ -126,7 +132,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   refreshAvailability(): void {
     if(document.hidden){this.clock.pause();if(this.timerId)clearTimeout(this.timerId);return;}
     if(this.practiceEntries())return;
-    if(this.retryRating()||this.pendingFinish())return;
+    if(this.retryRating()||this.pendingFinish()||this.pendingUndo())return;
     if (this.saving() || this.loading() || document.hidden) return;
     this.day = getLocalStudyDayKey(new Date());
     // A foreground/day refresh may update counts, never replace a card or its
@@ -147,6 +153,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   }
 
   reveal(): void {
+    if(this.pendingUndo())return;
     if (this.choiceState!==this.resource.state() || !this.deck || !this.choice() || this.revealed() || this.loading() || this.saving()) return;
     this.preview.set(this.study.preview(this.deck, this.choice()!));
     this.translationOpen.set(false);
@@ -154,7 +161,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   }
 
   async rate(rating: DeckRating): Promise<void> {
-    if(this.pendingFinish()||this.snapshot()?.completedToday)return;
+    if(this.pendingUndo()||this.pendingFinish()||this.snapshot()?.completedToday)return;
     if(this.retryRating()&&this.retryRating()!==rating)return;
     if (this.choiceState!==this.resource.state() || !this.deck || !this.choice() || !this.preview() || !this.revealed() || this.saving() || this.loading()) return;
     if(!this.retryRating()&&deckPreviewExpired(this.preview()!,new Date())){this.preview.set(this.study.preview(this.deck,this.choice()!));this.previewChanged.set(true);return;}
@@ -165,7 +172,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
         this.deck, this.choice()!, this.preview()!, rating, this.clock.appearanceMilliseconds(),
       );
       if(resourceState!==this.resource.state()||owner!==this.resource.catalog.owner())return;
-      this.clock.commitAppearance(); this.lastEvent.set(event);this.lastEventOwner=owner;
+      this.clock.commitAppearance(); this.lastEvent.set(event);this.lastEventOwner=owner;this.lastEventResource=resourceState;
       this.retryRating.set(null);this.choice.set(null); this.revealed.set(false);
       await this.loadNext();
     } catch { this.error.set(true); }
@@ -174,17 +181,22 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
 
   async undo(): Promise<void> {
     const event = this.lastEvent();
-    if (!event || !this.deck || event.deckId!==this.deck.id || this.lastEventOwner!==this.resource.catalog.owner() || this.saving()||this.retryRating()||this.snapshot()?.completedToday) return;
+    if (this.lastEventResource!==this.resource.state() || !event || getLocalStudyDayKey(new Date(event.reviewedAt))!==getLocalStudyDayKey(new Date()) || !this.deck || event.deckId!==this.deck.id || this.lastEventOwner!==this.resource.catalog.owner() || this.saving()||this.retryRating()||(this.snapshot()?.completedToday&&!this.canUndoClosed())) return;
     const resourceState=this.resource.state(),owner=this.resource.catalog.owner();
+    ++this.availabilityGeneration;this.undoReopen ||= !!this.snapshot()?.completedToday;this.pendingUndo.set(true);
     this.saving.set(true); this.error.set(false); this.clock.pause();
     try {
-      await this.study.undo(event);
+      this.undoPendingStore.begin(event,this.undoReopen);
+      await this.study.undo(event,this.undoReopen);
       if(resourceState!==this.resource.state()||owner!==this.resource.catalog.owner())return;
-      this.clock.discardAppearance(); this.clock.undo(event.elapsedAnswerMs); this.lastEvent.set(null);
-      this.choice.set(null);
       const snapshot = await this.study.snapshot(this.deck, this.resource.content!.index);
       const events=await this.dayPresentation.events(this.deck);
       if(this.destroyed||resourceState!==this.resource.state()||owner!==this.resource.catalog.owner())return;
+      const restored=snapshot.progress.find(p=>p.entryId===event.entryId)?.card??null;
+      if(snapshot.completedToday)throw Error('Closed session cannot resume');
+      if(JSON.stringify(restored)!==JSON.stringify(event.cardBefore))throw Error('Undo state no longer matches');
+      this.undoPendingStore.clear(event);
+      this.clock.discardAppearance();this.clock.undo(event.elapsedAnswerMs);
       this.snapshot.set(snapshot);this.dayEvents.set(events);this.presentationNow.set(new Date());
       const progress = snapshot.progress.find(item => item.entryId === event.entryId) ?? null;
       this.setCurrent(this.study.restoreAfterUndo(snapshot, this.deck, {
@@ -192,9 +204,9 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
         kind: progress ? (progress.card.state === 2 ? 'review' : 'learning') : 'new',
         progress,
       }));
-      this.lastEvent.set(null);
+      this.lastEvent.set(null);this.pendingUndo.set(false);this.undoReopen=false;
     } catch { this.error.set(true); }
-    finally { this.saving.set(false); if (!this.destroyed && this.choice()) this.clock.resume(); }
+    finally { this.saving.set(false); if (!this.destroyed && this.choice()&&!this.pendingUndo()) this.clock.resume(); }
   }
 
   intervalLabel(rating: DeckRating): string {
@@ -245,6 +257,8 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     this.error.set(false);
     try {
       const loaded=this.resource.state();
+      const pending=this.undoPendingStore.read(this.deck.id);
+      if(pending){this.lastEvent.set(pending.event);this.lastEventOwner=this.resource.catalog.owner();this.lastEventResource=loaded;this.undoReopen=pending.reopen;this.pendingUndo.set(true);this.error.set(true);return;}
       let snapshot = await this.study.snapshot(this.deck, this.resource.content!.index);
       if(!snapshot.completedToday&&!snapshot.startedToday){await this.study.startSession(this.deck);snapshot=await this.study.snapshot(this.deck,this.resource.content!.index);}
       if(this.resource.state()!==loaded||generation!==this.availabilityGeneration)return;
@@ -258,6 +272,10 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
       if (this.destroyed || this.resource.state()!==loaded||generation!==this.availabilityGeneration) return;
       this.cursor = decision.cursor;
       this.snapshot.set(snapshot);this.dayEvents.set(events);this.presentationNow.set(new Date());
+      if(snapshot.completedToday&&snapshot.closureOrigin==='automatic'&&!this.lastEvent()){
+        const last=events.find(e=>e.id===snapshot.closedByReviewId);
+        if(last){this.lastEvent.set(last);this.lastEventOwner=this.resource.catalog.owner();this.lastEventResource=loaded;}
+      }
       if (preserveAppearance && decision.choice?.entryId === this.choice()?.entryId && this.choice()) this.clock.resume();
       else this.setCurrent(decision.choice);
     } catch { this.error.set(true); }

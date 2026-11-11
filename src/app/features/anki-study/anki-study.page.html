@@ -10,13 +10,13 @@
       <span class="count-review"><b>{{queueCounts().review}}</b> {{i18n.t('anki.day.state.2')}}</span>
       <span class="count-repeat"><b>{{queueCounts().relearning}}</b> {{i18n.t('anki.day.state.3')}}</span>
     </div> }
-    <button type="button" class="undo" [disabled]="!lastEvent() || saving() || !!practiceEntries() || retryRating()!==null || snapshot()?.completedToday || pendingFinish()" (click)="undo()">{{ i18n.t('anki.studyPage.undo') }}</button>
+    <button type="button" class="undo" [disabled]="!lastEvent() || saving() || !!practiceEntries() || retryRating()!==null || (snapshot()?.completedToday && !canUndoClosed()) || pendingFinish()" (click)="undo()">{{ i18n.t('anki.studyPage.undo') }}</button>
   </header>
   }
 
   @if(practiceEntries();as practice){<app-deck-intensive-practice [entries]="practice" [builtinMedia]="deck?.id==='japanese-1500'" (closed)="closePractice()" />}@else{
   @if (error()) { <div class="storage-error" role="alert"><p>{{ i18n.t('anki.storageError') }}</p><button type="button" class="undo" [disabled]="saving()" (click)="retrySave()">{{i18n.t('common.retry')}}</button></div> }
-  @if(snapshot()&&!snapshot()?.completedToday){<button type="button" class="finish-today" [disabled]="saving() || retryRating()!==null || pendingFinish()" (click)="finishToday()">{{i18n.t('anki.day.finishToday')}}</button>}
+  @if(snapshot()&&!snapshot()?.completedToday){<button type="button" class="finish-today" [disabled]="saving() || pendingUndo() || retryRating()!==null || pendingFinish()" (click)="finishToday()">{{i18n.t('anki.day.finishToday')}}</button>}
   @if(snapshot()?.learningPending){<p class="learning-pending" role="status">{{i18n.t('anki.scheduler.pending',{count:snapshot()!.learningPending!})}}</p>}
   @if (loading()) { <p class="loading" aria-busy="true">{{ i18n.t('common.loading') }}</p> } @else if (!deck && resource.state().status === 'missing') {
     <section class="end-state"><app-study-timer [clock]="clock" [result]="true"/><h1>{{ i18n.t('anki.deckNotFound') }}</h1><a routerLink="/anki">{{ i18n.t('anki.title') }}</a></section>
@@ -62,8 +62,8 @@
         <button type="button" class="reveal" (click)="reveal()">{{ i18n.t('anki.studyPage.reveal') }} <kbd>{{ i18n.t('anki.studyPage.space') }}</kbd></button>
       } @else {
         <div class="ratings">
-          <button type="button" class="again" [disabled]="saving() || retryRating()!==null" (click)="rate('again')" [title]="i18n.t('anki.studyPage.againHelp')"><span>{{ i18n.t('anki.studyPage.again') }}</span><strong>{{ intervalLabel('again') }}</strong><kbd>1</kbd></button>
-          <button type="button" class="good" [disabled]="saving() || retryRating()!==null" (click)="rate('good')" [title]="i18n.t('anki.studyPage.goodHelp')"><span>{{ i18n.t('anki.studyPage.good') }}</span><strong>{{ intervalLabel('good') }}</strong><kbd>2</kbd></button>
+          <button type="button" class="again" [disabled]="saving() || pendingUndo() || retryRating()!==null" (click)="rate('again')" [title]="i18n.t('anki.studyPage.againHelp')"><span>{{ i18n.t('anki.studyPage.again') }}</span><strong>{{ intervalLabel('again') }}</strong><kbd>1</kbd></button>
+          <button type="button" class="good" [disabled]="saving() || pendingUndo() || retryRating()!==null" (click)="rate('good')" [title]="i18n.t('anki.studyPage.goodHelp')"><span>{{ i18n.t('anki.studyPage.good') }}</span><strong>{{ intervalLabel('good') }}</strong><kbd>2</kbd></button>
         </div>
       }
     </footer>

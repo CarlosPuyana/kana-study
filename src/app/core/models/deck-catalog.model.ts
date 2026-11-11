@@ -123,7 +123,7 @@ export interface DeckPersistence {
     getDeckProgress(deckId: string): Promise<DeckCardProgress[]>;
     getDeckReviewEvents(deckId: string): Promise<DeckReviewEvent[]>;
     getDailyState(deckId: string, day: string): Promise<DeckDailyState | null>;
-    writeDailyState(state: DeckDailyState): Promise<void>;
+    writeDailyState(state: DeckDailyState, expected?: {progress:readonly DeckCardProgress[];entryIds:readonly string[]}): Promise<void>;
     commitReview(progress: DeckCardProgress, event: DeckReviewEvent, daily: DeckDailyState, newCardLimit?:number): Promise<void>;
     undoReview(event: DeckReviewEvent, daily: DeckDailyState): Promise<void>;
     assertOwner(): void;

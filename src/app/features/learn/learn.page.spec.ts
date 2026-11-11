@@ -1,3 +1,4 @@
+import {SettingsService} from '../../core/services/settings.service';
 import {computed, signal} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
@@ -21,7 +22,7 @@ describe('Kana page keyboard and modal boundary', () => {
     clear:vi.fn(),dismissNextMedal:vi.fn(),isPractice:()=>false};
   let fixture:ReturnType<typeof TestBed.createComponent<LearnPage>>;
   beforeEach(()=>{vi.clearAllMocks();mode.set('self-assessment');type.set('kana-to-romaji');revealed.set(false);feedback.set(null);learning.completed.set(false);
-    TestBed.configureTestingModule({imports:[LearnPage],providers:[
+    TestBed.configureTestingModule({imports:[LearnPage],providers:[{provide:SettingsService,useValue:{selection:()=>({includeCanvas:true})}},
       {provide:LearningSessionService,useValue:learning},{provide:DailyLearningService,useValue:{isCompletedToday:()=>false}},
       {provide:TranslationService,useValue:{t:(key:string)=>key,language:signal('es')}},
       {provide:Router,useValue:{navigateByUrl:vi.fn()}},{provide:KanaStrokesService,useValue:{load:async()=>[]}}]});

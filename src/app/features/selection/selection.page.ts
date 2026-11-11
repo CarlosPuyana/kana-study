@@ -109,6 +109,10 @@ export class SelectionPage {
     });
   }
 
+  toggleCanvas(): void {
+    this.updateDraft(selection => { selection.includeCanvas = selection.includeCanvas === false; });
+  }
+
   save(): void {
     if (!this.valid()) return;
     this.settings.saveLearningSelection(this.draft());

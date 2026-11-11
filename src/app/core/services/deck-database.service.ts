@@ -1,3 +1,4 @@
+import {preserveClosure} from './deck-closure-state';
 import { LocalWorkspaceId } from '../models/account.model';
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { DeckCardProgress, DeckDailyState, DeckReviewEvent } from '../models/deck-study.model';
@@ -50,14 +51,17 @@ export class DeckDatabaseService {
     return requestResult(db.transaction(DAILY_STORE).objectStore(DAILY_STORE).getAll());
   }
 
-  async writeDailyState(state: DeckDailyState): Promise<void> {
+  async writeDailyState(state: DeckDailyState,expected?:{progress:readonly DeckCardProgress[];entryIds:readonly string[]}): Promise<void> {
     const workspace=this.workspace.active(),epoch=this.workspace.activationRevision();
     const assertOwner=()=>{if(workspace!==this.workspace.active()||epoch!==this.workspace.activationRevision())throw new Error('Deck workspace changed');};
+    const check=expected?(await import('./deck-undo-closure')).assertClosureSnapshot:null;assertOwner();
     const db=await this.database(workspace);assertOwner();
-    const transaction=db.transaction(DAILY_STORE,'readwrite'),done=transactionDone(transaction);
+    const transaction=db.transaction([DAILY_STORE,PROGRESS_STORE],'readwrite'),done=transactionDone(transaction);
     try{
       const stored=await requestResult<DeckDailyState|undefined>(transaction.objectStore(DAILY_STORE).get([state.deckId,state.localDate]));assertOwner();
-      state={...state,introducedEntryIds:stored?.introducedEntryIds??state.introducedEntryIds,completedAt:stored?.completedAt??(state.completedAt===undefined?stored?.completedAt:state.completedAt)};
+      if(expected)check!(expected,await requestResult<DeckCardProgress[]>(transaction.objectStore(PROGRESS_STORE).index('deckId').getAll(state.deckId)));
+      assertOwner();
+      state=preserveClosure(stored,state);
       transaction.objectStore(DAILY_STORE).put(state);
     }catch(error){try{transaction.abort();}catch{}await done.catch(()=>{});throw error;}
     await done;
@@ -97,7 +101,10 @@ export class DeckDatabaseService {
 
   async undoReview(event: DeckReviewEvent, dailyState: DeckDailyState): Promise<void> {
     const workspace = this.workspace.active();
+    const epoch=this.workspace.activationRevision(),guard=()=>{if(workspace!==this.workspace.active()||epoch!==this.workspace.activationRevision())throw Error('Deck workspace changed');};
+    const {undoDailyState}=await import('./deck-undo-closure');guard();
     const db = await this.database(workspace);
+    guard();
     const transaction = db.transaction([PROGRESS_STORE, EVENTS_STORE, DAILY_STORE], 'readwrite');
     const done=transactionDone(transaction);let publishedProgress:DeckCardProgress|null=null,publishedDaily=dailyState,changed=false;
     try{
@@ -105,12 +112,15 @@ export class DeckDatabaseService {
       const current=await requestResult<DeckCardProgress|undefined>(transaction.objectStore(PROGRESS_STORE).get([event.deckId,event.entryId]));
       const storedDaily=await requestResult<DeckDailyState|undefined>(transaction.objectStore(DAILY_STORE).get([dailyState.deckId,dailyState.localDate]));
       publishedProgress=current??null;publishedDaily=storedDaily??dailyState;
+      guard();
       if(record){
         if(JSON.stringify(record)!==JSON.stringify(event)||!current||current.card.lastReview!==event.reviewedAt||current.due!==event.dueAfter||current.state!==event.stateAfter||current.card.stability!==event.stabilityAfter)throw new Error('Deck undo is based on stale progress');
         publishedProgress=event.cardBefore?{deckId:event.deckId,entryId:event.entryId,due:event.cardBefore.due,state:event.cardBefore.state,card:event.cardBefore}:null;
         if(publishedProgress)transaction.objectStore(PROGRESS_STORE).put(publishedProgress);else transaction.objectStore(PROGRESS_STORE).delete([event.deckId,event.entryId]);
         transaction.objectStore(EVENTS_STORE).delete(event.id);
-        publishedDaily={...publishedDaily,introducedEntryIds:(event.cardBefore===null||event.cardBefore.state===0)?publishedDaily.introducedEntryIds.filter(id=>id!==event.entryId):publishedDaily.introducedEntryIds};
+        const events=await requestResult<DeckReviewEvent[]>(transaction.objectStore(EVENTS_STORE).index('deckId').getAll(event.deckId));
+        guard();
+        publishedDaily=undoDailyState(event,publishedDaily,dailyState,events);
         transaction.objectStore(DAILY_STORE).put(publishedDaily);changed=true;
       }
     }catch(error){try{transaction.abort();}catch{}await done.catch(()=>{});throw error;}
@@ -133,7 +143,7 @@ export class DeckDatabaseService {
     const dailyStore = transaction.objectStore(DAILY_STORE);
     for (const remote of input.daily) {
       const local = await requestResult<DeckDailyState | undefined>(dailyStore.get([remote.deckId, remote.localDate]));
-      dailyStore.put({ ...remote, completedAt: local?.completedAt ?? remote.completedAt, introducedEntryIds: [...new Set([...(local?.introducedEntryIds ?? []), ...remote.introducedEntryIds])] });
+      dailyStore.put({...preserveClosure(local,remote),introducedEntryIds:[...new Set([...(local?.introducedEntryIds??[]),...remote.introducedEntryIds])]});
     }
     await transactionDone(transaction);
     this.revision.update(n => n + 1);

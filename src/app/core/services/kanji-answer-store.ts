@@ -1,3 +1,5 @@
+import {KANJI_UNDO_PENDING,KANJI_REVOKED} from './kanji-undo-store';
+import {KanjiRoundRepository,KanjiRoundSnapshot} from './kanji-round.repository';
 import {DestroyRef,effect,inject,Injectable,signal,untracked} from '@angular/core';
 import {LocalWorkspaceId} from '../models/account.model';
 import {AttemptEvent,validAttemptEvent} from '../models/attempt-event.model';
@@ -22,12 +24,12 @@ export const KANJI_ANSWER_RECEIPT='kana-study.kanji-answer-receipt.v1';
 export const KANJI_FINISH_JOURNAL='kana-study.kanji-finish-intent.v1';
 export interface KanjiAnswerRequest {
   attempt:AttemptEvent;rating:StudyRating;unit?:KanjiStudyUnit;
-  progress:'review'|'practice'|'none';
+  progress:'review'|'practice'|'none';roundBefore?:KanjiRoundSnapshot;roundAfter?:KanjiRoundSnapshot;
 }
 export interface KanjiAnswerIntent {
-  version:1;owner:LocalWorkspaceId;attempt:AttemptEvent;
+  version:1;owner:LocalWorkspaceId;attempt:AttemptEvent;roundBefore?:KanjiRoundSnapshot;roundAfter?:KanjiRoundSnapshot;
   before:KanjiStudyProgress|null;after:KanjiStudyProgress|null;event:KanjiReviewEvent|null;
-  weaknessBefore:WeaknessRecord|null;weaknessAfter:WeaknessRecord;
+  weaknessBefore:WeaknessRecord|null;weaknessAfter:WeaknessRecord;weaknessIndex?:number;
 }
 const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
 
@@ -37,6 +39,7 @@ const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
 @Injectable({providedIn:'root'})
 export class KanjiAnswerStore {
   private readonly storage=inject(StorageService);
+  private readonly rounds=inject(KanjiRoundRepository);
   private readonly workspace=inject(WorkspaceService);
   private readonly attempts=inject(AttemptEventRepository);
   private readonly fsrs=inject(SpacedRepetitionService);
@@ -57,6 +60,7 @@ export class KanjiAnswerStore {
     if(this.destroyed||this.workspace.active()!==owner||this.workspace.activationRevision()!==epoch)throw Error('Kanji activation expired');
   }
   prepare(request:KanjiAnswerRequest):KanjiAnswerIntent {
+    if(this.read(KANJI_UNDO_PENDING,this.workspace.active(),null))throw Error('Kanji undo recovery required');
     if(this.hasPending())throw Error('Kanji recovery required');
     const {attempt,rating,unit}=request;
     if(!validAttemptEvent(attempt)||attempt.module!=='kanji'||!['again','hard','good'].includes(rating))throw Error('Invalid Kanji answer');
@@ -77,7 +81,7 @@ export class KanjiAnswerStore {
       // Preserve the historical internal-practice contract, including Hard's counter semantics.
       after={...before,lastSeenAt:at,totalAttempts:before.totalAttempts+1,totalFailures:before.totalFailures+Number(rating!=='good')};
     }
-    return {version:1,owner:this.workspace.active(),attempt,before,after,event,weaknessBefore,
+    return {version:1,owner:this.workspace.active(),attempt,before,after,event,weaknessBefore,roundBefore:request.roundBefore,roundAfter:request.roundAfter,weaknessIndex:records.findIndex(r=>weaknessKey(r)===weaknessKey(identity)),
       weaknessAfter:nextWeaknessRecord(identity,weaknessBefore??undefined,rating,at)};
   }
   async commit(intent:KanjiAnswerIntent,epoch:number):Promise<void> {
@@ -98,6 +102,7 @@ export class KanjiAnswerStore {
   }
   finish(summary:CompletedSessionSummary,owner:LocalWorkspaceId,epoch:number):void {
     this.guard(owner,epoch);
+    if(this.read(KANJI_UNDO_PENDING,owner,null))throw Error('Kanji undo recovery required');
     const pending=this.read<{owner:LocalWorkspaceId;summary:CompletedSessionSummary}|null>(KANJI_FINISH_JOURNAL,owner,null);
     if(pending&&pending.summary.sessionId!==summary.sessionId)throw Error('Another Kanji completion needs recovery');
     if(!pending)this.storage.set(KANJI_FINISH_JOURNAL,{owner,summary},{strict:true,localOnly:true,owner});
@@ -105,6 +110,7 @@ export class KanjiAnswerStore {
   }
   private finishPending(owner:LocalWorkspaceId,epoch:number):void {
     this.guard(owner,epoch);
+    if(this.read(KANJI_UNDO_PENDING,owner,null))throw Error('Kanji undo recovery required');
     const pending=this.read<{owner:LocalWorkspaceId;summary:CompletedSessionSummary}|null>(KANJI_FINISH_JOURNAL,owner,null);
     if(!pending)return;
     if(pending.owner!==owner||pending.summary?.module!=='kanji'||!pending.summary.sessionId||!Number.isFinite(Date.parse(pending.summary.completedAt)))throw Error('Invalid Kanji completion');
@@ -113,10 +119,12 @@ export class KanjiAnswerStore {
   }
   private async apply(owner:LocalWorkspaceId,epoch:number):Promise<void> {
     this.guard(owner,epoch);
+    if(this.read(KANJI_UNDO_PENDING,owner,null))throw Error('Kanji undo recovery required');
     const intent=this.read<KanjiAnswerIntent|null>(KANJI_ANSWER_JOURNAL,owner,null);
     if(!intent){this.finishPending(owner,epoch);this.error.set(false);return;}
     if(intent.version!==1||intent.owner!==owner||!validAttemptEvent(intent.attempt)||intent.attempt.module!=='kanji'
       ||intent.weaknessAfter?.module!=='kanji'||intent.weaknessAfter.itemId!==intent.attempt.itemId)throw Error('Invalid Kanji journal');
+    if(this.read<string[]>(KANJI_REVOKED,owner,[]).includes(intent.attempt.id))throw Error('Revoked Kanji answer');
     const attempt=intent.attempt,rating=attempt.result.source==='self'?attempt.result.rating:attempt.result.correct?'good':'again';
     const identity={module:'kanji' as const,activity:attempt.activity,itemId:attempt.itemId,...(attempt.questionType?{questionType:attempt.questionType}:{})};
     if(!same(intent.weaknessAfter,nextWeaknessRecord(identity,intent.weaknessBefore??undefined,rating,attempt.occurredAt)))throw Error('Invalid Kanji weakness receipt');
@@ -150,6 +158,7 @@ export class KanjiAnswerStore {
     this.guard(owner,epoch);
     if(!await this.attempts.insert(intent.attempt,owner))throw Error('Kanji attempt not saved');
     this.guard(owner,epoch);
+    if(intent.roundAfter)this.rounds.save(intent.roundAfter,epoch);
     write(KANJI_ANSWER_RECEIPT,intent,true);
     // Removal failure also remains recoverable: receipt and immutable ID prevent duplicate application.
     localStorage.removeItem(this.workspace.storageKey(KANJI_ANSWER_JOURNAL,owner));

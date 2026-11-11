@@ -28,7 +28,7 @@ for(const module of ['kana','vocabulary','kanji'] as const){
       const vocabularyUnits:VocabularyStudyUnit[]=VOCABULARY_N5.slice(0,2).map(e=>({key:`vocab:${e.id}:japanese-to-meaning`,entryId:e.id,questionType:'japanese-to-meaning'}));
       const kanjiUnits:KanjiStudyUnit[]=KANJI_N5.slice(0,2).map(k=>({key:`kanji:${k.id}:kanji-to-meaning`,kanjiId:k.id,questionType:'kanji-to-meaning'}));
       const units=module==='kana'?kanaUnits:module==='vocabulary'?vocabularyUnits:kanjiUnits;
-      const graduated=new Set<string>();const progress={buildRound:vi.fn(()=>units.slice(0,1).filter(u=>module!=='vocabulary'||!graduated.has(u.key))),recordReview:vi.fn((unit:{key:string},rating:string)=>{if(module==='vocabulary'&&rating==='good')graduated.add(unit.key);}),recordInternalAttempt:vi.fn(),recordPracticeAttempt:vi.fn()};
+      const graduated=new Set<string>();const progress={buildRound:vi.fn(()=>units.slice(0,1).filter(u=>module!=='vocabulary'||!graduated.has(u.key))),recordReview:vi.fn((unit:{key:string},rating:string)=>{if(module==='vocabulary'){if(rating==='good')graduated.add(unit.key);const word=unit as VocabularyStudyUnit;TestBed.inject(WeaknessService).recordLearn('vocabulary',word.entryId,word.questionType,rating as 'again'|'hard'|'good');}}),recordInternalAttempt:vi.fn(),recordPracticeAttempt:vi.fn()};
       const history={record:vi.fn()},daily={isCompletedToday:vi.fn(()=>false),refresh:vi.fn()},medals={evaluateUnlocks:vi.fn(()=>[])};
       const stored=new Map<string,unknown>();
       TestBed.configureTestingModule({providers:[isolatedKanjiAnswers,

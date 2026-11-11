@@ -1,4 +1,4 @@
-<main class="learn-shell" [class.writing-session]="!learning.completed() && learning.currentUnit()?.questionType === 'romaji-to-kana'" [attr.inert]="showExitConfirmation() || learning.newlyUnlockedMedals().length ? '' : null">
+<main class="learn-shell" [class.writing-session]="!learning.completed() && usesCanvas()" [attr.inert]="showExitConfirmation() || learning.newlyUnlockedMedals().length ? '' : null">
   @if (!learning.session()) {
     <section class="missing-session">
       <h1>{{ i18n.t(daily.isCompletedToday('kana') ? 'daily.completedTitle' : 'learn.noActiveSession') }}</h1>
@@ -40,30 +40,30 @@
         <button class="secondary-button" type="button" (click)="confirmExit()">{{ i18n.t('common.returnHome') }}</button>
       </section>
     } @else if (learning.currentKana(); as kana) {
-      <section class="exercise" [class.writing-exercise]="learning.currentUnit()!.questionType === 'romaji-to-kana'" [attr.aria-labelledby]="'question-label'">
+      <section class="exercise" [class.writing-exercise]="usesCanvas()" [attr.aria-labelledby]="'question-label'">
         <div class="question-stage">
         <p id="question-label" class="prompt">
-          @if (learning.currentUnit()!.questionType === 'romaji-to-kana') {
+          @if (usesCanvas()) {
             {{ i18n.t(kana.type === 'hiragana' ? 'learn.romajiToHiraganaPrompt' : 'learn.romajiToKatakanaPrompt') }}
           } @else {
             {{ i18n.t('learn.kanaToRomajiPrompt') }}
           }
         </p>
         <div [class.kana]="learning.currentUnit()!.questionType === 'kana-to-romaji'"
-          [class.romaji]="learning.currentUnit()!.questionType === 'romaji-to-kana'"
+          [class.romaji]="usesCanvas()"
           [attr.lang]="learning.currentUnit()!.questionType === 'kana-to-romaji' ? 'ja' : null">
           {{ learning.questionValue() }}
         </div>
 
-@if(learning.currentUnit()!.questionType==='romaji-to-kana'){<app-learning-writing-prompt [character]="kana.character" [occurrence]="writingKey()" [revealed]="learning.revealed() || !!learning.feedback()" [quick]="learning.session()!.mode==='quick-practice'" [optionsVisible]="writingOptionsVisible()" (continued)="drawingOptionsKey.set(writingKey())"/>}
+@if(usesCanvas()){<app-learning-writing-prompt [character]="kana.character" [occurrence]="writingKey()" [revealed]="learning.revealed() || !!learning.feedback()" [quick]="learning.session()!.mode==='quick-practice'" [optionsVisible]="writingOptionsVisible()" (continued)="drawingOptionsKey.set(writingKey())"/>}
         </div>
         <div class="response-stage">
         @if (learning.session()!.mode === 'quick-practice') {
           @if(writingOptionsVisible()){<div class="options">
             @for (option of learning.options(); track option; let index = $index) {
               <button type="button" [disabled]="learning.feedback()"
-                [attr.lang]="learning.currentUnit()!.questionType === 'romaji-to-kana' ? 'ja' : null"
-                [class.kana-option]="learning.currentUnit()!.questionType === 'romaji-to-kana'"
+                [attr.lang]="usesCanvas() ? 'ja' : null"
+                [class.kana-option]="usesCanvas()"
                 [class.correct]="learning.feedback() && option === learning.feedback()!.answer"
                 [class.incorrect]="learning.feedback() && option === learning.feedback()!.selected && !learning.feedback()!.correct"
                 [attr.aria-keyshortcuts]="index + 1" (click)="learning.answerQuick(option)"><span class="option-label">{{ option }}</span><kbd class="shortcut" aria-hidden="true">{{index + 1}}</kbd></button>
@@ -83,8 +83,8 @@
           } @else {
             <div class="answer-details"><div class="revealed-answer" role="status">
               <span>{{ i18n.t('learn.answer') }}</span>
-              <strong [class.kana-answer]="learning.currentUnit()!.questionType === 'romaji-to-kana'"
-                [attr.lang]="learning.currentUnit()!.questionType === 'romaji-to-kana' ? 'ja' : null">
+              <strong [class.kana-answer]="usesCanvas()"
+                [attr.lang]="usesCanvas() ? 'ja' : null">
                 {{ learning.answer() }}
               </strong>
             </div>

@@ -1,3 +1,4 @@
+import {SettingsService} from '../../../core/services/settings.service';
 import {isolatedKanjiAvailability} from '../../../core/services/kanji-availability.test-support';
 import {isolatedKanjiAnswers} from '../../../core/services/kanji-answer-store.test-support';
 import {TestBed} from '@angular/core/testing';
@@ -27,7 +28,7 @@ for(const module of ['kana','kanji'] as const)describe(`${module} drawing inside
   const progress={buildRound:vi.fn(),recordReview:vi.fn(),recordPracticeAttempt:vi.fn(),get:()=>null,roundSummary:()=>({roundNew:0,roundDue:0})};
   const glyph={character:'x',strokes:[{id:'1',value:'M0 0L20 20'}],clipPaths:[]};
   beforeEach(()=>{
-    vi.clearAllMocks();vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
+    localStorage.clear();vi.clearAllMocks();vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));
     kanaRound=[{key:`${kana.id}:romaji-to-kana`,kanaId:kana.id,questionType:'romaji-to-kana'}];
     kanjiRound=[{key:`kanji:${kanji.id}:meaning-to-kanji`,kanjiId:kanji.id,questionType:'meaning-to-kanji'}];
     progress.buildRound.mockImplementation(()=>module==='kana'?kanaRound:kanjiRound);
@@ -41,6 +42,14 @@ for(const module of ['kana','kanji'] as const)describe(`${module} drawing inside
     const f=module==='kana'?TestBed.createComponent(LearnPage):TestBed.createComponent(KanjiPlayPage);
     f.componentInstance.learning.start(mode);await f.whenStable();f.detectChanges();return f;
   }
+  if(module==='kana')it('supports romaji-to-kana with immediate options and no canvas when disabled',async()=>{
+    const settings=TestBed.inject(SettingsService);
+    settings.saveLearningSelection({...settings.selection(),includeCanvas:false,questionTypes:['romaji-to-kana']});
+    const f=await render('quick-practice');
+    expect(f.nativeElement.querySelector('app-learning-writing-prompt')).toBeNull();
+    expect(f.nativeElement.querySelectorAll('.options button').length).toBeGreaterThan(0);
+    expect(f.componentInstance.learning.currentUnit()!.questionType).toBe('romaji-to-kana');
+  });
   function draw(canvas:KanaWritingCanvas,svg:SVGSVGElement){
     vi.spyOn(svg,'getBoundingClientRect').mockReturnValue({left:0,top:0,width:200,height:200} as DOMRect);
     const event={currentTarget:svg,clientX:100,clientY:100,pointerId:1,button:0,pressure:.5,timeStamp:1,type:'pointerup',preventDefault:vi.fn()} as unknown as PointerEvent;
@@ -75,7 +84,7 @@ for(const module of ['kana','kanji'] as const)describe(`${module} drawing inside
     f.nativeElement.querySelector('app-learning-writing-prompt .actions button').click();f.detectChanges();
     const correct=(Array.from(f.nativeElement.querySelectorAll('.options button')) as HTMLButtonElement[]).find(button=>(button.querySelector('.option-label')?.textContent??button.textContent)?.trim()===answer)!;correct.click();await submitted.mock.results.at(-1)!.value;
     expect(progress.recordReview).toHaveBeenCalledOnce();expect(progress.recordPracticeAttempt).toHaveBeenCalledOnce();
-    learning.clear();learning.start('quick-practice');await f.whenStable();f.detectChanges();expect(f.nativeElement.querySelector('.options')).toBeNull();expect(canvas.strokes()).toHaveLength(0);
+    learning.clear();if(module==='kanji')localStorage.removeItem('kana-study.kanji-open-round.v1');learning.start('quick-practice');await f.whenStable();f.detectChanges();expect(f.nativeElement.querySelector('.options')).toBeNull();expect(canvas.strokes()).toHaveLength(0);
   });
   it('keeps the opposite direction unchanged',async()=>{
     kanaRound=[{key:`${kana.id}:kana-to-romaji`,kanaId:kana.id,questionType:'kana-to-romaji'}];

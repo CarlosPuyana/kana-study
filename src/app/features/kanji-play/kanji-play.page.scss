@@ -42,3 +42,5 @@ app-learning-writing-prompt {
 .first-try { margin-top:.65rem; }
 .first-try strong { font-size:2rem; }
 .round-stats { margin-top:.65rem; padding:.65rem; gap:.5rem; }
+
+.play-header .undo-answer{grid-column:1 / -1;justify-self:end;min-height:44px;padding:.4rem .75rem;border:1px solid var(--border);border-radius:.6rem;background:var(--surface);color:var(--text-primary)}

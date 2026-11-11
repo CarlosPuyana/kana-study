@@ -20,7 +20,8 @@ export class VocabularyStatsReader {
   const lessons=rawLessons&&typeof rawLessons==='object'?Object.values(rawLessons).filter(validVocabularyLesson):[];
   invalid ||= !rawProgress||typeof rawProgress!=='object'||Array.isArray(rawProgress)||Object.keys(progress).length!==Object.keys(rawProgress).length||!Array.isArray(rawEvents)||events.length!==rawEvents.length||!rawLessons||typeof rawLessons!=='object'||Array.isArray(rawLessons)||lessons.length!==Object.keys(rawLessons).length;
   const pending=read('kana-study.vocabulary-attempt-pending.v1',[]),intent=read('kana-study.vocabulary-review-intent.v1',null);
-  return {progress,events,lessons:lessons as VocabularyDailyLesson[],invalid,pending:!!intent||Array.isArray(pending)&&pending.length>0};
+  const undo=read('kana-study.vocabulary-undo-pending.v1',null);
+  return {progress,events,lessons:lessons as VocabularyDailyLesson[],invalid,pending:!!undo||!!intent||Array.isArray(pending)&&pending.length>0};
  }
  async evolution(count:7|30|90,activity:AttemptActivity|'',now:Date){
   const owner=this.workspace.active(),epoch=this.workspace.activationRevision(),all=historicalAccumulator(count,now),first=historicalAccumulator(count,now);let unknown=0;

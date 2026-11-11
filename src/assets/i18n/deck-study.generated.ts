@@ -276,7 +276,16 @@ export const es:Record<string,string> = {...shared,...{
   "kanji.stats.today": "Rondas hoy · Madrid",
   "kanji.stats.recordedTime": "Tiempo registrado",
   "kanji.stats.timeCoverage": "Tiempo disponible en {{known}} de {{total}} rondas. Los valores ausentes no se convierten en cero.",
-  "kanji.stats.dailyRatings": "Valoraciones por día"
+  "kanji.stats.dailyRatings": "Valoraciones por día",
+  "kanji.availability.homeFresh": "Nuevos pendientes: {{count}}",
+  "kanji.availability.homeToday": "Nuevos hoy: {{count}}",
+  "kanji.availability.homeDue": "Repasos vencidos: {{count}}",
+  "kanji.availability.homeCompleted": "Ronda completada. Podrás volver a aprender mañana.",
+  "vocabulary.daily.stats.view": "Ver estadísticas",
+  "vocabulary.daily.undo": "Deshacer última respuesta",
+  "vocabulary.daily.undoError": "No se ha podido verificar Deshacer. No respondas otra tarjeta; reintenta para completar la recuperación.",
+  "vocabulary.daily.undoAction": "Deshacer",
+  "kanji.stats.undo": "Deshacer"
 }};
 export const en:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "How cards are scheduled",
@@ -551,7 +560,16 @@ export const en:Record<string,string> = {...shared,...{
   "kanji.stats.today": "Rounds today · Madrid",
   "kanji.stats.recordedTime": "Recorded time",
   "kanji.stats.timeCoverage": "Time available for {{known}} of {{total}} rounds. Missing values are not converted to zero.",
-  "kanji.stats.dailyRatings": "Ratings by day"
+  "kanji.stats.dailyRatings": "Ratings by day",
+  "kanji.availability.homeFresh": "New remaining: {{count}}",
+  "kanji.availability.homeToday": "New today: {{count}}",
+  "kanji.availability.homeDue": "Due reviews: {{count}}",
+  "kanji.availability.homeCompleted": "Round completed. You can learn again tomorrow.",
+  "vocabulary.daily.stats.view": "View statistics",
+  "vocabulary.daily.undo": "Undo last answer",
+  "vocabulary.daily.undoError": "Undo could not be verified. Do not answer another card; retry to complete recovery.",
+  "vocabulary.daily.undoAction": "Undo",
+  "kanji.stats.undo": "Undo"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "Com es programen les targetes",
@@ -826,5 +844,14 @@ export const ca:Record<string,string> = {...shared,...{
   "kanji.stats.today": "Rondes avui · Madrid",
   "kanji.stats.recordedTime": "Temps registrat",
   "kanji.stats.timeCoverage": "Temps disponible en {{known}} de {{total}} rondes. Els valors absents no es converteixen en zero.",
-  "kanji.stats.dailyRatings": "Valoracions per dia"
+  "kanji.stats.dailyRatings": "Valoracions per dia",
+  "kanji.availability.homeFresh": "Nous pendents: {{count}}",
+  "kanji.availability.homeToday": "Nous avui: {{count}}",
+  "kanji.availability.homeDue": "Repassos vençuts: {{count}}",
+  "kanji.availability.homeCompleted": "Ronda completada. Podràs tornar a aprendre demà.",
+  "vocabulary.daily.stats.view": "Veure estadístiques",
+  "vocabulary.daily.undo": "Desfés l’última resposta",
+  "vocabulary.daily.undoError": "No s’ha pogut verificar Desfer. No responguis una altra targeta; torna-ho a provar per completar la recuperació.",
+  "vocabulary.daily.undoAction": "Desfés",
+  "kanji.stats.undo": "Desfés"
 }};

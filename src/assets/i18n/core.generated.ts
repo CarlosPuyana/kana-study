@@ -1672,7 +1672,8 @@ export const es:Record<string,string> = {...shared,...{
   "selection.writingScope": "La ronda normal usa estos tipos. Romaji → Kana permite dibujar de forma opcional. Escritura, RUSH y el refuerzo de puntos débiles tienen su propia selección. Los cambios se aplican a la próxima ronda; una ronda activa conserva su selección inicial.",
   "more.conjugations.title": "Conjugaciones",
   "more.conjugations.description": "Elige formas de verbos, adjetivos y cópula.",
-  "kanji.saveError": "No se guardó. Reintenta la misma respuesta."
+  "kanji.saveError": "No se guardó. Reintenta la misma respuesta.",
+  "selection.includeCanvas": "Incluir ejercicios con lienzo"
 }};
 export const en:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Objective answers",
@@ -3228,7 +3229,8 @@ export const en:Record<string,string> = {...shared,...{
   "selection.writingScope": "Normal rounds use these question types. Romaji → Kana lets you draw optionally. Writing, RUSH and focused weak-item practice use their own selection. Changes apply to the next round; an active round keeps its original selection.",
   "more.conjugations.title": "Conjugations",
   "more.conjugations.description": "Choose verb, adjective and copula forms.",
-  "kanji.saveError": "Not saved. Retry the same answer."
+  "kanji.saveError": "Not saved. Retry the same answer.",
+  "selection.includeCanvas": "Include canvas exercises"
 }};
 export const ca:Record<string,string> = {...shared,...{
   "statsV2.objectiveAnswers": "Respostes objectives",
@@ -4784,5 +4786,6 @@ export const ca:Record<string,string> = {...shared,...{
   "selection.writingScope": "La ronda normal utilitza aquests tipus. Romaji → Kana permet dibuixar opcionalment. Escriptura, RUSH i el reforç de punts febles tenen la seva pròpia selecció. Els canvis s’apliquen a la propera ronda; una ronda activa conserva la selecció inicial.",
   "more.conjugations.title": "Conjugacions",
   "more.conjugations.description": "Tria formes de verbs, adjectius i còpula.",
-  "kanji.saveError": "No s’ha desat. Torna a provar la mateixa resposta."
+  "kanji.saveError": "No s’ha desat. Torna a provar la mateixa resposta.",
+  "selection.includeCanvas": "Incloure exercicis amb llenç"
 }};

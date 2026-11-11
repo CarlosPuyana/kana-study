@@ -1,3 +1,4 @@
+import {WorkspaceService} from './workspace.service';
 import { TestBed } from '@angular/core/testing';
 import { SettingsService } from './settings.service';
 import { StorageService } from './storage.service';
@@ -27,6 +28,17 @@ describe('SettingsService themes', () => {
     document.documentElement.removeAttribute('data-theme');
   });
 
+  it('keeps canvas independent of directions, reloads and isolates workspaces',()=>{
+    let settings=TestBed.inject(SettingsService);
+    expect(settings.selection().includeCanvas).not.toBe(false);
+    settings.saveLearningSelection({...settings.selection(),questionTypes:['romaji-to-kana'],includeCanvas:false});
+    TestBed.resetTestingModule();settings=TestBed.inject(SettingsService);
+    expect(settings.selection().includeCanvas).toBe(false);
+    expect(settings.selection().questionTypes).toEqual(['romaji-to-kana']);
+    const w=TestBed.inject(WorkspaceService);w.activateUser('canvas-b');
+    expect(settings.selection().includeCanvas).not.toBe(false);
+    w.activateGuest();expect(settings.selection().includeCanvas).toBe(false);
+  });
   it('selects and persists the Nora theme', () => {
     const settings = TestBed.inject(SettingsService);
     settings.setTheme('nora');

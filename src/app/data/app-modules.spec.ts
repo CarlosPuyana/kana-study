@@ -190,7 +190,7 @@ describe('Module navigation', () => {
     await TestBed.configureTestingModule({
       imports: [KanjiPage], providers: [isolatedKanjiAvailability,provideRouter([]),
         { provide: TranslationService, useValue: translate },
-        { provide: KanjiProgressService, useValue: { stats: signal(emptyStats) } },
+        { provide: KanjiProgressService, useValue: { stats: signal(emptyStats), roundSummary:()=>({roundNew:1}) } },
         { provide: KanjiMedalService, useValue: { homeMedals: signal([]), presentation: vi.fn() } },
       ],
     }).compileComponents();

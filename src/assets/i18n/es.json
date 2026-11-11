@@ -12805,5 +12805,15 @@
   "kanji.stats.today": "Rondas hoy · Madrid",
   "kanji.stats.recordedTime": "Tiempo registrado",
   "kanji.stats.timeCoverage": "Tiempo disponible en {{known}} de {{total}} rondas. Los valores ausentes no se convierten en cero.",
-  "kanji.stats.dailyRatings": "Valoraciones por día"
+  "kanji.stats.dailyRatings": "Valoraciones por día",
+  "selection.includeCanvas": "Incluir ejercicios con lienzo",
+  "kanji.availability.homeFresh": "Nuevos pendientes: {{count}}",
+  "kanji.availability.homeToday": "Nuevos hoy: {{count}}",
+  "kanji.availability.homeDue": "Repasos vencidos: {{count}}",
+  "kanji.availability.homeCompleted": "Ronda completada. Podrás volver a aprender mañana.",
+  "vocabulary.daily.stats.view": "Ver estadísticas",
+  "vocabulary.daily.undo": "Deshacer última respuesta",
+  "vocabulary.daily.undoError": "No se ha podido verificar Deshacer. No respondas otra tarjeta; reintenta para completar la recuperación.",
+  "vocabulary.daily.undoAction": "Deshacer",
+  "kanji.stats.undo": "Deshacer"
 }

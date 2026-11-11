@@ -27,6 +27,7 @@ export interface LearningSettings {
 export type CategorySelection = Record<KanaVariant, boolean>;
 
 export interface LearningSelection {
+  includeCanvas?: boolean;
   categories: Record<KanaType, CategorySelection>;
   questionTypes: QuestionType[];
 }
