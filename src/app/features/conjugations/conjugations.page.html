@@ -2,13 +2,14 @@
   <app-page-header titleKey="more.conjugations.title" backRoute="/more" [backQueryParams]="{from:'conjugations'}"/>
   <p class="intro">{{i18n.t('conjugations.subtitle')}}</p>
   <p class="phase-note" id="phase-note">{{i18n.t('conjugations.phase')}}</p>
+  @if(selection.legacySelection()){<p class="phase-note" role="status">{{i18n.t('conjugations.legacySelection')}}</p>}
 
   <section class="mix" aria-labelledby="mix-title">
     <div class="mix-heading"><h2 id="mix-title">{{i18n.t('conjugations.mixLabel')}}</h2><strong class="selection-count" role="status">{{i18n.t('conjugations.selected',{count:selection.count(),total:categories.length})}}</strong></div>
     @if(!selection.count()){<p class="empty-hint">{{i18n.t('conjugations.emptySelection')}}</p>}
     @if(hiddenSelected()){<p class="hidden-selection">{{i18n.t('conjugations.hiddenSelected',{count:hiddenSelected()})}}</p>}
     <div class="mix-actions">
-      <button type="button" (click)="selectAll()" [disabled]="selection.count()===categories.length">{{i18n.t('conjugations.selectAll')}}</button>
+      <button type="button" (click)="selectAll()" [disabled]="selection.count()===selection.availableCount()">{{i18n.t('conjugations.selectAll')}}</button>
       <button type="button" (click)="clear()" [disabled]="!selection.count()">{{i18n.t('conjugations.clear')}}</button>
       <button class="primary" type="button" (click)="requestPractice()" [disabled]="!selection.count()" aria-describedby="phase-note">{{i18n.t('conjugations.practiceMixReady')}}</button>
     </div>
@@ -23,18 +24,26 @@
   <p class="level-note">{{i18n.t('conjugations.levelHint')}}</p>
   <section class="category-grid" [attr.aria-label]="i18n.t('conjugations.catalog')">
     @for(category of visible();track category.id){
-      <article class="category-card" [class.selected]="selected(category.id)" [class.unavailable]="category.availability!=='available'" [attr.data-category-id]="category.id">
-        <div class="card-heading"><div><h2>@if(category.availability==='available'){<button class="card-open" type="button" (click)="requestPractice(category.id)" [attr.aria-label]="i18n.t('conjugations.practiceSingleReady')+': '+i18n.t(category.titleKey)">{{i18n.t(category.titleKey)}}</button>}@else{ {{i18n.t(category.titleKey)}} }</h2><span class="japanese" lang="ja">{{category.japanese}}</span></div>
-          <label class="check-label"><input type="checkbox" [checked]="selected(category.id)" (change)="toggle(category.id,$event)" [attr.aria-label]="i18n.t('conjugations.select',{name:i18n.t(category.titleKey)})"/><span>{{i18n.t('conjugations.mixLabel')}}</span></label>
+      <article class="category-card" [class.selected]="selected(category.id)" [class.unavailable]="!selection.isUnlocked(category.id)" [attr.data-category-id]="category.id">
+        <div class="card-heading"><div><h2>@if(selection.isUnlocked(category.id)){<button class="card-open" type="button" (click)="requestPractice(category.id)" [attr.aria-label]="i18n.t('conjugations.practiceSingleReady')+': '+i18n.t(category.titleKey)">{{i18n.t(category.titleKey)}}</button>}@else{ {{i18n.t(category.titleKey)}} }</h2><span class="japanese" lang="ja">{{category.japanese}}</span></div>
+          <label class="check-label"><input type="checkbox" [disabled]="!selection.isUnlocked(category.id)" [checked]="selected(category.id)" (change)="toggle(category.id,$event)" [attr.aria-label]="i18n.t('conjugations.select',{name:i18n.t(category.titleKey)})"/><span>{{i18n.t('conjugations.mixLabel')}}</span></label>
         </div>
+        @if(selection.isAdjective(category.id)){
+          <label class="adjective-type">{{i18n.t('conjugations.adjectiveTypes')}}<select [value]="selection.adjectiveTypes()[category.id]" (change)="selection.setAdjectiveType(category.id,$any($event.target).value);$any($event.target).value=selection.adjectiveTypes()[category.id]">
+            <option value="both">{{i18n.t('conjugations.adjectiveType.both')}}</option><option value="i">{{i18n.t('conjugations.category.adjective-i.title')}}</option><option value="na">{{i18n.t('conjugations.category.adjective-na.title')}}</option>
+          </select></label>
+        }@else if(selection.isImplemented(category.id)){<button class="lock-category" type="button" [attr.aria-label]="i18n.t(selection.isUnlocked(category.id)?'conjugations.lock':'conjugations.unlock')+': '+i18n.t(category.titleKey)" [attr.aria-pressed]="selection.isUnlocked(category.id)" (click)="selection.setUnlocked(category.id,!selection.isUnlocked(category.id))">{{selection.isUnlocked(category.id)?'🔓':'🔒'}} {{i18n.t(selection.isUnlocked(category.id)?'conjugations.lock':'conjugations.unlock')}}</button>}
         @if(category.availability!=='available'){<span class="availability"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>{{i18n.t('conjugations.comingSoon')}}</span>}
         @if(category.example?.result){<p class="description"><span>{{i18n.t('conjugations.example')}}: </span><span lang="ja">{{category.example!.base}} → {{category.example!.result}}</span></p>}
         @else{<p class="description">{{i18n.t(category.descriptionKey)}}</p>}
         <div class="tags"><span>{{i18n.t('conjugations.group.'+category.group)}}</span><span>{{i18n.t('conjugations.difficulty.'+category.difficulty)}}</span></div>
         @if(category.example && !category.example.result){<p class="example"><span>{{i18n.t('conjugations.example')}}: </span><span lang="ja">{{category.example.base}}</span></p>}
-        <dl class="indicators"><div><dt>{{i18n.t('conjugations.words')}}</dt><dd>{{category.wordCount??i18n.t('conjugations.pending')}}</dd></div><div><dt>{{i18n.t('conjugations.streak')}}</dt><dd>{{best(category.id)??i18n.t('conjugations.pending')}}</dd></div></dl>
+        <dl class="indicators"><div><dt>{{i18n.t('conjugations.words')}}</dt><dd>{{selection.isAdjective(category.id)?(selection.adjectiveTypes()[category.id]==='i'?15:selection.adjectiveTypes()[category.id]==='na'?10:25):category.wordCount??i18n.t('conjugations.pending')}}</dd></div><div><dt>{{i18n.t('conjugations.streak')}}</dt><dd>{{best(category.id)??i18n.t('conjugations.pending')}}</dd></div></dl>
         @if(requestedId()===category.id){<p class="description" aria-hidden="true">{{notice()}}</p>}
       </article>
     }
   </section>
+  <details class="legacy-stats"><summary>{{i18n.t('conjugations.legacyStats')}}</summary><p>{{i18n.t('conjugations.legacyStatsHint')}}</p>
+    @for(id of legacyIds;track id){<p>{{i18n.t('conjugations.category.'+id+'.title')}}: {{i18n.t('conjugations.trainer.attempts')}} {{stats.get(id).attempts}} · {{i18n.t('conjugations.trainer.correct')}} {{stats.get(id).correct}} · {{i18n.t('conjugations.trainer.wrong')}} {{stats.get(id).wrong}} · {{i18n.t('conjugations.trainer.best')}} {{stats.get(id).bestStreak}}</p>}
+  </details>
 </main>

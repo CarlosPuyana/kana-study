@@ -73,12 +73,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 5,
     "descriptionKey": "conjugations.category.verb-continuous.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-te",
     "example": {
       "base": "書く",
       "result": "書いている"
-    }
+    },
+    "wordCount": 48
   },
   {
     "id": "verb-potential",
@@ -88,12 +89,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "intermediate",
     "order": 6,
     "descriptionKey": "conjugations.category.verb-potential.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-voice",
     "example": {
       "base": "書く",
       "result": "書ける"
-    }
+    },
+    "wordCount": 47
   },
   {
     "id": "verb-passive",
@@ -103,12 +105,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "intermediate",
     "order": 7,
     "descriptionKey": "conjugations.category.verb-passive.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-voice",
     "example": {
       "base": "書く",
       "result": "書かれる"
-    }
+    },
+    "wordCount": 45
   },
   {
     "id": "verb-causative",
@@ -118,12 +121,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "advanced",
     "order": 8,
     "descriptionKey": "conjugations.category.verb-causative.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-voice",
     "example": {
       "base": "書く",
       "result": "書かせる"
-    }
+    },
+    "wordCount": 48
   },
   {
     "id": "verb-causative-passive",
@@ -133,12 +137,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "advanced",
     "order": 9,
     "descriptionKey": "conjugations.category.verb-causative-passive.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-voice",
     "example": {
       "base": "書く",
       "result": "書かされる"
-    }
+    },
+    "wordCount": 48
   },
   {
     "id": "verb-volitional",
@@ -148,12 +153,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "intermediate",
     "order": 10,
     "descriptionKey": "conjugations.category.verb-volitional.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-mood",
     "example": {
       "base": "書く",
       "result": "書こう"
-    }
+    },
+    "wordCount": 48
   },
   {
     "id": "verb-imperative",
@@ -163,12 +169,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "advanced",
     "order": 11,
     "descriptionKey": "conjugations.category.verb-imperative.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-mood",
     "example": {
       "base": "書く",
       "result": "書け"
-    }
+    },
+    "wordCount": 47
   },
   {
     "id": "verb-desire",
@@ -178,12 +185,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 12,
     "descriptionKey": "conjugations.category.verb-desire.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-mood",
     "example": {
       "base": "書く",
       "result": "書きたい"
-    }
+    },
+    "wordCount": 48
   },
   {
     "id": "verb-conditional-ba",
@@ -193,12 +201,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "intermediate",
     "order": 13,
     "descriptionKey": "conjugations.category.verb-conditional-ba.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-conditional",
     "example": {
       "base": "書く",
       "result": "書けば"
-    }
+    },
+    "wordCount": 50
   },
   {
     "id": "verb-conditional-tara",
@@ -208,12 +217,13 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "intermediate",
     "order": 14,
     "descriptionKey": "conjugations.category.verb-conditional-tara.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-conditional",
     "example": {
       "base": "書く",
       "result": "書いたら"
-    }
+    },
+    "wordCount": 50
   },
   {
     "id": "verb-polite",
@@ -223,23 +233,69 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "difficulty": "basic",
     "order": 15,
     "descriptionKey": "conjugations.category.verb-polite.description",
-    "availability": "planned",
-    "ruleFamily": "verb-polite"
+    "availability": "available",
+    "ruleFamily": "verb-polite",
+    "wordCount": 50
   },
   {
-    "id": "adjective-i",
-    "titleKey": "conjugations.category.adjective-i.title",
-    "japanese": "い形容詞",
+    "id": "adjective-negative",
+    "titleKey": "conjugations.category.adjective-negative.title",
+    "japanese": "〜ない",
     "group": "adjective",
     "difficulty": "basic",
     "order": 16,
-    "descriptionKey": "conjugations.category.adjective-i.description",
+    "descriptionKey": "conjugations.category.adjective-negative.description",
     "availability": "available",
-    "wordCount": 15,
-    "ruleFamily": "adjective-i",
-    "example": {
-      "base": "高い"
-    }
+    "wordCount": 25,
+    "ruleFamily": "adjective-i"
+  },
+  {
+    "id": "adjective-past",
+    "titleKey": "conjugations.category.adjective-past.title",
+    "japanese": "〜た",
+    "group": "adjective",
+    "difficulty": "basic",
+    "order": 17,
+    "descriptionKey": "conjugations.category.adjective-past.description",
+    "availability": "available",
+    "wordCount": 25,
+    "ruleFamily": "adjective-i"
+  },
+  {
+    "id": "adjective-negative-past",
+    "titleKey": "conjugations.category.adjective-negative-past.title",
+    "japanese": "〜なかった",
+    "group": "adjective",
+    "difficulty": "basic",
+    "order": 18,
+    "descriptionKey": "conjugations.category.adjective-negative-past.description",
+    "availability": "available",
+    "wordCount": 25,
+    "ruleFamily": "adjective-i"
+  },
+  {
+    "id": "adjective-te",
+    "titleKey": "conjugations.category.adjective-te.title",
+    "japanese": "て形",
+    "group": "adjective",
+    "difficulty": "basic",
+    "order": 19,
+    "descriptionKey": "conjugations.category.adjective-te.description",
+    "availability": "available",
+    "wordCount": 25,
+    "ruleFamily": "adjective-i"
+  },
+  {
+    "id": "adjective-adverbial",
+    "titleKey": "conjugations.category.adjective-adverbial.title",
+    "japanese": "副詞形",
+    "group": "adjective",
+    "difficulty": "basic",
+    "order": 20,
+    "descriptionKey": "conjugations.category.adjective-adverbial.description",
+    "availability": "available",
+    "wordCount": 25,
+    "ruleFamily": "adjective-i"
   },
   {
     "id": "copula-plain",
@@ -247,10 +303,15 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "japanese": "だ",
     "group": "copula",
     "difficulty": "basic",
-    "order": 17,
+    "order": 21,
     "descriptionKey": "conjugations.category.copula-plain.description",
-    "availability": "planned",
-    "ruleFamily": "copula-plain"
+    "availability": "available",
+    "ruleFamily": "copula-plain",
+    "wordCount": 13,
+    "example": {
+      "base": "学生だ",
+      "result": "学生だった"
+    }
   },
   {
     "id": "copula-polite",
@@ -258,24 +319,14 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "japanese": "です",
     "group": "copula",
     "difficulty": "basic",
-    "order": 18,
+    "order": 22,
     "descriptionKey": "conjugations.category.copula-polite.description",
-    "availability": "planned",
-    "ruleFamily": "copula-polite"
-  },
-  {
-    "id": "adjective-na",
-    "titleKey": "conjugations.category.adjective-na.title",
-    "japanese": "な形容詞",
-    "group": "adjective",
-    "difficulty": "basic",
-    "order": 19,
-    "descriptionKey": "conjugations.category.adjective-na.description",
     "availability": "available",
-    "wordCount": 10,
-    "ruleFamily": "adjective-na",
+    "ruleFamily": "copula-polite",
+    "wordCount": 13,
     "example": {
-      "base": "静か"
+      "base": "学生です",
+      "result": "学生でした"
     }
   },
   {
@@ -284,13 +335,14 @@ export const CONJUGATION_CATEGORIES:readonly ConjugationCategory[] = [
     "japanese": "〜な",
     "group": "verb",
     "difficulty": "advanced",
-    "order": 20,
+    "order": 23,
     "descriptionKey": "conjugations.category.verb-prohibitive.description",
-    "availability": "planned",
+    "availability": "available",
     "ruleFamily": "verb-mood",
     "example": {
       "base": "書く",
       "result": "書くな"
-    }
+    },
+    "wordCount": 47
   }
 ];

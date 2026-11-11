@@ -15,6 +15,7 @@ export class ConjugationsPage{
   readonly i18n=inject(TranslationService);
   readonly selection=inject(ConjugationSelectionService);
   readonly stats=inject(ConjugationStatsService);
+  readonly legacyIds=['adjective-i','adjective-na'] as const;
   private readonly router=inject(Router);
   private readonly workspace=inject(WorkspaceService);
   readonly categories=[...CONJUGATION_CATEGORIES].sort((a,b)=>Number(b.group==='adjective')-Number(a.group==='adjective'));
