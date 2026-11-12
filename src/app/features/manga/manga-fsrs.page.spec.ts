@@ -1,3 +1,4 @@
+import {TranslationService} from '../../core/services/translation.service';
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
@@ -9,12 +10,13 @@ import { AuthService } from '../../core/services/auth.service';
 import { SettingsService } from '../../core/services/settings.service';
 
 describe('Manga scheduled review two-button UI',()=>{
-  beforeEach(()=>{
+  beforeEach(async()=>{
     localStorage.clear();vi.spyOn(document,'hidden','get').mockReturnValue(false);
     vi.stubGlobal('matchMedia',()=>({matches:false,addEventListener:()=>{},removeEventListener:()=>{}}));
     TestBed.configureTestingModule({providers:[provideRouter([]),{provide:SyncOutboxService,useValue:{enqueue:async()=>{}}},
       {provide:AuthService,useValue:{authenticated:signal(false)}},{provide:SyncService,useValue:{status:signal('guest')}},
       {provide:MangaStudySavedRepository,useValue:{items:signal([{schemaVersion:1,id:'external',expression:'龍',reading:'りゅう',meaning:'dragon',surface:'龍',context:'<img src=x onerror="alert(1)">龍。',kanji:[],source:{volumeId:'fixture',pageNumber:1},createdAt:1}]),loading:signal(false),failed:signal(false)}}]});
+    await TestBed.inject(TranslationService).loadManga();
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();});
   it.each([['es','Otra vez','Bien'],['en','Again','Good'],['ca','Una altra vegada','Bé']] as const)('reveals exactly two translated ratings in %s',(language,again,good)=>{

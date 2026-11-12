@@ -1,3 +1,4 @@
+import {TranslationService} from '../../core/services/translation.service';
 import 'fake-indexeddb/auto';
 import {IDBFactory} from 'fake-indexeddb';
 import {TestBed} from '@angular/core/testing';
@@ -15,6 +16,7 @@ describe('Manga library with included manga',()=>{
     vi.stubGlobal('matchMedia',()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()}));
     TestBed.configureTestingModule({providers:[provideRouter([]),{provide:MangaBuiltinService,useValue:{ensure}},{provide:LocalMangaCatalogService,useValue:{list:async()=>[]}}]});
     const own:MangaVolume={id:'own',title:'My manga',seriesTitle:'My manga',pageCount:1,storageBytes:1,mokuro:{version:'0.2.0',title:'My manga',volume:'1'},createdAt:'now',updatedAt:'now',complete:true};
+    await TestBed.inject(TranslationService).loadManga();
     await TestBed.inject(MangaRepository).put('volumes',own);
   });
   afterEach(()=>{TestBed.resetTestingModule();vi.unstubAllGlobals();});

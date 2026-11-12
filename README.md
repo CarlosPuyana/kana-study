@@ -43,7 +43,13 @@ npm run build
 
 ## Deployment
 
-El despliegue en GitHub Pages es automático mediante GitHub Actions al hacer push a la rama `main`. El workflow compila la aplicación con la base `/kana-study/` y publica el contenido estático de `dist/kana-study/browser`.
+El despliegue en GitHub Pages es automático mediante GitHub Actions al hacer push a la rama `main`. El workflow usa Node.js 24.15.0, `npm ci` y el build candidato:
+
+```bash
+npm run build:manga-candidate
+```
+
+Este comando compila con la base `/kana-study/`, valida que el bundle inicial sea estrictamente menor de 750000 bytes y genera `dist/kana-study-candidate/browser`. `npm run build` utiliza otra entrada y no sustituye esta validación. [Diagnóstico y optimización del bundle](docs/GITHUB_PAGES_BUNDLE.md).
 
 Tras el primer push, selecciona **GitHub Actions** como origen en **Settings → Pages** del repositorio.
 

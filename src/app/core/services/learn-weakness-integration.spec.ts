@@ -46,9 +46,13 @@ for(const module of ['kana','vocabulary','kanji'] as const){
     }
     afterEach(()=>TestBed.resetTestingModule());
     it('records quick Good once per evaluation and ignores duplicate clicks',async ()=>{
-      const s=setup();s.service.start('quick-practice');await s.service.answerQuick(await s.answer());await s.service.answerQuick(await s.answer());
-      expect(s.weakness.records()[0]).toEqual(expect.objectContaining({module,activity:'learn',attempts:1,score:0,failures:0,consecutiveCorrect:1,questionType:s.units[0].questionType}));
+      const s=setup();s.service.start('quick-practice');const presented=s.service.currentUnit()!;
+      // The durable Kanji round may resume another direction; record the card actually shown.
+      const itemId='kanaId' in presented?presented.kanaId:'kanjiId' in presented?presented.kanjiId:presented.entryId;
+      await s.service.answerQuick(await s.answer());await s.service.answerQuick(await s.answer());
+      expect(s.weakness.records()[0]).toEqual(expect.objectContaining({module,itemId,activity:'learn',attempts:1,score:0,failures:0,consecutiveCorrect:1,questionType:presented.questionType}));
       expect(s.progress.recordReview).toHaveBeenCalledTimes(1);
+      expect(s.progress.recordReview.mock.calls[0][0].key).toBe(presented.key);
     });
     it('records quick Again and later Good as separate evaluations with the module-specific FSRS contract',async ()=>{
       const s=setup();if(module==='vocabulary')s.focus('quick-practice');else s.service.start('quick-practice');await s.service.answerQuick('wrong');s.service.continueQuick();

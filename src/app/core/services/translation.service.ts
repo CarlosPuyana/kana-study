@@ -18,6 +18,16 @@ export class TranslationService {
   }
   private readonly grammar=signal<Record<AppLanguage,Dictionary>|null>(null);
   private grammarLoading:Promise<void>|null=null;
+  private mangaLoading:Promise<void>|null=null;
+  /** Reader-only copy loads before /manga or /upload activates, in all three languages. */
+  loadManga():Promise<void>{
+    if(this.mangaLoading)return this.mangaLoading;
+    const done=this.pending.add();
+    return this.mangaLoading=(async()=>{
+      try{this.useStudyCopy(await import('../../../assets/i18n/manga-reader.generated'));}
+      catch(error){this.mangaLoading=null;throw error;}finally{done();}
+    })();
+  }
   /** Reader bundles these existing course translations for first-use offline reference. */
   useBundledGrammar(dictionary:Record<AppLanguage,Dictionary>):void {
     if(!this.grammar())this.grammar.set(dictionary);

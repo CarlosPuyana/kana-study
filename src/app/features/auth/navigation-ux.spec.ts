@@ -1,3 +1,4 @@
+import {TranslationService} from '../../core/services/translation.service';
 import {GrammarAccessService} from '../../core/services/grammar-access.service';
 import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
@@ -85,7 +86,8 @@ describe('confirmed navigation and UX corrections',()=>{
   for(const [params,destination] of [[{from:'grammar',kana:'hiragana'},'/grammar/n5/00'],[{from:'grammar',return:'/grammar/n5/00/2'},'/grammar/n5/00/2'],[{},'/']] as const)it('Selection save returns to '+destination,()=>{
     query(params);const navigate=vi.spyOn(TestBed.inject(Router),'navigateByUrl').mockResolvedValue(true);const page=TestBed.createComponent(SelectionPage).componentInstance;page.save();expect(navigate).toHaveBeenCalledWith(destination);
   });
-  it('Manga exposes a remote form and sends validated URLs to existing upload flow',()=>{
+  it('Manga exposes a remote form and sends validated URLs to existing upload flow',async()=>{
+    await TestBed.inject(TranslationService).loadManga();
     const navigate=vi.spyOn(TestBed.inject(Router),'navigate').mockResolvedValue(true);const fixture=TestBed.createComponent(MangaPage);fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.remote-entry summary').textContent).toContain('Importar desde enlace');
     const page=fixture.componentInstance;page.remoteCbz='https://example.test/book.cbz';page.remoteManifest='https://example.test/manifest.json';page.openRemote();expect(navigate).toHaveBeenCalledWith(['/upload'],{queryParams:{cbz:page.remoteCbz,manifest:page.remoteManifest}});
