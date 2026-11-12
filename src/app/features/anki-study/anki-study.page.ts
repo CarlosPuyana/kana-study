@@ -84,6 +84,13 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   private finishAt:Date|null=null;
   readonly pendingFinish=signal(false);
   readonly pendingUndo=signal(false);
+  readonly undoNotice=signal('');
+  readonly failureKey=signal('anki.storageError');
+  private reportUndoFailure(error:unknown){
+    const reason=(error as {reason?:string})?.reason;
+    this.failureKey.set(reason==='invalid'?'anki.undo.invalid':reason==='inconsistent'?'anki.undo.inconsistent':error instanceof DOMException?'anki.storageError':'anki.undo.unverified');
+    console.warn('deck-undo',{phase:'reconcile',code:reason??(error instanceof DOMException?'storage':'unverified'),name:error instanceof Error?error.name:'unknown'});this.error.set(true);
+  }
   private lastEventResource:unknown;
   readonly retryRating=signal<DeckRating|null>(null);
   readonly previewChanged=signal(false);
@@ -113,6 +120,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
       const key=this.resource.catalog.owner()+':'+this.resource.catalog.epoch()+':'+(this.deck?.id??'');
       if(this.routeKey!==null&&this.routeKey!==key) untracked(() => {
         this.finishAt=null;this.pendingFinish.set(false);this.pendingUndo.set(false);this.retryRating.set(null);this.lastEvent.set(null);this.choice.set(null);this.entry.set(null);this.snapshot.set(null);
+        this.undoNotice.set('');this.failureKey.set('anki.storageError');
         this.returnToSummary.set(false);this.practiceEntries.set(null);this.dayEvents.set([]);this.cursor={debt:0};this.clock.discardAppearance();this.clock.pause();
         if(state.status==='ready')void this.tasks.run(()=>this.loadNext());
       });
@@ -166,7 +174,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     if (this.choiceState!==this.resource.state() || !this.deck || !this.choice() || !this.preview() || !this.revealed() || this.saving() || this.loading()) return;
     if(!this.retryRating()&&deckPreviewExpired(this.preview()!,new Date())){this.preview.set(this.study.preview(this.deck,this.choice()!));this.previewChanged.set(true);return;}
     const resourceState=this.resource.state(),owner=this.resource.catalog.owner();
-    ++this.availabilityGeneration;this.retryRating.set(rating);this.saving.set(true); this.error.set(false); this.clock.pause();
+    ++this.availabilityGeneration;this.retryRating.set(rating);this.saving.set(true); this.error.set(false);this.failureKey.set('anki.storageError'); this.clock.pause();
     try {
       const event = await this.study.rate(
         this.deck, this.choice()!, this.preview()!, rating, this.clock.appearanceMilliseconds(),
@@ -181,31 +189,36 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
 
   async undo(): Promise<void> {
     const event = this.lastEvent();
-    if (this.lastEventResource!==this.resource.state() || !event || getLocalStudyDayKey(new Date(event.reviewedAt))!==getLocalStudyDayKey(new Date()) || !this.deck || event.deckId!==this.deck.id || this.lastEventOwner!==this.resource.catalog.owner() || this.saving()||this.retryRating()||(this.snapshot()?.completedToday&&!this.canUndoClosed())) return;
+    if (this.lastEventResource!==this.resource.state() || !event || (getLocalStudyDayKey(new Date(event.reviewedAt))!==getLocalStudyDayKey(new Date())&&!this.pendingUndo()) || !this.deck || event.deckId!==this.deck.id || this.lastEventOwner!==this.resource.catalog.owner() || this.saving()||this.retryRating()||(this.snapshot()?.completedToday&&!this.canUndoClosed()&&!this.pendingUndo())) return;
     const resourceState=this.resource.state(),owner=this.resource.catalog.owner();
-    ++this.availabilityGeneration;this.undoReopen ||= !!this.snapshot()?.completedToday;this.pendingUndo.set(true);
+    ++this.availabilityGeneration;if(!this.pendingUndo())this.undoReopen=this.canUndoClosed();this.pendingUndo.set(true);
     this.saving.set(true); this.error.set(false); this.clock.pause();
     try {
       this.undoPendingStore.begin(event,this.undoReopen);
-      await this.study.undo(event,this.undoReopen);
+      const outcome=await this.study.reconcileUndo(event,this.undoReopen);
+      if(resourceState!==this.resource.state()||owner!==this.resource.catalog.owner())return;
+      if(outcome==='expired'){this.undoPendingStore.retire(event);this.lastEvent.set(null);this.pendingUndo.set(false);this.undoReopen=false;this.undoNotice.set('anki.undo.expired');await this.loadNext();return;}
+      this.undoNotice.set(outcome==='sync-pending'?'anki.undo.syncPending':'');
       if(resourceState!==this.resource.state()||owner!==this.resource.catalog.owner())return;
       const snapshot = await this.study.snapshot(this.deck, this.resource.content!.index);
       const events=await this.dayPresentation.events(this.deck);
       if(this.destroyed||resourceState!==this.resource.state()||owner!==this.resource.catalog.owner())return;
       const restored=snapshot.progress.find(p=>p.entryId===event.entryId)?.card??null;
-      if(snapshot.completedToday)throw Error('Closed session cannot resume');
       if(JSON.stringify(restored)!==JSON.stringify(event.cardBefore))throw Error('Undo state no longer matches');
       this.undoPendingStore.clear(event);
+      if(getLocalStudyDayKey(new Date(event.reviewedAt))!==getLocalStudyDayKey(new Date())){
+        this.lastEvent.set(null);this.pendingUndo.set(false);this.undoReopen=false;await this.loadNext();return;
+      }
       this.clock.discardAppearance();this.clock.undo(event.elapsedAnswerMs);
       this.snapshot.set(snapshot);this.dayEvents.set(events);this.presentationNow.set(new Date());
       const progress = snapshot.progress.find(item => item.entryId === event.entryId) ?? null;
-      this.setCurrent(this.study.restoreAfterUndo(snapshot, this.deck, {
+      this.setCurrent(snapshot.completedToday?null:this.study.restoreAfterUndo(snapshot, this.deck, {
         entryId: event.entryId,
         kind: progress ? (progress.card.state === 2 ? 'review' : 'learning') : 'new',
         progress,
       }));
       this.lastEvent.set(null);this.pendingUndo.set(false);this.undoReopen=false;
-    } catch { this.error.set(true); }
+    } catch(error) { this.reportUndoFailure(error); }
     finally { this.saving.set(false); if (!this.destroyed && this.choice()&&!this.pendingUndo()) this.clock.resume(); }
   }
 
@@ -258,7 +271,14 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
     try {
       const loaded=this.resource.state();
       const pending=this.undoPendingStore.read(this.deck.id);
-      if(pending){this.lastEvent.set(pending.event);this.lastEventOwner=this.resource.catalog.owner();this.lastEventResource=loaded;this.undoReopen=pending.reopen;this.pendingUndo.set(true);this.error.set(true);return;}
+      if(pending){
+        this.lastEvent.set(pending.event);this.lastEventOwner=this.resource.catalog.owner();this.lastEventResource=loaded;this.undoReopen=pending.reopen;this.pendingUndo.set(true);
+        const state=await this.study.undoState(pending.event);
+        if(this.destroyed||loaded!==this.resource.state()||generation!==this.availabilityGeneration)return;
+        if(state==='committed'||getLocalStudyDayKey(new Date(pending.event.reviewedAt))!==getLocalStudyDayKey(new Date())){await this.undo();return;}
+        if(state==='inconsistent')throw Object.assign(Error('Unverified undo'),{reason:'inconsistent'});
+        this.failureKey.set('anki.undo.retry');this.error.set(true);return;
+      }
       let snapshot = await this.study.snapshot(this.deck, this.resource.content!.index);
       if(!snapshot.completedToday&&!snapshot.startedToday){await this.study.startSession(this.deck);snapshot=await this.study.snapshot(this.deck,this.resource.content!.index);}
       if(this.resource.state()!==loaded||generation!==this.availabilityGeneration)return;
@@ -278,7 +298,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
       }
       if (preserveAppearance && decision.choice?.entryId === this.choice()?.entryId && this.choice()) this.clock.resume();
       else this.setCurrent(decision.choice);
-    } catch { this.error.set(true); }
+    } catch(error) { this.reportUndoFailure(error); }
     finally { this.loading.set(false);this.scheduleAvailability(); }
   }
 

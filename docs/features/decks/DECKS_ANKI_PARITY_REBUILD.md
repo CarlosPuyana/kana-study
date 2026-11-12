@@ -524,18 +524,41 @@ invalidan la operación correspondiente.
 
 Antes de ejecutar se guarda un marcador local por workspace/mazo con el evento
 inmutable y la intención de reapertura. No forma parte del protocolo cloud.
-Tras recargar, la vista detecta ese marcador y muestra error seguro, sin elegir
-otra tarjeta. Reintentar reutiliza el undo idempotente y comprueba el snapshot
-restaurado antes de limpiar el marcador y actualizar reloj/vista. Un error de
-outbox posterior al commit mantiene el marcador y permite volver a publicar el
-estado canónico sin duplicar la reversión. Los personalizados conservan su
-journal/recibo existente. No se modifica la sincronización experimental ni SQL.
+Tras recargar se reconcilia el marcador con evento, snapshot y cuota canónicos.
+Una reversión confirmada se verifica y finaliza automáticamente, sin repetir sus
+efectos. Una no ejecutada permite reintento seguro; si ha cambiado el día o el
+cierre no permite deshacer, se archiva la solicitud intacta, sin revertir la
+respuesta ni reabrir el día anterior. Un marcador ilegible o un estado posterior
+incompatible conserva sus datos y muestra un diagnóstico específico, sin inventar
+una recuperación. Los cierres voluntarios e históricos siguen bloqueados.
 
-Límites: marcador ilegible/corrupto, cambio de día o estado canónico posterior
-incompatible bloquean la recuperación; se conserva el error y no se borra ni se
-inventa una operación. Un cierre voluntario concurrente conserva el bloqueo.
+Los integrados usan desde el 12/11/2026 una ampliación aditiva de IndexedDB v2:
+la misma transacción de Undo deja un recibo de publicación. Un fallo posterior
+del outbox no impide continuar localmente una vez verificada la reversión. El
+recibo se reintenta tras lecturas/reinicio con el estado canónico actual y compara
+la revisión del outbox para no sustituir escrituras concurrentes. Los personalizados
+conservan su journal/recibo existente. No cambian transporte cloud, SQL ni FSRS.
+Los diagnósticos registran fase, código y tipo de excepción, sin contenido personal.
+
+Reproducción: la versión anterior rechaza un marcador válido al pasar medianoche
+incluso si Undo ya está confirmado; los rechazos poscommit también dejaban la vista
+bloqueada. Esto demuestra mecanismos de fallo, no la causa concreta del perfil de
+Nora, que no se ha abierto ni modificado. Para verificarlo: conservar primero una
+copia completa de los datos del sitio (IndexedDB y localStorage), cerrar pestañas
+antiguas, abrir la versión corregida y reanudar sin valorar tarjetas inicialmente.
+Comparar tarjeta, cuota e historial; ante diagnóstico de inconsistencia conservar
+el almacenamiento y solicitar revisión, sin borrar claves ni restaurar datos atrás.
+
+Límites: la información corrupta o contradictoria requiere revisión y no se borra.
 No se garantiza concurrencia distribuida entre dispositivos ni persistencia si
 el navegador elimina el almacenamiento. No se han usado cuentas reales.
+
+Validación urgente (12/11/2026): 151 tests dirigidos más 20 de integración; global
+final 3493/3493. La primera global detectó dos incompatibilidades de apertura de
+versión en la copia Guest, corregidas sin cambiar su política. Playwright 36/36
+en los tres mazos y ES/EN/CA, con 9 reintentos recomprobados sobre la vista final.
+Node 24.15.0, npm ci y build:manga-candidate: auditoría estricta 707008/750000 bytes,
+sin cambiar límites. Permanecen los warnings SCSS previos de otros módulos.
 
 Validación: 99/99 tests dirigidos finales (incluye backup exacto y cuota), 27/27
 Playwright nuevos en Japanese 1500/Puyi/custom, ES/EN/CA, escritorio y móvil.

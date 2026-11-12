@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import {fileURLToPath} from 'node:url';
 export const GRAMMAR_COPY_KEY=/^grammar\.(content|n5|audit|stable|expansion|v2)\./;
-export const STUDY_COPY_KEY=/^(kanji\.(availability|stats)\.|vocabulary\.daily\.|anki\.(day|results|rush|scheduler)\.|kaishi\.(sentenceVolume|autoAudio|preparing|playing|autoplayBlocked|audioFailed)$)/;
+export const STUDY_COPY_KEY=/^(kanji\.(availability|stats)\.|vocabulary\.daily\.|anki\.(day|results|rush|scheduler|undo)\.|kaishi\.(sentenceVolume|autoAudio|preparing|playing|autoplayBlocked|audioFailed)$)/;
 export const MANGA_ANALYSIS_COPY_KEY=/^mangaM1\.(?!title$)/;
 // Keep cross-module dictionary, deck-context and Daily labels synchronous.
 export const MANGA_READER_COPY_KEY=/^(?:ocrExplorer\.(?!title$)|mangaVocab\.(?!title$)|manga\.(?!(?:title$|.*\.title$|page$|assist\.|reason\.|grammar\.|study\.|saved\.|deck\.|catalog\.retry$)))/;

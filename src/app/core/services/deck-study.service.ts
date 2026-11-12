@@ -232,6 +232,33 @@ export class DeckStudyService {
     await database.undoReview(event, { ...daily, ...(reopen?{completedAt:null}:{}), introducedEntryIds });
   }
 
+  async undoState(event:DeckReviewEvent){
+    const database=this.database.bind(event.deckId),day=getLocalStudyDayKey(new Date(event.reviewedAt));
+    const [progress,events,daily]=await Promise.all([database.getDeckProgress(event.deckId),database.getDeckReviewEvents(event.deckId),database.getDailyState(event.deckId,day)]);
+    database.assertOwner();
+    const {classifyDeckUndo}=await import('./deck-undo-reconciliation');database.assertOwner();
+    return classifyDeckUndo(event,progress,events,daily);
+  }
+  async reconcileUndo(event:DeckReviewEvent,reopen=false):Promise<'committed'|'sync-pending'|'expired'>{
+    const owner=this.database.bind(event.deckId);
+    const {DeckUndoStateError,DeckUndoPublicationError}=await import('./deck-undo-reconciliation');
+    owner.assertOwner();
+    const state=await this.undoState(event);owner.assertOwner();if(state==='inconsistent')throw new DeckUndoStateError('inconsistent');
+    const sameDay=getLocalStudyDayKey(new Date(event.reviewedAt))===getLocalStudyDayKey(new Date());
+    const daily=await owner.getDailyState(event.deckId,getLocalStudyDayKey(new Date(event.reviewedAt)));owner.assertOwner();
+    const closedWithoutProof=daily?.completedAt!=null&&!(daily.closureOrigin==='automatic'&&daily.closedByReviewId===event.id);
+    if(state==='not-executed'&&(!sameDay||closedWithoutProof))return 'expired';
+    try{await this.undo(event,state==='committed'?false:reopen);return 'committed';}
+    catch(error){
+      owner.assertOwner();
+      console.warn('deck-undo',{phase:'undo-rejected',code:error instanceof DeckUndoPublicationError?'publication':'verification-required',name:error instanceof Error?error.name:'unknown',cause:error instanceof Error&&error.cause instanceof Error?error.cause.name:undefined});
+      if(await this.undoState(event)!=='committed')throw error;
+      owner.assertOwner();
+      console.warn('deck-undo',{phase:'after-commit',code:error instanceof DeckUndoPublicationError?'sync-pending':'reconciled',name:error instanceof Error?error.name:'unknown'});
+      return error instanceof DeckUndoPublicationError?'sync-pending':'committed';
+    }
+  }
+
   async adjustTodayNewLimit(deck: DeckDefinition, delta: number, now = new Date()): Promise<DeckDailyState> {
     const database = this.database.bind(deck.id);
     const localDate = getLocalStudyDayKey(now);

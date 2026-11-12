@@ -49,7 +49,8 @@ async function copyDatabase(sourceName: string, targetName: string, schemas: rea
 }
 function openExisting(name: string, schemas: readonly StoreSchema[]): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
-    const opening = indexedDB.open(name, 1);
+    // Keep the current schema version; Decks may add local recovery stores.
+    const opening = indexedDB.open(name);
     opening.onerror = () => reject(opening.error);
     opening.onupgradeneeded = () => {
       const db = opening.result;

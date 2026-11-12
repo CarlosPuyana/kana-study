@@ -55,10 +55,10 @@ describe('AnkiStudyPage', () => {
     p.retrySave();await fixture.whenStable();expect(p.pendingUndo()).toBe(false);expect(p.choice()?.entryId).toBe(study.event.entryId);
   });
 
-  it('keeps a safe error if a voluntary closure wins while undo is pending',async()=>{
+  it('preserves a voluntary closure after a verified undo without restoring an answerable card',async()=>{
     const p=fixture.componentInstance;p.reveal();await p.rate('good');const choice=p.choice();
     vi.spyOn(study,'undo').mockImplementationOnce(async()=>{Object.assign(study.snapshotValue,{completedToday:true,closureOrigin:'voluntary'});});
-    await p.undo();expect(p.error()).toBe(true);expect(p.pendingUndo()).toBe(true);expect(p.choice()).toEqual(choice);expect(p.lastEvent()).not.toBeNull();
+    await p.undo();expect(p.error()).toBe(false);expect(p.pendingUndo()).toBe(false);expect(p.choice()).toBeNull();expect(p.lastEvent()).toBeNull();
   });
 
   it('retains undo and freezes the view when reading after a confirmed reversal fails',async()=>{
@@ -76,6 +76,13 @@ describe('AnkiStudyPage', () => {
     const undo=vi.spyOn(study,'undo').mockRejectedValueOnce(Error('Synthetic IndexedDB failure'));
     await p.undo();expect(p.error()).toBe(true);expect(p.lastEvent()).not.toBeNull();
     p.retrySave();await fixture.whenStable();expect(undo).toHaveBeenCalledTimes(2);expect(p.lastEvent()).toBeNull();
+  });
+  it('keeps the original pending intent immutable if a closed snapshot arrives before retry',async()=>{
+    const p=fixture.componentInstance;p.reveal();await p.rate('good');
+    vi.spyOn(study,'undo').mockRejectedValueOnce(Error('before commit'));await p.undo();
+    p.snapshot.set({...p.snapshot()!,completedToday:true,closureOrigin:'voluntary'});
+    const begin=vi.spyOn(TestBed.inject(DeckUndoPendingService),'begin');await p.undo();
+    expect(begin.mock.calls[0][1]).toBe(false);
   });
 
   it('rejects an empty practice and preserves the ranking order of selected unique words',()=>{
@@ -281,6 +288,8 @@ class StudyStub {
   preview() { const base = { due: Date.now(), stability: 0, difficulty: 0, elapsedDays: 0, scheduledDays: 0, learningSteps: 0, reps: 0, lapses: 0, state: State.New, lastReview: null }; const log = { rating: Rating.Again, state: State.New, due: Date.now(), stability: 0, difficulty: 0, elapsedDays: 0, lastElapsedDays: 0, scheduledDays: 0, learningSteps: 0, review: Date.now() }; return { generatedAt: Date.now(), desiredRetention: 0.9, cardBefore: base, retrievabilityBefore: null, again: { card: { ...base, due: Date.now() + 60_000 }, log }, good: { card: { ...base, due: Date.now() + 10 * 60_000 }, log: { ...log, rating: Rating.Good } } }; }
   async rate(_deck: unknown, _choice: unknown, _preview: unknown, rating: string, elapsedAnswerMs: number) { this.ratings.push(rating); this.times.push(elapsedAnswerMs); return this.ratingPromise ?? {...this.event,elapsedAnswerMs}; }
   async undo() {}
+  async undoState() { return 'not-executed' as const; }
+  async reconcileUndo() { await this.undo();return 'committed' as const; }
   async startSession() {}
   async completeSession(_deck?:unknown,_index?:unknown,_at?:Date,_force?:boolean) { this.completed++;Object.assign(this.snapshotValue,{completedToday:true,newEntries:[],newAvailable:0}); }
 }

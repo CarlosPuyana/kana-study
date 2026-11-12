@@ -13040,5 +13040,11 @@
   "conjugations.result.copula.affirmative": "Non-past affirmation of “{{base}}”; participants, exact time and translation depend on context.",
   "conjugations.result.copula.negative": "Negates the predicate “{{base}}” in non-past; does not assert its opposite.",
   "conjugations.result.copula.past": "Affirms the predicate “{{base}}” in the past: was/were, depending on the sentence.",
-  "conjugations.result.copula.negativePast": "Negates the predicate “{{base}}” in the past: was/were not, depending on the sentence."
+  "conjugations.result.copula.negativePast": "Negates the predicate “{{base}}” in the past: was/were not, depending on the sentence.",
+  "anki.undo.invalid": "The pending Undo record cannot be verified. It is preserved intact; request technical review before changing it.",
+  "anki.undo.inconsistent": "Undo does not match the current data. No progress was overwritten; review is required.",
+  "anki.undo.unverified": "Undo could not be verified. New answers are paused; please retry.",
+  "anki.undo.retry": "An Undo is not yet confirmed. Retry to verify and complete the same operation.",
+  "anki.undo.syncPending": "Undo was saved on this device. Sync publication remains pending and will be retried; local study can continue.",
+  "anki.undo.expired": "The old Undo request was archived: the confirmed answer is preserved and no previous round was reopened."
 }

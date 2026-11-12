@@ -13040,5 +13040,11 @@
   "conjugations.result.copula.affirmative": "Afirmación no pasada de «{{base}}»; la persona, el tiempo concreto y la traducción dependen del contexto.",
   "conjugations.result.copula.negative": "Niega el predicado «{{base}}» en no pasado; no afirma su contrario.",
   "conjugations.result.copula.past": "Afirma el predicado «{{base}}» en pasado: era/fue o estaba/estuvo, según la oración.",
-  "conjugations.result.copula.negativePast": "Niega el predicado «{{base}}» en pasado: no era/no fue o no estaba/no estuvo, según la oración."
+  "conjugations.result.copula.negativePast": "Niega el predicado «{{base}}» en pasado: no era/no fue o no estaba/no estuvo, según la oración.",
+  "anki.undo.invalid": "El registro pendiente de Deshacer no puede verificarse. Se conserva intacto; solicita revisión técnica antes de modificarlo.",
+  "anki.undo.inconsistent": "Deshacer no coincide con los datos actuales. No se ha sobrescrito ningún progreso; se requiere revisión.",
+  "anki.undo.unverified": "No se pudo verificar Deshacer. Las nuevas respuestas están pausadas; vuelve a intentarlo.",
+  "anki.undo.retry": "Hay un Deshacer sin confirmar. Reintenta para verificar y completar la misma operación.",
+  "anki.undo.syncPending": "Deshacer se guardó en este dispositivo. La publicación de sincronización sigue pendiente y se reintentará; puedes continuar localmente.",
+  "anki.undo.expired": "La solicitud antigua de Deshacer se archivó: la respuesta confirmada se conserva y no se ha reabierto una ronda anterior."
 }

@@ -286,7 +286,13 @@ export const es:Record<string,string> = {...shared,...{
   "vocabulary.daily.undoError": "No se ha podido verificar Deshacer. No respondas otra tarjeta; reintenta para completar la recuperación.",
   "vocabulary.daily.undoAction": "Deshacer",
   "kanji.stats.undo": "Deshacer",
-  "kaishi.sentenceVolume": "Volumen de audio"
+  "kaishi.sentenceVolume": "Volumen de audio",
+  "anki.undo.invalid": "El registro pendiente de Deshacer no puede verificarse. Se conserva intacto; solicita revisión técnica antes de modificarlo.",
+  "anki.undo.inconsistent": "Deshacer no coincide con los datos actuales. No se ha sobrescrito ningún progreso; se requiere revisión.",
+  "anki.undo.unverified": "No se pudo verificar Deshacer. Las nuevas respuestas están pausadas; vuelve a intentarlo.",
+  "anki.undo.retry": "Hay un Deshacer sin confirmar. Reintenta para verificar y completar la misma operación.",
+  "anki.undo.syncPending": "Deshacer se guardó en este dispositivo. La publicación de sincronización sigue pendiente y se reintentará; puedes continuar localmente.",
+  "anki.undo.expired": "La solicitud antigua de Deshacer se archivó: la respuesta confirmada se conserva y no se ha reabierto una ronda anterior."
 }};
 export const en:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "How cards are scheduled",
@@ -571,7 +577,13 @@ export const en:Record<string,string> = {...shared,...{
   "vocabulary.daily.undoError": "Undo could not be verified. Do not answer another card; retry to complete recovery.",
   "vocabulary.daily.undoAction": "Undo",
   "kanji.stats.undo": "Undo",
-  "kaishi.sentenceVolume": "Audio volume"
+  "kaishi.sentenceVolume": "Audio volume",
+  "anki.undo.invalid": "The pending Undo record cannot be verified. It is preserved intact; request technical review before changing it.",
+  "anki.undo.inconsistent": "Undo does not match the current data. No progress was overwritten; review is required.",
+  "anki.undo.unverified": "Undo could not be verified. New answers are paused; please retry.",
+  "anki.undo.retry": "An Undo is not yet confirmed. Retry to verify and complete the same operation.",
+  "anki.undo.syncPending": "Undo was saved on this device. Sync publication remains pending and will be retried; local study can continue.",
+  "anki.undo.expired": "The old Undo request was archived: the confirmed answer is preserved and no previous round was reopened."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "anki.scheduler.title": "Com es programen les targetes",
@@ -856,5 +868,11 @@ export const ca:Record<string,string> = {...shared,...{
   "vocabulary.daily.undoError": "No s’ha pogut verificar Desfer. No responguis una altra targeta; torna-ho a provar per completar la recuperació.",
   "vocabulary.daily.undoAction": "Desfés",
   "kanji.stats.undo": "Desfés",
-  "kaishi.sentenceVolume": "Volum d’àudio"
+  "kaishi.sentenceVolume": "Volum d’àudio",
+  "anki.undo.invalid": "No es pot verificar el registre pendent de Desfer. Es conserva intacte; demana una revisió tècnica abans de modificar-lo.",
+  "anki.undo.inconsistent": "Desfer no coincideix amb les dades actuals. No s’ha sobreescrit cap progrés; cal una revisió.",
+  "anki.undo.unverified": "No s’ha pogut verificar Desfer. Les respostes noves estan pausades; torna-ho a provar.",
+  "anki.undo.retry": "Hi ha un Desfer sense confirmar. Reintenta per verificar i completar la mateixa operació.",
+  "anki.undo.syncPending": "Desfer s’ha desat en aquest dispositiu. La publicació de sincronització continua pendent i es reintentarà; pots continuar localment.",
+  "anki.undo.expired": "S’ha arxivat la petició antiga de Desfer: es conserva la resposta confirmada i no s’ha reobert cap ronda anterior."
 }};

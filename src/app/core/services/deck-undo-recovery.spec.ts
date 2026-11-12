@@ -19,7 +19,7 @@ const row=(id:string,state:1|2|3,minutes:number):DeckCardProgress=>{const due=NO
 
 describe('Durable undo recovery and automatic closure',()=>{
  let study:DeckStudyService,db:DeckDatabaseService;
-  beforeEach(()=>{localStorage.clear();vi.stubGlobal('indexedDB',new IDBFactory());vi.stubGlobal('IDBKeyRange',IDBKeyRange);TestBed.configureTestingModule({providers:[{provide:CUSTOM_DECKS_ENABLED,useValue:signal(true)},{provide:DECK_SCHEDULER_ENABLE_FUZZ,useValue:false},{provide:DeckSettingsService,useValue:{settingsFor:(d:DeckDefinition)=>d.settings}},{provide:SyncOutboxService,useValue:{enqueue:async()=>{}}}]});study=TestBed.inject(DeckStudyService);db=TestBed.inject(DeckDatabaseService);});
+  beforeEach(()=>{localStorage.clear();vi.stubGlobal('indexedDB',new IDBFactory());vi.stubGlobal('IDBKeyRange',IDBKeyRange);configureRecovery();study=TestBed.inject(DeckStudyService);db=TestBed.inject(DeckDatabaseService);});
  afterEach(()=>{TestBed.resetTestingModule();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
 
  it.each(['japanese-1500','mazo-puyi','md-undo'])('%s: restores exact snapshots for Again and Good and reopens only automatic completion',async id=>{
@@ -96,4 +96,4 @@ describe('Durable undo recovery and automatic closure',()=>{
   expect(await db.getDeckProgress(deck.id)).toEqual(before);expect(await db.getDeckReviewEvents(deck.id)).toEqual([event]);
  });
 });
-function configureRecovery(){TestBed.configureTestingModule({providers:[{provide:CUSTOM_DECKS_ENABLED,useValue:signal(true)},{provide:DECK_SCHEDULER_ENABLE_FUZZ,useValue:false},{provide:DeckSettingsService,useValue:{settingsFor:(d:DeckDefinition)=>d.settings}},{provide:SyncOutboxService,useValue:{enqueue:async()=>{}}}]});}
+function configureRecovery(){TestBed.configureTestingModule({providers:[{provide:CUSTOM_DECKS_ENABLED,useValue:signal(true)},{provide:DECK_SCHEDULER_ENABLE_FUZZ,useValue:false},{provide:DeckSettingsService,useValue:{settingsFor:(d:DeckDefinition)=>d.settings}},{provide:SyncOutboxService,useValue:{enqueue:async(_item:unknown)=>{},pending:async()=>[],async enqueueIfRevision(item:unknown){await this.enqueue(item);return true;}}}]});}

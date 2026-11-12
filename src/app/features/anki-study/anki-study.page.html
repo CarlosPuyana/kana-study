@@ -15,7 +15,8 @@
   }
 
   @if(practiceEntries();as practice){<app-deck-intensive-practice [entries]="practice" [builtinMedia]="deck?.id==='japanese-1500'" (closed)="closePractice()" />}@else{
-  @if (error()) { <div class="storage-error" role="alert"><p>{{ i18n.t('anki.storageError') }}</p><button type="button" class="undo" [disabled]="saving()" (click)="retrySave()">{{i18n.t('common.retry')}}</button></div> }
+  @if(undoNotice()){<p role="status">{{i18n.t(undoNotice())}}</p>}
+  @if (error()) { <div class="storage-error" role="alert"><p>{{ i18n.t(failureKey()) }}</p><button type="button" class="undo" [disabled]="saving()" (click)="retrySave()">{{i18n.t('common.retry')}}</button></div> }
   @if(snapshot()&&!snapshot()?.completedToday){<button type="button" class="finish-today" [disabled]="saving() || pendingUndo() || retryRating()!==null || pendingFinish()" (click)="finishToday()">{{i18n.t('anki.day.finishToday')}}</button>}
   @if(snapshot()?.learningPending){<p class="learning-pending" role="status">{{i18n.t('anki.scheduler.pending',{count:snapshot()!.learningPending!})}}</p>}
   @if (loading()) { <p class="loading" aria-busy="true">{{ i18n.t('common.loading') }}</p> } @else if (!deck && resource.state().status === 'missing') {

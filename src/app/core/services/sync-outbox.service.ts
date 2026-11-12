@@ -43,6 +43,19 @@ export class SyncOutboxService {
     return operation;
   }
 
+  /** Recovery must not replace work enqueued after its canonical read began. */
+  async enqueueIfRevision(item:SyncOutboxItem,expected:string|null):Promise<boolean>{
+    if(!hasIndexedDb()){
+      if((this.memory.get(item.id)?.revision??null)!==expected)return false;
+      this.memory.set(item.id,item);return true;
+    }
+    const db=await this.database(),tx=db.transaction(OUTBOX,'readwrite'),done=transactionDone(tx),store=tx.objectStore(OUTBOX);
+    const current=await request<SyncOutboxItem|undefined>(store.get(item.id));
+    const matches=(current?.revision??null)===expected;if(matches)store.put(item);await done;
+    if(matches&&typeof window!=='undefined')window.dispatchEvent(new CustomEvent('kana-study:sync-pending'));
+    return matches;
+  }
+
   private async persistIfAbsent(item: SyncOutboxItem): Promise<boolean> {
     if (!hasIndexedDb()) {
       if (this.memory.has(item.id)) return false;

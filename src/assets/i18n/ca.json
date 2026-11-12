@@ -13040,5 +13040,11 @@
   "conjugations.result.copula.affirmative": "Afirmació no passada de «{{base}}»; la persona, el temps concret i la traducció depenen del context.",
   "conjugations.result.copula.negative": "Nega el predicat «{{base}}» en no passat; no afirma el contrari.",
   "conjugations.result.copula.past": "Afirma el predicat «{{base}}» en passat: era/va ser o estava/va estar, segons l’oració.",
-  "conjugations.result.copula.negativePast": "Nega el predicat «{{base}}» en passat: no era/no va ser o no estava/no va estar, segons l’oració."
+  "conjugations.result.copula.negativePast": "Nega el predicat «{{base}}» en passat: no era/no va ser o no estava/no va estar, segons l’oració.",
+  "anki.undo.invalid": "No es pot verificar el registre pendent de Desfer. Es conserva intacte; demana una revisió tècnica abans de modificar-lo.",
+  "anki.undo.inconsistent": "Desfer no coincideix amb les dades actuals. No s’ha sobreescrit cap progrés; cal una revisió.",
+  "anki.undo.unverified": "No s’ha pogut verificar Desfer. Les respostes noves estan pausades; torna-ho a provar.",
+  "anki.undo.retry": "Hi ha un Desfer sense confirmar. Reintenta per verificar i completar la mateixa operació.",
+  "anki.undo.syncPending": "Desfer s’ha desat en aquest dispositiu. La publicació de sincronització continua pendent i es reintentarà; pots continuar localment.",
+  "anki.undo.expired": "S’ha arxivat la petició antiga de Desfer: es conserva la resposta confirmada i no s’ha reobert cap ronda anterior."
 }
