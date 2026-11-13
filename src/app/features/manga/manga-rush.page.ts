@@ -23,6 +23,7 @@ import { MangaProjectedWord, MangaVocabularyIndex } from '../../core/models/mang
   host:{'(document:keydown)':'key($event)'},
   templateUrl:'./manga-rush.page.html',styleUrl:'./manga-rush.page.scss'})
 export class MangaRushPage {
+  private readonly host=inject<ElementRef<HTMLElement>>(ElementRef);
   readonly meaningProvider=inject(MangaRushMeaningService);
   readonly interpretation=signal<Awaited<ReturnType<MangaRushMeaningService['resolve']>>|null>(null);
   readonly aiPending=signal(false);
@@ -110,11 +111,17 @@ export class MangaRushPage {
     if (!this.rush.session()) this.config.update(c => ({...c,[key]:value}));
   }
   key(event: KeyboardEvent): void {
-    if (!this.validScope() || !this.rush.current() || studyModalOpen()) return;
+    if (!this.validScope() || !this.rush.current() || studyModalOpen() || event.defaultPrevented) return;
     // Numeric ratings may be used from our focused study buttons; other controls own their keys.
     const numeric = event.key === '1' || event.key === '2';
-    const target = event.target instanceof Element ? event.target : null;
-    const button = target?.closest('button[studyPrimaryAction]');
+    const target = event.target instanceof Element ? event.target : document.activeElement;
+    const candidate = target?.closest('button[studyPrimaryAction]');
+    const button = candidate && this.host.nativeElement.contains(candidate);
+    if(button&&(event.key==='Enter'||event.key===' '||event.code==='Space')){
+      event.preventDefault();
+      if(!event.repeat&&!event.isComposing&&!event.ctrlKey&&!event.altKey&&!event.metaKey&&!event.shiftKey&&!this.rush.session()?.revealed)this.reveal();
+      return;
+    }
     if (numeric && button && !event.repeat && !event.isComposing && !event.ctrlKey && !event.altKey && !event.metaKey && !event.shiftKey && !event.defaultPrevented) {
       if (this.rush.session()?.revealed) {event.preventDefault();this.rate(event.key === '2');} return;
     }

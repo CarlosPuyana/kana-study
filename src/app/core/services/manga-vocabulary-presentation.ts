@@ -41,9 +41,21 @@ export function mangaReadingAddsInformation(form: string, reading: string): bool
 }
 
 export function mangaCategory(entry: MangaLexeme): MangaLexicalCategory { return entry.category ?? 'unclassified'; }
+/** Presentation/eligibility only; never mutate M1 or its POS evidence. */
+export function isSingleMangaKana(surface: string): boolean {
+  const normalized=/^[\uFF66-\uFF9D][\uFF9E\uFF9F]?$/u.test(surface)?surface.normalize('NFKC'):surface.normalize('NFC');
+  return /^[\p{Script=Hiragana}\p{Script=Katakana}]$/u.test(normalized) && /^\p{Letter}$/u.test(normalized);
+}
+export function mangaLexicalWords(words: readonly MangaProjectedWord[]): MangaProjectedWord[] {
+  return words.flatMap(w=>{
+    if(mangaCategory(w.entry)!=='lexical')return [w];
+    const occurrences=w.entry.occurrences.filter(o=>!isSingleMangaKana(o.surface));
+    return occurrences.length===w.entry.occurrences.length?[w]:occurrences.length?[{...w,entry:{...w.entry,occurrences}}]:[];
+  });
+}
 export function filterMangaWords(words: readonly MangaProjectedWord[], category: MangaLexicalCategory,
   state: MangaWordKnowledge | 'all' = 'all', ascending = false): MangaProjectedWord[] {
-  return words.filter(w => mangaCategory(w.entry) === category && (state === 'all' || w.state === state))
+  return mangaLexicalWords(words).filter(w => mangaCategory(w.entry) === category && (state === 'all' || w.state === state))
     .sort((a, b) => (a.entry.occurrences.length - b.entry.occurrences.length) * (ascending ? 1 : -1) || a.entry.key.localeCompare(b.entry.key));
 }
 /** M2 selection predicate only: no learning side effects or knowledge guessing. */

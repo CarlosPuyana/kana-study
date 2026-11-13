@@ -1,6 +1,6 @@
 import { MangaLexeme, MangaProjectedWord, MangaVocabularyIndex, MangaWordOccurrence } from '../models/manga-vocabulary-index.model';
 import { MangaRushCard, MangaRushConfiguration, MangaRushExclusion, MangaRushPool } from '../models/manga-rush.model';
-import { isMangaLexicalCandidate, mangaCategory, mangaReadingAddsInformation } from './manga-vocabulary-presentation';
+import { isMangaLexicalCandidate, mangaCategory, mangaReadingAddsInformation, mangaLexicalWords } from './manga-vocabulary-presentation';
 import { deinflect, inflectedReading, matchesInflectionRules } from './japanese-deinflection.service';
 
 export const MANGA_RUSH_DEFAULTS: Readonly<MangaRushConfiguration> = {
@@ -37,7 +37,7 @@ export function mangaRushExclusion(entry: MangaLexeme, pages: number): MangaRush
 export function mangaRushPool(index: MangaVocabularyIndex, words: readonly MangaProjectedWord[], config: MangaRushConfiguration): MangaRushPool {
   const excluded: Record<MangaRushExclusion, number> = {identity: 0, reading: 0, meaning: 0, source: 0};
   const safe = words.filter(w => {const reason = mangaRushExclusion(w.entry, index.pageCount); if (reason) excluded[reason]++; return !reason;});
-  const selected = safe.filter(w => {
+  const selected = mangaLexicalWords(safe).filter(w => {
     const category = mangaCategory(w.entry);
     const categoryFits = config.category === 'all' || category === config.category;
     const evidenced = category === 'unclassified' || (category === 'lexical' ? isMangaLexicalCandidate(w.entry) : w.entry.categoryReason === 'dictionary-pos');

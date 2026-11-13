@@ -37,7 +37,7 @@
           </section>
           <p>{{i18n.t('mangaM2.selfReport')}}</p>
         </div>
-        <div class="actions ratings"><button #knownButton studyPrimaryAction aria-keyshortcuts="2" class="action" (click)="rate(true)">{{i18n.t('mangaM2.knew')}} <kbd aria-hidden="true">2</kbd></button><button studyPrimaryAction aria-keyshortcuts="1" (click)="rate(false)">{{i18n.t('mangaM2.didNotKnow')}} <kbd aria-hidden="true">1</kbd></button></div>
+        <div class="actions ratings"><button studyPrimaryAction aria-keyshortcuts="1" (click)="rate(false)">{{i18n.t('mangaM2.didNotKnow')}} <kbd aria-hidden="true">1</kbd></button><button #knownButton studyPrimaryAction aria-keyshortcuts="2" class="action" (click)="rate(true)">{{i18n.t('mangaM2.knew')}} <kbd aria-hidden="true">2</kbd></button></div>
       } @else {<button #revealButton studyPrimaryAction class="action reveal" aria-keyshortcuts="Space Enter" (click)="reveal()">{{i18n.t('mangaM2.reveal')}} <kbd aria-hidden="true">{{i18n.t('mangaM2.keys')}}</kbd></button>}
     </section>
     <button class="exit" (click)="exit()">{{i18n.t('mangaM2.exit')}}</button>

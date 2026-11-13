@@ -33,7 +33,7 @@ export class MangaVocabularyAnalysisPage {
   readonly metrics = computed(() => mangaVocabularyMetrics(this.words()));
   readonly category = signal<MangaLexicalCategory>('lexical');
   readonly categories: MangaLexicalCategory[] = ['lexical', 'functional', 'unclassified'];
-  readonly sectionCounts = computed(() => Object.fromEntries(this.categories.map(c => [c, this.words().filter(w => mangaCategory(w.entry) === c).length])));
+  readonly sectionCounts = computed(() => Object.fromEntries(this.categories.map(c => [c, filterMangaWords(this.words(),c).length])));
   readonly unidentified = computed(() => this.index()?.issues.filter(issue => issue.reason === 'ambiguous' || issue.reason === 'unresolved') ?? []);
   readonly ambiguousCategories = computed(() => this.words().filter(w => mangaCategory(w.entry) === 'unclassified' && w.entry.categoryReason === 'conflicting-pos').length);
   readonly insufficientCategories = computed(() => (this.sectionCounts()['unclassified'] ?? 0) - this.ambiguousCategories());

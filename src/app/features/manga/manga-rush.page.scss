@@ -26,8 +26,8 @@ select { width:100%; min-width:0; }
 .meanings { padding-inline-start:1.4rem; }
 .context { font-size:1.15rem; }
 mark { background:var(--primary-soft); color:var(--text-primary); }
-.ratings { width:100%; }
-.ratings button { flex:1 1 180px; }
+.ratings { width:100%; align-items:stretch; }
+.ratings button { flex:1 1 0; min-width:0; }
 .reveal { width:100%; }
 .exit { margin-top:1.5rem; }
 progress { width:100%; accent-color:var(--primary); }

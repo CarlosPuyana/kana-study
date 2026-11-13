@@ -78,4 +78,15 @@ describe('Manga RUSH page: cache-only launch, fresh unlinked words and disposabl
     expect(page.knowledgeFailed()).toBe(true);page.update('knowledge','familiar');expect(page.pool()?.availableCards).toBe(0);
     page.start();expect(page.rush.session()).toBeNull();page.update('knowledge','all');page.start();expect(page.rush.current()).not.toBeNull();fixture.destroy();
   });
+  it('rates from focused own controls, keeps negative left, and advances only once',async()=>{
+    const f=await render(),p=f.componentInstance;p.start();f.detectChanges();
+    const reveal=f.nativeElement.querySelector('.reveal') as HTMLButtonElement;reveal.focus();
+    p.key(new KeyboardEvent('keydown',{key:'Enter',cancelable:true}));f.detectChanges();
+    const buttons=f.nativeElement.querySelectorAll('.ratings button') as NodeListOf<HTMLButtonElement>;
+    expect(buttons[0].getAttribute('aria-keyshortcuts')).toBe('1');expect(buttons[1].classList.contains('action')).toBe(true);
+    buttons[0].focus();p.key(new KeyboardEvent('keydown',{key:'1',cancelable:true}));p.key(new KeyboardEvent('keydown',{key:'1',repeat:true}));
+    expect(p.rush.session()?.answers.map(a=>a.knew)).toEqual([false]);f.detectChanges();
+    (f.nativeElement.querySelector('.reveal') as HTMLButtonElement).click();f.detectChanges();
+    (f.nativeElement.querySelector('.ratings .action') as HTMLButtonElement).click();expect(p.rush.summary()?.knew).toBe(1);f.destroy();
+  });
 });
