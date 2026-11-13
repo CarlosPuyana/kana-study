@@ -10,7 +10,6 @@
       <span class="count-review"><b>{{queueCounts().review}}</b> {{i18n.t('anki.day.state.2')}}</span>
       <span class="count-repeat"><b>{{queueCounts().relearning}}</b> {{i18n.t('anki.day.state.3')}}</span>
     </div> }
-    <button type="button" class="undo" [disabled]="!lastEvent() || saving() || !!practiceEntries() || retryRating()!==null || (snapshot()?.completedToday && !canUndoClosed()) || pendingFinish()" (click)="undo()">{{ i18n.t('anki.studyPage.undo') }}</button>
   </header>
   }
 

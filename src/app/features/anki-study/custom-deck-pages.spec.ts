@@ -29,7 +29,7 @@ describe('Custom deck deep links use their actual content and the shared study U
         expect(fixture.nativeElement.querySelector('app-deck-sentence-text')).toBeNull();
         fixture.destroy();
     });
-    it('offers only Again/Good, persists the selected branch and permits undo', async () => {
+    it('offers only Again/Good, persists the selected branch with Undo disabled', async () => {
         const first=await customCard('md-two');
         const second={...first,id:'card-dog',word:'犬',reading:'いぬ',order:2,lexicalIdentity:await lexicalIdentity({authority:'jmdict',entryId:'1251540',canonicalReading:'いぬ',homographGroup:'noun'},['犬'],'fixture'),glosses:[{...first.glosses[0],text:'perro'}]};
         await TestBed.inject(CustomDeckRepository).create('two-cards',customDeck('md-two'),[first,second]);
@@ -47,9 +47,13 @@ describe('Custom deck deep links use their actual content and the shared study U
         expect(fixture.nativeElement.querySelectorAll('.ratings button')).toHaveLength(2);
         await fixture.componentInstance.rate('again');
         expect(await TestBed.inject(CustomDeckRepository).getDeckReviewEvents('md-two')).toHaveLength(1);
+        const confirmed=await TestBed.inject(CustomDeckRepository).getDeckReviewEvents('md-two');
+        const progress=await TestBed.inject(CustomDeckRepository).getDeckProgress('md-two'),current=fixture.componentInstance.entry()?.id;
+        fixture.detectChanges();expect(fixture.nativeElement.querySelector('.study-header .undo')).toBeNull();
         await fixture.componentInstance.undo();
-        expect(await TestBed.inject(CustomDeckRepository).getDeckReviewEvents('md-two')).toEqual([]);
-        expect(fixture.componentInstance.entry()?.id).toBe('card-猫');
+        expect(await TestBed.inject(CustomDeckRepository).getDeckReviewEvents('md-two')).toEqual(confirmed);
+        expect(await TestBed.inject(CustomDeckRepository).getDeckProgress('md-two')).toEqual(progress);
+        expect(fixture.componentInstance.entry()?.id).toBe(current);
         fixture.destroy();
     });
     it('saves custom settings in the custom journal, not the legacy synced settings map', async () => { const fixture = TestBed.createComponent(AnkiSettingsPage); await fixture.componentInstance.resource.ready(); await fixture.whenStable(); fixture.componentInstance.setNewCards({ target: { value: '7' } } as unknown as Event); await fixture.componentInstance.save(); expect((await TestBed.inject(CustomDeckRepository).list())[0].settings.newCardsPerDay).toBe(7); expect(localStorage.getItem('kana-study.deck-settings.v1')).toBeNull(); fixture.destroy(); });

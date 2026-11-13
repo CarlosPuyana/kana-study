@@ -13046,5 +13046,6 @@
   "anki.undo.unverified": "Undo could not be verified. New answers are paused; please retry.",
   "anki.undo.retry": "An Undo is not yet confirmed. Retry to verify and complete the same operation.",
   "anki.undo.syncPending": "Undo was saved on this device. Sync publication remains pending and will be retried; local study can continue.",
-  "anki.undo.expired": "The old Undo request was archived: the confirmed answer is preserved and no previous round was reopened."
+  "anki.undo.expired": "The old Undo request was archived: the confirmed answer is preserved and no previous round was reopened.",
+  "anki.studyPage.loadError": "The Decks session could not be loaded. Saved data is preserved. Please retry."
 }

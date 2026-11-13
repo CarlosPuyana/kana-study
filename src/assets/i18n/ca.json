@@ -13046,5 +13046,6 @@
   "anki.undo.unverified": "No s’ha pogut verificar Desfer. Les respostes noves estan pausades; torna-ho a provar.",
   "anki.undo.retry": "Hi ha un Desfer sense confirmar. Reintenta per verificar i completar la mateixa operació.",
   "anki.undo.syncPending": "Desfer s’ha desat en aquest dispositiu. La publicació de sincronització continua pendent i es reintentarà; pots continuar localment.",
-  "anki.undo.expired": "S’ha arxivat la petició antiga de Desfer: es conserva la resposta confirmada i no s’ha reobert cap ronda anterior."
+  "anki.undo.expired": "S’ha arxivat la petició antiga de Desfer: es conserva la resposta confirmada i no s’ha reobert cap ronda anterior.",
+  "anki.studyPage.loadError": "No s’ha pogut carregar la sessió de Mazos. Es conserven les dades desades. Torna-ho a provar."
 }

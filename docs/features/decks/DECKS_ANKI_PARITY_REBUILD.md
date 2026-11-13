@@ -572,3 +572,16 @@ Comprobación previa a Deshacer en Vocabulario/Kanji (10/11/2026): suite complet
 **2866/2866**, 258 archivos, incluida la regresión de cuota corregida. La primera
 ejecución agotó los cinco segundos del benchmark de backups; la repetición completa
 con cuatro workers pasó sin cambiar tests ni producción de Mazos.
+
+
+## K. Retirada urgente de Deshacer en Mazos (13/11/2026)
+
+Sustituye el acceso de usuario descrito en J: Deshacer no está disponible ni en
+estudio ni en el resumen. Aprender/Reintentar no leen, validan ni ejecutan intents
+antiguos. Se conservan intactos los marcadores, snapshots, eventos, diarios y
+journals; no se borran claves ni se reconstruye progreso. El estado canónico de
+las transacciones confirmadas determina la cola y el bloqueo diario. Los recibos
+de publicación existentes siguen pendientes de publicación, sin nuevas reversiones.
+Los servicios históricos permanecen por compatibilidad y pruebas, sin llamadas
+desde la pantalla. Una avería real del almacenamiento conserva el error seguro.
+La corrección requiere publicar la nueva versión; no se ha abierto el perfil real.

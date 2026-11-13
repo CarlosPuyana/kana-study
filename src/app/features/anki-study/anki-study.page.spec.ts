@@ -38,51 +38,28 @@ describe('AnkiStudyPage', () => {
 
   afterEach(() => { fixture.destroy(); TestBed.resetTestingModule(); vi.useRealTimers(); vi.restoreAllMocks(); });
 
-  it('can undo the last automatic closure from the summary and resumes the same session',async()=>{
-    const p=fixture.componentInstance;study.exhaustAfterRating=true;p.reveal();await p.rate('good');
-    p.snapshot.set({...p.snapshot()!,closureOrigin:'automatic',closedByReviewId:p.lastEvent()!.id});fixture.detectChanges();
-    expect(p.canUndoClosed()).toBe(true);
-    expect((fixture.nativeElement.querySelector('.study-header .undo') as HTMLButtonElement).disabled).toBe(false);
-    vi.spyOn(study,'undo').mockImplementationOnce(async()=>{Object.assign(study.snapshotValue,{completedToday:false});});
-    await p.undo();expect(p.pendingUndo()).toBe(false);expect(p.lastEvent()).toBeNull();expect(p.choice()?.entryId).toBe(study.event.entryId);
-  });
-
-  it('a durable pending undo stops a reloaded view before choosing another card',async()=>{
+  it.each(['valid','expired','invalid','inconsistent'])('ignores a legacy %s Undo intent without changing it or executing a reversal',async kind=>{
     const p=fixture.componentInstance,store=TestBed.inject(DeckUndoPendingService);
-    vi.spyOn(store,'read').mockReturnValue({event:study.event,reopen:false});
-    p.choice.set(null);p.entry.set(null);p.refreshAvailability();await fixture.whenStable();
-    expect(p.pendingUndo()).toBe(true);expect(p.error()).toBe(true);expect(p.choice()).toBeNull();
-    p.retrySave();await fixture.whenStable();expect(p.pendingUndo()).toBe(false);expect(p.choice()?.entryId).toBe(study.event.entryId);
+    const read=vi.spyOn(store,'read').mockImplementation(()=>{throw Error(kind);});
+    const undo=vi.spyOn(study,'undo'),reconcile=vi.spyOn(study,'reconcileUndo');
+    p.choice.set(null);p.entry.set(null);p.refreshAvailability();await fixture.whenStable();fixture.detectChanges();
+    expect(p.error()).toBe(false);expect(p.choice()).not.toBeNull();expect(read).not.toHaveBeenCalled();
+    expect(fixture.nativeElement.querySelector('.study-header .undo')).toBeNull();await p.undo();
+    expect(undo).not.toHaveBeenCalled();expect(reconcile).not.toHaveBeenCalled();
   });
-
-  it('preserves a voluntary closure after a verified undo without restoring an answerable card',async()=>{
-    const p=fixture.componentInstance;p.reveal();await p.rate('good');const choice=p.choice();
-    vi.spyOn(study,'undo').mockImplementationOnce(async()=>{Object.assign(study.snapshotValue,{completedToday:true,closureOrigin:'voluntary'});});
-    await p.undo();expect(p.error()).toBe(false);expect(p.pendingUndo()).toBe(false);expect(p.choice()).toBeNull();expect(p.lastEvent()).toBeNull();
+  it('keeps automatic and voluntary closed days closed with Undo disabled',async()=>{
+    for(const closureOrigin of ['automatic','voluntary'] as const){
+      Object.assign(study.snapshotValue,{completedToday:true,closureOrigin});
+      const p=fixture.componentInstance;p.choice.set(null);p.entry.set(null);p.refreshAvailability();await fixture.whenStable();fixture.detectChanges();
+      expect(p.choice()).toBeNull();expect(fixture.nativeElement.querySelector('.study-header .undo')).toBeNull();
+    }
   });
-
-  it('retains undo and freezes the view when reading after a confirmed reversal fails',async()=>{
-    const p=fixture.componentInstance;p.reveal();await p.rate('good');
-    const event=p.lastEvent(),choice=p.choice();
-    vi.spyOn(study,'snapshot').mockRejectedValueOnce(Error('Synthetic post-commit read failure'));
-    await p.undo();expect(p.error()).toBe(true);expect(p.lastEvent()).toEqual(event);expect(p.choice()).toEqual(choice);
-    p.refreshAvailability();await fixture.whenStable();expect(p.error()).toBe(true);
-    p.retrySave();await fixture.whenStable();expect(p.error()).toBe(false);expect(p.lastEvent()).toBeNull();
-    expect(p.choice()?.entryId).toBe(event!.entryId);
-  });
-
-  it('routes retry to undo rather than advancing after an undo write failure',async()=>{
-    const p=fixture.componentInstance;p.reveal();await p.rate('good');
-    const undo=vi.spyOn(study,'undo').mockRejectedValueOnce(Error('Synthetic IndexedDB failure'));
-    await p.undo();expect(p.error()).toBe(true);expect(p.lastEvent()).not.toBeNull();
-    p.retrySave();await fixture.whenStable();expect(undo).toHaveBeenCalledTimes(2);expect(p.lastEvent()).toBeNull();
-  });
-  it('keeps the original pending intent immutable if a closed snapshot arrives before retry',async()=>{
-    const p=fixture.componentInstance;p.reveal();await p.rate('good');
-    vi.spyOn(study,'undo').mockRejectedValueOnce(Error('before commit'));await p.undo();
-    p.snapshot.set({...p.snapshot()!,completedToday:true,closureOrigin:'voluntary'});
-    const begin=vi.spyOn(TestBed.inject(DeckUndoPendingService),'begin');await p.undo();
-    expect(begin.mock.calls[0][1]).toBe(false);
+  it('still blocks on a real canonical read failure and retries loading, never Undo',async()=>{
+    const p=fixture.componentInstance;p.choice.set(null);p.entry.set(null);
+    vi.spyOn(study,'snapshot').mockRejectedValueOnce(new DOMException('synthetic read','UnknownError'));
+    const undo=vi.spyOn(study,'undo');p.refreshAvailability();await fixture.whenStable();
+    expect(p.error()).toBe(true);expect(p.failureKey()).toBe('anki.storageError');expect(p.choice()).toBeNull();
+    p.retrySave();await fixture.whenStable();expect(p.error()).toBe(false);expect(p.choice()).not.toBeNull();expect(undo).not.toHaveBeenCalled();
   });
 
   it('rejects an empty practice and preserves the ranking order of selected unique words',()=>{
@@ -221,16 +198,16 @@ describe('AnkiStudyPage', () => {
     window.dispatchEvent(new Event('focus'));await fixture.whenStable();
     expect(page.choice()).toBeNull();expect(page.preview()).toBeNull();await page.rate('good');expect(study.ratings).toEqual([]);
   });
-  it('shows the capped credited total, keeps focus on the same allowance and subtracts undo once',async()=>{
+  it('shows the capped credited total, keeps focus on the same allowance and cannot subtract it through a disabled undo callback',async()=>{
     const page=fixture.componentInstance;page.clock.attach();monotonic=4000;
     page.refreshAvailability();await fixture.whenStable();active(page.clock,11000);
     page.reveal();await page.rate('good');fixture.detectChanges();
     expect(study.times).toEqual([15000]);expect(page.clock.committedSeconds).toBe(15);
     expect(fixture.nativeElement.querySelector('[role="timer"]').textContent).toContain('00:15');
-    monotonic+=4000;await page.undo();fixture.detectChanges();expect(page.clock.committedSeconds).toBe(0);
-    await page.undo();expect(page.clock.committedSeconds).toBe(0);
+    await page.undo();fixture.detectChanges();expect(page.clock.committedSeconds).toBe(15);
+    await page.undo();expect(page.clock.committedSeconds).toBe(15);
     active(page.clock,7000);page.reveal();await page.rate('good');expect(study.times).toEqual([15000,7000]);
-    expect(page.clock.committedSeconds).toBe(7);expect(study.completed).toBe(0);
+    expect(page.clock.committedSeconds).toBe(22);expect(study.completed).toBe(0);
   });
   it('freezes during saves, rejects double clicks and freezes results without another duration record',async()=>{
     const page=fixture.componentInstance;page.clock.attach();study.exhaustAfterRating=true;

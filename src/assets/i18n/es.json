@@ -13046,5 +13046,6 @@
   "anki.undo.unverified": "No se pudo verificar Deshacer. Las nuevas respuestas están pausadas; vuelve a intentarlo.",
   "anki.undo.retry": "Hay un Deshacer sin confirmar. Reintenta para verificar y completar la misma operación.",
   "anki.undo.syncPending": "Deshacer se guardó en este dispositivo. La publicación de sincronización sigue pendiente y se reintentará; puedes continuar localmente.",
-  "anki.undo.expired": "La solicitud antigua de Deshacer se archivó: la respuesta confirmada se conserva y no se ha reabierto una ronda anterior."
+  "anki.undo.expired": "La solicitud antigua de Deshacer se archivó: la respuesta confirmada se conserva y no se ha reabierto una ronda anterior.",
+  "anki.studyPage.loadError": "No se pudo cargar la sesión de Mazos. Los datos guardados se conservan. Vuelve a intentarlo."
 }

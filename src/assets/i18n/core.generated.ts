@@ -1428,7 +1428,8 @@ export const es:Record<string,string> = {...shared,...{
   "more.conjugations.title": "Conjugaciones",
   "more.conjugations.description": "Elige formas de verbos, adjetivos y cópula.",
   "kanji.saveError": "No se guardó. Reintenta la misma respuesta.",
-  "selection.includeCanvas": "Incluir ejercicios con lienzo"
+  "selection.includeCanvas": "Incluir ejercicios con lienzo",
+  "anki.studyPage.loadError": "No se pudo cargar la sesión de Mazos. Los datos guardados se conservan. Vuelve a intentarlo."
 }};
 export const en:Record<string,string> = {...shared,...{
   "mangaM1.title": "Work vocabulary",
@@ -2743,7 +2744,8 @@ export const en:Record<string,string> = {...shared,...{
   "more.conjugations.title": "Conjugations",
   "more.conjugations.description": "Choose verb, adjective and copula forms.",
   "kanji.saveError": "Not saved. Retry the same answer.",
-  "selection.includeCanvas": "Include canvas exercises"
+  "selection.includeCanvas": "Include canvas exercises",
+  "anki.studyPage.loadError": "The Decks session could not be loaded. Saved data is preserved. Please retry."
 }};
 export const ca:Record<string,string> = {...shared,...{
   "mangaM1.title": "Vocabulari de l’obra",
@@ -4058,5 +4060,6 @@ export const ca:Record<string,string> = {...shared,...{
   "more.conjugations.title": "Conjugacions",
   "more.conjugations.description": "Tria formes de verbs, adjectius i còpula.",
   "kanji.saveError": "No s’ha desat. Torna a provar la mateixa resposta.",
-  "selection.includeCanvas": "Incloure exercicis amb llenç"
+  "selection.includeCanvas": "Incloure exercicis amb llenç",
+  "anki.studyPage.loadError": "No s’ha pogut carregar la sessió de Mazos. Es conserven les dades desades. Torna-ho a provar."
 }};
