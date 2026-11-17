@@ -12368,6 +12368,7 @@
   "grammarAccess.checking": "Checking private beta access…",
   "grammarAccess.authorized": "Your account has access. You can enter again.",
   "grammarAccess.denied": "Grammar is in private beta and requires the owner’s authorization. Signing in does not grant access.",
+  "grammarAccess.refreshFailed": "Grammar access could not be rechecked. You can continue this activity; another check will run automatically.",
   "grammarAccess.error": "Access could not be checked. Retry when connected.",
   "grammarAccess.login": "Sign in",
   "grammarAccess.retry": "Check access and enter",

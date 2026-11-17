@@ -7,7 +7,7 @@ import { TranslationService } from '../../core/services/translation.service';
 
 @Component({selector:'app-grammar-access',imports:[RouterLink],changeDetection:ChangeDetectionStrategy.OnPush,
   template:`<main class="page-shell"><h1 #heading tabindex="-1">{{i18n.t('grammarAccess.title')}}</h1>
-    <p role="status" aria-live="polite">{{i18n.t('grammarAccess.'+access.state())}}</p>
+    <p role="status" aria-live="polite">{{i18n.t('grammarAccess.'+(access.refreshFailed()?'error':access.state()))}}</p>
     <nav [attr.aria-label]="i18n.t('grammarAccess.title')"><a routerLink="/">{{i18n.t('common.returnHome')}}</a>
       @if(auth.ready()&&!auth.authenticated()){<a routerLink="/auth" [queryParams]="{return:destination}">{{i18n.t('grammarAccess.login')}}</a>}
       @if(access.state()!=='checking'){<button type="button" (click)="retry()">{{i18n.t('grammarAccess.retry')}}</button>}

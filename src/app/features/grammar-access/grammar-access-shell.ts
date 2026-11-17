@@ -4,9 +4,10 @@ import { GrammarAccessService } from '../../core/services/grammar-access.service
 import { grammarDestination } from '../../core/services/grammar-access.guard';
 import { TranslationService } from '../../core/services/translation.service';
 
-/** Block pending checks; destroy on account changes and leave on denial, preserving progress. */
+/** Keep the same activity mounted during revalidation; fence real account changes. */
 @Component({selector:'app-grammar-access-shell',imports:[RouterOutlet],changeDetection:ChangeDetectionStrategy.OnPush,
   template:`@if(access.scope()===entryScope){<section [hidden]="!access.allowed()" [attr.inert]="access.allowed()?null:''"><router-outlet/></section>}
+    @if(access.allowed()&&access.refreshFailed()){<p class="access-warning" role="status">{{i18n.t('grammarAccess.refreshFailed')}}</p>}
     @if(access.state()==='checking'){<p role="status" aria-live="polite">{{i18n.t('grammarAccess.checking')}}</p>}`})
 export class GrammarAccessShell {
   readonly access=inject(GrammarAccessService);

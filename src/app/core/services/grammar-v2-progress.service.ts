@@ -1,9 +1,8 @@
-import {computed, effect, inject, Injectable, signal, untracked} from '@angular/core';
+import {computed, inject, Injectable} from '@angular/core';
 import {GRAMMAR_PROGRESS_V2_KEY, GrammarV2ConceptProgress, GrammarIntegrationProgress} from '../models/grammar-v2.model';
 import {GrammarDifficulty, GrammarPracticeProgress, GrammarResume} from '../models/grammar-progress.model';
 import {GRAMMAR_V2_CONCEPTS, GRAMMAR_V2_REVIEW, GRAMMAR_V2_INTEGRATION} from '../../data/grammar/grammar-n5-v2.generated';
-import {StorageService} from './storage.service';
-import {WorkspaceService} from './workspace.service';
+import {StorageService, workspaceStorageSignal} from './storage.service';
 
 export interface ProgressV2 {
   version: 2; concepts: Record<string, GrammarV2ConceptProgress>;
@@ -21,13 +20,11 @@ const date=(v:unknown):string|undefined=>typeof v==='string'&&Number.isFinite(Da
 @Injectable({providedIn:'root'})
 export class GrammarV2ProgressService {
   private readonly storage=inject(StorageService);
-  private readonly workspace=inject(WorkspaceService);
-  private readonly saved=signal(this.read(this.storage.get<unknown>(GRAMMAR_PROGRESS_V2_KEY,null)));
+  private readonly saved=workspaceStorageSignal(()=>this.read(this.storage.get<unknown>(GRAMMAR_PROGRESS_V2_KEY,null)));
   readonly state=this.saved.asReadonly();
   readonly started=computed(()=>Object.keys(this.state().concepts).length>0);
   readonly integrationCompleted=computed(()=>!!this.state().integration?.openedAt&&GRAMMAR_V2_INTEGRATION.filter(s=>s.track==='core').every(s=>this.integrationStatus(s.id)==='completed'));
   readonly coreCompleted=computed(()=>GRAMMAR_V2_CONCEPTS.filter(c=>c.track==='core').every(c=>this.state().concepts[c.id]?.status==='completed')&&this.integrationCompleted());
-  constructor(){effect(()=>{this.workspace.active();this.workspace.dataRevision();this.storage.cloudRevision();untracked(()=>this.saved.set(this.read(this.storage.get<unknown>(GRAMMAR_PROGRESS_V2_KEY,null))));});}
   has(id:string):boolean{return catalog.has(id);}
   integrationStatus(id:string):'not-started'|'in-progress'|'completed' {
     if(id==='00')return this.state().integration?.openedAt?'completed':'not-started';

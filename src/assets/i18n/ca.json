@@ -12368,6 +12368,7 @@
   "grammarAccess.checking": "Comprovant l’accés a la beta privada…",
   "grammarAccess.authorized": "El teu compte té accés. Pots tornar a entrar.",
   "grammarAccess.denied": "Gramàtica és en beta privada i requereix autorització del propietari. Iniciar sessió no concedeix accés.",
+  "grammarAccess.refreshFailed": "No s’ha pogut tornar a comprovar l’accés a Gramàtica. Pots continuar aquesta activitat; es tornarà a provar automàticament.",
   "grammarAccess.error": "No s’ha pogut comprovar l’accés. Torna-ho a provar quan tinguis connexió.",
   "grammarAccess.login": "Iniciar sessió",
   "grammarAccess.retry": "Comprovar l’accés i entrar",

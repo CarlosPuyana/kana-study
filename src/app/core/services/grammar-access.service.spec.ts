@@ -64,18 +64,18 @@ describe('Grammar beta access leases and account fences',()=>{
     user.set(null);TestBed.inject(WorkspaceService).activateGuest();TestBed.tick();
     release({data:{enabled:true},error:null});expect(await old).toBe(false);expect(s.allowed()).toBe(false);
   });
-  it('expires after 60 seconds, blocks during revalidation and respects revocation',async()=>{
+  it('rechecks after 60 seconds without interrupting work and respects explicit revocation',async()=>{
     vi.useFakeTimers();account('A');const s=service();expect(await s.check()).toBe(true);
     let release!:(v:unknown)=>void;response.mockReturnValueOnce(new Promise(r=>release=r));
     await vi.advanceTimersByTimeAsync(GrammarAccessService.leaseMs);
-    expect(s.allowed()).toBe(false);expect(s.state()).toBe('checking');
+    expect(s.allowed()).toBe(true);expect(s.state()).toBe('authorized');
     release({data:{enabled:false},error:null});await settle();expect(s.state()).toBe('denied');
   });
   it('forces fresh checks on entry and foreground, including a same-account Auth event',async()=>{
     account('A');const s=service();expect(await s.check()).toBe(true);const before=response.mock.calls.length;
     expect(await s.check(true)).toBe(true);expect(response.mock.calls.length).toBe(before+1);
     response.mockResolvedValue({data:{enabled:false},error:null});
-    window.dispatchEvent(new Event('focus'));expect(s.allowed()).toBe(false);await settle();expect(s.state()).toBe('denied');
+    window.dispatchEvent(new Event('focus'));expect(s.allowed()).toBe(true);await settle();expect(s.state()).toBe('denied');
     response.mockResolvedValue({data:{enabled:true},error:null});user.set({id:'A'} as User);TestBed.tick();
     expect(await s.check()).toBe(true);
   });
@@ -96,5 +96,23 @@ describe('Grammar beta access leases and account fences',()=>{
     window.dispatchEvent(new Event('focus'));document.dispatchEvent(new Event('visibilitychange'));
     expect(response).toHaveBeenCalledOnce();expect(s.allowed()).toBe(false);
     release({data:{enabled:true},error:null});expect(await entry).toBe(true);expect(s.allowed()).toBe(true);
+  });
+  it('keeps an authorized activity available during periodic checks and transient failures',async()=>{
+    vi.useFakeTimers();account('A');const s=service();expect(await s.check()).toBe(true);
+    let release!:(v:unknown)=>void;response.mockReturnValueOnce(new Promise(r=>release=r));
+    await vi.advanceTimersByTimeAsync(GrammarAccessService.leaseMs);
+    expect(s.allowed()).toBe(true);
+    release({data:null,error:{message:'offline'}});await settle();
+    expect(s.allowed()).toBe(true);
+    response.mockResolvedValue({data:{enabled:true},error:null});
+    await vi.advanceTimersByTimeAsync(GrammarAccessService.leaseMs);
+    expect(s.allowed()).toBe(true);
+  });
+  it('uses account identity rather than the refreshed SDK User object as a lifecycle boundary',async()=>{
+    account('A');const s=service();expect(await s.check()).toBe(true);
+    let release!:(v:unknown)=>void;response.mockReturnValueOnce(new Promise(r=>release=r));
+    user.set({id:'A'} as User);expect(s.allowed()).toBe(true);TestBed.tick();await settle();
+    expect(s.allowed()).toBe(true);release({data:{enabled:true},error:null});await settle();
+    expect(s.allowed()).toBe(true);
   });
 });

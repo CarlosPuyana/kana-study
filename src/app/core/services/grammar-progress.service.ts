@@ -1,12 +1,11 @@
 import {GrammarV2ProgressService} from './grammar-v2-progress.service';
 import {grammarConceptId, grammarSessionConceptId} from '../../features/grammar/data/grammar-catalog';
-import { computed, effect, inject, Injectable, signal, untracked } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { emptyGrammarProgress, GRAMMAR_PROGRESS_KEY, GrammarProgressStateV1, GrammarProgressStatus } from '../models/grammar-progress.model';
 import { GRAMMAR_LESSONS, GRAMMAR_PRACTICES, GRAMMAR_SESSIONS } from '../../features/grammar/data/grammar-catalog';
 import { GrammarExercise, GrammarStudySession, grammarLessonExercises } from '../../features/grammar/models/grammar.model';
 import { readGrammarProgress } from './grammar-progress-state';
-import { StorageService } from './storage.service';
-import { WorkspaceService } from './workspace.service';
+import { StorageService, workspaceStorageSignal } from './storage.service';
 
 export interface GrammarReviewAnswer { conceptId: string; exerciseId: string; correct: boolean }
 const concepts = new Map(GRAMMAR_LESSONS.map(lesson => [grammarConceptId(lesson), {lesson, exercises: grammarLessonExercises(lesson)}]));
@@ -27,8 +26,8 @@ function firstPendingIndex(conceptId: string, state: GrammarProgressStateV1): nu
 @Injectable({providedIn: 'root'})
 export class GrammarProgressService {
   private readonly storage = inject(StorageService);
-  private readonly workspace = inject(WorkspaceService);
-  private readonly saved = signal(this.normalize(this.storage.get<unknown>(GRAMMAR_PROGRESS_KEY, null)));
+  // Hydration must be observed synchronously before the next local mutation.
+  private readonly saved = workspaceStorageSignal(() => this.normalize(this.storage.get<unknown>(GRAMMAR_PROGRESS_KEY, null)));
   private readonly v2 = inject(GrammarV2ProgressService);
   readonly state = computed(() => {
     const legacy=this.saved(), modern=this.v2.state();
@@ -45,13 +44,6 @@ export class GrammarProgressService {
     const pending = order.find(id => this.conceptStatus(id) !== 'completed');
     return pending?pathFor(pending):!this.v2.integrationCompleted()?this.v2.integrationContinuePath():'/grammar/review';
   });
-
-  constructor() {
-    effect(() => {
-      this.workspace.active(); this.workspace.dataRevision(); this.storage.cloudRevision();
-      untracked(() => this.saved.set(this.normalize(this.storage.get<unknown>(GRAMMAR_PROGRESS_KEY, null))));
-    });
-  }
 
   conceptStatus(conceptId: string): GrammarProgressStatus { return this.state().concepts[conceptId]?.status ?? 'not-started'; }
   statusSymbol(status: GrammarProgressStatus): string { return status === 'completed' ? '✓' : status === 'in-progress' ? '◐' : '○'; }

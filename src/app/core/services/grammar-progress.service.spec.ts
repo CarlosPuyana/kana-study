@@ -36,6 +36,18 @@ describe('Persistent grammar participation and difficulties', () => {
     expect(progress.continuePath()).toBe('/grammar/n5/01/sentence-structure-context');
     expect(localStorage.getItem(GRAMMAR_PROGRESS_KEY)).toBeNull();
   });
+  it('does not overwrite newly hydrated answers when answering before the next Angular effect flush',()=>{
+    progress.openLesson(lesson.id);
+    const modern=TestBed.inject(GrammarV2ProgressService);
+    const hydrated=structuredClone(modern.state());
+    hydrated.concepts[lesson.id].answers[exercises[1].id]={correct:true,solved:true,attempts:1,correctCount:1,answeredAt:new Date().toISOString()};
+    TestBed.inject(StorageService).setFromCloud(GRAMMAR_PROGRESS_KEY,hydrated);
+    // Deliberately no TestBed.tick(): cloud hydration and the user's answer can share a turn.
+    progress.recordAnswer(lesson.id,lesson.topicId,exercises[0].id,0,true);
+    const saved=TestBed.inject(StorageService).get(GRAMMAR_PROGRESS_KEY,emptyGrammarProgress());
+    expect(Object.keys(saved.concepts[lesson.id].answers)).toHaveLength(2);
+    expect(saved.concepts[lesson.id].answers[exercises[1].id].attempts).toBe(1);
+  });
   it('marks the first answer in progress and persists the actual answer', () => {
     progress.recordAnswer('change-naru', '10', exercises[0].id, 0, true);
     expect(progress.conceptStatus('change-naru')).toBe('in-progress');

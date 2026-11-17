@@ -18,38 +18,47 @@ export class GrammarAccessService {
   private readonly authReady = toObservable(this.auth.ready);
   private readonly result = signal<GrammarAccessState>('checking');
   private readonly owner = signal<string|null>(null);
+  /** Transient revalidation failure; never persisted as an access grant. */
+  readonly refreshFailed = signal(false);
   private readonly identity = computed(() => this.auth.ready() && this.auth.user() &&
     this.workspace.userId() === this.auth.user()!.id ? `${this.auth.user()!.id}:${this.workspace.activationRevision()}` : null);
   readonly scope = computed(() => this.identity());
   readonly state = computed<GrammarAccessState>(() => !this.auth.ready() ? (this.result()==='error'?'error':'checking') :
-    this.owner() !== this.identity() || this.scopeUser!==this.auth.user() ? (this.identity() ? 'checking' : 'denied') : this.result());
+    this.owner() !== this.identity() ? (this.identity() ? 'checking' : 'denied') : this.result());
   readonly allowed = computed(() => this.state() === 'authorized');
   private generation = 0;
   private expires = 0;
   private expiry?: ReturnType<typeof setTimeout>;
   private pending?: {key:string; promise:Promise<boolean>};
-  private scopeUser: ReturnType<AuthService['user']> = null;
 
   constructor() {
     effect(() => {
       this.auth.user(); this.auth.ready(); this.workspace.activationRevision();
       untracked(() => {
-        if(this.scopeUser!==this.auth.user() || this.owner()!==this.identity())this.invalidate();
-        if(this.auth.ready())void this.check();
+        if(this.owner()!==this.identity())this.invalidate();
+        // A token refresh can replace User without changing the account/activation.
+        if(this.auth.ready())void this.check(true);
       });
     });
     const foreground = () => { if(!document.hidden) void this.check(true); };
     window.addEventListener('focus',foreground);
+    window.addEventListener('online',foreground);
     document.addEventListener('visibilitychange',foreground);
     inject(DestroyRef).onDestroy(() => {
       this.invalidate(); window.removeEventListener('focus',foreground);
+      window.removeEventListener('online',foreground);
       document.removeEventListener('visibilitychange',foreground);
     });
   }
 
   private invalidate():void {
     ++this.generation; this.pending=undefined; this.expires=0;
-    clearTimeout(this.expiry); this.owner.set(null); this.result.set('checking');
+    clearTimeout(this.expiry); this.owner.set(null); this.result.set('checking');this.refreshFailed.set(false);
+  }
+
+  private scheduleCheck():void {
+    clearTimeout(this.expiry);
+    this.expiry=setTimeout(()=>{void this.check(true);},GrammarAccessService.leaseMs);
   }
 
   /** Entry forces a fresh check. Concurrent checks for the same identity share one request. */
@@ -60,10 +69,13 @@ export class GrammarAccessService {
     if(!key || !user) { this.owner.set(null); this.result.set('denied'); return false; }
     if(this.pending?.key===key) return this.pending.promise;
     if(!force && this.allowed() && Date.now()<this.expires) return true;
+    const continuing=this.allowed();
     const generation=++this.generation;
-    this.scopeUser=user;
-    clearTimeout(this.expiry); this.owner.set(key); this.result.set('checking');
-    const current=()=>generation===this.generation && this.identity()===key && this.auth.user()===user;
+    clearTimeout(this.expiry); this.owner.set(key);
+    // Rechecking the same activation must not hide/unmount a working course.
+    // New entries still await the actual request result in the router guards.
+    if(!continuing)this.result.set('checking');
+    const current=()=>generation===this.generation && this.identity()===key;
     const promise=(async()=>{
       let deadline:ReturnType<typeof setTimeout>|undefined;
       try {
@@ -78,14 +90,18 @@ export class GrammarAccessService {
         if(!current())return false;
         if(response.error)throw response.error;
         const granted=response.data?.enabled===true;
+        this.refreshFailed.set(false);
         this.result.set(granted?'authorized':'denied');
         if(granted){
           this.expires=Date.now()+GrammarAccessService.leaseMs;
-          this.expiry=setTimeout(()=>{this.invalidate();void this.check(true);},GrammarAccessService.leaseMs);
+          this.scheduleCheck();
         }
         return granted;
       } catch {
-        if(current())this.result.set('error');
+        if(current()){
+          if(continuing){this.refreshFailed.set(true);this.scheduleCheck();}
+          else this.result.set('error');
+        }
         return false;
       } finally {
         clearTimeout(deadline);

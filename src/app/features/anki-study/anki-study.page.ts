@@ -1,6 +1,7 @@
 import * as studyCopy from '../../../assets/i18n/deck-study.generated';
 import { DeckLearningSummary } from '../../shared/components/deck-learning-summary/deck-learning-summary';
 import { deckLearningSummary } from '../../core/services/deck-learning-presentation';
+import { deckStudyCounts } from '../../core/services/deck-study-counts';
 import {PublicDeckImage} from '../../shared/components/public-deck-image/public-deck-image';
 import {DeckIntensivePractice} from './deck-intensive-practice';
 import {DeckDayPresentation, deckDayCounts, deckDayDifficulties} from '../../core/services/deck-day-presentation';
@@ -91,7 +92,7 @@ export class AnkiStudyPage implements OnInit, OnDestroy {
   private lastEventResource:unknown;
   readonly retryRating=signal<DeckRating|null>(null);
   readonly previewChanged=signal(false);
-  readonly queueCounts=computed(()=>{const s=this.snapshot();return {new:s?.newAvailable??0,learning:s?.learningEntries.filter(p=>p.card.state===1).length??0,review:s?.reviewDue??0,relearning:s?.learningEntries.filter(p=>p.card.state===3).length??0};});
+  readonly queueCounts = computed(() => deckStudyCounts(this.snapshot()));
   retrySave():void{if(this.pendingFinish()){void this.finishToday();return;}const rating=this.retryRating();if(rating)void this.rate(rating);else this.refreshAvailability();}
   readonly snapshot = signal<DeckQueueSnapshot | null>(null);
   readonly choice = signal<DeckQueueChoice | null>(null);

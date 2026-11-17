@@ -12368,6 +12368,7 @@
   "grammarAccess.checking": "Comprobando el acceso a la beta privada…",
   "grammarAccess.authorized": "Tu cuenta tiene acceso. Puedes volver a entrar.",
   "grammarAccess.denied": "Gramática está en beta privada y requiere autorización del propietario. Iniciar sesión no concede acceso.",
+  "grammarAccess.refreshFailed": "No se pudo volver a comprobar el acceso a Gramática. Puedes continuar esta actividad; se reintentará automáticamente.",
   "grammarAccess.error": "No se ha podido comprobar el acceso. Reintenta cuando tengas conexión.",
   "grammarAccess.login": "Iniciar sesión",
   "grammarAccess.retry": "Comprobar acceso y entrar",

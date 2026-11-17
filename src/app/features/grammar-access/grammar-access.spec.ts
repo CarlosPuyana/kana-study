@@ -20,7 +20,7 @@ describe('Grammar route boundary and entry points',()=>{
     localStorage.clear();allowed.set(false);state.set('denied');check.mockReset();check.mockImplementation(async()=>allowed());courseLoad.mockClear();resolver.mockClear();opened.mockClear();
     vi.stubGlobal('matchMedia',()=>({matches:false,addEventListener:()=>{},removeEventListener:()=>{}}));
     TestBed.configureTestingModule({providers:[
-      {provide:GrammarAccessService,useValue:{allowed,state,check,scope:signal('A:0')}},
+      {provide:GrammarAccessService,useValue:{allowed,state,check,scope:signal('A:0'),refreshFailed:signal(false)}},
       {provide:AuthService,useValue:{ready:signal(true),authenticated:signal(false)}},
       provideRouter([{path:'',component:HomeFixture},{path:'grammar-access',component:GrammarAccessPage},
         {path:'grammar',canMatch:[grammarMatch],canActivateChild:[grammarChild],component:GrammarAccessShell,resolve:{course:resolver},loadChildren:courseLoad}]),
