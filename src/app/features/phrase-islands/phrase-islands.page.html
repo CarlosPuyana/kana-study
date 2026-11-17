@@ -1,0 +1,56 @@
+<main class="islands-shell">
+  <app-page-header titleKey="phraseIslands.title" backRoute="/anki" />
+
+  <section class="islands-intro" aria-labelledby="islands-intro-title">
+    <span class="intro-symbol" aria-hidden="true">🏝️</span>
+    <div>
+      <p class="eyebrow">{{i18n.t('phraseIslands.eyebrow')}}</p>
+      <h2 id="islands-intro-title">{{i18n.t('phraseIslands.subtitle')}}</h2>
+      <p class="intro-note">{{i18n.t('phraseIslands.preview')}}</p>
+    </div>
+  </section>
+
+  <section class="topics-section" aria-labelledby="topics-title" aria-describedby="topics-help">
+    <div class="section-heading">
+      <h2 id="topics-title">{{i18n.t('phraseIslands.topics.title')}}</h2>
+      <p id="topics-help">{{i18n.t('phraseIslands.topics.help')}}</p>
+    </div>
+    <div class="topics-grid">
+      @for(topic of topics; track topic.id) {
+        <button type="button" class="topic-card" [class.is-selected]="selected().has(topic.id)"
+          [attr.aria-pressed]="selected().has(topic.id)" [attr.aria-labelledby]="'topic-title-' + topic.id"
+          [attr.aria-describedby]="'topic-description-' + topic.id + ' topic-status-' + topic.id" (click)="toggleTopic(topic.id)">
+          <span class="topic-top">
+            <svg class="topic-icon" viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="topic.icon" /></svg>
+            <span class="selection-mark" aria-hidden="true">{{selected().has(topic.id) ? '✓' : '+'}}</span>
+          </span>
+          <span class="topic-title" [id]="'topic-title-' + topic.id">{{i18n.t('phraseIslands.topic.' + topic.id + '.title')}}</span>
+          <span class="topic-description" [id]="'topic-description-' + topic.id">{{i18n.t('phraseIslands.topic.' + topic.id + '.description')}}</span>
+          <span class="topic-footer">
+            <span class="coming-soon" [id]="'topic-status-' + topic.id">{{i18n.t('phraseIslands.comingSoon')}}</span>
+            <span class="selection-label" aria-hidden="true">{{i18n.t(selected().has(topic.id) ? 'phraseIslands.selected' : 'phraseIslands.select')}}</span>
+          </span>
+        </button>
+      }
+    </div>
+    <p class="selection-summary" role="status" aria-atomic="true">{{i18n.t('phraseIslands.selectionCount', {count: selected().size})}}</p>
+  </section>
+
+  <section class="modes-section" aria-labelledby="modes-title" aria-describedby="modes-help">
+    <div class="section-heading">
+      <h2 id="modes-title">{{i18n.t('phraseIslands.modes.title')}}</h2>
+      <p id="modes-help">{{i18n.t('phraseIslands.modes.help')}}</p>
+    </div>
+    <div class="modes-grid">
+      @for(mode of modes; track mode.id) {
+        <button type="button" class="mode-card" disabled
+          [attr.aria-labelledby]="'mode-title-' + mode.id" [attr.aria-describedby]="'mode-description-' + mode.id + ' mode-status-' + mode.id">
+          <svg class="mode-icon" viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="mode.icon" /></svg>
+          <span class="mode-title" [id]="'mode-title-' + mode.id">{{i18n.t('phraseIslands.mode.' + mode.id + '.title')}}</span>
+          <span class="mode-description" [id]="'mode-description-' + mode.id">{{i18n.t('phraseIslands.mode.' + mode.id + '.description')}}</span>
+          <span class="coming-soon" [id]="'mode-status-' + mode.id">{{i18n.t('phraseIslands.comingSoon')}}</span>
+        </button>
+      }
+    </div>
+  </section>
+</main>

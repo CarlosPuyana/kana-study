@@ -7,4 +7,11 @@
     @if(catalog.publicError()){<p role="alert">{{i18n.t('anki.publicUnavailable')}}</p><button type="button" (click)="refresh()">{{i18n.t('common.retry')}}</button>}
     <div class="deck-list">@for(deck of decks;track deck.id){@if(counts()[deck.id];as deckCounts){<app-deck-card [deck]="deck" [stats]="deckCounts" (newTodayAdjustment)="adjustNewToday(deck.id,$event)"/>} @else if(loading()){<div class="loading-card" aria-busy="true">{{i18n.t('common.loading')}}</div>}}</div>
   </section>
+  <section class="islands-entry" aria-labelledby="islands-entry-title">
+    <div class="islands-entry-copy">
+      <h2 id="islands-entry-title"><span aria-hidden="true">🏝️</span> {{i18n.t('phraseIslands.title')}}</h2>
+      <p>{{i18n.t('phraseIslands.subtitle')}}</p>
+    </div>
+    <a class="islands-explore" routerLink="/anki/islands">{{i18n.t('phraseIslands.explore')}} <span aria-hidden="true">↗</span></a>
+  </section>
 </main>

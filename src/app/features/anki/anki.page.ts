@@ -1,5 +1,7 @@
 import {LocalDeckNotice} from '../../shared/components/local-deck-notice/local-deck-notice';
 import {PageHeader} from '../../shared/components/page-header/page-header';
+import { RouterLink } from '@angular/router';
+import * as islandsCopy from '../../../assets/i18n/phrase-islands.generated';
 import { ChangeDetectionStrategy, Component, effect, inject, untracked, OnDestroy, OnInit, signal } from '@angular/core';
 import { DeckStudyCounts } from '../../core/models/deck-study.model';
 import { DeckStudyService, DECK_NEW_LIMIT_STEP } from '../../core/services/deck-study.service';
@@ -9,7 +11,7 @@ import { DeckCard } from './components/deck-card/deck-card';
 import { getLocalStudyDayKey } from '../../core/services/deck-study-time';
 
 @Component({
-  selector: 'app-anki-page', imports:[PageHeader, DeckCard,LocalDeckNotice], templateUrl: './anki.page.html',
+  selector: 'app-anki-page', imports:[PageHeader, DeckCard,LocalDeckNotice, RouterLink], templateUrl: './anki.page.html',
   styleUrl: './anki.page.scss', changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(window:focus)': 'refresh()', '(document:visibilitychange)': 'refresh()' },
 })
@@ -19,7 +21,7 @@ export class AnkiPage implements OnInit, OnDestroy {
   readonly catalog = inject(DeckCatalogService);
   get decks() { return this.catalog.items(); }
   private generation=0;
-  constructor(){effect(()=>{this.catalog.epoch();this.catalog.items();this.catalog.revision();this.catalog.repository.progressRevision();untracked(()=>{void this.refresh();});});}
+  constructor(){this.i18n.useStudyCopy(islandsCopy);effect(()=>{this.catalog.epoch();this.catalog.items();this.catalog.revision();this.catalog.repository.progressRevision();untracked(()=>{void this.refresh();});});}
   readonly counts = signal<Record<string, DeckStudyCounts>>({});
   readonly loading = signal(true);
   readonly error = signal(false);

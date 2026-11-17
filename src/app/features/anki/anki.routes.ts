@@ -4,6 +4,7 @@ import {inject} from '@angular/core';
 import {CUSTOM_DECKS_ENABLED} from '../../core/services/custom-deck-gates';
 
 export const ANKI_ROUTES: Routes = [
+  { path: 'islands', data: { titleKey: 'phraseIslands.title' }, loadComponent: () => import('../phrase-islands/phrase-islands.page').then(m => m.PhraseIslandsPage) },
   {path:'backups',canMatch:[()=>inject(CUSTOM_DECKS_ENABLED)()],canActivate:[guestCustomRouteGuard],data:{titleKey:'settings.data'},loadComponent:()=>import('../anki-backup/anki-backup.page').then(m=>m.AnkiBackupPage)},
   {
     path: '', data: {titleKey: 'anki.title'},

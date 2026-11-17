@@ -1,0 +1,33 @@
+:host { display: block; }
+.islands-shell { width: min(100% - 1.25rem, 68rem); margin: 0 auto; padding-bottom: 4rem; color: var(--text-primary); }
+.islands-intro { display: flex; align-items: center; gap: 1.25rem; padding: clamp(1.25rem, 4vw, 2.5rem); border: 1px solid var(--border); border-radius: 1.25rem; background: linear-gradient(120deg, var(--primary-soft), transparent), var(--surface); }
+.intro-symbol { flex: 0 0 auto; font-size: clamp(2.5rem, 6vw, 4rem); }
+.eyebrow { margin: 0 0 .6rem; color: var(--text-secondary); font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.islands-intro h2 { max-width: 34rem; margin: 0; font-size: clamp(1.3rem, 3vw, 1.85rem); line-height: 1.3; letter-spacing: -.025em; }
+.intro-note { margin: .9rem 0 0; color: var(--text-secondary); line-height: 1.6; font-size: .9rem; }
+.topics-section, .modes-section { margin-top: 2rem; }
+.section-heading { margin-bottom: 1rem; }
+.section-heading h2 { margin: 0 0 .4rem; font-size: 1.2rem; }
+.section-heading p { margin: 0; color: var(--text-secondary); line-height: 1.6; font-size: .9rem; }
+.topics-grid, .modes-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: .85rem; }
+.topic-card, .mode-card { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); color: var(--text-primary); font: inherit; text-align: left; overflow-wrap: anywhere; }
+.topic-card { cursor: pointer; }
+.topic-card.is-selected { border-color: var(--text-primary); background: linear-gradient(var(--primary-soft), var(--primary-soft)), var(--surface); box-shadow: inset 0 0 0 1px var(--text-primary); }
+.topic-card:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 4px; }
+.topic-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 1rem; }
+.topic-icon, .mode-icon { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.selection-mark { display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border: 1px solid var(--text-secondary); border-radius: 50%; font-weight: 800; }
+.is-selected .selection-mark { background: var(--text-primary); color: var(--surface); border-color: var(--text-primary); }
+.topic-title, .mode-title { font-size: 1rem; font-weight: 750; line-height: 1.5; }
+.topic-description, .mode-description { margin: .45rem 0 1.25rem; color: var(--text-secondary); line-height: 1.6; font-size: .85rem; }
+.topic-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem; width: 100%; margin-top: auto; padding-top: .85rem; border-top: 1px solid var(--border); }
+.coming-soon { display: inline-flex; padding: .3rem .6rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--background-soft); color: var(--text-secondary); font-size: .72rem; font-weight: 700; }
+.selection-label { font-size: .75rem; font-weight: 650; }
+.selection-summary { margin: 1rem 0 0; color: var(--text-secondary); font-size: .8rem; }
+.mode-card:disabled { opacity: 1; cursor: not-allowed; }
+.mode-icon { margin-bottom: 1rem; color: var(--text-secondary); }
+.mode-card .coming-soon { margin-top: auto; }
+@media (hover: hover) { .topic-card:hover { background-color: var(--surface-hover); } }
+@media (min-width: 540px) { .topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 860px) { .islands-shell { width: min(100% - 2rem, 68rem); } .topics-grid, .modes-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 380px) { .islands-intro { align-items: flex-start; flex-direction: column; gap: .75rem; } }

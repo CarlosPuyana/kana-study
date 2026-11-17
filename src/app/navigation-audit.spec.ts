@@ -27,6 +27,8 @@ describe('public navigation architecture',()=>{
   });
   it('has localized document title metadata for every screen in ES/EN/CA',async()=>{
     const all=await publicRoutes(routes);const i18n=TestBed.inject(TranslationService),settings=TestBed.inject(SettingsService);
+    // Islas registers its deferred copy when its lazy page activates.
+    i18n.useStudyCopy(await import('../assets/i18n/phrase-islands.generated'));
     for(const language of ['es','en','ca'] as const){settings.setLanguage(language);for(const route of all){expect(route.titleKey,route.path).toBeTruthy();expect(i18n.t(route.titleKey),route.path).not.toBe(route.titleKey);}}
   });
 });
