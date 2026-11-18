@@ -1,0 +1,16 @@
+  <section class="round-summary" aria-labelledby="round-title">
+   <p class="task-label">{{i18n.t('phraseIslands.rush.round',{round:round()})}}</p>
+   <h2 id="round-title" tabindex="-1">{{i18n.t('phraseIslands.rush.summary')}}</h2>
+   <dl class="round-totals">
+    <div><dt>{{i18n.t('phraseIslands.rush.evaluated')}}</dt><dd data-metric="total">{{total()}}</dd></div>
+    <div><dt>{{i18n.t('phraseIslands.rush.correct')}}</dt><dd data-metric="correct">{{correct()}}</dd></div>
+    <div><dt>{{i18n.t('phraseIslands.rush.failed')}}</dt><dd data-metric="failed">{{failed()}}</dd></div>
+    <div><dt>{{i18n.t('phraseIslands.rush.percent')}}</dt><dd data-metric="percent">{{percent()}}%</dd></div>
+   </dl>
+   <p class="recall-help">{{i18n.t('phraseIslands.rush.selfReport')}}</p>
+   <div class="round-actions">
+    @if(failed()){<button class="primary repeat-failed" type="button" (click)="repeatFailed.emit()">{{i18n.t('phraseIslands.rush.repeatFailed')}}</button>}
+    <button type="button" (click)="finish.emit()">{{i18n.t('phraseIslands.session.finish')}}</button>
+    <button class="quiet undo" type="button" [disabled]="!canUndo()" (click)="undo.emit()">{{i18n.t('phraseIslands.rush.undo')}}</button>
+   </div>
+  </section>

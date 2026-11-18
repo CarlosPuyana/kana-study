@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/phrase-admin"
+  },
+  "files": [
+    "src/main.phrase-islands-admin.ts"
+  ]
+}

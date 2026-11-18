@@ -1,0 +1,43 @@
+<main class="authoring-shell">
+ <header><div><p class="eyebrow">{{t('localOnly')}}</p><h1>{{t('title')}}</h1><p>{{t('intro')}}</p></div><div class="preferences"><label>{{t('language')}}<select [value]="preferences.language()" (change)="preferences.setLanguage($any($event.target).value)">@for(lang of languages;track lang){<option [value]="lang">{{lang.toUpperCase()}}</option>}</select></label><button type="button" (click)="preferences.theme.set(preferences.theme()==='dark'?'light':'dark')">{{t(preferences.theme()==='dark'?'light':'dark')}}</button></div></header>
+ @if(draft();as d){
+ <section class="toolbar" [attr.aria-label]="t('files')">
+  <button type="button" (click)="newDraft()">{{t('new')}}</button>
+  <label class="file-button">{{t('import')}}<input class="file-input" type="file" accept=".json,application/json" (change)="importFile($event)" /></label>
+  <button class="primary" type="button" (click)="exportDraft()" [disabled]="!!structuralIssues().length">{{t('export')}}</button>
+  <span class="dirty" role="status">{{t(dirty()?'unsaved':'fileWorkflow')}}</span>
+ </section>
+ <label class="published-picker">{{t('editPublished')}}<select aria-label="{{t('editPublished')}}" (change)="selectPublished($any($event.target).value)"><option value="">{{t('choose')}}</option>@for(p of published;track p.id){<option [value]="p.id">{{p.japanese}}</option>}</select></label>
+ @if(message()){<p class="message" role="status">{{message()}}</p>}
+ @if(error()){<p class="error" role="alert">{{error()}}</p>}
+ <div class="editor-grid">
+  <section class="editor-fields" [attr.aria-label]="t('content')">
+   <div class="section-heading"><h2>{{t('content')}}</h2><span>{{t(d.operation==='create'?'creating':'editing')}}</span></div>
+   <label>{{t('id')}}<input class="phrase-id" [value]="d.phrase.id" readonly /></label>
+   <p class="revision">{{t('base')}} {{d.base.catalogVersion}} · {{t('revision')}} {{d.base.contentRevision??'0'}}</p>
+   <div class="choices"><label>{{t('topic')}}<select [value]="d.phrase.topicId" (change)="setChoice('topicId',$any($event.target).value)">@for(topic of topics;track topic){<option [value]="topic">{{i18n.t('phraseIslands.topic.'+topic+'.title')}}</option>}</select></label><label>{{t('level')}}<select [value]="d.phrase.level" (change)="setChoice('level',$any($event.target).value)"><option>N5</option><option>N4</option></select></label><label>{{t('register')}}<select [value]="d.phrase.register" (change)="setChoice('register',$any($event.target).value)">@for(r of ['informal','polite','neutral'];track r){<option [value]="r">{{i18n.t('phraseIslands.register.'+r)}}</option>}</select></label></div>
+   <label>{{t('japanese')}}<textarea lang="ja" class="japanese-input" rows="2" [value]="d.phrase.japanese" (input)="setText('japanese',$any($event.target).value)"></textarea></label>
+   <label>{{t('reading')}}<input lang="ja" [value]="d.phrase.reading" (input)="setText('reading',$any($event.target).value)" /></label>
+   <fieldset class="segments"><legend>{{t('segments')}}</legend><p class="hint">{{t('segmentsHelp')}}</p>
+    @for(segment of d.phrase.segments;track $index;let n=$index){<div class="segment-row"><label>{{t('segmentText')}} {{n+1}}<input lang="ja" [value]="segment.text" (input)="setSegment(n,'text',$any($event.target).value)" /></label><label>{{t('segmentReading')}} {{n+1}}<input lang="ja" [value]="segment.reading??''" (input)="setSegment(n,'reading',$any($event.target).value)" /></label><button type="button" (click)="removeSegment(n)" [attr.aria-label]="t('removeSegment')+' '+(n+1)">×</button></div>}
+    <button type="button" (click)="addSegment()">{{t('addSegment')}}</button>
+   </fieldset>
+   <div class="language-tabs" role="group" [attr.aria-label]="t('contentLanguage')">@for(lang of languages;track lang){<button type="button" [attr.aria-pressed]="editorLanguage()===lang" (click)="editorLanguage.set(lang)">{{lang.toUpperCase()}}</button>}</div>
+   @for(field of fields;track field){<label>{{t(field)}} ({{editorLanguage().toUpperCase()}})<textarea [attr.lang]="editorLanguage()" [rows]="field==='natural'?2:3" [value]="d.phrase.localizations[editorLanguage()][field]" (input)="setLocalization(field,$any($event.target).value)"></textarea></label>}
+   <details class="synthesis"><summary>{{t('synthesis')}}</summary><p>AivisSpeech 1.2.0 · Aida Shigeru · {{t('normal')}}</p><label>{{t('synthesisSpeed')}}<input type="number" min="0.5" max="2" step="0.1" [value]="d.synthesis.speedScale" (input)="setSpeed($any($event.target).value)" /></label><p class="hint">{{t('invalidateAudio')}}</p></details>
+  </section>
+  <aside class="preview-column">
+   <section class="preview-card" aria-labelledby="preview-heading"><div class="section-heading"><h2 id="preview-heading">{{t('preview')}}</h2><span>{{editorLanguage().toUpperCase()}}</span></div>
+    @if(d.phrase.japanese){<h3 lang="ja"><app-furigana-text [segments]="d.phrase.segments.length?d.phrase.segments:[{text:d.phrase.japanese}]" /></h3>}
+    <p lang="ja" class="reading">{{d.phrase.reading}}</p><p class="natural">{{d.phrase.localizations[editorLanguage()].natural||t('emptyPreview')}}</p>
+    <dl><dt>{{t('structural')}}</dt><dd>{{d.phrase.localizations[editorLanguage()].structural}}</dd><dt>{{t('explanation')}}</dt><dd>{{d.phrase.localizations[editorLanguage()].explanation}}</dd></dl>
+    <label class="audio-picker">{{t('audioFile')}}<input type="file" accept=".mp3,audio/mpeg" (change)="selectAudio($event)" /></label>
+    @if(audioUrl()){<audio #previewAudio controls [src]="audioUrl()" preload="none" (error)="error.set(t('invalidAudio'))"></audio>}
+    <p class="hint">{{t('audioHelp')}}</p>
+   </section>
+   <section class="validation" [class.complete]="!issues().length"><h2>{{t(issues().length?'pending':'complete')}}</h2><p>{{t('notApproval')}}</p><ul>@for(issue of issues();track $index){<li>{{t('error.'+issue.code)}} <code>{{issue.field}}</code></li>}</ul><p class="hint">{{t('incompleteAllowed')}}</p></section>
+   <details class="next-steps"><summary>{{t('nextSteps')}}</summary><ol><li>{{t('stepImport')}}<code>node scripts/phrase-islands-admin.mjs import --file {{d.phrase.id}}-draft.json</code></li><li>{{t('stepAudio')}}<code>node scripts/phrase-islands-admin.mjs generate</code></li><li>{{t('stepReview')}}<code>node scripts/phrase-islands-admin.mjs review --reviewer NAME --content-reviewed --audio-listened</code></li><li>{{t('stepPrepare')}}<code>node scripts/phrase-islands-admin.mjs prepare-release --version 1.1.0 --name release-1_1_0</code></li></ol><p>{{t('githubAuthority')}}</p></details>
+  </aside>
+ </div>
+ }
+</main>

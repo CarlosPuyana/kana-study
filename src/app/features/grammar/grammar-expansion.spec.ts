@@ -6,6 +6,7 @@ import es from '../../../assets/i18n/es.json';
 import en from '../../../assets/i18n/en.json';
 import ca from '../../../assets/i18n/ca.json';
 import {es as compactEs,en as compactEn,ca as compactCa} from '../../../assets/i18n/dictionaries.generated';
+import * as authoringCopy from '../phrase-islands-admin/phrase-admin-copy.generated';
 import {GRAMMAR_LESSONS,GRAMMAR_PRACTICES} from './data/grammar-n5.generated';
 import {GrammarExercise,grammarLessonExercises} from './models/grammar.model';
 import {GrammarAnswer,isChoiceExercise,isGrammarAnswerCorrect} from './services/grammar-exercise-answer';
@@ -17,7 +18,8 @@ const answer=(e:GrammarExercise):GrammarAnswer=>({selected:isChoiceExercise(e)?e
 describe('Expanded grammar concept practice',()=>{
  afterEach(()=>TestBed.resetTestingModule());
  it('preserves every ES/EN/CA key and value in the compact build representation',()=>{
-  expect(compactEs).toEqual(es);expect(compactEn).toEqual(en);expect(compactCa).toEqual(ca);
+  expect({...compactEs,...authoringCopy.es}).toEqual(es);expect({...compactEn,...authoringCopy.en}).toEqual(en);expect({...compactCa,...authoringCopy.ca}).toEqual(ca);
+  expect(Object.keys(compactEs).some(key=>key.startsWith('phraseAdmin.'))).toBe(false);
  });
  it('resolves all 542 exercises and authored variants before and after shuffling',()=>{
   for(const original of [...GRAMMAR_LESSONS.flatMap(grammarLessonExercises),...GRAMMAR_PRACTICES.flatMap(p=>p.exercises)]){

@@ -1,6 +1,7 @@
 <main class="islands-shell">
-  <app-page-header titleKey="phraseIslands.title" backRoute="/anki" />
+  <app-page-header [titleKey]="exploring ? 'phraseIslands.browse' : 'phraseIslands.title'" [backRoute]="exploring ? '/anki/islands' : '/anki'" [backQueryParams]="exploring ? query() : null" />
 
+  @if (!exploring) {
   <section class="islands-intro" aria-labelledby="islands-intro-title">
     <span class="intro-symbol" aria-hidden="true">🏝️</span>
     <div>
@@ -27,7 +28,7 @@
           <span class="topic-title" [id]="'topic-title-' + topic.id">{{i18n.t('phraseIslands.topic.' + topic.id + '.title')}}</span>
           <span class="topic-description" [id]="'topic-description-' + topic.id">{{i18n.t('phraseIslands.topic.' + topic.id + '.description')}}</span>
           <span class="topic-footer">
-            <span class="coming-soon" [id]="'topic-status-' + topic.id">{{i18n.t('phraseIslands.comingSoon')}}</span>
+            <span class="phrase-count" [id]="'topic-status-' + topic.id">{{i18n.t('phraseIslands.phraseCount', {count: count(topic.id)})}}</span>
             <span class="selection-label" aria-hidden="true">{{i18n.t(selected().has(topic.id) ? 'phraseIslands.selected' : 'phraseIslands.select')}}</span>
           </span>
         </button>
@@ -36,6 +37,33 @@
     <p class="selection-summary" role="status" aria-atomic="true">{{i18n.t('phraseIslands.selectionCount', {count: selected().size})}}</p>
   </section>
 
+  <p><a class="explore-link" routerLink="/anki/islands/explore" [queryParams]="query()">{{i18n.t('phraseIslands.browse')}}</a></p>
+  }
+  @if (exploring) {
+  <section class="phrase-library" aria-labelledby="phrase-library-title">
+    <div class="section-heading"><h2 id="phrase-library-title">{{i18n.t('phraseIslands.library.title')}}</h2><p>{{i18n.t('phraseIslands.library.help')}}</p></div>
+    @if (!phrases().length) { <p class="library-empty">{{i18n.t('phraseIslands.library.empty')}}</p> }
+    <div class="phrases-grid">
+      @for (phrase of phrases(); track phrase.id) {
+        <article class="phrase-entry" [attr.data-phrase-id]="phrase.id">
+          <div class="phrase-meta"><span>{{i18n.t('phraseIslands.level', {level: phrase.level})}}</span><span>{{i18n.t('phraseIslands.register.' + phrase.register)}}</span></div>
+          <h3 lang="ja"><app-furigana-text [segments]="phrase.segments" /></h3>
+          <p class="phrase-reading" lang="ja">{{phrase.reading}}</p>
+          <p class="phrase-natural">{{content(phrase, 'natural')}}</p>
+          <dl class="phrase-details"><div><dt>{{i18n.t('phraseIslands.structural')}}</dt><dd>{{content(phrase, 'structural')}}</dd></div><div><dt>{{i18n.t('phraseIslands.explanation')}}</dt><dd>{{content(phrase, 'explanation')}}</dd></div></dl>
+          <div class="phrase-audio-actions"><button type="button" (click)="audio.play(phrase)" [attr.aria-label]="i18n.t('phraseIslands.audio.listenPhrase', {phrase: phrase.japanese})">{{i18n.t('phraseIslands.audio.listen')}}</button>
+          @if (audio.currentId() === phrase.id) {
+            <button type="button" (click)="audio.stop()">{{i18n.t('phraseIslands.audio.stop')}}</button>
+            <span role="status" [class.audio-error]="audio.state() === 'error' || audio.state() === 'blocked'">{{i18n.t('phraseIslands.audio.' + audio.state())}}</span>
+          }</div>
+        </article>
+      }
+    </div>
+    <p class="voice-credit">{{i18n.t('phraseIslands.audio.credit')}} <a [href]="licenseUrl()" target="_blank" rel="noopener">{{i18n.t('phraseIslands.audio.license')}}</a></p>
+  </section>
+
+  }
+  @if (!exploring) {
   <section class="modes-section" aria-labelledby="modes-title" aria-describedby="modes-help">
     <div class="section-heading">
       <h2 id="modes-title">{{i18n.t('phraseIslands.modes.title')}}</h2>
@@ -43,14 +71,15 @@
     </div>
     <div class="modes-grid">
       @for(mode of modes; track mode.id) {
-        <button type="button" class="mode-card" disabled
+        <button type="button" class="mode-card" [disabled]="!selected().size" (click)="startMode(mode.id)"
           [attr.aria-labelledby]="'mode-title-' + mode.id" [attr.aria-describedby]="'mode-description-' + mode.id + ' mode-status-' + mode.id">
           <svg class="mode-icon" viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="mode.icon" /></svg>
           <span class="mode-title" [id]="'mode-title-' + mode.id">{{i18n.t('phraseIslands.mode.' + mode.id + '.title')}}</span>
           <span class="mode-description" [id]="'mode-description-' + mode.id">{{i18n.t('phraseIslands.mode.' + mode.id + '.description')}}</span>
-          <span class="coming-soon" [id]="'mode-status-' + mode.id">{{i18n.t('phraseIslands.comingSoon')}}</span>
+          <span class="coming-soon" [id]="'mode-status-' + mode.id">{{i18n.t('phraseIslands.session.'+(selected().size?'start':'select'))}}</span>
         </button>
       }
     </div>
   </section>
+  }
 </main>

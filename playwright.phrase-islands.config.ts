@@ -4,6 +4,8 @@ import base from './playwright.deck-learning.config';
 export default defineConfig({ ...base, testDir: './manual-tests/phrase-islands',
   outputDir: '.cache/phrase-islands/browser-results',
   projects: [
+    { name: 'tablet-dark', use: { viewport: { width: 768, height: 1024 }, colorScheme: 'dark' } },
+    { name: 'tablet-light', use: { viewport: { width: 768, height: 1024 }, colorScheme: 'light' } },
     { name: 'desktop-dark', use: { viewport: { width: 1280, height: 1000 }, colorScheme: 'dark' } },
     { name: 'desktop-light', use: { viewport: { width: 1280, height: 1000 }, colorScheme: 'light' } },
     { name: 'mobile-dark', use: { viewport: { width: 390, height: 844 }, colorScheme: 'dark' } },

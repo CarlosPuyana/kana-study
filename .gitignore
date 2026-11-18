@@ -8,6 +8,8 @@
 
 # Local tooling
 /.cache
+# Durable local phrase authoring. Back this folder up; never publish drafts/masters.
+/.phrase-islands-authoring/
 /scripts/__pycache__/
 /.idea
 *.log

@@ -1,0 +1,20 @@
+ :host { display: block; }
+.round-summary { border: 1px solid var(--border); border-radius: 1.25rem; background: var(--surface); padding: clamp(1.25rem,4vw,2.5rem); text-align: center; }
+.round-summary h2 { font-size: clamp(1.3rem,3vw,1.75rem); margin: .5rem 0 1.5rem; letter-spacing: -.025em; }
+.round-summary h2:focus { outline: none; }
+.round-summary h2:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.round-totals { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin: 1rem 0; }
+.round-totals div { padding: .75rem; border: 1px solid var(--border); border-radius: .75rem; background: var(--background-soft); }
+.round-totals dt { font-size: .8rem; }
+.round-totals dd { font-size: 1.75rem; font-weight: 750; margin: .25rem 0 0; line-height: 1.2; }
+.round-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+
+.task-label { margin: 0 0 1rem; color: var(--text-secondary); font-size: .75rem; font-weight: 700; }
+.recall-help { color: var(--text-secondary); font-size: .75rem; line-height: 1.5; }
+button { font: inherit; font-size: .85rem; font-weight: 600; min-height: 44px; border: 1px solid var(--border); border-radius: .7rem; padding: .65rem 1rem; color: var(--text-primary); background: var(--surface-raised); cursor: pointer; }
+button.primary { background: var(--primary-hover); color: var(--on-primary); border-color: var(--primary-hover); }
+button.quiet { background: transparent; border-color: transparent; }
+button:disabled { color: var(--text-muted); cursor: default; }
+button:not(:disabled):hover { box-shadow: var(--focus-ring); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media(min-width:700px) { .round-totals { grid-template-columns: repeat(4,minmax(0,1fr)); } }

@@ -1,4 +1,21 @@
 :host { display: block; }
+.phrase-library { margin-top: 2rem; }
+.phrases-grid { display: grid; gap: 1rem; }
+.phrase-entry { min-width: 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); }
+.phrase-entry h3 { margin: 1rem 0 .5rem; line-height: 2; overflow-wrap: anywhere; }
+.phrase-meta { display: flex; flex-wrap: wrap; gap: .75rem; color: var(--text-secondary); font-size: .75rem; }
+.phrase-reading, .library-empty, .voice-credit { color: var(--text-secondary); line-height: 1.6; font-size: .85rem; }
+.phrase-natural { font-size: 1.05rem; font-weight: 700; }
+.phrase-details { display: grid; gap: 1rem; line-height: 1.6; font-size: .85rem; }
+.phrase-details dt { color: var(--text-secondary); font-size: .75rem; margin-bottom: .25rem; }
+.phrase-details dd { margin: 0; overflow-wrap: anywhere; }
+.phrase-audio-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; font-size: .8rem; }
+.phrase-audio-actions button { min-height: 44px; border: 1px solid var(--border); border-radius: .65rem; padding: .5rem 1rem; background: var(--surface-raised); color: var(--text-primary); font: inherit; cursor: pointer; }
+.phrase-audio-actions button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+.audio-error { color: var(--error); }
+.voice-credit a { color: var(--text-primary); }
+.phrase-count { color: var(--text-secondary); font-size: .8rem; }
+@media (min-width: 860px) { .phrases-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .islands-shell { width: min(100% - 1.25rem, 68rem); margin: 0 auto; padding-bottom: 4rem; color: var(--text-primary); }
 .islands-intro { display: flex; align-items: center; gap: 1.25rem; padding: clamp(1.25rem, 4vw, 2.5rem); border: 1px solid var(--border); border-radius: 1.25rem; background: linear-gradient(120deg, var(--primary-soft), transparent), var(--surface); }
 .intro-symbol { flex: 0 0 auto; font-size: clamp(2.5rem, 6vw, 4rem); }
@@ -31,3 +48,6 @@
 @media (min-width: 540px) { .topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 860px) { .islands-shell { width: min(100% - 2rem, 68rem); } .topics-grid, .modes-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 380px) { .islands-intro { align-items: flex-start; flex-direction: column; gap: .75rem; } }
+
+.explore-link { display: inline-block; padding: .8rem 1rem; border: 1px solid var(--border); border-radius: .65rem; color: var(--text-primary); background: var(--surface); }
+.explore-link:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }

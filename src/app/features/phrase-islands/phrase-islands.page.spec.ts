@@ -1,3 +1,5 @@
+import { PHRASE_ISLANDS_CATALOG } from '../../data/phrase-islands/phrase-islands-catalog';
+import { provideRouter } from '@angular/router';
 import { Component, input, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { TranslationService } from '../../core/services/translation.service';
@@ -6,13 +8,13 @@ import * as copy from '../../../assets/i18n/phrase-islands.generated';
 import { PhraseIslandsPage } from './phrase-islands.page';
 
 @Component({ selector: 'app-page-header', template: '' })
-class HeaderStub { readonly titleKey = input(''); readonly backRoute = input(''); }
+class HeaderStub { readonly titleKey = input(''); readonly backRoute = input(''); readonly backQueryParams = input<unknown>(null); }
 
 describe('Phrase islands I0 presentation', () => {
   const language = signal<'es' | 'en' | 'ca'>('es');
   beforeEach(() => {
     language.set('es');
-    TestBed.configureTestingModule({ imports: [PhraseIslandsPage], providers: [
+    TestBed.configureTestingModule({ imports: [PhraseIslandsPage], providers: [provideRouter([]),
       { provide: TranslationService, useValue: {
         useStudyCopy: vi.fn(), language,
         t: (key: string, values?: Record<string, number>) => (copy[language()][key] ?? key).replace('{{count}}', String(values?.['count'] ?? '')),
@@ -47,10 +49,18 @@ describe('Phrase islands I0 presentation', () => {
     const modes = host.querySelectorAll<HTMLButtonElement>('.mode-card');
     expect(modes).toHaveLength(3);
     for (const mode of modes) {
-      expect(mode.disabled).toBe(true); expect(mode.textContent).toContain('Próximamente'); mode.click();
+      expect(mode.disabled).toBe(false); expect(mode.textContent).toContain('Iniciar');
     }
     expect(host.querySelector('audio, video, .session, input')).toBeNull();
     expect(fixture.componentInstance.selected().size).toBe(1);
+  });
+
+  it('shows actual approved phrase counts per topic and explores exactly the selected topics', () => {
+    const fixture=create(),host:HTMLElement=fixture.nativeElement;
+    expect([...host.querySelectorAll('.phrase-count')].map(e=>e.textContent)).toEqual(fixture.componentInstance.topics.map(t=>PHRASE_ISLANDS_CATALOG.filter(p=>p.topicId===t.id).length+' frases'));
+    const buttons=host.querySelectorAll<HTMLButtonElement>('.topic-card');buttons[0].click();buttons[1].click();fixture.detectChanges();
+    expect(host.querySelectorAll('.phrase-entry')).toHaveLength(0);
+    expect(host.querySelector('.explore-link')?.getAttribute('href')).toContain('topics=everyday,conversation');
   });
 
   it('does not write storage or open a database, and a fresh visit starts without selections', () => {
@@ -66,7 +76,7 @@ describe('Phrase islands I0 presentation', () => {
     language.set(lang); const fixture = create(), host: HTMLElement = fixture.nativeElement;
     expect(Object.keys(copy[lang]).sort()).toEqual(Object.keys(copy.es).sort());
     expect(host.textContent).not.toContain('phraseIslands.');
-    expect(host.querySelector('.coming-soon')?.textContent).toBe(copy[lang]['phraseIslands.comingSoon']);
+    expect(host.querySelector('.coming-soon')?.textContent).toBe(copy[lang]['phraseIslands.session.select']);
     expect(host.querySelector('.topic-title')?.textContent).toBe(copy[lang]['phraseIslands.topic.everyday.title']);
   });
 });

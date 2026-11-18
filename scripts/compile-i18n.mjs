@@ -8,6 +8,7 @@ export const MANGA_ANALYSIS_COPY_KEY=/^mangaM1\.(?!title$)/;
 export const MANGA_READER_COPY_KEY=/^(?:ocrExplorer\.(?!title$)|mangaVocab\.(?!title$)|manga\.(?!(?:title$|.*\.title$|page$|assist\.|reason\.|grammar\.|study\.|saved\.|deck\.|catalog\.retry$)))/;
 export function compiledDomain(grammar){
  const includeKey=key=>{
+  if(key.startsWith('phraseAdmin.')||grammar==='phrase-admin')return key.startsWith('phraseAdmin.')&&grammar==='phrase-admin';
   if(key.startsWith('phraseIslands.')||grammar==='phrase-islands')return key.startsWith('phraseIslands.')&&grammar==='phrase-islands';
   return grammar==='manga-reader'?MANGA_READER_COPY_KEY.test(key):!MANGA_READER_COPY_KEY.test(key)&&(grammar==='manga-rush'?key.startsWith('mangaM2.'):!key.startsWith('mangaM2.')&&(grammar==='manga-analysis'?MANGA_ANALYSIS_COPY_KEY.test(key):!MANGA_ANALYSIS_COPY_KEY.test(key)&&(grammar==='conjugations'?key.startsWith('conjugations.'):!key.startsWith('conjugations.')&&(grammar==='puyi'?key.startsWith('puyi.'):grammar==='study'?STUDY_COPY_KEY.test(key):grammar==='local'?key.startsWith('localDeck.'):grammar==='backup'?key.startsWith('deckBackup.'):!key.startsWith('puyi.')&&!STUDY_COPY_KEY.test(key)&&!key.startsWith('localDeck.')&&!key.startsWith('deckBackup.')&&GRAMMAR_COPY_KEY.test(key)===grammar))));
  };
@@ -21,6 +22,7 @@ export function compiledTranslations(){return '// Generated translation aggregat
  "import * as mangaRush from './manga-rush.generated';\nimport * as mangaAnalysis from './manga-analysis.generated';\nimport * as mangaReader from './manga-reader.generated';\nimport * as study from './deck-study.generated';\nimport * as core from './core.generated';\nimport * as grammar from './grammar.generated';\nimport * as backup from './deck-backup.generated';\nimport * as puyi from './puyi.generated';\nimport * as local from './local-decks.generated';\nimport * as conjugations from './conjugations.generated';\nimport * as islands from './phrase-islands.generated';\n"+
  ['es','en','ca'].map(lang=>`export const ${lang}:Record<string,string> = {...mangaRush.${lang},...mangaAnalysis.${lang},...mangaReader.${lang},...puyi.${lang},...study.${lang},...core.${lang},...grammar.${lang},...backup.${lang},...local.${lang},...conjugations.${lang},...islands.${lang}};\n`).join('');}
 export function compileTranslations(){
+ fs.writeFileSync('src/app/features/phrase-islands-admin/phrase-admin-copy.generated.ts',compiledDomain('phrase-admin'));
  fs.writeFileSync('src/assets/i18n/phrase-islands.generated.ts',compiledDomain('phrase-islands'));
  fs.writeFileSync('src/assets/i18n/manga-rush.generated.ts',compiledDomain('manga-rush'));
  fs.writeFileSync('src/assets/i18n/manga-analysis.generated.ts',compiledDomain('manga-analysis'));

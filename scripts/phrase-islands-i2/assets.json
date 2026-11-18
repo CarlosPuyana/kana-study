@@ -1,0 +1,12 @@
+[
+  {
+    "name": "AivisSpeech-Engine-Windows-x64-1.2.0.7z.001",
+    "url": "https://github.com/Aivis-Project/AivisSpeech-Engine/releases/download/1.2.0/AivisSpeech-Engine-Windows-x64-1.2.0.7z.001",
+    "sha256": "bfbceba2e14dc7f23c7f3695f9ac0381baf91b15d6544e98384574eaadd271f3"
+  },
+  {
+    "name": "voicevox_engine-windows-cpu-0.26.2.7z.001",
+    "url": "https://github.com/VOICEVOX/voicevox_engine/releases/download/0.26.2/voicevox_engine-windows-cpu-0.26.2.7z.001",
+    "sha256": "55824ce0267a121c5d8f47c7d5d82a08b5c072f8417fddd20dc4096ac47aeaaa"
+  }
+]

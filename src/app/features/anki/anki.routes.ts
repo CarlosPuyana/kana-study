@@ -4,6 +4,10 @@ import {inject} from '@angular/core';
 import {CUSTOM_DECKS_ENABLED} from '../../core/services/custom-deck-gates';
 
 export const ANKI_ROUTES: Routes = [
+  {path:'islands/listen',data:{mode:'listen',titleKey:'phraseIslands.mode.listen.title'},loadComponent:()=>import('../phrase-islands/phrase-session.page').then(m=>m.PhraseSessionPage)},
+  {path:'islands/shadowing',data:{mode:'shadowing',titleKey:'phraseIslands.mode.shadowing.title'},loadComponent:()=>import('../phrase-islands/phrase-session.page').then(m=>m.PhraseSessionPage)},
+  {path:'islands/recall',data:{mode:'recall',titleKey:'phraseIslands.mode.recall.title'},loadComponent:()=>import('../phrase-islands/phrase-session.page').then(m=>m.PhraseSessionPage)},
+  { path: 'islands/explore', data: { explore: true, titleKey: 'phraseIslands.browse' }, loadComponent: () => import('../phrase-islands/phrase-islands.page').then(m => m.PhraseIslandsPage) },
   { path: 'islands', data: { titleKey: 'phraseIslands.title' }, loadComponent: () => import('../phrase-islands/phrase-islands.page').then(m => m.PhraseIslandsPage) },
   {path:'backups',canMatch:[()=>inject(CUSTOM_DECKS_ENABLED)()],canActivate:[guestCustomRouteGuard],data:{titleKey:'settings.data'},loadComponent:()=>import('../anki-backup/anki-backup.page').then(m=>m.AnkiBackupPage)},
   {

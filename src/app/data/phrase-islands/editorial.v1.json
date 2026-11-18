@@ -1,0 +1,581 @@
+{
+  "schemaVersion": 1,
+  "records": {
+    "pi-everyday-001": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "今日は家で休む。",
+      "analyzedReading": "キョオワイエデヤスム.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-everyday-002": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "昨日は早く寝ました。",
+      "analyzedReading": "キノオワハヤクネマシタ.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-everyday-003": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "まだ朝ご飯を食べていません。",
+      "analyzedReading": "マダアサゴハンオタベテイマセン.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-everyday-004": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "水を飲みたいです。",
+      "analyzedReading": "ミズオノミタイデス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-everyday-005": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "窓を開けてもいいですか？",
+      "analyzedReading": "マドオアケテモイイデスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-everyday-006": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "今日はあまり寒くないです。",
+      "analyzedReading": "キョオワアマリサムクナイデス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-conversation-001": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "初めまして。",
+      "analyzedReading": "ハジメマシテ.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-conversation-002": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "もう一度言ってくれる？",
+      "analyzedReading": "モオイチドイッテクレル?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-conversation-003": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "ゆっくり話してもらえますか？",
+      "analyzedReading": "ユックリハナシテモラエマスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-conversation-004": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "日本語が少しわかります。",
+      "analyzedReading": "ニホンゴガスコシワカリマス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-conversation-005": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "それはどういう意味ですか？",
+      "analyzedReading": "ソレワドオユウイミデスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-conversation-006": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "また明日ね。",
+      "analyzedReading": "マタアシタネ.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-work-001": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "何時に始まりますか？",
+      "analyzedReading": "ナンジニハジマリマスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-work-002": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "この漢字の読み方を教えてください。",
+      "analyzedReading": "コノカンジノヨミカタオオシエテクダサイ.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-work-003": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "今日は仕事がたくさんあります。",
+      "analyzedReading": "キョオワシゴトガタクサンアリマス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-work-004": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "明日までに出します。",
+      "analyzedReading": "アシタマデニダシマス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-work-005": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "ここで勉強してもいいですか？",
+      "analyzedReading": "ココデベンキョオシテモイイデスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-work-006": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "今日は学校へ行かない。",
+      "analyzedReading": "キョオワガッコオエイカナイ.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-shopping-001": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "これを二つください。",
+      "analyzedReading": "コレオフタツクダサイ.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-shopping-002": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "ほかの色はありますか？",
+      "analyzedReading": "ホカノイロワアリマスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-shopping-003": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "カードで払えますか？",
+      "analyzedReading": "カアドデハラエマスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-shopping-004": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "袋はいりません。",
+      "analyzedReading": "フクロハイリマセン.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-shopping-005": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "この店は何時までですか？",
+      "analyzedReading": "コノミセワナンジマデデスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-shopping-006": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "もう少し安いものはありますか？",
+      "analyzedReading": "モオスコシヤスイモノワアリマスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-travel-001": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "駅はどこですか？",
+      "analyzedReading": "エキワドコデスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-travel-002": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "ここから歩いて行けますか？",
+      "analyzedReading": "ココカラアルイテイケマスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-travel-003": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "次の駅で降ります。",
+      "analyzedReading": "ツギノエキデオリマス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-travel-004": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "道に迷ってしまいました。",
+      "analyzedReading": "ミチニマヨッテシマイマシタ.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-travel-005": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "京都に行ったことがあります。",
+      "analyzedReading": "キョオトニイッタコトガアリマス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-travel-006": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "写真を撮ってもいいですか？",
+      "analyzedReading": "シャシンオトッテモイイデスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-hobbies-001": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "休みの日は何をしますか？",
+      "analyzedReading": "ヤスミノヒワナニオシマスカ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-hobbies-002": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "音楽を聴くのが好きです。",
+      "analyzedReading": "オンガクオキクノガスキデス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-hobbies-003": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "友達と映画を見ました。",
+      "analyzedReading": "トモダチトエエガオミマシタ.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-hobbies-004": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "週末は料理をしたいです。",
+      "analyzedReading": "シュウマツワリョオリオシタイデス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-hobbies-005": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "ギターを弾くことができます。",
+      "analyzedReading": "ギタアオヒクコトガデキマス.",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    },
+    "pi-hobbies-006": {
+      "status": "approved",
+      "contentRevision": "1",
+      "text": "一緒に散歩しない？",
+      "analyzedReading": "イッショニサンポシナイ?",
+      "reviewedAt": "2026-11-17",
+      "reviewType": "agent-editorial-and-technical",
+      "checks": [
+        "Japanese and register",
+        "furigana and contextual reading",
+        "ES EN CA meaning and explanation",
+        "structural Spanish reference",
+        "query reading inspected"
+      ],
+      "nativeListening": "not-certified"
+    }
+  }
+}

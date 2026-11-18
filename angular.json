@@ -85,6 +85,23 @@
               "optimization": true,
               "sourceMap": false,
               "extractLicenses": true
+            },
+            "phrase-admin": {
+              "browser": "src/main.phrase-islands-admin.ts",
+              "tsConfig": "tsconfig.phrase-admin.json",
+              "index": "src/index.phrase-islands-admin.html",
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "public/audio/phrase-islands",
+                  "output": "audio/phrase-islands"
+                }
+              ],
+              "outputPath": {
+                "base": "dist/phrase-islands-admin",
+                "browser": "browser"
+              },
+              "sourceMap": false
             }
           },
           "defaultConfiguration": "production"
@@ -100,6 +117,9 @@
             },
             "development": {
               "buildTarget": "kana-study:build:development"
+            },
+            "phrase-admin": {
+              "buildTarget": "kana-study:build:development,phrase-admin"
             }
           },
           "defaultConfiguration": "development"

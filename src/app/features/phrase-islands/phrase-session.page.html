@@ -1,0 +1,89 @@
+<main class="session-shell" [class]="'session-shell mode-'+mode" [class.has-answer]="revealed()">
+ <header class="session-header">
+  <a class="session-back" routerLink="/anki/islands" [queryParams]="query()" [attr.aria-label]="i18n.t('common.back')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" /></svg></a>
+  <h1>{{i18n.t('phraseIslands.mode.'+mode+'.title')}}</h1>
+  @if(phrases().length&&!finished()&&!(mode==='recall'&&recall.complete())) {<p class="progress" role="status"><span class="sr-only">{{t('position')}}</span>{{index()+1}} <span>/ {{phrases().length}}</span></p>}
+ </header>
+ @if (!phrases().length) { <div class="session-empty"><h2>{{t('empty')}}</h2></div> }
+ @else if (finished()) { <div class="session-empty"><span aria-hidden="true">✓</span><h2 role="status">{{t('finished')}}</h2></div> }
+ @else if (mode==='recall'&&recall.complete()) {
+  <app-phrase-recall-summary [round]="recall.round().number" [total]="recall.evaluated().length" [correct]="recall.correct()" [failed]="recall.failedIds().length" [percent]="recall.percent()" [canUndo]="recall.canUndo()" (repeatFailed)="repeatFailed()" (finish)="finish()" (undo)="undoEvaluation()" />
+ }
+ @else {
+  @if(mode==='recall'){
+   <div class="recall-round" role="status">
+    <span>{{i18n.t('phraseIslands.rush.round',{round:recall.round().number})}} · {{i18n.t('phraseIslands.rush.done',{done:recall.evaluated().length,total:phrases().length})}}</span>
+    <span class="answer-status">{{i18n.t('phraseIslands.rush.'+(recallStatus()===undefined?'unrated':recallStatus()?'known':'unknown'))}}</span>
+   </div>
+  }
+  <progress class="session-track" [value]="index()+1" [max]="phrases().length" [attr.aria-label]="t('position')"></progress>
+  <article class="session-card" appRecallSwipe [enabled]="canEvaluate()" [phraseKey]="mode==='recall'?recall.round().number+':'+current().id:''" (recallSwipe)="evaluate($event)">
+   <div class="task-content">
+    <p class="task-label">{{t('focus.'+mode)}}</p>
+    @if(mode==='recall'){<p class="prompt">{{text('natural')}}</p>}
+    @if(mode!=='recall'||revealed()){
+     @if(mode==='listen'){<div class="sound-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>}
+     <div class="japanese"><h2 lang="ja"><app-furigana-text [segments]="current().segments" /></h2><p class="reading" lang="ja">{{current().reading}}</p></div>
+     <div class="transport">
+      <button class="primary play" type="button" (click)="start()"><span aria-hidden="true">▶</span> {{t('play')}}</button>
+      @if(mode==='listen'){
+       @if(paused()){<button type="button" (click)="resume()">{{t('resume')}}</button>}
+       @else {<button type="button" (click)="pause()" [disabled]="!running()">{{t('pause')}}</button>}
+      }
+      <button class="quiet stop" type="button" (click)="stop()">{{t('stop')}}</button>
+     </div>
+     <p class="audio-status" role="status" [class.is-waiting]="waiting()" [class.is-error]="audio.state()==='error'||audio.state()==='blocked'">{{waiting()?t(paused()?'paused':'waiting'):i18n.t('phraseIslands.audio.'+audio.state())}}</p>
+    } @else {
+     <p class="task-hint">{{t('recallHint')}}</p>
+     <button class="primary reveal" type="button" (click)="revealed.set(true)">{{t('reveal')}} <span aria-hidden="true">↓</span></button>
+    }
+   </div>
+   @if(mode==='shadowing'){
+    <aside class="shadow-cue" [class.is-waiting]="waiting()">
+     <div class="cue-step" [class.active]="!waiting()"><span class="step-number">1</span><div><strong>{{t('listenStep')}}</strong><p>{{t('listenHint')}}</p></div></div>
+     <div class="cue-step" [class.active]="waiting()"><span class="step-number">2</span><div><strong>{{t('imitateStep')}}</strong><p>{{t('imitateHint')}}</p></div></div>
+     <p class="cue-note">{{t('manualAdvance')}}</p>
+    </aside>
+   }
+   @if(mode==='recall'&&revealed()){
+    <section class="recall-grading" [attr.aria-label]="i18n.t('phraseIslands.rush.evaluate')">
+     <div class="grade-actions">
+      <button class="grade-unknown" type="button" (click)="evaluate(false)" [disabled]="!canEvaluate()"><span aria-hidden="true">←</span> {{i18n.t('phraseIslands.rush.unknown')}}</button>
+      <button class="grade-known" type="button" (click)="evaluate(true)" [disabled]="!canEvaluate()">{{i18n.t('phraseIslands.rush.known')}} <span aria-hidden="true">→</span></button>
+     </div>
+     <p class="recall-help notice">{{i18n.t('phraseIslands.rush.inputHelp')}}</p>
+    </section>
+   }
+   <div class="support">
+    @if(mode!=='recall'){
+     <button class="meaning-toggle" type="button" [attr.aria-expanded]="meaning()" aria-controls="session-meaning" (click)="meaning.set(!meaning())">{{t('meaning')}} <span aria-hidden="true">{{meaning()?'−':'+'}}</span></button>
+    }
+    @if(mode==='recall'&&revealed()||mode!=='recall'&&meaning()){
+     <section id="session-meaning" class="meaning-panel">
+      @if(mode!=='recall'){<p class="natural">{{text('natural')}}</p>}
+      <details class="phrase-details" [attr.open]="null"><summary>{{t('details')}}</summary><dl><dt>{{i18n.t('phraseIslands.structural')}}</dt><dd>{{text('structural')}}</dd><dt>{{i18n.t('phraseIslands.explanation')}}</dt><dd>{{text('explanation')}}</dd></dl></details>
+     </section>
+    }
+   </div>
+   <nav class="session-navigation" [attr.aria-label]="t('navigation')">
+    <button class="quiet" type="button" (click)="move(-1)" [disabled]="index()===0">{{t('previous')}}</button>
+    <button class="next"  type="button" (click)="move(1)" [disabled]="index()===phrases().length-1">{{t('next')}} <span aria-hidden="true">→</span></button>
+    @if(mode==='recall'){<button class="undo quiet" type="button" [disabled]="!recall.canUndo()" (click)="undoEvaluation()">{{i18n.t('phraseIslands.rush.undo')}}</button>}
+    <button class="finish quiet" type="button" (click)="finish()">{{t('finish')}}</button>
+   </nav>
+  </article>
+  <details class="session-settings"><summary>{{t('settings')}} <span class="settings-summary">{{speed()}}× @if(mode==='listen'){ · {{repeats()}} {{t('repeatShort')}} } @if(mode==='shadowing'){ · {{shadowGap()}} s }</span></summary>
+   <fieldset><legend class="sr-only">{{t('settings')}}</legend>
+    <label>{{t('speed')}} <select [value]="speed()" (change)="setSpeed($any($event.target).value)"><option value="0.8">0,8×</option><option value="1">1×</option><option value="1.2">1,2×</option></select></label>
+    @if(mode==='listen'){
+     <label>{{t('repeats')}} <select [value]="repeats()" (change)="repeats.set(+$any($event.target).value)"><option>1</option><option>2</option><option>3</option></select></label>
+     <label>{{t('gap')}} <select [value]="gap()" (change)="gap.set(+$any($event.target).value)"><option value="0">0 s</option><option value="1">1 s</option><option value="2">2 s</option></select></label>
+    }
+    @if(mode==='shadowing'){
+     <label>{{t('shadowGap')}} <select [value]="shadowGap()" (change)="shadowGap.set(+$any($event.target).value)"><option value="2">2 s</option><option value="3">3 s</option><option value="5">5 s</option><option value="8">8 s</option></select></label>
+    }
+   </fieldset>
+  </details>
+  <p class="notice">{{t('background')}}</p>
+ }
+</main>
