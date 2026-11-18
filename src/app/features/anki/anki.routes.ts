@@ -4,6 +4,7 @@ import {inject} from '@angular/core';
 import {CUSTOM_DECKS_ENABLED} from '../../core/services/custom-deck-gates';
 
 export const ANKI_ROUTES: Routes = [
+  { path: 'puyi-islands', data: { titleKey: 'puyiIslands.title' }, loadChildren: () => import('../puyi-islands/puyi-private.routes').then(m => m.PUYI_PRIVATE_ROUTES) },
   {path:'islands/listen',data:{mode:'listen',titleKey:'phraseIslands.mode.listen.title'},loadComponent:()=>import('../phrase-islands/phrase-session.page').then(m=>m.PhraseSessionPage)},
   {path:'islands/shadowing',data:{mode:'shadowing',titleKey:'phraseIslands.mode.shadowing.title'},loadComponent:()=>import('../phrase-islands/phrase-session.page').then(m=>m.PhraseSessionPage)},
   {path:'islands/recall',data:{mode:'recall',titleKey:'phraseIslands.mode.recall.title'},loadComponent:()=>import('../phrase-islands/phrase-session.page').then(m=>m.PhraseSessionPage)},

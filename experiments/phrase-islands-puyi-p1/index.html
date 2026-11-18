@@ -1,0 +1,13 @@
+<!doctype html><html lang="es" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="no-referrer"><title>P1</title><link rel="stylesheet" href="lab.css"></head><body><main>
+<header><p data-t="local"></p><h1 data-t="title"></h1><p data-t="intro"></p><div class="header-options"><label><span data-t="language"></span><select id="language"><option>ES</option><option>EN</option><option>CA</option></select></label><button id="theme" data-t="theme"></button></div></header>
+<p class="warn" data-t="warning"></p><div class="lab-grid"><section><div class="settings">
+<label><span data-t="duration"></span><select id="duration"><option value="5">5 min</option><option value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option><option value="test" data-t="testDuration"></option></select></label>
+<label><span data-t="testSeconds"></span><input id="seconds" type="number" min="1" max="120" value="20"></label>
+<label><span data-t="gap"></span><select id="gap"><option value="5">5 s</option><option value="0">0 s</option><option value="1">1 s</option><option value="2">2 s</option><option value="10">10 s</option></select></label>
+<label><span data-t="strategy"></span><select id="strategy"><option value="reuse" data-t="reuse"></option><option value="replace" data-t="replace"></option></select></label>
+<label class="check"><input id="preload" type="checkbox"><span data-t="preload"></span></label><label class="check"><input id="mediaSession" type="checkbox" checked><span>Media Session</span></label>
+<label class="check"><input id="nativeLoop" type="checkbox"><span data-t="nativeLoop"></span></label></div>
+<div class="controls"><button id="start" class="primary" data-t="start"></button><button id="pause" data-t="pause"></button><button id="resume" data-t="resume"></button><button id="stop" data-t="stop"></button></div>
+<p id="status" class="status" role="status" aria-live="polite"></p><progress id="progress" max="1" value="0" aria-label="Session"></progress><div id="clips" class="clips"></div><div id="audioHost" hidden aria-hidden="true"></div><p data-t="timerRule"></p><p data-t="credit"></p></section>
+<section class="log"><h2 data-t="events"></h2><p data-t="logHelp"></p><div class="controls"><button id="export" data-t="export"></button><button id="mark" data-t="mark"></button></div><p id="capabilities"></p><pre id="events" tabindex="0"></pre></section></div>
+</main><script type="module" src="lab.mjs"></script></body></html>

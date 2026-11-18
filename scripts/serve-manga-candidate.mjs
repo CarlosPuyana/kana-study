@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 /** Loopback preview only. Runtime Auth is unconfigured unless the browser test supplies its controlled config. */
 export async function serveCandidate(port=4402){
  const root=path.resolve('dist/kana-study-candidate/browser'),base='/kana-study/';
- const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.zip':'application/zip','.woff2':'font/woff2'};
+ const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.zip':'application/zip','.woff2':'font/woff2','.mp3':'audio/mpeg'};
  const server=http.createServer(async(req,res)=>{try{
   const url=new URL(req.url,'http://127.0.0.1');if(url.pathname==='/'){res.writeHead(302,{Location:base}).end();return;}
   if(!url.pathname.startsWith(base)){res.writeHead(404).end();return;}

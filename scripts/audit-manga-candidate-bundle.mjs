@@ -10,9 +10,10 @@ for(const [k,v]of Object.entries(outputs))if(v.entryPoint?.startsWith('angular:s
 const initialBytes=[...initial].reduce((n,k)=>n+outputs[k].bytes,0);assert(initialBytes<750000,`Candidate rejected: ${initialBytes} bytes must be strictly below 750000`);
 const inputs=[...initial].flatMap(k=>Object.keys(outputs[k].inputs??{}));assert(inputs.some(k=>k.endsWith('/release/manga-candidate.providers.ts')));
 assert(!Object.values(outputs).flatMap(v=>Object.keys(v.inputs??{})).some(k=>/manga-manual|custom-deck\.fixture|\.spec\.|\/e2e\//.test(k)),'Test/manual code in candidate');
-const lazy={};for(const source of ['deck-backup.service.ts','deck-backup-contract.ts','local-decks.generated.ts','custom-deck.repository.ts','manga-deck-assisted.service.ts','phrase-islands.page.ts','phrase-islands.generated.ts']){
+const lazy={};for(const source of ['deck-backup.service.ts','deck-backup-contract.ts','local-decks.generated.ts','custom-deck.repository.ts','manga-deck-assisted.service.ts','phrase-islands.page.ts','phrase-islands.generated.ts','puyi-private.routes.ts','puyi-private-catalog.ts']){
  const files=Object.keys(outputs).filter(k=>Object.keys(outputs[k].inputs??{}).some(i=>i.endsWith('/'+source)));assert(files.length);assert(files.every(k=>!initial.has(k)),`${source} is initial`);lazy[source]=files;
 }
+assert(!Object.values(outputs).flatMap(v=>Object.keys(v.inputs??{})).some(k=>/puyi-demo-catalog|main\.puyi-|puyi-editor|phrase-islands-authoring|phrase-islands-puyi-review/.test(k)),'Private authoring or demo input in Pages');
 assert.equal(JSON.parse(fs.readFileSync('angular.json')).projects['kana-study'].architect.build.options.browser,'src/main.ts');
 const normalStats='dist/kana-study/browser-stats.json';
 if(fs.existsSync(normalStats)){

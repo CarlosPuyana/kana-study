@@ -4,14 +4,16 @@ import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
 import {once} from 'node:events';
 import {createHmac,randomBytes,randomUUID} from 'node:crypto';
-import {writeFile,mkdtemp,unlink} from 'node:fs/promises';
+import {writeFile,mkdir,mkdtemp,unlink} from 'node:fs/promises';
 import {resolve,delimiter} from 'node:path';
 import {createServer} from 'node:net';
 import pg from '../.cache/h4a1-runtime/node_modules/pg/lib/index.js';
 import {puyiContract,adminId,readerId,content} from '../supabase/tests/puyi-contract.mjs';
 const root=process.cwd(),runtime=resolve(root,'.cache/h4a1-runtime'),bin=resolve(runtime,'node_modules/@embedded-postgres/windows-x64/native/bin');
 const password=randomBytes(32).toString('hex'),secret=randomBytes(48).toString('hex');
-const run=await mkdtemp(resolve(root,'.cache/puyi/native-')),pass=resolve(run,'password');let postgres,rest,client;
+const scratch=resolve(root,'.cache/puyi');
+await mkdir(scratch,{recursive:true});
+const run=await mkdtemp(resolve(scratch,'native-')),pass=resolve(run,'password');let postgres,rest,client;
 const redact=s=>String(s).replaceAll(password,'[redacted]').replaceAll(secret,'[redacted]').replace(/eyJ[\w-]+\.[\w-]+\.[\w-]+/g,'[jwt]');
 const launch=(file,args,options={})=>spawn(file,args,{cwd:root,windowsHide:true,stdio:['ignore','pipe','pipe'],...options});
 async function command(file,args,options={}){const c=launch(file,args,options);let text='';c.stdout.on('data',x=>text+=x);c.stderr.on('data',x=>text+=x);const [code]=await once(c,'exit');assert.equal(code,0,redact(text));return redact(text);}
@@ -28,6 +30,8 @@ try{
  await ready(async()=>{const c=new pg.Client({host:'127.0.0.1',port,user:'postgres',password,database:'postgres'});try{await c.connect();return true;}finally{await c.end().catch(()=>{});}});
  client=new pg.Client({host:'127.0.0.1',port,user:'postgres',password,database:'postgres'});await client.connect();
  const sqlPassed=await puyiContract({query:(...args)=>client.query(...args),exec:q=>client.query(q)});
+ const privateIslands=process.argv.includes('--private-islands')?await import('../supabase/tests/puyi-private-http.mjs'):null;
+ if(privateIslands)await privateIslands.preparePrivateIslands(client);
  await client.query(`create role puyi_authenticator login noinherit password '${password}';grant anon,authenticated to puyi_authenticator;`);
  const config=resolve(run,'postgrest.conf');await writeFile(config,`db-schemas = "public, storage"\ndb-anon-role = "anon"\ndb-pool = 2\nserver-host = "127.0.0.1"\nserver-port = ${httpPort}\n`);
  rest=launch(resolve(runtime,'postgrest-v16.5/postgrest.exe'),[config],{env:{...process.env,LC_ALL:'C',LANG:'C',PATH:bin+delimiter+process.env.PATH,PGRST_DB_URI:`postgres://puyi_authenticator:${password}@127.0.0.1:${port}/postgres`,PGRST_JWT_SECRET:secret}});rest.stdout.on('data',x=>restLog+=x);rest.stderr.on('data',x=>restLog+=x);
@@ -51,7 +55,8 @@ try{
   assert.equal((await client.query('select meaning from public.puyi_cards where id=$1',[raceId])).rows[0].meaning,'winner');
   await client.query('select public.puyi_save_card($1,2,$2::jsonb,null,true)',[raceId,'{}']);await client.query('reset role');console.log('ok native concurrency 1/1: independent writers overlap; CAS rejects stale edit');
  }finally{await second.end();}
- console.log(`${sqlPassed}/${sqlPassed} native SQL and ${httpPassed}/${httpPassed} signed HTTP scenarios passed. Supabase Auth and actual Storage object service remain untested.`);
+ if(privateIslands)await privateIslands.checkPrivateIslands({client,http,jwt,ready,test});
+ console.log(`${sqlPassed}/${sqlPassed} native SQL and ${httpPassed}/${httpPassed} PostgREST HTTP scenarios passed. Supabase Auth and actual Storage object service remain untested.`);
  if(process.argv.includes('--browser'))console.log(await command(process.execPath,[resolve(root,'node_modules/@playwright/test/cli.js'),'test','--config=playwright.puyi.config.ts','--output=.cache/puyi/browser'],{env:{...process.env,PUYI_TEST_REST:`http://127.0.0.1:${httpPort}`,PUYI_TEST_ADMIN:jwt(adminId),PUYI_TEST_READER:jwt(readerId)}}));
 }catch(error){console.error(redact(error.stack));process.exitCode=1;}
 finally{if(rest&&rest.exitCode===null){rest.kill();await once(rest,'exit');}if(client)await client.end().catch(()=>{});if(postgres&&postgres.exitCode===null)await command(resolve(bin,'pg_ctl.exe'),['-D',resolve(run,'data'),'stop','-m','fast']).catch(()=>postgres.kill());await unlink(pass).catch(()=>{});await writeFile(resolve(run,'postgres.log'),redact(pgLog));await writeFile(resolve(run,'postgrest.log'),redact(restLog));}

@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'.',testMatch:'browser.spec.ts',outputDir:'../../.cache/phrase-islands-puyi-p01/browser-results',workers:1,retries:0,timeout:90000,expect:{timeout:15000},use:{baseURL:'http://127.0.0.1:4441/',channel:'msedge',trace:'retain-on-failure'},projects:[{name:'edge-desktop',use:{viewport:{width:1280,height:900},colorScheme:'dark'}}],webServer:{command:'node experiments/phrase-islands-puyi-p1/server.mjs',cwd:'../..',url:'http://127.0.0.1:4441/',reuseExistingServer:true,timeout:30000}});

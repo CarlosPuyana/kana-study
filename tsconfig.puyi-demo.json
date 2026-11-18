@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/puyi-demo"
+  },
+  "files": ["src/main.puyi-demo.ts"]
+}

@@ -20,7 +20,12 @@
     "test:manga-candidate": "node scripts/audit-manga-candidate.mjs",
     "start:phrase-admin": "ng serve --configuration phrase-admin --host 127.0.0.1 --port 4410",
     "build:phrase-admin": "ng build --configuration production,phrase-admin",
-    "phrase-admin": "node scripts/phrase-islands-admin.mjs"
+    "phrase-admin": "node scripts/phrase-islands-admin.mjs",
+    "start:puyi-demo": "ng serve --configuration puyi-demo --host 127.0.0.1 --port 4446",
+    "build:puyi-demo": "ng build --configuration production,puyi-demo",
+    "build:puyi-editor": "ng build --configuration production,puyi-editor",
+    "start:puyi-editor": "node experiments/phrase-islands-puyi-editor/server.mjs",
+    "test:puyi-editor": "node --test experiments/phrase-islands-puyi-editor/editor.test.mjs"
   },
   "dependencies": {
     "@angular/common": "^22.0.0",

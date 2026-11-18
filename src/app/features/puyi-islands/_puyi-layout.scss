@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  --measure: 68rem;
+  --gutter: clamp(1rem, 5vw, 2rem);
+}
+
+.topbar,
+.library,
+.island {
+  width: min(100%, var(--measure));
+  margin-inline: auto;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left)) max(var(--gutter), env(safe-area-inset-right));
+}
+
+button,
+select {
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+button { cursor: pointer; }
+:disabled { opacity: 0.58; cursor: default; }
+
+.intro {
+  margin-block: clamp(1.3rem, 5vw, 3.4rem) 1.4rem;
+}
+
+.intro h1 {
+  margin: 0.25rem 0 0.5rem;
+  font-size: clamp(2.15rem, 6.8vw, 3.4rem);
+  line-height: 1.12;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.intro p { margin: 0; color: var(--text-secondary); line-height: 1.5; }
+.intro .quiet { font-size: 0.84rem; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  scroll-margin-block-end: var(--transport-clearance);
+}

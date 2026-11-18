@@ -86,6 +86,35 @@
               "sourceMap": false,
               "extractLicenses": true
             },
+            "puyi-demo": {
+              "browser": "src/main.puyi-demo.ts",
+              "tsConfig": "tsconfig.puyi-demo.json",
+              "index": "src/index.puyi-demo.html",
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "public/audio/phrase-islands",
+                  "output": "audio/phrase-islands"
+                }
+              ],
+              "outputPath": {
+                "base": "dist/puyi-demo",
+                "browser": "browser"
+              },
+              "sourceMap": false
+            },
+            "puyi-editor": {
+              "browser": "src/main.puyi-editor.ts",
+              "tsConfig": "tsconfig.puyi-editor.json",
+              "index": "src/index.puyi-demo.html",
+              "assets": [],
+              "outputPath": {
+                "base": "dist/puyi-editor",
+                "browser": "browser"
+              },
+              "optimization": { "styles": { "inlineCritical": false } },
+              "sourceMap": false
+            },
             "phrase-admin": {
               "browser": "src/main.phrase-islands-admin.ts",
               "tsConfig": "tsconfig.phrase-admin.json",
@@ -120,6 +149,9 @@
             },
             "phrase-admin": {
               "buildTarget": "kana-study:build:development,phrase-admin"
+            },
+            "puyi-demo": {
+              "buildTarget": "kana-study:build:development,puyi-demo"
             }
           },
           "defaultConfiguration": "development"

@@ -68,9 +68,12 @@ describe('lazy feature routes', () => {
     expect(feature?.loadChildren).toBeTypeOf('function');
     const children = await (feature!.loadChildren as () => Promise<Routes>)();
     expect(children.map(route => route.path)).toEqual([
-      'islands/listen', 'islands/shadowing', 'islands/recall', 'islands/explore', 'islands', 'backups', '', ':deckId/cards', ':deckId/stats', ':deckId/settings', ':deckId/study',
+      'puyi-islands', 'islands/listen', 'islands/shadowing', 'islands/recall', 'islands/explore', 'islands', 'backups', '', ':deckId/cards', ':deckId/stats', ':deckId/settings', ':deckId/study',
     ]);
-    expect(children.every(route => route.loadComponent && !route.component)).toBe(true);
+    const [privateIslands, ...existingPages] = children;
+    expect(privateIslands.loadChildren).toBeTypeOf('function');
+    expect(privateIslands.component).toBeUndefined();
+    expect(existingPages.every(route => route.loadComponent && !route.component)).toBe(true);
   });
 
   it('preserves module routes and availability metadata', () => {

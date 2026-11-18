@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "island": {
+    "id": "42cd3670-cf65-4cb8-9ce9-a6a7d1f89154",
+    "titleJa": "公園の散歩",
+    "title": {"es":"Paseo por el parque","en":"A walk in the park","ca":"Passeig pel parc"},
+    "description": {"es":"Una escena ficticia para practicar planes sencillos."}
+  },
+  "blocks": [
+    {
+      "id": "50ebbf56-d7da-479b-abad-efd1ffb587c2",
+      "name": {"es":"Un plan para hoy","en":"A plan for today","ca":"Un pla per a hui"},
+      "phrases": [
+        {
+          "id":"498f9845-eaef-4bd3-a939-66913af6da7a",
+          "japanese":"公園を散歩する。","reading":"こうえんをさんぽする。",
+          "segments":[{"text":"公園","reading":"こうえん"},{"text":"を"},{"text":"散歩","reading":"さんぽ"},{"text":"する。"}],
+          "natural":{"es":"Voy a dar un paseo por el parque.","en":"I’m going for a walk in the park.","ca":"Faré una passejada pel parc."},
+          "structural":{"es":"Parque [trayecto] + dar un paseo."},
+          "explanation":{"es":"を puede marcar el lugar por el que se realiza un movimiento."},
+          "register":"informal","status":"proposed"
+        },
+        {
+          "id":"e737c69a-5b78-4e6b-a3d3-28ea51e66469",
+          "japanese":"少し休もう。","reading":"すこしやすもう。",
+          "segments":[{"text":"少","reading":"すこ"},{"text":"し"},{"text":"休","reading":"やす"},{"text":"もう。"}],
+          "natural":{"es":"Descansemos un poco."},"register":"informal","status":"proposed"
+        }
+      ],
+      "prompts": [
+        {
+          "id":"172acbf7-58d8-456a-aafa-cfa974e86b0e",
+          "japanese":"今日、何をする？","reading":"きょう、なにをする？",
+          "segments":[{"text":"今日","reading":"きょう"},{"text":"、"},{"text":"何","reading":"なに"},{"text":"をする？"}],
+          "natural":{"es":"¿Qué vas a hacer hoy?"},"register":"informal","status":"proposed",
+          "answerPhraseIds":["498f9845-eaef-4bd3-a939-66913af6da7a"]
+        }
+      ]
+    }
+  ]
+}

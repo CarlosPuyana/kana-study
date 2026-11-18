@@ -1,0 +1,191 @@
+<main class="island" [class.shadowing]="practiceMode() === 'shadowing'">
+  <a class="back" [routerLink]="source.libraryPath || '/'"><span aria-hidden="true">←</span> {{ copy.t(previewOnly ? 'puyi.backEditor' : 'puyi.back') }}</a>
+  @if (source.status && source.status() !== 'ready') {
+    <h1>{{ copy.t('puyiIslands.title') }}</h1>
+    <app-puyi-access-note />
+  } @else if (island(); as currentIsland) {
+    <header class="intro">
+      <h1 lang="ja">{{ currentIsland.japanese }}</h1>
+      <p class="island-subtitle">{{ text(currentIsland.title) }}</p>
+      <p>{{ text(currentIsland.description) }}</p>
+    </header>
+    @if (block(); as currentBlock) {
+      <div class="island-layout">
+        <nav class="block-menu" [attr.aria-label]="copy.t('puyi.blocks')">
+          @for (choice of currentIsland.blocks; track choice.id) {
+            <button type="button" [attr.aria-pressed]="choice.id === currentBlock.id"
+              [attr.aria-label]="copy.t(previewOnly ? 'puyi.openBlock' : 'puyi.playBlock', {block: text(choice.name)})"
+              (click)="activateBlock(choice)">
+              <span>{{ text(choice.name) }}</span>
+              <small>{{ copy.t('puyi.phraseCount', {count: choice.phraseCount ?? choice.phrases.length}) }}</small>
+              @if (!previewOnly) { <span class="block-play" aria-hidden="true">▶</span> }
+            </button>
+          }
+        </nav>
+        <section class="block-content" aria-labelledby="puyi-block-title">
+          @let count = currentBlock.phraseCount ?? currentBlock.phrases.length;
+          @let countLabel = copy.t('puyi.phraseCount', {count: count});
+          <header class="block-heading" [class.playable]="!previewOnly && count > 0">
+            <h2 id="puyi-block-title" [attr.aria-label]="text(currentBlock.name)">
+              @if (!previewOnly && count > 0) {
+                <button type="button" class="block-heading-play"
+                  [attr.aria-label]="copy.t('puyi.play') + ' · ' + text(currentBlock.name)"
+                  (click)="activateBlock(currentBlock)">
+                  <span>{{ text(currentBlock.name) }}</span>
+                  <span class="block-meta">{{ countLabel }} <span aria-hidden="true">▶</span></span>
+                </button>
+              } @else { {{ text(currentBlock.name) }} }
+            </h2>
+            @if (previewOnly || !currentBlock.phrases.length) {
+              <span class="block-meta">{{ countLabel }}</span>
+            }
+          </header>
+          @if (!previewOnly) { <div class="practice-options">
+            <div class="practice-modes" role="group" [attr.aria-label]="copy.t('puyi.mode')">
+              <button type="button" [attr.aria-pressed]="practiceMode() === 'block'" (click)="selectMode('block')">
+                {{ copy.t('puyi.mode.playback') }}
+              </button>
+              <button type="button" [attr.aria-pressed]="practiceMode() === 'shadowing'" (click)="selectMode('shadowing')">
+                {{ copy.t('puyi.mode.shadowing') }}
+              </button>
+              <button type="button" [attr.aria-pressed]="practiceMode() === 'continuous'" (click)="selectMode('continuous')">
+                {{ copy.t('puyi.mode.continuous') }}
+              </button>
+            </div>
+            @if (practiceMode() === 'shadowing') {
+              <label class="turn-pause">
+                {{ copy.t('puyi.shadowing.pause') }}
+                <select [disabled]="player.canRepeat()" (change)="selectPause($event)">
+                  @for (seconds of pauseOptions; track seconds) {
+                    <option [value]="seconds" [selected]="seconds === imitationSeconds()">{{ copy.t('puyi.seconds', {seconds}) }}</option>
+                  }
+                </select>
+              </label>
+            }
+            @if (practiceMode() === 'continuous') {
+              <div class="listen-settings">
+                <label class="turn-pause">
+                  {{ copy.t('puyi.continuous.duration') }}
+                  <select [disabled]="player.mode() === 'continuous' && player.selectedId() !== null"
+                    (change)="selectDuration($event)">
+                    @for (option of durationOptions; track option) {
+                      <option [value]="option" [selected]="option === minutes()">{{ copy.t('puyi.minutes', {minutes: option}) }}</option>
+                    }
+                  </select>
+                </label>
+                <label class="turn-pause">
+                  {{ copy.t('puyi.continuous.silence') }}
+                  <select [disabled]="player.mode() === 'continuous' && player.selectedId() !== null"
+                    (change)="selectSilence($event)">
+                    @for (option of silenceOptions; track option) {
+                      <option [value]="option" [selected]="option === silenceSeconds()">{{ copy.t('puyi.seconds', {seconds: option}) }}</option>
+                    }
+                  </select>
+                </label>
+              </div>
+            }
+          </div> }
+          <ng-template #phraseRow let-entry let-playable="playable" let-size="size">
+            <ng-template #phraseText>
+              <span class="phrase-text">
+                <app-furigana-text lang="ja" [segments]="entry.segments" [size]="size" />
+                <span class="phrase-translation">{{ text(entry.translation) }}</span>
+              </span>
+            </ng-template>
+            @if (playable) {
+              @let playing = player.playingId() === entry.id;
+              <button type="button" class="phrase-row" [attr.aria-pressed]="playing"
+                [attr.aria-label]="playing ? copy.t('puyi.pause') : copy.t('puyi.listen', {phrase: text(entry.translation)})"
+                (click)="listen(entry)">
+                <ng-container *ngTemplateOutlet="phraseText" />
+                <span class="phrase-play" aria-hidden="true">{{ playing ? 'Ⅱ' : '▶' }}</span>
+              </button>
+            } @else {
+              <div class="phrase-row"><ng-container *ngTemplateOutlet="phraseText" /></div>
+            }
+          </ng-template>
+          <ng-template #questions>
+            @if (currentBlock.questions.length) {
+              <details class="questions">
+                <summary>{{ copy.t('puyi.questions') }}</summary>
+                @for (question of currentBlock.questions; track question.id) {
+                  <div class="question" [class.active]="player.playingId() === question.id">
+                    <ng-container *ngTemplateOutlet="phraseRow; context: {$implicit: question, playable: !previewOnly, size: 'small'}" />
+                  </div>
+                }
+              </details>
+            }
+          </ng-template>
+          @if (practiceMode() === 'shadowing') {
+            <ng-container *ngTemplateOutlet="questions" />
+          }
+          @if (currentBlock.loaded === false) {
+            <p class="block-heading" role="status">{{ copy.t('common.loading') }}</p>
+          }
+          <ol #phraseList class="phrase-list" role="list">
+            @for (phrase of currentBlock.phrases; track phrase.id) {
+              <li [attr.data-phrase-id]="phrase.id" [class.active]="activeId() === phrase.id"
+                [attr.aria-current]="activeId() === phrase.id ? 'step' : null">
+                <ng-container *ngTemplateOutlet="phraseRow; context: {$implicit: phrase, playable: !previewOnly && practiceMode() === 'block', size: 'medium'}" />
+              </li>
+            }
+          </ol>
+          @if (practiceMode() !== 'shadowing') {
+            <ng-container *ngTemplateOutlet="questions" />
+          }
+        </section>
+      </div>
+      @if (!previewOnly) { <section #transport class="transport" [attr.aria-label]="copy.t('puyi.player')">
+        <div class="transport-label">
+          @if (timedTransport()) {
+            <div class="countdown">
+              <strong role="timer" [attr.aria-label]="copy.t('puyi.continuous.remaining')">{{ countdown() }}</strong>
+              <span>{{ copy.t('puyi.continuous.remaining') }}</span>
+            </div>
+          } @else {
+            <strong>
+              @if (player.mode() === 'single') {
+                {{ copy.t(practiceMode() === 'block' ? 'puyi.single' : 'puyi.question') }}
+              } @else {
+                {{ practiceMode() === 'shadowing' ? copy.t('puyi.mode.shadowing') : text(currentBlock.name) }}
+              }
+            </strong>
+          }
+          <p role="status" [class.imitation]="phaseLabel() === 'puyi.shadowing.imitate'">{{ copy.t(phaseLabel()) }}
+            @if (!timedTransport() || player.selectedId()) {
+              <span>· {{ copy.t('puyi.progress', {current: current(), total: total()}) }}</span>
+            }
+          </p>
+          @if (timedTransport()) {
+            <progress [value]="durationSeconds() - remainingSeconds()" [max]="durationSeconds()"
+              [attr.aria-label]="copy.t('puyi.continuous.elapsed')"></progress>
+          } @else {
+            <progress [value]="current()" [max]="total() || 1" [attr.aria-label]="copy.t('puyi.progress', {current: current(), total: total()})"></progress>
+          }
+        </div>
+        <div class="transport-actions">
+          @if (practiceMode() === 'shadowing') {
+            <button type="button" class="repeat" [disabled]="!player.canRepeat()" [attr.aria-label]="copy.t('puyi.repeat')"
+              [title]="copy.t('puyi.repeat')" (click)="player.repeat()"><span aria-hidden="true">↻</span></button>
+          }
+          <button type="button" class="stop" [disabled]="player.phase() === 'idle'" [attr.aria-label]="copy.t('puyi.stop')"
+            (click)="player.stop()"><span aria-hidden="true">■</span></button>
+          <button type="button" class="play" [disabled]="!currentBlock.phrases.length && player.mode() !== 'single'"
+            [attr.aria-label]="copy.t(primaryLabel())" (click)="toggle(currentBlock)">
+            <span aria-hidden="true">{{ player.running() ? 'Ⅱ' : '▶' }}</span>
+            <span class="play-label">
+              @if (primaryLabel() === 'puyi.play') {
+                <span class="label-short">{{ copy.t('puyi.playShort') }}</span>
+                <span class="label-full">{{ copy.t('puyi.play') }}</span>
+              } @else {
+                {{ copy.t(primaryLabel()) }}
+              }
+            </span>
+          </button>
+        </div>
+      </section> }
+    } @else { <p>{{ copy.t('puyi.noBlocks') }}</p> }
+  } @else {
+    <h1>{{ copy.t('puyi.notFound') }}</h1>
+  }
+</main>

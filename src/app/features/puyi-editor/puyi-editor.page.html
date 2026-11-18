@@ -1,0 +1,239 @@
+<main class="editor" [attr.aria-busy]="busy()">
+  <div [attr.inert]="busy() ? '' : null">
+    @if (session.document(); as draft) {
+      <button type="button" class="quiet back" (click)="leave()">← {{ t('back') }}</button>
+      <header class="editor-heading">
+        <h1>{{ text(draft.island.title) || draft.island.titleJa || t('untitled') }}</h1>
+        <div class="actions">
+          <button type="button" (click)="preview(draft)">{{ t('preview') }}</button>
+          <button type="button" (click)="download(draft)">{{ t('export') }}</button>
+          <button type="button" class="primary" (click)="save(draft)">{{ t('save') }}</button>
+        </div>
+      </header>
+      <details class="card">
+        <summary>{{ t('islandDetails') }}</summary>
+        <div class="fields">
+          <label>{{ t('japaneseTitle') }}
+            <input lang="ja" [(ngModel)]="draft.island.titleJa" (ngModelChange)="changed()" />
+          </label>
+          <ng-container *ngTemplateOutlet="localized; context: {$implicit: draft.island.title, label: t('title')}" />
+          <ng-container *ngTemplateOutlet="localized; context: {$implicit: draft.island.description, label: t('description')}" />
+        </div>
+      </details>
+      @for (block of draft.blocks; track block.id; let blockIndex = $index) {
+        <section class="card block" [attr.aria-labelledby]="'block-' + block.id">
+          <div class="block-heading">
+            <h2 [id]="'block-' + block.id">{{ text(block.name) || t('untitledBlock') }}</h2>
+            <button type="button" class="quiet" (click)="removeBlock(draft, blockIndex)">{{ t('removeBlock') }}</button>
+          </div>
+          <details>
+            <summary>{{ t('blockName') }}</summary>
+            <div class="fields">
+              <ng-container *ngTemplateOutlet="localized; context: {$implicit: block.name, label: t('blockName')}" />
+            </div>
+          </details>
+          <ng-container *ngTemplateOutlet="entries; context: {$implicit: block.phrases, draft: draft, kind: 'phrases'}" />
+          <button type="button" class="quiet add" (click)="addEntry(block, 'phrases')">＋ {{ t('addPhrase') }}</button>
+          @if (block.prompts.length) {
+            <h3>{{ t('prompts') }}</h3>
+            <ng-container *ngTemplateOutlet="entries; context: {$implicit: block.prompts, draft: draft, kind: 'prompts'}" />
+          }
+          <button type="button" class="quiet add" (click)="addEntry(block, 'prompts')">＋ {{ t('addQuestion') }}</button>
+        </section>
+      }
+      <button type="button" class="add" (click)="addBlock(draft)">＋ {{ t('addBlock') }}</button>
+      <details class="card">
+        <summary>{{ t('review') }}</summary>
+        <div class="fields">
+          <div class="actions">
+            <button type="button" (click)="check(draft)">{{ t('check') }}</button>
+            <button type="button" (click)="save(draft, 'reviewed')">{{ t('reviewed') }}</button>
+            <button type="button" (click)="save(draft, 'approved')">{{ t('approved') }}</button>
+          </div>
+          @for (version of session.history(); track version) {
+            <div class="version">
+              <span>{{ t('revision', {number: version}) }}</span>
+              @if (version !== session.revision()) {
+                <button type="button" class="quiet" [disabled]="session.dirty()"
+                  [attr.aria-label]="t('restore') + ' ' + t('revision', {number: version})"
+                  (click)="restore(draft, version)">{{ t('restore') }}</button>
+              }
+            </div>
+          }
+        </div>
+      </details>
+    } @else {
+      <header class="editor-heading">
+        <h1>{{ t('editor') }}</h1>
+        <div class="actions">
+          <button type="button" [disabled]="session.importing()" (click)="newIsland()">{{ t('new') }}</button>
+          <button type="button" class="primary" [attr.aria-expanded]="session.importing()" (click)="toggleImport()">
+            {{ t(session.importing() ? 'cancel' : 'import') }}
+          </button>
+        </div>
+      </header>
+      @if (session.importing()) {
+        <section class="card import-panel">
+          <div class="actions">
+            <label class="file">{{ t('file') }} <input type="file" accept=".json,application/json" (change)="chooseFile($event)" /></label>
+            <button type="button" (click)="example()">{{ t('example') }}</button>
+          </div>
+          <label>{{ t('paste') }}
+            <textarea class="json" rows="8" spellcheck="false" [ngModel]="session.raw()" (ngModelChange)="paste($event)"></textarea>
+          </label>
+          <div class="actions">
+            <button type="button" [disabled]="!session.raw().trim()" (click)="validateImport()">{{ t('validate') }}</button>
+            @if (session.candidate(); as candidate) {
+              <button type="button" (click)="preview(candidate)">{{ t('preview') }}</button>
+              <button type="button" class="primary" (click)="confirmImport()">{{ t('confirm') }}</button>
+            }
+          </div>
+          @if (session.candidate(); as candidate) {
+            <strong>{{ text(candidate.island.title) || candidate.island.titleJa || t('untitled') }}</strong>
+            <ul class="import-blocks">
+              @for (block of candidate.blocks; track block.id) {
+                <li>{{ text(block.name) || t('untitledBlock') }} · {{ block.phrases.length }} {{ t('phrases') }}</li>
+              }
+            </ul>
+          }
+        </section>
+      } @else {
+        <ul class="draft-list">
+          @for (item of draftList(); track item.id) {
+            <li><button type="button" (click)="openSaved(item.id)">
+              <strong>{{ text(item.title) || item.titleJa || t('untitled') }}</strong>
+              <span class="muted">{{ t(item.approved ? 'ready' : 'pending') }}</span>
+            </button></li>
+          } @empty { <li class="muted">{{ t('empty') }}</li> }
+        </ul>
+      }
+    }
+  </div>
+  @if (error() || issues().length) {
+    <div #feedback class="feedback card" role="alert" tabindex="-1">
+      @if (error()) { <strong>{{ t(error()) }}</strong> }
+      @if (issues().length) {
+        <ul>@for (issue of issues(); track $index) { <li>{{ issueText(issue) }}</li> }</ul>
+      }
+    </div>
+  }
+  @if (notice()) {
+    <div #feedback class="feedback card" role="status" tabindex="-1">
+      {{ t(notice()) }}
+      @if (job(); as prepared) { <code>{{ prepared.job }}</code> }
+    </div>
+  }
+</main>
+
+<ng-template #localized let-value let-label="label" let-entry="entry">
+  <div class="localized">
+    @for (lang of langs; track lang) {
+      <label>{{ label }} {{ lang.toUpperCase() }}
+        <textarea rows="2" [lang]="lang" [(ngModel)]="value[lang]" (ngModelChange)="changed(entry)"></textarea>
+      </label>
+    }
+  </div>
+</ng-template>
+
+<ng-template #entries let-list let-draft="draft" let-kind="kind">
+  <ol class="entries">
+    @for (entry of list; track entry.id; let index = $index) {
+      <li>
+        <div class="entry-top">
+          <div class="phrase">
+            @if (entry.japanese) { <app-furigana-text lang="ja" [segments]="segments(entry)" /> }
+            @else { <strong>{{ t(kind === 'phrases' ? 'phrase' : 'question') }} {{ index + 1 }}</strong> }
+            @if (text(entry.natural)) { <p>{{ text(entry.natural) }}</p> }
+            <small class="muted">{{ state(entry) }} @if (entry.audio) { · {{ audioState(entry) }} }</small>
+          </div>
+          <div class="actions entry-controls">
+            <button type="button" [attr.aria-expanded]="editing() === entry.id"
+              [attr.aria-label]="t('edit') + ' ' + t(kind === 'phrases' ? 'phrase' : 'question') + ' ' + (index + 1)"
+              (click)="editing.set(editing() === entry.id ? null : entry.id)">{{ t('edit') }}</button>
+            <button type="button" class="quiet icon" [disabled]="$first" [attr.aria-label]="t('up')"
+              (click)="move(list, index, -1)">↑</button>
+            <button type="button" class="quiet icon" [disabled]="$last" [attr.aria-label]="t('down')"
+              (click)="move(list, index, 1)">↓</button>
+            <button type="button" class="quiet" (click)="remove(draft, list, index)">{{ t('remove') }}</button>
+          </div>
+        </div>
+        @if (isQuestion(entry) && entry.answerPhraseIds.length) {
+          <ul class="answer-list" [attr.aria-label]="t('answers')">
+            @for (phrase of answers(draft); track phrase.id) {
+              @if (entry.answerPhraseIds.includes(phrase.id)) { <li><span lang="ja">{{ phrase.japanese }}</span>
+                @if (!phrase.japanese) { {{ t('phrase') }} {{ $index + 1 }} }
+              </li> }
+            }
+          </ul>
+        }
+        @if (editing() === entry.id) {
+          <div class="fields entry-fields">
+            <label>{{ t('japanese') }}
+              <textarea rows="2" lang="ja" [(ngModel)]="entry.japanese" (ngModelChange)="changed(entry, true)"></textarea>
+            </label>
+            <ng-container *ngTemplateOutlet="localized; context: {$implicit: entry.natural, label: t('natural'), entry: entry}" />
+            @if (isQuestion(entry)) {
+              <fieldset>
+                <legend>{{ t('answers') }}</legend>
+                @for (phrase of answers(draft); track phrase.id) {
+                  <label class="answer">
+                    <input type="checkbox" [checked]="entry.answerPhraseIds.includes(phrase.id)" (change)="linked(entry, phrase, $event)" />
+                    @if (phrase.japanese) { <span lang="ja">{{ phrase.japanese }}</span> }
+                    @else { <span>{{ t('phrase') }} {{ $index + 1 }}</span> }
+                  </label>
+                }
+              </fieldset>
+            }
+            <details>
+              <summary>{{ t('detail') }}</summary>
+              <div class="fields">
+                <label>{{ t('reading') }}
+                  <input lang="ja" [(ngModel)]="entry.reading" (ngModelChange)="changed(entry, true)" />
+                </label>
+                <fieldset>
+                  <legend>{{ t('furigana') }}</legend>
+                  @for (segment of entry.segments; track segment; let i = $index) {
+                    <div class="segment">
+                      <label>{{ t('segment') }} {{ i + 1 }} <input lang="ja" [(ngModel)]="segment.text" (ngModelChange)="changed(entry)" /></label>
+                      <label>{{ t('reading') }} <input lang="ja" [(ngModel)]="segment.reading" (ngModelChange)="changed(entry)" /></label>
+                      <button type="button" class="quiet" (click)="entry.segments.splice(i, 1); changed(entry)">{{ t('remove') }}</button>
+                    </div>
+                  }
+                  <button type="button" class="quiet" (click)="entry.segments.push({text: ''}); changed(entry)">{{ t('addSegment') }}</button>
+                </fieldset>
+                <label>{{ t('register') }}
+                  <select [(ngModel)]="entry.register" (ngModelChange)="changed(entry)">
+                    @for (register of registers; track register) { <option [value]="register">{{ t(register) }}</option> }
+                  </select>
+                </label>
+                <ng-container *ngTemplateOutlet="localized; context: {$implicit: entry.structural, label: t('structural'), entry: entry}" />
+                <ng-container *ngTemplateOutlet="localized; context: {$implicit: entry.explanation, label: t('explanation'), entry: entry}" />
+                <fieldset>
+                  <legend>{{ t('vocabulary') }}</legend>
+                  @for (word of entry.vocabulary; track word; let index = $index) {
+                    <div class="segment">
+                      <label>{{ t('word') }} <input lang="ja" [(ngModel)]="word.japanese" (ngModelChange)="changed(entry)" /></label>
+                      <label>{{ t('reading') }} <input lang="ja" [(ngModel)]="word.reading" (ngModelChange)="changed(entry)" /></label>
+                      <button type="button" class="quiet" (click)="entry.vocabulary.splice(index, 1); changed(entry)">{{ t('remove') }}</button>
+                    </div>
+                    <ng-container *ngTemplateOutlet="localized; context: {$implicit: word.meaning, label: t('meaning'), entry: entry}" />
+                  }
+                  <button type="button" class="quiet" (click)="addWord(entry)">{{ t('addWord') }}</button>
+                </fieldset>
+                <label>{{ t('context') }}
+                  <textarea rows="2" [(ngModel)]="entry.context" (ngModelChange)="changed(entry)"></textarea>
+                </label>
+                <label>{{ t('editorialNote') }}
+                  <textarea rows="2" [(ngModel)]="entry.editorialNote" (ngModelChange)="changed(entry)"></textarea>
+                </label>
+              </div>
+            </details>
+            @if (entry.status === 'approved' && !session.dirty()) {
+              <div><button type="button" (click)="prepare(draft, entry)">{{ t('job') }}</button></div>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+</ng-template>

@@ -48,6 +48,8 @@ export const NAVIGATION_AUDIT:readonly RouteAuditEntry[]=[
   {route:'anki/islands/shadowing',entryPoint:'Phrase islands selected topics / practice mode',type:'ui'},
   {route:'anki/islands/recall',entryPoint:'Phrase islands selected topics / practice mode',type:'ui'},
   {route:'anki/islands',entryPoint:'Decks Phrase islands section / Explore islands',type:'ui'},
+  {route:'anki/puyi-islands',entryPoint:'Decks / Islas Puyi',type:'ui'},
+  {route:'anki/puyi-islands/island/:id',entryPoint:'Puyi private library / Island card',type:'dynamic'},
   {route:'anki/islands/explore',entryPoint:'Phrase islands / Explore phrases with topics query parameter',type:'ui'},
   {route:'anki/backups',entryPoint:'Local deck data action (internal gate)',type:'ui'},
   {route:'anki/:deckId/cards',entryPoint:'Deck card browse action',type:'dynamic'},
