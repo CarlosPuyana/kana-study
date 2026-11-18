@@ -20,6 +20,17 @@ const bytes = filename => {
 const objectKey = (island, asset) => `${island}/${asset.id}/r${asset.revision}-${asset.sha256}.mp3`;
 const putJson = (filename, value) => fs.writeFileSync(filename, JSON.stringify(value, null, 2) + '\n', { flag: 'wx' });
 
+export function prepareReviewPublication(review, { includeNotes = true } = {}) {
+  const { document, findClip } = contentFromP2(review);
+  if (!includeNotes) {
+    for (const entry of draftEntries(document)) {
+      entry.context = '';
+      entry.editorialNote = '';
+    }
+  }
+  return preparePublication(document, findClip);
+}
+
 function contentFromP2(review) {
   const { approved, clips } = getAudio(review);
   assert(approved, 'The exact P2 review lacks explicit text approval');
@@ -141,8 +152,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       const { document } = new DraftStore().get(id, revision === undefined ? undefined : Number(revision));
       console.log(preparePublication(document, entry => p6Clip(id, entry)));
     } else if (command === 'review') {
-      const { document, findClip } = contentFromP2(loadReview(id, revision));
-      console.log(preparePublication(document, findClip));
+      console.log(prepareReviewPublication(loadReview(id, revision)));
     } else {
       throw new Error('Choose draft, review or verify');
     }

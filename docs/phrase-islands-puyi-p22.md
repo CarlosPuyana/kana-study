@@ -2,9 +2,30 @@
 
 ## Estado
 
-La revisión P2.1 sigue pendiente de aprobación del propietario. La preparación de P2.2 comprobó las 12 entradas y dejó el generador condicionado a un recibo que vincula la aprobación con el SHA-256 del borrador y cada UUID y revisión. El borrador conserva el estado editorial original. [Revisión privada local](http://127.0.0.1:4444/).
+El propietario aprobó las doce entradas de `grappling-p21-confirmacion.json`, incluidas las propuestas de A4 y A5, la nueva B4 y 道場 en A2 y A3. El recibo vincula esa revisión textual con su SHA-256 y cada UUID y revisión. Los textos y el historial siguen en la carpeta privada de autoría.
 
-Quedan por confirmar las propuestas de A4 y A5, el término para el local en A2 y A3, y la descripción de las molestias y rozaduras en B4. El resultado actual es **0 de 12 candidatos de la isla**. La síntesis y las comprobaciones de pronunciación de la voz quedan pendientes de esa confirmación.
+Están generados y verificados **12 de 12 MP3** de Grappling con AivisSpeech 1.2.0 y Aida Shigeru normal. Son 317.655 bytes y unos 31 s de audio en total. Edge decodificó los doce y el reproductor local sirvió sus SHA-256 exactos con soporte `Range`. El análisis automático no marcó silencios excesivos ni saturación en los MP3. Escuchar especialmente el nombre y las partículas de A2/A3, la lectura de B4 y la entonación de P-A/P-B. Las dos consultas de preguntas no activaron una marca de interrogación. La calidad de la entonación queda para la escucha humana. [Todos los audios en este PC](http://127.0.0.1:4448/?section=all).
+
+## Escuchar y publicar Grappling
+
+Si el reproductor local está cerrado, inicia la vista de la revisión final y abre **Todos los audios**.
+
+```powershell
+$env:PUYI_REVIEW_PORT='4448'
+node experiments/phrase-islands-puyi-review/preview.mjs grappling-p21-confirmacion.json grappling-draft.json
+```
+
+Después de escuchar y aprobar los doce clips, ejecuta desde la raíz de Kana Study:
+
+```powershell
+node experiments/phrase-islands-puyi-editor/publish-grappling.mjs
+```
+
+Cuando queden clips pendientes de aprobación auditiva, escribe `ACEPTO` para confirmar el lote. Si marcaste alguno para corregir, resuélvelo primero. El comando lee la configuración pública del Kana Study desplegado, comprueba el bucket con el endpoint público de Storage y solicita el correo y la contraseña oculta de la cuenta propietaria existente. Usa la clave publicable y conserva la sesión en memoria durante la ejecución.
+
+El publicador guarda el contenido aprobado con los UUID originales, sube los MP3 al bucket privado y comprueba su SHA-256 al descargarlos. Los contextos originales y las notas de autoría quedan locales. Luego publica, prueba el catálogo, abre los dos bloques y vuelve a comprobar sus doce archivos. Si se interrumpe, repite el comando. Una revisión publicada idéntica se comprueba sin guardarla de nuevo. Una revisión previa diferente detiene el flujo para respetar los cambios editoriales.
+
+Al terminar, abre el enlace mostrado, elige un bloque y prueba Reproducción, Shadowing y Escucha continua en la aplicación desplegada. Para repetir la comprobación de catálogo, bloques y MP3 con una cuenta lectora autorizada, ejecuta el mismo comando con `--comprobar`. En el momento de preparar este flujo, Supabase devolvió `401` al catálogo sin sesión y el endpoint público no dejó ver el bucket privado. Queda pendiente la publicación autenticada y la comprobación de sus tres modos en la web desplegada.
 
 ## Generación tras aprobar el texto
 

@@ -130,14 +130,14 @@ export function getDecision(review, id, clip) {
   return null;
 }
 
-export function recordDecision(review, id, revision, digest, decision, note) {
+export function recordDecision(review, id, revision, digest, decision, note, origin = 'explicit-local-ui-action') {
   const clip = getAudio(review).clips.get(id);
   if (!clip || clip.revision !== revision || clip.hash !== digest) return false;
   if (!['accepted', 'needs-correction'].includes(decision) || note.length > 500) return false;
   const directory = decisionDirectory(review, id);
   mkdirSync(directory, { recursive: true });
   save(path.join(privatePath(directory), Date.now() + '-' + randomUUID() + '.json'), {
-    decision, note, revision, sha256: digest, at: new Date().toISOString(), origin: 'explicit-local-ui-action',
+    decision, note, revision, sha256: digest, at: new Date().toISOString(), origin,
   });
   return true;
 }

@@ -105,8 +105,11 @@ function render(review, { approved, clips }, theme, section) {
   }));
   const questions = blocks.flatMap(block => block.prompts.map(item => ({ item, block })));
   sections.push({ id: 'questions', name: 'Preguntas', entries: questions });
-  const selected = sections.find(tab => tab.id === section) ?? sections[0];
   const total = sections.reduce((count, tab) => count + tab.entries.length, 0);
+  if (approved) sections.push({ id: 'all', name: 'Todos los audios',
+    entries: blocks.flatMap(block => [...block.phrases, ...block.prompts].map(item => ({ item, block }))),
+  });
+  const selected = sections.find(tab => tab.id === section) ?? sections[0];
   const navigation = sections.map(tab => {
     const current = tab.id === selected.id ? ' aria-current="page"' : '';
     return `<a href="${escape(viewUrl(theme, tab.id))}"${current}>${escape(tab.name)}</a>`;
